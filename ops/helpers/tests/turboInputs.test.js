@@ -70,7 +70,7 @@ test("01 - task hashes include only the files each task consumes", () => {
   const fixture = mkdtempSync(path.join(tmpdir(), "codsen-turbo-inputs-"));
   try {
     const registry = {
-      "typescript-library": ["dependency", "library"],
+      "typescript-library": ["dependency", "library", "unrelated"],
       cli: ["cli"],
       "generated-data": ["@example/data"],
     };
@@ -131,7 +131,7 @@ test("01 - task hashes include only the files each task consumes", () => {
       write(fixture, relative);
     }
 
-    for (const name of ["dependency", "library"]) {
+    for (const name of ["dependency", "library", "unrelated"]) {
       write(
         fixture,
         `packages/${name}/package.json`,
@@ -236,6 +236,57 @@ test("01 - task hashes include only the files each task consumes", () => {
       taskHash(fixture, "@example/data", "build") === dataBuildHash,
       false,
       "01.12",
+    );
+
+    const scopedLibraryHash = taskHash(fixture, "library", "build");
+    const unrelatedHash = taskHash(fixture, "unrelated", "build");
+    write(
+      fixture,
+      "packages/unrelated/package.json",
+      packageManifest("unrelated", { dependency: "1.0.0" }),
+    );
+    equal(taskHash(fixture, "library", "build"), scopedLibraryHash, "01.13");
+    equal(
+      taskHash(fixture, "unrelated", "build") === unrelatedHash,
+      false,
+      "01.14",
+    );
+
+    const beforeLockOnlyChange = taskHash(fixture, "library", "build");
+    write(
+      fixture,
+      "package-lock.json",
+      `${JSON.stringify(
+        {
+          name: "turbo-input-fixture",
+          lockfileVersion: 3,
+          packages: {},
+          requires: true,
+          reviewFixtureMetadata: "lockfile-only change",
+        },
+        null,
+        2,
+      )}\n`,
+    );
+    equal(taskHash(fixture, "library", "build"), beforeLockOnlyChange, "01.15");
+
+    const beforeDependencyManifestChange = taskHash(
+      fixture,
+      "library",
+      "build",
+    );
+    write(
+      fixture,
+      "packages/dependency/package.json",
+      packageManifest("dependency").replace(
+        '"version": "1.0.0"',
+        '"version": "1.0.1"',
+      ),
+    );
+    equal(
+      taskHash(fixture, "library", "build") === beforeDependencyManifestChange,
+      false,
+      "01.16",
     );
   } finally {
     rmSync(fixture, { force: true, recursive: true });

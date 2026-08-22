@@ -1,8 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import Benchmark from "benchmark";
-import { sortAllObjectsSync } from "json-comb-core";
 import { perfRef, opsPerSec as refOpsPerSec } from "perf-ref";
+import { sortAllObjectsSync } from "../../packages/json-comb-core/dist/json-comb-core.esm.js";
 import {
   baselineOf,
   classifyPerfRun,

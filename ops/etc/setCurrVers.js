@@ -5,8 +5,8 @@
 // npm and sets all local versions to that.
 
 import fs from "node:fs";
-import { set } from "edit-package-json";
 import pacote from "pacote";
+import { set } from "../../packages/edit-package-json/dist/edit-package-json.esm.js";
 
 function getDirectories(p) {
   return fs.readdirSync(p).filter((file) => {

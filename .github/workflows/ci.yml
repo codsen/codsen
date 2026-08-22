@@ -62,9 +62,19 @@ jobs:
         uses: ./.github/actions/verify-repository
         with:
           examples: "false"
-          # nothing published to npm comes out of a cache. This job has a
-          # 90-minute budget and no deadline, so it installs and builds cold
-          cache: "false"
+          # Nothing published to npm comes out of a cache. The job installs and
+          # builds cold, then seeds later main/PR caches only after validation.
+          cache: "save-only"
+
+      - name: Upload repository verification telemetry
+        if: always() && steps.verify.outputs.telemetry-file != ''
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-verification-telemetry
+          path: ${{ steps.verify.outputs.telemetry-file }}
+          if-no-files-found: error
+          overwrite: true
+          retention-days: 30
 
       - name: Archive built test inputs
         run: >-
@@ -144,7 +154,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.sha }}
-          fetch-depth: 0
+          fetch-depth: 1
           persist-credentials: false
 
       - name: Set up Node and npm
@@ -178,7 +188,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.sha }}
-          fetch-depth: 0
+          fetch-depth: 1
           persist-credentials: false
 
       - name: Set up package runtime
@@ -191,6 +201,12 @@ jobs:
           node --version
           npm --version
 
+      - name: Restore package-test npm downloads
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ runner.temp }}/package-node-npm-cache
+          key: package-node-downloads-v1-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('package-lock.json', 'ops/helpers/packageNodeCompatibility.js', 'ops/scripts/package-node-compatibility.js') }}
+
       - name: Download package compatibility artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
@@ -202,6 +218,7 @@ jobs:
           node ops/scripts/package-node-compatibility.js verify
           --artifacts "${{ runner.temp }}/package-node-artifacts"
           --node-major "${{ matrix.node-major }}"
+          --npm-cache "${{ runner.temp }}/package-node-npm-cache"
           --unit-concurrency 4
 
   browser-iife-compatibility:
@@ -214,7 +231,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.sha }}
-          fetch-depth: 0
+          fetch-depth: 1
           persist-credentials: false
 
       - name: Set up the pinned root toolchain
@@ -249,6 +266,52 @@ jobs:
           node ops/scripts/verify-browser-iifes.js
           --browser "${{ steps.browser.outputs.browser-path }}"
 
+  windows-smoke:
+    name: Build scripts, packed CLIs and codsen-glob / Windows
+    needs: pack
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the exact release revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up the pinned root toolchain
+        uses: ./.github/actions/setup-node
+
+      - name: Install build dependencies
+        run: npm ci
+
+      - name: Restore packed-smoke npm downloads
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ runner.temp }}/package-node-npm-cache
+          key: package-node-downloads-v1-${{ runner.os }}-root-${{ hashFiles('.node-version', 'package-lock.json', 'ops/helpers/packageNodeCompatibility.js', 'ops/scripts/package-node-compatibility.js') }}
+
+      - name: Smoke-test the generated production build script
+        run: npm run build --workspace=ast-contains-only-empty-space
+
+      - name: Smoke-test the generated development build script
+        run: npm run dev --workspace=ast-contains-only-empty-space
+
+      - name: Smoke-test the examples runner
+        run: npm run test:examples-runner
+
+      - name: Download package compatibility artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: release-package-node-artifacts
+          path: ${{ runner.temp }}/package-node-artifacts
+
+      - name: Smoke-test packed CLIs and codsen-glob
+        run: >-
+          node ops/scripts/package-node-compatibility.js smoke
+          --artifacts "${{ runner.temp }}/package-node-artifacts"
+          --npm-cache "${{ runner.temp }}/package-node-npm-cache"
+
   publish:
     name: Publish to npm
     needs:
@@ -257,6 +320,7 @@ jobs:
       - tests
       - package-node-compatibility
       - browser-iife-compatibility
+      - windows-smoke
     runs-on: ubuntu-latest
     timeout-minutes: 30
     environment: npm-production
@@ -326,3 +390,38 @@ jobs:
           --manifest npm-release-artifacts/manifest.json
           --push
           --remote origin
+
+  timing-summary:
+    name: Release timing summary
+    if: always()
+    needs:
+      - lint-workflows
+      - pack
+      - tests
+      - package-node-compatibility
+      - browser-iife-compatibility
+      - windows-smoke
+      - publish
+      - tags
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Check out the exact release revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up the pinned Node runtime
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .node-version
+
+      - name: Report compute and approval timings
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node ops/scripts/summarize-github-run.js release

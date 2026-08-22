@@ -1,8 +1,23 @@
 import { promises as fs, statSync } from "node:fs";
-import { pull } from "array-pull-all-with-glob";
 import partition from "lodash.partition";
 import objectPath from "object-path";
 import { writeFileAtomically } from "../../helpers/writeFileAtomically.js";
+
+function matchesGlob(value, pattern, caseSensitive) {
+  const escapeRegex = (character) =>
+    /[\\^$.*+?()[\]{}|]/u.test(character) ? `\\${character}` : character;
+  const source = [...pattern]
+    .map((character) => (character === "*" ? ".*" : escapeRegex(character)))
+    .join("");
+  return new RegExp(`^${source}$`, caseSensitive ? "u" : "iu").test(value);
+}
+
+function pull(values, patterns, { caseSensitive = true } = {}) {
+  return values.filter(
+    (value) =>
+      !patterns.some((pattern) => matchesGlob(value, pattern, caseSensitive)),
+  );
+}
 
 // writes .npmignore
 async function npmIgnore({

@@ -33,7 +33,7 @@ import {
   COMPATIBILITY_MANIFEST_KIND,
   COMPATIBILITY_SCHEMA_VERSION,
   createCompatibilityPlan as createCompatibilityPlanCore,
-  safeTarballFilename,
+  normaliseNpmPackReport,
   validateCompatibilityManifest,
 } from "../helpers/packageNodeCompatibility.js";
 import {
@@ -282,46 +282,33 @@ function packCompatibilityArtifacts(outputDirectory) {
   );
 
   try {
-    for (const workspace of plan.packages) {
-      console.log(`Packing ${workspace.name}@${workspace.version}`);
-      const result = runNpm(
-        [
-          "pack",
-          path.join(ROOT, workspace.directory),
-          "--pack-destination",
-          outputDirectory,
-          "--ignore-scripts",
-          "--json",
-        ],
-        {
-          cwd: ROOT,
-          env: compatibilityEnvironment({ npm_config_cache: npmCache }),
-          timeout: PACK_TIMEOUT_MS,
-        },
-      );
-      let report;
-      try {
-        report = JSON.parse(result.stdout);
-      } catch (_error) {
-        fail(`npm pack returned invalid JSON for ${workspace.name}`);
-      }
-      if (!Array.isArray(report) || report.length !== 1) {
-        fail(`npm pack returned an unexpected report for ${workspace.name}`);
-      }
-      const entry = report[0];
-      if (
-        entry.name !== workspace.name ||
-        entry.version !== workspace.version
-      ) {
-        fail(
-          `npm pack reported ${entry.name}@${entry.version}, expected ${workspace.name}@${workspace.version}`,
-        );
-      }
-      if (!safeTarballFilename(entry.filename)) {
-        fail(
-          `npm pack returned an unsafe tarball filename for ${workspace.name}`,
-        );
-      }
+    console.log(
+      `Packing all ${plan.packages.length} workspaces in one npm invocation`,
+    );
+    const result = runNpm(
+      [
+        "pack",
+        "--workspaces",
+        "--pack-destination",
+        outputDirectory,
+        "--ignore-scripts",
+        "--json",
+      ],
+      {
+        cwd: ROOT,
+        env: compatibilityEnvironment({ npm_config_cache: npmCache }),
+        timeout: PACK_TIMEOUT_MS,
+      },
+    );
+    let report;
+    try {
+      report = JSON.parse(result.stdout);
+    } catch (_error) {
+      fail("npm pack returned invalid JSON for the workspace batch");
+    }
+    const orderedEntries = normaliseNpmPackReport(report, plan.packages);
+    for (const [index, workspace] of plan.packages.entries()) {
+      const entry = orderedEntries[index];
       const filename = entry.filename;
       const absoluteFilename = path.join(outputDirectory, filename);
       if (!existsSync(absoluteFilename)) {

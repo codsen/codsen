@@ -7,6 +7,7 @@ import {
   COMPATIBILITY_SCHEMA_VERSION,
   createCompatibilityPlan,
   normaliseBins,
+  normaliseNpmPackReport,
   validateCompatibilityManifest,
 } from "../packageNodeCompatibility.js";
 
@@ -263,6 +264,59 @@ test("07 - compares artifact metadata with the exact current plan projection", (
       }),
     /do not match/,
     "07.02",
+  );
+});
+
+test("08 - normalises one unordered npm workspace-pack report", () => {
+  const packages = [
+    packageArtifact("alpha", "alpha-1.0.0.tgz"),
+    packageArtifact("beta", "beta-1.0.0.tgz"),
+  ].map(({ filename: _filename, sha256: _sha256, ...item }) => item);
+  const beta = {
+    filename: "beta-1.0.0.tgz",
+    name: "beta",
+    version: "1.0.0",
+  };
+  const alpha = {
+    filename: "alpha-1.0.0.tgz",
+    name: "alpha",
+    version: "1.0.0",
+  };
+
+  equal(
+    normaliseNpmPackReport([beta, alpha], packages),
+    [alpha, beta],
+    "08.01",
+  );
+  throws(
+    () => normaliseNpmPackReport([alpha], packages),
+    /omitted planned package: beta/,
+    "08.02",
+  );
+  throws(
+    () => normaliseNpmPackReport([alpha, alpha], packages),
+    /reported alpha more than once/,
+    "08.03",
+  );
+  throws(
+    () => normaliseNpmPackReport([{ ...alpha, name: "other" }, beta], packages),
+    /unexpected package other/,
+    "08.04",
+  );
+  throws(
+    () =>
+      normaliseNpmPackReport(
+        [{ ...alpha, filename: "../alpha.tgz" }, beta],
+        packages,
+      ),
+    /unsafe tarball filename/,
+    "08.05",
+  );
+  throws(
+    () =>
+      normaliseNpmPackReport([{ ...alpha, version: "2.0.0" }, beta], packages),
+    /expected alpha@1.0.0/,
+    "08.06",
   );
 });
 

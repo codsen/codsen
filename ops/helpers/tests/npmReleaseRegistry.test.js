@@ -283,4 +283,24 @@ test("10 - a failed publish layer prevents every later layer", async () => {
   equal(started, ["alpha", "beta"], "10.02");
 });
 
+test("11 - reports deterministic per-layer publish timing", async () => {
+  const messages = [];
+  const times = [1_000, 1_250, 2_000, 2_900];
+  const counts = await publishReleaseLayers([["alpha"], ["beta", "gamma"]], {
+    log(message) {
+      messages.push(message);
+    },
+    now() {
+      return times.shift();
+    },
+    async publishLayer(layer) {
+      return layer.map(() => "published");
+    },
+  });
+
+  equal(counts, { published: 3, skipped: 0 }, "11.01");
+  match(messages[1], /layer 1\/2 in 250ms \(1 package\)/, "11.02");
+  match(messages[3], /layer 2\/2 in 900ms \(2 packages\)/, "11.03");
+});
+
 test.run();

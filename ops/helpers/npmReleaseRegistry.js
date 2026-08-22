@@ -48,24 +48,40 @@ async function publishPackage(item, tarballPath, capabilities) {
   return "published";
 }
 
-async function publishReleaseLayers(layers, { log, publishLayer }) {
+async function publishReleaseLayers(
+  layers,
+  { log, now = Date.now, publishLayer },
+) {
   if (
     !Array.isArray(layers) ||
     typeof log !== "function" ||
+    typeof now !== "function" ||
     typeof publishLayer !== "function"
   ) {
     fail("Release-layer publishing requires layers, log, and publishLayer");
   }
   const counts = { published: 0, skipped: 0 };
   for (const [index, layer] of layers.entries()) {
+    const startedAt = now();
     log(`Publishing layer ${index + 1}/${layers.length}: ${layer.join(", ")}`);
-    const outcomes = await publishLayer(layer, index);
+    let outcomes;
+    try {
+      outcomes = await publishLayer(layer, index);
+    } catch (error) {
+      log(
+        `Publish layer ${index + 1}/${layers.length} failed after ${now() - startedAt}ms.`,
+      );
+      throw error;
+    }
     for (const outcome of outcomes) {
       if (outcome !== "published" && outcome !== "skipped") {
         fail(`Unsupported release publish outcome: ${outcome}`);
       }
       counts[outcome] += 1;
     }
+    log(
+      `Completed publish layer ${index + 1}/${layers.length} in ${now() - startedAt}ms (${outcomes.length} package${outcomes.length === 1 ? "" : "s"}).`,
+    );
   }
   return counts;
 }

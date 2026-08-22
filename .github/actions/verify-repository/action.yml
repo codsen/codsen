@@ -22,15 +22,25 @@ inputs:
   cache:
     description: >-
       Restore the installed dependencies and the Turborepo cache, and write
-      them back on main. Set to "false" on the release lane, which builds every
-      artifact it publishes from a cold tree.
+      them back on main. Set to "save-only" on the release lane so published
+      artifacts are built cold but a successful release can seed later runs.
+      Set to "false" to disable both restore and save.
     required: false
     default: "true"
+  phase:
+    description: >-
+      Run the artifact-readiness gates, the independent validation gates, or
+      both in one job. Accepted values are "prepare", "validate", and "all".
+    required: false
+    default: "all"
 
 outputs:
   package-node-matrix:
     description: GitHub Actions matrix of every Node version packages support
     value: ${{ steps.package_node_matrix.outputs.matrix }}
+  telemetry-file:
+    description: Machine-readable timings for the shared repository gates
+    value: ${{ steps.telemetry.outputs.filename }}
 
 runs:
   using: composite
@@ -38,32 +48,67 @@ runs:
     - name: Set up Node and npm
       uses: ./.github/actions/setup-node
 
+    - name: Initialize verification telemetry
+      id: telemetry
+      shell: bash
+      run: |
+        telemetry_file="${RUNNER_TEMP}/codsen-verify-${GITHUB_JOB}-${{ inputs.phase }}.json"
+        printf 'CODSEN_CI_TELEMETRY_FILE=%s\n' "$telemetry_file" >> "$GITHUB_ENV"
+        printf 'filename=%s\n' "$telemetry_file" >> "$GITHUB_OUTPUT"
+        CODSEN_CI_TELEMETRY_FILE="$telemetry_file" \
+          node ops/scripts/ci-telemetry.js init
+
     - name: Prevent automated Node engine changes
-      if: inputs.node-engine-base-revision != ''
+      if: >-
+        inputs.phase != 'validate' &&
+        inputs.node-engine-base-revision != ''
       shell: bash
       env:
         BASE_REVISION: ${{ inputs.node-engine-base-revision }}
       run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Prevent automated Node engine changes" --
         node ops/scripts/verify-node-compatibility.js
         --unchanged-from "$BASE_REVISION"
 
     - name: Verify dependency-security waiver policy
+      if: inputs.phase != 'validate'
       shell: bash
-      run: node ops/scripts/audit-production-dependencies.js --check-policy
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Verify dependency-security waiver policy" --
+        node ops/scripts/audit-production-dependencies.js --check-policy
 
-    # one hash feeds both caches. The lockfile decides what `npm ci` writes into
-    # node_modules, and turbo hashes the same lockfile into every task, so a
-    # dependency bump has to invalidate the two together or not at all.
+    - name: Validate the cache mode
+      shell: bash
+      env:
+        CACHE_MODE: ${{ inputs.cache }}
+      run: >-
+        test "$CACHE_MODE" = true || test "$CACHE_MODE" = false ||
+        test "$CACHE_MODE" = save-only
+
+    - name: Validate the verification phase
+      shell: bash
+      env:
+        VERIFY_PHASE: ${{ inputs.phase }}
+      run: >-
+        test "$VERIFY_PHASE" = prepare || test "$VERIFY_PHASE" = validate ||
+        test "$VERIFY_PHASE" = all
+
+    # The installed tree is exact-lockfile keyed. Turbo entries are content
+    # addressed already, so their rolling cache deliberately spans lockfile
+    # revisions and preserves work for packages whose dependency closure did
+    # not change.
     - name: Derive the cache keys
-      if: inputs.cache == 'true'
+      if: inputs.cache != 'false'
       shell: bash
       env:
         INSTALL_HASH: ${{ hashFiles('package-lock.json', '.node-version') }}
       run: |
         printf 'CODSEN_NODE_MODULES_CACHE_KEY=node-modules-%s-%s\n' \
           "$RUNNER_OS" "$INSTALL_HASH" >> "$GITHUB_ENV"
-        printf 'CODSEN_TURBO_CACHE_KEY=turbo-%s-%s\n' \
-          "$RUNNER_OS" "$INSTALL_HASH" >> "$GITHUB_ENV"
+        printf 'CODSEN_TURBO_CACHE_KEY=turbo-v2-%s\n' \
+          "$RUNNER_OS" >> "$GITHUB_ENV"
 
     # keyed on the lockfile alone, because the lockfile is what decides the
     # installed tree. A manifest edited without re-running `npm i` therefore
@@ -80,10 +125,21 @@ runs:
           packages/*/node_modules
         key: ${{ env.CODSEN_NODE_MODULES_CACHE_KEY }}
 
+    - name: Record the installed-dependency cache outcome
+      if: inputs.cache == 'true'
+      shell: bash
+      run: >-
+        node ops/scripts/ci-telemetry.js cache
+        --name "Installed dependencies"
+        --outcome "${{ steps.node_modules_cache.outputs.cache-hit == 'true' && 'exact hit' || 'miss' }}"
+        --matched-key "${{ steps.node_modules_cache.outputs.cache-matched-key || 'none' }}"
+
     - name: Install dependencies
       if: steps.node_modules_cache.outputs.cache-hit != 'true'
       shell: bash
-      run: npm ci
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Install dependencies" -- npm ci
 
     # a cache written on main is readable from every pull request branch, but a
     # cache written on a branch is not readable from main or its siblings. Main
@@ -102,11 +158,10 @@ runs:
           packages/*/node_modules
         key: ${{ env.CODSEN_NODE_MODULES_CACHE_KEY }}
 
-    # rolling cache: restore the newest entry recorded for this lockfile, then
-    # save back whatever this run ended with under its own revision. Restoring
-    # across lockfiles is pointless because the lockfile is part of every task
-    # hash, so there is no broader restore-key than this one.
+    # Rolling content-addressed cache: restore only on ordinary CI, then save
+    # successful main/release work under its own immutable revision key.
     - name: Restore the Turborepo cache
+      id: turbo_cache
       if: inputs.cache == 'true'
       uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       with:
@@ -114,98 +169,206 @@ runs:
         key: ${{ env.CODSEN_TURBO_CACHE_KEY }}-${{ github.sha }}
         restore-keys: ${{ env.CODSEN_TURBO_CACHE_KEY }}-
 
-    - name: Lint maintained Markdown
+    - name: Record the Turborepo cache outcome
+      if: inputs.cache == 'true'
       shell: bash
-      run: npm run lint:markdown
+      run: >-
+        node ops/scripts/ci-telemetry.js cache
+        --name "Turborepo task entries"
+        --outcome "${{ steps.turbo_cache.outputs.cache-matched-key != '' && 'restored' || 'miss' }}"
+        --matched-key "${{ steps.turbo_cache.outputs.cache-matched-key || 'none' }}"
+
+    - name: Lint maintained Markdown
+      if: inputs.phase != 'validate'
+      shell: bash
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Lint maintained Markdown" -- npm run lint:markdown
 
     - name: Assert the complete workspace set
+      if: inputs.phase != 'validate'
       shell: bash
-      run: node ops/scripts/npm-release.js assert-workspaces
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Assert the complete workspace set" --
+        node ops/scripts/npm-release.js assert-workspaces
 
     - name: Verify declared package kinds and generated task profiles
+      if: inputs.phase != 'validate'
       shell: bash
-      run: npm run ci:verify:package-kinds
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Verify package kinds" -- npm run ci:verify:package-kinds
 
     - name: Verify development logging costs nothing in production
+      if: inputs.phase != 'validate'
       shell: bash
-      run: npm run ci:verify:debug-log-production-cost
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Verify production debug-log cost" --
+        npm run ci:verify:debug-log-production-cost
 
     - name: Verify mandatory unit test numbering
+      if: inputs.phase != 'validate'
       shell: bash
-      run: npm run ci:verify:test-numbering
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Verify unit-test numbering" --
+        npm run ci:verify:test-numbering
 
     - name: Verify lect-managed package files
+      if: inputs.phase != 'validate'
       shell: bash
-      run: npm run lect:check
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Verify lect-managed files" -- npm run lect:check
 
-    - name: Build package inputs and verify repository data sources
+    - name: Build package inputs and verify package information
+      if: inputs.phase != 'validate'
       shell: bash
-      run: |
-        npm run ci:verify:info
-        npm run ci:verify:changelogs
-        npm run ci:verify:root-readme
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Verify package information" -- npm run ci:verify:info
+
+    - name: Verify generated changelogs
+      if: inputs.phase != 'validate'
+      shell: bash
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Verify generated changelogs" -- npm run ci:verify:changelogs
+
+    - name: Verify the root README
+      if: inputs.phase != 'validate'
+      shell: bash
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Verify the root README" -- npm run ci:verify:root-readme
 
     - name: Build @codsen/data from regenerated sources
+      if: inputs.phase != 'validate'
       shell: bash
-      run: npm run build -- '--filter=./data/**'
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Build @codsen/data" --
+        npm run build -- '--filter=./data/**'
 
     - name: Unit-test the build, packaging and release tooling
+      if: inputs.phase != 'prepare'
       shell: bash
-      run: npm run test:ops-helpers
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Unit-test repository tooling" -- npm run test:ops-helpers
 
     - name: Type-check TypeScript sources
+      if: inputs.phase != 'prepare'
       shell: bash
-      run: npm run typecheck
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Type-check TypeScript sources" -- npm run typecheck
 
     - name: Verify complete and freshly compiled repository data
+      if: inputs.phase != 'prepare'
       shell: bash
-      run: npm run ci:verify:data
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Verify generated repository data" -- npm run ci:verify:data
 
     - name: Verify browser IIFEs against the minimum runtime API surface
+      if: inputs.phase != 'prepare'
       shell: bash
-      run: npm run ci:verify:browser-iifes
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Verify browser IIFEs" -- npm run ci:verify:browser-iifes
 
     - name: Run package examples on the root toolchain
-      if: inputs.examples == 'true'
+      if: inputs.phase != 'prepare' && inputs.examples == 'true'
       shell: bash
-      run: npm run turbo -- run examples --filter='./packages/**' --only
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Run package examples" --
+        npm run turbo -- run examples --filter='./packages/**' --only
 
     - name: Verify package coverage policy
+      if: inputs.phase != 'prepare'
       shell: bash
-      run: npm run ci:verify:coverage-policy
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Verify package coverage policy" --
+        npm run ci:verify:coverage-policy
 
     # the unit suites under c8 and nothing else: this job already type-checks,
     # lints and runs the examples in dedicated steps, so `devtest` stays a local
     # convenience alias rather than a third re-run of all three
     - name: Enforce package coverage on the root toolchain
+      if: inputs.phase != 'prepare'
       shell: bash
-      run: npm run test:coverage
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Enforce package coverage" -- npm run test:coverage
 
     - name: Verify package Node compatibility policy
+      if: inputs.phase != 'validate'
       shell: bash
-      run: npm run ci:verify:node-compatibility
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Verify package Node compatibility policy" --
+        npm run ci:verify:node-compatibility
 
     - name: Define package Node compatibility matrix
       id: package_node_matrix
+      if: inputs.phase != 'validate'
       shell: bash
       run: |
         package_node_matrix=$(node ops/scripts/verify-node-compatibility.js --github-actions-matrix)
         echo "matrix=$package_node_matrix" >> "$GITHUB_OUTPUT"
 
     - name: Check formatting, linting and assists without changing files
+      if: inputs.phase != 'prepare'
       shell: bash
-      run: npm exec -- biome ci --error-on-warnings .
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Check formatting and linting" --
+        npm exec -- biome ci --error-on-warnings .
 
     - name: Verify the checked-out revision is reproducible
+      if: inputs.phase != 'prepare'
       shell: bash
-      run: |
-        git diff --exit-code
-        test -z "$(git status --porcelain --untracked-files=all)"
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Verify reproducible worktree" --
+        bash -c 'git diff --exit-code &&
+        test -z "$(git status --porcelain --untracked-files=all)"'
+
+    - name: Prune stale Turborepo cache entries
+      if: >-
+        inputs.phase != 'prepare' && inputs.cache != 'false' &&
+        github.ref == 'refs/heads/main'
+      shell: bash
+      run: npm run cache:prune
+
+    # The release lane uses save-only mode to keep all published inputs cold.
+    # It seeds the exact installed tree only after every shared gate succeeds.
+    - name: Save cold-verified installed dependencies
+      if: inputs.cache == 'save-only' && github.ref == 'refs/heads/main'
+      uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: |
+          node_modules
+          data/node_modules
+          packages/*/node_modules
+        key: ${{ env.CODSEN_NODE_MODULES_CACHE_KEY }}
 
     # last, so it captures every task this action ran, whichever job called it
     - name: Save the Turborepo cache
-      if: inputs.cache == 'true' && github.ref == 'refs/heads/main'
+      if: >-
+        inputs.phase != 'prepare' && inputs.cache != 'false' &&
+        github.ref == 'refs/heads/main'
       uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       with:
         path: .turbo/cache
         key: ${{ env.CODSEN_TURBO_CACHE_KEY }}-${{ github.sha }}
+
+    - name: Summarize repository verification
+      if: always()
+      shell: bash
+      run: node ops/scripts/ci-telemetry.js summary

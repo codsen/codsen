@@ -34,8 +34,8 @@ jobs:
       - name: Lint GitHub Actions workflows
         uses: ./.github/actions/lint-workflows
 
-  validate:
-    name: Build and validate
+  artifacts:
+    name: Prepare build artifacts
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
@@ -48,7 +48,8 @@ jobs:
         github.event.pull_request.user.login == 'dependabot[bot]') &&
         github.event.pull_request.base.sha || '' }}
     outputs:
-      package_node_matrix: ${{ steps.verify.outputs.package-node-matrix }}
+      package_node_matrix: ${{ steps.prepare.outputs.package-node-matrix }}
+      release_push: ${{ steps.release_push.outputs.value }}
     steps:
       - name: Check out the exact revision
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -56,29 +57,78 @@ jobs:
           # the guard runs `git merge-base --is-ancestor`, which needs the whole
           # chain back to the base commit. Every other gate reads the working
           # tree, so they get a single commit instead of 9.5k
-          fetch-depth: ${{ env.DEPENDABOT_BASE_SHA && '0' || '1' }}
+          fetch-depth: ${{ env.DEPENDABOT_BASE_SHA && '0' || github.event_name == 'push' && '2' || '1' }}
           persist-credentials: false
+
+      - name: Classify release-plan pushes
+        id: release_push
+        shell: bash
+        run: |
+          value=false
+          if test "$GITHUB_EVENT_NAME" = push && \
+            git rev-parse --verify "${GITHUB_SHA}^" >/dev/null 2>&1 && \
+            ! git diff --quiet "${GITHUB_SHA}^" "$GITHUB_SHA" -- \
+              .github/npm-release-plan.json; then
+            value=true
+          fi
+          printf 'value=%s\n' "$value" >> "$GITHUB_OUTPUT"
+          printf 'Release-plan push: %s\n' "$value"
 
       # every remaining gate lives in the shared action so this job and the
       # release pack job cannot drift apart
-      - name: Verify the repository
-        id: verify
+      - name: Prepare repository artifacts
+        id: prepare
+        if: steps.release_push.outputs.value != 'true'
         uses: ./.github/actions/verify-repository
         with:
           node-engine-base-revision: ${{ env.DEPENDABOT_BASE_SHA }}
+          phase: prepare
+
+      - name: Upload artifact-preparation telemetry
+        if: >-
+          always() && steps.release_push.outputs.value != 'true' &&
+          steps.prepare.outputs.telemetry-file != ''
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ci-artifact-preparation-telemetry
+          path: ${{ steps.prepare.outputs.telemetry-file }}
+          if-no-files-found: error
+          overwrite: true
+          retention-days: 30
+
+      - name: Archive validation inputs
+        if: steps.release_push.outputs.value != 'true'
+        run: >-
+          tar --create --gzip
+          --file "${{ runner.temp }}/validation-inputs.tar.gz"
+          .turbo/cache packages/*/dist packages/*/types data/dist
+
+      - name: Upload validation inputs
+        if: steps.release_push.outputs.value != 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ci-validation-inputs
+          path: ${{ runner.temp }}/validation-inputs.tar.gz
+          compression-level: 0
+          if-no-files-found: error
+          overwrite: true
+          retention-days: 1
 
       - name: Pack all Node compatibility artifacts
+        if: steps.release_push.outputs.value != 'true'
         run: >-
           node ops/scripts/package-node-compatibility.js pack
           --output "${{ runner.temp }}/package-node-artifacts"
 
       - name: Archive built browser IIFEs
+        if: steps.release_push.outputs.value != 'true'
         run: >-
           tar --create --gzip
           --file "${{ runner.temp }}/browser-iifes.tar.gz"
           packages/*/dist/*.umd.js
 
       - name: Upload built browser IIFEs
+        if: steps.release_push.outputs.value != 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: ci-browser-iifes
@@ -89,6 +139,7 @@ jobs:
           retention-days: 1
 
       - name: Upload all Node compatibility artifacts
+        if: steps.release_push.outputs.value != 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: ci-package-node-artifacts
@@ -98,14 +149,74 @@ jobs:
           overwrite: true
           retention-days: 1
 
+  # This starts as soon as the build artifacts exist while compatibility jobs
+  # fan out beside it. The final validate job aggregates every result under the
+  # stable required-check identity.
+  repository_validation:
+    name: Validate the prepared repository
+    needs: artifacts
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Propagate artifact-preparation failures
+        if: needs.artifacts.result != 'success'
+        run: exit 1
+
+      - name: Report verification delegated to the release lane
+        if: needs.artifacts.outputs.release_push == 'true'
+        run: >-
+          printf '%s\n'
+          'The release-plan push is verified once by the publishing workflow.'
+
+      - name: Check out the exact revision
+        if: needs.artifacts.outputs.release_push != 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Download validation inputs
+        if: needs.artifacts.outputs.release_push != 'true'
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: ci-validation-inputs
+          path: ${{ runner.temp }}/validation-inputs
+
+      - name: Restore validation inputs
+        if: needs.artifacts.outputs.release_push != 'true'
+        run: >-
+          tar --extract --gzip
+          --file "${{ runner.temp }}/validation-inputs/validation-inputs.tar.gz"
+
+      - name: Validate the prepared repository
+        id: validate
+        if: needs.artifacts.outputs.release_push != 'true'
+        uses: ./.github/actions/verify-repository
+        with:
+          phase: validate
+
+      - name: Upload repository-validation telemetry
+        if: >-
+          always() && needs.artifacts.outputs.release_push != 'true' &&
+          steps.validate.outputs.telemetry-file != ''
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ci-repository-validation-telemetry
+          path: ${{ steps.validate.outputs.telemetry-file }}
+          if-no-files-found: error
+          overwrite: true
+          retention-days: 30
+
   package-node-compatibility:
     name: All packages / Node ${{ matrix.node-major }}
-    needs: validate
+    needs: artifacts
+    if: needs.artifacts.outputs.release_push != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
       fail-fast: false
-      matrix: ${{ fromJSON(needs.validate.outputs.package_node_matrix) }}
+      matrix: ${{ fromJSON(needs.artifacts.outputs.package_node_matrix) }}
     steps:
       - name: Check out the exact revision
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -124,6 +235,12 @@ jobs:
           node --version
           npm --version
 
+      - name: Restore package-test npm downloads
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ runner.temp }}/package-node-npm-cache
+          key: package-node-downloads-v1-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('package-lock.json', 'ops/helpers/packageNodeCompatibility.js', 'ops/scripts/package-node-compatibility.js') }}
+
       - name: Download package compatibility artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
@@ -135,11 +252,13 @@ jobs:
           node ops/scripts/package-node-compatibility.js verify
           --artifacts "${{ runner.temp }}/package-node-artifacts"
           --node-major "${{ matrix.node-major }}"
+          --npm-cache "${{ runner.temp }}/package-node-npm-cache"
           --unit-concurrency 4
 
   browser-iife-compatibility:
     name: All browser IIFEs / Chromium 58
-    needs: validate
+    needs: artifacts
+    if: needs.artifacts.outputs.release_push != 'true'
     runs-on: ubuntu-22.04
     timeout-minutes: 20
     steps:
@@ -183,7 +302,8 @@ jobs:
 
   windows-smoke:
     name: Build scripts, packed CLIs and codsen-glob / Windows
-    needs: validate
+    needs: artifacts
+    if: needs.artifacts.outputs.release_push != 'true'
     runs-on: windows-latest
     timeout-minutes: 30
     steps:
@@ -199,6 +319,12 @@ jobs:
 
       - name: Install build dependencies
         run: npm ci
+
+      - name: Restore packed-smoke npm downloads
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ runner.temp }}/package-node-npm-cache
+          key: package-node-downloads-v1-${{ runner.os }}-root-${{ hashFiles('.node-version', 'package-lock.json', 'ops/helpers/packageNodeCompatibility.js', 'ops/scripts/package-node-compatibility.js') }}
 
       - name: Smoke-test the generated production build script
         run: npm run build --workspace=ast-contains-only-empty-space
@@ -221,3 +347,64 @@ jobs:
         run: >-
           node ops/scripts/package-node-compatibility.js smoke
           --artifacts "${{ runner.temp }}/package-node-artifacts"
+          --npm-cache "${{ runner.temp }}/package-node-npm-cache"
+
+  validate:
+    name: Build and validate
+    if: always()
+    needs:
+      - lint-workflows
+      - artifacts
+      - repository_validation
+      - package-node-compatibility
+      - browser-iife-compatibility
+      - windows-smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require every applicable validation lane to pass
+        shell: bash
+        env:
+          ARTIFACTS_RESULT: ${{ needs.artifacts.result }}
+          BROWSER_RESULT: ${{ needs.browser-iife-compatibility.result }}
+          LINT_RESULT: ${{ needs.lint-workflows.result }}
+          NODE_RESULT: ${{ needs.package-node-compatibility.result }}
+          RELEASE_PUSH: ${{ needs.artifacts.outputs.release_push }}
+          REPOSITORY_RESULT: ${{ needs.repository_validation.result }}
+          WINDOWS_RESULT: ${{ needs.windows-smoke.result }}
+        run: |
+          test "$ARTIFACTS_RESULT" = success
+          test "$LINT_RESULT" = success
+          test "$REPOSITORY_RESULT" = success
+          if test "$RELEASE_PUSH" != true; then
+            test "$NODE_RESULT" = success
+            test "$BROWSER_RESULT" = success
+            test "$WINDOWS_RESULT" = success
+          fi
+
+  timing-summary:
+    name: CI timing summary
+    if: always()
+    needs:
+      - validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Check out the exact revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up the pinned Node runtime
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .node-version
+
+      - name: Report critical-path and runner timings
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node ops/scripts/summarize-github-run.js ci

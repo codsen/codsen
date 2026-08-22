@@ -1,6 +1,30 @@
 {
   "concurrency": "100%",
   "tasks": {
+    "//#coverage:workspaces": {
+      "inputs": [
+        ".node-version",
+        "ops/coverage-policy.json",
+        "ops/helpers/common.js",
+        "ops/helpers/packageKinds.js",
+        "ops/helpers/packageKindsFile.js",
+        "ops/helpers/shallow-compare.js",
+        "ops/helpers/spawn.js",
+        "ops/helpers/workspaceCoverage.js",
+        "ops/helpers/workspaceInventory.js",
+        "ops/helpers/workspaceInventoryFile.js",
+        "ops/package-kinds.json",
+        "ops/scripts/coverage-workspaces.js",
+        "package-lock.json",
+        "package.json",
+        "packages/*/*.js",
+        "packages/*/dist/**",
+        "packages/*/package.json",
+        "packages/*/test/**"
+      ],
+      "outputs": [],
+      "outputLogs": "new-only"
+    },
     "build": {
       "dependsOn": ["^build"],
       "inputs": [
@@ -17,8 +41,6 @@
         "$TURBO_ROOT$/ops/helpers/nodeEngine.js",
         "$TURBO_ROOT$/ops/scripts/esbuild.js",
         "$TURBO_ROOT$/ops/typedefs/common.ts",
-        "$TURBO_ROOT$/package-lock.json",
-        "$TURBO_ROOT$/package.json",
         "$TURBO_ROOT$/tsconfig.base.json"
       ],
       "outputs": ["dist/**", "types/**"]
@@ -76,8 +98,6 @@
         "sources/**",
         "tsconfig.json",
         "$TURBO_ROOT$/.node-version",
-        "$TURBO_ROOT$/package-lock.json",
-        "$TURBO_ROOT$/package.json",
         "$TURBO_ROOT$/tsconfig.base.json"
       ],
       "outputs": ["dist/**"]
@@ -95,8 +115,6 @@
         "test-types/**",
         "tsconfig.json",
         "$TURBO_ROOT$/ops/typedefs/common.ts",
-        "$TURBO_ROOT$/package-lock.json",
-        "$TURBO_ROOT$/package.json",
         "$TURBO_ROOT$/tsconfig.base.json"
       ],
       "outputs": []
@@ -108,8 +126,6 @@
         "package.json",
         "sources/**",
         "tsconfig.json",
-        "$TURBO_ROOT$/package-lock.json",
-        "$TURBO_ROOT$/package.json",
         "$TURBO_ROOT$/tsconfig.base.json"
       ],
       "outputs": []

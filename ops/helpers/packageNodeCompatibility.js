@@ -134,6 +134,47 @@ function safeTarballFilename(value) {
   );
 }
 
+function normaliseNpmPackReport(report, packages) {
+  if (!Array.isArray(report)) {
+    fail("npm pack report must be an array");
+  }
+  if (!Array.isArray(packages) || packages.length === 0) {
+    fail("npm pack report validation requires planned packages");
+  }
+  const expected = new Map(packages.map((item) => [item.name, item]));
+  const reported = new Map();
+  for (const [index, entry] of report.entries()) {
+    if (!entry || typeof entry !== "object" || Array.isArray(entry)) {
+      fail(`npm pack report entry ${index} must be an object`);
+    }
+    if (typeof entry.name !== "string" || !expected.has(entry.name)) {
+      fail(`npm pack reported unexpected package ${entry.name ?? index}`);
+    }
+    if (reported.has(entry.name)) {
+      fail(`npm pack reported ${entry.name} more than once`);
+    }
+    const planned = expected.get(entry.name);
+    if (entry.version !== planned.version) {
+      fail(
+        `npm pack reported ${entry.name}@${entry.version}, expected ${entry.name}@${planned.version}`,
+      );
+    }
+    if (!safeTarballFilename(entry.filename)) {
+      fail(`npm pack returned an unsafe tarball filename for ${entry.name}`);
+    }
+    reported.set(entry.name, entry);
+  }
+  const missing = packages
+    .filter(({ name }) => !reported.has(name))
+    .map(({ name }) => name);
+  if (missing.length > 0) {
+    fail(
+      `npm pack omitted planned package${missing.length === 1 ? "" : "s"}: ${missing.join(", ")}`,
+    );
+  }
+  return packages.map(({ name }) => reported.get(name));
+}
+
 function validatePackageRecord(item, index) {
   if (!item || typeof item !== "object" || Array.isArray(item)) {
     fail(`Compatibility package ${index} must be an object`);
@@ -329,6 +370,7 @@ export {
   compatibilityManifestPlan,
   createCompatibilityPlan,
   normaliseBins,
+  normaliseNpmPackReport,
   safeTarballFilename,
   validateCompatibilityManifest,
 };

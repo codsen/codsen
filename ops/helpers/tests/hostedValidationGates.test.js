@@ -86,18 +86,20 @@ test("04 - both hosted lanes validate through the shared action alone", () => {
   const ci = readRepositoryFile(checksWorkflow);
   const release = readRepositoryFile(releaseWorkflow);
 
-  equal(occurrences(ci, sharedActionUse), 1, "04.01");
-  equal(occurrences(release, sharedActionUse), 1, "04.02");
+  equal(occurrences(ci, sharedActionUse), 2, "04.01");
+  equal(occurrences(ci, "phase: prepare"), 1, "04.02");
+  equal(occurrences(ci, "phase: validate"), 1, "04.03");
+  equal(occurrences(release, sharedActionUse), 1, "04.04");
   // a gate spelled out in a lane again is that lane drifting from the action
   equal(
     requiredGates.filter((gate) => ci.includes(gate)),
     [],
-    "04.03",
+    "04.05",
   );
   equal(
     requiredGates.filter((gate) => release.includes(gate)),
     [],
-    "04.04",
+    "04.06",
   );
 });
 
@@ -127,6 +129,50 @@ test("06 - the release pack job validates before packing", () => {
 
   ok(verify > -1, "06.01");
   ok(verify < workflow.indexOf("npm-release.js pack"), "06.02");
+});
+
+test("07 - compatibility consumers share one artifact boundary per trigger", () => {
+  const checks = readRepositoryFile(checksWorkflow);
+  const release = readRepositoryFile(releaseWorkflow);
+  const artifacts = jobSection(checks, "artifacts");
+  const validate = jobSection(checks, "validate");
+  const repositoryValidation = jobSection(checks, "repository_validation");
+  const packageCompatibility = jobSection(checks, "package-node-compatibility");
+  const browser = jobSection(checks, "browser-iife-compatibility");
+  const windows = jobSection(checks, "windows-smoke");
+  const releaseWindows = jobSection(release, "windows-smoke");
+  const publish = jobSection(release, "publish");
+
+  equal(occurrences(artifacts, ".github/npm-release-plan.json"), 1, "07.01");
+  ok(repositoryValidation.includes("needs: artifacts"), "07.02");
+  for (const [index, section] of [
+    packageCompatibility,
+    browser,
+    windows,
+  ].entries()) {
+    ok(
+      section.includes("needs: artifacts"),
+      `07.${String(index * 2 + 3).padStart(2, "0")}`,
+    );
+    ok(
+      section.includes("release_push != 'true'"),
+      `07.${String(index * 2 + 4).padStart(2, "0")}`,
+    );
+  }
+  ok(releaseWindows.includes("needs: pack"), "07.09");
+  ok(publish.includes("- windows-smoke"), "07.10");
+  equal(
+    [
+      "lint-workflows",
+      "artifacts",
+      "repository_validation",
+      "package-node-compatibility",
+      "browser-iife-compatibility",
+      "windows-smoke",
+    ].filter((job) => !validate.includes(`- ${job}`)),
+    [],
+    "07.11",
+  );
 });
 
 test.run();

@@ -1,5 +1,6 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import git from "simple-git";
 import { programClassification } from "../../data/sources/programClassification.ts";
 import { writeGeneratedFile } from "../helpers/generatedFiles.js";
@@ -184,10 +185,15 @@ if (missingBuildArtifacts.length) {
   );
 }
 
-const [{ det }, { sortAllObjectsSync }] = await Promise.all([
-  import("detergent"),
-  import("json-comb-core"),
-]);
+const [{ det }, { sortAllObjectsSync }] = await Promise.all(
+  ["detergent", "json-comb-core"].map(
+    (name) =>
+      import(
+        pathToFileURL(path.resolve("packages", name, "dist", `${name}.esm.js`))
+          .href
+      ),
+  ),
+);
 
 for (let packageName of packageNames) {
   try {

@@ -1,13 +1,13 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
-import { cleanChangelogs } from "lerna-clean-changelogs";
 // import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
-import remarkTypography from "remark-typography";
 import { unified } from "unified";
+import { cleanChangelogs } from "../../packages/lerna-clean-changelogs/dist/lerna-clean-changelogs.esm.js";
+import remarkTypography from "../../packages/remark-typography/dist/remark-typography.esm.js";
 import { writeGeneratedFile } from "../helpers/generatedFiles.js";
 import changelogTimeline from "./remark-conventional-commit-changelog-timeline.esm.js";
 
