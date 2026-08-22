@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 13.6.2 (2026-08-22)
+
+### Performance Improvements
+
+- optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+- record lodash-es removal benchmarks ([0f69b6f](https://github.com/codsen/codsen/commit/0f69b6fdb8c3be04eaa02f82de107390b5263ce9))
+
 ## 13.6.0 (2026-08-19)
 
 ### Bug Fixes

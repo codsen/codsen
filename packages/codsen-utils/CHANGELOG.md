@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.9.0 (2026-08-22)
+
+### Features
+
+- **codsen-utils:** add reusable type and trim helpers ([d30a73f](https://github.com/codsen/codsen/commit/d30a73fe807afd129cd7b8e776fde1fc230628b9))
+
+### Performance Improvements
+
+- optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+
 ## 1.8.0 (2026-08-19)
 
 ### Bug Fixes

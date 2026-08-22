@@ -1,6 +1,6 @@
 {
   "name": "ranges-invert",
-  "version": "6.2.1",
+  "version": "6.2.2",
   "description": "Invert string index ranges",
   "keywords": ["array", "indexes", "ranges", "sort", "string"],
   "homepage": "https://codsen.com/os/ranges-invert",
@@ -55,9 +55,9 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.8.0",
-    "ranges-crop": "^6.2.1",
-    "ranges-merge": "^9.2.1"
+    "codsen-utils": "^1.9.0",
+    "ranges-crop": "^6.2.2",
+    "ranges-merge": "^9.2.2"
   },
   "engines": {
     "node": ">=18.20.8"

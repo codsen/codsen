@@ -1,6 +1,6 @@
 {
   "name": "object-delete-key",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.",
   "keywords": [
     "ast",
@@ -75,9 +75,9 @@
     }
   },
   "dependencies": {
-    "ast-is-empty": "^4.2.0",
-    "ast-monkey": "^9.2.1",
-    "codsen-utils": "^1.8.0",
+    "ast-is-empty": "^4.2.1",
+    "ast-monkey": "^9.2.2",
+    "codsen-utils": "^1.9.0",
     "util-array-object-or-both": "^5.2.1"
   },
   "engines": {

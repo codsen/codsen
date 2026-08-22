@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.4.0 (2026-08-22)
+
+### Features
+
+- **codsen-utils:** add reusable type and trim helpers ([d30a73f](https://github.com/codsen/codsen/commit/d30a73fe807afd129cd7b8e776fde1fc230628b9))
+
 ## 0.3.0 (2026-08-19)
 
 ### Bug Fixes
