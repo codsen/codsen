@@ -1,6 +1,6 @@
 {
   "name": "ranges-merge",
-  "version": "9.2.1",
+  "version": "9.2.2",
   "description": "Merge and sort string index ranges",
   "keywords": [
     "index",
@@ -69,8 +69,8 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.8.0",
-    "ranges-sort": "^6.2.0"
+    "codsen-utils": "^1.9.0",
+    "ranges-sort": "^6.2.1"
   },
   "engines": {
     "node": ">=18.20.8"

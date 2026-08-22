@@ -1,6 +1,6 @@
 {
   "name": "util-nonempty",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "description": "Is the input (plain object, array, string or whatever) not empty?",
   "keywords": ["array", "empty", "is", "not", "object", "string", "util"],
   "homepage": "https://codsen.com/os/util-nonempty",
@@ -58,7 +58,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.8.0"
+    "codsen-utils": "^1.9.0"
   },
   "engines": {
     "node": ">=18.20.8"

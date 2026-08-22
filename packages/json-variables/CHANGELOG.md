@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 12.2.2 (2026-08-22)
+
+### Performance Improvements
+
+- optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+
 ## 12.2.0 (2026-08-19)
 
 ### Bug Fixes
