@@ -200,10 +200,13 @@ class Ranges {
           })`,
         );
       // Does the incoming "from" value match the existing last element's "to" value?
+      // Read once - last() re-checks the array and re-indexes it on every
+      // call, and this branch consulted it eight times.
+      const lastRange = this.last();
       if (
         existy(this.ranges) &&
-        Array.isArray(this.last()) &&
-        from === (this.last() as RangeType)[1]
+        Array.isArray(lastRange) &&
+        from === lastRange[1]
       ) {
         DEV &&
           console.log(
@@ -211,22 +214,21 @@ class Ranges {
           );
         // The incoming range is an exact extension of the last range, like
         // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
-        (this.last() as RangeType)[1] = to;
+        lastRange[1] = to;
         // DEV && console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
 
-        if ((this.last() as RangeType)[2] === null || addVal === null) {
-          DEV &&
-            console.log(`this.last()[2] = ${(this.last() as RangeType)[2]}`);
+        if (lastRange[2] === null || addVal === null) {
+          DEV && console.log(`this.last()[2] = ${lastRange[2]}`);
           DEV && console.log(`addVal = ${addVal}`);
         }
 
-        if ((this.last() as RangeType)[2] !== null && existy(addVal)) {
+        if (lastRange[2] !== null && existy(addVal)) {
           DEV && console.log();
           let calculatedVal =
-            (this.last() as RangeType)[2] &&
-            ((this.last() as RangeType)[2] as string).length &&
+            lastRange[2] &&
+            (lastRange[2] as string).length &&
             (!this.opts?.mergeType || this.opts.mergeType === 1)
-              ? `${(this.last() as RangeType)[2]}${addVal}`
+              ? `${lastRange[2]}${addVal}`
               : addVal;
           DEV &&
             console.log(
@@ -252,7 +254,7 @@ class Ranges {
             );
           if (!(isStr(calculatedVal) && !calculatedVal.length)) {
             // don't let the zero-length strings past
-            (this.last() as RangeType)[2] = calculatedVal;
+            lastRange[2] = calculatedVal;
           }
         }
         DEV && console.log();
@@ -265,8 +267,7 @@ class Ranges {
         if (!this.ranges) {
           this.ranges = [];
         }
-        const previous = this.last();
-        if (previous && from < previous[0]) {
+        if (lastRange && from < lastRange[0]) {
           // this range jumps backwards, so the leading-cluster shortcut in
           // firstCovers() no longer holds
           this.sorted = false;
