@@ -375,7 +375,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 tag: tag as Tag,
                 deleteFrom:
                   rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
-                deleteTo: i + 1,
+                deleteTo: combinedRangeEnd,
                 insert: null,
                 rangesArr: rangesToDelete,
                 proposedReturn: [

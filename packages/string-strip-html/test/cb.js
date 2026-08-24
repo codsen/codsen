@@ -374,4 +374,43 @@ test("010 - opts.cb - combined pair range includes the closing bracket", () => {
   );
 });
 
+test("011 - opts.cb - combined pair scalar and tuple ranges agree before punctuation", () => {
+  const input = "<a>x</a>.";
+  const opts = {
+    skipHtmlDecoding: true,
+    stripTogetherWithTheirContents: ["*"],
+  };
+  const scalarEvents = [];
+
+  const scalarForwarded = stripHtml(input, {
+    ...opts,
+    cb: ({ deleteFrom, deleteTo, insert, rangesArr, proposedReturn }) => {
+      scalarEvents.push({ deleteFrom, deleteTo, insert, proposedReturn });
+      if (proposedReturn) {
+        rangesArr.push(deleteFrom, deleteTo, insert);
+      }
+    },
+  });
+  const tupleForwarded = stripHtml(input, {
+    ...opts,
+    cb: ({ rangesArr, proposedReturn }) => {
+      if (proposedReturn) {
+        rangesArr.push(...proposedReturn);
+      }
+    },
+  });
+
+  equal(
+    scalarEvents.map(({ deleteFrom, deleteTo, insert }) => [
+      deleteFrom,
+      deleteTo,
+      insert,
+    ]),
+    scalarEvents.map(({ proposedReturn }) => proposedReturn),
+    "011.01",
+  );
+  equal(scalarForwarded.result, ".", "011.02");
+  equal(tupleForwarded.result, ".", "011.03");
+});
+
 test.run();
