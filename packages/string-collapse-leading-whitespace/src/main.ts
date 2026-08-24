@@ -9,6 +9,12 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
   // helpers
 
   function reverse(s: string): string {
+    // Array.from() splits by code point, which matters only once there are
+    // two or more of them - and an empty or single-character chunk is the
+    // common case here, worth not allocating an array and a join for
+    if (s.length < 2) {
+      return s;
+    }
     return Array.from(s).reverse().join("");
   }
 
@@ -187,6 +193,17 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
   }
 
   if (typeof str === "string" && str.length) {
+    // Computed once - it was being recomputed three times below, and it also
+    // answers the quickest question there is: a string with no leading and no
+    // trailing whitespace has nothing for this function to collapse, and the
+    // assembly at the bottom would hand back `"" + str.trim() + ""`, which is
+    // the input itself.
+    const trimmed = str.trim();
+    if (trimmed.length === str.length) {
+      DEV && console.log(`no leading or trailing whitespace, return as-is`);
+      return str;
+    }
+
     // without a fuss, set the max allowed line breaks as a leading/trailing whitespace:
     let resolvedLineBreakLimit = 1;
     if (
@@ -209,7 +226,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
     let frontPart = "";
     let endPart = "";
 
-    if (!str.trim()) {
+    if (!trimmed) {
       frontPart = str;
     } else if (!str[0].trim()) {
       DEV && console.log(`the first char is whitespace`);
@@ -232,10 +249,8 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
     DEV && console.log(".");
 
     // if whole string is whitespace, endPart is empty string
-    if (
-      str.trim() &&
-      (str.slice(-1).trim() === "" || str.slice(-1) === rawNbsp)
-    ) {
+    const lastChar = str[str.length - 1];
+    if (trimmed && (lastChar.trim() === "" || lastChar === rawNbsp)) {
       DEV && console.log(`the last char is whitespace`);
       for (let i = str.length; i--; ) {
         // DEV && console.log(
@@ -269,7 +284,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
       frontPart,
       resolvedLineBreakLimit,
       false,
-    )}${str.trim()}${reverse(
+    )}${trimmed}${reverse(
       prep(reverse(endPart), resolvedLineBreakLimit, true),
     )}`;
   }
