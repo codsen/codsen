@@ -792,7 +792,7 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "size": 24055,
+    "size": 24094,
     "imports": [
       "codsen-utils",
       "ranges-apply",
