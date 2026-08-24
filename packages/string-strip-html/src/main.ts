@@ -1217,10 +1217,25 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
   let isInsideScript = false;
   let isDoctype = false;
+  let pendingMalformedStart: number | null = null;
   let currentPercentageDone = 0;
   let lastPercentage = 0;
   const len = str.length;
   const midLen = Math.floor(len / 2);
+
+  function clearCurrentTagState(): void {
+    resetTag();
+    attrObj = {};
+    isDoctype = false;
+  }
+
+  function releaseFinalizedTagState(): void {
+    if (tag.name?.length === 6 && tag.name.toLowerCase() === "script") {
+      isInsideScript = !tag.slashPresent;
+    }
+    pendingMalformedStart = null;
+    clearCurrentTagState();
+  }
 
   // step 1.
   // ===========================================================================
@@ -1754,6 +1769,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
         // also,
         treatRangedTags(i, resolvedOpts, rangesToDelete);
+        releaseFinalizedTagState();
       }
     }
 
@@ -2123,11 +2139,11 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           tag.nameContainsLetters &&
           typeof tag.nameStarts === "number"
         ) {
+          let candidateFinalized = false;
           DEV && console.log(`str[i + 1] = ${str[i + 1]}`);
           // find out the tag name earlier than dedicated tag name ending catching section:
-          tag.name = str
-            .slice(tag.nameStarts, tag.nameEnds || i + 1)
-            .toLowerCase();
+          tag.nameEnds ??= i + 1;
+          tag.name = str.slice(tag.nameStarts, tag.nameEnds).toLowerCase();
 
           DEV &&
             console.log(
@@ -2170,8 +2186,8 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               console.log(
                 `Ignored tag - \u001b[${31}m${`WIPE AND RESET`}\u001b[${39}m`,
               );
-            tag = {};
-            attrObj = {};
+            pendingMalformedStart = null;
+            clearCurrentTagState();
             continue;
           }
 
@@ -2184,7 +2200,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               singleLetterTags.has(tag.name)) &&
               (tag.onlyPlausible === false ||
                 (tag.onlyPlausible === true && tag.attributes.length))) ||
-            str[i + 1] === undefined
+            (str[i + 1] === undefined && tag.onlyPlausible !== true)
           ) {
             calculateHrefToBeInserted(resolvedOpts);
             DEV &&
@@ -2266,6 +2282,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               rangesArr: rangesToDelete,
               proposedReturn: [tag.leftOuterWhitespace, i + 1, insert],
             });
+            candidateFinalized = true;
             resetHrefMarkers();
 
             // also,
@@ -2377,6 +2394,15 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                   }, ${i + 1}] to filteredTagLocations`,
                 );
             }
+          }
+          if (candidateFinalized) {
+            releaseFinalizedTagState();
+          } else {
+            pendingMalformedStart =
+              tag.onlyPlausible === false
+                ? (pendingMalformedStart ?? tag.leftOuterWhitespace)
+                : null;
+            clearCurrentTagState();
           }
         }
         DEV && console.log(`end`);
@@ -2558,6 +2584,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             );
           tag = {};
           attrObj = {};
+          pendingMalformedStart = null;
         } else if (
           !tag.onlyPlausible ||
           // tag name is recognised and there are no attributes:
@@ -2839,9 +2866,11 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
           // also,
           treatRangedTags(i, resolvedOpts, rangesToDelete);
+          pendingMalformedStart = null;
         } else {
           DEV && console.log(`\u001b[${33}m${`RESET tag{}`}\u001b[${39}m`);
           tag = {};
+          pendingMalformedStart = null;
         }
 
         // part 2.
@@ -2978,8 +3007,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             treatRangedTags(i, resolvedOpts, rangesToDelete);
 
             // then, for continuity, mark everything up accordingly if it's a new bracket:
-            tag = {};
-            attrObj = {};
+            releaseFinalizedTagState();
           }
         }
 
@@ -2990,7 +3018,10 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           tag.name &&
           !tag.quotes
         ) {
-          // reset:
+          // This candidate was not finalized. Preserve its outer boundary so
+          // malformed chains such as "< < < tag>" can still be treated as one
+          // plausible candidate, but clear the fields which identify its most
+          // recent opening.
           DEV && console.log(`${`\u001b[${31}m${`RESET`}\u001b[${39}m`} tag`);
           tag.lastOpeningBracketAt = undefined;
           tag.name = undefined;
@@ -3030,6 +3061,10 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             tag.leftOuterWhitespace = chunkOfSpacesStartsAt || i;
           } else {
             tag.leftOuterWhitespace = chunkOfWhitespaceStartsAt;
+          }
+
+          if (pendingMalformedStart !== null) {
+            tag.leftOuterWhitespace = pendingMalformedStart;
           }
 
           // tag.leftOuterWhitespace =
@@ -3154,6 +3189,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                     whiteSpaceCompensation,
                   ],
                 });
+                pendingMalformedStart = null;
 
                 // offset:
                 i = y - 1;

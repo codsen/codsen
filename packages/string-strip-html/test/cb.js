@@ -736,4 +736,138 @@ test("020 - opts.cb - dirty-tag probes do not reuse progress hooks", () => {
   equal(actual.result, "tail", "020.04");
 });
 
+test("021 - opts.cb - malformed candidates finalize once with fresh state", () => {
+  const cases = [
+    {
+      input: "<div<span<em>x</em>",
+      result: "x",
+      locations: [
+        [0, 4],
+        [4, 9],
+        [9, 13],
+        [14, 19],
+      ],
+      names: ["div", "span", "em", "em"],
+      attributes: [[], [], [], []],
+    },
+    {
+      input: "</div<span>x</span>",
+      result: "x",
+      locations: [
+        [0, 5],
+        [5, 11],
+        [12, 19],
+      ],
+      names: ["div", "span", "span"],
+      attributes: [[], [], []],
+    },
+    {
+      input: '<div class="x"<span>x</span>',
+      result: "x",
+      locations: [
+        [0, 14],
+        [14, 20],
+        [21, 28],
+      ],
+      names: ["div", "span", "span"],
+      attributes: [["class"], [], []],
+    },
+    {
+      input: "<div<!--x-->",
+      result: "",
+      locations: [
+        [0, 4],
+        [4, 12],
+      ],
+      names: ["div", null],
+      attributes: [[], []],
+    },
+  ];
+
+  for (const expected of cases) {
+    const events = [];
+    const snapshots = [];
+    const actual = stripHtml(expected.input, {
+      cb: (event) => {
+        events.push(event);
+        snapshots.push(JSON.stringify(event.tag));
+        if (event.proposedReturn) {
+          event.rangesArr.push(...event.proposedReturn);
+        }
+      },
+    });
+
+    equal(actual.result, expected.result, "021.01");
+    equal(actual.allTagLocations, expected.locations, "021.02");
+    equal(actual.filteredTagLocations, expected.locations, "021.03");
+    equal(events.length, expected.locations.length, "021.04");
+    equal(
+      events.map(({ proposedReturn }) => proposedReturn?.slice(0, 2)),
+      expected.locations,
+      "021.05",
+    );
+    equal(
+      events.map(({ tag }) => tag.name ?? null),
+      expected.names,
+      "021.06",
+    );
+    equal(
+      events.map(({ tag }) =>
+        (tag.attributes || []).map((attribute) => attribute.name),
+      ),
+      expected.attributes,
+      "021.07",
+    );
+    equal(
+      events.map(({ tag }) => JSON.stringify(tag)),
+      snapshots,
+      "021.08",
+    );
+    equal(new Set(events.map(({ tag }) => tag)).size, events.length, "021.09");
+    for (const { tag } of events) {
+      if (tag.name) {
+        equal(
+          expected.input.slice(tag.nameStarts, tag.nameEnds),
+          tag.name,
+          "021.10",
+        );
+      }
+    }
+  }
+});
+
+test("022 - opts.cb - tight malformed ranged tags retain pair semantics", () => {
+  for (const name of ["script", "style", "xml"]) {
+    const input = `A<div<${name}>x</${name}>B`;
+    const spacedInput = `A<div <${name}>x</${name}>B`;
+    const events = [];
+    const actual = stripHtml(input, {
+      cb: (event) => {
+        events.push(event);
+        if (event.proposedReturn) {
+          event.rangesArr.push(...event.proposedReturn);
+        }
+      },
+    });
+
+    equal(actual.result, "A B", "022.01");
+    equal(actual.result, stripHtml(spacedInput).result, "022.02");
+    equal(events.length, 4, "022.03");
+    equal(
+      events
+        .slice(0, 3)
+        .map(({ proposedReturn }) => proposedReturn.slice(0, 2)),
+      actual.allTagLocations,
+      "022.04",
+    );
+    equal(
+      new Set(
+        events.map(({ proposedReturn }) => proposedReturn.slice(0, 2).join()),
+      ).size,
+      events.length,
+      "022.05",
+    );
+  }
+});
+
 test.run();
