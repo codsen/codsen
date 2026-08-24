@@ -13,18 +13,38 @@ import type { Range, Ranges as RangesType } from "../../../ops/typedefs/common";
 import { version as v } from "../package.json";
 import {
   characterSuitableForNames,
+  containsOnlyDashes,
   countInstancesOf,
   definitelyTagNames,
+  hasMoreKeysThan,
   inlineTags,
+  isCasedCharAt,
+  isWhitespaceCode,
   notWithinAttrQuotes,
   type Obj,
+  openingQuoteOrParenthesis,
   prepHopefullyAnArray,
   punctuation,
   punctuationTrailing,
+  sentencePunctuation,
   singleLetterTags,
 } from "./util";
 
 const version: string = v;
+
+// The main loop branches on the same handful of punctuation marks at every
+// character of the input. `str[i] === "<"` has to mint a one-character string
+// before it can compare; reading a char code compares two integers instead,
+// so the loop keeps one per iteration and matches it against these.
+const CODE_SPACE = 32; // " "
+const CODE_EXCLAMATION = 33; // !
+const CODE_DOUBLE_QUOTE = 34; // "
+const CODE_PERCENT = 37; // %
+const CODE_SINGLE_QUOTE = 39; // '
+const CODE_SLASH = 47; // /
+const CODE_LEFT_BRACKET = 60; // <
+const CODE_EQUALS = 61; // =
+const CODE_RIGHT_BRACKET = 62; // >
 
 declare let DEV: boolean;
 
@@ -682,7 +702,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           );
       }
 
-      if (temp.includes("\n") && isOpeningAt(toIdx as number, str2)) {
+      if (temp.includes("\n") && isOpeningAt(toIdx, str2)) {
         strToEvaluateForLineBreaks += " ";
       } else {
         strToEvaluateForLineBreaks += temp;
@@ -710,8 +730,8 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     const R0 = !punctuation.has(str2[currCharIdx]);
     const R1 =
       str2[(toIdx as number) - 1] !== ">" || !str2[fromIdx as number].trim();
-    const R2 = ![`"`, `(`].includes(str2[lastOpeningBracketAt - 1]);
-    const R3 = ![";", ".", ":", "!"].includes(str2[currCharIdx]);
+    const R2 = !openingQuoteOrParenthesis.has(str2[lastOpeningBracketAt - 1]);
+    const R3 = !sentencePunctuation.has(str2[currCharIdx]);
     if (
       (R0 || (R1 && R2 && R3)) &&
       // tag must be closed with a bracket, that is, it's not a case:
@@ -827,15 +847,40 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     }
   }
 
-  function isOpeningAt(i: number, customStr?: string): boolean {
-    if (customStr) {
-      return customStr[i] === "<" && customStr[i + 1] !== "%";
+  // These two run several times per character of the input. `str[i]` has to
+  // mint a one-character string before it can be compared; charCodeAt() reads
+  // an integer. Past either end of the string it yields NaN, which is !== 37
+  // just as `undefined` was, so the "%" lookaround answers the same.
+  //
+  // The null check is not decoration: callers pass indexes that right() may
+  // report as null, and `toIdx` may be undefined. Bracket access answered
+  // `undefined` for those, but charCodeAt() coerces both to zero and would
+  // read the first character of the input instead.
+  function isOpeningAt(
+    i: number | null | undefined,
+    customStr?: string,
+  ): boolean {
+    if (i == null) {
+      return false;
     }
-    return str[i] === "<" && str[i + 1] !== "%";
+    if (customStr) {
+      return (
+        customStr.charCodeAt(i) === CODE_LEFT_BRACKET &&
+        customStr.charCodeAt(i + 1) !== CODE_PERCENT
+      );
+    }
+    return (
+      str.charCodeAt(i) === CODE_LEFT_BRACKET &&
+      str.charCodeAt(i + 1) !== CODE_PERCENT
+    );
   }
 
-  function isClosingAt(i: number): boolean {
-    return str[i] === ">" && str[i - 1] !== "%";
+  function isClosingAt(i: number | null | undefined): boolean {
+    return (
+      i != null &&
+      str.charCodeAt(i) === CODE_RIGHT_BRACKET &&
+      str.charCodeAt(i - 1) !== CODE_PERCENT
+    );
   }
 
   function checkIgnoreTagsWithTheirContents(
@@ -1089,6 +1134,18 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
   // ===========================================================================
 
   for (let i = 0; i < len; i++) {
+    // The character under the cursor, read once for the many comparisons
+    // below, along with the two bracket questions asked of it - each of those
+    // is a pure function of the cursor and gets asked a dozen times per
+    // character. `i` jumps ahead in two places inside this body: the ESP
+    // token skip restarts the loop with `continue`, and the comment/CDATA
+    // skip retakes all three readings after moving the cursor.
+    let charCode = str.charCodeAt(i);
+    let opensHere =
+      charCode === CODE_LEFT_BRACKET && str.charCodeAt(i + 1) !== CODE_PERCENT;
+    let closesHere =
+      charCode === CODE_RIGHT_BRACKET && str.charCodeAt(i - 1) !== CODE_PERCENT;
+
     // Logging:
     // -------------------------------------------------------------------------
     DEV &&
@@ -1148,13 +1205,16 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // There can be bunch of spaces that end with EOF. In that case it's fine, this variable will
     // be null.
     if (
-      // cheapest clauses first - Object.keys() allocates an array, and this
-      // runs on every character of the input
+      // cheapest clauses first, and this runs on every character of the
+      // input: a local and a char code before the tag object's properties,
+      // and the key count - the only clause that walks the object - last
+      spacesChunkWhichFollowsTheClosingBracketEndsAt === null &&
+      charCode !== CODE_SPACE &&
       tag.lastClosingBracketAt &&
       tag.lastClosingBracketAt < i &&
-      spacesChunkWhichFollowsTheClosingBracketEndsAt === null &&
-      str[i] !== " " &&
-      Object.keys(tag).length > 1
+      // tag.lastClosingBracketAt above is already one own key, so a second
+      // known one settles the count without walking the object
+      (tag.attributes !== undefined || hasMoreKeysThan(tag, 1))
     ) {
       spacesChunkWhichFollowsTheClosingBracketEndsAt = i;
     }
@@ -1163,7 +1223,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // -------------------------------------------------------------------------
     if (
       !isInsideScript &&
-      str[i] === "%" &&
+      charCode === CODE_PERCENT &&
       str[i - 1] === "{" &&
       str.includes("%}", i + 1)
     ) {
@@ -1192,10 +1252,10 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
     // catch the closing bracket of dirty tags with missing opening brackets
     // -------------------------------------------------------------------------
-    if (!isInsideScript && isClosingAt(i)) {
+    if (!isInsideScript && closesHere) {
       DEV && console.log(`closing bracket caught`);
       // tend cases where opening bracket of a tag is missing:
-      if ((!tag || Object.keys(tag).length < 2) && i > 1) {
+      if ((!tag || !hasMoreKeysThan(tag, 1)) && i > 1) {
         DEV && console.log("TRAVERSE BACKWARDS");
 
         // traverse backwards either until start of string or ">" is found
@@ -1285,9 +1345,12 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                   }, "${whiteSpaceCompensation}"]`}\u001b[${39}m`,
                 );
               let deleteUpTo = i + 1;
-              if (str[deleteUpTo] && !str[deleteUpTo].trim()) {
+              if (
+                str[deleteUpTo] &&
+                isWhitespaceCode(str.charCodeAt(deleteUpTo))
+              ) {
                 for (let z = deleteUpTo; z < len; z++) {
-                  if (str[z].trim()) {
+                  if (!isWhitespaceCode(str.charCodeAt(z))) {
                     deleteUpTo = z;
                     break;
                   }
@@ -1320,7 +1383,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // -------------------------------------------------------------------------
     if (
       !isDoctype &&
-      str[i] === "/" &&
+      charCode === CODE_SLASH &&
       !tag.quotes?.value &&
       Number.isInteger(tag.lastOpeningBracketAt) &&
       !Number.isInteger(tag.lastClosingBracketAt)
@@ -1332,7 +1395,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
     // catch double or single quotes
     // -------------------------------------------------------------------------
-    if (str[i] === '"' || str[i] === "'") {
+    if (charCode === CODE_DOUBLE_QUOTE || charCode === CODE_SINGLE_QUOTE) {
       DEV && console.log(`quote clauses`);
       if (!isDoctype && tag.nameStarts && tag?.quotes?.value === str[i]) {
         // If empty quotes, skip processing and reset
@@ -1431,7 +1494,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     if (
       tag.nameStarts !== undefined &&
       tag.nameEnds === undefined &&
-      (!str[i].trim() || !characterSuitableForNames(str[i]))
+      (isWhitespaceCode(charCode) || !characterSuitableForNames(charCode))
     ) {
       // 1. mark the name ending
       tag.nameEnds = i;
@@ -1447,7 +1510,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         tag.nameStarts,
         tag.nameEnds +
           /* c8 ignore next */
-          (!isClosingAt(i) && str[i] !== "/" && str[i + 1] === undefined
+          (!closesHere && charCode !== CODE_SLASH && str[i + 1] === undefined
             ? 1
             : 0),
       );
@@ -1470,9 +1533,9 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       if (
         // if we caught "----" from "<----" or "---->", bail:
         (str[tag.nameStarts - 1] !== "!" && // protection against <!--
-          !tag.name.replace(/-/g, "").length) ||
+          containsOnlyDashes(tag.name)) ||
         // if tag name starts with a number character
-        /^\d+$/.test(tag.name[0])
+        (tag.name.charCodeAt(0) > 47 && tag.name.charCodeAt(0) < 58)
       ) {
         tag = {};
         continue;
@@ -1493,7 +1556,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           );
       }
 
-      if (isOpeningAt(i)) {
+      if (opensHere) {
         // process it because we need to tackle this new tag
         DEV && console.log(`opening bracket caught`);
 
@@ -1597,12 +1660,12 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // catch beginning of an attribute value
     // -------------------------------------------------------------------------
     if (
-      tag.quotes?.start &&
-      tag.quotes.start < i &&
-      !tag.quotes.end &&
       attrObj.nameEnds &&
       attrObj.equalsAt &&
-      !attrObj.valueStarts
+      !attrObj.valueStarts &&
+      tag.quotes?.start &&
+      tag.quotes.start < i &&
+      !tag.quotes.end
     ) {
       DEV &&
         console.log(
@@ -1616,11 +1679,11 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // catch rare cases when attributes name has some space after it, before equals
     // -------------------------------------------------------------------------
     if (
-      !tag.quotes &&
+      charCode === CODE_EQUALS &&
       attrObj.nameEnds &&
-      str[i] === "=" &&
       !attrObj.valueStarts &&
-      !attrObj.equalsAt
+      !attrObj.equalsAt &&
+      !tag.quotes
     ) {
       attrObj.equalsAt = i;
 
@@ -1638,12 +1701,12 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // We even anticipate for cases where whitespace anywhere between attribute parts:
     // < article class = " something " / >
     if (
-      !tag.quotes &&
-      attrObj.nameStarts &&
       attrObj.nameEnds &&
+      attrObj.nameStarts &&
       !attrObj.valueStarts &&
-      str[i].trim() &&
-      str[i] !== "="
+      !isWhitespaceCode(charCode) &&
+      charCode !== CODE_EQUALS &&
+      !tag.quotes
     ) {
       // if (!tag.attributes) {
       //   tag.attributes = [];
@@ -1655,7 +1718,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
     // catch the ending of an attribute's name
     // -------------------------------------------------------------------------
-    if (!tag.quotes && attrObj.nameStarts && !attrObj.nameEnds) {
+    if (attrObj.nameStarts && !attrObj.nameEnds && !tag.quotes) {
       DEV && console.log();
       if (isDoctype && `'"`.includes(str[attrObj.nameStarts])) {
         // nesting here so that "normal" attr name clauses would not
@@ -1680,7 +1743,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             );
           attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         }
-      } else if (!str[i].trim()) {
+      } else if (isWhitespaceCode(charCode)) {
         attrObj.nameEnds = i;
         DEV &&
           console.log(
@@ -1691,7 +1754,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             )}`,
           );
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
-      } else if (str[i] === "=") {
+      } else if (charCode === CODE_EQUALS) {
         DEV && console.log(`equal char clauses`);
         /* c8 ignore next */
         if (!attrObj.equalsAt) {
@@ -1716,7 +1779,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             );
           attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         }
-      } else if (str[i] === "/" || isClosingAt(i)) {
+      } else if (charCode === CODE_SLASH || closesHere) {
         DEV &&
           console.log(
             `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrObj.nameEnds`}\u001b[${39}m`} = ${JSON.stringify(
@@ -1734,7 +1797,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         // }
         tag.attributes.push(attrObj);
         attrObj = {};
-      } else if (isOpeningAt(i)) {
+      } else if (opensHere) {
         DEV &&
           console.log(
             `\u001b[${33}m${`ATTR NAME ENDS WITH NEW TAG`}\u001b[${39}m - ${`\u001b[${31}m${`TODO`}\u001b[${39}m`}`,
@@ -1753,13 +1816,19 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // catch the beginning of an attribute's name
     // -------------------------------------------------------------------------
     if (
-      !tag.quotes &&
-      tag.nameEnds < i &&
-      !str[i - 1].trim() &&
-      str[i].trim() &&
-      !`<>/!`.includes(str[i]) &&
+      // most selective clause first: an attribute name can only start right
+      // after whitespace, which rules out the bulk of the input before any
+      // of the tag object's properties have to be read
+      isWhitespaceCode(str.charCodeAt(i - 1)) &&
+      !isWhitespaceCode(charCode) &&
+      charCode !== CODE_LEFT_BRACKET &&
+      charCode !== CODE_RIGHT_BRACKET &&
+      charCode !== CODE_SLASH &&
+      charCode !== CODE_EXCLAMATION &&
       !attrObj.nameStarts &&
-      !tag.lastClosingBracketAt
+      tag.nameEnds < i &&
+      !tag.lastClosingBracketAt &&
+      !tag.quotes
     ) {
       attrObj.nameStarts = i;
       DEV &&
@@ -1773,9 +1842,9 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // catch "< /" - turn off "onlyPlausible"
     // -------------------------------------------------------------------------
     if (
+      charCode === CODE_SLASH &&
       tag.lastOpeningBracketAt !== null &&
       tag.lastOpeningBracketAt < i &&
-      str[i] === "/" &&
       tag.onlyPlausible
     ) {
       tag.onlyPlausible = false;
@@ -1786,11 +1855,11 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     if (
       tag.lastOpeningBracketAt !== null &&
       tag.lastOpeningBracketAt < i &&
-      str[i] !== "/" // there can be closing slashes in various places, legit and not
+      charCode !== CODE_SLASH // there can be closing slashes in various places, legit and not
     ) {
       // 1. identify, is it definite or just plausible tag
       if (tag.onlyPlausible === undefined) {
-        if ((!str[i].trim() || isOpeningAt(i)) && !tag.slashPresent) {
+        if ((isWhitespaceCode(charCode) || opensHere) && !tag.slashPresent) {
           tag.onlyPlausible = true;
         } else {
           tag.onlyPlausible = false;
@@ -1805,14 +1874,21 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       // 2. catch the beginning of the tag name. Consider custom HTML tag names
       // and also known (X)HTML tags:
       if (
-        str[i].trim() &&
+        !isWhitespaceCode(charCode) &&
         tag.nameStarts === undefined &&
-        !isOpeningAt(i) &&
-        str[i] !== "/" &&
-        !isClosingAt(i) &&
-        str[i] !== "!"
+        !opensHere &&
+        charCode !== CODE_SLASH &&
+        !closesHere &&
+        charCode !== CODE_EXCLAMATION
       ) {
-        if (/[-?_A-Za-z]/.test(str[i])) {
+        // the /[-?_A-Za-z]/ test, spelled out in char codes
+        if (
+          (charCode > 96 && charCode < 123) || // a-z
+          (charCode > 64 && charCode < 91) || // A-Z
+          charCode === 45 || // -
+          charCode === 63 || // ?
+          charCode === 95 // _
+        ) {
           tag.nameStarts = i;
           tag.nameContainsLetters = false;
           DEV &&
@@ -1829,12 +1905,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     }
 
     // Catch letters in the tag name. Necessary to filter out false positives like "<------"
-    if (
-      tag.nameStarts &&
-      !tag.quotes &&
-      typeof str[i] === "string" &&
-      str[i].toLowerCase() !== str[i].toUpperCase()
-    ) {
+    if (tag.nameStarts && !tag.quotes && isCasedCharAt(charCode, str, i)) {
       tag.nameContainsLetters = true;
     }
 
@@ -1842,7 +1913,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // -------------------------------------------------------------------------
     if (
       // it's closing bracket
-      isClosingAt(i) &&
+      closesHere &&
       //
       // precaution against JSP comparison
       // .. <c:when test="${!empty ab.cd && ab.cd > 0.00}"> ..
@@ -1918,7 +1989,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     } else {
       DEV &&
         console.log(
-          `ELSE CLAUSES: R1=${isClosingAt(i)} && R2=${notWithinAttrQuotes(
+          `ELSE CLAUSES: R1=${closesHere} && R2=${notWithinAttrQuotes(
             tag,
             str,
             i,
@@ -1931,7 +2002,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // the tag is "released" into "rApply":
 
     if (
-      (!isDoctype || str[i] === ">") &&
+      (!isDoctype || charCode === CODE_RIGHT_BRACKET) &&
       tag.lastOpeningBracketAt !== undefined
     ) {
       DEV && console.log(`opening bracket has been met`);
@@ -1946,7 +2017,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       if (tag.lastClosingBracketAt === undefined) {
         if (
           tag.lastOpeningBracketAt < i &&
-          !isOpeningAt(i) && // to prevent cases like "text <<<<<< text"
+          !opensHere && // to prevent cases like "text <<<<<< text"
           (str[i + 1] === undefined ||
             (isOpeningAt(i + 1) && !tag?.quotes?.value)) &&
           tag.nameContainsLetters &&
@@ -2053,7 +2124,8 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
             if (
               isInsideScript &&
-              tag.name?.toLowerCase() === "script" &&
+              tag.name?.length === 6 &&
+              tag.name.toLowerCase() === "script" &&
               tag.slashPresent
             ) {
               isInsideScript = false;
@@ -2209,7 +2281,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         }
         DEV && console.log(`end`);
       } else if (
-        (i > tag.lastClosingBracketAt && str[i].trim()) ||
+        (i > tag.lastClosingBracketAt && !isWhitespaceCode(charCode)) ||
         str[i + 1] === undefined ||
         // on markdown-friendly settings, when indentations are ignored,
         // stop at the first line break
@@ -2672,7 +2744,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         }
 
         // part 2.
-        if (!isClosingAt(i)) {
+        if (!closesHere) {
           DEV && console.log(`\u001b[${33}m${`RESET tag{}`}\u001b[${39}m`);
           tag = {};
         }
@@ -2704,11 +2776,11 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         // < body > text < script > zzz <    /    script < / body >
         //                              ^
         //                          we're here
-        (str[i] === "<" &&
+        (charCode === CODE_LEFT_BRACKET &&
           right(str, right(str, i)) &&
           str[right(str, i) as number] === "/" &&
           /^script/i.test(str.slice(right(str, right(str, i)) as number)))) &&
-      isOpeningAt(i) &&
+      opensHere &&
       !isOpeningAt(i - 1) &&
       !`'"`.includes(str[i + 1]) &&
       (!`'"`.includes(str[i + 2]) || /\w/.test(str[i + 1])) &&
@@ -2745,7 +2817,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           `${`\u001b[${32}m${`caught opening bracket`}\u001b[${39}m`}`,
         );
       // cater sequences of opening brackets "<<<<div>>>"
-      if (isClosingAt(right(str, i) as number)) {
+      if (isClosingAt(right(str, i))) {
         // cater cases like: "<><><>"
         DEV && console.log(`cases like <><><>`);
         continue;
@@ -2875,10 +2947,8 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           // if opening comment tag is detected, traverse forward aggressively
           // until EOL or "-->" is reached and offset outer index "i".
           if (
-            `${str[i + 1]}${str[i + 2]}${str[i + 3]}` === "!--" ||
-            `${str[i + 1]}${str[i + 2]}${str[i + 3]}${str[i + 4]}${str[i + 5]}${
-              str[i + 6]
-            }${str[i + 7]}${str[i + 8]}` === "![CDATA["
+            str.startsWith("!--", i + 1) ||
+            str.startsWith("![CDATA[", i + 1)
           ) {
             DEV &&
               console.log(
@@ -2897,10 +2967,11 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                   `${`\u001b[${33}m${`str[${y}]`}\u001b[${39}m`} = ${str[y]}`,
                 );
               if (
-                (!closingFoundAt &&
-                  cdata &&
-                  `${str[y - 2]}${str[y - 1]}${str[y]}` === "]]>") ||
-                (!cdata && `${str[y - 2]}${str[y - 1]}${str[y]}` === "-->")
+                // startsWith() clamps a negative index to zero, which the
+                // three-character concatenation this replaces did not
+                y > 1 &&
+                ((!closingFoundAt && cdata && str.startsWith("]]>", y - 2)) ||
+                  (!cdata && str.startsWith("-->", y - 2)))
               ) {
                 closingFoundAt = y;
                 DEV && console.log(`closingFoundAt = ${closingFoundAt}`);
@@ -2908,13 +2979,14 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
               if (
                 closingFoundAt &&
-                ((closingFoundAt < y && str[y].trim()) ||
+                ((closingFoundAt < y && !isWhitespaceCode(str.charCodeAt(y))) ||
                   str[y + 1] === undefined)
               ) {
                 DEV && console.log("END detected");
                 let rangeEnd = y;
                 if (
-                  (str[y + 1] === undefined && !str[y].trim()) ||
+                  (str[y + 1] === undefined &&
+                    isWhitespaceCode(str.charCodeAt(y))) ||
                   str[y] === ">"
                 ) {
                   rangeEnd += 1;
@@ -2987,6 +3059,11 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 if (str[y] === ">") {
                   i = y;
                 }
+                // the cursor moved, so the readings taken at the top of this
+                // iteration have to be taken again
+                charCode = str.charCodeAt(i);
+                opensHere = isOpeningAt(i);
+                closesHere = isClosingAt(i);
                 // resets:
                 tag = {};
                 attrObj = {};
@@ -3001,7 +3078,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
     // catch whitespace
     // -------------------------------------------------------------------------
-    if (!str[i].trim() || str[i].charCodeAt(0) === 847) {
+    if (isWhitespaceCode(charCode) || charCode === 847) {
       // 1. catch chunk boundaries:
       if (chunkOfWhitespaceStartsAt === null) {
         chunkOfWhitespaceStartsAt = i;
@@ -3032,7 +3109,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       }
 
       // 2. catch LF and CR
-      if (str[i] === "\n" || str[i] === "\r") {
+      if (charCode === 10 || charCode === 13) {
         lastLFCRAt = i;
         DEV &&
           console.log(
@@ -3067,8 +3144,8 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           attrObj.equalsAt > chunkOfWhitespaceStartsAt - 1 &&
           attrObj.nameEnds &&
           attrObj.equalsAt > attrObj.nameEnds &&
-          str[i] !== '"' &&
-          str[i] !== "'"
+          charCode !== CODE_DOUBLE_QUOTE &&
+          charCode !== CODE_SINGLE_QUOTE
         ) {
           /* c8 ignore next */
           if (isObj(attrObj)) {
@@ -3157,7 +3234,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // catch spaces-only chunks (needed for outer trim option resolvedOpts.trimOnlySpaces)
     // -------------------------------------------------------------------------
 
-    if (str[i] === " ") {
+    if (charCode === CODE_SPACE) {
       // 1. catch spaces boundaries:
       if (chunkOfSpacesStartsAt === null) {
         chunkOfSpacesStartsAt = i;
@@ -3177,7 +3254,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
     // activate
     // -----------------------------------------------------------------------------
-    if (tag.name?.toLowerCase() === "script") {
+    if (tag.name?.length === 6 && tag.name.toLowerCase() === "script") {
       isInsideScript = !tag.slashPresent;
       DEV &&
         console.log(
@@ -3310,13 +3387,13 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       // if normal trim is requested
       (!resolvedOpts.trimOnlySpaces &&
         // and the first character is whitespace character
-        !str[0].trim()))
+        isWhitespaceCode(str.charCodeAt(0))))
   ) {
     DEV && console.log(`trim frontal part`);
     for (let i2 = 0; i2 < len; i2++) {
       if (
         (resolvedOpts.trimOnlySpaces && str[i2] !== " ") ||
-        (!resolvedOpts.trimOnlySpaces && str[i2].trim())
+        (!resolvedOpts.trimOnlySpaces && !isWhitespaceCode(str.charCodeAt(i2)))
       ) {
         DEV && console.log(`PUSH [0, ${i2}]`);
         rangesToDelete.push([0, i2]);
@@ -3338,12 +3415,12 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       // if normal trim is requested
       (!resolvedOpts.trimOnlySpaces &&
         // and the last character is whitespace character
-        !str[~-str.length].trim()))
+        isWhitespaceCode(str.charCodeAt(~-str.length))))
   ) {
     for (let i3 = str.length; i3--; ) {
       if (
         (resolvedOpts.trimOnlySpaces && str[i3] !== " ") ||
-        (!resolvedOpts.trimOnlySpaces && str[i3].trim())
+        (!resolvedOpts.trimOnlySpaces && !isWhitespaceCode(str.charCodeAt(i3)))
       ) {
         DEV && console.log(`PUSH [${i3 + 1}, ${len}]`);
         rangesToDelete.push([i3 + 1, len]);
@@ -3429,7 +3506,8 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         if (
           str[startingIdx2 - 1] &&
           ((resolvedOpts.trimOnlySpaces && str[startingIdx2 - 1] === " ") ||
-            (!resolvedOpts.trimOnlySpaces && !str[startingIdx2 - 1].trim()))
+            (!resolvedOpts.trimOnlySpaces &&
+              isWhitespaceCode(str.charCodeAt(startingIdx2 - 1))))
         ) {
           startingIdx2 -= 1;
         }

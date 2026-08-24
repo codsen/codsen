@@ -6,9 +6,90 @@ interface Obj {
   [key: string]: any;
 }
 
+// The character tests below are asked once per character of the input, so
+// each takes a char code. Their string-level equivalents - a regex test,
+// `char.trim()`, `char.toLowerCase() !== char.toUpperCase()` - allocate a
+// fresh string (or a match object) on every call, and in a loop that visits
+// every character that allocation costs more than the test it serves.
+
+// equivalent to the /[-_A-Za-z0-9]/ test this replaced
 /* c8 ignore next */
-function characterSuitableForNames(char: string): boolean {
-  return /[-_A-Za-z0-9]/.test(char);
+function characterSuitableForNames(code: number): boolean {
+  return (
+    (code > 96 && code < 123) || // a-z
+    (code > 64 && code < 91) || // A-Z
+    (code > 47 && code < 58) || // 0-9
+    code === 45 || // -
+    code === 95 // _
+  );
+}
+
+// Exactly the set String.prototype.trim() strips - WhiteSpace plus
+// LineTerminator - so `isWhitespaceCode(str.charCodeAt(i))` answers the same
+// question as `!str[i].trim()`. NaN, which charCodeAt() yields past the end of
+// the string, falls through every comparison and reports false.
+function isWhitespaceCode(code: number): boolean {
+  if (code === 32 || (code > 8 && code < 14)) {
+    // space, and the \t \n \v \f \r run
+    return true;
+  }
+  if (code < 128) {
+    return false;
+  }
+  return (
+    code === 0xa0 || // no-break space
+    code === 0x1680 || // ogham space mark
+    (code > 0x1fff && code < 0x200b) || // en quad .. hair space
+    code === 0x2028 || // line separator
+    code === 0x2029 || // paragraph separator
+    code === 0x202f || // narrow no-break space
+    code === 0x205f || // medium mathematical space
+    code === 0x3000 || // ideographic space
+    code === 0xfeff // zero width no-break space
+  );
+}
+
+// Stands in for `str[i].toLowerCase() !== str[i].toUpperCase()`, the "is this
+// character cased" test. ASCII settles it without touching Unicode case
+// mapping; anything above it, including lone surrogates, falls back to the
+// original comparison so the answer is unchanged. An index past the end of
+// the string yields NaN, which is neither ASCII nor >= 128, so it reports
+// false - matching the `typeof str[i] === "string"` guard it replaces.
+//
+// `code` is `str.charCodeAt(i)`, passed in because every caller already has
+// it in hand.
+function isCasedCharAt(code: number, str: string, i: number): boolean {
+  if ((code > 96 && code < 123) || (code > 64 && code < 91)) {
+    return true;
+  }
+  if (!(code >= 128)) {
+    return false;
+  }
+  const char = str[i];
+  return char.toLowerCase() !== char.toUpperCase();
+}
+
+// Answers `!name.replace(/-/g, "").length` - "is this nothing but dashes" -
+// without building the stripped copy of the string the replace needed.
+function containsOnlyDashes(str: string): boolean {
+  for (let i = 0, len = str.length; i < len; i++) {
+    if (str.charCodeAt(i) !== 45) {
+      return false;
+    }
+  }
+  return true;
+}
+
+// `Object.keys(obj).length` allocates an array of every key just to read a
+// number off it; this stops as soon as the answer is settled.
+function hasMoreKeysThan(obj: Obj, n: number): boolean {
+  let count = 0;
+  for (const _key in obj) {
+    if (++count > n) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /* c8 ignore next */
@@ -239,6 +320,13 @@ export const singleLetterTags = new Set(["a", "b", "i", "p", "q", "s", "u"]);
 // (no trailing full stop). We don't want to omit brackets though.
 export const punctuationTrailing = new Set([`.`, `,`, `;`, `!`, `?`]);
 
+// Both of these sat as array literals inside the whitespace calculation,
+// which runs once per tag - and a literal is rebuilt on every call, because
+// the engine cannot prove nobody holds on to it.
+export const openingQuoteOrParenthesis = new Set([`"`, `(`]);
+
+export const sentencePunctuation = new Set([";", ".", ":", "!"]);
+
 export const punctuation = new Set([
   ".",
   ",",
@@ -313,6 +401,10 @@ export const inlineTags = new Set([
 
 export {
   characterSuitableForNames,
+  containsOnlyDashes,
+  hasMoreKeysThan,
+  isCasedCharAt,
+  isWhitespaceCode,
   notWithinAttrQuotes,
   type Obj,
   prepHopefullyAnArray,
