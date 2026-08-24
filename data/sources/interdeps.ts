@@ -577,7 +577,7 @@ export const interdeps = [
   },
   {
     "name": "ranges-push",
-    "size": 6734,
+    "size": 6574,
     "imports": [
       "codsen-utils",
       "ranges-sort",
@@ -651,7 +651,7 @@ export const interdeps = [
   },
   {
     "name": "string-collapse-leading-whitespace",
-    "size": 1131,
+    "size": 1170,
     "imports": []
   },
   {
@@ -792,7 +792,7 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "size": 23523,
+    "size": 24055,
     "imports": [
       "codsen-utils",
       "ranges-apply",

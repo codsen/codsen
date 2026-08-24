@@ -28,6 +28,7 @@ package_bak.json
 package.json.lerna_backup
 packages/csv-sort-cli/temp
 logs
+.perf-scratch
 
 # debug
 npm-debug.log*

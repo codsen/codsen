@@ -19,7 +19,7 @@ function requiredCapabilities(capabilities) {
   if (!capabilities || typeof capabilities !== "object") {
     fail("Registry capabilities are required");
   }
-  for (const name of ["delay", "log", "publish", "readState"]) {
+  for (const name of ["log", "publish", "readState"]) {
     if (typeof capabilities[name] !== "function") {
       fail(`Registry capability ${name} is required`);
     }
@@ -28,7 +28,7 @@ function requiredCapabilities(capabilities) {
 }
 
 async function publishPackage(item, tarballPath, capabilities) {
-  const { delay, log, publish, readState } = requiredCapabilities(capabilities);
+  const { log, publish, readState } = requiredCapabilities(capabilities);
   const state = await readState(item);
   if (state.exists) {
     assertRegistryIntegrity(item, state);
@@ -39,13 +39,44 @@ async function publishPackage(item, tarballPath, capabilities) {
   }
   log(`Publishing ${item.name}@${item.version}...`);
   await publish(item, tarballPath);
-  await verifyPublishedPackage(item, {
-    delay,
-    readState,
-    waits: PUBLISH_VERIFICATION_WAITS,
-  });
-  log(`Published and verified ${item.name}@${item.version}.`);
+  log(
+    `Submitted ${item.name}@${item.version} to npm for availability scanning.`,
+  );
   return "published";
+}
+
+async function publishAndVerifyLayer(
+  items,
+  { log, publishItems, verifyItems },
+) {
+  if (
+    !Array.isArray(items) ||
+    typeof log !== "function" ||
+    typeof publishItems !== "function" ||
+    typeof verifyItems !== "function"
+  ) {
+    fail(
+      "Layer publishing requires packages, log, publishItems, and verifyItems",
+    );
+  }
+  const outcomes = await publishItems(items);
+  if (!Array.isArray(outcomes) || outcomes.length !== items.length) {
+    fail("Layer publishing returned an invalid outcome list");
+  }
+  const published = [];
+  for (const [index, outcome] of outcomes.entries()) {
+    if (outcome !== "published" && outcome !== "skipped") {
+      fail(`Unsupported release publish outcome: ${outcome}`);
+    }
+    if (outcome === "published") {
+      published.push(items[index]);
+    }
+  }
+  await verifyItems(published);
+  for (const item of published) {
+    log(`Published and verified ${item.name}@${item.version}.`);
+  }
+  return outcomes;
 }
 
 async function publishReleaseLayers(
@@ -86,13 +117,42 @@ async function publishReleaseLayers(
   return counts;
 }
 
+// npm scans newly submitted packages before making their metadata readable.
+// Poll quickly for short scans, then once per minute for a 20-minute window.
 const PUBLISH_VERIFICATION_WAITS = [
-  0, 1_000, 2_000, 4_000, 8_000, 8_000, 8_000,
+  0,
+  5_000,
+  10_000,
+  15_000,
+  30_000,
+  ...Array(19).fill(60_000),
 ];
 
-async function verifyPublishedPackage(item, { delay, readState, waits }) {
-  if (typeof delay !== "function" || typeof readState !== "function") {
-    fail("Registry verification requires delay and readState capabilities");
+function packageList(items) {
+  return items.map((item) => `${item.name}@${item.version}`).join(", ");
+}
+
+async function verifyPublishedPackages(items, capabilities) {
+  if (!Array.isArray(items)) {
+    fail("Registry verification requires a package array");
+  }
+  if (items.length === 0) {
+    return;
+  }
+  const {
+    delay,
+    log,
+    readStates,
+    waits = PUBLISH_VERIFICATION_WAITS,
+  } = capabilities ?? {};
+  if (
+    typeof delay !== "function" ||
+    typeof log !== "function" ||
+    typeof readStates !== "function"
+  ) {
+    fail(
+      "Registry verification requires delay, log, and readStates capabilities",
+    );
   }
   if (
     !Array.isArray(waits) ||
@@ -101,17 +161,39 @@ async function verifyPublishedPackage(item, { delay, readState, waits }) {
   ) {
     fail("Registry verification waits must be non-negative integers");
   }
-  for (const wait of waits) {
+  let elapsed = 0;
+  let pending = [...items];
+  for (const [waitIndex, wait] of waits.entries()) {
     if (wait > 0) {
       await delay(wait);
+      elapsed += wait;
     }
-    const state = await readState(item);
-    if (state.exists) {
-      assertRegistryIntegrity(item, state);
+    const states = await readStates(pending);
+    if (!Array.isArray(states) || states.length !== pending.length) {
+      fail("Registry verification returned an invalid state list");
+    }
+    const nextPending = [];
+    for (const [index, item] of pending.entries()) {
+      const state = states[index];
+      if (state?.exists) {
+        assertRegistryIntegrity(item, state);
+      } else {
+        nextPending.push(item);
+      }
+    }
+    pending = nextPending;
+    if (pending.length === 0) {
       return;
     }
+    if (waitIndex < waits.length - 1) {
+      log(
+        `Waiting for npm to finish scanning ${pending.length} package${pending.length === 1 ? "" : "s"} after ${elapsed}ms: ${packageList(pending)}.`,
+      );
+    }
   }
-  fail(`${item.name}@${item.version} was not visible on npm after publishing`);
+  fail(
+    `${packageList(pending)} ${pending.length === 1 ? "was" : "were"} not visible on npm ${elapsed}ms after publishing`,
+  );
 }
 
 function releaseTagDecisions(desired, remoteState, shouldPush, headSha) {
@@ -148,8 +230,9 @@ function releaseTagDecisions(desired, remoteState, shouldPush, headSha) {
 export {
   assertRegistryIntegrity,
   PUBLISH_VERIFICATION_WAITS,
+  publishAndVerifyLayer,
   publishPackage,
   publishReleaseLayers,
   releaseTagDecisions,
-  verifyPublishedPackage,
+  verifyPublishedPackages,
 };

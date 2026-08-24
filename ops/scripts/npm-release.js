@@ -65,9 +65,12 @@ import {
 } from "../helpers/npmReleasePlan.js";
 import {
   assertRegistryIntegrity,
+  PUBLISH_VERIFICATION_WAITS,
+  publishAndVerifyLayer,
   publishPackage,
   publishReleaseLayers,
   releaseTagDecisions,
+  verifyPublishedPackages,
 } from "../helpers/npmReleaseRegistry.js";
 import {
   assertFunctionalCliSmokeCoverage,
@@ -1684,7 +1687,6 @@ function validateCurrentPackageManifests(packages) {
 
 async function publishOne(item, tarballPath) {
   return publishPackage(item, tarballPath, {
-    delay,
     log: (message) => console.log(message),
     publish: async () => {
       requireSuccess(
@@ -1709,6 +1711,16 @@ async function publishOne(item, tarballPath) {
   });
 }
 
+async function verifyPublishedLayer(items, concurrency) {
+  await verifyPublishedPackages(items, {
+    delay,
+    log: (message) => console.log(message),
+    readStates: (pending) =>
+      mapLimit(pending, concurrency, (item) => registryState(item)),
+    waits: PUBLISH_VERIFICATION_WAITS,
+  });
+}
+
 async function commandPublish(options) {
   assertTrustedPublishingEnvironment();
   const manifestOption = requiredOption(options, "manifest");
@@ -1727,12 +1739,19 @@ async function commandPublish(options) {
   );
   const counts = await publishReleaseLayers(manifest.layers, {
     log: (message) => console.log(message),
-    publishLayer: (layer) =>
-      mapLimit(layer, concurrency, async (name) => {
-        const item = packageByName.get(name);
-        const tarballPath = validateTarball(item, directory);
-        return publishOne(item, tarballPath);
-      }),
+    publishLayer: async (layer) => {
+      const items = layer.map((name) => packageByName.get(name));
+      return publishAndVerifyLayer(items, {
+        log: (message) => console.log(message),
+        publishItems: (pending) =>
+          mapLimit(pending, concurrency, async (item) => {
+            const tarballPath = validateTarball(item, directory);
+            return publishOne(item, tarballPath);
+          }),
+        verifyItems: (published) =>
+          verifyPublishedLayer(published, concurrency),
+      });
+    },
   });
   console.log(
     `Release complete: ${counts.published} published, ${counts.skipped} already present with matching integrity.`,

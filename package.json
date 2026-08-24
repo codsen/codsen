@@ -22,7 +22,7 @@
     "ci:generate:changelogs": "npm run build -- '--filter=lerna-clean-changelogs' '--filter=remark-typography' && node ./ops/scripts/generate-changelogs.js",
     "ci:generate:info": "npm run build:packages && node ./ops/scripts/generate-info.js",
     "ci:generate:package-kind-config": "node ./ops/scripts/generate-package-kind-config.js",
-    "ci:lerna:version": "lerna version --no-push --no-git-tag-version --conventional-commits --no-commit-hooks --yes",
+    "ci:lerna:version": "lerna version --no-push --no-git-tag-version --conventional-commits --no-commit-hooks --sync-workspace-lock --yes",
     "ci:pack:check": "npm pack --dry-run --json --workspaces --ignore-scripts",
     "ci:release": "node ./ops/scripts/npm-release.js",
     "ci:verify:browser-iifes": "node ./ops/scripts/verify-browser-iifes.js",

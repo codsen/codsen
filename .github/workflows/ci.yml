@@ -322,7 +322,10 @@ jobs:
       - browser-iife-compatibility
       - windows-smoke
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # npm can scan each of the nine dependency layers for 20 minutes before
+    # their published metadata becomes readable; leave headroom for setup and
+    # registry operations around that 180-minute verification ceiling.
+    timeout-minutes: 240
     environment: npm-production
     permissions:
       contents: read
