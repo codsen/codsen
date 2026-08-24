@@ -476,6 +476,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
   // that is not a natural number - so firstCovers()'s negative-start bail has
   // no equivalent below.
   function coveredFromStartUpTo(idx: number): boolean {
+    idx = originalStart(idx);
     const ranges = rangesToDelete.ranges as GatheredRange[] | null;
     const total = ranges ? ranges.length : 0;
     if (!total) {
@@ -1155,19 +1156,37 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
   }
 
   function emitCallback(cbObj: CbObj): void {
-    const shouldCompare =
-      userProvidedCb && callbackRangesMatchDefaultProposals;
+    const proposedReturn = cbObj.proposedReturn
+      ? mapDecodedRange(cbObj.proposedReturn, str, decodeSegments)
+      : null;
+
+    if (!userProvidedCb) {
+      if (proposedReturn) {
+        rangesToDelete.push([...proposedReturn] as Range);
+      }
+      return;
+    }
+
+    const originalCbObj: CbObj = {
+      tag: mapTagToOriginal(cbObj.tag, str, decodeSegments),
+      deleteFrom: proposedReturn ? proposedReturn[0] : null,
+      deleteTo: proposedReturn ? proposedReturn[1] : null,
+      insert: proposedReturn ? proposedReturn[2] : null,
+      rangesArr: rangesToDelete,
+      proposedReturn,
+    };
+    const shouldCompare = callbackRangesMatchDefaultProposals;
     const rangesBefore = shouldCompare
       ? copyRanges(rangesToDelete.current())
       : null;
 
-    resolvedOpts.cb?.(cbObj);
+    resolvedOpts.cb?.(originalCbObj);
 
     if (
       shouldCompare &&
       !rangesAreEqual(
         rangesToDelete.current(),
-        rangesWithProposal(rangesBefore, cbObj.proposedReturn),
+        rangesWithProposal(rangesBefore, proposedReturn),
       )
     ) {
       callbackRangesMatchDefaultProposals = false;
@@ -1181,6 +1200,19 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     : collectEntityDecodeRanges(str);
   if (entityDecodeRanges) {
     str = rApply(str, entityDecodeRanges);
+  }
+  const decodeSegments = buildDecodeSegments(
+    originalStr,
+    str,
+    entityDecodeRanges,
+  );
+
+  function originalStart(idx: number): number {
+    return mapDecodedStart(idx, str, decodeSegments).idx;
+  }
+
+  function pushDecodedRange(range: Range): void {
+    rangesToDelete.push(mapDecodedRange(range, str, decodeSegments));
   }
 
   let isInsideScript = false;
@@ -2656,7 +2688,8 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               // and the last of the recorded ranges does not extend to this range
               // we're about to push (meaning we're about to cut out tightly and make
               // a concatenation)
-              (rangesToDelete.last() as Range)[1] < tag.lastOpeningBracketAt &&
+              (rangesToDelete.last() as Range)[1] <
+                originalStart(tag.lastOpeningBracketAt) &&
               (!resolvedOpts?.dumpLinkHrefsNearby?.putOnNewLine ||
                 !punctuationTrailing.has(str[endingRangeIndex]))
             ) {
@@ -3273,10 +3306,15 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             // The end has to match exactly: this range being last, with this
             // end, is something the dumpLinkHrefsNearby branch reads later
             const lastRange = rangesToDelete.last() as Range | null;
+            const indentationRange = mapDecodedRange(
+              [lastLFCRAt + 1, i],
+              str,
+              decodeSegments,
+            );
             if (
               !lastRange ||
-              lastRange[0] > lastLFCRAt + 1 ||
-              lastRange[1] !== i
+              lastRange[0] > indentationRange[0] ||
+              lastRange[1] !== indentationRange[1]
             ) {
               DEV &&
                 console.log(
@@ -3284,7 +3322,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                     lastLFCRAt + 1
                   }, ${i}]`,
                 );
-              rangesToDelete.push([lastLFCRAt + 1, i]);
+              rangesToDelete.push(indentationRange);
             }
           }
         }
@@ -3456,12 +3494,12 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         (!resolvedOpts.trimOnlySpaces && !isWhitespaceCode(str.charCodeAt(i2)))
       ) {
         DEV && console.log(`PUSH [0, ${i2}]`);
-        rangesToDelete.push([0, i2]);
+        pushDecodedRange([0, i2]);
         break;
       } else if (!str[i2 + 1]) {
         // if end has been reached and whole string has been trim-able
         DEV && console.log(`PUSH [0, ${i2 + 1}]`);
-        rangesToDelete.push([0, i2 + 1]);
+        pushDecodedRange([0, i2 + 1]);
       }
     }
   }
@@ -3483,7 +3521,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         (!resolvedOpts.trimOnlySpaces && !isWhitespaceCode(str.charCodeAt(i3)))
       ) {
         DEV && console.log(`PUSH [${i3 + 1}, ${len}]`);
-        rangesToDelete.push([i3 + 1, len]);
+        pushDecodedRange([i3 + 1, len]);
         break;
       }
       // don't tackle end-to-end because it would have been already caught on the
@@ -3540,14 +3578,14 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // check end - the last range of gathered ranges, does it touch the end (str.length)
     // PS. remember ending is not inclusive, so ranges covering the whole ending
     // would go up to str.length, not up to str.length - 1!
-    if (curr[curr.length - 1]?.[1] === str.length) {
+    if (curr[curr.length - 1]?.[1] === originalStr.length) {
       DEV &&
         console.log(
           `${`\u001b[${33}m${`the last range`}\u001b[${39}m`} = ${JSON.stringify(
             curr[curr.length - 1],
             null,
             4,
-          )}; str.length = ${str.length}`,
+          )}; originalStr.length = ${originalStr.length}`,
         );
       const startingIdx = curr[curr.length - 1][0];
       // check character at str[startingIdx - 1]
@@ -3573,10 +3611,11 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           rangesToDelete.ranges[rangesToDelete.ranges.length - 1][0];
 
         if (
-          str[startingIdx2 - 1] &&
-          ((resolvedOpts.trimOnlySpaces && str[startingIdx2 - 1] === " ") ||
+          originalStr[startingIdx2 - 1] &&
+          ((resolvedOpts.trimOnlySpaces &&
+            originalStr[startingIdx2 - 1] === " ") ||
             (!resolvedOpts.trimOnlySpaces &&
-              isWhitespaceCode(str.charCodeAt(startingIdx2 - 1))))
+              isWhitespaceCode(originalStr.charCodeAt(startingIdx2 - 1))))
         ) {
           startingIdx2 -= 1;
         }
@@ -3600,8 +3639,6 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
   }
 
   const ranges = composeOriginalRanges(
-    originalStr,
-    str,
     entityDecodeRanges,
     rangesToDelete.current(),
   );
@@ -3612,15 +3649,13 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     ranges,
     allTagLocations: mapLocationsToOriginal(
       allTagLocations,
-      originalStr,
       str,
-      entityDecodeRanges,
+      decodeSegments,
     ),
     filteredTagLocations: mapLocationsToOriginal(
       filteredTagLocations,
-      originalStr,
       str,
-      entityDecodeRanges,
+      decodeSegments,
     ),
   };
 }
@@ -3721,9 +3756,21 @@ function mapDecodedStart(
   decodedStr: string,
   segments: DecodeSegment[],
 ): { idx: number; prefix: string; segment: DecodeSegment | undefined } {
-  const segment = segments.find(
-    ({ decodedFrom, decodedTo }) => idx >= decodedFrom && idx < decodedTo,
-  );
+  let low = 0;
+  let high = segments.length - 1;
+  let segment: DecodeSegment | undefined;
+  while (low <= high) {
+    const middle = (low + high) >> 1;
+    const candidate = segments[middle];
+    if (idx < candidate.decodedFrom) {
+      high = middle - 1;
+    } else if (idx >= candidate.decodedTo) {
+      low = middle + 1;
+    } else {
+      segment = candidate;
+      break;
+    }
+  }
 
   if (!segment) {
     return {
@@ -3755,9 +3802,21 @@ function mapDecodedEnd(
     return { idx: 0, suffix: "", segment: undefined };
   }
 
-  const segment = segments.find(
-    ({ decodedFrom, decodedTo }) => idx > decodedFrom && idx <= decodedTo,
-  );
+  let low = 0;
+  let high = segments.length - 1;
+  let segment: DecodeSegment | undefined;
+  while (low <= high) {
+    const middle = (low + high) >> 1;
+    const candidate = segments[middle];
+    if (idx <= candidate.decodedFrom) {
+      high = middle - 1;
+    } else if (idx > candidate.decodedTo) {
+      low = middle + 1;
+    } else {
+      segment = candidate;
+      break;
+    }
+  }
 
   if (!segment) {
     return {
@@ -3788,11 +3847,112 @@ function mapDecodedRange(
   const [from, to, insert] = range;
   const mappedFrom = mapDecodedStart(from, decodedStr, segments);
   const mappedTo = mapDecodedEnd(to, decodedStr, segments);
-  const replacement = `${mappedFrom.prefix}${insert || ""}${mappedTo.suffix}`;
+  const hasInsertion = range.length === 3;
+  const hasBoundaryContent = Boolean(mappedFrom.prefix || mappedTo.suffix);
 
-  return replacement
-    ? [mappedFrom.idx, mappedTo.idx, replacement]
+  if (hasBoundaryContent) {
+    const replacement = `${mappedFrom.prefix}${insert || ""}${mappedTo.suffix}`;
+    return replacement
+      ? [mappedFrom.idx, mappedTo.idx, replacement]
+      : hasInsertion
+        ? [mappedFrom.idx, mappedTo.idx, insert]
+        : [mappedFrom.idx, mappedTo.idx];
+  }
+
+  return hasInsertion
+    ? [mappedFrom.idx, mappedTo.idx, insert]
     : [mappedFrom.idx, mappedTo.idx];
+}
+
+function mapTagToOriginal(
+  tag: Tag,
+  decodedStr: string,
+  segments: DecodeSegment[],
+): Tag {
+  const mapped = {
+    ...tag,
+    attributes: (tag.attributes || []).map((attribute) => {
+      const mappedAttribute = { ...attribute };
+      if (typeof attribute.nameStarts === "number") {
+        mappedAttribute.nameStarts = mapDecodedStart(
+          attribute.nameStarts,
+          decodedStr,
+          segments,
+        ).idx;
+      }
+      if (typeof attribute.nameEnds === "number") {
+        mappedAttribute.nameEnds = mapDecodedEnd(
+          attribute.nameEnds,
+          decodedStr,
+          segments,
+        ).idx;
+      }
+      if (typeof attribute.equalsAt === "number") {
+        mappedAttribute.equalsAt = mapDecodedStart(
+          attribute.equalsAt,
+          decodedStr,
+          segments,
+        ).idx;
+      }
+      if (typeof attribute.valueStarts === "number") {
+        mappedAttribute.valueStarts = mapDecodedStart(
+          attribute.valueStarts,
+          decodedStr,
+          segments,
+        ).idx;
+      }
+      if (typeof attribute.valueEnds === "number") {
+        mappedAttribute.valueEnds = mapDecodedEnd(
+          attribute.valueEnds,
+          decodedStr,
+          segments,
+        ).idx;
+      }
+      return mappedAttribute;
+    }),
+  };
+
+  if (typeof tag.lastOpeningBracketAt === "number") {
+    mapped.lastOpeningBracketAt = mapDecodedStart(
+      tag.lastOpeningBracketAt,
+      decodedStr,
+      segments,
+    ).idx;
+  }
+  if (typeof tag.lastClosingBracketAt === "number") {
+    mapped.lastClosingBracketAt =
+      mapDecodedEnd(tag.lastClosingBracketAt + 1, decodedStr, segments).idx - 1;
+  }
+  if (typeof tag.leftOuterWhitespace === "number") {
+    mapped.leftOuterWhitespace = mapDecodedStart(
+      tag.leftOuterWhitespace,
+      decodedStr,
+      segments,
+    ).idx;
+  }
+  if (typeof tag.nameStarts === "number") {
+    mapped.nameStarts = mapDecodedStart(
+      tag.nameStarts,
+      decodedStr,
+      segments,
+    ).idx;
+  }
+  if (typeof tag.nameEnds === "number") {
+    mapped.nameEnds = mapDecodedEnd(
+      tag.nameEnds,
+      decodedStr,
+      segments,
+    ).idx;
+  }
+  if (typeof tag.slashPresent === "number") {
+    mapped.slashPresent = mapDecodedStart(
+      tag.slashPresent,
+      decodedStr,
+      segments,
+    ).idx;
+  }
+
+  return mapped;
 }
 
 function mergeTouchingRanges(ranges: Range[]): RangesType {
@@ -3818,8 +3978,6 @@ function mergeTouchingRanges(ranges: Range[]): RangesType {
 }
 
 function composeOriginalRanges(
-  originalStr: string,
-  decodedStr: string,
   entityDecodeRanges: RangesType,
   parserRanges: RangesType,
 ): RangesType {
@@ -3827,41 +3985,26 @@ function composeOriginalRanges(
     return parserRanges;
   }
 
-  const segments = buildDecodeSegments(
-    originalStr,
-    decodedStr,
-    entityDecodeRanges,
-  );
-  const mappedParserRanges =
-    parserRanges?.map((range) =>
-      mapDecodedRange(range, decodedStr, segments),
-    ) || [];
+  const originalParserRanges = parserRanges || [];
   const survivingEntityRanges = entityDecodeRanges.filter(
     ([entityFrom, entityTo]) =>
-      !mappedParserRanges.some(
+      !originalParserRanges.some(
         ([parserFrom, parserTo]) =>
           parserFrom < entityTo && parserTo > entityFrom,
       ),
   );
 
-  return mergeTouchingRanges([...survivingEntityRanges, ...mappedParserRanges]);
+  return mergeTouchingRanges([
+    ...survivingEntityRanges,
+    ...originalParserRanges,
+  ]);
 }
 
 function mapLocationsToOriginal(
   locations: [number, number][],
-  originalStr: string,
   decodedStr: string,
-  entityDecodeRanges: RangesType,
+  segments: DecodeSegment[],
 ): [number, number][] {
-  if (!entityDecodeRanges) {
-    return locations;
-  }
-
-  const segments = buildDecodeSegments(
-    originalStr,
-    decodedStr,
-    entityDecodeRanges,
-  );
   return locations.map(([from, to]) => [
     mapDecodedStart(from, decodedStr, segments).idx,
     mapDecodedEnd(to, decodedStr, segments).idx,

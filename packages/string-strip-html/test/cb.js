@@ -1,4 +1,6 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { rApply } from "ranges-apply";
+import { Ranges } from "ranges-push";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
@@ -488,6 +490,171 @@ test("014 - opts.cb - custom edge replacements are not normalized as defaults", 
   equal(leading.ranges, [[0, 3, " Z "]], "014.02");
   equal(trailing.result, "a Z", "014.03");
   equal(trailing.ranges, [[2, 5, "Z"]], "014.04");
+});
+
+test("015 - opts.cb - decoded input exposes only original coordinates", () => {
+  const prefix = "&copy;x";
+  const opening =
+    "&#x26;lt;b title&equals;&quot;&amp;🌟&#127775;&quot;&#x26;gt;";
+  const between = "&amp;🌟";
+  const closing = "&#x26;lt;&sol;b&#x26;gt;";
+  const input = `${prefix}${opening}${between}${closing}z`;
+  const openingStart = prefix.length;
+  const openingEnd = openingStart + opening.length;
+  const closingStart = openingEnd + between.length;
+  const closingEnd = closingStart + closing.length;
+  const events = [];
+
+  const forwarded = stripHtml(input, {
+    cb: ({
+      tag,
+      deleteFrom,
+      deleteTo,
+      insert,
+      rangesArr,
+      proposedReturn,
+    }) => {
+      events.push({
+        tag,
+        deleteFrom,
+        deleteTo,
+        insert,
+        proposedReturn,
+        rangesAtEntry: rangesArr.current(),
+      });
+      if (proposedReturn) {
+        rangesArr.push(...proposedReturn);
+      }
+    },
+  });
+
+  equal(forwarded, stripHtml(input), "015.01");
+  equal(forwarded.result, "©x&🌟z", "015.02");
+  equal(rApply(input, forwarded.ranges), forwarded.result, "015.03");
+  equal(events.length, 2, "015.04");
+  equal(
+    [events[0].deleteFrom, events[0].deleteTo, events[0].insert],
+    events[0].proposedReturn,
+    "015.05",
+  );
+  equal(
+    [events[1].deleteFrom, events[1].deleteTo, events[1].insert],
+    events[1].proposedReturn,
+    "015.06",
+  );
+  equal(events[0].proposedReturn.slice(0, 2), [openingStart, openingEnd], "015.07");
+  equal(events[1].proposedReturn.slice(0, 2), [closingStart, closingEnd], "015.08");
+  equal(events[0].rangesAtEntry, null, "015.09");
+  equal(events[1].rangesAtEntry, [[openingStart, openingEnd]], "015.10");
+  equal(
+    input.slice(
+      events[0].tag.lastOpeningBracketAt,
+      events[0].tag.lastClosingBracketAt + 1,
+    ),
+    opening,
+    "015.11",
+  );
+  equal(
+    input.slice(events[0].tag.nameStarts, events[0].tag.nameEnds),
+    "b",
+    "015.12",
+  );
+  equal(
+    input.slice(
+      events[0].tag.attributes[0].nameStarts,
+      events[0].tag.attributes[0].nameEnds,
+    ),
+    "title",
+    "015.13",
+  );
+  equal(
+    input.slice(
+      events[0].tag.attributes[0].equalsAt,
+      events[0].tag.attributes[0].equalsAt + "&equals;".length,
+    ),
+    "&equals;",
+    "015.14",
+  );
+  equal(
+    input.slice(
+      events[0].tag.attributes[0].valueStarts,
+      events[0].tag.attributes[0].valueEnds,
+    ),
+    "&amp;🌟&#127775;",
+    "015.15",
+  );
+  equal(events[0].tag.attributes[0].value, "&🌟🌟", "015.16");
+  equal(
+    input.slice(
+      events[1].tag.lastOpeningBracketAt,
+      events[1].tag.lastClosingBracketAt + 1,
+    ),
+    closing,
+    "015.17",
+  );
+  equal(
+    input.slice(
+      events[1].tag.slashPresent,
+      events[1].tag.slashPresent + "&sol;".length,
+    ),
+    "&sol;",
+    "015.18",
+  );
+  equal(forwarded.allTagLocations, [
+    [openingStart, openingEnd],
+    [closingStart, closingEnd],
+  ], "015.19");
+});
+
+test("016 - opts.cb - arbitrary original-coordinate ranges remain exact", () => {
+  const input = "A&amp;<b>B</b>C";
+  let edited = false;
+  let callbackRanges;
+
+  const actual = stripHtml(input, {
+    cb: ({ rangesArr }) => {
+      callbackRanges = rangesArr;
+      if (!edited) {
+        edited = true;
+        rangesArr.push(2, 4, "X");
+      }
+    },
+  });
+
+  ok(callbackRanges instanceof Ranges, "016.01");
+  equal(actual.result, "A&Xp;<b>B</b>C", "016.02");
+  equal(actual.ranges, [[2, 4, "X"]], "016.03");
+  equal(callbackRanges.current(), actual.ranges, "016.04");
+  equal(rApply(input, actual.ranges), actual.result, "016.05");
+  equal(actual.allTagLocations, [
+    [6, 9],
+    [10, 14],
+  ], "016.06");
+});
+
+test("017 - opts.cb - skipped decoding is an identity coordinate mapping", () => {
+  const input = '&amp;<b title="&copy;">x</b>';
+  const tags = [];
+  const actual = stripHtml(input, {
+    skipHtmlDecoding: true,
+    cb: ({ tag, rangesArr, proposedReturn }) => {
+      tags.push(tag);
+      if (proposedReturn) {
+        rangesArr.push(...proposedReturn);
+      }
+    },
+  });
+
+  equal(actual, stripHtml(input, { skipHtmlDecoding: true }), "017.01");
+  equal(input.slice(tags[0].nameStarts, tags[0].nameEnds), "b", "017.02");
+  equal(
+    input.slice(
+      tags[0].attributes[0].valueStarts,
+      tags[0].attributes[0].valueEnds,
+    ),
+    "&copy;",
+    "017.03",
+  );
 });
 
 test.run();
