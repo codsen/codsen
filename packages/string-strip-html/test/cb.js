@@ -413,4 +413,81 @@ test("011 - opts.cb - combined pair scalar and tuple ranges agree before punctua
   equal(tupleForwarded.result, ".", "011.03");
 });
 
+test("012 - opts.cb - forwarding reproduces callback-free output", () => {
+  const inputs = [
+    "<!--x-->y",
+    "<![CDATA[x]]>y",
+    "<article><p>text</p></article>",
+    "<script>x</script>",
+    "<div",
+    "text<br>",
+  ];
+
+  for (const trimOnlySpaces of [false, true]) {
+    for (const input of inputs) {
+      const opts = { skipHtmlDecoding: true, trimOnlySpaces };
+      const expected = stripHtml(input, opts);
+      const scalarForwarded = stripHtml(input, {
+        ...opts,
+        cb: ({ deleteFrom, deleteTo, insert, rangesArr, proposedReturn }) => {
+          if (proposedReturn) {
+            rangesArr.push(deleteFrom, deleteTo, insert);
+          }
+        },
+      });
+      const tupleForwarded = stripHtml(input, {
+        ...opts,
+        cb: ({ rangesArr, proposedReturn }) => {
+          if (proposedReturn) {
+            rangesArr.push(...proposedReturn);
+          }
+        },
+      });
+
+      equal(scalarForwarded, expected, "012.01");
+      equal(tupleForwarded, expected, "012.02");
+    }
+  }
+});
+
+test("013 - opts.cb - a callback can reject every proposed deletion", () => {
+  for (const input of [
+    "<!--x-->y",
+    "<![CDATA[x]]>y",
+    "<article><p>text</p></article>",
+    "<script>x</script>",
+    "<div",
+    "text<br>",
+  ]) {
+    const actual = stripHtml(input, {
+      skipHtmlDecoding: true,
+      cb: () => {},
+    });
+
+    equal(actual.result, input, "013.01");
+    equal(actual.ranges, null, "013.02");
+  }
+});
+
+test("014 - opts.cb - custom edge replacements are not normalized as defaults", () => {
+  const replacePhysicalTag = (replacement) => ({
+    skipHtmlDecoding: true,
+    cb: ({ tag, rangesArr }) => {
+      rangesArr.push(
+        tag.lastOpeningBracketAt,
+        tag.lastClosingBracketAt + 1,
+        replacement,
+      );
+    },
+  });
+
+  const leading = stripHtml("<b> a", replacePhysicalTag(" Z "));
+  const trailing = stripHtml("a <b>", replacePhysicalTag("Z"));
+
+  equal(leading.result, " Z  a", "014.01");
+  equal(leading.ranges, [[0, 3, " Z "]], "014.02");
+  equal(trailing.result, "a Z", "014.03");
+  equal(trailing.ranges, [[2, 5, "Z"]], "014.04");
+});
+
 test.run();

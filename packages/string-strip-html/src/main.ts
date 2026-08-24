@@ -371,7 +371,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             if (punctuation.has(str[i]) && resolvedOpts.cb) {
               DEV &&
                 console.log(`${`\u001b[${32}m${`PING CB()`}\u001b[${39}m`}`);
-              resolvedOpts.cb({
+              emitCallback({
                 tag: tag as Tag,
                 deleteFrom:
                   rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
@@ -390,7 +390,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             } else if (resolvedOpts.cb) {
               DEV &&
                 console.log(`${`\u001b[${32}m${`PING CB()`}\u001b[${39}m`}`);
-              resolvedOpts.cb({
+              emitCallback({
                 tag: tag as any,
                 deleteFrom:
                   rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
@@ -986,6 +986,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
   // prep resolvedOpts
   // ===========================================================================
+  const userProvidedCb = Boolean(opts?.cb);
   const resolvedOpts: Opts = {
     ...defaults,
     ...opts,
@@ -1111,10 +1112,67 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
   // if the links have to be on a new line, we need to increase the allowance for line breaks
   // in Ranges class, it's the ranges-push API setting resolvedOpts.limitLinebreaksCount
   // see https://www.npmjs.com/package/ranges-push#optional-options-object
-  const rangesToDelete = new Ranges({
-    limitToBeAddedWhitespace: true,
-    limitLinebreaksCount: 2,
-  });
+  function createRangesAccumulator(): Ranges {
+    return new Ranges({
+      limitToBeAddedWhitespace: true,
+      limitLinebreaksCount: 2,
+    });
+  }
+
+  const rangesToDelete = createRangesAccumulator();
+  let callbackRangesMatchDefaultProposals = true;
+
+  function copyRanges(ranges: RangesType): RangesType {
+    return ranges ? ranges.map((range) => [...range] as Range) : null;
+  }
+
+  function rangesAreEqual(left: RangesType, right: RangesType): boolean {
+    if (left === null || right === null) {
+      return left === right;
+    }
+    return (
+      left.length === right.length &&
+      left.every(
+        (range, idx) =>
+          range.length === right[idx].length &&
+          range.every((value, valueIdx) => value === right[idx][valueIdx]),
+      )
+    );
+  }
+
+  function rangesWithProposal(
+    ranges: RangesType,
+    proposedReturn: Range | null,
+  ): RangesType {
+    const accumulator = createRangesAccumulator();
+    ranges?.forEach((range) => {
+      accumulator.push([...range] as Range);
+    });
+    if (proposedReturn) {
+      accumulator.push([...proposedReturn] as Range);
+    }
+    return accumulator.current();
+  }
+
+  function emitCallback(cbObj: CbObj): void {
+    const shouldCompare =
+      userProvidedCb && callbackRangesMatchDefaultProposals;
+    const rangesBefore = shouldCompare
+      ? copyRanges(rangesToDelete.current())
+      : null;
+
+    resolvedOpts.cb?.(cbObj);
+
+    if (
+      shouldCompare &&
+      !rangesAreEqual(
+        rangesToDelete.current(),
+        rangesWithProposal(rangesBefore, cbObj.proposedReturn),
+      )
+    ) {
+      callbackRangesMatchDefaultProposals = false;
+    }
+  }
 
   // Keep positions anchored to the caller's string while parsing its decoded form.
   const originalStr = str;
@@ -1362,7 +1420,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 console.log(
                   `cb()-PUSHING [${startingPoint}, ${deleteUpTo}, "${whiteSpaceCompensation}"]`,
                 );
-              resolvedOpts.cb({
+              emitCallback({
                 tag: tag as any,
                 deleteFrom: startingPoint,
                 deleteTo: deleteUpTo,
@@ -1640,7 +1698,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         // filteredTagLocations.push([tag.leftOuterWhitespace, i]);
 
         DEV && console.log(`${`\u001b[${32}m${`PING CB()`}\u001b[${39}m`}`);
-        resolvedOpts.cb({
+        emitCallback({
           tag: tag as Tag,
           deleteFrom: tag.leftOuterWhitespace,
           deleteTo: i,
@@ -2160,7 +2218,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               );
 
             DEV && console.log(`${`\u001b[${32}m${`PING CB()`}\u001b[${39}m`}`);
-            resolvedOpts.cb({
+            emitCallback({
               tag: tag as Tag,
               deleteFrom: tag.leftOuterWhitespace,
               deleteTo: i + 1,
@@ -2442,7 +2500,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             console.log(
               `${`\u001b[${32}m${`PING CB() with nulls`}\u001b[${39}m`}`,
             );
-          resolvedOpts.cb({
+          emitCallback({
             tag: tag as Tag,
             deleteFrom: null,
             deleteTo: null,
@@ -2724,7 +2782,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 0,
               )}]`}\u001b[${39}m`,
             );
-          resolvedOpts.cb({
+          emitCallback({
             tag: tag as Tag,
             deleteFrom: tag.leftOuterWhitespace,
             deleteTo: endingRangeIndex + punctuationCorrection,
@@ -2862,7 +2920,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               console.log(
                 `cb()-PUSH range [${tag.leftOuterWhitespace}, ${i}, "${whiteSpaceCompensation}"]`,
               );
-            resolvedOpts.cb({
+            emitCallback({
               tag: tag as Tag,
               deleteFrom: tag.leftOuterWhitespace,
               deleteTo: i,
@@ -3043,7 +3101,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                   console.log(
                     `cb()-PUSH range [${tag.leftOuterWhitespace}, ${rangeEnd}, "${whiteSpaceCompensation}"]`,
                   );
-                resolvedOpts.cb({
+                emitCallback({
                   tag: tag as Tag,
                   deleteFrom: tag.leftOuterWhitespace,
                   deleteTo: rangeEnd,
@@ -3441,7 +3499,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
   // their inner sides will need to be trimmed accordingly, considering the
   // "resolvedOpts.trimOnlySpaces" of course.
   const curr = rangesToDelete.current();
-  if (!opts?.cb && curr) {
+  if ((!userProvidedCb || callbackRangesMatchDefaultProposals) && curr) {
     // check front - the first range of gathered ranges, does it touch start (0)
     if (curr[0] && !curr[0][0]) {
       DEV &&
@@ -3463,11 +3521,20 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           )}`,
         );
 
+      const backupWhatToAdd = rangesToDelete.ranges?.[0]?.[2];
+
       // manually edit Ranges class:
       (rangesToDelete.ranges as any)[0] = [
         (rangesToDelete.ranges as any)[0][0],
         (rangesToDelete.ranges as any)[0][1],
       ];
+
+      // Default proposals can contain spacing which is redundant at the
+      // beginning of the final result. Preserve meaningful callback
+      // replacements while removing only that edge whitespace.
+      if (backupWhatToAdd?.trim()) {
+        (rangesToDelete.ranges as any)[0].push(backupWhatToAdd);
+      }
     }
 
     // check end - the last range of gathered ranges, does it touch the end (str.length)
