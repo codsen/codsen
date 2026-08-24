@@ -1388,7 +1388,15 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 culprit.includes(`='`)) &&
               str !== `<${normalizedCulprit}>` && // recursion prevention
               definitelyTagNames.has(candidateTagNameLower) &&
-              stripHtml(`<${trimmedCulprit}>`, resolvedOpts).result === ""
+              // Validate fabricated input with an isolated parser configuration.
+              // Caller callbacks and progress reporting must only observe the
+              // caller's source, and callback decisions must not affect whether
+              // this candidate is recognised as a tag.
+              stripHtml(`<${trimmedCulprit}>`, {
+                skipHtmlDecoding: true,
+                cb: null,
+                reportProgressFunc: null,
+              }).result === ""
             ) {
               /* c8 ignore next */
               if (

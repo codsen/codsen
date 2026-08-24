@@ -657,4 +657,83 @@ test("017 - opts.cb - skipped decoding is an identity coordinate mapping", () =>
   );
 });
 
+test("018 - opts.cb - dirty-tag recognition is callback-independent", () => {
+  const cases = [
+    'hat > head class="z"> shoulders',
+    "hat > head class='z'> shoulders",
+    "hat > head /> shoulders",
+    "hat > head / > shoulders",
+  ];
+
+  for (const input of cases) {
+    const baseline = stripHtml(input);
+    const forwardedEvents = [];
+    const forwarded = stripHtml(input, {
+      cb: (event) => {
+        forwardedEvents.push(event);
+        if (event.proposedReturn) {
+          event.rangesArr.push(...event.proposedReturn);
+        }
+      },
+    });
+    const ignoredEvents = [];
+    const ignored = stripHtml(input, {
+      cb: (event) => {
+        ignoredEvents.push(event);
+      },
+    });
+
+    equal(forwarded, baseline, "018.01");
+    equal(forwardedEvents.length, 1, "018.02");
+    equal(ignoredEvents.length, 1, "018.03");
+    equal(ignored.allTagLocations, baseline.allTagLocations, "018.04");
+    equal(
+      ignored.filteredTagLocations,
+      baseline.filteredTagLocations,
+      "018.05",
+    );
+    equal(ignored.result, input, "018.06");
+    equal(
+      forwardedEvents[0].proposedReturn,
+      baseline.ranges[0],
+      "018.07",
+    );
+  }
+});
+
+test("019 - opts.cb - rejected dirty candidates emit no event", () => {
+  const input = "hat > head > shoulders";
+  let eventCount = 0;
+  const actual = stripHtml(input, {
+    cb: () => {
+      eventCount += 1;
+    },
+  });
+
+  equal(actual.result, input, "019.01");
+  equal(actual.allTagLocations, [], "019.02");
+  equal(actual.filteredTagLocations, [], "019.03");
+  equal(eventCount, 0, "019.04");
+});
+
+test("020 - opts.cb - dirty-tag probes do not reuse progress hooks", () => {
+  const input = `head class="${"x".repeat(2100)}">tail`;
+  const percentages = [];
+  const actual = stripHtml(input, {
+    reportProgressFunc: (percentage) => {
+      percentages.push(percentage);
+    },
+  });
+
+  ok(percentages.length > 0, "020.01");
+  ok(
+    percentages.every(
+      (percentage, index) => !index || percentage > percentages[index - 1],
+    ),
+    "020.02",
+  );
+  equal(actual.allTagLocations, [[0, input.length - 4]], "020.03");
+  equal(actual.result, "tail", "020.04");
+});
+
 test.run();
