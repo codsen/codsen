@@ -307,9 +307,11 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 )}`,
               );
 
+            const combinedRangeEnd = tag.lastClosingBracketAt === i ? i + 1 : i;
+
             DEV &&
               console.log(
-                `ABOUT TO cb()-PUSH RANGE: [${rangedOpeningTagsForDeletion[y].lastOpeningBracketAt}, ${i}]`,
+                `ABOUT TO cb()-PUSH RANGE: [${rangedOpeningTagsForDeletion[y].lastOpeningBracketAt}, ${combinedRangeEnd}]`,
               );
 
             // also, tend filteredTagLocations in the output - tags which are to be
@@ -378,7 +380,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 rangesArr: rangesToDelete,
                 proposedReturn: [
                   rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
-                  i,
+                  combinedRangeEnd,
                   null,
                 ],
               });
@@ -392,12 +394,12 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 tag: tag as any,
                 deleteFrom:
                   rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
-                deleteTo: i,
+                deleteTo: combinedRangeEnd,
                 insert: "",
                 rangesArr: rangesToDelete,
                 proposedReturn: [
                   rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
-                  i,
+                  combinedRangeEnd,
                   "",
                 ],
               });

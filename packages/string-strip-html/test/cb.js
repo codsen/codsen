@@ -336,4 +336,42 @@ test("009 - opts.cb - cb.tag contents are right on non-ignored tags", () => {
   );
 });
 
+test("010 - opts.cb - combined pair range includes the closing bracket", () => {
+  const input = '<a href="test">123</a>';
+  const gathered = [];
+
+  stripHtml(input, {
+    skipHtmlDecoding: true,
+    stripTogetherWithTheirContents: ["*"],
+    cb: ({ deleteFrom, deleteTo, insert, proposedReturn }) => {
+      gathered.push({ deleteFrom, deleteTo, insert, proposedReturn });
+    },
+  });
+
+  equal(
+    gathered,
+    [
+      {
+        deleteFrom: 0,
+        deleteTo: 15,
+        insert: undefined,
+        proposedReturn: [0, 15, undefined],
+      },
+      {
+        deleteFrom: 18,
+        deleteTo: 22,
+        insert: null,
+        proposedReturn: [18, 22, null],
+      },
+      {
+        deleteFrom: 0,
+        deleteTo: 22,
+        insert: "",
+        proposedReturn: [0, 22, ""],
+      },
+    ],
+    "010.01",
+  );
+});
+
 test.run();
