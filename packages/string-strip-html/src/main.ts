@@ -1616,6 +1616,10 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       !isDoctype &&
       charCode === CODE_SLASH &&
       !tag.quotes?.value &&
+      !(
+        typeof attrObj.equalsAt === "number" &&
+        attrObj.valueEnds === undefined
+      ) &&
       Number.isInteger(tag.lastOpeningBracketAt) &&
       !Number.isInteger(tag.lastClosingBracketAt)
     ) {
@@ -1687,7 +1691,12 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               );
           }
         }
-      } else if (!isDoctype && !tag.quotes && tag.nameStarts) {
+      } else if (
+        !isDoctype &&
+        !tag.quotes &&
+        tag.nameStarts &&
+        attrObj.valueStarts === undefined
+      ) {
         // 1. if it's an opening quote, record its type and location
         DEV &&
           console.log(
@@ -1916,6 +1925,59 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       attrObj.valueStarts = i;
     }
 
+    // catch unquoted attribute values
+    // -------------------------------------------------------------------------
+    if (
+      attrObj.nameEnds &&
+      typeof attrObj.equalsAt === "number" &&
+      attrObj.valueStarts === undefined &&
+      !tag.quotes &&
+      attrObj.equalsAt < i &&
+      !isWhitespaceCode(charCode) &&
+      charCode !== CODE_DOUBLE_QUOTE &&
+      charCode !== CODE_SINGLE_QUOTE &&
+      charCode !== CODE_EQUALS &&
+      !opensHere &&
+      !closesHere
+    ) {
+      attrObj.valueStarts = i;
+      DEV && console.log(`SET attrObj.valueStarts = ${attrObj.valueStarts}`);
+    }
+
+    if (
+      typeof attrObj.valueStarts === "number" &&
+      !tag.quotes &&
+      (isWhitespaceCode(charCode) || closesHere || str[i + 1] === undefined)
+    ) {
+      attrObj.valueEnds =
+        isWhitespaceCode(charCode) || closesHere ? i : i + 1;
+      attrObj.value = str.slice(attrObj.valueStarts, attrObj.valueEnds);
+      DEV &&
+        console.log(
+          `PUSHING unquoted ${`\u001b[${33}m${`attrObj`}\u001b[${39}m`} = ${JSON.stringify(
+            attrObj,
+            null,
+            4,
+          )}`,
+        );
+      if (
+        resolvedOpts.dumpLinkHrefsNearby?.enabled &&
+        !rangedOpeningTagsForDeletion.length &&
+        typeof attrObj.name === "string" &&
+        attrObj.name.toLowerCase() === "href"
+      ) {
+        hrefDump = {
+          tagName: tag.name,
+          hrefValue: `${resolvedOpts.dumpLinkHrefsNearby.wrapHeads || ""}${
+            attrObj.value
+          }${resolvedOpts.dumpLinkHrefsNearby.wrapTails || ""}`,
+          openingTagEnds: undefined,
+        };
+      }
+      tag.attributes.push(attrObj);
+      attrObj = {};
+    }
+
     // catch rare cases when attributes name has some space after it, before equals
     // -------------------------------------------------------------------------
     if (
@@ -1944,6 +2006,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       attrObj.nameEnds &&
       attrObj.nameStarts &&
       !attrObj.valueStarts &&
+      !attrObj.equalsAt &&
       !isWhitespaceCode(charCode) &&
       charCode !== CODE_EQUALS &&
       !tag.quotes
@@ -3441,9 +3504,11 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         // 1. piggyback the catching of the attributes with equal and no value
         if (
           !tag.quotes &&
+          attrObj.valueStarts === undefined &&
           attrObj.equalsAt > chunkOfWhitespaceStartsAt - 1 &&
           attrObj.nameEnds &&
           attrObj.equalsAt > attrObj.nameEnds &&
+          charCode !== CODE_EQUALS &&
           charCode !== CODE_DOUBLE_QUOTE &&
           charCode !== CODE_SINGLE_QUOTE
         ) {

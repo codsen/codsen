@@ -1046,4 +1046,83 @@ test("024 - opts.cb - callback metadata is isolated from parser state", () => {
   equal(retained.map((event) => JSON.stringify(event)), snapshots, "024.06");
 });
 
+test("025 - opts.cb - unquoted attribute slashes remain value data", () => {
+  const capture = (input) => {
+    const tokens = [];
+    const response = stripHtml(input, {
+      cb: (event) => {
+        tokens.push(event.tag);
+        if (event.proposedReturn) {
+          event.rangesArr.push(...event.proposedReturn);
+        }
+      },
+    });
+    return { response, token: tokens[0] };
+  };
+
+  for (const value of ["/foo", "foo/bar", "https://example.test/x?q=1"]) {
+    const input = `before<script src=${value}>alert(1)</script>after`;
+    const { response, token } = capture(input);
+    const attribute = token.attributes[0];
+
+    equal(response.result, "before after", "025.01");
+    equal(token.slashPresent, false, "025.02");
+    equal(attribute.name, "src", "025.03");
+    equal(attribute.value, value, "025.04");
+    equal(
+      input.slice(attribute.nameStarts, attribute.nameEnds),
+      "src",
+      "025.05",
+    );
+    equal(
+      input.slice(attribute.valueStarts, attribute.valueEnds),
+      value,
+      "025.06",
+    );
+  }
+
+  const multipleInput =
+    "A<a href=https://example.test/x?q=1 data-x=foo/bar data-y =bar data-z = quux>B</a>C";
+  const { token: multiple } = capture(multipleInput);
+  equal(
+    multiple.attributes.map(({ name, value }) => ({ name, value })),
+    [
+      { name: "href", value: "https://example.test/x?q=1" },
+      { name: "data-x", value: "foo/bar" },
+      { name: "data-y", value: "bar" },
+      { name: "data-z", value: "quux" },
+    ],
+    "025.07",
+  );
+  equal(multiple.slashPresent, false, "025.08");
+
+  const spacedInput = "A<img src=foo/bar />B";
+  const { token: spaced } = capture(spacedInput);
+  equal(spaced.attributes[0].value, "foo/bar", "025.09");
+  equal(spaced.slashPresent, spacedInput.indexOf("/>"), "025.10");
+
+  const tightInput = "A<img src=foo/bar/>B";
+  const { token: tight } = capture(tightInput);
+  equal(tight.attributes[0].value, "foo/bar/", "025.11");
+  equal(tight.slashPresent, false, "025.12");
+
+  const quoted = capture('A<script src="foo/bar">x</script>B');
+  const unquoted = capture("A<script src=foo/bar>x</script>B");
+  equal(quoted.response.result, unquoted.response.result, "025.13");
+  equal(
+    quoted.token.attributes[0].value,
+    unquoted.token.attributes[0].value,
+    "025.14",
+  );
+  equal(
+    stripHtml('A<a href="https://example.test/x">B</a>C', {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    stripHtml("A<a href=https://example.test/x>B</a>C", {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "025.15",
+  );
+});
+
 test.run();
