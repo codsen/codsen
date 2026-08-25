@@ -990,6 +990,39 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     );
   }
 
+  function isScriptClosingTagAt(i: number): boolean {
+    if (str.charCodeAt(i) !== CODE_LEFT_BRACKET) {
+      return false;
+    }
+
+    const slashAt = right(str, i);
+    if (slashAt === null || str.charCodeAt(slashAt) !== 47) {
+      return false;
+    }
+
+    const nameStarts = right(str, slashAt);
+    if (
+      nameStarts === null ||
+      (str.charCodeAt(nameStarts) | 32) !== 115 ||
+      (str.charCodeAt(nameStarts + 1) | 32) !== 99 ||
+      (str.charCodeAt(nameStarts + 2) | 32) !== 114 ||
+      (str.charCodeAt(nameStarts + 3) | 32) !== 105 ||
+      (str.charCodeAt(nameStarts + 4) | 32) !== 112 ||
+      (str.charCodeAt(nameStarts + 5) | 32) !== 116
+    ) {
+      return false;
+    }
+
+    const boundaryCode = str.charCodeAt(nameStarts + 6);
+    return (
+      Number.isNaN(boundaryCode) ||
+      isWhitespaceCode(boundaryCode) ||
+      boundaryCode === 47 ||
+      boundaryCode === CODE_RIGHT_BRACKET ||
+      boundaryCode === CODE_LEFT_BRACKET
+    );
+  }
+
   function checkIgnoreTagsWithTheirContents(
     i: number,
     resolvedOpts: Opts,
@@ -3075,10 +3108,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         // < body > text < script > zzz <    /    script < / body >
         //                              ^
         //                          we're here
-        (charCode === CODE_LEFT_BRACKET &&
-          right(str, right(str, i)) &&
-          str[right(str, i) as number] === "/" &&
-          /^script/i.test(str.slice(right(str, right(str, i)) as number)))) &&
+        (charCode === CODE_LEFT_BRACKET && isScriptClosingTagAt(i))) &&
       opensHere &&
       !isOpeningAt(i - 1) &&
       !`'"`.includes(str[i + 1]) &&
