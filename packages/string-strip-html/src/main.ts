@@ -1376,10 +1376,52 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
   let isInsideScript = false;
   let isDoctype = false;
   let pendingMalformedStart: number | null = null;
-  let currentPercentageDone = 0;
   let lastPercentage = 0;
+  let lastProgressAt = -1;
+  let mediumProgressReported = false;
   const len = str.length;
-  const midLen = Math.floor(len / 2);
+  const originalLen = originalStr.length;
+  const progressMidLen = Math.floor(originalLen / 2);
+
+  function reportProgressAt(decodedIdx: number): void {
+    const originalIdx = Math.max(
+      0,
+      mapDecodedEnd(decodedIdx + 1, str, decodeSegments).idx - 1,
+    );
+
+    if (originalIdx <= lastProgressAt) {
+      return;
+    }
+    lastProgressAt = originalIdx;
+
+    if (originalLen > 1000 && originalLen < 2000) {
+      if (!mediumProgressReported && originalIdx >= progressMidLen) {
+        mediumProgressReported = true;
+        resolvedOpts.reportProgressFunc?.(
+          resolvedOpts.reportProgressFuncFrom +
+            Math.floor(
+              (resolvedOpts.reportProgressFuncTo -
+                resolvedOpts.reportProgressFuncFrom) /
+                2,
+            ),
+        );
+      }
+    } else if (originalLen >= 2000) {
+      const currentPercentageDone =
+        resolvedOpts.reportProgressFuncFrom +
+        Math.floor(
+          (originalIdx / originalLen) *
+            (resolvedOpts.reportProgressFuncTo -
+              resolvedOpts.reportProgressFuncFrom),
+        );
+
+      if (currentPercentageDone !== lastPercentage) {
+        lastPercentage = currentPercentageDone;
+        resolvedOpts.reportProgressFunc?.(currentPercentageDone);
+        DEV && console.log(`DONE ${currentPercentageDone}%`);
+      }
+    }
+  }
 
   function clearCurrentTagState(): void {
     resetTag();
@@ -1498,36 +1540,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // Progress:
     // -------------------------------------------------------------------------
     if (resolvedOpts.reportProgressFunc) {
-      if (len > 1000 && len < 2000) {
-        if (i === midLen) {
-          resolvedOpts.reportProgressFunc(
-            resolvedOpts.reportProgressFuncFrom +
-              Math.floor(
-                (resolvedOpts.reportProgressFuncTo -
-                  resolvedOpts.reportProgressFuncFrom) /
-                  2,
-              ),
-          );
-        }
-      } else if (len >= 2000) {
-        // defaults:
-        // resolvedOpts.reportProgressFuncFrom = 0
-        // resolvedOpts.reportProgressFuncTo = 100
-
-        currentPercentageDone =
-          resolvedOpts.reportProgressFuncFrom +
-          Math.floor(
-            (i / len) *
-              (resolvedOpts.reportProgressFuncTo -
-                resolvedOpts.reportProgressFuncFrom),
-          );
-
-        if (currentPercentageDone !== lastPercentage) {
-          lastPercentage = currentPercentageDone;
-          resolvedOpts.reportProgressFunc(currentPercentageDone);
-          DEV && console.log(`DONE ${currentPercentageDone}%`);
-        }
-      }
+      reportProgressAt(i);
     }
 
     // catch the first ending of the spaces chunk that follows the closing bracket.
@@ -1573,6 +1586,9 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       // otherwise, there's a risk of perpetual loop
       if (newPosition > i) {
         i = newPosition;
+        if (resolvedOpts.reportProgressFunc) {
+          reportProgressAt(i);
+        }
         DEV &&
           console.log(
             `offset i = ${i}; then ${`\u001b[${32}m${`CONTINUE`}\u001b[${39}m`}`,
@@ -3314,6 +3330,9 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             DEV && console.log("traversing forward");
             let closingFoundAt: number | undefined;
             for (let y = i; y < len; y++) {
+              if (resolvedOpts.reportProgressFunc) {
+                reportProgressAt(y);
+              }
               DEV &&
                 console.log(
                   `${`\u001b[${33}m${`str[${y}]`}\u001b[${39}m`} = ${str[y]}`,

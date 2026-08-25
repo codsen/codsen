@@ -8,6 +8,22 @@ let thrower = (val) => {
   throw new Error(val);
 };
 
+const everyPercentage = Array.from({ length: 99 }, (_, idx) => idx + 1);
+
+function runWithProgress(input, options = {}) {
+  const progress = [];
+  const actual = stripHtml(input, {
+    ...options,
+    reportProgressFunc: (percentage) => progress.push(percentage),
+  });
+
+  return {
+    actual,
+    expected: stripHtml(input, options),
+    progress,
+  };
+}
+
 test("001 - progress won't be reported under string length 1001", () => {
   equal(
     stripHtml("<body>text<script>zzz</script</body>", {
@@ -88,6 +104,82 @@ test("006 - maps the midpoint into a custom range for medium inputs", () => {
   });
 
   equal(gather, [90], "006.01");
+});
+
+test("007 - measures medium decoded input in caller coordinates", () => {
+  const observed = runWithProgress("&amp;".repeat(300));
+
+  equal(observed.progress, [50], "007.01");
+  equal(observed.actual, observed.expected, "007.02");
+});
+
+test("008 - measures long decoded input in caller coordinates", () => {
+  const observed = runWithProgress("&amp;".repeat(500));
+
+  equal(observed.progress, everyPercentage, "008.01");
+  equal(observed.actual, observed.expected, "008.02");
+});
+
+test("009 - reports progress while scanning medium comments and CDATA", () => {
+  for (const input of [
+    `<!--${"x".repeat(1493)}-->`,
+    `<![CDATA[${"x".repeat(1488)}]]>`,
+  ]) {
+    const observed = runWithProgress(input);
+
+    equal(observed.progress, [50], "009.01");
+    equal(observed.actual, observed.expected, "009.02");
+  }
+});
+
+test("010 - reports progress while scanning long comments and CDATA", () => {
+  for (const input of [
+    `<!--${"x".repeat(2993)}-->`,
+    `<![CDATA[${"x".repeat(2988)}]]>`,
+  ]) {
+    const observed = runWithProgress(input);
+
+    equal(observed.progress, everyPercentage, "010.01");
+    equal(observed.actual, observed.expected, "010.02");
+  }
+});
+
+test("011 - reports progress after skipping ESP token contents", () => {
+  const medium = runWithProgress(`{%${"x".repeat(1496)}%}`);
+  const long = runWithProgress(`{%${"x".repeat(2996)}%}`);
+
+  equal(medium.progress, [50], "011.01");
+  equal(medium.actual, medium.expected, "011.02");
+  equal(long.progress, [99], "011.03");
+  equal(long.actual, long.expected, "011.04");
+});
+
+test("012 - reports a complete monotonic sequence across mixed paths", () => {
+  const input = `${"&amp;".repeat(100)}<!--${"x".repeat(
+    993,
+  )}--><![CDATA[${"x".repeat(988)}]]>`;
+  const observed = runWithProgress(input);
+
+  equal(observed.progress, everyPercentage, "012.01");
+  equal(observed.actual, observed.expected, "012.02");
+});
+
+test("013 - composes skipped input progress into the configured range", () => {
+  const observed = runWithProgress(`<!--${"x".repeat(1493)}-->`, {
+    reportProgressFuncFrom: 80,
+    reportProgressFuncTo: 100,
+  });
+
+  equal(observed.progress, [90], "013.01");
+  equal(observed.actual, observed.expected, "013.02");
+});
+
+test("014 - reports a recursively decoded span at its caller extent", () => {
+  const observed = runWithProgress(`&${"amp;".repeat(625)}`);
+
+  equal(observed.progress, [99], "014.01");
+  equal(observed.actual, observed.expected, "014.02");
+  equal(observed.actual.result, "&", "014.03");
 });
 
 test.run();
