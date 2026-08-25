@@ -250,6 +250,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
   // temporary variable to assemble the attribute pieces:
   let attrObj: Obj = {};
+  let consumedAttributeClosingQuoteAt: number | null = null;
 
   // marker to store captured href, used in resolvedOpts.dumpLinkHrefsNearby?.enabled
   let hrefDump: {
@@ -1756,6 +1757,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     if (charCode === CODE_DOUBLE_QUOTE || charCode === CODE_SINGLE_QUOTE) {
       DEV && console.log(`quote clauses`);
       if (!isDoctype && tag.nameStarts && tag?.quotes?.value === str[i]) {
+        consumedAttributeClosingQuoteAt = i;
         // If empty quotes, skip processing and reset
         if (attrObj.valueStarts === undefined) {
           // reset:
@@ -2246,6 +2248,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       // after whitespace, which rules out the bulk of the input before any
       // of the tag object's properties have to be read
       isWhitespaceCode(str.charCodeAt(i - 1)) &&
+      consumedAttributeClosingQuoteAt !== i &&
       !isWhitespaceCode(charCode) &&
       charCode !== CODE_LEFT_BRACKET &&
       charCode !== CODE_RIGHT_BRACKET &&

@@ -1213,4 +1213,87 @@ test("026 - opts.cb - incomplete tags follow normal keep policy", () => {
   }
 });
 
+test("027 - opts.cb - closing quotes are not attribute names", () => {
+  const attributesFor = (input) => {
+    let attributes = [];
+    stripHtml(input, {
+      cb: ({ tag, rangesArr, proposedReturn }) => {
+        attributes = tag.attributes;
+        if (proposedReturn) {
+          rangesArr.push(...proposedReturn);
+        }
+      },
+    });
+    return attributes;
+  };
+  const whitespaceClass = {
+    nameStarts: 5,
+    nameEnds: 10,
+    equalsAt: 10,
+    name: "class",
+    valueStarts: 12,
+    valueEnds: 13,
+    value: " ",
+  };
+
+  equal(attributesFor('<div class=" ">'), [whitespaceClass], "027.01");
+  equal(attributesFor("<div class=' '>"), [whitespaceClass], "027.02");
+  equal(attributesFor('<div class=" " >'), [whitespaceClass], "027.03");
+  equal(
+    attributesFor('<div class="x ">'),
+    [
+      {
+        nameStarts: 5,
+        nameEnds: 10,
+        equalsAt: 10,
+        name: "class",
+        valueStarts: 12,
+        valueEnds: 14,
+        value: "x ",
+      },
+    ],
+    "027.04",
+  );
+  equal(
+    attributesFor('<div class="x">'),
+    [
+      {
+        nameStarts: 5,
+        nameEnds: 10,
+        equalsAt: 10,
+        name: "class",
+        valueStarts: 12,
+        valueEnds: 13,
+        value: "x",
+      },
+    ],
+    "027.05",
+  );
+  equal(attributesFor('<div class="">'), [], "027.06");
+  equal(attributesFor("<div class=''>"), [], "027.07");
+
+  const adjacentAttributes = [
+    whitespaceClass,
+    {
+      nameStarts: 15,
+      nameEnds: 17,
+      equalsAt: 17,
+      name: "id",
+      valueStarts: 19,
+      valueEnds: 20,
+      value: "x",
+    },
+  ];
+  equal(
+    attributesFor('<div class=" " id="x">'),
+    adjacentAttributes,
+    "027.08",
+  );
+  equal(
+    attributesFor("<div class=' ' id='x'>"),
+    adjacentAttributes,
+    "027.09",
+  );
+});
+
 test.run();
