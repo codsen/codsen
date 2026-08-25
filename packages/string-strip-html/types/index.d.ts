@@ -75,9 +75,13 @@ interface CbObj {
   readonly proposedReturn: CallbackRange | null;
 }
 interface Opts {
+  /** HTML and custom/XML-looking tag names match case-insensitively. */
   ignoreTags: string[];
+  /** HTML and custom/XML-looking tag names match case-insensitively. */
   ignoreTagsWithTheirContents: string[];
+  /** HTML and custom/XML-looking tag names match case-insensitively. */
   onlyStripTags: string[];
+  /** HTML and custom/XML-looking tag names match case-insensitively. */
   stripTogetherWithTheirContents: string[];
   skipHtmlDecoding: boolean;
   trimOnlySpaces: boolean;

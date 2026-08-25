@@ -150,9 +150,13 @@ type InternalTokenMeta =
     };
 
 export interface Opts {
+  /** HTML and custom/XML-looking tag names match case-insensitively. */
   ignoreTags: string[];
+  /** HTML and custom/XML-looking tag names match case-insensitively. */
   ignoreTagsWithTheirContents: string[];
+  /** HTML and custom/XML-looking tag names match case-insensitively. */
   onlyStripTags: string[];
+  /** HTML and custom/XML-looking tag names match case-insensitively. */
   stripTogetherWithTheirContents: string[];
   skipHtmlDecoding: boolean;
   trimOnlySpaces: boolean;
@@ -263,6 +267,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
   // state flag
   let hrefInsertionActive = false;
+  let foldedStrForTagSearch: string | null = null;
 
   // marker to keep a note where does the whitespace chunk that follows closing bracket end.
   // It's necessary for resolvedOpts.trimOnlySpaces when there's closing bracket, whitespace, non-space
@@ -994,11 +999,13 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       DEV && console.log(`ignored tag contents: RETURN TRUE`);
       return true;
     }
+    const tagName =
+      typeof tag2.name === "string" ? tag2.name.toLowerCase() : "";
     // past the "*" case above, the only way out of here that is not false is
     // the very last line, so a tag nobody listed is a "false" already - worth
     // establishing before the two str.indexOf() below, which each scan the rest
     // of the input, for every tag, on the default (empty) setting too
-    if (!resolvedOpts.ignoreTagsWithTheirContents.includes(tag2.name)) {
+    if (!resolvedOpts.ignoreTagsWithTheirContents.includes(tagName)) {
       DEV && console.log(`checkIgnoreTagsWithTheirContents(): RETURN FALSE`);
       return false;
     }
@@ -1008,9 +1015,12 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     //
     // in such case, we treat #1 as normal tag, we don't ignore
     // anything for it, only for #2. It's to prevent a loophole.
-    const nextOpeningPos = str.indexOf(`<${tag2.name}`, i);
+    if (foldedStrForTagSearch === null) {
+      foldedStrForTagSearch = asciiLowercase(str);
+    }
+    const nextOpeningPos = foldedStrForTagSearch.indexOf(`<${tagName}`, i);
     // TODO: replace below with regexp:
-    const nextClosingPos = str.indexOf(`</${tag2.name}`, i);
+    const nextClosingPos = foldedStrForTagSearch.indexOf(`</${tagName}`, i);
     if (
       // EITHER it's an opening tag
       (!tag2.slashPresent &&
@@ -1020,7 +1030,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       (tag2.slashPresent &&
         // and there haven't been any opening tag encountered so far
         !rangedOpeningTagsForIgnoring.some(
-          (tagObj) => tagObj.name === tag2.name,
+          (tagObj) => tagObj.name?.toLowerCase() === tagName,
         )) ||
       // OR both opening and closing tags follow further
       (nextClosingPos > -1 &&
@@ -1034,10 +1044,10 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     DEV &&
       console.log(
         `checkIgnoreTagsWithTheirContents(): RETURN ${resolvedOpts.ignoreTagsWithTheirContents.includes(
-          tag2.name,
+          tagName,
         )}`,
       );
-    return resolvedOpts.ignoreTagsWithTheirContents.includes(tag2.name);
+    return resolvedOpts.ignoreTagsWithTheirContents.includes(tagName);
   }
 
   // validation
@@ -1121,11 +1131,17 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
   resolvedOpts.ignoreTags = prepHopefullyAnArray(
     resolvedOpts.ignoreTags,
     "resolvedOpts.ignoreTags",
-  );
+  ).map((name) => name.toLowerCase());
   resolvedOpts.onlyStripTags = prepHopefullyAnArray(
     resolvedOpts.onlyStripTags,
     "resolvedOpts.onlyStripTags",
-  );
+  ).map((name) => name.toLowerCase());
+  if (Array.isArray(resolvedOpts.ignoreTagsWithTheirContents)) {
+    resolvedOpts.ignoreTagsWithTheirContents =
+      resolvedOpts.ignoreTagsWithTheirContents.map((name) =>
+        typeof name === "string" ? name.toLowerCase() : name,
+      );
+  }
 
   // let's define the onlyStripTagsMode. Since resolvedOpts.onlyStripTags can cancel
   // out the entries in resolvedOpts.onlyStripTags, it can be empty but this mode has
@@ -1344,7 +1360,8 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     status: "complete" | "incomplete",
     end: number,
   ): boolean {
-    const ignoredByName = resolvedOpts.ignoreTags.includes(tag.name);
+    const tagName = typeof tag.name === "string" ? tag.name.toLowerCase() : "";
+    const ignoredByName = resolvedOpts.ignoreTags.includes(tagName);
     const ignoredWithContents = checkIgnoreTagsWithTheirContents(
       i,
       resolvedOpts,
@@ -1357,8 +1374,8 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         !definitelyTagNames.has(tag.name.toLowerCase()) &&
         !singleLetterTags.has(tag.name.toLowerCase())) ||
       (!onlyStripTagsMode && (ignoredByName || ignoredWithContents)) ||
-      (onlyStripTagsMode && !resolvedOpts.onlyStripTags.includes(tag.name)) ||
-      resolvedOpts.ignoreTagsWithTheirContents.includes(tag.name);
+      (onlyStripTagsMode && !resolvedOpts.onlyStripTags.includes(tagName)) ||
+      resolvedOpts.ignoreTagsWithTheirContents.includes(tagName);
 
     if (!shouldKeep) {
       return false;
@@ -1367,7 +1384,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     if (ignoredWithContents) {
       if (tag.slashPresent) {
         for (let y = rangedOpeningTagsForIgnoring.length; y--; ) {
-          if (rangedOpeningTagsForIgnoring[y].name === tag.name) {
+          if (rangedOpeningTagsForIgnoring[y].name?.toLowerCase() === tagName) {
             rangedOpeningTagsForIgnoring.splice(y, 1);
             break;
           }
@@ -4335,6 +4352,23 @@ function fullyConsumedTagLocations(
     }
     return false;
   });
+}
+
+// Fold only ASCII capitals so character positions stay aligned with the
+// decoded parser input even when non-ASCII case mappings change string length.
+function asciiLowercase(str: string): string {
+  let result = "";
+  let chunkStartsAt = 0;
+
+  for (let i = 0; i < str.length; i++) {
+    const code = str.charCodeAt(i);
+    if (code > 64 && code < 91) {
+      result += `${str.slice(chunkStartsAt, i)}${String.fromCharCode(code + 32)}`;
+      chunkStartsAt = i + 1;
+    }
+  }
+
+  return chunkStartsAt ? result + str.slice(chunkStartsAt) : str;
 }
 
 export { defaults, stripHtml, version };
