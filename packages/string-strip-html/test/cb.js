@@ -1296,4 +1296,316 @@ test("027 - opts.cb - closing quotes are not attribute names", () => {
   );
 });
 
+test("028 - opts.cb - contract invariants hold across parser branches", () => {
+  const rows = [
+    {
+      input: "<a>x</a>.",
+      options: { stripTogetherWithTheirContents: ["*"] },
+      result: ".",
+      events: ["tag:complete", "tag:complete", "tag:complete"],
+      tokens: ["<a>", "</a>", "</a>"],
+      names: ["a", "a", "a"],
+      attributes: [[], [], []],
+    },
+    {
+      input: "&amp;<b title=&quot;🌟&quot;>x</b>z",
+      options: {},
+      result: "&xz",
+      events: ["tag:complete", "tag:complete"],
+      tokens: ["<b title=&quot;🌟&quot;>", "</b>"],
+      names: ["b", "b"],
+      attributes: [[["title", "🌟"]], []],
+    },
+    {
+      input: 'hat > head class="z"> shoulders',
+      options: {},
+      result: "hat > shoulders",
+      events: ["tag:inferred"],
+      tokens: [' head class="z">'],
+      names: ["head"],
+      attributes: [[]],
+    },
+    {
+      input: "A<div<script src=/foo>x</script>B",
+      options: {},
+      result: "A B",
+      events: [
+        "tag:incomplete",
+        "tag:complete",
+        "tag:complete",
+        "tag:complete",
+      ],
+      tokens: ["<div", "<script src=/foo>", "</script>", "</script>"],
+      names: ["div", "script", "script", "script"],
+      attributes: [[], [["src", "/foo"]], [], []],
+    },
+    {
+      input: "A<!--x--><![CDATA[y]]><br>Z",
+      options: {},
+      result: "A Z",
+      events: ["comment", "cdata", "tag:complete"],
+      tokens: ["<!--x-->", "<![CDATA[y]]>", "<br>"],
+      names: [null, null, "br"],
+      attributes: [[], [], []],
+    },
+    {
+      input: "A<HR",
+      options: { ignoreTags: ["hr"] },
+      result: "A<HR",
+      events: ["tag:incomplete"],
+      tokens: ["<HR"],
+      names: ["hr"],
+      attributes: [[]],
+    },
+    {
+      input: "A<DIV>x</dIv>B",
+      options: { onlyStripTags: ["div"] },
+      result: "A x B",
+      events: ["tag:complete", "tag:complete"],
+      tokens: ["<DIV>", "</dIv>"],
+      names: ["DIV", "dIv"],
+      attributes: [[], []],
+    },
+    {
+      input: "A<CoDe><b>x</b></cOdE>B",
+      options: { ignoreTagsWithTheirContents: ["code"] },
+      result: "A<CoDe><b>x</b></cOdE>B",
+      events: [
+        "tag:complete",
+        "tag:complete",
+        "tag:complete",
+        "tag:complete",
+      ],
+      tokens: ["<CoDe>", "<b>", "</b>", "</cOdE>"],
+      names: ["CoDe", "b", "b", "cOdE"],
+      attributes: [[], [], [], []],
+    },
+    {
+      input: " <p>x</p> ",
+      options: { trimOnlySpaces: true },
+      result: "x",
+      events: ["tag:complete", "tag:complete"],
+      tokens: ["<p>", "</p>"],
+      names: ["p", "p"],
+      attributes: [[], []],
+    },
+  ];
+  const cloneRanges = (ranges) =>
+    ranges ? ranges.map((range) => [...range]) : null;
+  const recordEvent = (event) => ({
+    tag: event.tag,
+    deleteFrom: event.deleteFrom,
+    deleteTo: event.deleteTo,
+    insert: event.insert,
+    proposedReturn: event.proposedReturn,
+    rangesArr: event.rangesArr,
+    rangesAtEntry: cloneRanges(event.rangesArr.current()),
+    tagSnapshot: JSON.stringify(event.tag),
+    proposalSnapshot: JSON.stringify(event.proposedReturn),
+  });
+  const eventLabel = ({ tag }) =>
+    tag.kind === "tag" ? `${tag.kind}:${tag.status}` : tag.kind;
+  const allNumbers = (value, gathered = []) => {
+    if (typeof value === "number") {
+      gathered.push(value);
+    } else if (Array.isArray(value)) {
+      value.forEach((item) => {
+        allNumbers(item, gathered);
+      });
+    } else if (value && typeof value === "object") {
+      Object.values(value).forEach((item) => {
+        allNumbers(item, gathered);
+      });
+    }
+    return gathered;
+  };
+  const validRange = (range, inputLength) =>
+    Array.isArray(range) &&
+    (range.length === 2 || range.length === 3) &&
+    Number.isInteger(range[0]) &&
+    Number.isInteger(range[1]) &&
+    range[0] >= 0 &&
+    range[0] <= range[1] &&
+    range[1] <= inputLength &&
+    (range.length === 2 ||
+      range[2] === null ||
+      range[2] === undefined ||
+      typeof range[2] === "string");
+  const validProposal = (range, inputLength) =>
+    validRange(range, inputLength) && range.length === 3;
+
+  for (const {
+    input,
+    options,
+    result,
+    events,
+    tokens,
+    names,
+    attributes,
+  } of rows) {
+    const expected = stripHtml(input, options);
+    const scalarEvents = [];
+    const scalarForwarded = stripHtml(input, {
+      ...options,
+      cb: (event) => {
+        scalarEvents.push(recordEvent(event));
+        if (event.proposedReturn) {
+          event.rangesArr.push(
+            event.deleteFrom,
+            event.deleteTo,
+            event.insert,
+          );
+        }
+      },
+    });
+    const tupleEvents = [];
+    const tupleForwarded = stripHtml(input, {
+      ...options,
+      cb: (event) => {
+        tupleEvents.push(recordEvent(event));
+        event.rangesArr.push(event.proposedReturn);
+      },
+    });
+
+    equal(scalarForwarded, expected, "028.01");
+    equal(tupleForwarded, expected, "028.02");
+    equal(scalarForwarded, tupleForwarded, "028.03");
+    equal(expected.result, result, "028.04");
+    equal(scalarEvents, tupleEvents, "028.05");
+    equal(scalarEvents.map(eventLabel), events, "028.06");
+
+    for (const event of scalarEvents) {
+      equal(
+        [event.deleteFrom, event.deleteTo, event.insert],
+        event.proposedReturn || [null, null, null],
+        "028.07",
+      );
+    }
+
+    equal(
+      allNumbers(
+        scalarEvents.map(
+          ({ tag, deleteFrom, deleteTo, insert, proposedReturn }) => ({
+            tag,
+            deleteFrom,
+            deleteTo,
+            insert,
+            proposedReturn,
+          }),
+        ),
+      ).every(
+        (value) =>
+          Number.isInteger(value) && value >= 0 && value <= input.length,
+      ),
+      true,
+      "028.08",
+    );
+    equal(
+      scalarEvents.every(({ tag }) => tag.start < tag.end),
+      true,
+      "028.09",
+    );
+    equal(
+      scalarEvents.every(
+        ({ proposedReturn, rangesAtEntry }) =>
+          (proposedReturn === null ||
+            validProposal(proposedReturn, input.length)) &&
+          (rangesAtEntry === null ||
+            rangesAtEntry.every((range) => validRange(range, input.length))),
+      ),
+      true,
+      "028.10",
+    );
+    equal(
+      expected.ranges ? rApply(input, expected.ranges) : input,
+      expected.result,
+      "028.11",
+    );
+    equal(
+      scalarEvents.map(({ tag }) => input.slice(tag.start, tag.end)),
+      tokens,
+      "028.12",
+    );
+    equal(
+      scalarEvents.map(({ tag }) => tag.name || null),
+      names,
+      "028.13",
+    );
+    equal(
+      scalarEvents.map(({ tag }) =>
+        (tag.attributes || []).map((attribute) => [
+          input.slice(attribute.nameStarts, attribute.nameEnds),
+          typeof attribute.valueStarts === "number" &&
+          typeof attribute.valueEnds === "number"
+            ? input.slice(attribute.valueStarts, attribute.valueEnds)
+            : null,
+        ]),
+      ),
+      attributes,
+      "028.14",
+    );
+    equal(
+      scalarEvents
+        .filter(({ tag }) => tag.kind !== "tag")
+        .map(({ tag }) => Object.keys(tag).sort()),
+      events
+        .filter((label) => label === "comment" || label === "cdata")
+        .map(() => ["end", "kind", "start"]),
+      "028.15",
+    );
+    equal(
+      new Set(
+        scalarEvents.map(({ tag, proposedReturn }) =>
+          JSON.stringify([
+            tag.kind,
+            tag.status || null,
+            tag.start,
+            tag.end,
+            proposedReturn,
+          ]),
+        ),
+      ).size,
+      scalarEvents.length,
+      "028.16",
+    );
+    equal(
+      [
+        new Set(scalarEvents.map(({ rangesArr }) => rangesArr)).size,
+        new Set(tupleEvents.map(({ rangesArr }) => rangesArr)).size,
+      ],
+      [1, 1],
+      "028.17",
+    );
+    equal(
+      scalarEvents[0].rangesArr.current(),
+      tupleEvents[0].rangesArr.current(),
+      "028.18",
+    );
+    equal(
+      [...scalarEvents, ...tupleEvents].every(
+        ({ tag, proposedReturn, tagSnapshot, proposalSnapshot }) =>
+          JSON.stringify(tag) === tagSnapshot &&
+          JSON.stringify(proposedReturn) === proposalSnapshot,
+      ),
+      true,
+      "028.19",
+    );
+
+    const reconstructed = new Ranges({
+      limitToBeAddedWhitespace: true,
+      limitLinebreaksCount: 2,
+    });
+    for (const event of scalarEvents) {
+      equal(
+        event.rangesAtEntry,
+        cloneRanges(reconstructed.current()),
+        "028.20",
+      );
+      if (event.proposedReturn) {
+        reconstructed.push(...event.proposedReturn);
+      }
+    }
+  }
+});
+
 test.run();
