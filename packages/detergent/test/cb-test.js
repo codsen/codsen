@@ -126,4 +126,25 @@ test("007 - cb is invoked once per range", () => {
   equal(calls, 2, "007.02");
 });
 
+test("008 - callback skips every recognized HTML token shape", () => {
+  for (const { input, expectedSlices } of [
+    { input: "A<!--x-->B", expectedSlices: ["A", "B"] },
+    { input: "A<![CDATA[x]]>B", expectedSlices: ["A", "B"] },
+    { input: "A<hr", expectedSlices: ["A"] },
+    { input: "A<hr/", expectedSlices: ["A"] },
+    { input: 'A> head class="z"> B', expectedSlices: ["A>", " B"] },
+  ]) {
+    const slices = [];
+    const callbackResult = det1(input, {
+      cb: (slice) => {
+        slices.push(slice);
+        return slice;
+      },
+    });
+
+    equal(slices, expectedSlices, "008.01");
+    equal(callbackResult.res, det1(input).res, "008.02");
+  }
+});
+
 test.run();

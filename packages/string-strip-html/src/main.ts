@@ -53,18 +53,23 @@ declare let DEV: boolean;
 type GatheredRange = [number, number, (string | null | undefined)?];
 
 export interface Attribute {
-  nameStarts: number;
-  nameEnds: number;
+  nameStarts?: number;
+  nameEnds?: number;
   equalsAt?: number;
-  name: string;
+  name?: string;
   valueStarts?: number;
   valueEnds?: number;
   value?: string;
 }
-export interface Tag {
+
+interface TokenBase {
+  start: number;
+  end: number;
+}
+
+interface NamedTagBase extends TokenBase {
+  kind: "tag";
   attributes: Attribute[];
-  lastClosingBracketAt: number;
-  lastOpeningBracketAt: number;
   slashPresent: number | false;
   leftOuterWhitespace: number;
   onlyPlausible: boolean;
@@ -74,14 +79,75 @@ export interface Tag {
   name: string;
 }
 
+export interface CompleteTag extends NamedTagBase {
+  status: "complete";
+  lastClosingBracketAt: number;
+  lastOpeningBracketAt: number;
+}
+
+export interface IncompleteTag extends NamedTagBase {
+  status: "incomplete";
+  lastClosingBracketAt?: never;
+  lastOpeningBracketAt: number;
+}
+
+export interface InferredTag extends TokenBase {
+  kind: "tag";
+  status: "inferred";
+  nameStarts: number;
+  nameContainsLetters: boolean;
+  nameEnds: number;
+  name: string;
+}
+
+export interface CommentTag extends TokenBase {
+  kind: "comment";
+}
+
+export interface CdataTag extends TokenBase {
+  kind: "cdata";
+}
+
+export type CallbackToken =
+  | CompleteTag
+  | IncompleteTag
+  | InferredTag
+  | CommentTag
+  | CdataTag;
+
+export type Tag = CallbackToken;
+
+export type CallbackRange = [
+  from: number,
+  to: number,
+  whatToInsert: string | null | undefined,
+];
+
 export interface CbObj {
   tag: Tag;
   deleteFrom: null | number;
   deleteTo: null | number;
   insert: null | undefined | string;
   rangesArr: Ranges;
-  proposedReturn: Range | null;
+  proposedReturn: CallbackRange | null;
 }
+
+interface InternalCbObj extends Omit<CbObj, "tag"> {
+  tag: Obj;
+}
+
+type InternalTokenMeta =
+  | {
+      kind: "comment" | "cdata";
+      start: number;
+      end: number;
+    }
+  | {
+      kind: "tag";
+      status: "complete" | "incomplete" | "inferred";
+      start: number;
+      end: number;
+    };
 
 export interface Opts {
   ignoreTags: string[];
@@ -371,38 +437,70 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             if (punctuation.has(str[i]) && resolvedOpts.cb) {
               DEV &&
                 console.log(`${`\u001b[${32}m${`PING CB()`}\u001b[${39}m`}`);
-              emitCallback({
-                tag: tag as Tag,
-                deleteFrom:
-                  rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
-                deleteTo: combinedRangeEnd,
-                insert: null,
-                rangesArr: rangesToDelete,
-                proposedReturn: [
-                  rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
-                  combinedRangeEnd,
-                  null,
-                ],
-              });
+              emitCallback(
+                {
+                  tag,
+                  deleteFrom:
+                    rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
+                  deleteTo: combinedRangeEnd,
+                  insert: null,
+                  rangesArr: rangesToDelete,
+                  proposedReturn: [
+                    rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
+                    combinedRangeEnd,
+                    null,
+                  ],
+                },
+                {
+                  kind: "tag",
+                  status:
+                    typeof tag.lastClosingBracketAt === "number"
+                      ? "complete"
+                      : "incomplete",
+                  start: tag.lastOpeningBracketAt,
+                  end:
+                    typeof tag.lastClosingBracketAt === "number"
+                      ? tag.lastClosingBracketAt + 1
+                      : isOpeningAt(i)
+                        ? i
+                        : i + 1,
+                },
+              );
               // null will remove any spaces added so far. Opening and closing range tags might
               // have received spaces as separate entities, but those might not be necessary for range:
               // "text <script>deleteme</script>."
             } else if (resolvedOpts.cb) {
               DEV &&
                 console.log(`${`\u001b[${32}m${`PING CB()`}\u001b[${39}m`}`);
-              emitCallback({
-                tag: tag as any,
-                deleteFrom:
-                  rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
-                deleteTo: combinedRangeEnd,
-                insert: "",
-                rangesArr: rangesToDelete,
-                proposedReturn: [
-                  rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
-                  combinedRangeEnd,
-                  "",
-                ],
-              });
+              emitCallback(
+                {
+                  tag,
+                  deleteFrom:
+                    rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
+                  deleteTo: combinedRangeEnd,
+                  insert: "",
+                  rangesArr: rangesToDelete,
+                  proposedReturn: [
+                    rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
+                    combinedRangeEnd,
+                    "",
+                  ],
+                },
+                {
+                  kind: "tag",
+                  status:
+                    typeof tag.lastClosingBracketAt === "number"
+                      ? "complete"
+                      : "incomplete",
+                  start: tag.lastOpeningBracketAt,
+                  end:
+                    typeof tag.lastClosingBracketAt === "number"
+                      ? tag.lastClosingBracketAt + 1
+                      : isOpeningAt(i)
+                        ? i
+                        : i + 1,
+                },
+              );
             }
             // 2. delete the reference to this range from rangedOpeningTagsForDeletion[]
             // because there might be more ranged tags of the same name or
@@ -1155,7 +1253,10 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     return accumulator.current();
   }
 
-  function emitCallback(cbObj: CbObj): void {
+  function emitCallback(
+    cbObj: InternalCbObj,
+    tokenMeta: InternalTokenMeta,
+  ): void {
     const proposedReturn = cbObj.proposedReturn
       ? mapDecodedRange(cbObj.proposedReturn, str, decodeSegments)
       : null;
@@ -1168,7 +1269,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     }
 
     const originalCbObj: CbObj = {
-      tag: mapTagToOriginal(cbObj.tag, str, decodeSegments),
+      tag: mapTokenToOriginal(cbObj.tag, tokenMeta, str, decodeSegments),
       deleteFrom: proposedReturn ? proposedReturn[0] : null,
       deleteTo: proposedReturn ? proposedReturn[1] : null,
       insert: proposedReturn ? proposedReturn[2] : null,
@@ -1475,18 +1576,33 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 console.log(
                   `cb()-PUSHING [${startingPoint}, ${deleteUpTo}, "${whiteSpaceCompensation}"]`,
                 );
-              emitCallback({
-                tag: tag as any,
-                deleteFrom: startingPoint,
-                deleteTo: deleteUpTo,
-                insert: whiteSpaceCompensation,
-                rangesArr: rangesToDelete,
-                proposedReturn: [
-                  startingPoint,
-                  deleteUpTo,
-                  whiteSpaceCompensation,
-                ],
-              });
+              const nameOffset = culprit.indexOf(candidateTagName);
+              const nameStarts = startingPoint + nameOffset;
+              emitCallback(
+                {
+                  tag: {
+                    name: candidateTagName,
+                    nameStarts,
+                    nameEnds: nameStarts + candidateTagName.length,
+                    nameContainsLetters: true,
+                  },
+                  deleteFrom: startingPoint,
+                  deleteTo: deleteUpTo,
+                  insert: whiteSpaceCompensation,
+                  rangesArr: rangesToDelete,
+                  proposedReturn: [
+                    startingPoint,
+                    deleteUpTo,
+                    whiteSpaceCompensation,
+                  ],
+                },
+                {
+                  kind: "tag",
+                  status: "inferred",
+                  start: startingPoint,
+                  end: i + 1,
+                },
+              );
             }
             break;
           }
@@ -1753,18 +1869,26 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         // filteredTagLocations.push([tag.leftOuterWhitespace, i]);
 
         DEV && console.log(`${`\u001b[${32}m${`PING CB()`}\u001b[${39}m`}`);
-        emitCallback({
-          tag: tag as Tag,
-          deleteFrom: tag.leftOuterWhitespace,
-          deleteTo: i,
-          insert: `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
-          rangesArr: rangesToDelete,
-          proposedReturn: [
-            tag.leftOuterWhitespace,
-            i,
-            `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
-          ],
-        });
+        emitCallback(
+          {
+            tag,
+            deleteFrom: tag.leftOuterWhitespace,
+            deleteTo: i,
+            insert: `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
+            rangesArr: rangesToDelete,
+            proposedReturn: [
+              tag.leftOuterWhitespace,
+              i,
+              `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
+            ],
+          },
+          {
+            kind: "tag",
+            status: "incomplete",
+            start: tag.lastOpeningBracketAt,
+            end: i,
+          },
+        );
         resetHrefMarkers();
 
         // also,
@@ -2274,14 +2398,22 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               );
 
             DEV && console.log(`${`\u001b[${32}m${`PING CB()`}\u001b[${39}m`}`);
-            emitCallback({
-              tag: tag as Tag,
-              deleteFrom: tag.leftOuterWhitespace,
-              deleteTo: i + 1,
-              insert,
-              rangesArr: rangesToDelete,
-              proposedReturn: [tag.leftOuterWhitespace, i + 1, insert],
-            });
+            emitCallback(
+              {
+                tag,
+                deleteFrom: tag.leftOuterWhitespace,
+                deleteTo: i + 1,
+                insert,
+                rangesArr: rangesToDelete,
+                proposedReturn: [tag.leftOuterWhitespace, i + 1, insert],
+              },
+              {
+                kind: "tag",
+                status: "incomplete",
+                start: tag.lastOpeningBracketAt,
+                end: i + 1,
+              },
+            );
             candidateFinalized = true;
             resetHrefMarkers();
 
@@ -2566,14 +2698,22 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             console.log(
               `${`\u001b[${32}m${`PING CB() with nulls`}\u001b[${39}m`}`,
             );
-          emitCallback({
-            tag: tag as Tag,
-            deleteFrom: null,
-            deleteTo: null,
-            insert: null,
-            rangesArr: rangesToDelete,
-            proposedReturn: null,
-          });
+          emitCallback(
+            {
+              tag,
+              deleteFrom: null,
+              deleteTo: null,
+              insert: null,
+              rangesArr: rangesToDelete,
+              proposedReturn: null,
+            },
+            {
+              kind: "tag",
+              status: "complete",
+              start: tag.lastOpeningBracketAt,
+              end: tag.lastClosingBracketAt + 1,
+            },
+          );
 
           // don't submit the tag onto "filteredTagLocations"
 
@@ -2850,18 +2990,26 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 0,
               )}]`}\u001b[${39}m`,
             );
-          emitCallback({
-            tag: tag as Tag,
-            deleteFrom: tag.leftOuterWhitespace,
-            deleteTo: endingRangeIndex + punctuationCorrection,
-            insert,
-            rangesArr: rangesToDelete,
-            proposedReturn: [
-              tag.leftOuterWhitespace,
-              endingRangeIndex + punctuationCorrection,
+          emitCallback(
+            {
+              tag,
+              deleteFrom: tag.leftOuterWhitespace,
+              deleteTo: endingRangeIndex + punctuationCorrection,
               insert,
-            ],
-          });
+              rangesArr: rangesToDelete,
+              proposedReturn: [
+                tag.leftOuterWhitespace,
+                endingRangeIndex + punctuationCorrection,
+                insert,
+              ],
+            },
+            {
+              kind: "tag",
+              status: "complete",
+              start: tag.lastOpeningBracketAt,
+              end: tag.lastClosingBracketAt + 1,
+            },
+          );
           resetHrefMarkers();
 
           // also,
@@ -2990,18 +3138,26 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               console.log(
                 `cb()-PUSH range [${tag.leftOuterWhitespace}, ${i}, "${whiteSpaceCompensation}"]`,
               );
-            emitCallback({
-              tag: tag as Tag,
-              deleteFrom: tag.leftOuterWhitespace,
-              deleteTo: i,
-              insert: whiteSpaceCompensation,
-              rangesArr: rangesToDelete,
-              proposedReturn: [
-                tag.leftOuterWhitespace,
-                i,
-                whiteSpaceCompensation,
-              ],
-            });
+            emitCallback(
+              {
+                tag,
+                deleteFrom: tag.leftOuterWhitespace,
+                deleteTo: i,
+                insert: whiteSpaceCompensation,
+                rangesArr: rangesToDelete,
+                proposedReturn: [
+                  tag.leftOuterWhitespace,
+                  i,
+                  whiteSpaceCompensation,
+                ],
+              },
+              {
+                kind: "tag",
+                status: "incomplete",
+                start: tag.lastOpeningBracketAt,
+                end: i,
+              },
+            );
 
             // also,
             treatRangedTags(i, resolvedOpts, rangesToDelete);
@@ -3177,18 +3333,25 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                   console.log(
                     `cb()-PUSH range [${tag.leftOuterWhitespace}, ${rangeEnd}, "${whiteSpaceCompensation}"]`,
                   );
-                emitCallback({
-                  tag: tag as Tag,
-                  deleteFrom: tag.leftOuterWhitespace,
-                  deleteTo: rangeEnd,
-                  insert: whiteSpaceCompensation,
-                  rangesArr: rangesToDelete,
-                  proposedReturn: [
-                    tag.leftOuterWhitespace,
-                    rangeEnd,
-                    whiteSpaceCompensation,
-                  ],
-                });
+                emitCallback(
+                  {
+                    tag,
+                    deleteFrom: tag.leftOuterWhitespace,
+                    deleteTo: rangeEnd,
+                    insert: whiteSpaceCompensation,
+                    rangesArr: rangesToDelete,
+                    proposedReturn: [
+                      tag.leftOuterWhitespace,
+                      rangeEnd,
+                      whiteSpaceCompensation,
+                    ],
+                  },
+                  {
+                    kind: cdata ? "cdata" : "comment",
+                    start: tag.lastOpeningBracketAt,
+                    end: closingFoundAt + 1,
+                  },
+                );
                 pendingMalformedStart = null;
 
                 // offset:
@@ -3884,6 +4047,16 @@ function mapDecodedEnd(
 }
 
 function mapDecodedRange(
+  range: CallbackRange,
+  decodedStr: string,
+  segments: DecodeSegment[],
+): CallbackRange;
+function mapDecodedRange(
+  range: Range,
+  decodedStr: string,
+  segments: DecodeSegment[],
+): Range;
+function mapDecodedRange(
   range: Range,
   decodedStr: string,
   segments: DecodeSegment[],
@@ -3908,95 +4081,168 @@ function mapDecodedRange(
     : [mappedFrom.idx, mappedTo.idx];
 }
 
-function mapTagToOriginal(
-  tag: Tag,
+function mapAttributeToOriginal(
+  attribute: Obj,
+  decodedStr: string,
+  segments: DecodeSegment[],
+): Attribute {
+  const mapped: Attribute = {};
+  if (typeof attribute.nameStarts === "number") {
+    mapped.nameStarts = mapDecodedStart(
+      attribute.nameStarts,
+      decodedStr,
+      segments,
+    ).idx;
+  }
+  if (typeof attribute.nameEnds === "number") {
+    mapped.nameEnds = mapDecodedEnd(
+      attribute.nameEnds,
+      decodedStr,
+      segments,
+    ).idx;
+  }
+  if (typeof attribute.equalsAt === "number") {
+    mapped.equalsAt = mapDecodedStart(
+      attribute.equalsAt,
+      decodedStr,
+      segments,
+    ).idx;
+  }
+  if (typeof attribute.name === "string") {
+    mapped.name = attribute.name;
+  }
+  if (typeof attribute.valueStarts === "number") {
+    mapped.valueStarts = mapDecodedStart(
+      attribute.valueStarts,
+      decodedStr,
+      segments,
+    ).idx;
+  }
+  if (typeof attribute.valueEnds === "number") {
+    mapped.valueEnds = mapDecodedEnd(
+      attribute.valueEnds,
+      decodedStr,
+      segments,
+    ).idx;
+  }
+  if (typeof attribute.value === "string") {
+    mapped.value = attribute.value;
+  }
+  return mapped;
+}
+
+function mapTokenToOriginal(
+  parserTag: Obj,
+  tokenMeta: InternalTokenMeta,
   decodedStr: string,
   segments: DecodeSegment[],
 ): Tag {
-  const mapped = {
-    ...tag,
-    attributes: (tag.attributes || []).map((attribute) => {
-      const mappedAttribute = { ...attribute };
-      if (typeof attribute.nameStarts === "number") {
-        mappedAttribute.nameStarts = mapDecodedStart(
-          attribute.nameStarts,
-          decodedStr,
-          segments,
-        ).idx;
-      }
-      if (typeof attribute.nameEnds === "number") {
-        mappedAttribute.nameEnds = mapDecodedEnd(
-          attribute.nameEnds,
-          decodedStr,
-          segments,
-        ).idx;
-      }
-      if (typeof attribute.equalsAt === "number") {
-        mappedAttribute.equalsAt = mapDecodedStart(
-          attribute.equalsAt,
-          decodedStr,
-          segments,
-        ).idx;
-      }
-      if (typeof attribute.valueStarts === "number") {
-        mappedAttribute.valueStarts = mapDecodedStart(
-          attribute.valueStarts,
-          decodedStr,
-          segments,
-        ).idx;
-      }
-      if (typeof attribute.valueEnds === "number") {
-        mappedAttribute.valueEnds = mapDecodedEnd(
-          attribute.valueEnds,
-          decodedStr,
-          segments,
-        ).idx;
-      }
-      return mappedAttribute;
-    }),
+  const start = mapDecodedStart(
+    tokenMeta.start,
+    decodedStr,
+    segments,
+  ).idx;
+  const end = mapDecodedEnd(tokenMeta.end, decodedStr, segments).idx;
+
+  if (tokenMeta.kind !== "tag") {
+    return { kind: tokenMeta.kind, start, end };
+  }
+
+  const rawName =
+    typeof parserTag.name === "string"
+      ? parserTag.name
+      : typeof parserTag.nameStarts === "number" &&
+          typeof parserTag.nameEnds === "number"
+        ? decodedStr.slice(parserTag.nameStarts, parserTag.nameEnds)
+        : "";
+  const nameStarts =
+    typeof parserTag.nameStarts === "number"
+      ? mapDecodedStart(parserTag.nameStarts, decodedStr, segments).idx
+      : start;
+  const nameEnds =
+    typeof parserTag.nameEnds === "number"
+      ? mapDecodedEnd(parserTag.nameEnds, decodedStr, segments).idx
+      : nameStarts + rawName.length;
+  const nameContainsLetters =
+    typeof parserTag.nameContainsLetters === "boolean"
+      ? parserTag.nameContainsLetters
+      : /[A-Za-z]/.test(rawName);
+
+  if (tokenMeta.status === "inferred") {
+    return {
+      kind: "tag",
+      status: "inferred",
+      start,
+      end,
+      nameStarts,
+      nameContainsLetters,
+      nameEnds,
+      name: rawName,
+    };
+  }
+
+  const common: NamedTagBase = {
+    kind: "tag",
+    start,
+    end,
+    attributes: Array.isArray(parserTag.attributes)
+      ? parserTag.attributes.map((attribute) =>
+          mapAttributeToOriginal(attribute, decodedStr, segments),
+        )
+      : [],
+    slashPresent:
+      typeof parserTag.slashPresent === "number"
+        ? mapDecodedStart(parserTag.slashPresent, decodedStr, segments).idx
+        : false,
+    leftOuterWhitespace:
+      typeof parserTag.leftOuterWhitespace === "number"
+        ? mapDecodedStart(
+            parserTag.leftOuterWhitespace,
+            decodedStr,
+            segments,
+          ).idx
+        : start,
+    onlyPlausible:
+      typeof parserTag.onlyPlausible === "boolean"
+        ? parserTag.onlyPlausible
+        : false,
+    nameStarts,
+    nameContainsLetters,
+    nameEnds,
+    name: rawName,
   };
 
-  if (typeof tag.lastOpeningBracketAt === "number") {
-    mapped.lastOpeningBracketAt = mapDecodedStart(
-      tag.lastOpeningBracketAt,
-      decodedStr,
-      segments,
-    ).idx;
-  }
-  if (typeof tag.lastClosingBracketAt === "number") {
-    mapped.lastClosingBracketAt =
-      mapDecodedEnd(tag.lastClosingBracketAt + 1, decodedStr, segments).idx - 1;
-  }
-  if (typeof tag.leftOuterWhitespace === "number") {
-    mapped.leftOuterWhitespace = mapDecodedStart(
-      tag.leftOuterWhitespace,
-      decodedStr,
-      segments,
-    ).idx;
-  }
-  if (typeof tag.nameStarts === "number") {
-    mapped.nameStarts = mapDecodedStart(
-      tag.nameStarts,
-      decodedStr,
-      segments,
-    ).idx;
-  }
-  if (typeof tag.nameEnds === "number") {
-    mapped.nameEnds = mapDecodedEnd(
-      tag.nameEnds,
-      decodedStr,
-      segments,
-    ).idx;
-  }
-  if (typeof tag.slashPresent === "number") {
-    mapped.slashPresent = mapDecodedStart(
-      tag.slashPresent,
-      decodedStr,
-      segments,
-    ).idx;
+  const lastOpeningBracketAt =
+    typeof parserTag.lastOpeningBracketAt === "number"
+      ? mapDecodedStart(
+          parserTag.lastOpeningBracketAt,
+          decodedStr,
+          segments,
+        ).idx
+      : start;
+
+  if (tokenMeta.status === "incomplete") {
+    return {
+      ...common,
+      status: "incomplete",
+      lastOpeningBracketAt,
+    };
   }
 
-  return mapped;
+  const lastClosingBracketAt =
+    typeof parserTag.lastClosingBracketAt === "number"
+      ? mapDecodedEnd(
+          parserTag.lastClosingBracketAt + 1,
+          decodedStr,
+          segments,
+        ).idx - 1
+      : end - 1;
+  return {
+    ...common,
+    status: "complete",
+    lastOpeningBracketAt,
+    lastClosingBracketAt,
+  };
 }
 
 function mergeTouchingRanges(ranges: Range[]): RangesType {

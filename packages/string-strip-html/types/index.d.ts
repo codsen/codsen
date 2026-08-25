@@ -7,18 +7,21 @@ type Ranges = Range[] | null;
 
 declare const version: string;
 interface Attribute {
-  nameStarts: number;
-  nameEnds: number;
+  nameStarts?: number;
+  nameEnds?: number;
   equalsAt?: number;
-  name: string;
+  name?: string;
   valueStarts?: number;
   valueEnds?: number;
   value?: string;
 }
-interface Tag {
+interface TokenBase {
+  start: number;
+  end: number;
+}
+interface NamedTagBase extends TokenBase {
+  kind: "tag";
   attributes: Attribute[];
-  lastClosingBracketAt: number;
-  lastOpeningBracketAt: number;
   slashPresent: number | false;
   leftOuterWhitespace: number;
   onlyPlausible: boolean;
@@ -27,13 +30,49 @@ interface Tag {
   nameEnds: number;
   name: string;
 }
+interface CompleteTag extends NamedTagBase {
+  status: "complete";
+  lastClosingBracketAt: number;
+  lastOpeningBracketAt: number;
+}
+interface IncompleteTag extends NamedTagBase {
+  status: "incomplete";
+  lastClosingBracketAt?: never;
+  lastOpeningBracketAt: number;
+}
+interface InferredTag extends TokenBase {
+  kind: "tag";
+  status: "inferred";
+  nameStarts: number;
+  nameContainsLetters: boolean;
+  nameEnds: number;
+  name: string;
+}
+interface CommentTag extends TokenBase {
+  kind: "comment";
+}
+interface CdataTag extends TokenBase {
+  kind: "cdata";
+}
+type CallbackToken =
+  | CompleteTag
+  | IncompleteTag
+  | InferredTag
+  | CommentTag
+  | CdataTag;
+type Tag = CallbackToken;
+type CallbackRange = [
+  from: number,
+  to: number,
+  whatToInsert: string | null | undefined,
+];
 interface CbObj {
   tag: Tag;
   deleteFrom: null | number;
   deleteTo: null | number;
   insert: null | undefined | string;
   rangesArr: Ranges$1;
-  proposedReturn: Range | null;
+  proposedReturn: CallbackRange | null;
 }
 interface Opts {
   ignoreTags: string[];
@@ -72,4 +111,17 @@ interface Res {
 declare function stripHtml(str: string, opts?: Partial<Opts>): Res;
 
 export { defaults, stripHtml, version };
-export type { Attribute, CbObj, Opts, Res, Tag };
+export type {
+  Attribute,
+  CallbackRange,
+  CallbackToken,
+  CbObj,
+  CdataTag,
+  CommentTag,
+  CompleteTag,
+  IncompleteTag,
+  InferredTag,
+  Opts,
+  Res,
+  Tag,
+};

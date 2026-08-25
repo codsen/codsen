@@ -1,0 +1,7 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": ["type-contract.ts", "../src/**/*", "../package.json"]
+}

@@ -424,10 +424,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
                 4,
               )}`,
             );
-          rangesArr.push(
-            tag.lastOpeningBracketAt,
-            tag.lastClosingBracketAt + 1,
-          );
+          rangesArr.push(tag.start, tag.end);
         },
         skipHtmlDecoding: true,
       }).ranges;
@@ -510,15 +507,14 @@ function det(str: string, opts?: Partial<Opts>): Res {
         );
 
       // if it's a tag
-      const tagName =
-        typeof tag.name === "string" ? tag.name.toLowerCase() : null;
+      const tagName = tag.kind === "tag" ? tag.name.toLowerCase() : null;
 
-      if (
-        (isNum(tag.lastOpeningBracketAt) &&
-          isNum(tag.lastClosingBracketAt) &&
-          tag.lastOpeningBracketAt < tag.lastClosingBracketAt) ||
-        tag.slashPresent
-      ) {
+      const isConfirmedToken =
+        tag.kind !== "tag" ||
+        tag.status === "complete" ||
+        (tag.status === "incomplete" && Boolean(tag.slashPresent));
+
+      if (tag.start < tag.end && isConfirmedToken) {
         DEV && console.log(`tag confirmed`);
         applicableOpts.stripHtml = true;
 
@@ -532,18 +528,11 @@ function det(str: string, opts?: Partial<Opts>): Res {
           );
 
         // 1. add range from bracket to bracket to ignores list:
-        skipArr.push(
-          tag.lastOpeningBracketAt,
-          tag.lastClosingBracketAt ? tag.lastClosingBracketAt + 1 : str.length,
-        );
+        skipArr.push(tag.start, tag.end);
 
         DEV &&
           console.log(
-            `PUSH to skipArr [${tag.lastOpeningBracketAt}, ${
-              tag.lastClosingBracketAt
-                ? tag.lastClosingBracketAt + 1
-                : str.length
-            }]`,
+            `PUSH to skipArr [${tag.start}, ${tag.end}]`,
           );
 
         // 2. strip tag if resolvedOpts.stripHtml is enabled
@@ -556,6 +545,8 @@ function det(str: string, opts?: Partial<Opts>): Res {
 
           // take care of tags listed under resolvedOpts.stripHtmlAddNewLine
           if (
+            tag.kind === "tag" &&
+            tag.status === "complete" &&
             Array.isArray(resolvedOpts.stripHtmlAddNewLine) &&
             resolvedOpts.stripHtmlAddNewLine.length &&
             resolvedOpts.stripHtmlAddNewLine.some(
@@ -661,7 +652,9 @@ function det(str: string, opts?: Partial<Opts>): Res {
                   )}`,
                 );
             } else {
-              finalIndexesToDelete.push(proposedReturn as any);
+              if (proposedReturn) {
+                finalIndexesToDelete.push(proposedReturn);
+              }
 
               DEV &&
                 console.log(`PUSH ${JSON.stringify(proposedReturn, null, 4)}`);
@@ -671,8 +664,10 @@ function det(str: string, opts?: Partial<Opts>): Res {
               console.log(
                 `didn't fell into resolvedOpts.stripHtmlAddNewLine clauses`,
               );
-            finalIndexesToDelete.push(proposedReturn as any);
-            skipArr.push(proposedReturn as any);
+            if (proposedReturn) {
+              finalIndexesToDelete.push(proposedReturn);
+              skipArr.push(proposedReturn);
+            }
 
             DEV &&
               console.log(
@@ -683,7 +678,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
                 )}`,
               );
           }
-        } else {
+        } else if (tag.kind === "tag" && tag.status === "complete") {
           DEV && console.log("- not stripping tags");
           // 3. add closing slash on void tags if XHTML mode is on
           if (tagName !== null && voidTags.includes(tagName)) {
@@ -950,7 +945,12 @@ function det(str: string, opts?: Partial<Opts>): Res {
         }
 
         // 9. if it's a BR, take a note of its closing bracket's location:
-        if (tagName === "br" && tag.lastClosingBracketAt) {
+        if (
+          tag.kind === "tag" &&
+          tag.status === "complete" &&
+          tagName === "br" &&
+          tag.lastClosingBracketAt
+        ) {
           brClosingBracketIndexesArr.push(tag.lastClosingBracketAt);
 
           DEV &&
@@ -965,6 +965,8 @@ function det(str: string, opts?: Partial<Opts>): Res {
 
         // 10. remove whitespace in front of UL/LI tags
         if (
+          tag.kind === "tag" &&
+          tag.status === "complete" &&
           (tagName === "ul" || tagName === "li") &&
           !resolvedOpts.removeLineBreaks &&
           str[tag.lastOpeningBracketAt - 1] &&
@@ -990,6 +992,8 @@ function det(str: string, opts?: Partial<Opts>): Res {
 
         // 11. remove whitespace before closing bracket
         if (
+          tag.kind === "tag" &&
+          tag.status === "complete" &&
           str[tag.lastClosingBracketAt - 1] &&
           !str[tag.lastClosingBracketAt - 1].trim() &&
           typeof tag.lastClosingBracketAt === "number" &&

@@ -236,6 +236,9 @@ test("008 - opts.cb - cb.tag contents are correct on ignored tags", () => {
     capturedTags,
     [
       {
+        kind: "tag",
+        start: 1,
+        end: 6,
         attributes: [],
         lastClosingBracketAt: 5,
         lastOpeningBracketAt: 1,
@@ -246,6 +249,7 @@ test("008 - opts.cb - cb.tag contents are correct on ignored tags", () => {
         nameContainsLetters: true,
         nameEnds: 4,
         name: "br",
+        status: "complete",
       },
     ],
     "008.01",
@@ -286,6 +290,9 @@ test("009 - opts.cb - cb.tag contents are right on non-ignored tags", () => {
     capturedTags,
     [
       {
+        kind: "tag",
+        start: 3,
+        end: 8,
         attributes: [],
         lastClosingBracketAt: 7,
         lastOpeningBracketAt: 3,
@@ -296,8 +303,12 @@ test("009 - opts.cb - cb.tag contents are right on non-ignored tags", () => {
         nameStarts: 4,
         onlyPlausible: false,
         slashPresent: false,
+        status: "complete",
       },
       {
+        kind: "tag",
+        start: 11,
+        end: 15,
         attributes: [],
         lastClosingBracketAt: 14,
         lastOpeningBracketAt: 11,
@@ -308,8 +319,12 @@ test("009 - opts.cb - cb.tag contents are right on non-ignored tags", () => {
         nameStarts: 12,
         onlyPlausible: false,
         slashPresent: false,
+        status: "complete",
       },
       {
+        kind: "tag",
+        start: 18,
+        end: 23,
         attributes: [],
         lastClosingBracketAt: 22,
         lastOpeningBracketAt: 18,
@@ -320,8 +335,12 @@ test("009 - opts.cb - cb.tag contents are right on non-ignored tags", () => {
         nameStarts: 19,
         onlyPlausible: false,
         slashPresent: 21,
+        status: "complete",
       },
       {
+        kind: "tag",
+        start: 26,
+        end: 32,
         attributes: [],
         lastClosingBracketAt: 31,
         lastOpeningBracketAt: 26,
@@ -332,6 +351,7 @@ test("009 - opts.cb - cb.tag contents are right on non-ignored tags", () => {
         nameStarts: 27,
         onlyPlausible: false,
         slashPresent: 30,
+        status: "complete",
       },
     ],
     "009.01",
@@ -867,6 +887,93 @@ test("022 - opts.cb - tight malformed ranged tags retain pair semantics", () => 
       events.length,
       "022.05",
     );
+  }
+});
+
+test("023 - opts.cb - callback token variants match their public types", () => {
+  const firstToken = (input) => {
+    let token;
+    stripHtml(input, {
+      cb: (event) => {
+        token ??= event.tag;
+      },
+    });
+    return token;
+  };
+
+  const complete = firstToken('A<b x="y">B');
+  const incomplete = firstToken("A<div<span>B");
+  const inferred = firstToken('A> head class="z"> B');
+  const comment = firstToken("A<!--x-->B");
+  const cdata = firstToken("A<![CDATA[x]]>B");
+  const encoded = firstToken("A&lt;b&gt;B");
+
+  equal(
+    {
+      kind: complete.kind,
+      status: complete.status,
+      start: complete.start,
+      end: complete.end,
+    },
+    { kind: "tag", status: "complete", start: 1, end: 10 },
+    "023.01",
+  );
+  equal(
+    {
+      opening: complete.lastOpeningBracketAt,
+      closing: complete.lastClosingBracketAt,
+    },
+    { opening: 1, closing: 9 },
+    "023.02",
+  );
+  equal(
+    {
+      kind: incomplete.kind,
+      status: incomplete.status,
+      start: incomplete.start,
+      end: incomplete.end,
+    },
+    { kind: "tag", status: "incomplete", start: 1, end: 5 },
+    "023.03",
+  );
+  not.ok(
+    Object.hasOwn(incomplete, "lastClosingBracketAt"),
+    "023.04",
+  );
+  equal(
+    {
+      kind: inferred.kind,
+      status: inferred.status,
+      start: inferred.start,
+      end: inferred.end,
+      name: inferred.name,
+    },
+    { kind: "tag", status: "inferred", start: 2, end: 18, name: "head" },
+    "023.05",
+  );
+  not.ok(Object.hasOwn(inferred, "attributes"), "023.06");
+  equal(comment, { kind: "comment", start: 1, end: 9 }, "023.07");
+  equal(cdata, { kind: "cdata", start: 1, end: 14 }, "023.08");
+  equal(
+    {
+      kind: encoded.kind,
+      status: encoded.status,
+      start: encoded.start,
+      end: encoded.end,
+    },
+    { kind: "tag", status: "complete", start: 1, end: 10 },
+    "023.09",
+  );
+  equal("A&lt;b&gt;B".slice(encoded.start, encoded.end), "&lt;b&gt;", "023.10");
+
+  for (const [input, token, expectedSlice] of [
+    ['A<b x="y">B', complete, '<b x="y">'],
+    ["A<div<span>B", incomplete, "<div"],
+    ['A> head class="z"> B', inferred, ' head class="z">'],
+    ["A<!--x-->B", comment, "<!--x-->"],
+    ["A<![CDATA[x]]>B", cdata, "<![CDATA[x]]>"],
+  ]) {
+    equal(input.slice(token.start, token.end), expectedSlice, "023.11");
   }
 });
 
