@@ -7,52 +7,52 @@ type Ranges = Range[] | null;
 
 declare const version: string;
 interface Attribute {
-  nameStarts?: number;
-  nameEnds?: number;
-  equalsAt?: number;
-  name?: string;
-  valueStarts?: number;
-  valueEnds?: number;
-  value?: string;
+  readonly nameStarts?: number;
+  readonly nameEnds?: number;
+  readonly equalsAt?: number;
+  readonly name?: string;
+  readonly valueStarts?: number;
+  readonly valueEnds?: number;
+  readonly value?: string;
 }
 interface TokenBase {
-  start: number;
-  end: number;
+  readonly start: number;
+  readonly end: number;
 }
 interface NamedTagBase extends TokenBase {
-  kind: "tag";
-  attributes: Attribute[];
-  slashPresent: number | false;
-  leftOuterWhitespace: number;
-  onlyPlausible: boolean;
-  nameStarts: number;
-  nameContainsLetters: boolean;
-  nameEnds: number;
-  name: string;
+  readonly kind: "tag";
+  readonly attributes: readonly Attribute[];
+  readonly slashPresent: number | false;
+  readonly leftOuterWhitespace: number;
+  readonly onlyPlausible: boolean;
+  readonly nameStarts: number;
+  readonly nameContainsLetters: boolean;
+  readonly nameEnds: number;
+  readonly name: string;
 }
 interface CompleteTag extends NamedTagBase {
-  status: "complete";
-  lastClosingBracketAt: number;
-  lastOpeningBracketAt: number;
+  readonly status: "complete";
+  readonly lastClosingBracketAt: number;
+  readonly lastOpeningBracketAt: number;
 }
 interface IncompleteTag extends NamedTagBase {
-  status: "incomplete";
-  lastClosingBracketAt?: never;
-  lastOpeningBracketAt: number;
+  readonly status: "incomplete";
+  readonly lastClosingBracketAt?: never;
+  readonly lastOpeningBracketAt: number;
 }
 interface InferredTag extends TokenBase {
-  kind: "tag";
-  status: "inferred";
-  nameStarts: number;
-  nameContainsLetters: boolean;
-  nameEnds: number;
-  name: string;
+  readonly kind: "tag";
+  readonly status: "inferred";
+  readonly nameStarts: number;
+  readonly nameContainsLetters: boolean;
+  readonly nameEnds: number;
+  readonly name: string;
 }
 interface CommentTag extends TokenBase {
-  kind: "comment";
+  readonly kind: "comment";
 }
 interface CdataTag extends TokenBase {
-  kind: "cdata";
+  readonly kind: "cdata";
 }
 type CallbackToken =
   | CompleteTag
@@ -61,18 +61,18 @@ type CallbackToken =
   | CommentTag
   | CdataTag;
 type Tag = CallbackToken;
-type CallbackRange = [
+type CallbackRange = readonly [
   from: number,
   to: number,
   whatToInsert: string | null | undefined,
 ];
 interface CbObj {
-  tag: Tag;
-  deleteFrom: null | number;
-  deleteTo: null | number;
-  insert: null | undefined | string;
-  rangesArr: Ranges$1;
-  proposedReturn: CallbackRange | null;
+  readonly tag: Tag;
+  readonly deleteFrom: null | number;
+  readonly deleteTo: null | number;
+  readonly insert: null | undefined | string;
+  readonly rangesArr: Ranges$1;
+  readonly proposedReturn: CallbackRange | null;
 }
 interface Opts {
   ignoreTags: string[];

@@ -977,4 +977,73 @@ test("023 - opts.cb - callback token variants match their public types", () => {
   }
 });
 
+test("024 - opts.cb - callback metadata is isolated from parser state", () => {
+  const input =
+    '<script src="x">payload</script><a href="u">link</a><!--z--><![CDATA[q]]>';
+  const baseline = stripHtml(input);
+  const tokens = [];
+  const proposals = [];
+  const attributes = [];
+
+  const hostile = stripHtml(input, {
+    cb: (event) => {
+      const savedProposal = event.proposedReturn
+        ? [...event.proposedReturn]
+        : null;
+      tokens.push(event.tag);
+
+      event.tag.start = -1;
+      event.tag.end = -1;
+      if (event.tag.kind === "tag") {
+        event.tag.name = "changed";
+        if (event.tag.attributes) {
+          attributes.push(...event.tag.attributes);
+          if (event.tag.attributes[0]) {
+            event.tag.attributes[0].name = "changed";
+          }
+          event.tag.attributes.push({ name: "injected" });
+        }
+        if (event.tag.status === "complete") {
+          event.tag.lastOpeningBracketAt = -1;
+          event.tag.lastClosingBracketAt = -1;
+        }
+      }
+      if (event.proposedReturn) {
+        proposals.push(event.proposedReturn);
+        event.proposedReturn[0] = input.length;
+        event.proposedReturn[1] = input.length;
+        event.proposedReturn[2] = "changed";
+      }
+      if (savedProposal) {
+        event.rangesArr.push(...savedProposal);
+      }
+    },
+  });
+
+  equal(hostile, baseline, "024.01");
+  equal(new Set(tokens).size, tokens.length, "024.02");
+  equal(new Set(proposals).size, proposals.length, "024.03");
+  equal(new Set(attributes).size, attributes.length, "024.04");
+
+  const retained = [];
+  const snapshots = [];
+  const retainedResult = stripHtml(input, {
+    cb: (event) => {
+      retained.push({ tag: event.tag, proposedReturn: event.proposedReturn });
+      snapshots.push(
+        JSON.stringify({
+          tag: event.tag,
+          proposedReturn: event.proposedReturn,
+        }),
+      );
+      if (event.proposedReturn) {
+        event.rangesArr.push(...event.proposedReturn);
+      }
+    },
+  });
+
+  equal(retainedResult, baseline, "024.05");
+  equal(retained.map((event) => JSON.stringify(event)), snapshots, "024.06");
+});
+
 test.run();

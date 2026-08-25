@@ -53,59 +53,59 @@ declare let DEV: boolean;
 type GatheredRange = [number, number, (string | null | undefined)?];
 
 export interface Attribute {
-  nameStarts?: number;
-  nameEnds?: number;
-  equalsAt?: number;
-  name?: string;
-  valueStarts?: number;
-  valueEnds?: number;
-  value?: string;
+  readonly nameStarts?: number;
+  readonly nameEnds?: number;
+  readonly equalsAt?: number;
+  readonly name?: string;
+  readonly valueStarts?: number;
+  readonly valueEnds?: number;
+  readonly value?: string;
 }
 
 interface TokenBase {
-  start: number;
-  end: number;
+  readonly start: number;
+  readonly end: number;
 }
 
 interface NamedTagBase extends TokenBase {
-  kind: "tag";
-  attributes: Attribute[];
-  slashPresent: number | false;
-  leftOuterWhitespace: number;
-  onlyPlausible: boolean;
-  nameStarts: number;
-  nameContainsLetters: boolean;
-  nameEnds: number;
-  name: string;
+  readonly kind: "tag";
+  readonly attributes: readonly Attribute[];
+  readonly slashPresent: number | false;
+  readonly leftOuterWhitespace: number;
+  readonly onlyPlausible: boolean;
+  readonly nameStarts: number;
+  readonly nameContainsLetters: boolean;
+  readonly nameEnds: number;
+  readonly name: string;
 }
 
 export interface CompleteTag extends NamedTagBase {
-  status: "complete";
-  lastClosingBracketAt: number;
-  lastOpeningBracketAt: number;
+  readonly status: "complete";
+  readonly lastClosingBracketAt: number;
+  readonly lastOpeningBracketAt: number;
 }
 
 export interface IncompleteTag extends NamedTagBase {
-  status: "incomplete";
-  lastClosingBracketAt?: never;
-  lastOpeningBracketAt: number;
+  readonly status: "incomplete";
+  readonly lastClosingBracketAt?: never;
+  readonly lastOpeningBracketAt: number;
 }
 
 export interface InferredTag extends TokenBase {
-  kind: "tag";
-  status: "inferred";
-  nameStarts: number;
-  nameContainsLetters: boolean;
-  nameEnds: number;
-  name: string;
+  readonly kind: "tag";
+  readonly status: "inferred";
+  readonly nameStarts: number;
+  readonly nameContainsLetters: boolean;
+  readonly nameEnds: number;
+  readonly name: string;
 }
 
 export interface CommentTag extends TokenBase {
-  kind: "comment";
+  readonly kind: "comment";
 }
 
 export interface CdataTag extends TokenBase {
-  kind: "cdata";
+  readonly kind: "cdata";
 }
 
 export type CallbackToken =
@@ -117,19 +117,19 @@ export type CallbackToken =
 
 export type Tag = CallbackToken;
 
-export type CallbackRange = [
+export type CallbackRange = readonly [
   from: number,
   to: number,
   whatToInsert: string | null | undefined,
 ];
 
 export interface CbObj {
-  tag: Tag;
-  deleteFrom: null | number;
-  deleteTo: null | number;
-  insert: null | undefined | string;
-  rangesArr: Ranges;
-  proposedReturn: CallbackRange | null;
+  readonly tag: Tag;
+  readonly deleteFrom: null | number;
+  readonly deleteTo: null | number;
+  readonly insert: null | undefined | string;
+  readonly rangesArr: Ranges;
+  readonly proposedReturn: CallbackRange | null;
 }
 
 interface InternalCbObj extends Omit<CbObj, "tag"> {
@@ -1241,7 +1241,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
   function rangesWithProposal(
     ranges: RangesType,
-    proposedReturn: Range | null,
+    proposedReturn: Range | CallbackRange | null,
   ): RangesType {
     const accumulator = createRangesAccumulator();
     ranges?.forEach((range) => {
@@ -1274,7 +1274,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       deleteTo: proposedReturn ? proposedReturn[1] : null,
       insert: proposedReturn ? proposedReturn[2] : null,
       rangesArr: rangesToDelete,
-      proposedReturn,
+      proposedReturn: proposedReturn ? [...proposedReturn] : null,
     };
     const shouldCompare = callbackRangesMatchDefaultProposals;
     const rangesBefore = shouldCompare
@@ -4057,10 +4057,10 @@ function mapDecodedRange(
   segments: DecodeSegment[],
 ): Range;
 function mapDecodedRange(
-  range: Range,
+  range: Range | CallbackRange,
   decodedStr: string,
   segments: DecodeSegment[],
-): Range {
+): Range | CallbackRange {
   const [from, to, insert] = range;
   const mappedFrom = mapDecodedStart(from, decodedStr, segments);
   const mappedTo = mapDecodedEnd(to, decodedStr, segments);
@@ -4086,7 +4086,7 @@ function mapAttributeToOriginal(
   decodedStr: string,
   segments: DecodeSegment[],
 ): Attribute {
-  const mapped: Attribute = {};
+  const mapped: { -readonly [Key in keyof Attribute]: Attribute[Key] } = {};
   if (typeof attribute.nameStarts === "number") {
     mapped.nameStarts = mapDecodedStart(
       attribute.nameStarts,

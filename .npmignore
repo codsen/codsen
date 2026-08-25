@@ -13,6 +13,7 @@ src
 tap
 temp
 test
+test-types
 test_alt
 test-folder
 test-util

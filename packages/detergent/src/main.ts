@@ -653,7 +653,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
                 );
             } else {
               if (proposedReturn) {
-                finalIndexesToDelete.push(proposedReturn);
+                finalIndexesToDelete.push(...proposedReturn);
               }
 
               DEV &&
@@ -665,8 +665,8 @@ function det(str: string, opts?: Partial<Opts>): Res {
                 `didn't fell into resolvedOpts.stripHtmlAddNewLine clauses`,
               );
             if (proposedReturn) {
-              finalIndexesToDelete.push(proposedReturn);
-              skipArr.push(proposedReturn);
+              finalIndexesToDelete.push(...proposedReturn);
+              skipArr.push(...proposedReturn);
             }
 
             DEV &&
