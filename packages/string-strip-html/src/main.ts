@@ -1338,6 +1338,72 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     clearCurrentTagState();
   }
 
+  function finalizeKeptTag(
+    i: number,
+    status: "complete" | "incomplete",
+    end: number,
+  ): boolean {
+    const ignoredByName = resolvedOpts.ignoreTags.includes(tag.name);
+    const ignoredWithContents = checkIgnoreTagsWithTheirContents(
+      i,
+      resolvedOpts,
+      tag,
+    );
+    const shouldKeep =
+      !strip ||
+      (resolvedOpts.stripRecognisedHTMLOnly &&
+        typeof tag.name === "string" &&
+        !definitelyTagNames.has(tag.name.toLowerCase()) &&
+        !singleLetterTags.has(tag.name.toLowerCase())) ||
+      (!onlyStripTagsMode && (ignoredByName || ignoredWithContents)) ||
+      (onlyStripTagsMode && !resolvedOpts.onlyStripTags.includes(tag.name)) ||
+      resolvedOpts.ignoreTagsWithTheirContents.includes(tag.name);
+
+    if (!shouldKeep) {
+      return false;
+    }
+
+    if (ignoredWithContents) {
+      if (tag.slashPresent) {
+        for (let y = rangedOpeningTagsForIgnoring.length; y--; ) {
+          if (rangedOpeningTagsForIgnoring[y].name === tag.name) {
+            rangedOpeningTagsForIgnoring.splice(y, 1);
+            break;
+          }
+        }
+        if (!rangedOpeningTagsForIgnoring.length) {
+          strip = true;
+        }
+      } else {
+        if (strip) {
+          strip = false;
+        }
+        rangedOpeningTagsForIgnoring.push(tag);
+      }
+    }
+
+    emitCallback(
+      {
+        tag,
+        deleteFrom: null,
+        deleteTo: null,
+        insert: null,
+        rangesArr: rangesToDelete,
+        proposedReturn: null,
+      },
+      {
+        kind: "tag",
+        status,
+        start: tag.lastOpeningBracketAt,
+        end,
+      },
+    );
+
+    pendingMalformedStart = null;
+    clearCurrentTagState();
+    return true;
+  }
+
   // step 1.
   // ===========================================================================
 
@@ -2357,24 +2423,11 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               );
           }
 
-          if (
-            // if it's an ignored tag
-            resolvedOpts.ignoreTags.includes(tag.name) ||
-            // or ignored ranged tag
-            checkIgnoreTagsWithTheirContents(i, resolvedOpts, tag) ||
-            // it's not a known HTML tag and...
-            (!definitelyTagNames.has(tag.name) &&
-              // ...EITHER situation is suspicious
-              (tag.onlyPlausible ||
-                // ...OR user instructed to strip only definitely HTML
-                resolvedOpts.stripRecognisedHTMLOnly))
-          ) {
+          if (finalizeKeptTag(i, "incomplete", i + 1)) {
             DEV &&
               console.log(
                 `Ignored tag - \u001b[${31}m${`WIPE AND RESET`}\u001b[${39}m`,
               );
-            pendingMalformedStart = null;
-            clearCurrentTagState();
             continue;
           }
 
@@ -2667,127 +2720,14 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             );
         }
 
-        // let's define the flags here to prevent repetition and
-        // make it easier to nest logical clauses
-        const ignoreTags = resolvedOpts.ignoreTags.includes(tag.name);
-        const ignoreTagsWithTheirContents = checkIgnoreTagsWithTheirContents(
-          i,
-          resolvedOpts,
-          tag,
-        );
-        DEV &&
-          console.log(
-            `SET ignoreTags = ${ignoreTags}; ignoreTagsWithTheirContents = ${ignoreTagsWithTheirContents}`,
-          );
-
-        DEV && console.log(`onlyStripTagsMode = ${onlyStripTagsMode}`);
-        // if we should not strip this tag
         if (
-          !strip ||
-          (resolvedOpts.stripRecognisedHTMLOnly &&
-            typeof tag.name === "string" &&
-            !definitelyTagNames.has(tag.name.toLowerCase()) &&
-            !singleLetterTags.has(tag.name.toLowerCase())) ||
-          (!onlyStripTagsMode && (ignoreTags || ignoreTagsWithTheirContents)) ||
-          (onlyStripTagsMode &&
-            !resolvedOpts.onlyStripTags.includes(tag.name)) ||
-          resolvedOpts.ignoreTagsWithTheirContents.includes(tag.name)
+          finalizeKeptTag(
+            i,
+            "complete",
+            tag.lastClosingBracketAt + 1,
+          )
         ) {
-          DEV && console.log();
-          // if the "strip" flag is not activated, if we're not already between
-          // ranged ignored tags, activate the "strip" flag
-          if (ignoreTagsWithTheirContents) {
-            // it depends, is it an opening tag
-            if (tag.slashPresent) {
-              DEV && console.log(`it's an closing closing ranged tag`);
-
-              for (let y = rangedOpeningTagsForIgnoring.length; y--; ) {
-                if (rangedOpeningTagsForIgnoring[y].name === tag.name) {
-                  // 2. delete the reference to this tag
-                  rangedOpeningTagsForIgnoring.splice(y, 1);
-                  DEV &&
-                    console.log(
-                      `new \u001b[${33}m${`rangedOpeningTagsForIgnoring`}\u001b[${39}m = ${JSON.stringify(
-                        rangedOpeningTagsForIgnoring,
-                        null,
-                        4,
-                      )}`,
-                    );
-                  // 3. stop the loop
-                  break;
-                }
-              }
-
-              // if by now the rangedOpeningTagsForIgnoring[] is empty,
-              // disable the "strip" to resume the tag stripping
-              if (!rangedOpeningTagsForIgnoring.length) {
-                strip = true;
-                DEV &&
-                  console.log(
-                    `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`strip`}\u001b[${39}m`} = ${JSON.stringify(
-                      strip,
-                      null,
-                      4,
-                    )}`,
-                  );
-              }
-            } else {
-              DEV && console.log(`it's an opening closing ranged tag`);
-              if (strip) {
-                strip = false;
-                DEV &&
-                  console.log(
-                    `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`strip`}\u001b[${39}m`} = ${JSON.stringify(
-                      strip,
-                      null,
-                      4,
-                    )}`,
-                  );
-              }
-
-              rangedOpeningTagsForIgnoring.push(tag);
-              DEV &&
-                console.log(
-                  `pushed tag{} to \u001b[${33}m${`rangedOpeningTagsForIgnoring`}\u001b[${39}m\nwhich is now equal to:\n${JSON.stringify(
-                    rangedOpeningTagsForIgnoring,
-                    null,
-                    4,
-                  )}`,
-                );
-            }
-          }
-
-          DEV &&
-            console.log(
-              `${`\u001b[${32}m${`PING CB() with nulls`}\u001b[${39}m`}`,
-            );
-          emitCallback(
-            {
-              tag,
-              deleteFrom: null,
-              deleteTo: null,
-              insert: null,
-              rangesArr: rangesToDelete,
-              proposedReturn: null,
-            },
-            {
-              kind: "tag",
-              status: "complete",
-              start: tag.lastOpeningBracketAt,
-              end: tag.lastClosingBracketAt + 1,
-            },
-          );
-
-          // don't submit the tag onto "filteredTagLocations"
-
-          // then reset:
-          DEV &&
-            console.log(
-              `Ignored tag - \u001b[${31}m${`WIPE AND RESET`}\u001b[${39}m`,
-            );
-          tag = {};
-          attrObj = {};
-          pendingMalformedStart = null;
+          DEV && console.log(`kept tag and emitted null callback proposal`);
         } else if (
           !tag.onlyPlausible ||
           // tag name is recognised and there are no attributes:

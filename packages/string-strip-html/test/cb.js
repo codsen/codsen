@@ -1125,4 +1125,100 @@ test("025 - opts.cb - unquoted attribute slashes remain value data", () => {
   );
 });
 
+test("026 - opts.cb - incomplete tags follow normal keep policy", () => {
+  const runForwarded = (input, options) => {
+    const events = [];
+    const response = stripHtml(input, {
+      ...options,
+      cb: (event) => {
+        events.push(event);
+        if (event.proposedReturn) {
+          event.rangesArr.push(...event.proposedReturn);
+        }
+      },
+    });
+    return { events, response };
+  };
+  const cases = [
+    { input: "<hr", name: "hr", locations: [[0, 3]] },
+    { input: "</hr", name: "hr", locations: [[0, 4]] },
+    { input: "<hr/", name: "hr", locations: [[0, 4]] },
+    { input: "<x-foo", name: "x-foo", locations: [[0, 6]] },
+    {
+      input: "<script>x</script",
+      name: "script",
+      locations: [
+        [0, 8],
+        [9, 17],
+      ],
+    },
+  ];
+
+  for (const { input, name, locations } of cases) {
+    for (const options of [
+      { ignoreTags: [name] },
+      { onlyStripTags: ["span"] },
+      { ignoreTagsWithTheirContents: [name] },
+    ]) {
+      const baseline = stripHtml(input, options);
+      const { events, response } = runForwarded(input, options);
+
+      equal(response.result, baseline.result, "026.01");
+      equal(response.ranges, baseline.ranges, "026.02");
+      equal(response.allTagLocations, baseline.allTagLocations, "026.03");
+      equal(
+        response.filteredTagLocations,
+        baseline.filteredTagLocations,
+        "026.04",
+      );
+      equal(response.result, input, "026.05");
+      equal(response.ranges, null, "026.06");
+      equal(response.allTagLocations, locations, "026.07");
+      equal(response.filteredTagLocations, [], "026.08");
+      equal(
+        events.map(({ tag }) => ({
+          status: tag.status,
+          start: tag.start,
+          end: tag.end,
+        })),
+        locations.map(([start, end], index) => ({
+          status:
+            input.startsWith("<script") && index === 0
+              ? "complete"
+              : "incomplete",
+          start,
+          end,
+        })),
+        "026.09",
+      );
+      equal(
+        events.map(
+          ({ deleteFrom, deleteTo, insert, proposedReturn }) => [
+            deleteFrom,
+            deleteTo,
+            insert,
+            proposedReturn,
+          ],
+        ),
+        locations.map(() => [null, null, null, null]),
+        "026.10",
+      );
+    }
+  }
+
+  for (const options of [
+    { onlyStripTags: ["hr"] },
+    { ignoreTags: ["span"] },
+    { ignoreTagsWithTheirContents: ["span"] },
+  ]) {
+    const { events, response } = runForwarded("<hr", options);
+    equal(response.result, "", "026.11");
+    equal(response.ranges, [[0, 3]], "026.12");
+    equal(response.filteredTagLocations, [[0, 3]], "026.13");
+    equal(events.length, 1, "026.14");
+    equal(events[0].tag.status, "incomplete", "026.15");
+    equal(events[0].proposedReturn, [0, 3, "  "], "026.16");
+  }
+});
+
 test.run();
