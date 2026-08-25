@@ -238,10 +238,46 @@ test("014 - wrong opts.stripTogetherWithTheirContents", () => {
   );
 });
 
+test("015 - validates opts.cb eagerly", () => {
+  const invalidValues = [true, 1, "callback", [], {}];
+  const inputs = ["plain", "<b>x</b>"];
+
+  for (const input of inputs) {
+    for (const cb of invalidValues) {
+      throws(
+        () => {
+          stripHtml(input, { cb });
+        },
+        /^string-strip-html\/stripHtml\(\): \[THROW_ID_10\]/,
+        "015.01",
+      );
+    }
+  }
+
+  const falsyValues = [false, 0, "", null, undefined, Number.NaN];
+  for (const input of inputs) {
+    for (const cb of falsyValues) {
+      equal(stripHtml(input, { cb }), stripHtml(input), "015.02");
+    }
+  }
+
+  let callbackCount = 0;
+  const actual = stripHtml("<b>x</b>", {
+    cb: ({ rangesArr, proposedReturn }) => {
+      callbackCount += 1;
+      if (proposedReturn) {
+        rangesArr.push(...proposedReturn);
+      }
+    },
+  });
+  equal(actual, stripHtml("<b>x</b>"), "015.03");
+  equal(callbackCount, 2, "015.04");
+});
+
 // legit input
 // -----------------------------------------------------------------------------
 
-test("015 - empty input", () => {
+test("016 - empty input", () => {
   let { result, ranges, allTagLocations, filteredTagLocations } = stripHtml("");
   equal(
     { result, ranges, allTagLocations, filteredTagLocations },
@@ -251,11 +287,11 @@ test("015 - empty input", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "015.01",
+    "016.01",
   );
 });
 
-test("016 - tabs only", () => {
+test("017 - tabs only", () => {
   let input = "\t\t\t";
   equal(
     stripHtml(input, {
@@ -264,34 +300,6 @@ test("016 - tabs only", () => {
     {
       result: input,
       ranges: null,
-      allTagLocations: [],
-      filteredTagLocations: [],
-    },
-    "016.01",
-  );
-  equal(
-    stripHtml(input, {
-      trimOnlySpaces: false,
-    }),
-    {
-      result: "",
-      ranges: [[0, 3]],
-      allTagLocations: [],
-      filteredTagLocations: [],
-    },
-    "016.02",
-  );
-});
-
-test("017 - spaces only", () => {
-  let input = "   ";
-  equal(
-    stripHtml(input, {
-      trimOnlySpaces: true,
-    }),
-    {
-      result: "",
-      ranges: [[0, 3]],
       allTagLocations: [],
       filteredTagLocations: [],
     },
@@ -308,6 +316,34 @@ test("017 - spaces only", () => {
       filteredTagLocations: [],
     },
     "017.02",
+  );
+});
+
+test("018 - spaces only", () => {
+  let input = "   ";
+  equal(
+    stripHtml(input, {
+      trimOnlySpaces: true,
+    }),
+    {
+      result: "",
+      ranges: [[0, 3]],
+      allTagLocations: [],
+      filteredTagLocations: [],
+    },
+    "018.01",
+  );
+  equal(
+    stripHtml(input, {
+      trimOnlySpaces: false,
+    }),
+    {
+      result: "",
+      ranges: [[0, 3]],
+      allTagLocations: [],
+      filteredTagLocations: [],
+    },
+    "018.02",
   );
 });
 

@@ -1231,6 +1231,12 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       );
   }
 
+  if (resolvedOpts.cb && typeof resolvedOpts.cb !== "function") {
+    throw new TypeError(
+      `string-strip-html/stripHtml(): [THROW_ID_10] The Optional Options Object's key cb should be a function or something falsy but it was given as type ${typeof resolvedOpts.cb}, equal to ${formatDiagnosticValue(resolvedOpts.cb, 4)}`,
+    );
+  }
+
   // prep the resolvedOpts.cb
   DEV && console.log(`resolvedOpts.cb type = ${typeof resolvedOpts.cb}`);
   if (!resolvedOpts.cb) {
