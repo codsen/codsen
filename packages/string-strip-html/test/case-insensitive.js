@@ -81,10 +81,7 @@ test("004 - every tag-list option is case-insensitive", () => {
 });
 
 test("005 - content-ignore pairs mixed-case nested tags", () => {
-  const inputs = [
-    "x<DiV><b>y</b></dIv>z",
-    "x<DiV><DIV><b>y</b></div></dIv>z",
-  ];
+  const inputs = ["x<DiV><b>y</b></dIv>z", "x<DiV><DIV><b>y</b></div></dIv>z"];
 
   for (const input of inputs) {
     equal(
@@ -119,17 +116,9 @@ test("006 - ignoreTags wins across option casing", () => {
 
 test("007 - incomplete standard tags match case-insensitively", () => {
   equal(stripHtml("<DIV", { ignoreTags: ["div"] }).result, "<DIV", "007.01");
-  equal(
-    stripHtml("</dIv", { ignoreTags: ["DIV"] }).result,
-    "</dIv",
-    "007.02",
-  );
+  equal(stripHtml("</dIv", { ignoreTags: ["DIV"] }).result, "</dIv", "007.02");
   equal(stripHtml("<DIV", { onlyStripTags: ["div"] }).result, "", "007.03");
-  equal(
-    stripHtml("</dIv", { onlyStripTags: ["DIV"] }).result,
-    "",
-    "007.04",
-  );
+  equal(stripHtml("</dIv", { onlyStripTags: ["DIV"] }).result, "", "007.04");
 });
 
 test("008 - callbacks retain source tag-name casing", () => {
@@ -150,11 +139,7 @@ test("008 - callbacks retain source tag-name casing", () => {
 
 test("009 - custom tag names use the same case-insensitive contract", () => {
   const input = "a<MyTag>x</mYtAg>b";
-  equal(
-    stripHtml(input, { ignoreTags: ["mytag"] }).result,
-    input,
-    "009.01",
-  );
+  equal(stripHtml(input, { ignoreTags: ["mytag"] }).result, input, "009.01");
   equal(
     stripHtml(input, { onlyStripTags: ["mytag"] }).result,
     "a x b",

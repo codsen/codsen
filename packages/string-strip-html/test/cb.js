@@ -522,14 +522,7 @@ test("015 - opts.cb - decoded input exposes only original coordinates", () => {
   const events = [];
 
   const forwarded = stripHtml(input, {
-    cb: ({
-      tag,
-      deleteFrom,
-      deleteTo,
-      insert,
-      rangesArr,
-      proposedReturn,
-    }) => {
+    cb: ({ tag, deleteFrom, deleteTo, insert, rangesArr, proposedReturn }) => {
       events.push({
         tag,
         deleteFrom,
@@ -558,8 +551,16 @@ test("015 - opts.cb - decoded input exposes only original coordinates", () => {
     events[1].proposedReturn,
     "015.06",
   );
-  equal(events[0].proposedReturn.slice(0, 2), [openingStart, openingEnd], "015.07");
-  equal(events[1].proposedReturn.slice(0, 2), [closingStart, closingEnd], "015.08");
+  equal(
+    events[0].proposedReturn.slice(0, 2),
+    [openingStart, openingEnd],
+    "015.07",
+  );
+  equal(
+    events[1].proposedReturn.slice(0, 2),
+    [closingStart, closingEnd],
+    "015.08",
+  );
   equal(events[0].rangesAtEntry, null, "015.09");
   equal(events[1].rangesAtEntry, [[openingStart, openingEnd]], "015.10");
   equal(
@@ -616,10 +617,14 @@ test("015 - opts.cb - decoded input exposes only original coordinates", () => {
     "&sol;",
     "015.18",
   );
-  equal(forwarded.allTagLocations, [
-    [openingStart, openingEnd],
-    [closingStart, closingEnd],
-  ], "015.19");
+  equal(
+    forwarded.allTagLocations,
+    [
+      [openingStart, openingEnd],
+      [closingStart, closingEnd],
+    ],
+    "015.19",
+  );
 });
 
 test("016 - opts.cb - arbitrary original-coordinate ranges remain exact", () => {
@@ -642,10 +647,14 @@ test("016 - opts.cb - arbitrary original-coordinate ranges remain exact", () => 
   equal(actual.ranges, [[2, 4, "X"]], "016.03");
   equal(callbackRanges.current(), actual.ranges, "016.04");
   equal(rApply(input, actual.ranges), actual.result, "016.05");
-  equal(actual.allTagLocations, [
-    [6, 9],
-    [10, 14],
-  ], "016.06");
+  equal(
+    actual.allTagLocations,
+    [
+      [6, 9],
+      [10, 14],
+    ],
+    "016.06",
+  );
 });
 
 test("017 - opts.cb - skipped decoding is an identity coordinate mapping", () => {
@@ -705,11 +714,7 @@ test("018 - opts.cb - dirty-tag recognition is callback-independent", () => {
     equal(ignored.allTagLocations, baseline.allTagLocations, "018.04");
     equal(ignored.filteredTagLocations, [], "018.05");
     equal(ignored.result, input, "018.06");
-    equal(
-      forwardedEvents[0].proposedReturn,
-      baseline.ranges[0],
-      "018.07",
-    );
+    equal(forwardedEvents[0].proposedReturn, baseline.ranges[0], "018.07");
   }
 });
 
@@ -928,10 +933,7 @@ test("023 - opts.cb - callback token variants match their public types", () => {
     { kind: "tag", status: "incomplete", start: 1, end: 5 },
     "023.03",
   );
-  not.ok(
-    Object.hasOwn(incomplete, "lastClosingBracketAt"),
-    "023.04",
-  );
+  not.ok(Object.hasOwn(incomplete, "lastClosingBracketAt"), "023.04");
   equal(
     {
       kind: inferred.kind,
@@ -1035,7 +1037,11 @@ test("024 - opts.cb - callback metadata is isolated from parser state", () => {
   });
 
   equal(retainedResult, baseline, "024.05");
-  equal(retained.map((event) => JSON.stringify(event)), snapshots, "024.06");
+  equal(
+    retained.map((event) => JSON.stringify(event)),
+    snapshots,
+    "024.06",
+  );
 });
 
 test("025 - opts.cb - unquoted attribute slashes remain value data", () => {
@@ -1184,14 +1190,12 @@ test("026 - opts.cb - incomplete tags follow normal keep policy", () => {
         "026.09",
       );
       equal(
-        events.map(
-          ({ deleteFrom, deleteTo, insert, proposedReturn }) => [
-            deleteFrom,
-            deleteTo,
-            insert,
-            proposedReturn,
-          ],
-        ),
+        events.map(({ deleteFrom, deleteTo, insert, proposedReturn }) => [
+          deleteFrom,
+          deleteTo,
+          insert,
+          proposedReturn,
+        ]),
         locations.map(() => [null, null, null, null]),
         "026.10",
       );
@@ -1284,16 +1288,8 @@ test("027 - opts.cb - closing quotes are not attribute names", () => {
       value: "x",
     },
   ];
-  equal(
-    attributesFor('<div class=" " id="x">'),
-    adjacentAttributes,
-    "027.08",
-  );
-  equal(
-    attributesFor("<div class=' ' id='x'>"),
-    adjacentAttributes,
-    "027.09",
-  );
+  equal(attributesFor('<div class=" " id="x">'), adjacentAttributes, "027.08");
+  equal(attributesFor("<div class=' ' id='x'>"), adjacentAttributes, "027.09");
 });
 
 test("028 - opts.cb - contract invariants hold across parser branches", () => {
@@ -1370,12 +1366,7 @@ test("028 - opts.cb - contract invariants hold across parser branches", () => {
       input: "A<CoDe><b>x</b></cOdE>B",
       options: { ignoreTagsWithTheirContents: ["code"] },
       result: "A<CoDe><b>x</b></cOdE>B",
-      events: [
-        "tag:complete",
-        "tag:complete",
-        "tag:complete",
-        "tag:complete",
-      ],
+      events: ["tag:complete", "tag:complete", "tag:complete", "tag:complete"],
       tokens: ["<CoDe>", "<b>", "</b>", "</cOdE>"],
       names: ["CoDe", "b", "b", "cOdE"],
       attributes: [[], [], [], []],
@@ -1450,11 +1441,7 @@ test("028 - opts.cb - contract invariants hold across parser branches", () => {
       cb: (event) => {
         scalarEvents.push(recordEvent(event));
         if (event.proposedReturn) {
-          event.rangesArr.push(
-            event.deleteFrom,
-            event.deleteTo,
-            event.insert,
-          );
+          event.rangesArr.push(event.deleteFrom, event.deleteTo, event.insert);
         }
       },
     });

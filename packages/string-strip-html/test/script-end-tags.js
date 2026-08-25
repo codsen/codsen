@@ -96,11 +96,7 @@ test("003 - exact script names accept valid boundaries", () => {
 test("004 - supported dirty and incomplete boundaries still close", () => {
   const cases = [
     ["<script>x< / SCRIPT >y", "x y", ["<script>", "< / SCRIPT >"]],
-    [
-      "<script>x</script<body>y",
-      "x y",
-      ["<script>", "</script", "<body>"],
-    ],
+    ["<script>x</script<body>y", "x y", ["<script>", "</script", "<body>"]],
     ["<script>x</script", "x", ["<script>", "</script"]],
   ];
 

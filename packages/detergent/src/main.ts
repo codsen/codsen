@@ -530,10 +530,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
         // 1. add range from bracket to bracket to ignores list:
         skipArr.push(tag.start, tag.end);
 
-        DEV &&
-          console.log(
-            `PUSH to skipArr [${tag.start}, ${tag.end}]`,
-          );
+        DEV && console.log(`PUSH to skipArr [${tag.start}, ${tag.end}]`);
 
         // 2. strip tag if resolvedOpts.stripHtml is enabled
         if (

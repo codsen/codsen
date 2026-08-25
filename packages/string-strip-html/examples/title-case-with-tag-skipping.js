@@ -16,15 +16,17 @@ function tagAwareTitle(str) {
     stripTogetherWithTheirContents: ["*"],
   });
   let inverted = rInvert(
-    (ranges || []).map(([from, to]) => [from, to]).concat(
-      whitelist.reduce((acc, curr) => {
-        let rangesFindings = rRegex(new RegExp(curr, "gi"), str);
-        if (rangesFindings) {
-          return acc.concat(rangesFindings);
-        }
-        return acc;
-      }, []),
-    ),
+    (ranges || [])
+      .map(([from, to]) => [from, to])
+      .concat(
+        whitelist.reduce((acc, curr) => {
+          let rangesFindings = rRegex(new RegExp(curr, "gi"), str);
+          if (rangesFindings) {
+            return acc.concat(rangesFindings);
+          }
+          return acc;
+        }, []),
+      ),
     str.length,
   );
 

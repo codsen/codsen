@@ -175,4 +175,10 @@ test("07 - compatibility consumers share one artifact boundary per trigger", () 
   );
 });
 
+test("08 - the pre-push command only applies housekeeping", () => {
+  const manifest = JSON.parse(readRepositoryFile("package.json"));
+
+  equal(manifest.scripts.prepush, "npm run fix", "08.01");
+});
+
 test.run();

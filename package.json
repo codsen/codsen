@@ -55,6 +55,7 @@
     "perf": "turbo run perf --continue=dependencies-successful",
     "prep": "turbo run prep",
     "prepare": "git config core.hooksPath ops/git-hooks || true",
+    "prepush": "npm run fix",
     "prettier": "npm run check",
     "prettier:format": "npm run check:fix",
     "test": "npm run verify && npm run test:compatibility && npm run test:quality",

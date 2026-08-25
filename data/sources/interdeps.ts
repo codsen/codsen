@@ -198,7 +198,7 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "size": 24459,
+    "size": 24550,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -792,7 +792,7 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "size": 24094,
+    "size": 28048,
     "imports": [
       "codsen-utils",
       "ranges-apply",
