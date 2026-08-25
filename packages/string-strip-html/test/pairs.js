@@ -145,7 +145,14 @@ test("005 - single tag pair - text, pair tag", () => {
     ],
     "005.03",
   );
-  equal(filteredTagLocations, [[26, 43]], "005.04");
+  equal(
+    filteredTagLocations,
+    [
+      [26, 32],
+      [36, 43],
+    ],
+    "005.04",
+  );
 });
 
 test("006 - single tag pair - astrisk", () => {
@@ -165,7 +172,14 @@ test("006 - single tag pair - astrisk", () => {
     ],
     "006.03",
   );
-  equal(filteredTagLocations, [[26, 43]], "006.04");
+  equal(
+    filteredTagLocations,
+    [
+      [26, 32],
+      [36, 43],
+    ],
+    "006.04",
+  );
 });
 
 test("007 - single tag pair - inner line break retained", () => {

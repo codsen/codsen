@@ -17,7 +17,8 @@ test("001 - missing closing bracket - opening bracket acts as tag delimeter", ()
       ],
       filteredTagLocations: [
         [0, 6],
-        [10, 29],
+        [10, 18],
+        [21, 29],
         [29, 36],
       ],
       ranges: [
@@ -42,7 +43,8 @@ test("002 - missing closing brackets", () => {
       ],
       filteredTagLocations: [
         [1, 9],
-        [15, 47],
+        [15, 25],
+        [30, 47],
         [47, 57],
       ],
       ranges: [

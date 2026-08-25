@@ -140,11 +140,7 @@ test("005 - opts.cb - replace only hr", () => {
         [10, 16],
         [19, 26],
       ],
-      filteredTagLocations: [
-        [3, 7],
-        [10, 16],
-        [19, 26],
-      ],
+      filteredTagLocations: [[3, 7]],
     },
     "005.01",
   );
@@ -707,11 +703,7 @@ test("018 - opts.cb - dirty-tag recognition is callback-independent", () => {
     equal(forwardedEvents.length, 1, "018.02");
     equal(ignoredEvents.length, 1, "018.03");
     equal(ignored.allTagLocations, baseline.allTagLocations, "018.04");
-    equal(
-      ignored.filteredTagLocations,
-      baseline.filteredTagLocations,
-      "018.05",
-    );
+    equal(ignored.filteredTagLocations, [], "018.05");
     equal(ignored.result, input, "018.06");
     equal(
       forwardedEvents[0].proposedReturn,

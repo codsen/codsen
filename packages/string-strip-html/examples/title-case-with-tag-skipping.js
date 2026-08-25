@@ -12,11 +12,11 @@ import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 function tagAwareTitle(str) {
   let whitelist = ["eslint", "readme", "npm"];
-  let { filteredTagLocations } = stripHtml(str, {
+  let { ranges } = stripHtml(str, {
     stripTogetherWithTheirContents: ["*"],
   });
   let inverted = rInvert(
-    filteredTagLocations.concat(
+    (ranges || []).map(([from, to]) => [from, to]).concat(
       whitelist.reduce((acc, curr) => {
         let rangesFindings = rRegex(new RegExp(curr, "gi"), str);
         if (rangesFindings) {

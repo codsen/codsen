@@ -103,6 +103,7 @@ interface Res {
   result: string;
   ranges: Ranges;
   allTagLocations: [number, number][];
+  /** Original tag spans fully consumed by the returned ranges. */
   filteredTagLocations: [number, number][];
 }
 /**

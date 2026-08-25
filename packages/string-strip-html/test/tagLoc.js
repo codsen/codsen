@@ -220,7 +220,10 @@ test("008 - tag locations - closing bracket missing", () => {
         [0, 23],
         [23, 41],
       ],
-      filteredTagLocations: [[0, 41]],
+      filteredTagLocations: [
+        [0, 23],
+        [23, 41],
+      ],
     },
     "008.01",
   );

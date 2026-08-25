@@ -199,6 +199,7 @@ export interface Res {
   result: string;
   ranges: RangesType;
   allTagLocations: [number, number][];
+  /** Original tag spans fully consumed by the returned ranges. */
   filteredTagLocations: [number, number][];
 }
 
@@ -3854,20 +3855,20 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     entityDecodeRanges,
     rangesToDelete.current(),
   );
+  const originalTagLocations = mapLocationsToOriginal(
+    allTagLocations,
+    str,
+    decodeSegments,
+  );
 
   return {
     log: { timeTakenInMilliseconds: Date.now() - start },
     result: rApply(originalStr, ranges),
     ranges,
-    allTagLocations: mapLocationsToOriginal(
-      allTagLocations,
-      str,
-      decodeSegments,
-    ),
-    filteredTagLocations: mapLocationsToOriginal(
-      filteredTagLocations,
-      str,
-      decodeSegments,
+    allTagLocations: originalTagLocations,
+    filteredTagLocations: fullyConsumedTagLocations(
+      originalTagLocations,
+      ranges,
     ),
   };
 }
@@ -4304,6 +4305,36 @@ function mapLocationsToOriginal(
     mapDecodedStart(from, decodedStr, segments).idx,
     mapDecodedEnd(to, decodedStr, segments).idx,
   ]);
+}
+
+function fullyConsumedTagLocations(
+  locations: [number, number][],
+  ranges: RangesType,
+): [number, number][] {
+  if (!ranges) {
+    return [];
+  }
+
+  let rangeIdx = 0;
+  return locations.filter(([from, to]) => {
+    while (rangeIdx < ranges.length && ranges[rangeIdx][1] <= from) {
+      rangeIdx += 1;
+    }
+
+    let candidateIdx = rangeIdx;
+    let coveredTo = from;
+    while (
+      candidateIdx < ranges.length &&
+      ranges[candidateIdx][0] <= coveredTo
+    ) {
+      coveredTo = Math.max(coveredTo, ranges[candidateIdx][1]);
+      if (coveredTo >= to) {
+        return true;
+      }
+      candidateIdx += 1;
+    }
+    return false;
+  });
 }
 
 export { defaults, stripHtml, version };

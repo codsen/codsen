@@ -17,15 +17,17 @@ const someHtml = `<!DOCTYPE html>
 
 // The task asks not to include <head...> and </head>.
 // First, extract head tag-to-head tag, including contents
-const headWithHeadTags = stripHtml(someHtml, {
+const { ranges } = stripHtml(someHtml, {
   onlyStripTags: ["head"],
   stripTogetherWithTheirContents: ["head"],
-})
-  .filteredTagLocations.reduce(
-    (acc, [from, to]) => `${acc}${someHtml.slice(from, to)}`,
-    "",
-  )
-  .trim();
+});
+const headRange = ranges?.find(([from, to]) => {
+  const candidate = someHtml.slice(from, to);
+  return candidate.includes("<head>") && candidate.includes("</head>");
+});
+const headWithHeadTags = headRange
+  ? someHtml.slice(headRange[0], headRange[1]).trim()
+  : "";
 
 assert.equal(
   headWithHeadTags,
