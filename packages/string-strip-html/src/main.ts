@@ -132,22 +132,8 @@ export interface CbObj {
   readonly proposedReturn: CallbackRange | null;
 }
 
-interface InternalCbObj extends Omit<CbObj, "tag"> {
-  tag: Obj;
-}
-
-type InternalTokenMeta =
-  | {
-      kind: "comment" | "cdata";
-      start: number;
-      end: number;
-    }
-  | {
-      kind: "tag";
-      status: "complete" | "incomplete" | "inferred";
-      start: number;
-      end: number;
-    };
+type InternalTokenKind = "tag" | "comment" | "cdata";
+type InternalTagStatus = "complete" | "incomplete" | "inferred";
 
 export interface Opts {
   /** HTML and custom/XML-looking tag names match case-insensitively. */
@@ -224,15 +210,31 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
   // we'll put tag locations here
   const allTagLocations: [number, number][] = [];
-  let filteredTagLocations: [number, number][] = [];
 
   // variables
   // ===========================================================================
 
   // records the info about the suspected tag:
   let tag: Obj = {};
+  let cachedTagName: string | undefined;
+  let cachedTagNameLower = "";
   function resetTag(): void {
     tag = { attributes: [] };
+    cachedTagName = undefined;
+    cachedTagNameLower = "";
+  }
+  function lowerTagName(tag2: Obj): string {
+    if (typeof tag2.name !== "string") {
+      return "";
+    }
+    if (tag2 !== tag) {
+      return tag2.name.toLowerCase();
+    }
+    if (cachedTagName !== tag2.name) {
+      cachedTagName = tag2.name;
+      cachedTagNameLower = tag2.name.toLowerCase();
+    }
+    return cachedTagNameLower;
   }
   resetTag();
 
@@ -250,6 +252,11 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
   // temporary variable to assemble the attribute pieces:
   let attrObj: Obj = {};
+  let unquotedValueState: 0 | 1 | 2 = 0;
+  function resetAttrObj(): void {
+    attrObj = {};
+    unquotedValueState = 0;
+  }
   let consumedAttributeClosingQuoteAt: number | null = null;
 
   // marker to store captured href, used in resolvedOpts.dumpLinkHrefsNearby?.enabled
@@ -323,15 +330,13 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           4,
         )}`,
       );
+    const tagNameLower = lowerTagName(tag);
 
     // 1. deletion resolvedOpts.stripTogetherWithTheirContents
     if (
       Array.isArray(resolvedOpts.stripTogetherWithTheirContents) &&
       (resolvedOpts.stripTogetherWithTheirContents.includes("*") ||
-        (typeof tag.name === "string" &&
-          resolvedOpts.stripTogetherWithTheirContents.includes(
-            tag.name.toLowerCase(),
-          )))
+        resolvedOpts.stripTogetherWithTheirContents.includes(tagNameLower))
     ) {
       DEV && console.log();
       // it depends, is it opening or closing range tag:
@@ -345,7 +350,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         tag.slashPresent &&
         Array.isArray(rangedOpeningTagsForDeletion) &&
         rangedOpeningTagsForDeletion.some(
-          (obj) => obj.name?.toLowerCase() === tag.name?.toLowerCase(),
+          (obj) => lowerTagName(obj) === tagNameLower,
         )
       ) {
         DEV &&
@@ -355,10 +360,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         // closing tag.
         // filter and remove the found tag
         for (let y = rangedOpeningTagsForDeletion.length; y--; ) {
-          if (
-            rangedOpeningTagsForDeletion[y].name?.toLowerCase() ===
-            tag.name?.toLowerCase()
-          ) {
+          if (lowerTagName(rangedOpeningTagsForDeletion[y]) === tagNameLower) {
             // we'll remove from opening tag's opening bracket to closing tag's
             // closing bracket because whitespace will be taken care of separately,
             // when tags themselves will be removed.
@@ -387,126 +389,51 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 `ABOUT TO cb()-PUSH RANGE: [${rangedOpeningTagsForDeletion[y].lastOpeningBracketAt}, ${combinedRangeEnd}]`,
               );
 
-            // also, tend filteredTagLocations in the output - tags which are to be
-            // deleted with contents should be reported as one large range in
-            // filteredTagLocations - from opening to closing - not two ranges
-
-            DEV &&
-              console.log(
-                `FIY, ${`\u001b[${33}m${`rangedOpeningTagsForDeletion`}\u001b[${39}m`} = ${JSON.stringify(
-                  rangedOpeningTagsForDeletion,
-                  null,
-                  4,
-                )}`,
-              );
-
-            DEV &&
-              console.log(
-                `${`\u001b[${33}m${`filteredTagLocations`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
-                  filteredTagLocations,
-                  null,
-                  4,
-                )}`,
-              );
-            filteredTagLocations = filteredTagLocations.filter(
-              ([from, upto]) =>
-                (from < rangedOpeningTagsForDeletion[y].lastOpeningBracketAt ||
-                  from >= i + 1) &&
-                (upto <= rangedOpeningTagsForDeletion[y].lastOpeningBracketAt ||
-                  upto > i + 1),
-            );
-            DEV &&
-              console.log(
-                `${`\u001b[${33}m${`filteredTagLocations`}\u001b[${39}m`} AFTER: ${JSON.stringify(
-                  filteredTagLocations,
-                  null,
-                  4,
-                )}`,
-              );
-
-            let endingIdx = i + 1;
-            if (tag.lastClosingBracketAt) {
-              endingIdx = tag.lastClosingBracketAt + 1;
-            }
-
-            DEV &&
-              console.log(
-                `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-                  rangedOpeningTagsForDeletion[y].lastOpeningBracketAt
-                }, ${endingIdx}] to filteredTagLocations`,
-              );
-            filteredTagLocations.push([
-              rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
-              endingIdx,
-            ]);
-
             /* c8 ignore next */
-            if (punctuation.has(str[i]) && resolvedOpts.cb) {
+            if (punctuation.has(str[i])) {
               DEV &&
                 console.log(`${`\u001b[${32}m${`PING CB()`}\u001b[${39}m`}`);
               emitCallback(
-                {
-                  tag,
-                  deleteFrom:
-                    rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
-                  deleteTo: combinedRangeEnd,
-                  insert: null,
-                  rangesArr: rangesToDelete,
-                  proposedReturn: [
-                    rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
-                    combinedRangeEnd,
-                    null,
-                  ],
-                },
-                {
-                  kind: "tag",
-                  status:
-                    typeof tag.lastClosingBracketAt === "number"
-                      ? "complete"
-                      : "incomplete",
-                  start: tag.lastOpeningBracketAt,
-                  end:
-                    typeof tag.lastClosingBracketAt === "number"
-                      ? tag.lastClosingBracketAt + 1
-                      : isOpeningAt(i)
-                        ? i
-                        : i + 1,
-                },
+                tag,
+                [
+                  rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
+                  combinedRangeEnd,
+                  null,
+                ],
+                "tag",
+                typeof tag.lastClosingBracketAt === "number"
+                  ? "complete"
+                  : "incomplete",
+                tag.lastOpeningBracketAt,
+                typeof tag.lastClosingBracketAt === "number"
+                  ? tag.lastClosingBracketAt + 1
+                  : isOpeningAt(i)
+                    ? i
+                    : i + 1,
               );
               // null will remove any spaces added so far. Opening and closing range tags might
               // have received spaces as separate entities, but those might not be necessary for range:
               // "text <script>deleteme</script>."
-            } else if (resolvedOpts.cb) {
+            } else {
               DEV &&
                 console.log(`${`\u001b[${32}m${`PING CB()`}\u001b[${39}m`}`);
               emitCallback(
-                {
-                  tag,
-                  deleteFrom:
-                    rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
-                  deleteTo: combinedRangeEnd,
-                  insert: "",
-                  rangesArr: rangesToDelete,
-                  proposedReturn: [
-                    rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
-                    combinedRangeEnd,
-                    "",
-                  ],
-                },
-                {
-                  kind: "tag",
-                  status:
-                    typeof tag.lastClosingBracketAt === "number"
-                      ? "complete"
-                      : "incomplete",
-                  start: tag.lastOpeningBracketAt,
-                  end:
-                    typeof tag.lastClosingBracketAt === "number"
-                      ? tag.lastClosingBracketAt + 1
-                      : isOpeningAt(i)
-                        ? i
-                        : i + 1,
-                },
+                tag,
+                [
+                  rangedOpeningTagsForDeletion[y].lastOpeningBracketAt,
+                  combinedRangeEnd,
+                  "",
+                ],
+                "tag",
+                typeof tag.lastClosingBracketAt === "number"
+                  ? "complete"
+                  : "incomplete",
+                tag.lastOpeningBracketAt,
+                typeof tag.lastClosingBracketAt === "number"
+                  ? tag.lastClosingBracketAt + 1
+                  : isOpeningAt(i)
+                    ? i
+                    : i + 1,
               );
             }
             // 2. delete the reference to this range from rangedOpeningTagsForDeletion[]
@@ -544,6 +471,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       }
     } else if (
       Array.isArray(resolvedOpts.ignoreTagsWithTheirContents) &&
+      resolvedOpts.ignoreTagsWithTheirContents.length &&
       checkIgnoreTagsWithTheirContents(i, resolvedOpts, tag)
     ) {
       DEV && console.log();
@@ -854,7 +782,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       (R1 || R2) &&
       str2[currCharIdx] !== "!" &&
       // either the tag is not inline-tag
-      (!inlineTags.has(tag.name?.toLowerCase()) ||
+      (!inlineTags.has(lowerTagName(tag)) ||
         // that tag already has some whitespace around
         (typeof fromIdx === "number" && fromIdx < lastOpeningBracketAt) ||
         (typeof toIdx === "number" && toIdx > lastClosingBracketAt + 1))
@@ -925,7 +853,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     if (
       resolvedOpts.dumpLinkHrefsNearby?.enabled &&
       hrefDump.tagName &&
-      hrefDump.tagName.toLowerCase() === tag.name?.toLowerCase() &&
+      hrefDump.tagName.toLowerCase() === lowerTagName(tag) &&
       tag.lastOpeningBracketAt &&
       ((hrefDump.openingTagEnds &&
         tag.lastOpeningBracketAt > hrefDump.openingTagEnds) ||
@@ -1029,6 +957,9 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     resolvedOpts: Opts,
     tag2: Obj,
   ): boolean {
+    if (!resolvedOpts.ignoreTagsWithTheirContents.length) {
+      return false;
+    }
     if (resolvedOpts.ignoreTagsWithTheirContents.includes("*")) {
       DEV && console.log(`ignored tag contents: RETURN TRUE`);
       return true;
@@ -1064,7 +995,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       (tag2.slashPresent &&
         // and there haven't been any opening tag encountered so far
         !rangedOpeningTagsForIgnoring.some(
-          (tagObj) => tagObj.name?.toLowerCase() === tagName,
+          (tagObj) => lowerTagName(tagObj) === tagName,
         )) ||
       // OR both opening and closing tags follow further
       (nextClosingPos > -1 &&
@@ -1162,15 +1093,24 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
   // filter non-string or whitespace entries from the following arrays or turn
   // them into arrays:
-  resolvedOpts.ignoreTags = prepHopefullyAnArray(
+  const preparedIgnoreTags = prepHopefullyAnArray(
     resolvedOpts.ignoreTags,
     "resolvedOpts.ignoreTags",
-  ).map((name) => name.toLowerCase());
-  resolvedOpts.onlyStripTags = prepHopefullyAnArray(
+  );
+  resolvedOpts.ignoreTags = preparedIgnoreTags.length
+    ? preparedIgnoreTags.map((name) => name.toLowerCase())
+    : preparedIgnoreTags;
+  const preparedOnlyStripTags = prepHopefullyAnArray(
     resolvedOpts.onlyStripTags,
     "resolvedOpts.onlyStripTags",
-  ).map((name) => name.toLowerCase());
-  if (Array.isArray(resolvedOpts.ignoreTagsWithTheirContents)) {
+  );
+  resolvedOpts.onlyStripTags = preparedOnlyStripTags.length
+    ? preparedOnlyStripTags.map((name) => name.toLowerCase())
+    : preparedOnlyStripTags;
+  if (
+    Array.isArray(resolvedOpts.ignoreTagsWithTheirContents) &&
+    resolvedOpts.ignoreTagsWithTheirContents.length
+  ) {
     resolvedOpts.ignoreTagsWithTheirContents =
       resolvedOpts.ignoreTagsWithTheirContents.map((name) =>
         typeof name === "string" ? name.toLowerCase() : name,
@@ -1232,28 +1172,17 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       );
   }
 
+  const tagsMayBeKept = Boolean(
+    resolvedOpts.stripRecognisedHTMLOnly ||
+      resolvedOpts.ignoreTags.length ||
+      resolvedOpts.ignoreTagsWithTheirContents.length ||
+      onlyStripTagsMode,
+  );
+
   if (resolvedOpts.cb && typeof resolvedOpts.cb !== "function") {
     throw new TypeError(
       `string-strip-html/stripHtml(): [THROW_ID_10] The Optional Options Object's key cb should be a function or something falsy but it was given as type ${typeof resolvedOpts.cb}, equal to ${formatDiagnosticValue(resolvedOpts.cb, 4)}`,
     );
-  }
-
-  // prep the resolvedOpts.cb
-  DEV && console.log(`resolvedOpts.cb type = ${typeof resolvedOpts.cb}`);
-  if (!resolvedOpts.cb) {
-    resolvedOpts.cb = ({ rangesArr, proposedReturn }) => {
-      DEV &&
-        console.log(
-          `cb(): ${`\u001b[${33}m${`proposedReturn`}\u001b[${39}m`} = ${JSON.stringify(
-            proposedReturn,
-            null,
-            4,
-          )}`,
-        );
-      if (proposedReturn) {
-        (rangesArr as any).push(...proposedReturn);
-      }
-    };
   }
 
   DEV &&
@@ -1268,109 +1197,88 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
   // if the links have to be on a new line, we need to increase the allowance for line breaks
   // in Ranges class, it's the ranges-push API setting resolvedOpts.limitLinebreaksCount
   // see https://www.npmjs.com/package/ranges-push#optional-options-object
-  function createRangesAccumulator(): Ranges {
-    return new Ranges({
-      limitToBeAddedWhitespace: true,
-      limitLinebreaksCount: 2,
-    });
-  }
-
   const rangesToDelete = createRangesAccumulator();
   let callbackRangesMatchDefaultProposals = true;
 
-  function copyRanges(ranges: RangesType): RangesType {
-    return ranges ? ranges.map((range) => [...range] as Range) : null;
-  }
-
-  function rangesAreEqual(left: RangesType, right: RangesType): boolean {
-    if (left === null || right === null) {
-      return left === right;
-    }
-    return (
-      left.length === right.length &&
-      left.every(
-        (range, idx) =>
-          range.length === right[idx].length &&
-          range.every((value, valueIdx) => value === right[idx][valueIdx]),
-      )
-    );
-  }
-
-  function rangesWithProposal(
-    ranges: RangesType,
-    proposedReturn: Range | CallbackRange | null,
-  ): RangesType {
-    const accumulator = createRangesAccumulator();
-    ranges?.forEach((range) => {
-      accumulator.push([...range] as Range);
-    });
-    if (proposedReturn) {
-      accumulator.push([...proposedReturn] as Range);
-    }
-    return accumulator.current();
-  }
-
   function emitCallback(
-    cbObj: InternalCbObj,
-    tokenMeta: InternalTokenMeta,
+    parserTag: Obj,
+    proposedRange: CallbackRange | null,
+    tokenKind: InternalTokenKind,
+    tokenStatus: InternalTagStatus | undefined,
+    tokenStart: number,
+    tokenEnd: number,
   ): void {
-    const proposedReturn = cbObj.proposedReturn
-      ? mapDecodedRange(cbObj.proposedReturn, str, decodeSegments)
+    const proposedReturn = proposedRange
+      ? decodeSegments
+        ? mapDecodedRange(proposedRange, str, decodeSegments)
+        : proposedRange
       : null;
 
     if (!userProvidedCb) {
       if (proposedReturn) {
-        rangesToDelete.push([...proposedReturn] as Range);
+        rangesToDelete.push(proposedReturn as Range);
       }
       return;
     }
 
-    const originalCbObj: CbObj = {
-      tag: mapTokenToOriginal(cbObj.tag, tokenMeta, str, decodeSegments),
-      deleteFrom: proposedReturn ? proposedReturn[0] : null,
-      deleteTo: proposedReturn ? proposedReturn[1] : null,
-      insert: proposedReturn ? proposedReturn[2] : null,
-      rangesArr: rangesToDelete,
-      proposedReturn: proposedReturn ? [...proposedReturn] : null,
-    };
-    const shouldCompare = callbackRangesMatchDefaultProposals;
-    const rangesBefore = shouldCompare
-      ? copyRanges(rangesToDelete.current())
-      : null;
+    if (decodeSegments) {
+      const originalCbObj: CbObj = {
+        tag: mapTokenToOriginal(
+          parserTag,
+          tokenKind,
+          tokenStatus,
+          tokenStart,
+          tokenEnd,
+          str,
+          decodeSegments,
+        ),
+        deleteFrom: proposedReturn ? proposedReturn[0] : null,
+        deleteTo: proposedReturn ? proposedReturn[1] : null,
+        insert: proposedReturn ? proposedReturn[2] : null,
+        rangesArr: rangesToDelete,
+        proposedReturn: proposedReturn ? [...proposedReturn] : null,
+      };
+      const shouldCompare = callbackRangesMatchDefaultProposals;
+      const rangesBefore = shouldCompare
+        ? copyRanges(rangesToDelete.current())
+        : null;
 
-    resolvedOpts.cb?.(originalCbObj);
+      resolvedOpts.cb?.(originalCbObj);
 
-    if (
-      shouldCompare &&
-      !rangesAreEqual(
-        rangesToDelete.current(),
-        rangesWithProposal(rangesBefore, proposedReturn),
-      )
-    ) {
-      callbackRangesMatchDefaultProposals = false;
+      if (
+        shouldCompare &&
+        !rangesAreEqual(
+          rangesToDelete.current(),
+          rangesWithProposal(rangesBefore, proposedReturn),
+        )
+      ) {
+        callbackRangesMatchDefaultProposals = false;
+      }
     }
   }
 
   // Keep positions anchored to the caller's string while parsing its decoded form.
   const originalStr = str;
-  const entityDecodeRanges = resolvedOpts.skipHtmlDecoding
-    ? null
-    : collectEntityDecodeRanges(str);
+  const entityDecodeRanges =
+    resolvedOpts.skipHtmlDecoding || !str.includes("&")
+      ? null
+      : collectEntityDecodeRanges(str);
   if (entityDecodeRanges) {
     str = rApply(str, entityDecodeRanges);
   }
-  const decodeSegments = buildDecodeSegments(
-    originalStr,
-    str,
-    entityDecodeRanges,
-  );
+  const decodeSegments =
+    entityDecodeRanges || userProvidedCb
+      ? buildDecodeSegments(originalStr, str, entityDecodeRanges)
+      : null;
 
   function originalStart(idx: number): number {
-    return mapDecodedStart(idx, str, decodeSegments).idx;
+    return decodeSegments ? mapDecodedStart(idx, str, decodeSegments).idx : idx;
   }
 
   function pushDecodedRange(range: Range): void {
-    rangesToDelete.push(mapDecodedRange(range, str, decodeSegments));
+    rangesToDelete.push(
+      decodeSegments ? mapDecodedRange(range, str, decodeSegments) : range,
+    );
   }
 
   let isInsideScript = false;
@@ -1384,10 +1292,9 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
   const progressMidLen = Math.floor(originalLen / 2);
 
   function reportProgressAt(decodedIdx: number): void {
-    const originalIdx = Math.max(
-      0,
-      mapDecodedEnd(decodedIdx + 1, str, decodeSegments).idx - 1,
-    );
+    const originalIdx = decodeSegments
+      ? Math.max(0, mapDecodedEnd(decodedIdx + 1, str, decodeSegments).idx - 1)
+      : decodedIdx;
 
     if (originalIdx <= lastProgressAt) {
       return;
@@ -1425,12 +1332,12 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
   function clearCurrentTagState(): void {
     resetTag();
-    attrObj = {};
+    resetAttrObj();
     isDoctype = false;
   }
 
   function releaseFinalizedTagState(): void {
-    if (tag.name?.length === 6 && tag.name.toLowerCase() === "script") {
+    if (tag.name?.length === 6 && lowerTagName(tag) === "script") {
       isInsideScript = !tag.slashPresent;
     }
     pendingMalformedStart = null;
@@ -1442,7 +1349,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     status: "complete" | "incomplete",
     end: number,
   ): boolean {
-    const tagName = typeof tag.name === "string" ? tag.name.toLowerCase() : "";
+    const tagName = lowerTagName(tag);
     const ignoredByName = resolvedOpts.ignoreTags.includes(tagName);
     const ignoredWithContents = checkIgnoreTagsWithTheirContents(
       i,
@@ -1453,8 +1360,8 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       !strip ||
       (resolvedOpts.stripRecognisedHTMLOnly &&
         typeof tag.name === "string" &&
-        !definitelyTagNames.has(tag.name.toLowerCase()) &&
-        !singleLetterTags.has(tag.name.toLowerCase())) ||
+        !definitelyTagNames.has(tagName) &&
+        !singleLetterTags.has(tagName)) ||
       (!onlyStripTagsMode && (ignoredByName || ignoredWithContents)) ||
       (onlyStripTagsMode && !resolvedOpts.onlyStripTags.includes(tagName)) ||
       resolvedOpts.ignoreTagsWithTheirContents.includes(tagName);
@@ -1482,22 +1389,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       }
     }
 
-    emitCallback(
-      {
-        tag,
-        deleteFrom: null,
-        deleteTo: null,
-        insert: null,
-        rangesArr: rangesToDelete,
-        proposedReturn: null,
-      },
-      {
-        kind: "tag",
-        status,
-        start: tag.lastOpeningBracketAt,
-        end,
-      },
-    );
+    emitCallback(tag, null, "tag", status, tag.lastOpeningBracketAt, end);
 
     pendingMalformedStart = null;
     clearCurrentTagState();
@@ -1669,23 +1561,6 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                   );
               }
 
-              /* c8 ignore next */
-              if (
-                !filteredTagLocations.length ||
-                filteredTagLocations[filteredTagLocations.length - 1][0] !==
-                  tag.lastOpeningBracketAt
-              ) {
-                filteredTagLocations.push([startingPoint, i + 1]);
-                DEV &&
-                  console.log(
-                    `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-                      tag.lastOpeningBracketAt
-                    }, ${
-                      tag.lastClosingBracketAt + 1
-                    }] to filteredTagLocations`,
-                  );
-              }
-
               const whiteSpaceCompensation = calculateWhitespaceToInsert(
                 str,
                 i,
@@ -1720,28 +1595,16 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               const nameStarts = startingPoint + nameOffset;
               emitCallback(
                 {
-                  tag: {
-                    name: candidateTagName,
-                    nameStarts,
-                    nameEnds: nameStarts + candidateTagName.length,
-                    nameContainsLetters: true,
-                  },
-                  deleteFrom: startingPoint,
-                  deleteTo: deleteUpTo,
-                  insert: whiteSpaceCompensation,
-                  rangesArr: rangesToDelete,
-                  proposedReturn: [
-                    startingPoint,
-                    deleteUpTo,
-                    whiteSpaceCompensation,
-                  ],
+                  name: candidateTagName,
+                  nameStarts,
+                  nameEnds: nameStarts + candidateTagName.length,
+                  nameContainsLetters: true,
                 },
-                {
-                  kind: "tag",
-                  status: "inferred",
-                  start: startingPoint,
-                  end: i + 1,
-                },
+                [startingPoint, deleteUpTo, whiteSpaceCompensation],
+                "tag",
+                "inferred",
+                startingPoint,
+                i + 1,
               );
             }
             break;
@@ -1757,8 +1620,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       charCode === CODE_SLASH &&
       !tag.quotes?.value &&
       !(
-        typeof attrObj.equalsAt === "number" &&
-        attrObj.valueEnds === undefined
+        typeof attrObj.equalsAt === "number" && attrObj.valueEnds === undefined
       ) &&
       Number.isInteger(tag.lastOpeningBracketAt) &&
       !Number.isInteger(tag.lastClosingBracketAt)
@@ -1777,7 +1639,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         // If empty quotes, skip processing and reset
         if (attrObj.valueStarts === undefined) {
           // reset:
-          attrObj = {};
+          resetAttrObj();
           // delete the quotes marker
           delete tag.quotes;
         }
@@ -1796,7 +1658,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             );
           tag.attributes.push(attrObj);
           // reset:
-          attrObj = {};
+          resetAttrObj();
           // 2. finally, delete the quotes marker, we don't need it any more
           delete tag.quotes;
           // 3. if resolvedOpts.dumpLinkHrefsNearby?.enabled is on, catch href
@@ -1849,6 +1711,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         tag.quotes.value = str[i];
         tag.quotes.start = i;
         tag.quotes.next = str.indexOf(str[i], i + 1);
+        unquotedValueState = 0;
         // 2. start assembling the attribute object which we'll dump into tag.attributes[] array:
         if (
           attrObj.nameStarts &&
@@ -1922,10 +1785,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         continue;
       }
 
-      if (
-        typeof tag.name === "string" &&
-        tag.name.toLowerCase() === "doctype"
-      ) {
+      if (typeof tag.name === "string" && lowerTagName(tag) === "doctype") {
         isDoctype = true;
         DEV &&
           console.log(
@@ -1980,64 +1840,18 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             )}`,
           );
 
-        // only on pair tags, exclude the opening counterpart and closing
-        // counterpart if whole pair is to be deleted
-        if (
-          resolvedOpts.stripTogetherWithTheirContents.includes("*") ||
-          (typeof tag.name === "string" &&
-            resolvedOpts.stripTogetherWithTheirContents.includes(
-              tag.name.toLowerCase(),
-            ))
-        ) {
-          DEV &&
-            console.log(
-              `${`\u001b[${33}m${`filteredTagLocations`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
-                filteredTagLocations,
-                null,
-                4,
-              )}`,
-            );
-          /* c8 ignore next */
-          filteredTagLocations = filteredTagLocations.filter(
-            ([from, upto]) => !(from === tag.leftOuterWhitespace && upto === i),
-          );
-          DEV &&
-            console.log(
-              `${`\u001b[${33}m${`filteredTagLocations`}\u001b[${39}m`} AFTER: ${JSON.stringify(
-                filteredTagLocations,
-                null,
-                4,
-              )}`,
-            );
-        }
-
-        // DEV && console.log(
-        //   `1453 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-        //     tag.leftOuterWhitespace
-        //   }, ${i}] to filteredTagLocations`
-        // );
-        // filteredTagLocations.push([tag.leftOuterWhitespace, i]);
-
         DEV && console.log(`${`\u001b[${32}m${`PING CB()`}\u001b[${39}m`}`);
         emitCallback(
-          {
-            tag,
-            deleteFrom: tag.leftOuterWhitespace,
-            deleteTo: i,
-            insert: `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
-            rangesArr: rangesToDelete,
-            proposedReturn: [
-              tag.leftOuterWhitespace,
-              i,
-              `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
-            ],
-          },
-          {
-            kind: "tag",
-            status: "incomplete",
-            start: tag.lastOpeningBracketAt,
-            end: i,
-          },
+          tag,
+          [
+            tag.leftOuterWhitespace,
+            i,
+            `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
+          ],
+          "tag",
+          "incomplete",
+          tag.lastOpeningBracketAt,
+          i,
         );
         resetHrefMarkers();
 
@@ -2068,55 +1882,55 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
     // catch unquoted attribute values
     // -------------------------------------------------------------------------
-    if (
-      attrObj.nameEnds &&
-      typeof attrObj.equalsAt === "number" &&
-      attrObj.valueStarts === undefined &&
-      !tag.quotes &&
-      attrObj.equalsAt < i &&
-      !isWhitespaceCode(charCode) &&
-      charCode !== CODE_DOUBLE_QUOTE &&
-      charCode !== CODE_SINGLE_QUOTE &&
-      charCode !== CODE_EQUALS &&
-      !opensHere &&
-      !closesHere
-    ) {
-      attrObj.valueStarts = i;
-      DEV && console.log(`SET attrObj.valueStarts = ${attrObj.valueStarts}`);
-    }
-
-    if (
-      typeof attrObj.valueStarts === "number" &&
-      !tag.quotes &&
-      (isWhitespaceCode(charCode) || closesHere || str[i + 1] === undefined)
-    ) {
-      attrObj.valueEnds =
-        isWhitespaceCode(charCode) || closesHere ? i : i + 1;
-      attrObj.value = str.slice(attrObj.valueStarts, attrObj.valueEnds);
-      DEV &&
-        console.log(
-          `PUSHING unquoted ${`\u001b[${33}m${`attrObj`}\u001b[${39}m`} = ${JSON.stringify(
-            attrObj,
-            null,
-            4,
-          )}`,
-        );
+    if (unquotedValueState) {
       if (
-        resolvedOpts.dumpLinkHrefsNearby?.enabled &&
-        !rangedOpeningTagsForDeletion.length &&
-        typeof attrObj.name === "string" &&
-        attrObj.name.toLowerCase() === "href"
+        unquotedValueState === 1 &&
+        attrObj.valueStarts === undefined &&
+        attrObj.equalsAt < i &&
+        !isWhitespaceCode(charCode) &&
+        charCode !== CODE_DOUBLE_QUOTE &&
+        charCode !== CODE_SINGLE_QUOTE &&
+        charCode !== CODE_EQUALS &&
+        !opensHere &&
+        !closesHere
       ) {
-        hrefDump = {
-          tagName: tag.name,
-          hrefValue: `${resolvedOpts.dumpLinkHrefsNearby.wrapHeads || ""}${
-            attrObj.value
-          }${resolvedOpts.dumpLinkHrefsNearby.wrapTails || ""}`,
-          openingTagEnds: undefined,
-        };
+        attrObj.valueStarts = i;
+        unquotedValueState = 2;
+        DEV && console.log(`SET attrObj.valueStarts = ${attrObj.valueStarts}`);
       }
-      tag.attributes.push(attrObj);
-      attrObj = {};
+
+      if (
+        unquotedValueState === 2 &&
+        (isWhitespaceCode(charCode) || closesHere || str[i + 1] === undefined)
+      ) {
+        attrObj.valueEnds =
+          isWhitespaceCode(charCode) || closesHere ? i : i + 1;
+        attrObj.value = str.slice(attrObj.valueStarts, attrObj.valueEnds);
+        DEV &&
+          console.log(
+            `PUSHING unquoted ${`\u001b[${33}m${`attrObj`}\u001b[${39}m`} = ${JSON.stringify(
+              attrObj,
+              null,
+              4,
+            )}`,
+          );
+        if (
+          resolvedOpts.dumpLinkHrefsNearby?.enabled &&
+          !rangedOpeningTagsForDeletion.length &&
+          typeof attrObj.name === "string" &&
+          attrObj.name.toLowerCase() === "href"
+        ) {
+          hrefDump = {
+            tagName: tag.name,
+            hrefValue: `${resolvedOpts.dumpLinkHrefsNearby.wrapHeads || ""}${
+              attrObj.value
+            }${resolvedOpts.dumpLinkHrefsNearby.wrapTails || ""}`,
+            openingTagEnds: undefined,
+          };
+        }
+        tag.attributes.push(attrObj);
+        resetAttrObj();
+      }
     }
 
     // catch rare cases when attributes name has some space after it, before equals
@@ -2129,6 +1943,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       !tag.quotes
     ) {
       attrObj.equalsAt = i;
+      unquotedValueState = 1;
 
       DEV &&
         console.log(
@@ -2157,7 +1972,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       // }
       tag.attributes.push(attrObj);
       DEV && console.log("PUSHED attrObj into tag.attributes, reset attrObj");
-      attrObj = {};
+      resetAttrObj();
     }
 
     // catch the ending of an attribute's name
@@ -2213,6 +2028,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               )}`,
             );
           attrObj.equalsAt = i;
+          unquotedValueState = 1;
           DEV &&
             console.log(
               `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrObj.equalsAt`}\u001b[${39}m`} = ${JSON.stringify(
@@ -2240,7 +2056,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         //   tag.attributes = [];
         // }
         tag.attributes.push(attrObj);
-        attrObj = {};
+        resetAttrObj();
       } else if (opensHere) {
         DEV &&
           console.log(
@@ -2253,7 +2069,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         //   tag.attributes = [];
         // }
         tag.attributes.push(attrObj);
-        attrObj = {};
+        resetAttrObj();
       }
     }
 
@@ -2344,7 +2160,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             );
         } else {
           resetTag();
-          attrObj = {};
+          resetAttrObj();
         }
       }
     }
@@ -2411,7 +2227,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           //   tag.attributes = [];
           // }
           tag.attributes.push(attrObj);
-          attrObj = {};
+          resetAttrObj();
         }
         // 4. if resolvedOpts.dumpLinkHrefsNearby?.enabled is on and we just recorded an href,
         if (
@@ -2499,7 +2315,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               );
           }
 
-          if (finalizeKeptTag(i, "incomplete", i + 1)) {
+          if (tagsMayBeKept && finalizeKeptTag(i, "incomplete", i + 1)) {
             DEV &&
               console.log(
                 `Ignored tag - \u001b[${31}m${`WIPE AND RESET`}\u001b[${39}m`,
@@ -2557,7 +2373,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             if (
               isInsideScript &&
               tag.name?.length === 6 &&
-              tag.name.toLowerCase() === "script" &&
+              lowerTagName(tag) === "script" &&
               tag.slashPresent
             ) {
               isInsideScript = false;
@@ -2591,20 +2407,12 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
             DEV && console.log(`${`\u001b[${32}m${`PING CB()`}\u001b[${39}m`}`);
             emitCallback(
-              {
-                tag,
-                deleteFrom: tag.leftOuterWhitespace,
-                deleteTo: i + 1,
-                insert,
-                rangesArr: rangesToDelete,
-                proposedReturn: [tag.leftOuterWhitespace, i + 1, insert],
-              },
-              {
-                kind: "tag",
-                status: "incomplete",
-                start: tag.lastOpeningBracketAt,
-                end: i + 1,
-              },
+              tag,
+              [tag.leftOuterWhitespace, i + 1, insert],
+              "tag",
+              "incomplete",
+              tag.lastOpeningBracketAt,
+              i + 1,
             );
             candidateFinalized = true;
             resetHrefMarkers();
@@ -2614,111 +2422,6 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           }
           DEV && console.log();
 
-          /* c8 ignore next */
-          if (
-            !filteredTagLocations.length ||
-            (filteredTagLocations[filteredTagLocations.length - 1][0] !==
-              tag.lastOpeningBracketAt &&
-              filteredTagLocations[filteredTagLocations.length - 1][1] !==
-                i + 1)
-          ) {
-            DEV && console.log();
-
-            // filter out opening/closing tag pair because whole chunk
-            // from opening's opening to closing's closing will be pushed
-            if (
-              resolvedOpts.stripTogetherWithTheirContents.includes("*") ||
-              (typeof tag.name === "string" &&
-                resolvedOpts.stripTogetherWithTheirContents.includes(
-                  tag.name.toLowerCase(),
-                ))
-            ) {
-              DEV &&
-                console.log(
-                  `FIY, ${`\u001b[${33}m${`rangedOpeningTagsForDeletion`}\u001b[${39}m`} = ${JSON.stringify(
-                    rangedOpeningTagsForDeletion,
-                    null,
-                    4,
-                  )}`,
-                );
-
-              // get the last opening counterpart of the pair
-              // iterate rangedOpeningTagsForDeletion from the, pick the first
-              // ranged opening tag whose name is same like current, closing's
-              let lastRangedOpeningTag: any;
-              for (let z = rangedOpeningTagsForDeletion.length; z--; ) {
-                /* c8 ignore next */
-                if (
-                  rangedOpeningTagsForDeletion[z].name?.toLowerCase() ===
-                  tag.name?.toLowerCase()
-                ) {
-                  lastRangedOpeningTag = rangedOpeningTagsForDeletion[z];
-                  DEV &&
-                    console.log(
-                      `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastRangedOpeningTag`}\u001b[${39}m`} = ${JSON.stringify(
-                        lastRangedOpeningTag,
-                        null,
-                        4,
-                      )}`,
-                    );
-                  DEV && console.log(`BREAK`);
-                }
-              }
-
-              /* c8 ignore next */
-              if (lastRangedOpeningTag) {
-                DEV &&
-                  console.log(
-                    `${`\u001b[${33}m${`filteredTagLocations`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
-                      filteredTagLocations,
-                      null,
-                      4,
-                    )}`,
-                  );
-                filteredTagLocations = filteredTagLocations.filter(
-                  ([from]) =>
-                    from !== lastRangedOpeningTag.lastOpeningBracketAt,
-                );
-                DEV &&
-                  console.log(
-                    `${`\u001b[${33}m${`filteredTagLocations`}\u001b[${39}m`} AFTER: ${JSON.stringify(
-                      filteredTagLocations,
-                      null,
-                      4,
-                    )}`,
-                  );
-
-                filteredTagLocations.push([
-                  lastRangedOpeningTag.lastOpeningBracketAt,
-                  i + 1,
-                ]);
-                DEV &&
-                  console.log(
-                    `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-                      lastRangedOpeningTag.lastOpeningBracketAt
-                    }, ${i + 1}] to filteredTagLocations`,
-                  );
-              } else {
-                /* c8 ignore next */
-                filteredTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
-                DEV &&
-                  console.log(
-                    `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-                      tag.lastOpeningBracketAt
-                    }, ${i + 1}] to filteredTagLocations`,
-                  );
-              }
-            } else {
-              // if it's not ranged tag, just push it as it is to filteredTagLocations
-              filteredTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
-              DEV &&
-                console.log(
-                  `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-                    tag.lastOpeningBracketAt
-                  }, ${i + 1}] to filteredTagLocations`,
-                );
-            }
-          }
           if (candidateFinalized) {
             releaseFinalizedTagState();
           } else {
@@ -2797,11 +2500,8 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         }
 
         if (
-          finalizeKeptTag(
-            i,
-            "complete",
-            tag.lastClosingBracketAt + 1,
-          )
+          tagsMayBeKept &&
+          finalizeKeptTag(i, "complete", tag.lastClosingBracketAt + 1)
         ) {
           DEV && console.log(`kept tag and emitted null callback proposal`);
         } else if (
@@ -2809,30 +2509,11 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           // tag name is recognised and there are no attributes:
           (tag.attributes.length === 0 &&
             tag.name &&
-            (definitelyTagNames.has(tag.name.toLowerCase()) ||
-              singleLetterTags.has(tag.name.toLowerCase()))) ||
+            (definitelyTagNames.has(lowerTagName(tag)) ||
+              singleLetterTags.has(lowerTagName(tag)))) ||
           // OR there is at least one equals that follow the attribute's name:
           tag.attributes?.some((attrObj2: any) => attrObj2.equalsAt)
         ) {
-          // submit tag to filteredTagLocations
-          /* c8 ignore next */
-          if (
-            !filteredTagLocations.length ||
-            filteredTagLocations[filteredTagLocations.length - 1][0] !==
-              tag.lastOpeningBracketAt
-          ) {
-            filteredTagLocations.push([
-              tag.lastOpeningBracketAt,
-              tag.lastClosingBracketAt + 1,
-            ]);
-            DEV &&
-              console.log(
-                `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-                  tag.lastOpeningBracketAt
-                }, ${tag.lastClosingBracketAt + 1}] to filteredTagLocations`,
-              );
-          }
-
           // if this was an ignored tag name, algorithm would have bailed earlier,
           // in stage "catch the ending of the tag name".
 
@@ -2981,7 +2662,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             (tag.leftOuterWhitespace === 0 ||
               !right(str, endingRangeIndex - 1)) &&
             (!resolvedOpts.dumpLinkHrefsNearby?.enabled ||
-              tag.name?.toLowerCase() !== "a")
+              lowerTagName(tag) !== "a")
           ) {
             insert = undefined;
             DEV &&
@@ -3070,24 +2751,16 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               )}]`}\u001b[${39}m`,
             );
           emitCallback(
-            {
-              tag,
-              deleteFrom: tag.leftOuterWhitespace,
-              deleteTo: endingRangeIndex + punctuationCorrection,
+            tag,
+            [
+              tag.leftOuterWhitespace,
+              endingRangeIndex + punctuationCorrection,
               insert,
-              rangesArr: rangesToDelete,
-              proposedReturn: [
-                tag.leftOuterWhitespace,
-                endingRangeIndex + punctuationCorrection,
-                insert,
-              ],
-            },
-            {
-              kind: "tag",
-              status: "complete",
-              start: tag.lastOpeningBracketAt,
-              end: tag.lastClosingBracketAt + 1,
-            },
+            ],
+            "tag",
+            "complete",
+            tag.lastOpeningBracketAt,
+            tag.lastClosingBracketAt + 1,
           );
           resetHrefMarkers();
 
@@ -3215,24 +2888,12 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 `cb()-PUSH range [${tag.leftOuterWhitespace}, ${i}, "${whiteSpaceCompensation}"]`,
               );
             emitCallback(
-              {
-                tag,
-                deleteFrom: tag.leftOuterWhitespace,
-                deleteTo: i,
-                insert: whiteSpaceCompensation,
-                rangesArr: rangesToDelete,
-                proposedReturn: [
-                  tag.leftOuterWhitespace,
-                  i,
-                  whiteSpaceCompensation,
-                ],
-              },
-              {
-                kind: "tag",
-                status: "incomplete",
-                start: tag.lastOpeningBracketAt,
-                end: i,
-              },
+              tag,
+              [tag.leftOuterWhitespace, i, whiteSpaceCompensation],
+              "tag",
+              "incomplete",
+              tag.lastOpeningBracketAt,
+              i,
             );
 
             // also,
@@ -3382,24 +3043,6 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                     );
                 }
 
-                /* c8 ignore next */
-                if (
-                  !filteredTagLocations.length ||
-                  filteredTagLocations[filteredTagLocations.length - 1][0] !==
-                    tag.lastOpeningBracketAt
-                ) {
-                  filteredTagLocations.push([
-                    tag.lastOpeningBracketAt,
-                    closingFoundAt + 1,
-                  ]);
-                  DEV &&
-                    console.log(
-                      `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-                        tag.lastOpeningBracketAt
-                      }, ${closingFoundAt + 1}] to filteredTagLocations`,
-                    );
-                }
-
                 const whiteSpaceCompensation = calculateWhitespaceToInsert(
                   str,
                   y,
@@ -3413,23 +3056,12 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                     `cb()-PUSH range [${tag.leftOuterWhitespace}, ${rangeEnd}, "${whiteSpaceCompensation}"]`,
                   );
                 emitCallback(
-                  {
-                    tag,
-                    deleteFrom: tag.leftOuterWhitespace,
-                    deleteTo: rangeEnd,
-                    insert: whiteSpaceCompensation,
-                    rangesArr: rangesToDelete,
-                    proposedReturn: [
-                      tag.leftOuterWhitespace,
-                      rangeEnd,
-                      whiteSpaceCompensation,
-                    ],
-                  },
-                  {
-                    kind: cdata ? "cdata" : "comment",
-                    start: tag.lastOpeningBracketAt,
-                    end: closingFoundAt + 1,
-                  },
+                  tag,
+                  [tag.leftOuterWhitespace, rangeEnd, whiteSpaceCompensation],
+                  cdata ? "cdata" : "comment",
+                  undefined,
+                  tag.lastOpeningBracketAt,
+                  closingFoundAt + 1,
                 );
                 pendingMalformedStart = null;
 
@@ -3445,7 +3077,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 closesHere = isClosingAt(i);
                 // resets:
                 tag = {};
-                attrObj = {};
+                resetAttrObj();
                 // finally,
                 break;
               }
@@ -3473,8 +3105,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           i === tag.lastOpeningBracketAt + 1 &&
           // insurance against tail part of ranged tag being deleted:
           !rangedOpeningTagsForDeletion.some(
-            (rangedTagObj) =>
-              rangedTagObj.name?.toLowerCase() === tag.name?.toLowerCase(),
+            (rangedTagObj) => lowerTagName(rangedTagObj) === lowerTagName(tag),
           )
         ) {
           DEV &&
@@ -3542,7 +3173,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           }
 
           // reset:
-          attrObj = {};
+          resetAttrObj();
           tag.equalsSpottedAt = undefined;
         }
         // 2. reset whitespace marker
@@ -3594,11 +3225,9 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             // The end has to match exactly: this range being last, with this
             // end, is something the dumpLinkHrefsNearby branch reads later
             const lastRange = rangesToDelete.last() as Range | null;
-            const indentationRange = mapDecodedRange(
-              [lastLFCRAt + 1, i],
-              str,
-              decodeSegments,
-            );
+            const indentationRange = decodeSegments
+              ? mapDecodedRange([lastLFCRAt + 1, i], str, decodeSegments)
+              : ([lastLFCRAt + 1, i] as Range);
             if (
               !lastRange ||
               lastRange[0] > indentationRange[0] ||
@@ -3640,7 +3269,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
     // activate
     // -----------------------------------------------------------------------------
-    if (tag.name?.length === 6 && tag.name.toLowerCase() === "script") {
+    if (tag.name?.length === 6 && lowerTagName(tag) === "script") {
       isInsideScript = !tag.slashPresent;
       DEV &&
         console.log(
@@ -3674,14 +3303,6 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       console.log(
         `${`\u001b[${33}m${`rangedOpeningTagsForIgnoring`}\u001b[${39}m`} = ${JSON.stringify(
           rangedOpeningTagsForIgnoring,
-          null,
-          4,
-        )}`,
-      );
-    DEV &&
-      console.log(
-        `${`\u001b[${33}m${`filteredTagLocations`}\u001b[${39}m`} = ${JSON.stringify(
-          filteredTagLocations,
           null,
           4,
         )}`,
@@ -3930,11 +3551,9 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     entityDecodeRanges,
     rangesToDelete.current(),
   );
-  const originalTagLocations = mapLocationsToOriginal(
-    allTagLocations,
-    str,
-    decodeSegments,
-  );
+  const originalTagLocations = decodeSegments
+    ? mapLocationsToOriginal(allTagLocations, str, decodeSegments)
+    : allTagLocations;
 
   return {
     log: { timeTakenInMilliseconds: Date.now() - start },
@@ -4214,19 +3833,18 @@ function mapAttributeToOriginal(
 
 function mapTokenToOriginal(
   parserTag: Obj,
-  tokenMeta: InternalTokenMeta,
+  tokenKind: InternalTokenKind,
+  tokenStatus: InternalTagStatus | undefined,
+  tokenStart: number,
+  tokenEnd: number,
   decodedStr: string,
   segments: DecodeSegment[],
 ): Tag {
-  const start = mapDecodedStart(
-    tokenMeta.start,
-    decodedStr,
-    segments,
-  ).idx;
-  const end = mapDecodedEnd(tokenMeta.end, decodedStr, segments).idx;
+  const start = mapDecodedStart(tokenStart, decodedStr, segments).idx;
+  const end = mapDecodedEnd(tokenEnd, decodedStr, segments).idx;
 
-  if (tokenMeta.kind !== "tag") {
-    return { kind: tokenMeta.kind, start, end };
+  if (tokenKind !== "tag") {
+    return { kind: tokenKind, start, end };
   }
 
   const rawName =
@@ -4249,7 +3867,7 @@ function mapTokenToOriginal(
       ? parserTag.nameContainsLetters
       : /[A-Za-z]/.test(rawName);
 
-  if (tokenMeta.status === "inferred") {
+  if (tokenStatus === "inferred") {
     return {
       kind: "tag",
       status: "inferred",
@@ -4277,11 +3895,8 @@ function mapTokenToOriginal(
         : false,
     leftOuterWhitespace:
       typeof parserTag.leftOuterWhitespace === "number"
-        ? mapDecodedStart(
-            parserTag.leftOuterWhitespace,
-            decodedStr,
-            segments,
-          ).idx
+        ? mapDecodedStart(parserTag.leftOuterWhitespace, decodedStr, segments)
+            .idx
         : start,
     onlyPlausible:
       typeof parserTag.onlyPlausible === "boolean"
@@ -4295,14 +3910,11 @@ function mapTokenToOriginal(
 
   const lastOpeningBracketAt =
     typeof parserTag.lastOpeningBracketAt === "number"
-      ? mapDecodedStart(
-          parserTag.lastOpeningBracketAt,
-          decodedStr,
-          segments,
-        ).idx
+      ? mapDecodedStart(parserTag.lastOpeningBracketAt, decodedStr, segments)
+          .idx
       : start;
 
-  if (tokenMeta.status === "incomplete") {
+  if (tokenStatus === "incomplete") {
     return {
       ...common,
       status: "incomplete",
@@ -4312,11 +3924,8 @@ function mapTokenToOriginal(
 
   const lastClosingBracketAt =
     typeof parserTag.lastClosingBracketAt === "number"
-      ? mapDecodedEnd(
-          parserTag.lastClosingBracketAt + 1,
-          decodedStr,
-          segments,
-        ).idx - 1
+      ? mapDecodedEnd(parserTag.lastClosingBracketAt + 1, decodedStr, segments)
+          .idx - 1
       : end - 1;
   return {
     ...common,
@@ -4390,8 +3999,12 @@ function fullyConsumedTagLocations(
     return [];
   }
 
+  const filtered: [number, number][] = [];
   let rangeIdx = 0;
-  return locations.filter(([from, to]) => {
+  for (let locationIdx = 0; locationIdx < locations.length; locationIdx++) {
+    const location = locations[locationIdx];
+    const from = location[0];
+    const to = location[1];
     while (rangeIdx < ranges.length && ranges[rangeIdx][1] <= from) {
       rangeIdx += 1;
     }
@@ -4404,12 +4017,52 @@ function fullyConsumedTagLocations(
     ) {
       coveredTo = Math.max(coveredTo, ranges[candidateIdx][1]);
       if (coveredTo >= to) {
-        return true;
+        filtered.push(location);
+        break;
       }
       candidateIdx += 1;
     }
-    return false;
+  }
+  return filtered;
+}
+
+function createRangesAccumulator(): Ranges {
+  return new Ranges({
+    limitToBeAddedWhitespace: true,
+    limitLinebreaksCount: 2,
   });
+}
+
+function copyRanges(ranges: RangesType): RangesType {
+  return ranges ? ranges.map((range) => [...range] as Range) : null;
+}
+
+function rangesAreEqual(left: RangesType, right: RangesType): boolean {
+  if (left === null || right === null) {
+    return left === right;
+  }
+  return (
+    left.length === right.length &&
+    left.every(
+      (range, idx) =>
+        range.length === right[idx].length &&
+        range.every((value, valueIdx) => value === right[idx][valueIdx]),
+    )
+  );
+}
+
+function rangesWithProposal(
+  ranges: RangesType,
+  proposedReturn: Range | CallbackRange | null,
+): RangesType {
+  const accumulator = createRangesAccumulator();
+  ranges?.forEach((range) => {
+    accumulator.push([...range] as Range);
+  });
+  if (proposedReturn) {
+    accumulator.push([...proposedReturn] as Range);
+  }
+  return accumulator.current();
 }
 
 // Fold only ASCII capitals so character positions stay aligned with the

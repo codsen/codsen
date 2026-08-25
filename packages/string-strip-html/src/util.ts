@@ -98,6 +98,9 @@ function prepHopefullyAnArray(something: any, name: string): string[] {
     return [];
   }
   if (Array.isArray(something)) {
+    if (!something.length) {
+      return something;
+    }
     return something.filter((val) => typeof val === "string" && val.trim());
   }
   if (typeof something === "string") {
