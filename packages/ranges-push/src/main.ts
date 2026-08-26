@@ -11,7 +11,7 @@ import {
 import { collWhitespace } from "string-collapse-leading-whitespace";
 import type { Range as RangeType } from "../../../ops/typedefs/common";
 import { version as v } from "../package.json";
-import { rMerge } from "./rMerge";
+import { mergeInsertValues, rMerge } from "./rMerge";
 
 const version: string = v;
 
@@ -217,19 +217,13 @@ class Ranges {
         lastRange[1] = to;
         // DEV && console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
 
-        if (lastRange[2] === null || addVal === null) {
-          DEV && console.log(`this.last()[2] = ${lastRange[2]}`);
-          DEV && console.log(`addVal = ${addVal}`);
-        }
-
-        if (lastRange[2] !== null && existy(addVal)) {
+        if (addVal !== undefined && !(isStr(addVal) && !addVal.length)) {
           DEV && console.log();
-          let calculatedVal =
-            lastRange[2] &&
-            (lastRange[2] as string).length &&
-            (!this.opts?.mergeType || this.opts.mergeType === 1)
-              ? `${lastRange[2]}${addVal}`
-              : addVal;
+          let calculatedVal = mergeInsertValues(
+            lastRange[2],
+            addVal,
+            this.opts.mergeType === 2 && lastRange[0] === from,
+          );
           DEV &&
             console.log(
               `${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
@@ -238,9 +232,12 @@ class Ranges {
                 4,
               )} (type ${typeof calculatedVal})`,
             );
-          if (this.opts.limitToBeAddedWhitespace) {
+          if (
+            this.opts.limitToBeAddedWhitespace &&
+            typeof calculatedVal === "string"
+          ) {
             calculatedVal = collWhitespace(
-              calculatedVal as string,
+              calculatedVal,
               this.opts.limitLinebreaksCount,
             );
           }

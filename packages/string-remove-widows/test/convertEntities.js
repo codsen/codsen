@@ -393,4 +393,15 @@ test("32", () => {
   );
 });
 
+test("33 - adjacent entities preserve every replacement", () => {
+  equal(
+    removeWidows("&nbsp;&nbsp;", {
+      convertEntities: false,
+      minWordCount: 999,
+    }).res,
+    `${rawnbsp}${rawnbsp}`,
+    "33.01",
+  );
+});
+
 test.run();

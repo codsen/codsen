@@ -1492,4 +1492,62 @@ test("123 - FIRSTCOVERS() - rejects an index which is not a natural number", () 
   throws(() => ranges.firstCovers(), /THROW_ID_08/, "123.05");
 });
 
+test("124 - ADD() - adjacent values follow canonical merge semantics", () => {
+  const cases = [
+    { mergeType: 1, values: ["a", "b"], expected: "ab" },
+    { mergeType: 2, values: ["a", "b"], expected: "ab" },
+    { mergeType: 1, values: [null, "b"], expected: null },
+    { mergeType: 2, values: [null, "b"], expected: null },
+    { mergeType: 1, values: ["a", null], expected: null },
+    { mergeType: 2, values: ["a", null], expected: null },
+    { mergeType: 1, values: [1, 2], expected: 3 },
+    { mergeType: 2, values: [1, 2], expected: 3 },
+    { mergeType: 1, values: [0, "b"], expected: "0b" },
+    { mergeType: 2, values: [0, "b"], expected: "0b" },
+  ];
+  const actual = [];
+  const expected = [];
+  for (const fixture of cases) {
+    const ranges = new Ranges({ mergeType: fixture.mergeType });
+    ranges.add(0, 1, fixture.values[0]);
+    ranges.add(1, 2, fixture.values[1]);
+    actual.push(ranges.current());
+    expected.push([[0, 2, fixture.expected]]);
+  }
+  equal(actual, expected, "124.01");
+
+  const sameStart = new Ranges({ mergeType: 2 });
+  sameStart.add(1, 1, "a");
+  sameStart.add(1, 2, "b");
+  equal(sameStart.current(), [[1, 2, "b"]], "124.02");
+});
+
+test("125 - ADD() - adjacent ingestion agrees with deferred merging", () => {
+  const values = [undefined, null, "", "a", 0, 2];
+  const actual = [];
+  const expected = [];
+  for (const mergeType of [1, 2]) {
+    for (const firstValue of values) {
+      for (const secondValue of values) {
+        const incremental = new Ranges({ mergeType });
+        incremental.add(0, 1, firstValue);
+        incremental.add(1, 2, secondValue);
+        actual.push(incremental.current());
+
+        const deferred = new Ranges({ mergeType });
+        deferred.replace([
+          firstValue === "" || firstValue === undefined
+            ? [0, 1]
+            : [0, 1, firstValue],
+          secondValue === "" || secondValue === undefined
+            ? [1, 2]
+            : [1, 2, secondValue],
+        ]);
+        expected.push(deferred.current());
+      }
+    }
+  }
+  equal(actual, expected, "125.01");
+});
+
 test.run();

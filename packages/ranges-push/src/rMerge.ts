@@ -21,6 +21,23 @@ const defaults: Opts = {
   joinRangesThatTouchEdges: true,
 };
 
+function mergeInsertValues(
+  currentValue: any,
+  nextValue: any,
+  overwriteCurrent: boolean,
+): any {
+  if (nextValue === undefined || currentValue === null) {
+    return currentValue;
+  }
+  if (nextValue === null) {
+    return null;
+  }
+  if (currentValue === undefined || overwriteCurrent) {
+    return nextValue;
+  }
+  return currentValue + nextValue;
+}
+
 // merges the overlapping ranges
 // case #1. exact extension:
 // [ [1, 5], [5, 10] ] => [ [1, 10] ]
@@ -182,23 +199,11 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
         (startsAtSameIndex || nextRangeExtendsEnd)
       ) {
         DEV && console.log(`inside tend the insert value clauses`);
-
-        // if the value of the range before exists:
-        if (currentRange[2] !== null) {
-          if (nextRange[2] === null && currentRange[2] !== null) {
-            currentRange[2] = null;
-          } else if (currentRange[2] != null) {
-            // if there's a clash of "insert" values:
-            if (mergeTypeIsTwo && startsAtSameIndex) {
-              // take the value from the range that's on the right:
-              currentRange[2] = nextRange[2];
-            } else {
-              (currentRange as [number, number, any])[2] += nextRange[2];
-            }
-          } else {
-            currentRange[2] = nextRange[2];
-          }
-        }
+        (currentRange as [number, number, any])[2] = mergeInsertValues(
+          currentRange[2],
+          nextRange[2],
+          mergeTypeIsTwo && startsAtSameIndex,
+        );
       }
 
       writeIndex += 1;
@@ -225,4 +230,11 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
   return sortedRanges.length ? sortedRanges : null;
 }
 
-export { defaults, type Ranges, type RangeType as Range, rMerge, version };
+export {
+  defaults,
+  mergeInsertValues,
+  type Ranges,
+  type RangeType as Range,
+  rMerge,
+  version,
+};
