@@ -27,6 +27,16 @@ function isWhitespace(charCode: number): boolean {
   );
 }
 
+function normalizeLeftIndex(strLength: number, idx: unknown): number | null {
+  if (idx == null) {
+    return 0;
+  }
+  if (typeof idx !== "number" || !Number.isInteger(idx) || idx < 0) {
+    return null;
+  }
+  return idx > strLength ? strLength : idx;
+}
+
 // separates the value from flags
 interface SeparateValueFromFlags {
   value: string;
@@ -231,12 +241,11 @@ function leftMain({
   if (typeof str !== "string" || !str.length) {
     return null;
   }
-  if (!idx || typeof idx !== "number") {
-    idx = 0;
-  }
-  if (idx < 1) {
+  let normalizedIdx = normalizeLeftIndex(str.length, idx);
+  if (normalizedIdx === null || normalizedIdx < 1) {
     return null;
   }
+  idx = normalizedIdx;
   if (
     // ~- means minus one, in bitwise
     str[~-idx] &&
@@ -359,7 +368,13 @@ function seq(
   if (typeof str !== "string" || !str.length) {
     return null;
   }
-  if (typeof idx !== "number") {
+  if (direction === "left") {
+    let normalizedIdx = normalizeLeftIndex(str.length, idx);
+    if (normalizedIdx === null) {
+      return null;
+    }
+    idx = normalizedIdx;
+  } else if (typeof idx !== "number") {
     idx = 0;
   }
   if (
@@ -728,7 +743,13 @@ function chomp(
   if (typeof str !== "string" || !str.length) {
     return null;
   }
-  if (!idx || typeof idx !== "number") {
+  if (direction === "left") {
+    let normalizedIdx = normalizeLeftIndex(str.length, idx);
+    if (normalizedIdx === null) {
+      return null;
+    }
+    idx = normalizedIdx;
+  } else if (!idx || typeof idx !== "number") {
     idx = 0;
   }
   if (

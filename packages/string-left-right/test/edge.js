@@ -53,4 +53,52 @@ test("05 - chomp modes at whitespace boundaries", () => {
   equal(chompLeft("   xa", 4, { mode: 3 }, "x"), 0, "05.05");
 });
 
+test("06 - leftward index normalization", () => {
+  equal(left("abc", 4), 2, "06.01");
+  equal(left("abc", Number.MAX_SAFE_INTEGER), 2, "06.02");
+  equal(left("abc", Number.MAX_SAFE_INTEGER + 1), 2, "06.03");
+  equal(left("abc", 2 ** 32 + 1), 2, "06.04");
+  equal(left("abc", Number.MAX_VALUE), 2, "06.05");
+  equal(left("abc", Infinity), null, "06.06");
+  equal(left("abc", -Infinity), null, "06.07");
+  equal(left("abc", Number.NaN), null, "06.08");
+  equal(left("abc", 1.5), null, "06.09");
+  equal(left("abc", -1), null, "06.10");
+
+  equal(leftStopAtNewLines("abc", Number.MAX_VALUE), 2, "06.11");
+  equal(leftStopAtNewLines("abc", Infinity), null, "06.12");
+  equal(leftStopAtNewLines("abc", 1.5), null, "06.13");
+  equal(leftStopAtNewLines("abc", -1), null, "06.14");
+  equal(leftStopAtRawNbsp("abc", Number.MAX_VALUE), 2, "06.15");
+  equal(leftStopAtRawNbsp("abc", Infinity), null, "06.16");
+  equal(leftStopAtRawNbsp("abc", 1.5), null, "06.17");
+  equal(leftStopAtRawNbsp("abc", -1), null, "06.18");
+
+  let sequenceResult = {
+    gaps: [
+      [1, 2],
+      [3, 4],
+    ],
+    leftmostChar: 0,
+    rightmostChar: 4,
+  };
+  equal(
+    leftSeq("a b c", Number.MAX_VALUE, "a", "b", "c"),
+    sequenceResult,
+    "06.19",
+  );
+  equal(leftSeq("a b c", Infinity, "a", "b", "c"), null, "06.20");
+  equal(leftSeq("a b c", -Infinity, "a", "b", "c"), null, "06.21");
+  equal(leftSeq("a b c", Number.NaN, "a", "b", "c"), null, "06.22");
+  equal(leftSeq("a b c", 1.5, "a", "b", "c"), null, "06.23");
+  equal(leftSeq("a b c", -1, "a", "b", "c"), null, "06.24");
+
+  equal(chompLeft("a b c", Number.MAX_VALUE, "a", "b", "c"), 0, "06.25");
+  equal(chompLeft("a b c", Infinity, "a", "b", "c"), null, "06.26");
+  equal(chompLeft("a b c", -Infinity, "a", "b", "c"), null, "06.27");
+  equal(chompLeft("a b c", Number.NaN, "a", "b", "c"), null, "06.28");
+  equal(chompLeft("a b c", 1.5, "a", "b", "c"), null, "06.29");
+  equal(chompLeft("a b c", -1, "a", "b", "c"), null, "06.30");
+});
+
 test.run();
