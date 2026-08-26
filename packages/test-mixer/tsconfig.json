@@ -7,7 +7,8 @@
     "src/**/*",
     "src/**/*.json",
     "package.json",
-    "../../ops/typedefs/common.ts"
+    "../../ops/typedefs/common.ts",
+    "test-types/**/*.ts"
   ],
   "exclude": [".git", "node_modules"]
 }

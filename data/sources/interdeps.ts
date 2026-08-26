@@ -724,7 +724,7 @@ export const interdeps = [
   },
   {
     "name": "string-left-right",
-    "size": 6537,
+    "size": 6741,
     "imports": [
       "codsen-utils"
     ]
