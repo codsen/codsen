@@ -93,7 +93,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
     };
   }
 
-  let finalIndexesToDelete = new Ranges();
+  let finalIndexesToDelete = new Ranges<string | null | undefined>();
 
   let NBSP = `\xa0`;
 

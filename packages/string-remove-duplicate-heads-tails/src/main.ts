@@ -356,7 +356,10 @@ function remDup(str: string, opts?: Partial<LenientOpts>): string {
             },
           },
         );
-        if (resultOfAttemptToMatchTails) {
+        if (
+          resultOfAttemptToMatchTails &&
+          typeof tempIndexUpTo === "number"
+        ) {
           realRanges.push(i, tempIndexUpTo);
         }
 

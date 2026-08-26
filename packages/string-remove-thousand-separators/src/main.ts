@@ -53,7 +53,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
   }
 
   // we'll manage the TO-DELETE string slice ranges using this:
-  let rangesToDelete = new Ranges();
+  let rangesToDelete = new Ranges<string | null | undefined>();
 
   // traverse the string indexes
   for (let i = 0, len = res.length; i < len; i++) {

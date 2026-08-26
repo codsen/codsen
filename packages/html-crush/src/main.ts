@@ -194,7 +194,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
     }
   }
 
-  const finalIndexesToDelete = new Ranges({
+  const finalIndexesToDelete = new Ranges<string | null | undefined>({
     limitToBeAddedWhitespace: true,
   });
   let resolvedOpts: Opts = { ...defaults, ...opts };

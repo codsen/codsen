@@ -1,6 +1,10 @@
 type Range =
   | [from: number, to: number]
-  | [from: number, to: number, whatToInsert: string | null | undefined];
+  | [
+      from: number,
+      to: number,
+      whatToInsert: string | number | null | undefined,
+    ];
 type Ranges = Range[] | null;
 declare const version: string;
 type ProgressFn = (percentageDone: number) => void;

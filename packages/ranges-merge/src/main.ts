@@ -195,7 +195,7 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
               // take the value from the range that's on the right:
               currentRange[2] = nextRange[2];
             } else {
-              currentRange[2] += nextRange[2];
+              (currentRange as [number, number, any])[2] += nextRange[2] as any;
             }
           } else {
             currentRange[2] = nextRange[2];

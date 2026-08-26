@@ -45,7 +45,7 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
   if (typeof str !== "string" || str.length === 0) {
     return { result: str };
   }
-  const ranges = new Ranges();
+  const ranges = new Ranges<string | null | undefined>();
   // Keep mutable range state isolated even when parsing aborts unexpectedly.
 
   // setup

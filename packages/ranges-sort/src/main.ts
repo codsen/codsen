@@ -3,7 +3,11 @@ import { version as v } from "../package.json";
 
 export type Range =
   | [from: number, to: number]
-  | [from: number, to: number, whatToInsert: string | null | undefined];
+  | [
+      from: number,
+      to: number,
+      whatToInsert: string | number | null | undefined,
+    ];
 
 export type Ranges = Range[] | null;
 

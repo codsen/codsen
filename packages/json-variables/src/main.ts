@@ -319,7 +319,7 @@ function resolveString(
   resolvedOpts: Opts,
   byKeyCache: ByKeyCache,
   incomingBreadCrumbPath: string[] = [],
-): string | false | undefined {
+): string | number | false | undefined {
   DEV &&
     console.log(
       `\u001b[${33}m${`CALLED resolveString() on "${string}". Path = "${path}"`}\u001b[${39}m`,

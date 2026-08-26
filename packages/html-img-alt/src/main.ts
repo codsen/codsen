@@ -54,7 +54,7 @@ function alts(str: string, opts?: Partial<Opts>): string {
   let addSpaceInTheFutureBeforeSlashOrBracket = false;
 
   let altBegins = null;
-  let rangesArr = new Ranges();
+  let rangesArr = new Ranges<string | null | undefined>();
 
   // plausibleWithinQuotesRanges - some ranges should be included only if they are
   // not within double quotes. However, there can be cases when double quotes are
@@ -62,7 +62,7 @@ function alts(str: string, opts?: Partial<Opts>): string {
   // closing bracket. In this case, the condition "within double quotes" is false
   // regarding characters that follow that first unclosed double quote.
   // This is the temporary array which houses such "plausible" ranges.
-  let plausibleWithinQuotesRanges = new Ranges();
+  let plausibleWithinQuotesRanges = new Ranges<string | null | undefined>();
 
   // resolvedOpts
   // ================

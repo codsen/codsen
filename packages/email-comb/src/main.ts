@@ -181,9 +181,13 @@ const defaults: Opts = {
  */
 function comb(str: string, opts?: InputOpts | null): Res {
   const start = Date.now();
-  let finalIndexesToDelete = new Ranges({ limitToBeAddedWhitespace: true });
-  let currentChunksMinifiedSelectors = new Ranges();
-  let lineBreaksToDelete = new Ranges();
+  let finalIndexesToDelete = new Ranges<string | null | undefined>({
+    limitToBeAddedWhitespace: true,
+  });
+  let currentChunksMinifiedSelectors = new Ranges<
+    string | null | undefined
+  >();
+  let lineBreaksToDelete = new Ranges<string | null | undefined>();
 
   // PS. badChars is also used
   function characterSuitableForNames(char: string): boolean {

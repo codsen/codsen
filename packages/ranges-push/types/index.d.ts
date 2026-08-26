@@ -1,7 +1,3 @@
-type Range =
-  | [from: number, to: number]
-  | [from: number, to: number, whatToInsert: string | null | undefined];
-
 declare const version: string;
 interface Opts {
   limitToBeAddedWhitespace: boolean | undefined;
@@ -14,29 +10,51 @@ interface ResolvedOpts {
   mergeType: 1 | 2;
 }
 declare const defaults: ResolvedOpts;
-declare class Ranges {
+type AddValue = string | number | null | undefined;
+type IndexInput = number | string;
+type Range<InsertValue extends AddValue = AddValue> =
+  | [from: number, to: number]
+  | [from: number, to: number, addValue: InsertValue];
+type RangeInput<InsertValue extends AddValue = AddValue> =
+  | [from: IndexInput, to: IndexInput]
+  | [from: IndexInput, to: IndexInput, addValue: InsertValue];
+declare class Ranges<InsertValue extends AddValue = AddValue> {
   constructor(originalOpts?: Partial<Opts>);
-  ranges: Range[];
+  ranges: Range<InsertValue>[] | null;
   opts: Readonly<ResolvedOpts>;
   private addValidated;
   add(
-    originalFrom: number,
-    originalTo?: number,
-    addVal?: undefined | null | string,
+    originalFrom: IndexInput,
+    originalTo: IndexInput,
+    addVal?: InsertValue,
   ): void;
-  add(originalFrom: Range[] | Range | null): void;
+  add(originalFrom?: null, originalTo?: null, addVal?: null): void;
+  add(
+    originalFrom:
+      | RangeInput<InsertValue>[]
+      | RangeInput<InsertValue>
+      | null
+      | undefined,
+  ): void;
   push(
-    originalFrom: number,
-    originalTo?: number,
-    addVal?: undefined | null | string,
+    originalFrom: IndexInput,
+    originalTo: IndexInput,
+    addVal?: InsertValue,
   ): void;
-  push(originalFrom: Range[] | Range | null): void;
-  current(): null | Range[];
+  push(originalFrom?: null, originalTo?: null, addVal?: null): void;
+  push(
+    originalFrom:
+      | RangeInput<InsertValue>[]
+      | RangeInput<InsertValue>
+      | null
+      | undefined,
+  ): void;
+  current(): null | Range<InsertValue>[];
   firstCovers(index: number): boolean;
   wipe(): void;
-  replace(givenRanges: Range[] | null): void;
-  last(): Range | null;
+  replace(givenRanges: RangeInput<InsertValue>[] | null | undefined): void;
+  last(): Range<InsertValue> | null;
 }
 
 export { Ranges, defaults, version };
-export type { Opts, Range };
+export type { Opts, Range, RangeInput };

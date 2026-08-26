@@ -83,7 +83,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
     resolvedOpts.padStart = 0;
   }
 
-  let finalIndexesToDelete = new RangesClass();
+  let finalIndexesToDelete = new RangesClass<string | null | undefined>();
 
   let i;
   let len = str.length;

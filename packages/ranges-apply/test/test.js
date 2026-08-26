@@ -184,6 +184,7 @@ test("03 - adds a chunk, arg is a number, middle", () => {
 test("04 - adds a chunk, arg is a number, whole str", () => {
   let str = "abc";
   equal(rApply(str, [[0, 3, -0.3]]), "-0.3", "04.01");
+  equal(rApply(str, [[0, 3, 0]]), "0", "04.02");
 });
 
 test("05 - deletes multiple chunks correctly", () => {

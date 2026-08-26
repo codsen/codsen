@@ -9,7 +9,6 @@ import {
   isStr,
 } from "codsen-utils";
 import { collWhitespace } from "string-collapse-leading-whitespace";
-import type { Range as RangeType } from "../../../ops/typedefs/common";
 import { version as v } from "../package.json";
 import { mergeInsertValues, rMerge } from "./rMerge";
 
@@ -36,7 +35,14 @@ const defaults: ResolvedOpts = {
 };
 
 type AddValue = string | number | null | undefined;
-type ValidatedRange = [from: number, to: number, addValue?: AddValue];
+type IndexInput = number | string;
+type Range<InsertValue extends AddValue = AddValue> =
+  | [from: number, to: number]
+  | [from: number, to: number, addValue: InsertValue];
+type RangeInput<InsertValue extends AddValue = AddValue> =
+  | [from: IndexInput, to: IndexInput]
+  | [from: IndexInput, to: IndexInput, addValue: InsertValue];
+type ValidatedRange = Range;
 
 interface NormalizedRanges {
   error?: string;
@@ -147,13 +153,13 @@ function normalizeRangeInputs(args: unknown[]): NormalizedRanges {
 
 // rMerge() throws away the ranges which cover nothing and insert nothing, so
 // anything mimicking its output has to ignore them too
-function isFutile(range: RangeType): boolean {
+function isFutile(range: Range): boolean {
   return range[2] === undefined && range[0] === range[1];
 }
 
 // firstCovers() can read only the leading cluster while the ranges sit in
 // non-descending "from" order - which is how add() receives them in practice
-function isAscending(ranges: RangeType[]): boolean {
+function isAscending(ranges: Range[]): boolean {
   let previousFrom = -1;
   for (let i = 0, len = ranges.length; i < len; i++) {
     const range = ranges[i];
@@ -170,7 +176,7 @@ function isAscending(ranges: RangeType[]): boolean {
 
 // -----------------------------------------------------------------------------
 
-class Ranges {
+class Ranges<InsertValue extends AddValue = AddValue> {
   //
 
   // O P T I O N S
@@ -223,13 +229,13 @@ class Ranges {
     this.ranges = [];
   }
 
-  ranges: RangeType[];
+  ranges: Range<InsertValue>[] | null;
   opts: Readonly<ResolvedOpts>;
 
   private addValidated(
     from: number,
     to: number,
-    addVal?: string | number | null,
+    addVal?: InsertValue,
   ): void {
     DEV &&
       console.log(
@@ -304,7 +310,7 @@ class Ranges {
               : addVal,
           ]
         : [from, to]
-    ) as RangeType;
+    ) as Range<InsertValue>;
     DEV &&
       console.log(`PUSH whatToPush = ${JSON.stringify(whatToPush, null, 4)}`);
     this.ranges.push(whatToPush);
@@ -315,11 +321,18 @@ class Ranges {
   // ========
 
   add(
-    originalFrom: number,
-    originalTo?: number,
-    addVal?: undefined | null | string,
+    originalFrom: IndexInput,
+    originalTo: IndexInput,
+    addVal?: InsertValue,
   ): void;
-  add(originalFrom: RangeType[] | RangeType | null): void;
+  add(originalFrom?: null, originalTo?: null, addVal?: null): void;
+  add(
+    originalFrom:
+      | RangeInput<InsertValue>[]
+      | RangeInput<InsertValue>
+      | null
+      | undefined,
+  ): void;
   add(...args: any[]): void {
     DEV &&
       console.log(
@@ -337,7 +350,7 @@ class Ranges {
       );
     }
     for (const [from, to, addValue] of normalized.ranges) {
-      this.addValidated(from, to, addValue);
+      this.addValidated(from, to, addValue as InsertValue);
     }
     DEV && console.log();
   }
@@ -345,18 +358,25 @@ class Ranges {
   // P U S H  ()  -  A L I A S   F O R   A D D ()
   // ============================================
   push(
-    originalFrom: number,
-    originalTo?: number,
-    addVal?: undefined | null | string,
+    originalFrom: IndexInput,
+    originalTo: IndexInput,
+    addVal?: InsertValue,
   ): void;
-  push(originalFrom: RangeType[] | RangeType | null): void;
+  push(originalFrom?: null, originalTo?: null, addVal?: null): void;
+  push(
+    originalFrom:
+      | RangeInput<InsertValue>[]
+      | RangeInput<InsertValue>
+      | null
+      | undefined,
+  ): void;
   push(...args: any[]): void {
     (this.add as (...values: any[]) => void)(...args);
   }
 
   // C U R R E N T () - kindof a getter
   // ==================================
-  current(): null | RangeType[] {
+  current(): null | Range<InsertValue>[] {
     DEV &&
       console.log(
         `ranges-push/current(): ${`\u001b[${33}m${`this.ranges`}\u001b[${39}m`} = ${JSON.stringify(
@@ -367,20 +387,23 @@ class Ranges {
       );
     if (Array.isArray(this.ranges) && this.ranges.length) {
       // beware, merging can return null
-      this.ranges = rMerge(this.ranges, {
+      this.ranges = rMerge(this.ranges as any, {
         mergeType: this.opts.mergeType,
-      }) as RangeType[];
+      }) as Range<InsertValue>[] | null;
       if (this.ranges && this.opts.limitToBeAddedWhitespace) {
-        return this.ranges.map((val) => {
-          if (existy(val[2])) {
+        return this.ranges.map((val): Range<InsertValue> => {
+          if (typeof val[2] === "string") {
             return [
               val[0],
               val[1],
-              collWhitespace(val[2] as string, this.opts.limitLinebreaksCount),
+              collWhitespace(
+                val[2],
+                this.opts.limitLinebreaksCount,
+              ) as InsertValue,
             ];
           }
           return val;
-        });
+        }) as Range<InsertValue>[];
       }
       DEV &&
         console.log(
@@ -456,7 +479,9 @@ class Ranges {
 
   // R E P L A C E ()
   // ==========
-  replace(givenRanges: RangeType[] | null): void {
+  replace(
+    givenRanges: RangeInput<InsertValue>[] | null | undefined,
+  ): void {
     if (Array.isArray(givenRanges) && givenRanges.length) {
       // Now, ranges can be array of arrays, correct format but also single
       // range, an array of two natural numbers might be given.
@@ -472,7 +497,7 @@ class Ranges {
             `ranges-push/Ranges/replace(): [THROW_ID_06] ${normalized.error}.`,
           );
         }
-        this.ranges = normalized.ranges as RangeType[];
+        this.ranges = normalized.ranges as Range<InsertValue>[];
       }
     } else {
       this.ranges = [];
@@ -481,7 +506,7 @@ class Ranges {
 
   // L A S T ()
   // ==========
-  last(): RangeType | null {
+  last(): Range<InsertValue> | null {
     if (Array.isArray(this.ranges) && this.ranges.length) {
       return this.ranges[this.ranges.length - 1];
     }
@@ -489,4 +514,4 @@ class Ranges {
   }
 }
 
-export { defaults, Ranges, type RangeType as Range, version };
+export { defaults, Ranges, type Range, type RangeInput, version };

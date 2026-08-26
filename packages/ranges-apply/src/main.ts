@@ -148,7 +148,7 @@ function rApply(
 
       let beginning = i === 0 ? 0 : arr[i - 1][1];
       let ending = arr[i][0];
-      return `${acc}${str.slice(beginning, ending)}${arr[i][2] || ""}`;
+      return `${acc}${str.slice(beginning, ending)}${arr[i][2] ?? ""}`;
     }, "");
     str += tails;
   }

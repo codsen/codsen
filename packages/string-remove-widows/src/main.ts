@@ -117,7 +117,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
 
   let isArr = Array.isArray;
   let len = str.length;
-  let rangesArr = new Ranges({ mergeType: 2 });
+  let rangesArr = new Ranges<string | null | undefined>({ mergeType: 2 });
   let punctuationCharsToConsiderWidowIssue = ["."];
   let postcodeRegexFront = /[A-Z]{1,2}[0-9][0-9A-Z]?$/;
   let postcodeRegexEnd = /^[0-9][A-Z]{2}/;

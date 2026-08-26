@@ -145,7 +145,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
   // We need to track what actions need to be done. Each action (a range) is
   // an array of two elements: from index and to index. It means what to delete.
   // There can be third element, a string, which means what to insert instead.
-  let finalIndexesToDelete = new Ranges({
+  let finalIndexesToDelete = new Ranges<string | null | undefined>({
     limitToBeAddedWhitespace: false,
   }); // the main container to gather the ranges. Ranges is a JS class.
 
@@ -155,7 +155,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
   // those index range are identified. It's even a hassle otherwise: entities
   // contain ampersands and if we didn't ignore entity ranges, we'd have to
   // take measures to ignore ampersand encoding.
-  let skipArr = new Ranges();
+  let skipArr = new Ranges<string | null | undefined>();
 
   let state: State = {
     onUrlCurrently: false,

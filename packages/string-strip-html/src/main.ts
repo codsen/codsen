@@ -4026,8 +4026,8 @@ function fullyConsumedTagLocations(
   return filtered;
 }
 
-function createRangesAccumulator(): Ranges {
-  return new Ranges({
+function createRangesAccumulator(): Ranges<string | null | undefined> {
+  return new Ranges<string | null | undefined>({
     limitToBeAddedWhitespace: true,
     limitLinebreaksCount: 2,
   });
