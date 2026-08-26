@@ -469,4 +469,36 @@ test(`06 - matchLeft()          opts.maxMismatches === 1, pin the maxMismatches 
   );
 });
 
+test("07 - rejects an unmatched leftmost code unit in strict mode", () => {
+  let callbackCalls = 0;
+  equal(
+    matchLeft("aaa", 2, "ba", {
+      cb: () => {
+        callbackCalls += 1;
+        return true;
+      },
+    }),
+    false,
+    "07.01",
+  );
+  equal(callbackCalls, 0, "07.02");
+  equal(matchLeft("aaa", 2, "ba", { maxMismatches: 1 }), "ba", "07.03");
+  equal(
+    matchLeft("aaa", 2, "ba", {
+      maxMismatches: 1,
+      firstMustMatch: true,
+    }),
+    "ba",
+    "07.04",
+  );
+  equal(
+    matchLeft("aaa", 2, "ba", {
+      maxMismatches: 1,
+      lastMustMatch: true,
+    }),
+    false,
+    "07.05",
+  );
+});
+
 test.run();

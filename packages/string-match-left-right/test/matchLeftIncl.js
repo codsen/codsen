@@ -365,4 +365,36 @@ test(`09 - matchLeftIncl()          adhoc`, () => {
   );
 });
 
+test("10 - rejects an unmatched leftmost code unit in strict mode", () => {
+  let callbackCalls = 0;
+  equal(
+    matchLeftIncl("aa", 1, "ba", {
+      cb: () => {
+        callbackCalls += 1;
+        return true;
+      },
+    }),
+    false,
+    "10.01",
+  );
+  equal(callbackCalls, 0, "10.02");
+  equal(matchLeftIncl("aa", 1, "ba", { maxMismatches: 1 }), "ba", "10.03");
+  equal(
+    matchLeftIncl("aa", 1, "ba", {
+      maxMismatches: 1,
+      firstMustMatch: true,
+    }),
+    "ba",
+    "10.04",
+  );
+  equal(
+    matchLeftIncl("aa", 1, "ba", {
+      maxMismatches: 1,
+      lastMustMatch: true,
+    }),
+    false,
+    "10.05",
+  );
+});
+
 test.run();

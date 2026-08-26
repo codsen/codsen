@@ -573,6 +573,9 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
       } else if (
         i === 0 &&
         charsToCheckCount === 1 &&
+        opts.maxMismatches > 0 &&
+        patience > 0 &&
+        (!opts.firstMustMatch || firstCharacterMatched) &&
         !opts.lastMustMatch &&
         atLeastSomethingWasMatched
       ) {
