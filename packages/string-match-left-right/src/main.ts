@@ -838,6 +838,10 @@ function main(
     );
   }
 
+  if (position >= str.length) {
+    return false;
+  }
+
   const trimChars = opts.i
     ? opts.trimCharsBeforeMatching.map((char) => char.toLowerCase())
     : opts.trimCharsBeforeMatching;

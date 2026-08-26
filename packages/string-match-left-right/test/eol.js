@@ -754,4 +754,51 @@ test(`96 - matchRightIncl()  \u001b[${33}mEOL\u001b[${39}m matching - trim combo
   );
 });
 
+test("97 - valid and out-of-range index boundaries", () => {
+  const functions = [matchLeft, matchLeftIncl, matchRight, matchRightIncl];
+  const eol = () => "EOL";
+
+  equal(
+    functions.map((fn) => fn("ab", 0, eol)),
+    ["EOL", false, false, false],
+    "97.01",
+  );
+  equal(
+    functions.map((fn) => fn("ab", 1, eol)),
+    [false, false, "EOL", false],
+    "97.02",
+  );
+  equal(
+    functions.map((fn) => fn("ab", 0, fn === matchRight ? "b" : "a")),
+    [false, "a", "b", "a"],
+    "97.03",
+  );
+  equal(
+    functions.map((fn) => fn("ab", 1, fn === matchLeft ? "a" : "b")),
+    ["a", "b", false, "b"],
+    "97.04",
+  );
+
+  equal(
+    functions.map((fn) => fn("ab", 2, eol)),
+    [false, false, false, false],
+    "97.05",
+  );
+  equal(
+    functions.map((fn) => fn("ab", 2, "a")),
+    [false, false, false, false],
+    "97.06",
+  );
+  equal(
+    functions.map((fn) => fn("ab", 3, eol)),
+    [false, false, false, false],
+    "97.07",
+  );
+  equal(
+    functions.map((fn) => fn("ab", 3, "a")),
+    [false, false, false, false],
+    "97.08",
+  );
+});
+
 test.run();
