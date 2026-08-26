@@ -14,6 +14,7 @@ declare class Ranges {
   ranges: Range[];
   opts: Opts;
   private sorted;
+  private addValidated;
   add(
     originalFrom: number,
     originalTo?: number,
@@ -29,7 +30,7 @@ declare class Ranges {
   current(): null | Range[];
   firstCovers(index: number): boolean;
   wipe(): void;
-  replace(givenRanges: Range[]): void;
+  replace(givenRanges: Range[] | null): void;
   last(): Range | null;
 }
 

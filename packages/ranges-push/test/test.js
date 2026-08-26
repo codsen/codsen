@@ -58,7 +58,7 @@ test("007 - ADD() - wrong types", () => {
       let ranges = new Ranges();
       ranges.add("a", "a");
     },
-    /THROW_ID_06/g,
+    /THROW_ID_03/g,
     "07.01",
   );
 });
@@ -69,7 +69,7 @@ test("008 - ADD() - wrong types", () => {
       let ranges = new Ranges();
       ranges.add(1, "a");
     },
-    /THROW_ID_07/g,
+    /THROW_ID_03/g,
     "08.01",
   );
 });
@@ -80,7 +80,7 @@ test("009 - ADD() - wrong types", () => {
       let ranges = new Ranges();
       ranges.add("a", 1);
     },
-    /THROW_ID_06/g,
+    /THROW_ID_03/g,
     "09.01",
   );
 });
@@ -99,7 +99,7 @@ test("011 - ADD() - wrong input args", () => {
       let ranges = new Ranges();
       ranges.add(1.2, 1);
     },
-    /THROW_ID_06/g,
+    /THROW_ID_03/g,
     "11.01",
   );
   throws(
@@ -107,7 +107,7 @@ test("011 - ADD() - wrong input args", () => {
       let ranges = new Ranges();
       ranges.add(-1, 1);
     },
-    /THROW_ID_06/g,
+    /THROW_ID_03/g,
     "11.02",
   );
 });
@@ -118,7 +118,7 @@ test("012 - ADD() - wrong input args", () => {
       let ranges = new Ranges();
       ranges.add(1, 1.3);
     },
-    /THROW_ID_07/,
+    /THROW_ID_03/,
     "12.01",
   );
   throws(
@@ -126,7 +126,7 @@ test("012 - ADD() - wrong input args", () => {
       let ranges = new Ranges();
       ranges.add(1, -1);
     },
-    /THROW_ID_07/,
+    /THROW_ID_03/,
     "12.02",
   );
 });
@@ -154,7 +154,7 @@ test("015 - PUSH() - wrong inputs", () => {
       let ranges = new Ranges();
       ranges.push("a", "a");
     },
-    /THROW_ID_06/,
+    /THROW_ID_03/,
     "15.01",
   );
 });
@@ -165,7 +165,7 @@ test("016 - PUSH() - wrong inputs", () => {
       let ranges = new Ranges();
       ranges.push(1, "a");
     },
-    /THROW_ID_07/,
+    /THROW_ID_03/,
     "16.01",
   );
 });
@@ -176,7 +176,7 @@ test("017 - PUSH() - wrong inputs", () => {
       let ranges = new Ranges();
       ranges.push("a", 1);
     },
-    /THROW_ID_06/,
+    /THROW_ID_03/,
     "17.01",
   );
 });
@@ -194,7 +194,7 @@ test("019 - PUSH() - wrong inputs", () => {
       let ranges = new Ranges();
       ranges.push(undefined, 1);
     },
-    /THROW_ID_04/,
+    /THROW_ID_03/,
     "19.01",
   );
 });
@@ -205,7 +205,7 @@ test("020 - PUSH() - wrong inputs", () => {
       let ranges = new Ranges();
       ranges.push(null, 1);
     },
-    /THROW_ID_04/,
+    /THROW_ID_03/,
     "20.01",
   );
 });
@@ -238,7 +238,7 @@ test("023 - PUSH() - numbers but not natural integers", () => {
       let ranges = new Ranges();
       ranges.push(1.2, 1);
     },
-    /THROW_ID_06/,
+    /THROW_ID_03/,
     "23.01",
   );
 });
@@ -249,7 +249,7 @@ test("024 - PUSH() - numbers but not natural integers", () => {
       let ranges = new Ranges();
       ranges.push(1, 1.3);
     },
-    /THROW_ID_07/,
+    /THROW_ID_03/,
     "24.01",
   );
 });
@@ -297,7 +297,7 @@ test("029 - ADD() - first argument is .current() output of ranges", () => {
       let ranges = new Ranges();
       ranges.add([[1, "z"]]);
     },
-    /THROW_ID_07/,
+    /THROW_ID_03/,
     "29.01",
   );
 });
@@ -308,7 +308,7 @@ test("030 - ADD() - first argument is .current() output of ranges", () => {
       let ranges = new Ranges();
       ranges.add([["z", 1]]);
     },
-    /THROW_ID_06/,
+    /THROW_ID_03/,
     "30.01",
   );
 });
@@ -319,7 +319,7 @@ test("031 - ADD() - first argument is .current() output of ranges", () => {
       let ranges = new Ranges();
       ranges.add([["z", 1], 1]);
     },
-    /THROW_ID_06/,
+    /THROW_ID_03/,
     "31.01",
   );
 });
@@ -1212,7 +1212,7 @@ test("109 - REPLACE() - replaces ranges with single range (throws)", () => {
     () => {
       oldRanges.replace([6, 8]);
     },
-    /THROW_ID_09/,
+    /THROW_ID_05/,
     "109.01",
   );
 
@@ -1221,13 +1221,13 @@ test("109 - REPLACE() - replaces ranges with single range (throws)", () => {
     () => {
       oldRanges.replace([6, 8, "zzz"]);
     },
-    /THROW_ID_09/,
+    /THROW_ID_05/,
     "109.02",
   );
 
   // but range or ranges does work fine:
   oldRanges.replace([[6, 8, "zzz"]]);
-  equal(oldRanges.current(), [[6, 8, "zzz"]], "109.01");
+  equal(oldRanges.current(), [[6, 8, "zzz"]], "109.03");
 });
 
 test("110 - constructor rejects non-object options", () => {
@@ -1248,17 +1248,14 @@ test("111 - constructor normalises and validates mergeType", () => {
   throws(() => new Ranges({ mergeType: "3" }), /THROW_ID_02/, "111.03");
 });
 
-test("112 - ADD() ignores non-range items in a ranges array", () => {
+test("112 - ADD() rejects non-range items in a ranges array", () => {
   const ranges = new Ranges();
-  ranges.add([null, [1, 2], "not a range", [3, 4]]);
-  equal(
-    ranges.current(),
-    [
-      [1, 2],
-      [3, 4],
-    ],
+  throws(
+    () => ranges.add([null, [1, 2], "not a range", [3, 4]]),
+    /THROW_ID_03/,
     "112.01",
   );
+  equal(ranges.current(), null, "112.02");
 });
 
 // -----------------------------------------------------------------------------
@@ -1384,20 +1381,27 @@ test("120 - FIRSTCOVERS() - WIPE() and REPLACE()", () => {
   equal(ranges.firstCovers(7), true, "120.03");
   equal(ranges.firstCovers(8), false, "120.04");
 
-  // replace() accepts out-of-order and malformed members
-  ranges.replace([[6, 9], null, [0, 6]]);
+  // replace() accepts valid out-of-order ranges
+  ranges.replace([
+    [6, 9],
+    [0, 6],
+  ]);
   equal(ranges.firstCovers(9), true, "120.05");
   equal(ranges.firstCovers(10), false, "120.06");
 
-  // a negative index sorts ahead of zero, so the first range is not at zero
-  ranges.replace([
-    [0, 9],
-    [-3, 0],
-  ]);
-  equal(ranges.firstCovers(0), false, "120.07");
+  throws(
+    () =>
+      ranges.replace([
+        [0, 9],
+        [-3, 0],
+      ]),
+    /THROW_ID_06/,
+    "120.07",
+  );
+  equal(ranges.current(), [[0, 9]], "120.08");
 
   ranges.replace([]);
-  equal(ranges.firstCovers(0), false, "120.08");
+  equal(ranges.firstCovers(0), false, "120.09");
 });
 
 test("121 - FIRSTCOVERS() - does not merge, sort or collapse", () => {
@@ -1485,11 +1489,11 @@ test("122 - FIRSTCOVERS() - agrees with CURRENT() on assorted range sets", () =>
 test("123 - FIRSTCOVERS() - rejects an index which is not a natural number", () => {
   const ranges = new Ranges();
   ranges.add(0, 5);
-  throws(() => ranges.firstCovers("5"), /THROW_ID_08/, "123.01");
-  throws(() => ranges.firstCovers(null), /THROW_ID_08/, "123.02");
-  throws(() => ranges.firstCovers(1.5), /THROW_ID_08/, "123.03");
-  throws(() => ranges.firstCovers(-1), /THROW_ID_08/, "123.04");
-  throws(() => ranges.firstCovers(), /THROW_ID_08/, "123.05");
+  throws(() => ranges.firstCovers("5"), /THROW_ID_04/, "123.01");
+  throws(() => ranges.firstCovers(null), /THROW_ID_04/, "123.02");
+  throws(() => ranges.firstCovers(1.5), /THROW_ID_04/, "123.03");
+  throws(() => ranges.firstCovers(-1), /THROW_ID_04/, "123.04");
+  throws(() => ranges.firstCovers(), /THROW_ID_04/, "123.05");
 });
 
 test("124 - ADD() - adjacent values follow canonical merge semantics", () => {
@@ -1548,6 +1552,64 @@ test("125 - ADD() - adjacent ingestion agrees with deferred merging", () => {
     }
   }
   equal(actual, expected, "125.01");
+});
+
+test("126 - validation rejects reversed ranges before mutation", () => {
+  for (const method of ["add", "push"]) {
+    const ranges = new Ranges();
+    ranges.add(1, 5, "a");
+    throws(() => ranges[method](5, 2, "b"), /THROW_ID_03/, "126.01");
+    equal(ranges.current(), [[1, 5, "a"]], "126.02");
+  }
+
+  const replaced = new Ranges();
+  replaced.add(1, 5, "a");
+  throws(() => replaced.replace([[5, 2, "b"]]), /THROW_ID_06/, "126.03");
+  equal(replaced.current(), [[1, 5, "a"]], "126.04");
+});
+
+test("127 - validation rejects unsafe index coercions", () => {
+  const invalidIndexes = [true, " ", [], [1], 1n, Symbol("index")];
+  for (const method of ["add", "push"]) {
+    for (const invalid of invalidIndexes) {
+      throws(() => new Ranges()[method](invalid, 2), /THROW_ID_03/, "127.01");
+      throws(() => new Ranges()[method](1, invalid), /THROW_ID_03/, "127.02");
+    }
+  }
+});
+
+test("128 - validation checks complete batches before mutation", () => {
+  const ranges = new Ranges();
+  ranges.add(0, 1, "kept");
+  throws(
+    () => ranges.add([[1, 2], [3]]),
+    /THROW_ID_03/,
+    "128.01",
+  );
+  equal(ranges.current(), [[0, 1, "kept"]], "128.02");
+
+  throws(
+    () => ranges.add([[1, 2], "not a range"]),
+    /THROW_ID_03/,
+    "128.03",
+  );
+  throws(() => ranges.add([1]), /THROW_ID_03/, "128.04");
+  throws(() => ranges.add(1, 2, undefined, 3), /THROW_ID_03/, "128.05");
+  throws(() => ranges.add([1, 2, "x", 3]), /THROW_ID_03/, "128.06");
+  equal(ranges.current(), [[0, 1, "kept"]], "128.07");
+});
+
+test("129 - validation preserves deliberate index and no-op inputs", () => {
+  const ranges = new Ranges();
+  ranges.add("01", "2", 0);
+  ranges.push("2", "2", "insert");
+  ranges.add(null);
+  ranges.push(undefined, undefined);
+  equal(ranges.current(), [[1, 2, "0insert"]], "129.01");
+
+  const numericInsertion = new Ranges({ limitToBeAddedWhitespace: true });
+  numericInsertion.add(1, 2, 3);
+  equal(numericInsertion.current(), [[1, 2, 3]], "129.02");
 });
 
 test.run();

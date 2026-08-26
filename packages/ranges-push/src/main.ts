@@ -29,6 +29,116 @@ const defaults: Opts = {
   mergeType: 1,
 };
 
+type AddValue = string | number | null | undefined;
+type ValidatedRange = [from: number, to: number, addValue?: AddValue];
+
+interface NormalizedRanges {
+  error?: string;
+  ranges: ValidatedRange[];
+}
+
+function normalizeRangeInputs(args: unknown[]): NormalizedRanges {
+  if (args.length > 3) {
+    return {
+      error: `expected at most three arguments but received ${args.length}`,
+      ranges: [],
+    };
+  }
+
+  if (args.length <= 1 && Array.isArray(args[0])) {
+    const supplied = args[0];
+    if (!supplied.length) {
+      return { ranges: [] };
+    }
+    if (supplied.some((value) => Array.isArray(value))) {
+      if (!supplied.every((value) => Array.isArray(value))) {
+        return {
+          error: `a ranges batch must contain only range arrays; received ${formatDiagnosticValue(supplied, 4)}`,
+          ranges: [],
+        };
+      }
+      args = supplied;
+    } else {
+      args = [supplied];
+    }
+  } else {
+    args = [args];
+  }
+
+  const ranges: ValidatedRange[] = [];
+  for (const value of args) {
+    if (!Array.isArray(value)) {
+      return {
+        error: `a ranges batch must contain only range arrays; received ${formatDiagnosticValue(value, 4)}`,
+        ranges: [],
+      };
+    }
+    if (value.length > 3) {
+      return {
+        error: `a range must contain at most three values; received ${formatDiagnosticValue(value, 4)}`,
+        ranges: [],
+      };
+    }
+
+    const [originalFrom, originalTo, addValue] = value;
+    if (originalFrom == null && originalTo == null) {
+      continue;
+    }
+    if (originalFrom != null && originalTo == null) {
+      return {
+        error: `the first index is set (${formatDiagnosticValue(originalFrom)}) but the second index is not (${formatDiagnosticValue(originalTo)})`,
+        ranges: [],
+      };
+    }
+    if (originalFrom == null && originalTo != null) {
+      return {
+        error: `the second index is set (${formatDiagnosticValue(originalTo)}) but the first index is not (${formatDiagnosticValue(originalFrom)})`,
+        ranges: [],
+      };
+    }
+
+    const from =
+      typeof originalFrom === "string" && /^\d+$/.test(originalFrom)
+        ? Number(originalFrom)
+        : originalFrom;
+    const to =
+      typeof originalTo === "string" && /^\d+$/.test(originalTo)
+        ? Number(originalTo)
+        : originalTo;
+    if (!isInt(from)) {
+      return {
+        error: `the first index must be a natural number, zero, or a digit-only numeric string; received ${formatDiagnosticValue(originalFrom, 4)} (type ${typeof originalFrom})`,
+        ranges: [],
+      };
+    }
+    if (!isInt(to)) {
+      return {
+        error: `the second index must be a natural number, zero, or a digit-only numeric string; received ${formatDiagnosticValue(originalTo, 4)} (type ${typeof originalTo})`,
+        ranges: [],
+      };
+    }
+    if (existy(addValue) && !isStr(addValue) && !isNum(addValue)) {
+      return {
+        error: `the third value must be a string, number, null, or undefined; received ${formatDiagnosticValue(addValue, 4)} (type ${typeof addValue})`,
+        ranges: [],
+      };
+    }
+    if (from > to) {
+      return {
+        error: `the first index (${from}) must not be greater than the second index (${to})`,
+        ranges: [],
+      };
+    }
+
+    ranges.push(
+      addValue !== undefined && !(isStr(addValue) && !addValue.length)
+        ? [from, to, addValue]
+        : [from, to],
+    );
+  }
+  return { ranges };
+}
+
 // rMerge() throws away the ranges which cover nothing and insert nothing, so
 // anything mimicking its output has to ignore them too
 function isFutile(range: RangeType): boolean {
@@ -95,6 +205,94 @@ class Ranges {
   // re-walking the whole accumulated array
   private sorted: boolean;
 
+  private addValidated(
+    from: number,
+    to: number,
+    addVal?: string | number | null,
+  ): void {
+    DEV &&
+      console.log(
+        `${`\u001b[${33}m${`CASE 2`}\u001b[${39}m`} - two indexes were given as arguments`,
+      );
+    const lastRange = this.last();
+    if (
+      existy(this.ranges) &&
+      Array.isArray(lastRange) &&
+      from === lastRange[1]
+    ) {
+      DEV &&
+        console.log(
+          `${`\u001b[${32}m${`YES`}\u001b[${39}m`}, incoming "from" value match the existing last element's "to" value`,
+        );
+      lastRange[1] = to;
+
+      if (addVal !== undefined && !(isStr(addVal) && !addVal.length)) {
+        DEV && console.log();
+        let calculatedVal = mergeInsertValues(
+          lastRange[2],
+          addVal,
+          this.opts.mergeType === 2 && lastRange[0] === from,
+        );
+        DEV &&
+          console.log(
+            `${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
+              calculatedVal,
+              null,
+              4,
+            )} (type ${typeof calculatedVal})`,
+          );
+        if (
+          this.opts.limitToBeAddedWhitespace &&
+          typeof calculatedVal === "string"
+        ) {
+          calculatedVal = collWhitespace(
+            calculatedVal,
+            this.opts.limitLinebreaksCount,
+          );
+        }
+        DEV &&
+          console.log(
+            `${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
+              calculatedVal,
+              null,
+              4,
+            )}`,
+          );
+        if (!(isStr(calculatedVal) && !calculatedVal.length)) {
+          lastRange[2] = calculatedVal;
+        }
+      }
+      DEV && console.log();
+      return;
+    }
+
+    DEV &&
+      console.log(
+        `${`\u001b[${31}m${`NO`}\u001b[${39}m`}, incoming "from" value does not match the existing last element's "to" value`,
+      );
+    if (!this.ranges) {
+      this.ranges = [];
+    }
+    if (lastRange && from < lastRange[0]) {
+      this.sorted = false;
+    }
+    const whatToPush = (
+      addVal !== undefined
+        ? [
+            from,
+            to,
+            typeof addVal === "string" && this.opts.limitToBeAddedWhitespace
+              ? collWhitespace(addVal, this.opts.limitLinebreaksCount)
+              : addVal,
+          ]
+        : [from, to]
+    ) as RangeType;
+    DEV &&
+      console.log(`PUSH whatToPush = ${JSON.stringify(whatToPush, null, 4)}`);
+    this.ranges.push(whatToPush);
+    DEV && console.log(`this.ranges = ${JSON.stringify(this.ranges, null, 4)};`);
+  }
+
   // A D D ()
   // ========
 
@@ -104,208 +302,24 @@ class Ranges {
     addVal?: undefined | null | string,
   ): void;
   add(originalFrom: RangeType[] | RangeType | null): void;
-  add(originalFrom?: any, originalTo?: any, addVal?: any): void {
+  add(...args: any[]): void {
     DEV &&
       console.log(
         `\n\n\n${`\u001b[${32}m${`${`=`.repeat(80)}`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${35}m${`ADD()`}\u001b[${39}m`} called; originalFrom = ${originalFrom}; originalTo = ${originalTo}; addVal = ${addVal}`,
+        `${`\u001b[${35}m${`ADD()`}\u001b[${39}m`} called; args = ${JSON.stringify(args, null, 4)}`,
       );
 
-    if (originalFrom == null && originalTo == null) {
-      // absent ranges are marked as null - instead of array of arrays we can receive a null
-      DEV && console.log(`nothing happens`);
-      return;
-    }
-    if (existy(originalFrom) && !existy(originalTo)) {
-      if (Array.isArray(originalFrom)) {
-        if (originalFrom.length) {
-          if (originalFrom.some((el) => Array.isArray(el))) {
-            originalFrom.forEach((thing) => {
-              if (Array.isArray(thing)) {
-                // recursively feed this subarray, hopefully it's an array
-                DEV &&
-                  console.log(
-                    `██ RECURSIVELY CALLING ITSELF AGAIN WITH ${JSON.stringify(
-                      thing,
-                      null,
-                      4,
-                    )}`,
-                  );
-                (this as any).add(...thing);
-                DEV && console.log("104\n\n\n");
-                DEV && console.log("██ END OF RECURSION, BACK TO NORMAL FLOW");
-                DEV && console.log("107\n\n\n");
-              }
-              // just skip other cases
-            });
-            return;
-          }
-          if (
-            originalFrom.length &&
-            isInt(+originalFrom[0]) &&
-            isInt(+originalFrom[1])
-          ) {
-            // recursively pass in those values
-            DEV &&
-              console.log(
-                `██ RECURSIVELY CALLING ITSELF AGAIN WITH ${JSON.stringify(
-                  originalFrom,
-                  null,
-                  4,
-                )}`,
-              );
-            (this as any).add(...originalFrom);
-            DEV && console.log("128\n\n\n");
-            DEV && console.log("██ END OF RECURSION, BACK TO NORMAL FLOW");
-            DEV && console.log("130\n\n\n");
-          }
-        }
-        // else,
-        return;
-      }
+    const normalized = normalizeRangeInputs(args);
+    if (normalized.error) {
       throw new TypeError(
-        `ranges-push/Ranges/add(): [THROW_ID_03] the first input argument, "from" is set (${formatDiagnosticValue(originalFrom)}) but second-one, "to" is not (${formatDiagnosticValue(originalTo)})`,
-      );
-    } else if (!existy(originalFrom) && existy(originalTo)) {
-      throw new TypeError(
-        `ranges-push/Ranges/add(): [THROW_ID_04] the second input argument, "to" is set (${formatDiagnosticValue(originalTo)}) but first-one, "from" is not (${formatDiagnosticValue(originalFrom)})`,
+        `ranges-push/Ranges/add(): [THROW_ID_03] ${normalized.error}.`,
       );
     }
-    const from = +originalFrom;
-    const to = +originalTo;
-
-    // validation
-    if (isInt(from) && isInt(to)) {
-      DEV &&
-        console.log(
-          `${`\u001b[${33}m${`CASE 2`}\u001b[${39}m`} - two indexes were given as arguments`,
-        );
-      // This means two indexes were given as arguments. Business as usual.
-      if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
-        throw new TypeError(
-          `ranges-push/Ranges/add(): [THROW_ID_05] The third argument, the value to add, was given not as string but ${typeof addVal}, equal to:\n${formatDiagnosticValue(addVal, 4)}`,
-        );
-      }
-      DEV &&
-        console.log(
-          `${`\u001b[${33}m${`addVal`}\u001b[${39}m`} = ${JSON.stringify(
-            addVal,
-            null,
-            4,
-          )} (${typeof addVal}, charCodeAt zero = ${
-            isStr(addVal) ? addVal.charCodeAt(0) : "N/A"
-          })`,
-        );
-      // Does the incoming "from" value match the existing last element's "to" value?
-      // Read once - last() re-checks the array and re-indexes it on every
-      // call, and this branch consulted it eight times.
-      const lastRange = this.last();
-      if (
-        existy(this.ranges) &&
-        Array.isArray(lastRange) &&
-        from === lastRange[1]
-      ) {
-        DEV &&
-          console.log(
-            `${`\u001b[${32}m${`YES`}\u001b[${39}m`}, incoming "from" value match the existing last element's "to" value`,
-          );
-        // The incoming range is an exact extension of the last range, like
-        // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
-        lastRange[1] = to;
-        // DEV && console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
-
-        if (addVal !== undefined && !(isStr(addVal) && !addVal.length)) {
-          DEV && console.log();
-          let calculatedVal = mergeInsertValues(
-            lastRange[2],
-            addVal,
-            this.opts.mergeType === 2 && lastRange[0] === from,
-          );
-          DEV &&
-            console.log(
-              `${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
-                calculatedVal,
-                null,
-                4,
-              )} (type ${typeof calculatedVal})`,
-            );
-          if (
-            this.opts.limitToBeAddedWhitespace &&
-            typeof calculatedVal === "string"
-          ) {
-            calculatedVal = collWhitespace(
-              calculatedVal,
-              this.opts.limitLinebreaksCount,
-            );
-          }
-          DEV &&
-            console.log(
-              `${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
-                calculatedVal,
-                null,
-                4,
-              )}`,
-            );
-          if (!(isStr(calculatedVal) && !calculatedVal.length)) {
-            // don't let the zero-length strings past
-            lastRange[2] = calculatedVal;
-          }
-        }
-        DEV && console.log();
-      } else {
-        DEV &&
-          console.log(
-            `${`\u001b[${31}m${`NO`}\u001b[${39}m`}, incoming "from" value does not match the existing last element's "to" value`,
-          );
-
-        if (!this.ranges) {
-          this.ranges = [];
-        }
-        if (lastRange && from < lastRange[0]) {
-          // this range jumps backwards, so the leading-cluster shortcut in
-          // firstCovers() no longer holds
-          this.sorted = false;
-        }
-        let whatToPush: RangeType =
-          addVal !== undefined && !(isStr(addVal) && !addVal.length)
-            ? [
-                from,
-                to,
-                addVal && this.opts.limitToBeAddedWhitespace
-                  ? collWhitespace(addVal, this.opts.limitLinebreaksCount)
-                  : addVal,
-              ]
-            : [from, to];
-        DEV &&
-          console.log(
-            `PUSH whatToPush = ${JSON.stringify(whatToPush, null, 4)}`,
-          );
-        this.ranges.push(whatToPush);
-        DEV &&
-          console.log(`this.ranges = ${JSON.stringify(this.ranges, null, 4)};`);
-      }
-    } else {
-      DEV &&
-        console.log(
-          `${`\u001b[${33}m${`CASE 3`}\u001b[${39}m`} - error somewhere!`,
-        );
-      // Error somewhere!
-      // Let's find out where.
-
-      // is it first arg?
-      if (!isInt(from)) {
-        throw new TypeError(
-          `ranges-push/Ranges/add(): [THROW_ID_06] "from" value, the first input argument, must be a natural number or zero! Currently it's of a type "${typeof originalFrom}" equal to: ${formatDiagnosticValue(originalFrom, 4)}`,
-        );
-      } else {
-        // then it's second...
-        throw new TypeError(
-          `ranges-push/Ranges/add(): [THROW_ID_07] "to" value, the second input argument, must be a natural number or zero! Currently it's of a type "${typeof originalTo}" equal to: ${formatDiagnosticValue(originalTo, 4)}`,
-        );
-      }
+    for (const [from, to, addValue] of normalized.ranges) {
+      this.addValidated(from, to, addValue);
     }
     DEV && console.log();
   }
@@ -318,8 +332,8 @@ class Ranges {
     addVal?: undefined | null | string,
   ): void;
   push(originalFrom: RangeType[] | RangeType | null): void;
-  push(originalFrom?: any, originalTo?: any, addVal?: any): void {
-    this.add(originalFrom, originalTo, addVal);
+  push(...args: any[]): void {
+    (this.add as (...values: any[]) => void)(...args);
   }
 
   // C U R R E N T () - kindof a getter
@@ -378,7 +392,7 @@ class Ranges {
   firstCovers(index: number): boolean {
     if (!isInt(index)) {
       throw new TypeError(
-        `ranges-push/Ranges/firstCovers(): [THROW_ID_08] the input argument must be a natural number or zero! It was given as ${formatDiagnosticValue(index, 4)} (type ${typeof index})`,
+        `ranges-push/Ranges/firstCovers(): [THROW_ID_04] the input argument must be a natural number or zero! It was given as ${formatDiagnosticValue(index, 4)} (type ${typeof index})`,
       );
     }
     if (!Array.isArray(this.ranges) || !this.ranges.length) {
@@ -448,17 +462,23 @@ class Ranges {
 
   // R E P L A C E ()
   // ==========
-  replace(givenRanges: RangeType[]): void {
+  replace(givenRanges: RangeType[] | null): void {
     if (Array.isArray(givenRanges) && givenRanges.length) {
       // Now, ranges can be array of arrays, correct format but also single
       // range, an array of two natural numbers might be given.
       // Let's put safety latch against such cases
       if (!(Array.isArray(givenRanges[0]) && isInt(givenRanges[0][0]))) {
         throw new Error(
-          `ranges-push/Ranges/replace(): [THROW_ID_09] Single range was given but we expected array of arrays! The first element, ${formatDiagnosticValue(givenRanges[0], 4)} should be an array and its first element should be an integer, a string index.`,
+          `ranges-push/Ranges/replace(): [THROW_ID_05] Single range was given but we expected array of arrays! The first element, ${formatDiagnosticValue(givenRanges[0], 4)} should be an array.`,
         );
       } else {
-        this.ranges = Array.from(givenRanges);
+        const normalized = normalizeRangeInputs([givenRanges]);
+        if (normalized.error) {
+          throw new TypeError(
+            `ranges-push/Ranges/replace(): [THROW_ID_06] ${normalized.error}.`,
+          );
+        }
+        this.ranges = normalized.ranges as RangeType[];
         this.sorted = isAscending(this.ranges);
       }
     } else {
