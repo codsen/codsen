@@ -51,4 +51,25 @@ const maybeRowChecks: [
 
 const legacyBooleanRow: PlainObjectOfBool = { varied: true };
 
+// @ts-expect-error -- null is not an empty-reference sentinel.
+mixer(null, defaults);
+// @ts-expect-error -- false is not an empty-reference sentinel.
+mixer(false, defaults);
+// @ts-expect-error -- zero is not an empty-reference sentinel.
+mixer(0, defaults);
+// @ts-expect-error -- an empty string is not an empty-reference sentinel.
+mixer("", defaults);
+// @ts-expect-error -- NaN is not an empty-reference sentinel.
+mixer(NaN, defaults);
+// @ts-expect-error -- null is not accepted as defaults.
+mixer({}, null);
+// @ts-expect-error -- false is not accepted as defaults.
+mixer({}, false);
+// @ts-expect-error -- zero is not accepted as defaults.
+mixer({}, 0);
+// @ts-expect-error -- an empty string is not accepted as defaults.
+mixer({}, "");
+// @ts-expect-error -- NaN is not accepted as defaults.
+mixer({}, NaN);
+
 void [rowChecks, allRowChecks, maybeRowChecks, legacyBooleanRow];

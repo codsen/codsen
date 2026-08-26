@@ -1,4 +1,8 @@
-import { deepClone as clone } from "codsen-utils";
+import {
+  deepClone as clone,
+  formatDiagnosticValue,
+  isPlainObject as isObj,
+} from "codsen-utils";
 import { combinations } from "object-boolean-combinations";
 
 import { version as v } from "../package.json";
@@ -70,20 +74,18 @@ function mixer(
   ref: PlainObject = {},
   defaultsObj: PlainObject = {},
 ): PlainObject[] {
-  if (ref && typeof ref !== "object") {
+  if (!isObj(ref)) {
     throw new Error(
-      `test-mixer/mixer(): [THROW_ID_01] the first input arg is missing!`,
+      `test-mixer/mixer(): [THROW_ID_01] the first input argument must be a plain object or undefined. It was given as:\n${formatDiagnosticValue(ref, 4)} (type ${typeof ref}).`,
     );
   }
-  if (defaultsObj && typeof defaultsObj !== "object") {
+  if (!isObj(defaultsObj)) {
     throw new Error(
-      `test-mixer/mixer(): [THROW_ID_02] the second input arg is missing!`,
+      `test-mixer/mixer(): [THROW_ID_02] the second input argument must be a plain object or undefined. It was given as:\n${formatDiagnosticValue(defaultsObj, 4)} (type ${typeof defaultsObj}).`,
     );
   }
   let caught;
   if (
-    typeof ref === "object" &&
-    typeof defaultsObj === "object" &&
     Object.keys(ref)
       // If some unrecognised key is present in the first,
       // "ref" argument, that's OK as long as it's not boolean,
