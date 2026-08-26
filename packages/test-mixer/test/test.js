@@ -398,4 +398,109 @@ test("09", () => {
   );
 });
 
+test("10 - isolates mutable values between generated rows", () => {
+  let callbackCalls = 0;
+  const callback = () => {
+    callbackCalls += 1;
+  };
+  const shared = { value: "shared" };
+  const cycle = { value: "cycle" };
+  cycle.self = cycle;
+  const mapKey = { id: 1 };
+  const mapValue = { value: "map" };
+  const setValue = { value: "set" };
+  const defaults = {
+    enabled: false,
+    nested: { value: "nested" },
+    list: [{ value: "list" }],
+    map: new Map([[mapKey, mapValue]]),
+    set: new Set([setValue]),
+    cycle,
+    aliasFromDefaults: shared,
+    callback,
+  };
+  const ref = {
+    required: [{ value: "required" }],
+    aliasFromRef: shared,
+  };
+
+  const [first, second] = mixer(ref, defaults);
+  const [[firstMapKey, firstMapValue]] = first.map;
+  const [[secondMapKey, secondMapValue]] = second.map;
+  const [firstSetValue] = first.set;
+  const [secondSetValue] = second.set;
+
+  is(first.aliasFromDefaults, first.aliasFromRef, "10.01");
+  is(second.aliasFromDefaults, second.aliasFromRef, "10.02");
+  is.not(first.aliasFromDefaults, second.aliasFromDefaults, "10.03");
+  is.not(first.aliasFromDefaults, shared, "10.04");
+  is.not(first.nested, second.nested, "10.05");
+  is.not(first.nested, defaults.nested, "10.06");
+  is.not(first.list, second.list, "10.07");
+  is.not(first.list[0], second.list[0], "10.08");
+  is.not(first.map, second.map, "10.09");
+  is.not(firstMapKey, secondMapKey, "10.10");
+  is.not(firstMapValue, secondMapValue, "10.11");
+  is.not(first.set, second.set, "10.12");
+  is.not(firstSetValue, secondSetValue, "10.13");
+  is(first.cycle.self, first.cycle, "10.14");
+  is(second.cycle.self, second.cycle, "10.15");
+  is.not(first.cycle, second.cycle, "10.16");
+  is.not(first.required, second.required, "10.17");
+  is(first.callback, callback, "10.18");
+  is(second.callback, callback, "10.19");
+  equal(callbackCalls, 0, "10.20");
+
+  first.aliasFromDefaults.value = "changed";
+  first.nested.value = "changed";
+  first.list[0].value = "changed";
+  firstMapKey.id = 2;
+  firstMapValue.value = "changed";
+  firstSetValue.value = "changed";
+  first.cycle.value = "changed";
+  first.required[0].value = "changed";
+
+  equal(
+    {
+      alias: second.aliasFromDefaults.value,
+      callbackCalls,
+      cycle: second.cycle.value,
+      list: second.list[0].value,
+      mapKey: secondMapKey.id,
+      mapValue: secondMapValue.value,
+      nested: second.nested.value,
+      required: second.required[0].value,
+      set: secondSetValue.value,
+      sourceAlias: shared.value,
+      sourceCycle: cycle.value,
+      sourceList: defaults.list[0].value,
+      sourceMapKey: mapKey.id,
+      sourceMapValue: mapValue.value,
+      sourceNested: defaults.nested.value,
+      sourceRequired: ref.required[0].value,
+      sourceSet: setValue.value,
+    },
+    {
+      alias: "shared",
+      callbackCalls: 0,
+      cycle: "cycle",
+      list: "list",
+      mapKey: 1,
+      mapValue: "map",
+      nested: "nested",
+      required: "required",
+      set: "set",
+      sourceAlias: "shared",
+      sourceCycle: "cycle",
+      sourceList: "list",
+      sourceMapKey: 1,
+      sourceMapValue: "map",
+      sourceNested: "nested",
+      sourceRequired: "required",
+      sourceSet: "set",
+    },
+    "10.21",
+  );
+});
+
 test.run();

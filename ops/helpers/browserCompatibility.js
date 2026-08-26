@@ -236,12 +236,18 @@ function detergentSmoke(api, equal) {
 }
 
 function testMixerSmoke(api, equal) {
-  equal(api.mixer({}, { enabled: true, cached: false }), [
-    { enabled: false, cached: false },
-    { enabled: true, cached: false },
-    { enabled: false, cached: true },
-    { enabled: true, cached: true },
+  const rows = api.mixer(
+    {},
+    { enabled: true, cached: false, nested: { value: 1 } },
+  );
+  equal(rows, [
+    { enabled: false, cached: false, nested: { value: 1 } },
+    { enabled: true, cached: false, nested: { value: 1 } },
+    { enabled: false, cached: true, nested: { value: 1 } },
+    { enabled: true, cached: true, nested: { value: 1 } },
   ]);
+  rows[0].nested.value = 2;
+  equal(rows[1].nested.value, 1);
 }
 
 function arrayGroupSmoke(api, equal) {

@@ -118,8 +118,6 @@ function mixer(
     return [];
   }
 
-  let refClone = clone(ref);
-  let defaultsObjClone = clone(defaultsObj);
   let optsWithBoolValues: PlainObjectOfBool = {};
 
   // 1. find out, what boolean-value keys are there in defaultsObj that
@@ -127,45 +125,43 @@ function mixer(
   Object.keys(defaultsObj).forEach((key) => {
     // if key's value is bool AND it's not present in ref,
     // add it to "optsWithBoolValues"
-    if (typeof defaultsObjClone[key] === "boolean" && !hasOwn.call(ref, key)) {
-      optsWithBoolValues[key] = defaultsObjClone[key];
+    if (typeof defaultsObj[key] === "boolean" && !hasOwn.call(ref, key)) {
+      optsWithBoolValues[key] = defaultsObj[key];
     }
   });
 
+  DEV && console.log(`${`\u001b[${33}m${`ref`}\u001b[${39}m`} =`, ref);
   DEV &&
     console.log(
-      `${`\u001b[${33}m${`refClone`}\u001b[${39}m`} = ${JSON.stringify(
-        refClone,
-        null,
-        4,
-      )}`,
+      `${`\u001b[${33}m${`defaultsObj`}\u001b[${39}m`} =`,
+      defaultsObj,
     );
   DEV &&
     console.log(
-      `${`\u001b[${33}m${`defaultsObjClone`}\u001b[${39}m`} = ${JSON.stringify(
-        defaultsObjClone,
-        null,
-        4,
-      )}`,
-    );
-  DEV &&
-    console.log(
-      `${`\u001b[${33}m${`optsWithBoolValues`}\u001b[${39}m`} = ${JSON.stringify(
-        optsWithBoolValues,
-        null,
-        4,
-      )}`,
+      `${`\u001b[${33}m${`optsWithBoolValues`}\u001b[${39}m`} =`,
+      optsWithBoolValues,
     );
 
   // calculate combinations using combinations() - object-boolean-combinations
   // then restore the non-bool keys
-  let res = combinations(optsWithBoolValues).map((obj) => ({
-    ...defaultsObjClone,
-    ...refClone,
-    ...obj,
-  }));
+  const booleanVariations = combinations(optsWithBoolValues);
+  const firstResult = clone({
+    ...defaultsObj,
+    ...ref,
+    ...booleanVariations[0],
+  });
+  const res = booleanVariations.map((variation, index) => {
+    if (index === 0) {
+      return firstResult;
+    }
+    const result = clone(firstResult);
+    for (const key of Object.keys(variation)) {
+      result[key] = variation[key];
+    }
+    return result;
+  });
 
-  DEV && console.log(`RETURN res = ${JSON.stringify(res, null, 4)}`);
+  DEV && console.log(`RETURN res =`, res);
 
   return res;
 }
