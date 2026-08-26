@@ -247,66 +247,37 @@ function leftMain({
   if (typeof str !== "string" || !str.length) {
     return null;
   }
-  let normalizedIdx = normalizeLeftIndex(str.length, idx);
+  const normalizedIdx = normalizeLeftIndex(str.length, idx);
   if (normalizedIdx === null || normalizedIdx < 1) {
     return null;
   }
-  idx = normalizedIdx;
+  let i = normalizedIdx - 1;
+  let charCode = str.charCodeAt(i);
   if (
-    // ~- means minus one, in bitwise
-    str[~-idx] &&
-    // either it's not a whitespace
-    (str[~-idx].trim() ||
-      // or it is whitespace, but...
-      // stop at newlines is on
-      (stopAtNewlines &&
-        // and it's a newline
-        "\n\r".includes(str[~-idx])) ||
-      // stop at raw nbsp is on
-      (stopAtRawNbsp &&
-        // and it's a raw nbsp
-        str[~-idx] === RAWNBSP))
+    !isWhitespace(charCode) ||
+    (stopAtNewlines && (charCode === 10 || charCode === 13)) ||
+    (stopAtRawNbsp && charCode === 160)
   ) {
-    // best case scenario - next character is non-whitespace:
-    return ~-idx;
+    return i;
   }
-
-  // if we reached this point, this means character on the left is whitespace -
-  // fine - check the next character on the left, str[idx - 2]
-
+  i -= 1;
+  if (i < 0) {
+    return null;
+  }
+  charCode = str.charCodeAt(i);
   if (
-    // second character exists
-    str[idx - 2] &&
-    // either it's not whitespace so Bob's your uncle here's non-whitespace character
-    (str[idx - 2].trim() ||
-      // it is whitespace, but...
-      // stop at newlines is on
-      (stopAtNewlines &&
-        // it's some sort of a newline
-        "\n\r".includes(str[idx - 2])) ||
-      // stop at raw nbsp is on
-      (stopAtRawNbsp &&
-        // and it's a raw nbsp
-        str[idx - 2] === RAWNBSP))
+    !isWhitespace(charCode) ||
+    (stopAtNewlines && (charCode === 10 || charCode === 13)) ||
+    (stopAtRawNbsp && charCode === 160)
   ) {
-    // second best case scenario - second next character is non-whitespace:
-    return idx - 2;
+    return i;
   }
-  // worst case scenario - traverse backwards
-  for (let i = idx; i--; ) {
+  for (i -= 1; i >= 0; i--) {
+    charCode = str.charCodeAt(i);
     if (
-      str[i] &&
-      // it's non-whitespace character
-      (str[i].trim() ||
-        // or it is whitespace character, but...
-        // stop at newlines is on
-        (stopAtNewlines &&
-          // it's some sort of a newline
-          "\n\r".includes(str[i])) ||
-        // stop at raw nbsp is on
-        (stopAtRawNbsp &&
-          // and it's a raw nbsp
-          str[i] === RAWNBSP))
+      !isWhitespace(charCode) ||
+      (stopAtNewlines && (charCode === 10 || charCode === 13)) ||
+      (stopAtRawNbsp && charCode === 160)
     ) {
       return i;
     }
@@ -315,7 +286,30 @@ function leftMain({
 }
 
 function left(str: string, idx: number | null = 0): number | null {
-  return leftMain({ str, idx, stopAtNewlines: false, stopAtRawNbsp: false });
+  if (typeof str !== "string" || !str.length) {
+    return null;
+  }
+  const normalizedIdx = normalizeLeftIndex(str.length, idx);
+  if (normalizedIdx === null || normalizedIdx < 1) {
+    return null;
+  }
+  let i = normalizedIdx - 1;
+  if (!isWhitespace(str.charCodeAt(i))) {
+    return i;
+  }
+  i -= 1;
+  if (i < 0) {
+    return null;
+  }
+  if (!isWhitespace(str.charCodeAt(i))) {
+    return i;
+  }
+  for (i -= 1; i >= 0; i--) {
+    if (!isWhitespace(str.charCodeAt(i))) {
+      return i;
+    }
+  }
+  return null;
 }
 
 function leftStopAtNewLines(
