@@ -41,7 +41,7 @@ const defaults: Opts = {
 };
 
 function restoreExactTieOrder(sorted: Range[], original: Range[]): Range[] {
-  const originalOrder = new Map(original.map((range, index) => [range, index]));
+  let originalOrder: Map<Range, number> | undefined;
   let groupStart = 0;
   while (groupStart < sorted.length) {
     let groupEnd = groupStart + 1;
@@ -53,12 +53,15 @@ function restoreExactTieOrder(sorted: Range[], original: Range[]): Range[] {
       groupEnd += 1;
     }
     if (groupEnd - groupStart > 1) {
+      if (!originalOrder) {
+        originalOrder = new Map(original.map((range, index) => [range, index]));
+      }
+      const order = originalOrder;
       const stableGroup = sorted
         .slice(groupStart, groupEnd)
         .sort(
           (range1, range2) =>
-            (originalOrder.get(range1) as number) -
-            (originalOrder.get(range2) as number),
+            (order.get(range1) as number) - (order.get(range2) as number),
         );
       sorted.splice(groupStart, stableGroup.length, ...stableGroup);
     }
@@ -73,32 +76,47 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
     return arrOfRanges;
   }
 
-  const optionsArePlain = isPlainObject(originalOptions);
+  const optionsArePlain =
+    originalOptions === undefined ? true : isPlainObject(originalOptions);
   const strictlyTwoElementsInRangeArrays =
+    originalOptions !== undefined &&
     optionsArePlain &&
     originalOptions?.strictlyTwoElementsInRangeArrays === true;
 
   // Validate by index so that sparse slots are observed as undefined entries.
-  for (let index = 0; index < arrOfRanges.length; index += 1) {
-    const range = arrOfRanges[index];
-    if (
-      strictlyTwoElementsInRangeArrays &&
-      (!Array.isArray(range) || range.length !== 2)
-    ) {
-      throw new TypeError(
-        `ranges-sort/rSort(): [THROW_ID_01] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, range at index ${index} (${formatDiagnosticValue(range, 4)}) is ${Array.isArray(range) ? `an array with ${range.length} elements` : "not an array"}!`,
-      );
+  if (strictlyTwoElementsInRangeArrays) {
+    for (let index = 0; index < arrOfRanges.length; index += 1) {
+      const range = arrOfRanges[index];
+      if (!Array.isArray(range) || range.length !== 2) {
+        throw new TypeError(
+          `ranges-sort/rSort(): [THROW_ID_01] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, range at index ${index} (${formatDiagnosticValue(range, 4)}) is ${Array.isArray(range) ? `an array with ${range.length} elements` : "not an array"}!`,
+        );
+      }
+      if (
+        !Number.isInteger(range[0]) ||
+        range[0] < 0 ||
+        !Number.isInteger(range[1]) ||
+        range[1] < 0
+      ) {
+        throw new TypeError(
+          `ranges-sort/rSort(): [THROW_ID_02] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, range at index ${index} (${formatDiagnosticValue(range, 4)}) does not consist of only natural numbers!`,
+        );
+      }
     }
-    if (
-      !Array.isArray(range) ||
-      !Number.isInteger(range[0]) ||
-      range[0] < 0 ||
-      !Number.isInteger(range[1]) ||
-      range[1] < 0
-    ) {
-      throw new TypeError(
-        `ranges-sort/rSort(): [THROW_ID_02] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, range at index ${index} (${formatDiagnosticValue(range, 4)}) does not consist of only natural numbers!`,
-      );
+  } else {
+    for (let index = 0; index < arrOfRanges.length; index += 1) {
+      const range = arrOfRanges[index];
+      if (
+        !Array.isArray(range) ||
+        !Number.isInteger(range[0]) ||
+        range[0] < 0 ||
+        !Number.isInteger(range[1]) ||
+        range[1] < 0
+      ) {
+        throw new TypeError(
+          `ranges-sort/rSort(): [THROW_ID_02] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, range at index ${index} (${formatDiagnosticValue(range, 4)}) does not consist of only natural numbers!`,
+        );
+      }
     }
   }
 
@@ -107,62 +125,80 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
       `ranges-sort/rSort(): [THROW_ID_03] The second argument must be a plain options object; received ${formatDiagnosticValue(originalOptions, 4)} (type ${typeof originalOptions})!`,
     );
   }
-  const strictOption = originalOptions?.strictlyTwoElementsInRangeArrays;
-  if (strictOption !== undefined && typeof strictOption !== "boolean") {
-    throw new TypeError(
-      `ranges-sort/rSort(): [THROW_ID_04] opts.strictlyTwoElementsInRangeArrays must be a boolean; received ${formatDiagnosticValue(strictOption, 4)} (type ${typeof strictOption})!`,
-    );
-  }
-  const progressFn = originalOptions?.progressFn ?? defaults.progressFn;
-  if (
-    progressFn !== false &&
-    progressFn !== null &&
-    typeof progressFn !== "function"
-  ) {
-    throw new TypeError(
-      `ranges-sort/rSort(): [THROW_ID_05] opts.progressFn must be a function, false, null, or undefined; received ${formatDiagnosticValue(progressFn, 4)} (type ${typeof progressFn})!`,
-    );
-  }
-
-  // let's assume worst case scenario is N x N.
-  let maxPossibleIterations = arrOfRanges.length ** 2;
-  let counter = 0;
-  let lastPercentageDone: number | undefined;
-
-  const reportProgress = (percentageDone: number) => {
-    if (progressFn && percentageDone !== lastPercentageDone) {
-      lastPercentageDone = percentageDone;
-      progressFn(percentageDone);
-    }
-  };
-
-  // return a deep clone
-  const sorted = Array.from(arrOfRanges).sort((range1, range2) => {
-    if (progressFn) {
-      counter += 1;
-      reportProgress(
-        Math.min(99, Math.floor((counter * 100) / maxPossibleIterations)),
+  let progressFn: Opts["progressFn"] = defaults.progressFn;
+  if (originalOptions !== undefined) {
+    const strictOption = originalOptions.strictlyTwoElementsInRangeArrays;
+    if (strictOption !== undefined && typeof strictOption !== "boolean") {
+      throw new TypeError(
+        `ranges-sort/rSort(): [THROW_ID_04] opts.strictlyTwoElementsInRangeArrays must be a boolean; received ${formatDiagnosticValue(strictOption, 4)} (type ${typeof strictOption})!`,
       );
     }
-    if (range1[0] === range2[0]) {
-      if (range1[1] < range2[1]) {
+    progressFn = originalOptions.progressFn ?? defaults.progressFn;
+    if (
+      progressFn !== false &&
+      progressFn !== null &&
+      typeof progressFn !== "function"
+    ) {
+      throw new TypeError(
+        `ranges-sort/rSort(): [THROW_ID_05] opts.progressFn must be a function, false, null, or undefined; received ${formatDiagnosticValue(progressFn, 4)} (type ${typeof progressFn})!`,
+      );
+    }
+  }
+
+  let sorted: Range[];
+  let reportProgress: ((percentageDone: number) => void) | undefined;
+  if (progressFn) {
+    const maxPossibleIterations = arrOfRanges.length ** 2;
+    let counter = 0;
+    let lastPercentageDone: number | undefined;
+    reportProgress = (percentageDone) => {
+      if (percentageDone !== lastPercentageDone) {
+        lastPercentageDone = percentageDone;
+        progressFn(percentageDone);
+      }
+    };
+    sorted = Array.from(arrOfRanges).sort((range1, range2) => {
+      counter += 1;
+      reportProgress?.(
+        Math.min(99, Math.floor((counter * 100) / maxPossibleIterations)),
+      );
+      if (range1[0] === range2[0]) {
+        if (range1[1] < range2[1]) {
+          return -1;
+        }
+        if (range1[1] > range2[1]) {
+          return 1;
+        }
+        return 0;
+      }
+      if (range1[0] < range2[0]) {
         return -1;
       }
-      if (range1[1] > range2[1]) {
-        return 1;
+      return 1;
+    });
+  } else {
+    // Keep callback checks and progress arithmetic out of the default hot path.
+    sorted = Array.from(arrOfRanges).sort((range1, range2) => {
+      if (range1[0] === range2[0]) {
+        if (range1[1] < range2[1]) {
+          return -1;
+        }
+        if (range1[1] > range2[1]) {
+          return 1;
+        }
+        return 0;
       }
-      return 0;
-    }
-    if (range1[0] < range2[0]) {
-      return -1;
-    }
-    return 1;
-  });
+      if (range1[0] < range2[0]) {
+        return -1;
+      }
+      return 1;
+    });
+  }
   // Chromium 58's native sort becomes unstable above ten entries. Exact-key
   // groups are adjacent after sorting, so only those groups need restoration.
   const result =
     sorted.length > 10 ? restoreExactTieOrder(sorted, arrOfRanges) : sorted;
-  reportProgress(100);
+  reportProgress?.(100);
   return result;
 }
 
