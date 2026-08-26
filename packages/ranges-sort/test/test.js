@@ -564,4 +564,77 @@ test("20 - long arrays sort by both coordinates", () => {
   );
 });
 
+test("21 - progress is monotonic and completes", () => {
+  const inputs = [
+    [[1, 2]],
+    [
+      [1, 2],
+      [2, 3],
+      [3, 4],
+    ],
+    [
+      [3, 4],
+      [2, 3],
+      [1, 2],
+    ],
+    [
+      [3, 4],
+      [1, 3],
+      [1, 2],
+      [2, 3],
+    ],
+    Array.from({ length: 12 }, (_, index) => [1, 2, index]),
+    Array.from({ length: 100 }, (_, index) => [100 - index, 101 - index]),
+  ];
+  const sequences = inputs.map((ranges) => {
+    const percentages = [];
+    srt(ranges, {
+      progressFn: (percentage) => percentages.push(percentage),
+    });
+    return percentages;
+  });
+
+  equal(
+    sequences.map((percentages) => percentages[percentages.length - 1]),
+    [100, 100, 100, 100, 100, 100],
+    "21.01",
+  );
+  equal(
+    sequences.every((percentages) =>
+      percentages.every(
+        (percentage) =>
+          Number.isInteger(percentage) && percentage >= 0 && percentage <= 100,
+      ),
+    ),
+    true,
+    "21.02",
+  );
+  equal(
+    sequences.every((percentages) =>
+      percentages.every(
+        (percentage, index) =>
+          index === 0 || percentage > percentages[index - 1],
+      ),
+    ),
+    true,
+    "21.03",
+  );
+  const emptyPercentages = [];
+  srt([], {
+    progressFn: (percentage) => emptyPercentages.push(percentage),
+  });
+  equal(emptyPercentages, [], "21.04");
+
+  const errorPercentages = [];
+  throws(
+    () =>
+      srt([[1, 2], null], {
+        progressFn: (percentage) => errorPercentages.push(percentage),
+      }),
+    /THROW_ID_02/,
+    "21.05",
+  );
+  equal(errorPercentages, [], "21.05");
+});
+
 test.run();

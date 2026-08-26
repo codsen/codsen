@@ -29,6 +29,10 @@ export type ProgressFn = (percentageDone: number) => void;
 
 export interface Opts {
   strictlyTwoElementsInRangeArrays: boolean;
+  /**
+   * Reports best-effort integer progress for successful nonempty sorts. The
+   * final call is 100. Empty inputs and validation failures do not call it.
+   */
   progressFn: undefined | null | ProgressFn;
 }
 const defaults: Opts = {
@@ -99,12 +103,22 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
   // let's assume worst case scenario is N x N.
   let maxPossibleIterations = arrOfRanges.length ** 2;
   let counter = 0;
+  let lastPercentageDone: number | undefined;
+
+  const reportProgress = (percentageDone: number) => {
+    if (opts.progressFn && percentageDone !== lastPercentageDone) {
+      lastPercentageDone = percentageDone;
+      opts.progressFn(percentageDone);
+    }
+  };
 
   // return a deep clone
   const sorted = Array.from(arrOfRanges).sort((range1, range2) => {
     if (opts.progressFn) {
       counter += 1;
-      opts.progressFn(Math.floor((counter * 100) / maxPossibleIterations));
+      reportProgress(
+        Math.min(99, Math.floor((counter * 100) / maxPossibleIterations)),
+      );
     }
     if (range1[0] === range2[0]) {
       if (range1[1] < range2[1]) {
@@ -122,9 +136,10 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
   });
   // Chromium 58's native sort becomes unstable above ten entries. Exact-key
   // groups are adjacent after sorting, so only those groups need restoration.
-  return sorted.length > 10
-    ? restoreExactTieOrder(sorted, arrOfRanges)
-    : sorted;
+  const result =
+    sorted.length > 10 ? restoreExactTieOrder(sorted, arrOfRanges) : sorted;
+  reportProgress(100);
+  return result;
 }
 
 export { defaults, rSort, version };

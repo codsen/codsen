@@ -946,7 +946,7 @@ test("27 - progress handles zero, one, and two ranges", () => {
   });
 
   equal(sequences[0], [], "27.01");
-  equal(sequences[1], [99], "27.02");
+  equal(sequences[1], [20, 99], "27.02");
   equal(sequences[2][sequences[2].length - 1], 99, "27.03");
   equal(sequences[2], [...new Set(sequences[2])], "27.04");
   equal(
@@ -999,6 +999,22 @@ test("29 - false disables progress reporting", () => {
     [[0, 2]],
     "29.01",
   );
+});
+
+test("30 - sorting progress completes before merging advances", () => {
+  const percentages = [];
+  rMerge(
+    [
+      [5, 8],
+      [1, 3],
+      [3, 6],
+      [9, 12],
+    ],
+    { progressFn: (percentage) => percentages.push(percentage) },
+  );
+  const sortingCompleteAt = percentages.indexOf(20);
+  equal(sortingCompleteAt >= 0, true, "30.01");
+  equal(percentages[sortingCompleteAt + 1] >= 21, true, "30.02");
 });
 
 test.run();

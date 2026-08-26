@@ -19,4 +19,10 @@ assert.deepEqual(result, [
   [2, 3],
   [3, 4],
 ]);
-assert.equal(percentages.length > 0, true);
+assert.equal(percentages[percentages.length - 1], 100);
+assert.equal(
+  percentages.every(
+    (percentage, index) => index === 0 || percentage > percentages[index - 1],
+  ),
+  true,
+);

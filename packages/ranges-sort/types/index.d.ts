@@ -10,6 +10,10 @@ declare const version: string;
 type ProgressFn = (percentageDone: number) => void;
 interface Opts {
   strictlyTwoElementsInRangeArrays: boolean;
+  /**
+   * Reports best-effort integer progress for successful nonempty sorts. The
+   * final call is 100. Empty inputs and validation failures do not call it.
+   */
   progressFn: undefined | null | ProgressFn;
 }
 declare const defaults: Opts;
