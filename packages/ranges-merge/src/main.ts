@@ -1,4 +1,4 @@
-import { formatDiagnosticValue } from "codsen-utils";
+import { formatDiagnosticValue, isPlainObject } from "codsen-utils";
 import type { Range, Ranges } from "ranges-sort";
 import { rSort } from "ranges-sort";
 
@@ -32,22 +32,13 @@ const defaults: Opts = {
 // case #2. overlap:
 // [ [1, 4], [3, 5] ] => [ [1, 5] ]
 function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
-  //
-  // internal functions:
-  // ---------------------------------------------------------------------------
-  function isObj(something: unknown): boolean {
-    return (
-      !!something && typeof something === "object" && !Array.isArray(something)
-    );
-  }
-
   // quick ending:
   // ---------------------------------------------------------------------------
   if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return null;
   }
 
-  if (originalOpts && !isObj(originalOpts)) {
+  if (originalOpts !== undefined && !isPlainObject(originalOpts)) {
     throw new TypeError(
       `ranges-merge/rMerge(): [THROW_ID_01] the second input argument must be a plain object. It was given as:\n${formatDiagnosticValue(originalOpts, 4)} (type ${typeof originalOpts})`,
     );
@@ -56,7 +47,7 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
   const opts: Opts = { ...defaults, ...originalOpts };
   if (
     opts.progressFn &&
-    isObj(opts.progressFn) &&
+    isPlainObject(opts.progressFn) &&
     !Object.keys(opts.progressFn).length
   ) {
     opts.progressFn = null;

@@ -14,6 +14,8 @@ test("01 - does not throw when the first arg is wrong", () => {
   equal(rMerge(null), null, "01.03");
   equal(rMerge([null]), null, "01.04");
   equal(rMerge([null, null]), null, "01.05");
+  equal(rMerge([], false), null, "01.06");
+  equal(rMerge("z", false), null, "01.07");
 });
 
 test("02 - throws when opts.progressFn is wrong", () => {
@@ -49,19 +51,23 @@ test("03 - throws when opts.mergeType is wrong", () => {
 });
 
 test("04 - throws when the second arg is wrong", () => {
-  throws(
-    () => {
-      rMerge(
-        [
-          [1, 2],
-          [0, 1],
-        ],
-        1,
-      );
-    },
-    /THROW_ID_01/,
-    "04.01",
-  );
+  const validRanges = [
+    [1, 2],
+    [0, 1],
+  ];
+  const invalidOptions = [1, false, 0, "", null, [], new Date(0), new Map()];
+  invalidOptions.forEach((options, index) => {
+    throws(
+      () => {
+        rMerge(validRanges, options);
+      },
+      /THROW_ID_01/,
+      `04.${String(index + 1).padStart(2, "0")}`,
+    );
+  });
+  not.throws(() => rMerge(validRanges), "04.09");
+  not.throws(() => rMerge(validRanges, {}), "04.10");
+  not.throws(() => rMerge(validRanges, Object.create(null)), "04.11");
 });
 
 test("05 - throws when opts.joinRangesThatTouchEdges is wrong", () => {
