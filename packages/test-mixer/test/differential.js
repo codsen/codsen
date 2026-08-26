@@ -27,7 +27,7 @@ test("01 - matches a bounded reference implementation", () => {
   const expectedCases = [];
   const lazyCases = [];
 
-  for (let keyCount = 0; keyCount <= 8; keyCount += 1) {
+  for (let keyCount = 0; keyCount <= 12; keyCount += 1) {
     const defaultsObj = { mode: "safe" };
     for (let keyIndex = 0; keyIndex < keyCount; keyIndex += 1) {
       defaultsObj[`flag${keyIndex}`] = keyIndex % 2 === 0;
@@ -44,7 +44,7 @@ test("01 - matches a bounded reference implementation", () => {
     }
   }
 
-  equal(actualCases.length, 45, "01.01");
+  equal(actualCases.length, 91, "01.01");
   equal(actualCases, expectedCases, "01.02");
   equal(lazyCases, expectedCases, "01.03");
 });

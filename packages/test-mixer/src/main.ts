@@ -3,7 +3,6 @@ import {
   formatDiagnosticValue,
   isPlainObject as isObj,
 } from "codsen-utils";
-import { combinations } from "object-boolean-combinations";
 
 import { version as v } from "../package.json";
 
@@ -164,6 +163,29 @@ function assertWithinEagerLimit(
   }
 }
 
+function generateEagerRows(
+  template: PlainObject,
+  freeBooleanKeys: string[],
+): PlainObject[] {
+  const rowCount = 2 ** freeBooleanKeys.length;
+  const rows = new Array<PlainObject>(rowCount);
+  const firstResult = clone(template);
+  for (
+    let combinationIndex = 0;
+    combinationIndex < rowCount;
+    combinationIndex++
+  ) {
+    const result = combinationIndex === 0 ? firstResult : clone(firstResult);
+    // The eager limit keeps every key index well below the 32-bit shift limit.
+    for (let keyIndex = 0; keyIndex < freeBooleanKeys.length; keyIndex++) {
+      result[freeBooleanKeys[keyIndex]] =
+        (combinationIndex & (1 << keyIndex)) !== 0;
+    }
+    rows[combinationIndex] = result;
+  }
+  return rows;
+}
+
 function* generateRows(
   template: PlainObject,
   freeBooleanKeys: string[],
@@ -235,14 +257,6 @@ function mixer(
     resolvedOpts.maxCombinations,
   );
 
-  let optsWithBoolValues: PlainObjectOfBool = {};
-
-  // 1. find out, what boolean-value keys are there in defaultsObj that
-  // are missing in ref. If there are n keys, we'll generate 2^n objects.
-  prepared.freeBooleanKeys.forEach((key) => {
-    optsWithBoolValues[key] = defaultsObj[key];
-  });
-
   DEV && console.log(`${`\u001b[${33}m${`ref`}\u001b[${39}m`} =`, ref);
   DEV &&
     console.log(
@@ -251,28 +265,14 @@ function mixer(
     );
   DEV &&
     console.log(
-      `${`\u001b[${33}m${`optsWithBoolValues`}\u001b[${39}m`} =`,
-      optsWithBoolValues,
+      `${`\u001b[${33}m${`freeBooleanKeys`}\u001b[${39}m`} =`,
+      prepared.freeBooleanKeys,
     );
 
-  // calculate combinations using combinations() - object-boolean-combinations
-  // then restore the non-bool keys
-  const booleanVariations = combinations(optsWithBoolValues);
-  const firstResult = clone({
-    ...defaultsObj,
-    ...ref,
-    ...booleanVariations[0],
-  });
-  const res = booleanVariations.map((variation, index) => {
-    if (index === 0) {
-      return firstResult;
-    }
-    const result = clone(firstResult);
-    for (const key of Object.keys(variation)) {
-      result[key] = variation[key];
-    }
-    return result;
-  });
+  const res = generateEagerRows(
+    { ...defaultsObj, ...ref },
+    prepared.freeBooleanKeys,
+  );
 
   DEV && console.log(`RETURN res =`, res);
 
