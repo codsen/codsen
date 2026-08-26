@@ -1,4 +1,4 @@
-import { formatDiagnosticValue } from "codsen-utils";
+import { formatDiagnosticValue, isPlainObject } from "codsen-utils";
 import { version as v } from "../package.json";
 
 export type Range =
@@ -33,7 +33,7 @@ export interface Opts {
    * Reports best-effort integer progress for successful nonempty sorts. The
    * final call is 100. Empty inputs and validation failures do not call it.
    */
-  progressFn: undefined | null | ProgressFn;
+  progressFn: false | undefined | null | ProgressFn;
 }
 const defaults: Opts = {
   strictlyTwoElementsInRangeArrays: false,
@@ -73,14 +73,16 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
     return arrOfRanges;
   }
 
-  // fill any settings with defaults if missing:
-  let opts = { ...defaults, ...originalOptions };
+  const optionsArePlain = isPlainObject(originalOptions);
+  const strictlyTwoElementsInRangeArrays =
+    optionsArePlain &&
+    originalOptions?.strictlyTwoElementsInRangeArrays === true;
 
   // Validate by index so that sparse slots are observed as undefined entries.
   for (let index = 0; index < arrOfRanges.length; index += 1) {
     const range = arrOfRanges[index];
     if (
-      opts.strictlyTwoElementsInRangeArrays &&
+      strictlyTwoElementsInRangeArrays &&
       (!Array.isArray(range) || range.length !== 2)
     ) {
       throw new TypeError(
@@ -100,21 +102,43 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
     }
   }
 
+  if (originalOptions !== undefined && !optionsArePlain) {
+    throw new TypeError(
+      `ranges-sort/rSort(): [THROW_ID_03] The second argument must be a plain options object; received ${formatDiagnosticValue(originalOptions, 4)} (type ${typeof originalOptions})!`,
+    );
+  }
+  const strictOption = originalOptions?.strictlyTwoElementsInRangeArrays;
+  if (strictOption !== undefined && typeof strictOption !== "boolean") {
+    throw new TypeError(
+      `ranges-sort/rSort(): [THROW_ID_04] opts.strictlyTwoElementsInRangeArrays must be a boolean; received ${formatDiagnosticValue(strictOption, 4)} (type ${typeof strictOption})!`,
+    );
+  }
+  const progressFn = originalOptions?.progressFn ?? defaults.progressFn;
+  if (
+    progressFn !== false &&
+    progressFn !== null &&
+    typeof progressFn !== "function"
+  ) {
+    throw new TypeError(
+      `ranges-sort/rSort(): [THROW_ID_05] opts.progressFn must be a function, false, null, or undefined; received ${formatDiagnosticValue(progressFn, 4)} (type ${typeof progressFn})!`,
+    );
+  }
+
   // let's assume worst case scenario is N x N.
   let maxPossibleIterations = arrOfRanges.length ** 2;
   let counter = 0;
   let lastPercentageDone: number | undefined;
 
   const reportProgress = (percentageDone: number) => {
-    if (opts.progressFn && percentageDone !== lastPercentageDone) {
+    if (progressFn && percentageDone !== lastPercentageDone) {
       lastPercentageDone = percentageDone;
-      opts.progressFn(percentageDone);
+      progressFn(percentageDone);
     }
   };
 
   // return a deep clone
   const sorted = Array.from(arrOfRanges).sort((range1, range2) => {
-    if (opts.progressFn) {
+    if (progressFn) {
       counter += 1;
       reportProgress(
         Math.min(99, Math.floor((counter * 100) / maxPossibleIterations)),

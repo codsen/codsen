@@ -637,4 +637,90 @@ test("21 - progress is monotonic and completes", () => {
   equal(errorPercentages, [], "21.05");
 });
 
+test("22 - validates the options container", () => {
+  for (const invalidOptions of [
+    null,
+    true,
+    1,
+    "options",
+    [],
+    new Date(0),
+    new Map(),
+  ]) {
+    throws(() => srt([[1, 2]], invalidOptions), /THROW_ID_03/, "22.01");
+  }
+  const nullPrototypeOptions = Object.create(null);
+  nullPrototypeOptions.strictlyTwoElementsInRangeArrays = false;
+  equal(
+    srt(
+      [
+        [2, 3],
+        [1, 2],
+      ],
+      nullPrototypeOptions,
+    ),
+    [
+      [1, 2],
+      [2, 3],
+    ],
+    "22.01",
+  );
+});
+
+test("23 - validates strictness exactly", () => {
+  for (const invalidStrictness of [null, 0, 1, "false", {}, []]) {
+    throws(
+      () =>
+        srt([[1, 2]], {
+          strictlyTwoElementsInRangeArrays: invalidStrictness,
+        }),
+      /THROW_ID_04/,
+      "23.01",
+    );
+  }
+  equal(
+    srt(
+      [
+        [2, 3],
+        [1, 2],
+      ],
+      { strictlyTwoElementsInRangeArrays: false },
+    ),
+    [
+      [1, 2],
+      [2, 3],
+    ],
+    "23.01",
+  );
+  equal(
+    srt(
+      [
+        [2, 3],
+        [1, 2],
+      ],
+      { strictlyTwoElementsInRangeArrays: true },
+    ),
+    [
+      [1, 2],
+      [2, 3],
+    ],
+    "23.02",
+  );
+});
+
+test("24 - validates progress values exactly", () => {
+  for (const invalidProgress of [true, 1, "callback", {}, []]) {
+    throws(
+      () => srt([[1, 2]], { progressFn: invalidProgress }),
+      /THROW_ID_05/,
+      "24.01",
+    );
+  }
+  equal(
+    [false, null, undefined].map((progressFn) => srt([[1, 2]], { progressFn })),
+    [[[1, 2]], [[1, 2]], [[1, 2]]],
+    "24.01",
+  );
+});
+
 test.run();

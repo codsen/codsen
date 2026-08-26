@@ -14,7 +14,7 @@ interface Opts {
    * Reports best-effort integer progress for successful nonempty sorts. The
    * final call is 100. Empty inputs and validation failures do not call it.
    */
-  progressFn: undefined | null | ProgressFn;
+  progressFn: false | undefined | null | ProgressFn;
 }
 declare const defaults: Opts;
 declare function rSort(
