@@ -4,6 +4,8 @@ import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { omit } from "../dist/codsen-utils.esm.js";
 
+const hasOwn = Object.prototype.hasOwnProperty;
+
 test("01 - empty plain object", () => {
   equal(omit(undefined, ["a", "c"]), undefined, "01.01");
   equal(omit(null, ["a", "c"]), null, "01.02");
@@ -58,7 +60,7 @@ test("04 - retained nested values are deeply cloned", () => {
   is.not(result.keep.nested, input.keep.nested, "04.04");
 
   result.keep.nested.value = 9;
-  equal(input.keep.nested.value, 1, "04.02");
+  equal(input.keep.nested.value, 1, "04.05");
 });
 
 test("05 - removed values are not read or cloned", () => {
@@ -109,6 +111,46 @@ test("07 - circular invalid input retains the validation error contract", () => 
     /^codsen-utils\/omit\(\): \[THROW_ID_02\].*\[Circular\]/s,
     "07.02",
   );
+});
+
+test("08 - safely retains or removes a proto data key", () => {
+  const protoValue = { polluted: "local" };
+  const input = { keep: { value: 1 } };
+  Object.defineProperty(input, "__proto__", {
+    configurable: true,
+    enumerable: true,
+    value: protoValue,
+    writable: true,
+  });
+
+  const result = omit(input);
+  const resultProtoValue = Object.getOwnPropertyDescriptor(
+    result,
+    "__proto__",
+  ).value;
+  const resultProtoDescriptor = Object.getOwnPropertyDescriptor(
+    result,
+    "__proto__",
+  );
+
+  equal(
+    {
+      configurable: resultProtoDescriptor.configurable,
+      enumerable: resultProtoDescriptor.enumerable,
+      hasOwn: hasOwn.call(result, "__proto__"),
+      writable: resultProtoDescriptor.writable,
+    },
+    { configurable: true, enumerable: true, hasOwn: true, writable: true },
+    "08.01",
+  );
+  is(Object.getPrototypeOf(result), Object.prototype, "08.02");
+  equal(resultProtoValue, protoValue, "08.03");
+  is.not(resultProtoValue, protoValue, "08.04");
+  equal(Object.prototype.polluted, undefined, "08.05");
+
+  const removed = omit(input, ["__proto__"]);
+  equal(hasOwn.call(removed, "__proto__"), false, "08.06");
+  equal(removed, { keep: { value: 1 } }, "08.07");
 });
 
 test.run();

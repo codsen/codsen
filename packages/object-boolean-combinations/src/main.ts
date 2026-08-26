@@ -11,6 +11,19 @@ export interface BoolObj {
   [key: string]: boolean;
 }
 
+function defineEnumerableDataProperty(
+  target: Obj,
+  key: string,
+  value: unknown,
+): void {
+  Object.defineProperty(target, key, {
+    configurable: true,
+    enumerable: true,
+    value,
+    writable: true,
+  });
+}
+
 function combinations(input: Obj, Override: undefined | Obj = {}): Obj[] {
   // CHECKS
   // ======
@@ -51,22 +64,53 @@ function combinations(input: Obj, Override: undefined | Obj = {}): Obj[] {
   // matrix of zeroes and ones.
   const combinationsCount = 2 ** propertiesToMix.length;
   const outgoingObjectsArray: Obj[] = new Array(combinationsCount);
-  for (
-    let combinationIndex = 0;
-    combinationIndex < combinationsCount;
-    combinationIndex++
-  ) {
-    const result: Obj = {};
-    for (let keyIndex = 0; keyIndex < propertiesToMix.length; keyIndex++) {
-      result[propertiesToMix[keyIndex]] =
-        (combinationIndex & (1 << keyIndex)) !== 0;
-    }
-    if (overrideObject) {
-      for (const key of propertiesToBeOverridden) {
-        result[key] = overrideObject[key];
+  if (!inputKeySet.has("__proto__")) {
+    // Preserve the branch-free common path: this loop is the package's hot
+    // work and normally assigns hundreds of ordinary keys per call.
+    for (
+      let combinationIndex = 0;
+      combinationIndex < combinationsCount;
+      combinationIndex++
+    ) {
+      const result: Obj = {};
+      for (let keyIndex = 0; keyIndex < propertiesToMix.length; keyIndex++) {
+        result[propertiesToMix[keyIndex]] =
+          (combinationIndex & (1 << keyIndex)) !== 0;
       }
+      if (overrideObject) {
+        for (const key of propertiesToBeOverridden) {
+          result[key] = overrideObject[key];
+        }
+      }
+      outgoingObjectsArray[combinationIndex] = result;
     }
-    outgoingObjectsArray[combinationIndex] = result;
+  } else {
+    for (
+      let combinationIndex = 0;
+      combinationIndex < combinationsCount;
+      combinationIndex++
+    ) {
+      const result: Obj = {};
+      for (let keyIndex = 0; keyIndex < propertiesToMix.length; keyIndex++) {
+        const key = propertiesToMix[keyIndex];
+        const value = (combinationIndex & (1 << keyIndex)) !== 0;
+        if (key === "__proto__") {
+          defineEnumerableDataProperty(result, key, value);
+        } else {
+          result[key] = value;
+        }
+      }
+      if (overrideObject) {
+        for (const key of propertiesToBeOverridden) {
+          if (key === "__proto__") {
+            defineEnumerableDataProperty(result, key, overrideObject[key]);
+          } else {
+            result[key] = overrideObject[key];
+          }
+        }
+      }
+      outgoingObjectsArray[combinationIndex] = result;
+    }
   }
 
   // RETURN

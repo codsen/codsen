@@ -1,10 +1,10 @@
-import { mixer, mixerLazy } from "test-mixer";
 import type {
-  defaults as mixerDefaults,
   MixerOptions,
   MixerResult,
+  defaults as mixerDefaults,
   PlainObjectOfBool,
 } from "test-mixer";
+import { mixer, mixerLazy } from "test-mixer";
 
 type Equal<Left, Right> =
   (<Value>() => Value extends Left ? 1 : 2) extends <

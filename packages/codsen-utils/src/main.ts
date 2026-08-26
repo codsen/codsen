@@ -186,6 +186,20 @@ function cloneArrayBufferView(
   return result;
 }
 
+/** Defines the exceptional key without invoking Object.prototype.__proto__. */
+function defineEnumerableDataProperty(
+  target: Record<string, unknown>,
+  key: string,
+  value: unknown,
+): void {
+  Object.defineProperty(target, key, {
+    configurable: true,
+    enumerable: true,
+    value,
+    writable: true,
+  });
+}
+
 /**
  * Copies every own enumerable string key across, cloning as it goes. Values
  * which can't hold references are assigned straight, skipping a call each.
@@ -198,8 +212,13 @@ function cloneOwnKeys(
 ): void {
   for (const key of keys) {
     const item = input[key];
-    result[key] =
+    const clonedItem =
       typeof item !== "object" || item === null ? item : cloneValue(item, memo);
+    if (key === "__proto__") {
+      defineEnumerableDataProperty(result, key, clonedItem);
+    } else {
+      result[key] = clonedItem;
+    }
   }
 }
 
@@ -1305,7 +1324,12 @@ export function omit(obj: JSONObject, keysToRemove: string[] = []): JSONObject {
     if (removals ? removals.has(key) : keysToRemove.includes(key)) {
       continue;
     }
-    result[key] = cloneValue(obj[key], memo);
+    const clonedValue = cloneValue(obj[key], memo);
+    if (key === "__proto__") {
+      defineEnumerableDataProperty(result, key, clonedValue);
+    } else {
+      result[key] = clonedValue;
+    }
   }
   return result;
 }

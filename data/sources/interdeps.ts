@@ -144,7 +144,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-utils",
-    "size": 18826,
+    "size": 18996,
     "imports": []
   },
   {
@@ -450,7 +450,7 @@ export const interdeps = [
   },
   {
     "name": "object-boolean-combinations",
-    "size": 1062,
+    "size": 1367,
     "imports": [
       "codsen-utils"
     ]
@@ -821,7 +821,7 @@ export const interdeps = [
   },
   {
     "name": "test-mixer",
-    "size": 2744,
+    "size": 2920,
     "imports": [
       "codsen-utils"
     ]

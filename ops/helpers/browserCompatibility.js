@@ -218,6 +218,27 @@ function codsenUtilsSmoke(api, equal) {
   equal(api.hasOwnProp(value, "own"), true);
   equal(api.hasOwnProp(value, "missing"), false);
   equal(api.deepClone({ nested: { x: 1 } }), { nested: { x: 1 } });
+  const protoSource = {};
+  Object.defineProperty(protoSource, "__proto__", {
+    configurable: true,
+    enumerable: true,
+    value: { polluted: "local" },
+    writable: true,
+  });
+  const protoClone = api.deepClone(protoSource);
+  const protoCloneValue = Object.getOwnPropertyDescriptor(
+    protoClone,
+    "__proto__",
+  ).value;
+  equal(
+    [
+      Object.getOwnPropertyDescriptor(protoClone, "__proto__") !== undefined,
+      Object.getPrototypeOf(protoClone) === Object.prototype,
+      protoCloneValue.polluted,
+      Object.prototype.polluted,
+    ],
+    [true, true, "local", undefined],
+  );
   equal(api.formatDiagnosticValue(Symbol("x")), 'Symbol("x")');
   equal(
     api.codsenCLI("", {
@@ -251,6 +272,64 @@ function testMixerSmoke(api, equal) {
   equal(Array.from(api.mixerLazy({ enabled: true }, { enabled: false })), [
     { enabled: true },
   ]);
+  const protoDefaults = { enabled: false };
+  Object.defineProperty(protoDefaults, "__proto__", {
+    configurable: true,
+    enumerable: true,
+    value: false,
+    writable: true,
+  });
+  const protoRows = api.mixer({}, protoDefaults);
+  const lazyProtoRows = Array.from(api.mixerLazy({}, protoDefaults));
+  equal(
+    [protoRows, lazyProtoRows].map((resultRows) =>
+      resultRows.map((row) => [
+        row.enabled,
+        Object.getOwnPropertyDescriptor(row, "__proto__").value,
+        Object.getOwnPropertyDescriptor(row, "__proto__") !== undefined,
+        Object.getPrototypeOf(row) === Object.prototype,
+      ]),
+    ),
+    [
+      [
+        [false, false, true, true],
+        [true, false, true, true],
+        [false, true, true, true],
+        [true, true, true, true],
+      ],
+      [
+        [false, false, true, true],
+        [true, false, true, true],
+        [false, true, true, true],
+        [true, true, true, true],
+      ],
+    ],
+  );
+}
+
+function objectBooleanCombinationsSmoke(api, equal) {
+  const input = { enabled: false };
+  Object.defineProperty(input, "__proto__", {
+    configurable: true,
+    enumerable: true,
+    value: false,
+    writable: true,
+  });
+  const rows = api.combinations(input);
+  equal(
+    rows.map((row) => [
+      row.enabled,
+      Object.getOwnPropertyDescriptor(row, "__proto__").value,
+      Object.getOwnPropertyDescriptor(row, "__proto__") !== undefined,
+      Object.getPrototypeOf(row) === Object.prototype,
+    ]),
+    [
+      [false, false, true, true],
+      [true, false, true, true],
+      [false, true, true, true],
+      [true, true, true, true],
+    ],
+  );
 }
 
 function arrayGroupSmoke(api, equal) {
@@ -297,6 +376,7 @@ const IIFE_API_SMOKES = Object.freeze({
   "email-comb": emailCombSmoke,
   "generate-atomic-css": generateAtomicCssSmoke,
   "is-language-code": languageCodeSmoke,
+  "object-boolean-combinations": objectBooleanCombinationsSmoke,
   "string-convert-indexes": stringConvertIndexesSmoke,
   "string-strip-html": stringStripHtmlSmoke,
   "test-mixer": testMixerSmoke,

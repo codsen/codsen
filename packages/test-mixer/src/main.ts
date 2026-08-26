@@ -58,6 +58,19 @@ export interface MixerOptions {
   maxCombinations: number;
 }
 
+function defineEnumerableDataProperty(
+  target: PlainObject,
+  key: string,
+  value: unknown,
+): void {
+  Object.defineProperty(target, key, {
+    configurable: true,
+    enumerable: true,
+    value,
+    writable: true,
+  });
+}
+
 const maxEagerCombinations = 16_384;
 
 export const defaults: Readonly<MixerOptions> = Object.freeze({
@@ -178,8 +191,13 @@ function generateEagerRows(
     const result = combinationIndex === 0 ? firstResult : clone(firstResult);
     // The eager limit keeps every key index well below the 32-bit shift limit.
     for (let keyIndex = 0; keyIndex < freeBooleanKeys.length; keyIndex++) {
-      result[freeBooleanKeys[keyIndex]] =
-        (combinationIndex & (1 << keyIndex)) !== 0;
+      const key = freeBooleanKeys[keyIndex];
+      const value = (combinationIndex & (1 << keyIndex)) !== 0;
+      if (key === "__proto__") {
+        defineEnumerableDataProperty(result, key, value);
+      } else {
+        result[key] = value;
+      }
     }
     rows[combinationIndex] = result;
   }
@@ -200,7 +218,12 @@ function* generateRows(
   while (moreRows) {
     const result = clone(template);
     for (let keyIndex = 0; keyIndex < freeBooleanKeys.length; keyIndex++) {
-      result[freeBooleanKeys[keyIndex]] = values[keyIndex];
+      const key = freeBooleanKeys[keyIndex];
+      if (key === "__proto__") {
+        defineEnumerableDataProperty(result, key, values[keyIndex]);
+      } else {
+        result[key] = values[keyIndex];
+      }
     }
     yield result;
 

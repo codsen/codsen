@@ -98,6 +98,7 @@ test("05 - keeps browser smoke functions self-contained and serializable", () =>
       "email-comb",
       "generate-atomic-css",
       "is-language-code",
+      "object-boolean-combinations",
       "string-convert-indexes",
       "string-strip-html",
       "test-mixer",
