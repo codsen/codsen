@@ -202,11 +202,17 @@ function right(str: string, idx: number | null = 0): number | null {
   return null;
 }
 
-function rightStopAtNewLines(str: string, idx: number): number | null {
+function rightStopAtNewLines(
+  str: string,
+  idx: number | null = 0,
+): number | null {
   return rightMain({ str, idx, stopAtNewlines: true, stopAtRawNbsp: false });
 }
 
-function rightStopAtRawNbsp(str: string, idx: number): number | null {
+function rightStopAtRawNbsp(
+  str: string,
+  idx: number | null = 0,
+): number | null {
   return rightMain({ str, idx, stopAtNewlines: false, stopAtRawNbsp: true });
 }
 
@@ -312,11 +318,17 @@ function left(str: string, idx: number | null = 0): number | null {
   return leftMain({ str, idx, stopAtNewlines: false, stopAtRawNbsp: false });
 }
 
-function leftStopAtNewLines(str: string, idx: number): number | null {
+function leftStopAtNewLines(
+  str: string,
+  idx: number | null = 0,
+): number | null {
   return leftMain({ str, idx, stopAtNewlines: true, stopAtRawNbsp: false });
 }
 
-function leftStopAtRawNbsp(str: string, idx: number): number | null {
+function leftStopAtRawNbsp(
+  str: string,
+  idx: number | null = 0,
+): number | null {
   return leftMain({ str, idx, stopAtNewlines: false, stopAtRawNbsp: true });
 }
 
