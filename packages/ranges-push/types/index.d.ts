@@ -13,7 +13,6 @@ declare class Ranges {
   constructor(originalOpts?: Partial<Opts>);
   ranges: Range[];
   opts: Opts;
-  private sorted;
   private addValidated;
   add(
     originalFrom: number,

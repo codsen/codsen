@@ -1612,4 +1612,45 @@ test("129 - validation preserves deliberate index and no-op inputs", () => {
   equal(numericInsertion.current(), [[1, 2, 3]], "129.02");
 });
 
+test("130 - FIRSTCOVERS() - observes mutations through public views", () => {
+  for (const view of ["current", "ranges"]) {
+    const ranges = new Ranges();
+    ranges.add(0, 5);
+    ranges.add(6, 9);
+    const exposed = view === "current" ? ranges.current() : ranges.ranges;
+    exposed.reverse();
+    equal(ranges.firstCovers(5), true, "130.01");
+    equal(ranges.firstCovers(6), false, "130.02");
+  }
+
+  const last = new Ranges();
+  last.add(0, 5);
+  last.add(6, 9);
+  last.last()[0] = 5;
+  equal(last.firstCovers(9), true, "130.03");
+});
+
+test("131 - FIRSTCOVERS() - reversed chains scale without repeated scans", () => {
+  function countReads(size) {
+    const ranges = new Ranges();
+    const chain = Array.from({ length: size }, (_, index) => [index, index + 1]);
+    chain.reverse();
+    let indexedReads = 0;
+    ranges.ranges = new Proxy(chain, {
+      get(target, property, receiver) {
+        if (typeof property === "string" && /^\d+$/.test(property)) {
+          indexedReads += 1;
+        }
+        return Reflect.get(target, property, receiver);
+      },
+    });
+    equal(ranges.firstCovers(size), true, "131.01");
+    return indexedReads;
+  }
+
+  const small = countReads(128);
+  const large = countReads(256);
+  ok(large <= small * 3, "131.02");
+});
+
 test.run();

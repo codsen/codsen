@@ -195,15 +195,10 @@ class Ranges {
       console.log(`ranges-push: USING opts = ${JSON.stringify(opts, null, 4)}`);
     this.opts = opts;
     this.ranges = [];
-    this.sorted = true;
   }
 
   ranges: RangeType[];
   opts: Opts;
-  // true while "ranges" is known to be in non-descending "from" order; it lets
-  // firstCovers() answer from the leading cluster alone instead of walking and
-  // re-walking the whole accumulated array
-  private sorted: boolean;
 
   private addValidated(
     from: number,
@@ -272,9 +267,6 @@ class Ranges {
       );
     if (!this.ranges) {
       this.ranges = [];
-    }
-    if (lastRange && from < lastRange[0]) {
-      this.sorted = false;
     }
     const whatToPush = (
       addVal !== undefined
@@ -352,9 +344,6 @@ class Ranges {
       this.ranges = rMerge(this.ranges, {
         mergeType: this.opts.mergeType,
       }) as RangeType[];
-      // rMerge() hands back a sorted result, so the shortcut is usable again
-      this.sorted = true;
-
       if (this.ranges && this.opts.limitToBeAddedWhitespace) {
         return this.ranges.map((val) => {
           if (existy(val[2])) {
@@ -399,55 +388,35 @@ class Ranges {
       return false;
     }
 
-    // how far the cluster of ranges anchored at index zero reaches; null while
-    // nothing starts at zero, because then there is nothing to anchor it
+    // Public views can be mutated without notifying the class, so verify the
+    // ordering instead of trusting the add()/replace() bookkeeping flag. The
+    // common ordered path remains allocation-free; arbitrary order is copied
+    // and sorted once, giving this method an O(n log n) worst-case bound.
+    const ranges = isAscending(this.ranges)
+      ? this.ranges
+      : this.ranges
+          .filter((range) => Array.isArray(range))
+          .slice()
+          .sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+
     let end: null | number = null;
-
-    if (this.sorted) {
-      // ascending ranges mean the first merged range is simply the leading
-      // cluster, so walk it and stop at the first gap
-      for (let i = 0, len = this.ranges.length; i < len; i++) {
-        const range = this.ranges[i];
-        if (!Array.isArray(range) || isFutile(range)) {
-          continue;
-        }
-        if (end === null) {
-          if (range[0] !== 0) {
-            // the leftmost range which survives merging misses index zero
-            return false;
-          }
-          end = range[1];
-        } else if (range[0] > end) {
-          // a gap - whatever sits further right is a separate merged range
-          break;
-        } else if (range[1] > end) {
-          end = range[1];
-        }
-        if (end >= index) {
-          return true;
-        }
+    for (let i = 0, len = ranges.length; i < len; i++) {
+      const range = ranges[i];
+      if (!Array.isArray(range) || isFutile(range)) {
+        continue;
       }
-      return end !== null && end >= index;
-    }
-
-    // ranges arrived out of order, so a range anywhere in the array can extend
-    // the cluster and let another one join it - repeat until it settles
-    let extended = true;
-    while (extended) {
-      extended = false;
-      for (let i = 0, len = this.ranges.length; i < len; i++) {
-        const range = this.ranges[i];
-        if (!Array.isArray(range) || isFutile(range)) {
-          continue;
-        }
-        if (range[0] < 0) {
-          // merging would put a negative index first, not zero
+      if (end === null) {
+        if (range[0] !== 0) {
           return false;
         }
-        if (end === null ? range[0] === 0 : range[0] <= end && range[1] > end) {
-          end = range[1];
-          extended = true;
-        }
+        end = range[1];
+      } else if (range[0] > end) {
+        break;
+      } else if (range[1] > end) {
+        end = range[1];
+      }
+      if (end >= index) {
+        return true;
       }
     }
     return end !== null && end >= index;
@@ -457,7 +426,6 @@ class Ranges {
   // ==========
   wipe(): void {
     this.ranges = [];
-    this.sorted = true;
   }
 
   // R E P L A C E ()
@@ -479,11 +447,9 @@ class Ranges {
           );
         }
         this.ranges = normalized.ranges as RangeType[];
-        this.sorted = isAscending(this.ranges);
       }
     } else {
       this.ranges = [];
-      this.sorted = true;
     }
   }
 
