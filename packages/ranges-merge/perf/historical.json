@@ -16,9 +16,9 @@
   "9.2.1": 1_167_056,
   "lastSlowerRun": {
     "against": 1_167_056,
-    "score": 1_049_446,
-    "version": "9.2.1",
-    "worst": 1_049_446
+    "score": 1_055_897,
+    "version": "9.2.2",
+    "worst": 1_043_149
   },
   "lastVersion": 1_167_056
 }
