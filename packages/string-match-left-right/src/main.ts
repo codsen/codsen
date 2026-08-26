@@ -51,6 +51,7 @@ function march(
   position: number,
   whatToMatchVal: Matcher,
   originalOpts?: Partial<Opts>,
+  isTrimChar: (char: string) => boolean = () => false,
   special = false,
   getNextIdx = defaultGetNextIdx,
 ) {
@@ -213,14 +214,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
         )}`,
       );
 
-    if (
-      (opts && !opts.i && opts?.trimCharsBeforeMatching?.includes(str[i])) ||
-      (opts?.i &&
-        opts.trimCharsBeforeMatching &&
-        (opts.trimCharsBeforeMatching as string[])
-          .map((val) => val.toLowerCase())
-          .includes(str[i].toLowerCase()))
-    ) {
+    if (isTrimChar(str[i])) {
       DEV && console.log("char is in the skip list");
       if (special && whatToMatchVal === "EOL" && !str[nextIdx]) {
         // return true because we reached the zero'th index, exactly what we're looking for
@@ -844,6 +838,13 @@ function main(
     );
   }
 
+  const trimChars = opts.i
+    ? opts.trimCharsBeforeMatching.map((char) => char.toLowerCase())
+    : opts.trimCharsBeforeMatching;
+  const isTrimChar = opts.i
+    ? (char: string) => trimChars.includes(char.toLowerCase())
+    : (char: string) => trimChars.includes(char);
+
   // action
 
   // CASE 1. If it's driven by callback-only, the 3rd input argument, what to look
@@ -877,8 +878,7 @@ function main(
             (!opts.trimBeforeMatching ||
               (opts.trimBeforeMatching && currentChar?.trim())) &&
             (!opts.trimCharsBeforeMatching?.length ||
-              (currentChar !== undefined &&
-                !opts.trimCharsBeforeMatching.includes(currentChar)))
+              (currentChar !== undefined && !isTrimChar(currentChar)))
           ) {
             firstCharOutsideIndex = y;
             break;
@@ -900,8 +900,7 @@ function main(
           if (
             (!opts.trimBeforeMatching ||
               (opts.trimBeforeMatching && currentChar.trim())) &&
-            (!opts.trimCharsBeforeMatching?.length ||
-              !opts.trimCharsBeforeMatching.includes(currentChar))
+            (!opts.trimCharsBeforeMatching?.length || !isTrimChar(currentChar))
           ) {
             DEV && console.log("breaking!");
             firstCharOutsideIndex = y;
@@ -1000,6 +999,7 @@ function main(
       startingPosition,
       whatToMatchVal as string | (() => string),
       opts,
+      isTrimChar,
       special,
       (i2) => (mode[5] === "L" ? i2 - 1 : i2 + 1),
     );

@@ -1118,4 +1118,50 @@ test("27 - callback-only context follows direction at every boundary", () => {
   equal(beyondBoundaryCalls, 0, "27.05");
 });
 
+test("28 - callback-only trim characters honor case-insensitive mode", () => {
+  const cases = [
+    [matchRight, "xaY", 0, ["A"], "Y"],
+    [matchRightIncl, "aY", 0, ["A"], "Y"],
+    [matchLeft, "YaX", 2, ["A"], "Y"],
+    [matchLeftIncl, "Ya", 1, ["A"], "Y"],
+    [matchRight, "xAY", 0, ["a"], "Y"],
+  ];
+  const callbackOnlyResults = cases.map(
+    ([fn, source, position, trimCharsBeforeMatching, expectedCharacter]) =>
+      fn(source, position, "", {
+        i: true,
+        trimCharsBeforeMatching,
+        cb: (character) => character === expectedCharacter,
+      }),
+  );
+  const literalResults = cases.map(
+    ([fn, source, position, trimCharsBeforeMatching, expectedCharacter]) =>
+      fn(source, position, expectedCharacter, {
+        i: true,
+        trimCharsBeforeMatching,
+      }),
+  );
+
+  equal(callbackOnlyResults, [true, true, true, true, true], "28.01");
+  equal(literalResults, ["Y", "Y", "Y", "Y", "Y"], "28.02");
+  equal(
+    matchRight("xaY", 0, "", {
+      i: false,
+      trimCharsBeforeMatching: ["A"],
+      cb: (character) => character === "Y",
+    }),
+    false,
+    "28.03",
+  );
+  equal(
+    matchRight("x_Y", 0, "", {
+      i: true,
+      trimCharsBeforeMatching: ["_"],
+      cb: (character) => character === "Y",
+    }),
+    true,
+    "28.04",
+  );
+});
+
 test.run();
