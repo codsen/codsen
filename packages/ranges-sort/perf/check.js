@@ -2,16 +2,9 @@
 import path from "node:path";
 
 import { runPerf } from "../../../ops/scripts/perf.js";
-import { rSort } from "../dist/ranges-sort.esm.js";
+import { testme } from "./workload.js";
 
 const callerDir = path.resolve(".");
-
-const testme = () =>
-  rSort([
-    [5, 6],
-    [5, 3],
-    [5, 0],
-  ]);
 
 // action
 runPerf(testme, callerDir);
