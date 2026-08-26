@@ -49,7 +49,7 @@ export const defaultGetNextIdx = (index: number): number => index + 1;
 function march(
   str: string,
   position: number,
-  whatToMatchVal: Matcher,
+  whatToMatchVal: string,
   originalOpts?: Partial<Opts>,
   isTrimChar: (char: string) => boolean = () => false,
   special = false,
@@ -71,13 +71,10 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
 ======`,
     );
 
-  let whatToMatchValVal =
-    typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
-
   // early ending case if matching EOL being at 0-th index:
-  if (+position < 0 && special && whatToMatchValVal === "EOL") {
+  if (+position < 0 && special && whatToMatchVal === "EOL") {
     DEV && console.log("EARLY ENDING, return true");
-    return whatToMatchValVal;
+    return whatToMatchVal;
   }
 
   let opts: Opts = { ...defaults, ...originalOpts };
@@ -125,7 +122,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
 
   const maxMismatches = Math.min(
     opts.maxMismatches,
-    str.length + whatToMatchValVal.length,
+    str.length + whatToMatchVal.length,
   );
   let patience = maxMismatches;
 
@@ -227,6 +224,9 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
       i = getNextIdx(i);
       continue;
     }
+    if (special) {
+      return false;
+    }
     DEV &&
       console.log(
         `${`\u001b[${33}m${"charsToCheckCount"}\u001b[${39}m`} = ${JSON.stringify(
@@ -264,12 +264,8 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
 
     // let's match
     //
-    // Both sides have to be read out before lowercasing. For a function matcher
-    // `whatToMatchVal.length` is the function's arity rather than a string
-    // length, so the index above comes out negative and charToCompareAgainst is
-    // undefined; the case-sensitive branch already compared that away, while the
-    // case-insensitive one called a method on it. Guarding here makes the two
-    // branches answer the same for the same input.
+    // Both sides have to be read out before lowercasing. Guard the matcher side
+    // so the case-sensitive and case-insensitive branches answer consistently.
     if (
       (!opts.i && str[i] === charToCompareAgainst) ||
       (opts.i &&
@@ -674,7 +670,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
   DEV && console.log(`AFTER THE WHILE LOOP`);
 
   if (charsToCheckCount > 0) {
-    if (special && whatToMatchValVal === "EOL") {
+    if (special && whatToMatchVal === "EOL") {
       DEV &&
         console.log(
           `charsToCheckCount = ${charsToCheckCount};\nwent past the beginning of the string and EOL was queried to ${`\u001b[${32}m${`return TRUE`}\u001b[${39}m`}`,
@@ -971,8 +967,19 @@ function main(
       );
     DEV && console.log(`🔥 special = ${special}`);
 
-    // since input can be function, we need to grab the value explicitly:
-    let whatToMatchVal = whatToMatch[i];
+    const matcher = whatToMatch[i];
+    const whatToMatchVal = typeof matcher === "function" ? matcher() : matcher;
+    if (special && whatToMatchVal !== "EOL") {
+      throw new Error(
+        `string-match-left-right/${mode}(): [THROW_ID_09] EOL marker functions must return "EOL". The function at index ${i} returned:\n${formatDiagnosticValue(whatToMatchVal, 4)}`,
+      );
+    }
+
+    // Inclusive matching starts on an existing source character, so it cannot
+    // match a boundary marker.
+    if (special && mode.endsWith("Incl")) {
+      continue;
+    }
 
     let fullCharacterInFront: string | undefined;
     let indexOfTheCharacterInFront: number | undefined;
@@ -1001,7 +1008,7 @@ function main(
     let found = march(
       str,
       startingPosition,
-      whatToMatchVal as string | (() => string),
+      whatToMatchVal,
       opts,
       isTrimChar,
       special,
@@ -1022,22 +1029,18 @@ function main(
 
     // if march() returned positive result and it was "special" case,
     // Bob's your uncle, here's the result:
-    if (
-      found &&
-      special &&
-      typeof whatToMatchVal === "function" &&
-      whatToMatchVal() === "EOL"
-    ) {
-      DEV && console.log(`returning whatToMatchVal() = ${whatToMatchVal()}`);
-      return whatToMatchVal() &&
-        (opts.cb
+    if (found && special) {
+      DEV && console.log(`returning whatToMatchVal = ${whatToMatchVal}`);
+      return (
+        opts.cb
           ? opts.cb(
               fullCharacterInFront as string,
               restOfStringInFront,
               indexOfTheCharacterInFront as number,
             )
-          : true)
-        ? whatToMatchVal()
+          : true
+      )
+        ? whatToMatchVal
         : false;
     }
 

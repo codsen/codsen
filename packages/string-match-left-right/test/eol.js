@@ -274,11 +274,7 @@ test(`35 - matchLeftIncl()   \u001b[${33}mEOL\u001b[${39}m matching - whitespace
 });
 
 test(`36 - matchLeftIncl()   \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`, () => {
-  equal(
-    matchLeftIncl("EOLa", 3, () => "EOLa"),
-    false,
-    "36.01",
-  );
+  throws(() => matchLeftIncl("EOLa", 3, () => "EOLa"), /THROW_ID_09/, "36.01");
   equal(matchLeftIncl("EOLa", 3, "EOL"), false, "36.02");
 });
 
@@ -695,11 +691,7 @@ test(`89 - matchRightIncl()  \u001b[${33}mEOL\u001b[${39}m matching - whitespace
 });
 
 test(`90 - matchRightIncl()  \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`, () => {
-  equal(
-    matchRightIncl("aEOL", 0, () => "aEOL"),
-    false,
-    "90.01",
-  );
+  throws(() => matchRightIncl("aEOL", 0, () => "aEOL"), /THROW_ID_09/, "90.01");
 });
 
 test(`91 - matchRightIncl()  \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`, () => {
@@ -799,6 +791,92 @@ test("97 - valid and out-of-range index boundaries", () => {
     [false, false, false, false],
     "97.08",
   );
+});
+
+test("98 - each attempted EOL marker is evaluated once", () => {
+  const cases = [
+    [matchLeft, " a", 1, { trimBeforeMatching: true }],
+    [matchLeftIncl, "a", 0, {}],
+    [matchRight, "a ", 0, { trimBeforeMatching: true }],
+    [matchRightIncl, "a", 0, {}],
+  ];
+  const scalarCounts = [0, 0, 0, 0];
+  const scalarResults = cases.map(([fn, source, position, opts], index) =>
+    fn(
+      source,
+      position,
+      () => {
+        scalarCounts[index] += 1;
+        return "EOL";
+      },
+      opts,
+    ),
+  );
+
+  equal(scalarResults, ["EOL", false, "EOL", false], "98.01");
+  equal(scalarCounts, [1, 1, 1, 1], "98.02");
+
+  const mixedCounts = [0, 0, 0, 0];
+  const mixedResults = cases.map(([fn, source, position, opts], index) =>
+    fn(
+      source,
+      position,
+      [
+        "not present",
+        () => {
+          mixedCounts[index] += 1;
+          return "EOL";
+        },
+        "a",
+      ],
+      opts,
+    ),
+  );
+
+  equal(mixedResults, ["EOL", "a", "EOL", "a"], "98.03");
+  equal(mixedCounts, [1, 1, 1, 1], "98.04");
+
+  const callbackCounts = [0, 0];
+  const callbackResults = [true, false].map((accepted, index) =>
+    matchLeft(
+      "a",
+      0,
+      () => {
+        callbackCounts[index] += 1;
+        return "EOL";
+      },
+      { cb: () => accepted },
+    ),
+  );
+
+  equal(callbackResults, ["EOL", false], "98.05");
+  equal(callbackCounts, [1, 1], "98.06");
+
+  let changingCalls = 0;
+  equal(
+    matchRight("a", 0, () => {
+      changingCalls += 1;
+      if (changingCalls > 1) {
+        throw new Error("called twice");
+      }
+      return "EOL";
+    }),
+    "EOL",
+    "98.07",
+  );
+  equal(changingCalls, 1, "98.08");
+
+  let invalidCalls = 0;
+  throws(
+    () =>
+      matchRight("ab", 0, () => {
+        invalidCalls += 1;
+        return "not EOL";
+      }),
+    /THROW_ID_09/,
+    "98.09",
+  );
+  equal(invalidCalls, 1, "98.10");
 });
 
 test.run();

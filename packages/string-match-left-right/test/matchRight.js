@@ -610,10 +610,8 @@ test(`23 - matchRight()      opts.maxMismatches === 2, three mismatches`, () => 
 });
 
 test("24 - matchRight()      function matcher with opts.i does not crash", () => {
-  // for a function matcher, whatToMatchVal.length is the function's arity, not
-  // a string length, so the compared-against index came out negative and the
-  // case-insensitive branch called .toLowerCase() on undefined. Both branches
-  // now answer the same for the same input.
+  // EOL markers behave the same in both case-sensitivity modes, and other
+  // return values are rejected as invalid markers.
   equal(
     matchRight("abc", 0, () => "EOL", { i: true }),
     false,
@@ -624,9 +622,9 @@ test("24 - matchRight()      function matcher with opts.i does not crash", () =>
     false,
     "24.02",
   );
-  equal(
-    matchRight("abc", 0, () => "b", { i: true }),
-    false,
+  throws(
+    () => matchRight("abc", 0, () => "b", { i: true }),
+    /THROW_ID_09/,
     "24.03",
   );
 });
