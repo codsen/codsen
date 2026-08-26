@@ -1,4 +1,5 @@
 declare const version: string;
+type Matcher = string | (() => string);
 interface Opts {
   cb:
     | undefined
@@ -21,25 +22,25 @@ declare const defaultGetNextIdx: (index: number) => number;
 declare function matchLeftIncl(
   str: string,
   position: number,
-  whatToMatch: (() => string) | string | string[],
+  whatToMatch: Matcher | Matcher[],
   opts?: Partial<Opts>,
 ): boolean | string;
 declare function matchLeft(
   str: string,
   position: number,
-  whatToMatch: (() => string) | string | string[],
+  whatToMatch: Matcher | Matcher[],
   opts?: Partial<Opts>,
 ): boolean | string;
 declare function matchRightIncl(
   str: string,
   position: number,
-  whatToMatch: (() => string) | string | string[],
+  whatToMatch: Matcher | Matcher[],
   opts?: Partial<Opts>,
 ): boolean | string;
 declare function matchRight(
   str: string,
   position: number,
-  whatToMatch: (() => string) | string | string[],
+  whatToMatch: Matcher | Matcher[],
   opts?: Partial<Opts>,
 ): boolean | string;
 
@@ -52,4 +53,4 @@ export {
   matchRightIncl,
   version,
 };
-export type { Opts };
+export type { Matcher, Opts };

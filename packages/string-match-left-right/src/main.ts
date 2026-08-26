@@ -14,6 +14,8 @@ const version: string = v;
 
 declare let DEV: boolean;
 
+export type Matcher = string | (() => string);
+
 export interface Opts {
   cb:
     | undefined
@@ -47,7 +49,7 @@ export const defaultGetNextIdx = (index: number): number => index + 1;
 function march(
   str: string,
   position: number,
-  whatToMatchVal: (() => string) | string,
+  whatToMatchVal: Matcher,
   originalOpts?: Partial<Opts>,
   special = false,
   getNextIdx = defaultGetNextIdx,
@@ -743,7 +745,7 @@ function main(
   mode: "matchLeftIncl" | "matchLeft" | "matchRightIncl" | "matchRight",
   str: string,
   position: number,
-  originalWhatToMatch: (() => string) | string | string[],
+  originalWhatToMatch: Matcher | Matcher[],
   originalOpts?: Partial<Opts>,
 ): boolean | string {
   // insurance
@@ -786,7 +788,7 @@ function main(
       `string-match-left-right/${mode}(): [THROW_ID_02] the second argument should be a natural number. Currently it's of a type: ${typeof position}, equal to:\n${formatDiagnosticValue(position, 4)}`,
     );
   }
-  let whatToMatch: Array<string | (() => string)> | undefined;
+  let whatToMatch: Matcher[] | undefined;
 
   let special: boolean;
   if (isStr(originalWhatToMatch)) {
@@ -814,6 +816,7 @@ function main(
       `string-match-left-right/${mode}(): [THROW_ID_03] the third argument, whatToMatch, is neither string nor array of strings! It's ${typeof originalWhatToMatch}, equal to:\n${formatDiagnosticValue(originalWhatToMatch, 4)}`,
     );
   }
+  validateMatchers(whatToMatch, mode);
 
   DEV && console.log("\n\n");
   DEV && console.log(`whatToMatch = ${JSON.stringify(whatToMatch, null, 4)}`);
@@ -1113,12 +1116,29 @@ function validateMaxMismatches(
   }
 }
 
+function validateMatchers(
+  matchers: Matcher[] | undefined,
+  mode: "matchLeftIncl" | "matchLeft" | "matchRightIncl" | "matchRight",
+): void {
+  if (!matchers) {
+    return;
+  }
+  for (let index = 0; index < matchers.length; index += 1) {
+    const matcher = matchers[index];
+    if (typeof matcher !== "string" && typeof matcher !== "function") {
+      throw new Error(
+        `string-match-left-right/${mode}(): [THROW_ID_08] matcher alternatives must be strings or EOL marker functions. The value at index ${index} is of a type: ${typeof matcher}, equal to:\n${formatDiagnosticValue(matcher, 4)}`,
+      );
+    }
+  }
+}
+
 // External API functions
 
 function matchLeftIncl(
   str: string,
   position: number,
-  whatToMatch: (() => string) | string | string[],
+  whatToMatch: Matcher | Matcher[],
   opts?: Partial<Opts>,
 ): boolean | string {
   return main("matchLeftIncl", str, position, whatToMatch, opts);
@@ -1127,7 +1147,7 @@ function matchLeftIncl(
 function matchLeft(
   str: string,
   position: number,
-  whatToMatch: (() => string) | string | string[],
+  whatToMatch: Matcher | Matcher[],
   opts?: Partial<Opts>,
 ): boolean | string {
   return main("matchLeft", str, position, whatToMatch, opts);
@@ -1136,7 +1156,7 @@ function matchLeft(
 function matchRightIncl(
   str: string,
   position: number,
-  whatToMatch: (() => string) | string | string[],
+  whatToMatch: Matcher | Matcher[],
   opts?: Partial<Opts>,
 ): boolean | string {
   return main("matchRightIncl", str, position, whatToMatch, opts);
@@ -1145,7 +1165,7 @@ function matchRightIncl(
 function matchRight(
   str: string,
   position: number,
-  whatToMatch: (() => string) | string | string[],
+  whatToMatch: Matcher | Matcher[],
   opts?: Partial<Opts>,
 ): boolean | string {
   return main("matchRight", str, position, whatToMatch, opts);

@@ -193,4 +193,19 @@ test("03 - validates and bounds maxMismatches", () => {
   );
 });
 
+test("04 - validates every matcher alternative", () => {
+  for (const invalidMatchers of [
+    [1, "a", "b"],
+    ["a", null, "b"],
+    ["a", "b", {}],
+  ]) {
+    throws(
+      () => matchRightIncl("abc", 0, invalidMatchers),
+      /THROW_ID_08/,
+      "04.01",
+    );
+  }
+  equal(matchRightIncl("abc", 0, ["x", () => "EOL"]), false, "04.01");
+});
+
 test.run();
