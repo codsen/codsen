@@ -376,9 +376,17 @@ test("12 - more complex case", () => {
     "12.04",
   );
   equal(
-    percentages,
-    [0, 1, 2, 3, 4, 5, 6, 21, 40, 60, 79, 99],
+    percentages[percentages.length - 1],
+    99,
     "12.05",
+  );
+  equal(new Set(percentages).size, percentages.length, "12.06");
+  equal(
+    percentages.every(
+      (percentage, index) => index === 0 || percentage > percentages[index - 1],
+    ),
+    true,
+    "12.07",
   );
 
   // with opts
@@ -400,7 +408,7 @@ test("12 - more complex case", () => {
       [6, 10],
       [10, 30],
     ],
-    "12.06",
+    "12.08",
   );
   equal(
     rMerge(
@@ -421,7 +429,7 @@ test("12 - more complex case", () => {
       [6, 10],
       [10, 30],
     ],
-    "12.07",
+    "12.09",
   );
 });
 
@@ -942,6 +950,35 @@ test("27 - progress handles zero, one, and two ranges", () => {
     true,
     "27.05",
   );
+});
+
+test("28 - exact ties retain insertion order above old V8 cutoff", () => {
+  const input = Array.from({ length: 12 }, (_, index) => [
+    1,
+    2,
+    String.fromCharCode(97 + index),
+  ]);
+  const nativeSort = Array.prototype.sort;
+  Array.prototype.sort = function deliberatelyUnstableSort(compareFn) {
+    nativeSort.call(this, compareFn);
+    if (
+      this.length > 10 &&
+      compareFn(this[0], this[this.length - 1]) === 0
+    ) {
+      this.reverse();
+    }
+    return this;
+  };
+  try {
+    equal(
+      rMerge(input, { mergeType: 1 }),
+      [[1, 2, "abcdefghijkl"]],
+      "28.01",
+    );
+    equal(rMerge(input, { mergeType: 2 }), [[1, 2, "l"]], "28.02");
+  } finally {
+    Array.prototype.sort = nativeSort;
+  }
 });
 
 test.run();

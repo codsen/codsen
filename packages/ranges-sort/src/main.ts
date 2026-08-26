@@ -36,6 +36,35 @@ const defaults: Opts = {
   progressFn: null,
 };
 
+function restoreExactTieOrder(sorted: Range[], original: Range[]): Range[] {
+  const originalOrder = new Map(
+    original.map((range, index) => [range, index]),
+  );
+  let groupStart = 0;
+  while (groupStart < sorted.length) {
+    let groupEnd = groupStart + 1;
+    while (
+      groupEnd < sorted.length &&
+      sorted[groupStart][0] === sorted[groupEnd][0] &&
+      sorted[groupStart][1] === sorted[groupEnd][1]
+    ) {
+      groupEnd += 1;
+    }
+    if (groupEnd - groupStart > 1) {
+      const stableGroup = sorted
+        .slice(groupStart, groupEnd)
+        .sort(
+          (range1, range2) =>
+            (originalOrder.get(range1) as number) -
+            (originalOrder.get(range2) as number),
+        );
+      sorted.splice(groupStart, stableGroup.length, ...stableGroup);
+    }
+    groupStart = groupEnd;
+  }
+  return sorted;
+}
+
 function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
   // quick ending
   if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
@@ -93,7 +122,7 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
   let counter = 0;
 
   // return a deep clone
-  return Array.from(arrOfRanges).sort((range1, range2) => {
+  const sorted = Array.from(arrOfRanges).sort((range1, range2) => {
     if (opts.progressFn) {
       counter += 1;
       opts.progressFn(Math.floor((counter * 100) / maxPossibleIterations));
@@ -112,6 +141,11 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
     }
     return 1;
   });
+  // Chromium 58's native sort becomes unstable above ten entries. Exact-key
+  // groups are adjacent after sorting, so only those groups need restoration.
+  return sorted.length > 10
+    ? restoreExactTieOrder(sorted, arrOfRanges)
+    : sorted;
 }
 
 export { defaults, rSort, version };

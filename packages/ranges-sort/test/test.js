@@ -474,4 +474,62 @@ test("18 - null in array", () => {
   );
 });
 
+test("19 - exact ties preserve input order above old V8 cutoff", () => {
+  const input = Array.from({ length: 12 }, (_, index) => [
+    1,
+    2,
+    String.fromCharCode(97 + index),
+  ]);
+  const nativeSort = Array.prototype.sort;
+  Array.prototype.sort = function deliberatelyUnstableSort(compareFn) {
+    nativeSort.call(this, compareFn);
+    if (
+      this.length > 10 &&
+      compareFn(this[0], this[this.length - 1]) === 0
+    ) {
+      this.reverse();
+    }
+    return this;
+  };
+  try {
+    equal(srt(input), input, "19.01");
+  } finally {
+    Array.prototype.sort = nativeSort;
+  }
+});
+
+test("20 - long arrays sort by both coordinates", () => {
+  equal(
+    srt([
+      [5, 6],
+      [5, 3],
+      [5, 0],
+      [4, 8],
+      [1, 2],
+      [9, 10],
+      [5, 7],
+      [3, 4],
+      [2, 3],
+      [8, 9],
+      [7, 8],
+      [6, 7],
+    ], { progressFn: () => {} }),
+    [
+      [1, 2],
+      [2, 3],
+      [3, 4],
+      [4, 8],
+      [5, 0],
+      [5, 3],
+      [5, 6],
+      [5, 7],
+      [6, 7],
+      [7, 8],
+      [8, 9],
+      [9, 10],
+    ],
+    "20.01",
+  );
+});
+
 test.run();
