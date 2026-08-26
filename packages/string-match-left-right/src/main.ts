@@ -120,7 +120,11 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
   // positive result!
   let atLeastSomethingWasMatched = false;
 
-  let patience = opts.maxMismatches;
+  const maxMismatches = Math.min(
+    opts.maxMismatches,
+    str.length + whatToMatchValVal.length,
+  );
+  let patience = maxMismatches;
 
   let i = position;
   DEV &&
@@ -163,7 +167,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
       // and it's whitespace
       // !str[i - 1].trim() &&
       // some patience has been consumed already
-      patience < opts.maxMismatches - 1
+      patience < maxMismatches - 1
     );
   }
 
@@ -293,7 +297,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
 
         // now, if the first character was matched and yet, patience was
         // reduced already, this means there's a false beginning in front
-        if (patience !== opts.maxMismatches) {
+        if (patience !== maxMismatches) {
           DEV &&
             console.log(
               `RETURN ${`\u001b[${31}m${`false`}\u001b[${39}m`} because patience was consumed already, before matching this first character!`,
@@ -341,7 +345,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
             // or it was, and in that case, no patience was reduced
             // (if a perfect match was found, yet some "patience" was reduced,
             // that means we have false positive characters)
-            patience === opts.maxMismatches ||
+            patience === maxMismatches ||
             // mind you, it can be a case of rogue characters in-between
             // the what was matched, imagine:
             // source: "abxcd", matching ["bc"], maxMismatches=1
@@ -390,7 +394,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
           );
       }
 
-      if (opts.maxMismatches && patience && i) {
+      if (maxMismatches && patience && i) {
         patience -= 1;
         DEV &&
           console.log(
@@ -573,7 +577,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
       } else if (
         i === 0 &&
         charsToCheckCount === 1 &&
-        opts.maxMismatches > 0 &&
+        maxMismatches > 0 &&
         patience > 0 &&
         (!opts.firstMustMatch || firstCharacterMatched) &&
         !opts.lastMustMatch &&
@@ -683,7 +687,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
     }
     if (
       opts &&
-      opts.maxMismatches >= charsToCheckCount &&
+      maxMismatches >= charsToCheckCount &&
       atLeastSomethingWasMatched
     ) {
       DEV && console.log(`RETURN ${lastWasMismatched || 0}`);
@@ -759,6 +763,8 @@ function main(
   }
 
   let opts: Opts = { ...defaults, ...originalOpts };
+  opts.maxMismatches = originalOpts?.maxMismatches ?? defaults.maxMismatches;
+  validateMaxMismatches(opts.maxMismatches, mode);
   if (typeof opts.trimCharsBeforeMatching === "string") {
     // arrayiffy if needed:
     opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
@@ -1100,6 +1106,17 @@ function main(
   }
   DEV && console.log(`${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} false`);
   return false;
+}
+
+function validateMaxMismatches(
+  value: number,
+  mode: "matchLeftIncl" | "matchLeft" | "matchRightIncl" | "matchRight",
+): void {
+  if (!Number.isSafeInteger(value) || value < 0) {
+    throw new Error(
+      `string-match-left-right/${mode}(): [THROW_ID_07] opts.maxMismatches must be a non-negative safe integer. Currently it's of a type: ${typeof value}, equal to:\n${formatDiagnosticValue(value, 4)}`,
+    );
+  }
 }
 
 // External API functions

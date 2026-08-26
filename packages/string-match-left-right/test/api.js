@@ -160,4 +160,37 @@ test("02 - default index stepper", () => {
   equal(defaultGetNextIdx(4), 5, "02.01");
 });
 
+test("03 - validates and bounds maxMismatches", () => {
+  for (const invalidValue of [
+    Number.POSITIVE_INFINITY,
+    Number.NEGATIVE_INFINITY,
+    Number.NaN,
+    -1,
+    1.5,
+    Number.MAX_SAFE_INTEGER + 1,
+  ]) {
+    throws(
+      () =>
+        matchRightIncl("ab", 1, "z", {
+          maxMismatches: invalidValue,
+        }),
+      /THROW_ID_07/,
+      "03.01",
+    );
+  }
+  equal(matchRightIncl("ab", 1, "z", { maxMismatches: 0 }), false, "03.01");
+  equal(
+    matchRightIncl("ab", 1, "z", {
+      maxMismatches: Number.MAX_SAFE_INTEGER,
+    }),
+    false,
+    "03.02",
+  );
+  equal(
+    matchRightIncl("ab", 1, "z", { maxMismatches: undefined }),
+    false,
+    "03.03",
+  );
+});
+
 test.run();
