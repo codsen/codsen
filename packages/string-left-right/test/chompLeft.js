@@ -275,4 +275,9 @@ test("17", () => {
   );
 });
 
+test("18 - hungry matches require the following value", () => {
+  equal(chompLeft("bba", 2, "c", "b*"), null, "18.01");
+  equal(chompLeft("cbba", 3, "c", "b*"), 0, "18.02");
+});
+
 test.run();

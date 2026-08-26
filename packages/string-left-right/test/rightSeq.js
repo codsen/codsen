@@ -211,4 +211,35 @@ test("13 - does not crash when the sequence runs past the end", () => {
   );
 });
 
+test("14 - hungry matches require the following value", () => {
+  equal(rightSeq("abb", 0, "b*", "c"), null, "14.01");
+  equal(
+    rightSeq("abbc", 0, "b*", "c"),
+    { gaps: [], leftmostChar: 1, rightmostChar: 3 },
+    "14.02",
+  );
+  equal(
+    rightSeq("a b b c", 0, "b*", "c"),
+    {
+      gaps: [
+        [1, 2],
+        [3, 4],
+        [5, 6],
+      ],
+      leftmostChar: 2,
+      rightmostChar: 6,
+    },
+    "14.03",
+  );
+  equal(rightSeq("abb", 0, "b?*", "c"), null, "14.04");
+  equal(rightSeq("abb", 0, "b*?", "c"), null, "14.05");
+  equal(rightSeq("abb", 0, "b*", "x?", "c"), null, "14.06");
+  equal(rightSeq("aBB", 0, { i: true }, "b*", "c"), null, "14.07");
+  equal(
+    rightSeq("aBBC", 0, { i: true }, "b*", "c"),
+    { gaps: [], leftmostChar: 1, rightmostChar: 3 },
+    "14.08",
+  );
+});
+
 test.run();

@@ -209,4 +209,9 @@ test("11", () => {
   equal(chompRight('<a bcd= == "ef">', 6, { mode: 3 }, "="), 11, "11.35");
 });
 
+test("12 - hungry matches require the following value", () => {
+  equal(chompRight("abb", 0, "b*", "c"), null, "12.01");
+  equal(chompRight("abbc", 0, "b*", "c"), 4, "12.02");
+});
+
 test.run();

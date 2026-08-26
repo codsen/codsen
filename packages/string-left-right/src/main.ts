@@ -494,6 +494,7 @@ function seq(
       } else {
         // move on
         i += 1;
+        satiated = undefined;
         DEV &&
           console.log(
             `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${JSON.stringify(

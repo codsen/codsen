@@ -100,4 +100,35 @@ test("04 - case insensitive", () => {
   );
 });
 
+test("05 - hungry matches require the following value", () => {
+  equal(leftSeq("bba", 2, "c", "b*"), null, "05.01");
+  equal(
+    leftSeq("cbba", 3, "c", "b*"),
+    { gaps: [], leftmostChar: 0, rightmostChar: 2 },
+    "05.02",
+  );
+  equal(
+    leftSeq("c b b a", 6, "c", "b*"),
+    {
+      gaps: [
+        [1, 2],
+        [3, 4],
+        [5, 6],
+      ],
+      leftmostChar: 0,
+      rightmostChar: 4,
+    },
+    "05.03",
+  );
+  equal(leftSeq("bba", 2, "c", "b?*"), null, "05.04");
+  equal(leftSeq("bba", 2, "c", "b*?"), null, "05.05");
+  equal(leftSeq("bba", 2, "c", "x?", "b*"), null, "05.06");
+  equal(leftSeq("BBA", 2, { i: true }, "c", "b*"), null, "05.07");
+  equal(
+    leftSeq("CBBA", 3, { i: true }, "c", "b*"),
+    { gaps: [], leftmostChar: 0, rightmostChar: 2 },
+    "05.08",
+  );
+});
+
 test.run();
