@@ -231,12 +231,72 @@ class Ranges<InsertValue extends AddValue = AddValue> {
 
   ranges: Range<InsertValue>[] | null;
   opts: Readonly<ResolvedOpts>;
+  private currentCacheReady = false;
+  private currentResult: Range<InsertValue>[] | null = null;
+  private currentResultSnapshot: Range<InsertValue>[] | null = null;
+  private currentSnapshot: Range<InsertValue>[] | null = null;
+
+  private rangeListsMatch(
+    left: Range<InsertValue>[] | null,
+    right: Range<InsertValue>[] | null,
+  ): boolean {
+    if (!Array.isArray(left)) {
+      return right === null;
+    }
+    if (
+      !Array.isArray(right) ||
+      left.length !== right.length
+    ) {
+      return false;
+    }
+    for (let i = 0, len = left.length; i < len; i++) {
+      const range = left[i];
+      const snapshotRange = right[i];
+      if (
+        !Array.isArray(range) ||
+        !Array.isArray(snapshotRange) ||
+        range.length !== snapshotRange.length ||
+        range[0] !== snapshotRange[0] ||
+        range[1] !== snapshotRange[1] ||
+        range[2] !== snapshotRange[2]
+      ) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private currentStateMatchesSnapshot(): boolean {
+    return (
+      this.currentCacheReady &&
+      this.rangeListsMatch(this.ranges, this.currentSnapshot) &&
+      this.rangeListsMatch(this.currentResult, this.currentResultSnapshot)
+    );
+  }
+
+  private recordCurrentSnapshot(
+    result: Range<InsertValue>[] | null,
+  ): void {
+    this.currentSnapshot = Array.isArray(this.ranges)
+      ? this.ranges.map((range) => [...range] as Range<InsertValue>)
+      : null;
+    this.currentResult = result;
+    this.currentResultSnapshot = Array.isArray(result)
+      ? result.map((range) => [...range] as Range<InsertValue>)
+      : null;
+    this.currentCacheReady = true;
+  }
+
+  private invalidateCurrentCache(): void {
+    this.currentCacheReady = false;
+  }
 
   private addValidated(
     from: number,
     to: number,
     addVal?: InsertValue,
   ): void {
+    this.invalidateCurrentCache();
     DEV &&
       console.log(
         `${`\u001b[${33}m${`CASE 2`}\u001b[${39}m`} - two indexes were given as arguments`,
@@ -385,13 +445,17 @@ class Ranges<InsertValue extends AddValue = AddValue> {
           4,
         )}`,
       );
+    if (this.currentStateMatchesSnapshot()) {
+      return this.currentResult;
+    }
     if (Array.isArray(this.ranges) && this.ranges.length) {
       // beware, merging can return null
       this.ranges = rMerge(this.ranges as any, {
         mergeType: this.opts.mergeType,
       }) as Range<InsertValue>[] | null;
-      if (this.ranges && this.opts.limitToBeAddedWhitespace) {
-        return this.ranges.map((val): Range<InsertValue> => {
+      let result = this.ranges;
+      if (result && this.opts.limitToBeAddedWhitespace) {
+        result = result.map((val): Range<InsertValue> => {
           if (typeof val[2] === "string") {
             return [
               val[0],
@@ -405,6 +469,7 @@ class Ranges<InsertValue extends AddValue = AddValue> {
           return val;
         }) as Range<InsertValue>[];
       }
+      this.recordCurrentSnapshot(result);
       DEV &&
         console.log(
           `ranges-push/current(): ${`\u001b[${33}m${`this.ranges`}\u001b[${39}m`} = ${JSON.stringify(
@@ -413,8 +478,9 @@ class Ranges<InsertValue extends AddValue = AddValue> {
             4,
           )}`,
         );
-      return this.ranges;
+      return result;
     }
+    this.recordCurrentSnapshot(null);
     return null;
   }
 
@@ -475,6 +541,7 @@ class Ranges<InsertValue extends AddValue = AddValue> {
   // ==========
   wipe(): void {
     this.ranges = [];
+    this.invalidateCurrentCache();
   }
 
   // R E P L A C E ()
@@ -498,9 +565,11 @@ class Ranges<InsertValue extends AddValue = AddValue> {
           );
         }
         this.ranges = normalized.ranges as Range<InsertValue>[];
+        this.invalidateCurrentCache();
       }
     } else {
       this.ranges = [];
+      this.invalidateCurrentCache();
     }
   }
 

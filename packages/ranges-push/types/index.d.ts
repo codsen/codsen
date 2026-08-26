@@ -22,6 +22,14 @@ declare class Ranges<InsertValue extends AddValue = AddValue> {
   constructor(originalOpts?: Partial<Opts>);
   ranges: Range<InsertValue>[] | null;
   opts: Readonly<ResolvedOpts>;
+  private currentCacheReady;
+  private currentResult;
+  private currentResultSnapshot;
+  private currentSnapshot;
+  private rangeListsMatch;
+  private currentStateMatchesSnapshot;
+  private recordCurrentSnapshot;
+  private invalidateCurrentCache;
   private addValidated;
   add(
     originalFrom: IndexInput,

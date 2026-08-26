@@ -1717,4 +1717,61 @@ test("133 - constructor validates and freezes normalized options", () => {
   equal(ranges.opts.mergeType, 1, "133.06");
 });
 
+test("134 - CURRENT() - unchanged reads reuse the canonical value", () => {
+  for (const opts of [undefined, { limitToBeAddedWhitespace: true }]) {
+    const ranges = new Ranges(opts);
+    ranges.add(1, 2, "  a  ");
+    ranges.add(2, 3, "  b  ");
+    const first = ranges.current();
+    const second = ranges.current();
+    is(second, first, "134.01");
+    equal(second, [[1, 3, opts ? " a   b " : "  a    b  "]], "134.02");
+  }
+
+  const futile = new Ranges();
+  futile.add(1, 1);
+  equal(futile.current(), null, "134.03");
+  equal(futile.current(), null, "134.04");
+});
+
+test("135 - CURRENT() - every public mutation route invalidates safely", () => {
+  const throughCurrent = new Ranges();
+  throughCurrent.add(3, 4);
+  const current = throughCurrent.current();
+  current.push([1, 2]);
+  equal(
+    throughCurrent.current(),
+    [
+      [1, 2],
+      [3, 4],
+    ],
+    "135.01",
+  );
+
+  const throughLast = new Ranges();
+  throughLast.add(1, 2, "a");
+  throughLast.current();
+  throughLast.last()[2] = "b";
+  equal(throughLast.current(), [[1, 2, "b"]], "135.02");
+
+  const throughRanges = new Ranges();
+  throughRanges.add(3, 4);
+  throughRanges.current();
+  throughRanges.ranges = [[1, 2]];
+  equal(throughRanges.current(), [[1, 2]], "135.03");
+
+  throughRanges.add(2, 3);
+  equal(throughRanges.current(), [[1, 3]], "135.04");
+  throughRanges.replace([[5, 6]]);
+  equal(throughRanges.current(), [[5, 6]], "135.05");
+  throughRanges.wipe();
+  equal(throughRanges.current(), null, "135.06");
+
+  const whitespaceCopy = new Ranges({ limitToBeAddedWhitespace: true });
+  whitespaceCopy.add(1, 2, "  a  ");
+  const exposedCopy = whitespaceCopy.current();
+  exposedCopy[0][2] = "mutated";
+  equal(whitespaceCopy.current(), [[1, 2, " a "]], "135.07");
+});
+
 test.run();
