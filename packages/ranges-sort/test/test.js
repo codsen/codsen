@@ -12,7 +12,7 @@ test("01 - not array", () => {
   is(srt(null), null, "01.01");
   is(srt(1), 1, "01.02");
   is(srt(true), true, "01.03");
-  equal(srt({ e: true }), { e: true }, "01.01");
+  equal(srt({ e: true }), { e: true }, "01.04");
 });
 
 test("02 - not two arguments in one of ranges", () => {
@@ -455,23 +455,55 @@ test("16 - calls progress callback correctly", () => {
 });
 
 test("17 - gaps in array", () => {
+  const sparse = Array(3);
+  sparse[0] = [0, 3];
+  sparse[2] = [5, 8];
   throws(
     () => {
-      srt([[0, 3], undefined, [5, 8], [5, 6]]);
+      srt(sparse);
     },
+    /THROW_ID_02/,
     "17.01",
-    "17.01",
+  );
+  throws(
+    () => {
+      srt(sparse, { strictlyTwoElementsInRangeArrays: true });
+    },
+    /THROW_ID_01/,
+    "17.02",
   );
 });
 
-test("18 - null in array", () => {
-  throws(
-    () => {
-      srt([[0, 3], undefined, [5, 8], [5, 6]]);
-    },
-    "18.01",
-    "18.01",
-  );
+test("18 - invalid range members", () => {
+  for (const [index, invalidRange] of [
+    undefined,
+    null,
+    1,
+    "1,2",
+    {},
+    [],
+    [1],
+    [1, null],
+  ].entries()) {
+    throws(
+      () => {
+        srt([[0, 3], invalidRange, [5, 8]]);
+      },
+      /THROW_ID_02/,
+      `18.${String(index * 2 + 1).padStart(2, "0")}`,
+    );
+    throws(
+      () => {
+        srt([[0, 3], invalidRange, [5, 8]], {
+          strictlyTwoElementsInRangeArrays: true,
+        });
+      },
+      Array.isArray(invalidRange) && invalidRange.length === 2
+        ? /THROW_ID_02/
+        : /THROW_ID_01/,
+      `18.${String(index * 2 + 2).padStart(2, "0")}`,
+    );
+  }
 });
 
 test("19 - exact ties preserve input order above old V8 cutoff", () => {
@@ -483,10 +515,7 @@ test("19 - exact ties preserve input order above old V8 cutoff", () => {
   const nativeSort = Array.prototype.sort;
   Array.prototype.sort = function deliberatelyUnstableSort(compareFn) {
     nativeSort.call(this, compareFn);
-    if (
-      this.length > 10 &&
-      compareFn(this[0], this[this.length - 1]) === 0
-    ) {
+    if (this.length > 10 && compareFn(this[0], this[this.length - 1]) === 0) {
       this.reverse();
     }
     return this;
@@ -500,20 +529,23 @@ test("19 - exact ties preserve input order above old V8 cutoff", () => {
 
 test("20 - long arrays sort by both coordinates", () => {
   equal(
-    srt([
-      [5, 6],
-      [5, 3],
-      [5, 0],
-      [4, 8],
-      [1, 2],
-      [9, 10],
-      [5, 7],
-      [3, 4],
-      [2, 3],
-      [8, 9],
-      [7, 8],
-      [6, 7],
-    ], { progressFn: () => {} }),
+    srt(
+      [
+        [5, 6],
+        [5, 3],
+        [5, 0],
+        [4, 8],
+        [1, 2],
+        [9, 10],
+        [5, 7],
+        [3, 4],
+        [2, 3],
+        [8, 9],
+        [7, 8],
+        [6, 7],
+      ],
+      { progressFn: () => {} },
+    ),
     [
       [1, 2],
       [2, 3],

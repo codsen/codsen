@@ -37,9 +37,7 @@ const defaults: Opts = {
 };
 
 function restoreExactTieOrder(sorted: Range[], original: Range[]): Range[] {
-  const originalOrder = new Map(
-    original.map((range, index) => [range, index]),
-  );
+  const originalOrder = new Map(original.map((range, index) => [range, index]));
   let groupStart = 0;
   while (groupStart < sorted.length) {
     let groupEnd = groupStart + 1;
@@ -74,47 +72,28 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
   // fill any settings with defaults if missing:
   let opts = { ...defaults, ...originalOptions };
 
-  // arrOfRanges validation
-  let culpritsIndex: any;
-  let culpritsLen: any;
-  // validate does every range consist of exactly two indexes:
-  if (
-    opts.strictlyTwoElementsInRangeArrays &&
-    !arrOfRanges
-      // theoretically, there can be holes in the given array!
-      .every((rangeArr, indx) => {
-        if (!Array.isArray(rangeArr) || rangeArr.length !== 2) {
-          culpritsIndex = indx;
-          culpritsLen = rangeArr.length;
-          return false;
-        }
-        return true;
-      })
-  ) {
-    throw new TypeError(
-      `ranges-sort/rSort(): [THROW_ID_01] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${culpritsIndex}th range (${formatDiagnosticValue(arrOfRanges[culpritsIndex], 4)}) has not two but ${culpritsLen} elements!`,
-    );
-  }
-
-  // validate are range indexes natural numbers:
-  if (
-    !arrOfRanges.every((rangeArr, indx) => {
-      if (
-        !Array.isArray(rangeArr) ||
-        !Number.isInteger(rangeArr[0]) ||
-        rangeArr[0] < 0 ||
-        !Number.isInteger(rangeArr[1]) ||
-        rangeArr[1] < 0
-      ) {
-        culpritsIndex = indx;
-        return false;
-      }
-      return true;
-    })
-  ) {
-    throw new TypeError(
-      `ranges-sort/rSort(): [THROW_ID_02] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${culpritsIndex}th range (${formatDiagnosticValue(arrOfRanges[culpritsIndex], 4)}) does not consist of only natural numbers!`,
-    );
+  // Validate by index so that sparse slots are observed as undefined entries.
+  for (let index = 0; index < arrOfRanges.length; index += 1) {
+    const range = arrOfRanges[index];
+    if (
+      opts.strictlyTwoElementsInRangeArrays &&
+      (!Array.isArray(range) || range.length !== 2)
+    ) {
+      throw new TypeError(
+        `ranges-sort/rSort(): [THROW_ID_01] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, range at index ${index} (${formatDiagnosticValue(range, 4)}) is ${Array.isArray(range) ? `an array with ${range.length} elements` : "not an array"}!`,
+      );
+    }
+    if (
+      !Array.isArray(range) ||
+      !Number.isInteger(range[0]) ||
+      range[0] < 0 ||
+      !Number.isInteger(range[1]) ||
+      range[1] < 0
+    ) {
+      throw new TypeError(
+        `ranges-sort/rSort(): [THROW_ID_02] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, range at index ${index} (${formatDiagnosticValue(range, 4)}) does not consist of only natural numbers!`,
+      );
+    }
   }
 
   // let's assume worst case scenario is N x N.
