@@ -55,33 +55,36 @@ export type MixerResult<
   Defaults extends PlainObject,
 > = Omit<BooleanValuesWidened<Defaults>, keyof Ref> & Ref;
 
-function mixer<Defaults extends PlainObject = Record<never, never>>(
-  ref?: undefined,
-  defaultsObj?: Defaults,
-): BooleanValuesWidened<Defaults>[];
-function mixer<
-  Ref extends PlainObject,
-  Defaults extends PlainObject = Record<never, never>,
->(ref: Ref, defaultsObj?: Defaults): MixerResult<Ref, Defaults>[];
-function mixer<
-  Ref extends PlainObject,
-  Defaults extends PlainObject = Record<never, never>,
->(
-  ref: Ref | undefined,
-  defaultsObj?: Defaults,
-): Array<MixerResult<Ref, Defaults> | BooleanValuesWidened<Defaults>>;
-function mixer(
-  ref: PlainObject = {},
-  defaultsObj: PlainObject = {},
-): PlainObject[] {
+export interface MixerOptions {
+  maxCombinations: number;
+}
+
+const maxEagerCombinations = 16_384;
+
+export const defaults: Readonly<MixerOptions> = Object.freeze({
+  maxCombinations: maxEagerCombinations,
+});
+
+type MixerFunctionName = "mixer" | "mixerLazy";
+
+interface PreparedMixer {
+  defaultsKeys: string[];
+  freeBooleanKeys: string[];
+}
+
+function prepareMixer(
+  ref: PlainObject,
+  defaultsObj: PlainObject,
+  functionName: MixerFunctionName,
+): PreparedMixer {
   if (!isObj(ref)) {
     throw new Error(
-      `test-mixer/mixer(): [THROW_ID_01] the first input argument must be a plain object or undefined. It was given as:\n${formatDiagnosticValue(ref, 4)} (type ${typeof ref}).`,
+      `test-mixer/${functionName}(): [THROW_ID_01] the first input argument must be a plain object or undefined. It was given as:\n${formatDiagnosticValue(ref, 4)} (type ${typeof ref}).`,
     );
   }
   if (!isObj(defaultsObj)) {
     throw new Error(
-      `test-mixer/mixer(): [THROW_ID_02] the second input argument must be a plain object or undefined. It was given as:\n${formatDiagnosticValue(defaultsObj, 4)} (type ${typeof defaultsObj}).`,
+      `test-mixer/${functionName}(): [THROW_ID_02] the second input argument must be a plain object or undefined. It was given as:\n${formatDiagnosticValue(defaultsObj, 4)} (type ${typeof defaultsObj}).`,
     );
   }
   let caught;
@@ -108,26 +111,136 @@ function mixer(
       })
   ) {
     throw new Error(
-      `test-mixer/mixer(): [THROW_ID_03] the second input arg object should be defaults; it should be a superset of 1st input arg object. However, 1st input arg object contains key "${caught}" which 2nd input arg object doesn't have.`,
+      `test-mixer/${functionName}(): [THROW_ID_03] the second input arg object should be defaults; it should be a superset of 1st input arg object. However, 1st input arg object contains key "${caught}" which 2nd input arg object doesn't have.`,
     );
   }
 
+  const defaultsKeys = Object.keys(defaultsObj);
+  return {
+    defaultsKeys,
+    freeBooleanKeys: defaultsKeys.filter(
+      (key) => typeof defaultsObj[key] === "boolean" && !hasOwn.call(ref, key),
+    ),
+  };
+}
+
+function resolveMixerOptions(
+  opts: Partial<MixerOptions> | boolean,
+): MixerOptions {
+  // Booleans were accepted and ignored by old JavaScript callers.
+  if (typeof opts === "boolean") {
+    return { ...defaults };
+  }
+  if (!isObj(opts)) {
+    throw new Error(
+      `test-mixer/mixer(): [THROW_ID_04] the third input argument must be a plain options object or undefined. It was given as:\n${formatDiagnosticValue(opts, 4)} (type ${typeof opts}).`,
+    );
+  }
+  const resolved = { ...defaults, ...opts };
+  if (
+    !Number.isSafeInteger(resolved.maxCombinations) ||
+    resolved.maxCombinations < 1 ||
+    resolved.maxCombinations > maxEagerCombinations
+  ) {
+    throw new Error(
+      `test-mixer/mixer(): [THROW_ID_05] opts.maxCombinations must be a positive integer no greater than ${maxEagerCombinations}. It was given as ${formatDiagnosticValue(resolved.maxCombinations)}.`,
+    );
+  }
+  return resolved;
+}
+
+function assertWithinEagerLimit(
+  freeBooleanKeyCount: number,
+  maxCombinations: number,
+): void {
+  const plannedCount = 2 ** freeBooleanKeyCount;
+  if (plannedCount > maxCombinations) {
+    const plannedDescription = Number.isSafeInteger(plannedCount)
+      ? `${plannedCount} rows (2^${freeBooleanKeyCount})`
+      : `2^${freeBooleanKeyCount} rows`;
+    throw new Error(
+      `test-mixer/mixer(): [THROW_ID_06] ${freeBooleanKeyCount} unpinned boolean options would create ${plannedDescription}, above the configured maxCombinations of ${maxCombinations}. Pin more boolean keys, raise maxCombinations up to ${maxEagerCombinations}, or use mixerLazy().`,
+    );
+  }
+}
+
+function* generateRows(
+  template: PlainObject,
+  freeBooleanKeys: string[],
+  hasDefaults: boolean,
+): Generator<PlainObject, void, unknown> {
+  if (!hasDefaults) {
+    return;
+  }
+
+  const values = new Array(freeBooleanKeys.length).fill(false);
+  let moreRows = true;
+  while (moreRows) {
+    const result = clone(template);
+    for (let keyIndex = 0; keyIndex < freeBooleanKeys.length; keyIndex++) {
+      result[freeBooleanKeys[keyIndex]] = values[keyIndex];
+    }
+    yield result;
+
+    let keyIndex = 0;
+    while (keyIndex < values.length && values[keyIndex]) {
+      values[keyIndex] = false;
+      keyIndex++;
+    }
+    if (keyIndex === values.length) {
+      moreRows = false;
+    } else {
+      values[keyIndex] = true;
+    }
+  }
+}
+
+function mixer<Defaults extends PlainObject = Record<never, never>>(
+  ref?: undefined,
+  defaultsObj?: Defaults,
+  opts?: Partial<MixerOptions>,
+): BooleanValuesWidened<Defaults>[];
+function mixer<
+  Ref extends PlainObject,
+  Defaults extends PlainObject = Record<never, never>,
+>(
+  ref: Ref,
+  defaultsObj?: Defaults,
+  opts?: Partial<MixerOptions>,
+): MixerResult<Ref, Defaults>[];
+function mixer<
+  Ref extends PlainObject,
+  Defaults extends PlainObject = Record<never, never>,
+>(
+  ref: Ref | undefined,
+  defaultsObj?: Defaults,
+  opts?: Partial<MixerOptions>,
+): Array<MixerResult<Ref, Defaults> | BooleanValuesWidened<Defaults>>;
+function mixer(
+  ref: PlainObject = {},
+  defaultsObj: PlainObject = {},
+  opts: Partial<MixerOptions> | boolean = {},
+): PlainObject[] {
+  const prepared = prepareMixer(ref, defaultsObj, "mixer");
+  const resolvedOpts = resolveMixerOptions(opts);
+
   // quick end
-  if (!Object.keys(defaultsObj).length) {
+  if (!prepared.defaultsKeys.length) {
     DEV && console.log(`early return []`);
     return [];
   }
+
+  assertWithinEagerLimit(
+    prepared.freeBooleanKeys.length,
+    resolvedOpts.maxCombinations,
+  );
 
   let optsWithBoolValues: PlainObjectOfBool = {};
 
   // 1. find out, what boolean-value keys are there in defaultsObj that
   // are missing in ref. If there are n keys, we'll generate 2^n objects.
-  Object.keys(defaultsObj).forEach((key) => {
-    // if key's value is bool AND it's not present in ref,
-    // add it to "optsWithBoolValues"
-    if (typeof defaultsObj[key] === "boolean" && !hasOwn.call(ref, key)) {
-      optsWithBoolValues[key] = defaultsObj[key];
-    }
+  prepared.freeBooleanKeys.forEach((key) => {
+    optsWithBoolValues[key] = defaultsObj[key];
   });
 
   DEV && console.log(`${`\u001b[${33}m${`ref`}\u001b[${39}m`} =`, ref);
@@ -166,6 +279,45 @@ function mixer(
   return res;
 }
 
+function mixerLazy<Defaults extends PlainObject = Record<never, never>>(
+  ref?: undefined,
+  defaultsObj?: Defaults,
+): Generator<BooleanValuesWidened<Defaults>, void, unknown>;
+function mixerLazy<
+  Ref extends PlainObject,
+  Defaults extends PlainObject = Record<never, never>,
+>(
+  ref: Ref,
+  defaultsObj?: Defaults,
+): Generator<MixerResult<Ref, Defaults>, void, unknown>;
+function mixerLazy<
+  Ref extends PlainObject,
+  Defaults extends PlainObject = Record<never, never>,
+>(
+  ref: Ref | undefined,
+  defaultsObj?: Defaults,
+): Generator<
+  MixerResult<Ref, Defaults> | BooleanValuesWidened<Defaults>,
+  void,
+  unknown
+>;
+/**
+ * Lazily yields the same rows and ordering as `mixer()`. Stop iterating to
+ * cancel the remaining work, or consume the iterator in caller-sized batches.
+ */
+function mixerLazy(
+  ref: PlainObject = {},
+  defaultsObj: PlainObject = {},
+): Generator<PlainObject, void, unknown> {
+  const prepared = prepareMixer(ref, defaultsObj, "mixerLazy");
+  const template = clone({ ...defaultsObj, ...ref });
+  return generateRows(
+    template,
+    prepared.freeBooleanKeys,
+    prepared.defaultsKeys.length > 0,
+  );
+}
+
 const hasOwn = Object.prototype.hasOwnProperty;
 
-export { mixer, version };
+export { mixer, mixerLazy, version };

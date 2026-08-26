@@ -2,7 +2,7 @@
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
-import { mixer } from "../dist/test-mixer.esm.js";
+import { mixer, mixerLazy } from "../dist/test-mixer.esm.js";
 
 const hasOwn = Object.prototype.hasOwnProperty;
 
@@ -25,6 +25,7 @@ function referenceMixer(ref, defaultsObj) {
 test("01 - matches a bounded reference implementation", () => {
   const actualCases = [];
   const expectedCases = [];
+  const lazyCases = [];
 
   for (let keyCount = 0; keyCount <= 8; keyCount += 1) {
     const defaultsObj = { mode: "safe" };
@@ -39,11 +40,13 @@ test("01 - matches a bounded reference implementation", () => {
       }
       actualCases.push(mixer(ref, defaultsObj));
       expectedCases.push(referenceMixer(ref, defaultsObj));
+      lazyCases.push([...mixerLazy(ref, defaultsObj)]);
     }
   }
 
   equal(actualCases.length, 45, "01.01");
   equal(actualCases, expectedCases, "01.02");
+  equal(lazyCases, expectedCases, "01.03");
 });
 
 test.run();

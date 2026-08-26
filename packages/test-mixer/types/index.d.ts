@@ -17,25 +17,58 @@ type MixerResult<Ref extends PlainObject, Defaults extends PlainObject> = Omit<
   keyof Ref
 > &
   Ref;
+interface MixerOptions {
+  maxCombinations: number;
+}
+declare const defaults: Readonly<MixerOptions>;
 declare function mixer<Defaults extends PlainObject = Record<never, never>>(
   ref?: undefined,
   defaultsObj?: Defaults,
+  opts?: Partial<MixerOptions>,
 ): BooleanValuesWidened<Defaults>[];
 declare function mixer<
   Ref extends PlainObject,
   Defaults extends PlainObject = Record<never, never>,
->(ref: Ref, defaultsObj?: Defaults): MixerResult<Ref, Defaults>[];
+>(
+  ref: Ref,
+  defaultsObj?: Defaults,
+  opts?: Partial<MixerOptions>,
+): MixerResult<Ref, Defaults>[];
 declare function mixer<
   Ref extends PlainObject,
   Defaults extends PlainObject = Record<never, never>,
 >(
   ref: Ref | undefined,
   defaultsObj?: Defaults,
+  opts?: Partial<MixerOptions>,
 ): Array<MixerResult<Ref, Defaults> | BooleanValuesWidened<Defaults>>;
+declare function mixerLazy<Defaults extends PlainObject = Record<never, never>>(
+  ref?: undefined,
+  defaultsObj?: Defaults,
+): Generator<BooleanValuesWidened<Defaults>, void, unknown>;
+declare function mixerLazy<
+  Ref extends PlainObject,
+  Defaults extends PlainObject = Record<never, never>,
+>(
+  ref: Ref,
+  defaultsObj?: Defaults,
+): Generator<MixerResult<Ref, Defaults>, void, unknown>;
+declare function mixerLazy<
+  Ref extends PlainObject,
+  Defaults extends PlainObject = Record<never, never>,
+>(
+  ref: Ref | undefined,
+  defaultsObj?: Defaults,
+): Generator<
+  MixerResult<Ref, Defaults> | BooleanValuesWidened<Defaults>,
+  void,
+  unknown
+>;
 
-export { mixer, version };
+export { defaults, mixer, mixerLazy, version };
 export type {
   BooleanValuesWidened,
+  MixerOptions,
   MixerResult,
   PlainObject,
   PlainObjectOfBool,

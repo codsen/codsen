@@ -248,6 +248,9 @@ function testMixerSmoke(api, equal) {
   ]);
   rows[0].nested.value = 2;
   equal(rows[1].nested.value, 1);
+  equal(Array.from(api.mixerLazy({ enabled: true }, { enabled: false })), [
+    { enabled: true },
+  ]);
 }
 
 function arrayGroupSmoke(api, equal) {

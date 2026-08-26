@@ -1,4 +1,10 @@
-import { mixer, type MixerResult, type PlainObjectOfBool } from "test-mixer";
+import { mixer, mixerLazy } from "test-mixer";
+import type {
+  defaults as mixerDefaults,
+  MixerOptions,
+  MixerResult,
+  PlainObjectOfBool,
+} from "test-mixer";
 
 type Equal<Left, Right> =
   (<Value>() => Value extends Left ? 1 : 2) extends <
@@ -50,6 +56,17 @@ const maybeRowChecks: [
 ] = [true, true];
 
 const legacyBooleanRow: PlainObjectOfBool = { varied: true };
+const mixerOptions: MixerOptions = { maxCombinations: 2 };
+const limitedRows = mixer(ref, defaults, mixerOptions);
+const lazyRows = mixerLazy(ref, defaults);
+type Yielded<Value> =
+  Value extends Generator<infer Row, void, unknown> ? Row : never;
+type LazyRow = Yielded<typeof lazyRows>;
+const newApiChecks: [
+  Equal<(typeof limitedRows)[number], Row>,
+  Equal<LazyRow, Row>,
+  Equal<typeof mixerDefaults.maxCombinations, number>,
+] = [true, true, true];
 
 // @ts-expect-error -- null is not an empty-reference sentinel.
 mixer(null, defaults);
@@ -71,5 +88,11 @@ mixer({}, 0);
 mixer({}, "");
 // @ts-expect-error -- NaN is not accepted as defaults.
 mixer({}, NaN);
+// @ts-expect-error -- eager options must be a plain object.
+mixer({}, defaults, "options");
+// @ts-expect-error -- maxCombinations must be numeric.
+mixer({}, defaults, { maxCombinations: "two" });
+// @ts-expect-error -- lazy references use the same object contract.
+mixerLazy(false, defaults);
 
-void [rowChecks, allRowChecks, maybeRowChecks, legacyBooleanRow];
+void [rowChecks, allRowChecks, maybeRowChecks, legacyBooleanRow, newApiChecks];

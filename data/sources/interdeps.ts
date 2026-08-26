@@ -821,7 +821,7 @@ export const interdeps = [
   },
   {
     "name": "test-mixer",
-    "size": 1397,
+    "size": 2797,
     "imports": [
       "codsen-utils",
       "object-boolean-combinations"
