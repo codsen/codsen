@@ -981,4 +981,18 @@ test("28 - exact ties retain insertion order above old V8 cutoff", () => {
   }
 });
 
+test("29 - false disables progress reporting", () => {
+  equal(
+    rMerge(
+      [
+        [1, 2],
+        [0, 1],
+      ],
+      { progressFn: false },
+    ),
+    [[0, 2]],
+    "29.01",
+  );
+});
+
 test.run();

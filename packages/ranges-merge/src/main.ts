@@ -16,7 +16,7 @@ export type ProgressFn = (percentageDone: number) => void;
 
 export interface Opts {
   mergeType: 1 | 2 | "1" | "2";
-  progressFn: null | undefined | ProgressFn;
+  progressFn: false | null | undefined | ProgressFn;
   joinRangesThatTouchEdges: boolean;
 }
 
