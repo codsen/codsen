@@ -1774,4 +1774,13 @@ test("135 - CURRENT() - every public mutation route invalidates safely", () => {
   equal(whitespaceCopy.current(), [[1, 2, " a "]], "135.07");
 });
 
+test("136 - REPLACE() - accepts declared numeric-string indexes", () => {
+  const ranges = new Ranges();
+  ranges.replace([
+    ["01", "2", "a"],
+    ["2", "3", 0],
+  ]);
+  equal(ranges.current(), [[1, 3, "a0"]], "136.01");
+});
+
 test.run();

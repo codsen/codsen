@@ -631,7 +631,7 @@ class Ranges<InsertValue extends AddValue = AddValue> {
       // Now, ranges can be array of arrays, correct format but also single
       // range, an array of two natural numbers might be given.
       // Let's put safety latch against such cases
-      if (!(Array.isArray(givenRanges[0]) && isInt(givenRanges[0][0]))) {
+      if (!Array.isArray(givenRanges[0])) {
         throw new Error(
           `ranges-push/Ranges/replace(): [THROW_ID_05] Single range was given but we expected array of arrays! The first element, ${formatDiagnosticValue(givenRanges[0], 4)} should be an array.`,
         );
