@@ -45,12 +45,13 @@ const defaults: Opts = {
 };
 
 export const defaultGetNextIdx = (index: number): number => index + 1;
+const getPreviousIdx = (index: number): number => index - 1;
 
 function march(
   str: string,
   position: number,
   whatToMatchVal: string,
-  originalOpts?: Partial<Opts>,
+  opts: Opts,
   isTrimChar: (char: string) => boolean = () => false,
   special = false,
   getNextIdx = defaultGetNextIdx,
@@ -62,11 +63,7 @@ function march(
 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${str}
 ${`\u001b[${33}m${`position`}\u001b[${39}m`} = ${position}
 ${`\u001b[${33}m${`whatToMatchVal`}\u001b[${39}m`} = ${whatToMatchVal}
-${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
-        originalOpts,
-        null,
-        4,
-      )}
+${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(opts, null, 4)}
 ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
 ======`,
     );
@@ -76,8 +73,6 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
     DEV && console.log("EARLY ENDING, return true");
     return whatToMatchVal;
   }
-
-  let opts: Opts = { ...defaults, ...originalOpts };
 
   DEV &&
     console.log(
@@ -950,6 +945,44 @@ function main(
   // result is merged using logical "AND" - meaning both have to be true to yield
   // final result "true".
 
+  if (
+    !opts.cb &&
+    !opts.i &&
+    !opts.trimBeforeMatching &&
+    !opts.trimCharsBeforeMatching.length &&
+    opts.maxMismatches === 0 &&
+    !opts.firstMustMatch &&
+    !opts.lastMustMatch &&
+    !opts.hungry &&
+    whatToMatch.every(isStr)
+  ) {
+    for (const matcher of whatToMatch) {
+      if (!matcher.length) {
+        continue;
+      }
+      let start = position;
+      if (mode === "matchRight") {
+        start += 1;
+      } else if (mode === "matchLeft") {
+        start -= matcher.length;
+      } else if (mode === "matchLeftIncl") {
+        start -= matcher.length - 1;
+      }
+      if (start >= 0 && str.startsWith(matcher, start)) {
+        return matcher;
+      }
+    }
+    return false;
+  }
+
+  let startingPosition = position;
+  if (mode === "matchRight") {
+    startingPosition += 1;
+  } else if (mode === "matchLeft") {
+    startingPosition -= 1;
+  }
+  const getNextIdx = mode[5] === "L" ? getPreviousIdx : defaultGetNextIdx;
+
   for (let i = 0, len = whatToMatch.length; i < len; i++) {
     DEV &&
       console.log(
@@ -985,13 +1018,6 @@ function main(
     let indexOfTheCharacterInFront: number | undefined;
     let restOfStringInFront = "";
 
-    let startingPosition = position;
-    if (mode === "matchRight") {
-      startingPosition += 1;
-    } else if (mode === "matchLeft") {
-      startingPosition -= 1;
-    }
-
     DEV &&
       console.log(
         `\u001b[${33}m${"march() called with:"}\u001b[${39}m\n* startingPosition = ${JSON.stringify(
@@ -1012,7 +1038,7 @@ function main(
       opts,
       isTrimChar,
       special,
-      (i2) => (mode[5] === "L" ? i2 - 1 : i2 + 1),
+      getNextIdx,
     );
     DEV &&
       console.log(
