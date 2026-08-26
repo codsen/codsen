@@ -653,6 +653,13 @@ const seqDefaults: Opts = {
   i: false,
 };
 
+function leftSeq(
+  str: string,
+  idx: number,
+  ...args:
+    | [value: string, ...values: string[]]
+    | [opts: Opts, value: string, ...values: string[]]
+): SeqOutput | null;
 function leftSeq(str: string, idx: number, ...args: any[]): SeqOutput | null {
   // if there are no arguments, it becomes left()
   if (!args?.length) {
@@ -681,6 +688,13 @@ function leftSeq(str: string, idx: number, ...args: any[]): SeqOutput | null {
   return seq("left", str, idx, opts, Array.from(args).reverse());
 }
 
+function rightSeq(
+  str: string,
+  idx: number,
+  ...args:
+    | [value: string, ...values: string[]]
+    | [opts: Opts, value: string, ...values: string[]]
+): SeqOutput | null;
 function rightSeq(str: string, idx: number, ...args: any[]): SeqOutput | null {
   // if there are no arguments, it becomes right()
   if (!args?.length) {
@@ -735,6 +749,10 @@ function rightSeq(str: string, idx: number, ...args: any[]): SeqOutput | null {
 //
 
 interface ChompOpts {
+  mode?: 0 | 1 | 2 | 3 | "0" | "1" | "2" | "3" | "" | null;
+}
+
+interface NormalizedChompOpts {
   mode?: 0 | 1 | 2 | 3;
 }
 
@@ -745,7 +763,7 @@ function chomp(
   direction: "left" | "right",
   str: string,
   idx: number,
-  opts?: ChompOpts,
+  opts?: NormalizedChompOpts,
   args: any[] = [],
 ): number | null {
   //
@@ -799,8 +817,16 @@ function chomp(
       );
     lastRes =
       direction === "right"
-        ? rightSeq(str, typeof lastIdx === "number" ? lastIdx : idx, ...args)
-        : leftSeq(str, typeof lastIdx === "number" ? lastIdx : idx, ...args);
+        ? rightSeq(
+            str,
+            typeof lastIdx === "number" ? lastIdx : idx,
+            ...(args as [string, ...string[]]),
+          )
+        : leftSeq(
+            str,
+            typeof lastIdx === "number" ? lastIdx : idx,
+            ...(args as [string, ...string[]]),
+          );
     DEV && console.log();
     DEV &&
       console.log(
@@ -1077,6 +1103,17 @@ function chomp(
 //                                                                   ppppppppp
 //
 
+function chompLeft(
+  str: string,
+  idx: number,
+  ...args:
+    | [value: string, ...values: string[]]
+    | [
+        opts: ChompOpts | null | undefined,
+        value: string,
+        ...values: string[],
+      ]
+): number | null;
 function chompLeft(str: string, idx: number, ...args: any[]): number | null {
   DEV &&
     console.log(
@@ -1102,7 +1139,7 @@ function chompLeft(str: string, idx: number, ...args: any[]): number | null {
   // 1 - stop at first space, leave whitespace alone
   // 2 - aggressively chomp all whitespace except newlines
   // 3 - aggressively chomp all whitespace including newlines
-  let defaults: ChompOpts = {
+  let defaults: NormalizedChompOpts = {
     mode: 0,
   };
   // now, the first element within args can be opts.
@@ -1163,6 +1200,17 @@ function chompLeft(str: string, idx: number, ...args: any[]): number | null {
 //                                                                  ppppppppp
 //
 
+function chompRight(
+  str: string,
+  idx: number,
+  ...args:
+    | [value: string, ...values: string[]]
+    | [
+        opts: ChompOpts | null | undefined,
+        value: string,
+        ...values: string[],
+      ]
+): number | null;
 function chompRight(str: string, idx: number, ...args: any[]): number | null {
   DEV &&
     console.log(
@@ -1188,7 +1236,7 @@ function chompRight(str: string, idx: number, ...args: any[]): number | null {
   // 1 - stop at first space, leave whitespace alone
   // 2 - aggressively chomp all whitespace except newlines
   // 3 - aggressively chomp all whitespace including newlines
-  let defaults: ChompOpts = {
+  let defaults: NormalizedChompOpts = {
     mode: 0,
   };
   // now, the first element within args can be opts.

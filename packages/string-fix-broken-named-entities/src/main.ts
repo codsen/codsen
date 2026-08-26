@@ -416,7 +416,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
               tempRes = rightSeq(
                 str,
                 (letterSeqStartAt as number) - 1,
-                ...oneOfKnownEntities.split(""),
+                ...(oneOfKnownEntities.split("") as [string, ...string[]]),
               );
               if (tempRes) {
                 possibleMatches.push({ tempEnt: oneOfKnownEntities, tempRes });
@@ -560,7 +560,11 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
               // find all entities that match on the right of here
               // rightSeq could theoretically give positive answer, zero index,
               // but it's impossible here, so we're fine to match "if true".
-              tempRes = leftSeq(str, i, ...oneOfKnownEntities.split(""));
+              tempRes = leftSeq(
+                str,
+                i,
+                ...(oneOfKnownEntities.split("") as [string, ...string[]]),
+              );
               if (
                 tempRes &&
                 !(
@@ -1493,7 +1497,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             let matchEntityOnTheRight = rightSeq(
               str,
               toDeleteAllAmpEndHere - 1,
-              ...entity.split(""),
+              ...(entity.split("") as [string, ...string[]]),
             );
             if (matchEntityOnTheRight) {
               matchedTemp = entity;

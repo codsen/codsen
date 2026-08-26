@@ -28,22 +28,33 @@ interface SeqOutput {
 declare function leftSeq(
   str: string,
   idx: number,
-  ...args: any[]
+  ...args:
+    | [value: string, ...values: string[]]
+    | [opts: Opts, value: string, ...values: string[]]
 ): SeqOutput | null;
 declare function rightSeq(
   str: string,
   idx: number,
-  ...args: any[]
+  ...args:
+    | [value: string, ...values: string[]]
+    | [opts: Opts, value: string, ...values: string[]]
 ): SeqOutput | null;
+interface ChompOpts {
+  mode?: 0 | 1 | 2 | 3 | "0" | "1" | "2" | "3" | "" | null;
+}
 declare function chompLeft(
   str: string,
   idx: number,
-  ...args: any[]
+  ...args:
+    | [value: string, ...values: string[]]
+    | [opts: ChompOpts | null | undefined, value: string, ...values: string[]]
 ): number | null;
 declare function chompRight(
   str: string,
   idx: number,
-  ...args: any[]
+  ...args:
+    | [value: string, ...values: string[]]
+    | [opts: ChompOpts | null | undefined, value: string, ...values: string[]]
 ): number | null;
 
 export {
