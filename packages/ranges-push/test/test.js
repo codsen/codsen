@@ -1148,6 +1148,17 @@ test("106 - REPLACE() - replaces ranges with ranges", () => {
     ],
     "106.03",
   );
+
+  const classMustNotMutateCaller = [[20, 21, "c"]];
+  oldRanges.replace(classMustNotMutateCaller);
+  oldRanges.add(21, 22, "d");
+  oldRanges.current();
+  equal(classMustNotMutateCaller, [[20, 21, "c"]], "106.04");
+
+  const callerMustNotMutateClass = [[30, 31, "e"]];
+  oldRanges.replace(callerMustNotMutateClass);
+  callerMustNotMutateClass[0][0] = 99;
+  equal(oldRanges.current(), [[30, 31, "e"]], "106.05");
 });
 
 test("107 - REPLACE() - replaces ranges with null", () => {
