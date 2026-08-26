@@ -4,15 +4,20 @@ type Range =
 
 declare const version: string;
 interface Opts {
-  limitToBeAddedWhitespace: boolean;
-  limitLinebreaksCount: number;
+  limitToBeAddedWhitespace: boolean | undefined;
+  limitLinebreaksCount: number | undefined;
   mergeType: 1 | 2 | "1" | "2" | undefined;
 }
-declare const defaults: Opts;
+interface ResolvedOpts {
+  limitToBeAddedWhitespace: boolean;
+  limitLinebreaksCount: number;
+  mergeType: 1 | 2;
+}
+declare const defaults: ResolvedOpts;
 declare class Ranges {
   constructor(originalOpts?: Partial<Opts>);
   ranges: Range[];
-  opts: Opts;
+  opts: Readonly<ResolvedOpts>;
   private addValidated;
   add(
     originalFrom: number,

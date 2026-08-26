@@ -18,12 +18,18 @@ const version: string = v;
 declare let DEV: boolean;
 
 export interface Opts {
-  limitToBeAddedWhitespace: boolean;
-  limitLinebreaksCount: number;
+  limitToBeAddedWhitespace: boolean | undefined;
+  limitLinebreaksCount: number | undefined;
   mergeType: 1 | 2 | "1" | "2" | undefined;
 }
 
-const defaults: Opts = {
+interface ResolvedOpts {
+  limitToBeAddedWhitespace: boolean;
+  limitLinebreaksCount: number;
+  mergeType: 1 | 2;
+}
+
+const defaults: ResolvedOpts = {
   limitToBeAddedWhitespace: false,
   limitLinebreaksCount: 1,
   mergeType: 1,
@@ -175,21 +181,41 @@ class Ranges {
         `ranges-push/Ranges/constructor(): [THROW_ID_01] The options argument must be a plain object. It was given as ${formatDiagnosticValue(originalOpts, 4)} (type ${typeof originalOpts}).`,
       );
     }
-    const opts: Opts = { ...defaults, ...originalOpts };
-    if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
-      if (isStr(opts.mergeType) && (opts.mergeType as string).trim() === "1") {
-        opts.mergeType = 1;
-      } else if (
-        isStr(opts.mergeType) &&
-        (opts.mergeType as string).trim() === "2"
-      ) {
-        opts.mergeType = 2;
-      } else {
-        throw new Error(
-          `ranges-push/Ranges/constructor(): [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${formatDiagnosticValue(opts.mergeType, 4)}`,
-        );
-      }
+    const supplied = originalOpts || {};
+    const limitToBeAddedWhitespace =
+      supplied.limitToBeAddedWhitespace === undefined
+        ? defaults.limitToBeAddedWhitespace
+        : supplied.limitToBeAddedWhitespace;
+    const limitLinebreaksCount =
+      supplied.limitLinebreaksCount === undefined
+        ? defaults.limitLinebreaksCount
+        : supplied.limitLinebreaksCount;
+    const suppliedMergeType =
+      supplied.mergeType === undefined ? defaults.mergeType : supplied.mergeType;
+    const mergeType =
+      suppliedMergeType === "1"
+        ? 1
+        : suppliedMergeType === "2"
+          ? 2
+          : suppliedMergeType;
+    let optionError: string | undefined;
+    if (typeof limitToBeAddedWhitespace !== "boolean") {
+      optionError = `opts.limitToBeAddedWhitespace must be a boolean; received ${formatDiagnosticValue(limitToBeAddedWhitespace, 4)} (type ${typeof limitToBeAddedWhitespace})`;
+    } else if (!isInt(limitLinebreaksCount)) {
+      optionError = `opts.limitLinebreaksCount must be a natural number or zero; received ${formatDiagnosticValue(limitLinebreaksCount, 4)} (type ${typeof limitLinebreaksCount})`;
+    } else if (mergeType !== 1 && mergeType !== 2) {
+      optionError = `opts.mergeType must be 1, 2, "1", or "2"; received ${formatDiagnosticValue(suppliedMergeType, 4)} (type ${typeof suppliedMergeType})`;
     }
+    if (optionError) {
+      throw new TypeError(
+        `ranges-push/Ranges/constructor(): [THROW_ID_02] ${optionError}.`,
+      );
+    }
+    const opts: Readonly<ResolvedOpts> = Object.freeze({
+      limitToBeAddedWhitespace,
+      limitLinebreaksCount,
+      mergeType,
+    });
     // so it's correct, let's get it in:
     DEV &&
       console.log(`ranges-push: USING opts = ${JSON.stringify(opts, null, 4)}`);
@@ -198,7 +224,7 @@ class Ranges {
   }
 
   ranges: RangeType[];
-  opts: Opts;
+  opts: Readonly<ResolvedOpts>;
 
   private addValidated(
     from: number,

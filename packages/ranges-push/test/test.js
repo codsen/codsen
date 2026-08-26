@@ -1664,4 +1664,57 @@ test("131 - FIRSTCOVERS() - reversed chains scale without repeated scans", () =>
   ok(large <= small * 3, "131.02");
 });
 
+test("132 - constructor defaults explicit undefined option values", () => {
+  const omitted = new Ranges();
+  const explicit = new Ranges({
+    limitToBeAddedWhitespace: undefined,
+    limitLinebreaksCount: undefined,
+    mergeType: undefined,
+  });
+  equal(explicit.opts, omitted.opts, "132.01");
+  equal(explicit.opts, {
+    limitToBeAddedWhitespace: false,
+    limitLinebreaksCount: 1,
+    mergeType: 1,
+  }, "132.02");
+
+  const zeroLinebreaks = new Ranges({
+    limitToBeAddedWhitespace: true,
+    limitLinebreaksCount: 0,
+    mergeType: "2",
+  });
+  equal(zeroLinebreaks.opts, {
+    limitToBeAddedWhitespace: true,
+    limitLinebreaksCount: 0,
+    mergeType: 2,
+  }, "132.03");
+});
+
+test("133 - constructor validates and freezes normalized options", () => {
+  for (const mergeType of [null, 0, false, "", " 1 ", 3, Number.NaN]) {
+    throws(() => new Ranges({ mergeType }), /THROW_ID_02/, "133.01");
+  }
+  for (const limitToBeAddedWhitespace of [null, 0, 1, "yes"]) {
+    throws(
+      () => new Ranges({ limitToBeAddedWhitespace }),
+      /THROW_ID_02/,
+      "133.02",
+    );
+  }
+  for (const limitLinebreaksCount of [null, -1, 1.5, "2", Number.NaN]) {
+    throws(
+      () => new Ranges({ limitLinebreaksCount }),
+      /THROW_ID_02/,
+      "133.03",
+    );
+  }
+
+  const ranges = new Ranges();
+  ok(Object.isFrozen(ranges.opts), "133.04");
+  throws(() => {
+    ranges.opts.mergeType = 2;
+  }, /read only|Cannot assign/, "133.05");
+  equal(ranges.opts.mergeType, 1, "133.06");
+});
+
 test.run();
