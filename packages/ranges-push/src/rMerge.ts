@@ -64,29 +64,29 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
       `ranges-push/rMerge(): [THROW_ID_07] the second input argument must be a plain object. It was given as:\n${formatDiagnosticValue(opts, 4)} (type ${typeof opts})`,
     );
   }
-  const resolvedOpts: Opts = { ...defaults, ...opts };
+  let progressFn = opts?.progressFn ?? defaults.progressFn;
+  const mergeType = opts?.mergeType ?? defaults.mergeType;
+  const joinRangesThatTouchEdges =
+    opts?.joinRangesThatTouchEdges ?? defaults.joinRangesThatTouchEdges;
   if (
-    resolvedOpts.progressFn &&
-    isObj(resolvedOpts.progressFn) &&
-    !Object.keys(resolvedOpts.progressFn).length
+    progressFn &&
+    isObj(progressFn) &&
+    !Object.keys(progressFn).length
   ) {
-    resolvedOpts.progressFn = null;
-  } else if (
-    resolvedOpts.progressFn &&
-    typeof resolvedOpts.progressFn !== "function"
-  ) {
+    progressFn = null;
+  } else if (progressFn && typeof progressFn !== "function") {
     throw new TypeError(
-      `ranges-push/rMerge(): [THROW_ID_08] resolvedOpts.progressFn must be a function! It was given of a type: "${typeof resolvedOpts.progressFn}", equal to ${formatDiagnosticValue(resolvedOpts.progressFn, 4)}`,
+      `ranges-push/rMerge(): [THROW_ID_08] resolvedOpts.progressFn must be a function! It was given of a type: "${typeof progressFn}", equal to ${formatDiagnosticValue(progressFn, 4)}`,
     );
   }
-  if (![1, 2, "1", "2"].includes(resolvedOpts.mergeType)) {
+  if (mergeType !== 1 && mergeType !== 2 && mergeType !== "1" && mergeType !== "2") {
     throw new TypeError(
-      `ranges-push/rMerge(): [THROW_ID_09] resolvedOpts.mergeType was customised to a wrong thing! It was given of a type: "${typeof resolvedOpts.mergeType}", equal to ${formatDiagnosticValue(resolvedOpts.mergeType, 4)}`,
+      `ranges-push/rMerge(): [THROW_ID_09] resolvedOpts.mergeType was customised to a wrong thing! It was given of a type: "${typeof mergeType}", equal to ${formatDiagnosticValue(mergeType, 4)}`,
     );
   }
-  if (typeof resolvedOpts.joinRangesThatTouchEdges !== "boolean") {
+  if (typeof joinRangesThatTouchEdges !== "boolean") {
     throw new TypeError(
-      `ranges-push/rMerge(): [THROW_ID_10] resolvedOpts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof resolvedOpts.joinRangesThatTouchEdges}", equal to ${formatDiagnosticValue(resolvedOpts.joinRangesThatTouchEdges, 4)}`,
+      `ranges-push/rMerge(): [THROW_ID_10] resolvedOpts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof joinRangesThatTouchEdges}", equal to ${formatDiagnosticValue(joinRangesThatTouchEdges, 4)}`,
     );
   }
 
@@ -111,7 +111,7 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
   let lastPercentageDone: any;
   let percentageDone;
 
-  if (resolvedOpts.progressFn) {
+  if (progressFn) {
     // progress already gets reported in [0,100] range, so we just need to
     // divide by 5 in order to "compress" that into 20% range.
     sortedRanges = rSort(filtered, {
@@ -120,8 +120,8 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
         // ensure each percent is passed only once:
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
-          if (resolvedOpts.progressFn != null) {
-            resolvedOpts.progressFn(percentageDone);
+          if (progressFn != null) {
+            progressFn(percentageDone);
           }
         }
       },
@@ -131,7 +131,7 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
   }
 
   const len = sortedRanges.length - 1;
-  const mergeTypeIsTwo = +resolvedOpts.mergeType === 2;
+  const mergeTypeIsTwo = +mergeType === 2;
   // reset 80% of progress is this loop:
 
   // Work right-to-left, keeping completed ranges in the unused suffix of the
@@ -152,14 +152,14 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
         )} --------------`}\u001b[${39}m\n`,
       );
 
-    if (resolvedOpts.progressFn && readIndex < len) {
+    if (progressFn && readIndex < len) {
       percentageDone = Math.floor((1 - (readIndex + 1) / len) * 78) + 21;
       if (
         percentageDone !== lastPercentageDone &&
         percentageDone > lastPercentageDone
       ) {
         lastPercentageDone = percentageDone;
-        resolvedOpts.progressFn(percentageDone);
+        progressFn(percentageDone);
       }
     }
 
@@ -171,7 +171,7 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
       const startsAtSameIndex = nextRange[0] === currentRange[0];
       if (
         !startsAtSameIndex &&
-        (resolvedOpts.joinRangesThatTouchEdges
+        (joinRangesThatTouchEdges
           ? nextRange[0] > currentRange[1]
           : nextRange[0] >= currentRange[1])
       ) {

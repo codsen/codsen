@@ -28,11 +28,11 @@ interface ResolvedOpts {
   mergeType: 1 | 2;
 }
 
-const defaults: ResolvedOpts = {
+const defaults: Readonly<ResolvedOpts> = Object.freeze({
   limitToBeAddedWhitespace: false,
   limitLinebreaksCount: 1,
   mergeType: 1,
-};
+});
 
 type AddValue = string | number | null | undefined;
 type IndexInput = number | string;
@@ -49,6 +49,59 @@ interface NormalizedRanges {
   ranges: ValidatedRange[];
 }
 
+interface CurrentCache<InsertValue extends AddValue> {
+  rangesSnapshot: unknown[] | null;
+  result: Range<InsertValue>[] | null;
+  resultSnapshot: unknown[] | null;
+}
+
+function normalizeIndexInput(value: unknown): number | null {
+  if (isInt(value)) {
+    return value;
+  }
+  if (typeof value === "string" && /^\d+$/.test(value)) {
+    const normalized = Number(value);
+    return isInt(normalized) ? normalized : null;
+  }
+  return null;
+}
+
+function rangeInputError(value: unknown): string | undefined {
+  if (!Array.isArray(value)) {
+    return `a ranges batch must contain only range arrays; received ${formatDiagnosticValue(value, 4)}`;
+  }
+  if (value.length > 3) {
+    return `a range must contain at most three values; received ${formatDiagnosticValue(value, 4)}`;
+  }
+
+  const [originalFrom, originalTo, addValue] = value;
+  if (originalFrom == null && originalTo == null) {
+    return undefined;
+  }
+  if (originalFrom != null && originalTo == null) {
+    return `the first index is set (${formatDiagnosticValue(originalFrom)}) but the second index is not (${formatDiagnosticValue(originalTo)})`;
+  }
+  if (originalFrom == null && originalTo != null) {
+    return `the second index is set (${formatDiagnosticValue(originalTo)}) but the first index is not (${formatDiagnosticValue(originalFrom)})`;
+  }
+
+  const from = normalizeIndexInput(originalFrom);
+  const to = normalizeIndexInput(originalTo);
+  if (from === null) {
+    return `the first index must be a natural number, zero, or a digit-only numeric string; received ${formatDiagnosticValue(originalFrom, 4)} (type ${typeof originalFrom})`;
+  }
+  if (to === null) {
+    return `the second index must be a natural number, zero, or a digit-only numeric string; received ${formatDiagnosticValue(originalTo, 4)} (type ${typeof originalTo})`;
+  }
+  if (existy(addValue) && !isStr(addValue) && !isNum(addValue)) {
+    return `the third value must be a string, number, null, or undefined; received ${formatDiagnosticValue(addValue, 4)} (type ${typeof addValue})`;
+  }
+  if (from > to) {
+    return `the first index (${from}) must not be greater than the second index (${to})`;
+  }
+  return undefined;
+}
+
 function normalizeRangeInputs(args: unknown[]): NormalizedRanges {
   if (args.length > 3) {
     return {
@@ -62,89 +115,27 @@ function normalizeRangeInputs(args: unknown[]): NormalizedRanges {
     if (!supplied.length) {
       return { ranges: [] };
     }
-    if (supplied.some((value) => Array.isArray(value))) {
-      if (!supplied.every((value) => Array.isArray(value))) {
-        return {
-          error: `a ranges batch must contain only range arrays; received ${formatDiagnosticValue(supplied, 4)}`,
-          ranges: [],
-        };
-      }
-      args = supplied;
-    } else {
-      args = [supplied];
-    }
+    args = Array.isArray(supplied[0]) ? supplied : [supplied];
   } else {
     args = [args];
   }
 
   const ranges: ValidatedRange[] = [];
   for (const value of args) {
-    if (!Array.isArray(value)) {
-      return {
-        error: `a ranges batch must contain only range arrays; received ${formatDiagnosticValue(value, 4)}`,
-        ranges: [],
-      };
+    const error = rangeInputError(value);
+    if (error) {
+      return { error, ranges: [] };
     }
-    if (value.length > 3) {
-      return {
-        error: `a range must contain at most three values; received ${formatDiagnosticValue(value, 4)}`,
-        ranges: [],
-      };
-    }
-
-    const [originalFrom, originalTo, addValue] = value;
+    const [originalFrom, originalTo, addValue] = value as unknown[];
     if (originalFrom == null && originalTo == null) {
       continue;
     }
-    if (originalFrom != null && originalTo == null) {
-      return {
-        error: `the first index is set (${formatDiagnosticValue(originalFrom)}) but the second index is not (${formatDiagnosticValue(originalTo)})`,
-        ranges: [],
-      };
-    }
-    if (originalFrom == null && originalTo != null) {
-      return {
-        error: `the second index is set (${formatDiagnosticValue(originalTo)}) but the first index is not (${formatDiagnosticValue(originalFrom)})`,
-        ranges: [],
-      };
-    }
-
-    const from =
-      typeof originalFrom === "string" && /^\d+$/.test(originalFrom)
-        ? Number(originalFrom)
-        : originalFrom;
-    const to =
-      typeof originalTo === "string" && /^\d+$/.test(originalTo)
-        ? Number(originalTo)
-        : originalTo;
-    if (!isInt(from)) {
-      return {
-        error: `the first index must be a natural number, zero, or a digit-only numeric string; received ${formatDiagnosticValue(originalFrom, 4)} (type ${typeof originalFrom})`,
-        ranges: [],
-      };
-    }
-    if (!isInt(to)) {
-      return {
-        error: `the second index must be a natural number, zero, or a digit-only numeric string; received ${formatDiagnosticValue(originalTo, 4)} (type ${typeof originalTo})`,
-        ranges: [],
-      };
-    }
-    if (existy(addValue) && !isStr(addValue) && !isNum(addValue)) {
-      return {
-        error: `the third value must be a string, number, null, or undefined; received ${formatDiagnosticValue(addValue, 4)} (type ${typeof addValue})`,
-        ranges: [],
-      };
-    }
-    if (from > to) {
-      return {
-        error: `the first index (${from}) must not be greater than the second index (${to})`,
-        ranges: [],
-      };
-    }
+    const from = normalizeIndexInput(originalFrom) as number;
+    const to = normalizeIndexInput(originalTo) as number;
 
     ranges.push(
       addValue !== undefined && !(isStr(addValue) && !addValue.length)
-        ? [from, to, addValue]
+        ? [from, to, addValue as AddValue]
         : [from, to],
     );
   }
@@ -187,7 +178,12 @@ class Ranges<InsertValue extends AddValue = AddValue> {
         `ranges-push/Ranges/constructor(): [THROW_ID_01] The options argument must be a plain object. It was given as ${formatDiagnosticValue(originalOpts, 4)} (type ${typeof originalOpts}).`,
       );
     }
-    const supplied = originalOpts || {};
+    if (originalOpts === undefined) {
+      this.opts = defaults;
+      this.ranges = [];
+      return;
+    }
+    const supplied = originalOpts;
     const limitToBeAddedWhitespace =
       supplied.limitToBeAddedWhitespace === undefined
         ? defaults.limitToBeAddedWhitespace
@@ -231,64 +227,87 @@ class Ranges<InsertValue extends AddValue = AddValue> {
 
   ranges: Range<InsertValue>[] | null;
   opts: Readonly<ResolvedOpts>;
-  private currentCacheReady = false;
-  private currentResult: Range<InsertValue>[] | null = null;
-  private currentResultSnapshot: Range<InsertValue>[] | null = null;
-  private currentSnapshot: Range<InsertValue>[] | null = null;
+  private currentCache: CurrentCache<InsertValue> | null = null;
 
   private rangeListsMatch(
     left: Range<InsertValue>[] | null,
-    right: Range<InsertValue>[] | null,
+    snapshot: unknown[] | null,
   ): boolean {
     if (!Array.isArray(left)) {
-      return right === null;
+      return snapshot === null;
     }
-    if (
-      !Array.isArray(right) ||
-      left.length !== right.length
-    ) {
+    if (!Array.isArray(snapshot) || left.length !== snapshot[0]) {
       return false;
     }
+    let cursor = 1;
     for (let i = 0, len = left.length; i < len; i++) {
       const range = left[i];
-      const snapshotRange = right[i];
-      if (
-        !Array.isArray(range) ||
-        !Array.isArray(snapshotRange) ||
-        range.length !== snapshotRange.length ||
-        range[0] !== snapshotRange[0] ||
-        range[1] !== snapshotRange[1] ||
-        range[2] !== snapshotRange[2]
-      ) {
+      if (!Array.isArray(range)) {
+        if (snapshot[cursor++] !== -1 || range !== snapshot[cursor++]) {
+          return false;
+        }
+        continue;
+      }
+      if (range.length !== snapshot[cursor++]) {
         return false;
       }
+      for (let y = 0; y < range.length; y++) {
+        if (range[y] !== snapshot[cursor++]) {
+          return false;
+        }
+      }
     }
-    return true;
+    return cursor === snapshot.length;
+  }
+
+  private snapshotRanges(ranges: Range<InsertValue>[] | null): unknown[] | null {
+    if (!Array.isArray(ranges)) {
+      return null;
+    }
+    const snapshot = new Array<unknown>(1 + ranges.length * 4);
+    snapshot[0] = ranges.length;
+    let cursor = 1;
+    for (let i = 0, len = ranges.length; i < len; i++) {
+      const range = ranges[i];
+      if (Array.isArray(range)) {
+        snapshot[cursor++] = range.length;
+        for (let y = 0; y < range.length; y++) {
+          snapshot[cursor++] = range[y];
+        }
+      } else {
+        snapshot[cursor++] = -1;
+        snapshot[cursor++] = range;
+      }
+    }
+    snapshot.length = cursor;
+    return snapshot;
   }
 
   private currentStateMatchesSnapshot(): boolean {
+    const cache = this.currentCache;
     return (
-      this.currentCacheReady &&
-      this.rangeListsMatch(this.ranges, this.currentSnapshot) &&
-      this.rangeListsMatch(this.currentResult, this.currentResultSnapshot)
+      cache !== null &&
+      this.rangeListsMatch(this.ranges, cache.rangesSnapshot) &&
+      this.rangeListsMatch(cache.result, cache.resultSnapshot)
     );
   }
 
   private recordCurrentSnapshot(
     result: Range<InsertValue>[] | null,
   ): void {
-    this.currentSnapshot = Array.isArray(this.ranges)
-      ? this.ranges.map((range) => [...range] as Range<InsertValue>)
-      : null;
-    this.currentResult = result;
-    this.currentResultSnapshot = Array.isArray(result)
-      ? result.map((range) => [...range] as Range<InsertValue>)
-      : null;
-    this.currentCacheReady = true;
+    const rangesSnapshot = this.snapshotRanges(this.ranges);
+    this.currentCache = {
+      rangesSnapshot,
+      result,
+      resultSnapshot:
+        result === this.ranges
+          ? rangesSnapshot
+          : this.snapshotRanges(result),
+    };
   }
 
   private invalidateCurrentCache(): void {
-    this.currentCacheReady = false;
+    this.currentCache = null;
   }
 
   private addValidated(
@@ -393,24 +412,81 @@ class Ranges<InsertValue extends AddValue = AddValue> {
       | null
       | undefined,
   ): void;
-  add(...args: any[]): void {
+  add(originalFrom?: any, originalTo?: any, addValue?: any): void {
     DEV &&
       console.log(
         `\n\n\n${`\u001b[${32}m${`${`=`.repeat(80)}`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${35}m${`ADD()`}\u001b[${39}m`} called; args = ${JSON.stringify(args, null, 4)}`,
+        `${`\u001b[${35}m${`ADD()`}\u001b[${39}m`} called; originalFrom = ${JSON.stringify(originalFrom)}; originalTo = ${JSON.stringify(originalTo)}; addValue = ${JSON.stringify(addValue)}`,
       );
 
-    const normalized = normalizeRangeInputs(args);
-    if (normalized.error) {
-      throw new TypeError(
-        `ranges-push/Ranges/add(): [THROW_ID_03] ${normalized.error}.`,
-      );
+    // biome-ignore lint/complexity/noArguments: avoid allocating a rest array on every scalar add
+    const argumentCount = arguments.length;
+    let validationError: string | undefined;
+    if (argumentCount > 3) {
+      validationError = `expected at most three arguments but received ${argumentCount}`;
+    } else if (argumentCount === 1 && Array.isArray(originalFrom)) {
+      const values = Array.isArray(originalFrom[0])
+        ? originalFrom
+        : [originalFrom];
+      for (let i = 0, len = values.length; i < len; i++) {
+        validationError = rangeInputError(values[i]);
+        if (validationError) {
+          break;
+        }
+      }
+      if (!validationError) {
+        for (let i = 0, len = values.length; i < len; i++) {
+          const [batchFrom, batchTo, batchAddValue] = values[i];
+          if (batchFrom == null && batchTo == null) {
+            continue;
+          }
+          this.addValidated(
+            normalizeIndexInput(batchFrom) as number,
+            normalizeIndexInput(batchTo) as number,
+            (isStr(batchAddValue) && !batchAddValue.length
+              ? undefined
+              : batchAddValue) as InsertValue,
+          );
+        }
+      }
+    } else if (originalFrom == null && originalTo == null) {
+      return;
+    } else if (originalFrom != null && originalTo == null) {
+      validationError = `the first index is set (${formatDiagnosticValue(originalFrom)}) but the second index is not (${formatDiagnosticValue(originalTo)})`;
+    } else if (originalFrom == null && originalTo != null) {
+      validationError = `the second index is set (${formatDiagnosticValue(originalTo)}) but the first index is not (${formatDiagnosticValue(originalFrom)})`;
+    } else {
+      const from = normalizeIndexInput(originalFrom);
+      const to = normalizeIndexInput(originalTo);
+      if (from === null) {
+        validationError = `the first index must be a natural number, zero, or a digit-only numeric string; received ${formatDiagnosticValue(originalFrom, 4)} (type ${typeof originalFrom})`;
+      } else if (to === null) {
+        validationError = `the second index must be a natural number, zero, or a digit-only numeric string; received ${formatDiagnosticValue(originalTo, 4)} (type ${typeof originalTo})`;
+      } else if (
+        existy(addValue) &&
+        !isStr(addValue) &&
+        !isNum(addValue)
+      ) {
+        validationError = `the third value must be a string, number, null, or undefined; received ${formatDiagnosticValue(addValue, 4)} (type ${typeof addValue})`;
+      } else if (from > to) {
+        validationError = `the first index (${from}) must not be greater than the second index (${to})`;
+      } else {
+        this.addValidated(
+          from,
+          to,
+          (isStr(addValue) && !addValue.length
+            ? undefined
+            : addValue) as InsertValue,
+        );
+      }
     }
-    for (const [from, to, addValue] of normalized.ranges) {
-      this.addValidated(from, to, addValue as InsertValue);
+    if (validationError) {
+      throw new TypeError(
+        `ranges-push/Ranges/add(): [THROW_ID_03] ${validationError}.`,
+      );
     }
     DEV && console.log();
   }
@@ -430,8 +506,9 @@ class Ranges<InsertValue extends AddValue = AddValue> {
       | null
       | undefined,
   ): void;
-  push(...args: any[]): void {
-    (this.add as (...values: any[]) => void)(...args);
+  push(_originalFrom?: any, _originalTo?: any, _addValue?: any): void {
+    // biome-ignore lint/complexity/noArguments: preserve exact arity without a rest-array allocation
+    (this.add as (...values: any[]) => void).apply(this, arguments as any);
   }
 
   // C U R R E N T () - kindof a getter
@@ -446,13 +523,14 @@ class Ranges<InsertValue extends AddValue = AddValue> {
         )}`,
       );
     if (this.currentStateMatchesSnapshot()) {
-      return this.currentResult;
+      return this.currentCache?.result ?? null;
     }
     if (Array.isArray(this.ranges) && this.ranges.length) {
       // beware, merging can return null
-      this.ranges = rMerge(this.ranges as any, {
-        mergeType: this.opts.mergeType,
-      }) as Range<InsertValue>[] | null;
+      this.ranges = rMerge(
+        this.ranges as any,
+        this.opts.mergeType === 1 ? undefined : { mergeType: 2 },
+      ) as Range<InsertValue>[] | null;
       let result = this.ranges;
       if (result && this.opts.limitToBeAddedWhitespace) {
         result = result.map((val): Range<InsertValue> => {

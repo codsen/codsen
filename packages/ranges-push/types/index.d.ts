@@ -9,7 +9,7 @@ interface ResolvedOpts {
   limitLinebreaksCount: number;
   mergeType: 1 | 2;
 }
-declare const defaults: ResolvedOpts;
+declare const defaults: Readonly<ResolvedOpts>;
 type AddValue = string | number | null | undefined;
 type IndexInput = number | string;
 type Range<InsertValue extends AddValue = AddValue> =
@@ -22,11 +22,9 @@ declare class Ranges<InsertValue extends AddValue = AddValue> {
   constructor(originalOpts?: Partial<Opts>);
   ranges: Range<InsertValue>[] | null;
   opts: Readonly<ResolvedOpts>;
-  private currentCacheReady;
-  private currentResult;
-  private currentResultSnapshot;
-  private currentSnapshot;
+  private currentCache;
   private rangeListsMatch;
+  private snapshotRanges;
   private currentStateMatchesSnapshot;
   private recordCurrentSnapshot;
   private invalidateCurrentCache;
