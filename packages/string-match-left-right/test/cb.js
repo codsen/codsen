@@ -1066,4 +1066,56 @@ test(`26 - opts.cb()   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - match
   );
 });
 
+test("27 - callback-only context follows direction at every boundary", () => {
+  const contexts = [];
+  let callbackCalls = 0;
+  const capture = (returnValue) => (character, remainder, index) => {
+    callbackCalls += 1;
+    contexts.push([character, remainder, index]);
+    return returnValue;
+  };
+  const results = [
+    matchLeftIncl("abc", 0, "", { cb: capture(true) }),
+    matchLeft("abc", 1, "", { cb: capture("accepted") }),
+    matchRightIncl("abc", 0, "", { cb: capture(true) }),
+    matchRight("abc", 0, "", { cb: capture("accepted") }),
+    matchLeftIncl("abc", 2, "", { cb: capture(true) }),
+    matchLeft("abc", 2, "", { cb: capture("accepted") }),
+    matchRightIncl("abc", 2, "", { cb: capture(true) }),
+  ];
+
+  equal(
+    contexts,
+    [
+      ["a", "a", 0],
+      ["a", "a", 0],
+      ["a", "abc", 0],
+      ["b", "bc", 1],
+      ["c", "abc", 2],
+      ["b", "ab", 1],
+      ["c", "c", 2],
+    ],
+    "27.01",
+  );
+  equal(
+    results,
+    [true, "accepted", true, "accepted", true, "accepted", true],
+    "27.02",
+  );
+  equal(callbackCalls, 7, "27.03");
+
+  let beyondBoundaryCalls = 0;
+  equal(
+    matchRight("abc", 2, "", {
+      cb: () => {
+        beyondBoundaryCalls += 1;
+        return true;
+      },
+    }),
+    false,
+    "27.04",
+  );
+  equal(beyondBoundaryCalls, 0, "27.05");
+});
+
 test.run();

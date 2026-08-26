@@ -912,12 +912,10 @@ function main(
       }
 
       let wholeCharacterOutside = str[firstCharOutsideIndex];
-      let indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
-
-      let theRemainderOfTheString = "";
-      if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
-        theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
-      }
+      const theRemainderOfTheString =
+        mode[5] === "L"
+          ? str.slice(0, firstCharOutsideIndex + 1)
+          : str.slice(firstCharOutsideIndex);
       if (mode[5] === "L") {
         DEV && console.log(`${`\u001b[${32}m${`CALL THE CB()`}\u001b[${39}m`}`);
         return opts.cb(
@@ -927,10 +925,6 @@ function main(
         );
       }
       // ELSE matchRight & matchRightIncl
-
-      if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
-        theRemainderOfTheString = str.slice(firstCharOutsideIndex);
-      }
       DEV && console.log(`${`\u001b[${32}m${`CALL THE CB()`}\u001b[${39}m`}`);
       return opts.cb(
         wholeCharacterOutside,
