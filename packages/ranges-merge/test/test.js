@@ -306,7 +306,7 @@ test("11 - empty array with null inside", () => {
 });
 
 test("12 - more complex case", () => {
-  let counter = 0;
+  const percentages = [];
   equal(
     rMerge([[1, 5], null, [11, 15], [6, 10], null, [16, 20], [10, 30]]),
     [
@@ -364,9 +364,8 @@ test("12 - more complex case", () => {
       ],
       {
         progressFn: (perc) => {
-          // console.log(`done: ${perc}`);
           type(perc, "number");
-          counter += 1;
+          percentages.push(perc);
         },
       },
     ),
@@ -376,7 +375,11 @@ test("12 - more complex case", () => {
     ],
     "12.04",
   );
-  ok(counter > 5, "12.05");
+  equal(
+    percentages,
+    [0, 1, 2, 3, 4, 5, 6, 21, 40, 60, 79, 99],
+    "12.05",
+  );
 
   // with opts
   equal(
@@ -397,7 +400,7 @@ test("12 - more complex case", () => {
       [6, 10],
       [10, 30],
     ],
-    "12.05",
+    "12.06",
   );
   equal(
     rMerge(
@@ -418,13 +421,12 @@ test("12 - more complex case", () => {
       [6, 10],
       [10, 30],
     ],
-    "12.06",
+    "12.07",
   );
 });
 
 test("13 - even more complex case", () => {
-  let last;
-  let counter = 0;
+  const percentages = [];
   equal(
     rMerge(
       [
@@ -449,10 +451,7 @@ test("13 - even more complex case", () => {
       ],
       {
         progressFn: (perc) => {
-          // console.log(`done: ${perc}`);
-          // ensure there are no repetitions on status percentages reported
-          ok(perc !== last);
-          last = perc;
+          percentages.push(perc);
         },
       },
     ),
@@ -469,7 +468,15 @@ test("13 - even more complex case", () => {
     ],
     "13.01",
   );
-  ok(counter < 100, "13.02");
+  equal(percentages[percentages.length - 1], 99, "13.02");
+  equal(percentages, [...new Set(percentages)], "13.03");
+  equal(
+    percentages.every(
+      (percentage, index) => index === 0 || percentage > percentages[index - 1],
+    ),
+    true,
+    "13.04",
+  );
 });
 
 test("14 - more merging examples", () => {
@@ -912,6 +919,28 @@ test("26 - contained null insertion vetoes merged text", () => {
     ]),
     [[1, 10, null]],
     "26.03",
+  );
+});
+
+test("27 - progress handles zero, one, and two ranges", () => {
+  const sequences = [[], [[1, 2]], [[1, 2], [3, 4]]].map((ranges) => {
+    const percentages = [];
+    rMerge(ranges, {
+      progressFn: (percentage) => percentages.push(percentage),
+    });
+    return percentages;
+  });
+
+  equal(sequences[0], [], "27.01");
+  equal(sequences[1], [99], "27.02");
+  equal(sequences[2][sequences[2].length - 1], 99, "27.03");
+  equal(sequences[2], [...new Set(sequences[2])], "27.04");
+  equal(
+    sequences[2].every(
+      (percentage, index) => index === 0 || percentage > sequences[2][index - 1],
+    ),
+    true,
+    "27.05",
   );
 });
 

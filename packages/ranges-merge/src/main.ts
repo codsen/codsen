@@ -217,6 +217,9 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
     sortedRanges[i] = sortedRanges[writeIndex + i];
   }
   sortedRanges.length = mergedLength;
+  if (progressFn && lastPercentageDone !== 99) {
+    progressFn(99);
+  }
   DEV &&
     console.log(
       `${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} sortedRanges = ${JSON.stringify(

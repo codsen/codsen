@@ -368,7 +368,7 @@ test("18 - null in replacement op - does nothing", () => {
 // -----------------------------------------------------------------------------
 
 test("19 - progressFn - basic replacement", () => {
-  let count = 0;
+  const percentages = [];
   equal(
     rApply("lkg jdlg dfljhlfgjlkhjf;gjh ;jsdlfj sldf lsjfldksj", [
       [40, 40, "rrrr"],
@@ -417,15 +417,21 @@ test("19 - progressFn - basic replacement", () => {
         [5, 7],
       ],
       (perc) => {
-        // console.log(`perc = ${perc}`);
         type(perc, "number");
-        count += 1;
+        percentages.push(perc);
       },
     ),
     "rrrlzgygljhlgzzzkyyyaaaa;dfrrrr lsjfldksj",
     "19.02",
   );
-  ok(count <= 101, "19.03");
+  equal(percentages, [...new Set(percentages)], "19.03");
+  equal(
+    percentages.every(
+      (percentage, index) => index === 0 || percentage > percentages[index - 1],
+    ),
+    true,
+    "19.04",
+  );
 });
 
 test("20 - validates and normalises ranges without mutating input", () => {
