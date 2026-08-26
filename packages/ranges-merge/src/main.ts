@@ -178,8 +178,12 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
           `${`\u001b[${32}m${`SET`}\u001b[${39}m`} currentRange[0] = ${currentRange[0]}; currentRange[1] = ${currentRange[1]}`,
         );
 
-      // tend the third argument, "what to insert"
-      if (
+      // A null insertion is an explicit veto and wins even when its range is
+      // wholly contained. Other contained insertions still contribute no edge
+      // and are discarded as before.
+      if (nextRange[2] === null) {
+        currentRange[2] = null;
+      } else if (
         nextRange[2] !== undefined &&
         (startsAtSameIndex || nextRangeExtendsEnd)
       ) {
@@ -187,9 +191,7 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
 
         // if the value of the range before exists:
         if (currentRange[2] !== null) {
-          if (nextRange[2] === null && currentRange[2] !== null) {
-            currentRange[2] = null;
-          } else if (currentRange[2] != null) {
+          if (currentRange[2] != null) {
             // if there's a clash of "insert" values:
             if (mergeTypeIsTwo && startsAtSameIndex) {
               // take the value from the range that's on the right:

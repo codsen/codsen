@@ -191,10 +191,12 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
           `${`\u001b[${32}m${`SET`}\u001b[${39}m`} currentRange[0] = ${currentRange[0]}; currentRange[1] = ${currentRange[1]}`,
         );
 
-      // tend the third argument, "what to insert" - dropped when the range on
-      // the right sat wholly inside the one on the left and so contributed
-      // neither edge to the merged result
-      if (
+      // A null insertion is an explicit veto and wins even when its range is
+      // wholly contained. Other contained insertions still contribute no edge
+      // and are discarded as before.
+      if (nextRange[2] === null) {
+        currentRange[2] = null;
+      } else if (
         nextRange[2] !== undefined &&
         (startsAtSameIndex || nextRangeExtendsEnd)
       ) {

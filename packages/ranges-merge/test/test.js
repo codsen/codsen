@@ -875,4 +875,44 @@ test("25 - right-to-left merge order preserves null insertions", () => {
   );
 });
 
+test("26 - contained null insertion vetoes merged text", () => {
+  for (const mergeType of [1, 2, "1", "2"]) {
+    for (const joinRangesThatTouchEdges of [true, false]) {
+      for (const input of [
+        [
+          [1, 10, "x"],
+          [5, 6, null],
+        ],
+        [
+          [5, 6, null],
+          [1, 10, "x"],
+        ],
+      ]) {
+        equal(
+          rMerge(input, { mergeType, joinRangesThatTouchEdges }),
+          [[1, 10, null]],
+          "26.01",
+        );
+      }
+    }
+  }
+
+  equal(
+    rMerge([
+      [1, 10, "x"],
+      [5, 6, "contained"],
+    ]),
+    [[1, 10, "x"]],
+    "26.02",
+  );
+  equal(
+    rMerge([
+      [1, 10],
+      [5, 6, null],
+    ]),
+    [[1, 10, null]],
+    "26.03",
+  );
+});
+
 test.run();

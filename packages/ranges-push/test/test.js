@@ -1783,4 +1783,13 @@ test("136 - REPLACE() - accepts declared numeric-string indexes", () => {
   equal(ranges.current(), [[1, 3, "a0"]], "136.01");
 });
 
+test("137 - CURRENT() - contained null insertion vetoes merged text", () => {
+  const ranges = new Ranges();
+  ranges.replace([
+    [1, 10, "x"],
+    [5, 6, null],
+  ]);
+  equal(ranges.current(), [[1, 10, null]], "137.01");
+});
+
 test.run();
