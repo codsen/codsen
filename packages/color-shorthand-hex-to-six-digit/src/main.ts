@@ -6,6 +6,22 @@ import { version as v } from "../package.json";
 const version: string = v;
 const hexColorRegex = /#(?:[a-f0-9]{3}|[a-f0-9]{4}(?:[a-f0-9]{2}){0,2})\b/gi;
 
+export type Converted<Input> = Input extends string
+  ? string
+  : Input extends (...arguments_: never[]) => unknown
+    ? Input
+    : Input extends abstract new (
+          ...arguments_: never[]
+        ) => unknown
+      ? Input
+      : Input extends readonly unknown[]
+        ? { [Key in keyof Input]: Converted<Input[Key]> }
+        : Input extends object
+          ? {
+              [Key in keyof Input]: Converted<Input[Key]>;
+            }
+          : Input;
+
 function isCssIdentifierContinuation(input: string, index: number): boolean {
   const character = input[index];
   const code = input.charCodeAt(index);
@@ -177,9 +193,9 @@ function toFullHex(hex: string, offset: number, string: string): string {
 }
 
 function setOwnEnumerableValue(
-  target: Record<string, any>,
-  key: string,
-  value: any,
+  target: Record<PropertyKey, unknown>,
+  key: PropertyKey,
+  value: unknown,
 ): void {
   if (key === "__proto__") {
     Object.defineProperty(target, key, {
@@ -193,29 +209,19 @@ function setOwnEnumerableValue(
   }
 }
 
-function convertValue(input: any, converted: WeakMap<object, any>): any {
-  if (
-    typeof input !== "string" &&
-    !Array.isArray(input) &&
-    !isPlainObject(input)
-  ) {
-    return input;
-  }
-
-  // action
-  // ====================
-
+function convertValue(
+  input: unknown,
+  converted: WeakMap<object, object>,
+): unknown {
   if (typeof input === "string") {
     return input.replace(hexColorRegex, toFullHex);
   }
-
-  const existingResult = converted.get(input);
-  if (existingResult !== undefined) {
-    return existingResult;
-  }
-
   if (Array.isArray(input)) {
-    const result = new Array(input.length);
+    const existingResult = converted.get(input);
+    if (existingResult !== undefined) {
+      return existingResult;
+    }
+    const result: unknown[] = new Array(input.length);
     converted.set(input, result);
     for (let index = 0; index < input.length; index += 1) {
       if (index in input) {
@@ -225,12 +231,18 @@ function convertValue(input: any, converted: WeakMap<object, any>): any {
     return result;
   }
   if (isPlainObject(input)) {
-    let result: Record<string, any> = Object.create(
+    const existingResult = converted.get(input);
+    if (existingResult !== undefined) {
+      return existingResult;
+    }
+    const result: Record<PropertyKey, unknown> = Object.create(
       Object.getPrototypeOf(input),
     );
     converted.set(input, result);
-    for (const key of Object.keys(input)) {
-      setOwnEnumerableValue(result, key, convertValue(input[key], converted));
+    for (const key of Reflect.ownKeys(input)) {
+      if (Object.prototype.propertyIsEnumerable.call(input, key)) {
+        setOwnEnumerableValue(result, key, convertValue(input[key], converted));
+      }
     }
     return result;
   }
@@ -240,8 +252,10 @@ function convertValue(input: any, converted: WeakMap<object, any>): any {
 /**
  * Convert shorthand hex color codes into full
  */
-function conv(input: any): any {
-  return convertValue(input, new WeakMap());
+function conv(): undefined;
+function conv<Input>(input: Input): Converted<Input>;
+function conv(input?: unknown): unknown {
+  return convertValue(input, new WeakMap<object, object>());
 }
 
 export { conv, version };

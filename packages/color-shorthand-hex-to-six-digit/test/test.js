@@ -360,6 +360,14 @@ test("23 - preserves own proto keys and plain-object prototypes", () => {
     "23.10",
   );
   equal(dictionary.nested.color, "#def", "23.11");
+
+  const token = Symbol("token");
+  const withSymbol = { color: "#abc", [token]: "#def" };
+  const withSymbolResult = conv(withSymbol);
+
+  equal(withSymbolResult.color, "#aabbcc", "23.12");
+  equal(withSymbolResult[token], "#ddeeff", "23.13");
+  equal(withSymbol[token], "#def", "23.14");
 });
 
 test("24 - preserves graph shape and propagates property access errors", () => {
