@@ -71,8 +71,7 @@ const LANGUAGES = new Set([
 ]);
 const EXTLANGS = new Set(extlangJson);
 const EXTLANG_PREFIXES = extlangPrefixesJson as Record<string, string[]>;
-const GRANDFATHERED = new Set(grandfatheredJson);
-const REDUNDANT = new Set(redundantJson);
+const COMPLETE_TAGS = new Set([...grandfatheredJson, ...redundantJson]);
 const REGIONS = new Set([
   ...regionJson,
   ...rangedSubtags(rangedJson, "region"),
@@ -125,7 +124,7 @@ function isLangCode(str?: unknown): Res {
 
   const normalized = str.toLowerCase();
 
-  if (GRANDFATHERED.has(normalized) || REDUNDANT.has(normalized)) {
+  if (COMPLETE_TAGS.has(normalized)) {
     return success();
   }
 
