@@ -5,7 +5,6 @@ import {
   isStr,
   isWhitespaceChar,
 } from "codsen-utils";
-import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
 import { left, right } from "string-left-right";
 import { matchLeft, matchRight, matchRightIncl } from "string-match-left-right";
@@ -42,6 +41,11 @@ function isHtmlNameChar(char: string | undefined): boolean {
 }
 
 function utf8ByteLength(value: string): number {
+  // biome-ignore lint/suspicious/noControlCharactersInRegex: intentional full ASCII range for the fast path
+  if (/^[\x00-\x7f]*$/.test(value)) {
+    return value.length;
+  }
+
   let bytes = 0;
 
   for (let i = 0; i < value.length; i++) {
@@ -68,6 +72,29 @@ function utf8ByteLength(value: string): number {
   }
 
   return bytes;
+}
+
+function applyCanonicalRanges(
+  value: string,
+  ranges: NonNullable<RangesType>,
+  reportProgress?: (percentageDone: number) => void,
+): string {
+  let result = "";
+  let lastEnd = 0;
+
+  for (let i = 0, len = ranges.length; i < len; i++) {
+    if (reportProgress) {
+      reportProgress((i / len) * 100);
+    }
+    const range = ranges[i];
+    result += `${value.slice(lastEnd, range[0])}${range[2] ?? ""}`;
+    lastEnd = range[1];
+  }
+
+  if (reportProgress) {
+    reportProgress(100);
+  }
+  return result + value.slice(lastEnd);
 }
 
 export interface Opts {
@@ -2628,16 +2655,22 @@ function crush(str: string, opts?: InputOpts | null): Res {
     if (ranges) {
       // This accumulator is local to the call, so no wipe is necessary.
 
-      let res = rApply(str, ranges, (applyPercDone) => {
-        // allocate remaining "leavePercForLastStage" percentage of the total
-        // progress reporting to this stage:
-        if (resolvedOpts.reportProgressFunc && len >= 2000) {
-          reportProgressAt(
-            mainProgressShare +
-              leavePercForLastStage * (applyPercDone / 100),
-          );
-        }
-      });
+      const reportRangeApplicationProgress =
+        resolvedOpts.reportProgressFunc && len >= 2000
+          ? (applyPercDone: number) => {
+              // Allocate the remaining percentage of the total progress
+              // reporting to this stage.
+              reportProgressAt(
+                mainProgressShare +
+                  leavePercForLastStage * (applyPercDone / 100),
+              );
+            }
+          : undefined;
+      let res = applyCanonicalRanges(
+        str,
+        ranges,
+        reportRangeApplicationProgress,
+      );
 
       reportProgressAt(1);
 

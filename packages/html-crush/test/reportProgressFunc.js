@@ -399,18 +399,7 @@ test("05 - edited and unchanged inputs share completion semantics", () => {
     reportProgressFuncTo: 40,
   });
   equal(editedPercentages.at(-1), 40, "05.02");
-
-  for (const percentages of [unchangedPercentages, editedPercentages]) {
-    ok(
-      percentages.every(
-        (percentage, index) =>
-          percentage >= 20 &&
-          percentage <= 40 &&
-          (!index || percentage >= percentages[index - 1]),
-      ),
-      "05.03",
-    );
-  }
+  equal(editedPercentages, unchangedPercentages, "05.03");
 });
 
 test.run();
