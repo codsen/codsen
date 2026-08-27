@@ -12,22 +12,38 @@ export interface Stop {
   now: boolean;
 }
 
+export type TreePrimitive = string | number | boolean | null | undefined;
+export type TreeValue = TreePrimitive | TreeArray | TreeObject;
+export interface TreeArray extends Array<TreeValue> {}
+export interface TreeObject {
+  [key: string]: TreeValue;
+}
+export type ReadonlyTreeValue =
+  | TreePrimitive
+  | ReadonlyTreeArray
+  | ReadonlyTreeObject;
+export interface ReadonlyTreeArray extends ReadonlyArray<ReadonlyTreeValue> {}
+export interface ReadonlyTreeObject {
+  readonly [key: string]: ReadonlyTreeValue;
+}
+export type ReadonlyTreeContainer = ReadonlyTreeArray | ReadonlyTreeObject;
+
 export interface InnerObj {
   depth: number;
   path: string;
-  pathSegments: string[];
+  pathSegments: readonly string[];
   topmostKey?: string;
-  parent: any;
-  parentType: string;
+  parent: ReadonlyTreeContainer;
+  parentType: "array" | "object";
   parentKey: string | null;
 }
 
 export type Callback = (
-  key: any,
-  val: any,
+  key: string | Exclude<TreeValue, undefined>,
+  val: TreeValue | undefined,
   innerObj: InnerObj,
   stop: Stop,
-) => any;
+) => TreeValue;
 
 // Detaches one just-visited child for storing in a `parent` snapshot.
 // Primitives can hold no references, so only the rest is worth a clone.
@@ -69,7 +85,7 @@ function readonlySnapshot(value: any): any {
 /**
  * Utility library to traverse AST
  */
-function traverse<T>(tree1: T, cb1: Callback): T {
+function traverse(tree1: TreeValue, cb1: Callback): TreeValue {
   if (typeof cb1 !== "function") {
     throw new TypeError(
       `ast-monkey-traverse/traverse(): [THROW_ID_01] The second argument must be a callback function. It was ${typeof cb1}.`,
@@ -88,8 +104,8 @@ function traverse<T>(tree1: T, cb1: Callback): T {
   //
   // traverseInner() needs a wrapper to shield the last args from the outside
   //
-  function traverseInner<U>(
-    treeOriginal: U,
+  function traverseInner(
+    treeOriginal: TreeValue,
     callback: Callback,
     depth: number,
     path: string,
@@ -97,7 +113,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
     parentKey: string | null,
     topmostKey: string | undefined,
     stop: Stop,
-  ): U {
+  ): TreeValue {
     DEV && console.log(`======= traverseInner() =======`);
     let tree: any = treeOriginal;
 
@@ -313,7 +329,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
           mutations += 1;
           removed = true;
         } else if (res !== currentValue) {
-          tree[key] = res;
+          (tree as TreeObject)[key] = res;
           mutations += 1;
         }
         if (parentSnappedAt !== mutations) {
