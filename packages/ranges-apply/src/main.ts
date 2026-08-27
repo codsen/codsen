@@ -52,6 +52,9 @@ function rApply(
   // insurance against array of nulls
   if (!originalRangesArr?.some(Boolean)) {
     // quick ending - no ranges passed
+    if (progressFn) {
+      progressFn(100);
+    }
     return str;
   }
 
@@ -151,6 +154,9 @@ function rApply(
       return `${acc}${str.slice(beginning, ending)}${arr[i][2] ?? ""}`;
     }, "");
     str += tails;
+  }
+  if (progressFn && lastPercentageDone !== 100) {
+    progressFn(100);
   }
   return str;
 }

@@ -15,4 +15,4 @@ const result = rApply(
 );
 
 assert.equal(result, "aXcdYf");
-assert.deepEqual(percentages, [5, 10, 12, 20, 60]);
+assert.deepEqual(percentages, [5, 10, 12, 19, 20, 60, 100]);

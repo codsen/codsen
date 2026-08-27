@@ -63,7 +63,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
     /50/,
     "01.04",
   );
-  equal(crush("abc").result, "abc", "01.04");
+  equal(crush("abc").result, "abc", "01.05");
 
   // long input (>1000 chars long) should report at each natural number percentage passed:
 
@@ -321,8 +321,24 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
   // confirm that no numbers outside of permitted values are reported
   // biome-ignore lint/suspicious/useIterableCallbackReturn: it's a quick test
   gather.forEach((perc) => ok(compareTo.includes(perc), `checking: ${perc}%`));
-  equal(gather.length, 86 - 21, "02.01");
+  equal(gather.length, 86 - 21 + 1, "02.02");
   // equal(gather, compareTo, "03.02")
+});
+
+test("03 - ranges-apply stage reaches the configured upper bound", () => {
+  const percentages = [];
+  crush("a ".repeat(1100), {
+    removeLineBreaks: true,
+    reportProgressFunc: (percentage) => percentages.push(percentage),
+    reportProgressFuncFrom: 21,
+    reportProgressFuncTo: 86,
+  });
+  equal(percentages.at(-1), 86, "03.01");
+  equal(
+    percentages.filter((percentage) => percentage === 86).length,
+    1,
+    "03.02",
+  );
 });
 
 test.run();
