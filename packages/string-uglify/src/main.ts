@@ -31,10 +31,10 @@ export interface Obj {
   [key: string]: any;
 }
 
-function assertStringArray(
+function assertArray(
   value: unknown,
   functionName: "uglifyArr" | "uglifyById",
-): asserts value is string[] {
+): asserts value is unknown[] {
   let isArray = false;
   try {
     isArray = Array.isArray(value);
@@ -47,6 +47,26 @@ function assertStringArray(
       `string-uglify/${functionName}(): [THROW_ID_01] The first input argument must be an array of strings. It was given as type ${value === null ? "null" : typeof value}.`,
     );
   }
+}
+
+function throwInvalidArrayMember(
+  functionName: "uglifyArr" | "uglifyById",
+  index: number,
+  member?: unknown,
+  unreadable = false,
+): never {
+  throw new TypeError(
+    unreadable
+      ? `string-uglify/${functionName}(): [THROW_ID_02] The first input argument contains an unreadable item at index ${index}.`
+      : `string-uglify/${functionName}(): [THROW_ID_02] The first input argument contains a non-string item at index ${index} (type ${typeof member}).`,
+  );
+}
+
+function assertStringArray(
+  value: unknown,
+  functionName: "uglifyById",
+): asserts value is string[] {
+  assertArray(value, functionName);
 
   const arr = value as unknown[];
   let length = 0;
@@ -63,21 +83,17 @@ function assertStringArray(
     try {
       member = arr[index];
     } catch {
-      throw new TypeError(
-        `string-uglify/${functionName}(): [THROW_ID_02] The first input argument contains an unreadable item at index ${index}.`,
-      );
+      throwInvalidArrayMember(functionName, index, undefined, true);
     }
     if (typeof member !== "string") {
-      throw new TypeError(
-        `string-uglify/${functionName}(): [THROW_ID_02] The first input argument contains a non-string item at index ${index} (type ${typeof member}).`,
-      );
+      throwInvalidArrayMember(functionName, index, member);
     }
   }
 }
 
 // converts whole array into array uglified names
 function uglifyArr(arr: string[]): string[] {
-  assertStringArray(arr, "uglifyArr");
+  assertArray(arr, "uglifyArr");
 
   let letters = "abcdefghijklmnopqrstuvwxyz";
   let lettersAndNumbers = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -184,12 +200,17 @@ function uglifyArr(arr: string[]): string[] {
   let collisionOrdinals: Map<string, number> | undefined;
 
   for (let id = 0, len = arr.length; id < len; id++) {
+    const originalName: unknown = arr[id];
+    if (typeof originalName !== "string") {
+      throwInvalidArrayMember("uglifyArr", id, originalName);
+    }
+
     // insurance against duplicate reference array values
     let previousResult: string | undefined;
     if (generatedByOriginal) {
-      previousResult = generatedByOriginal.get(arr[id]);
+      previousResult = generatedByOriginal.get(originalName);
     } else {
-      const firstIndex = arr.indexOf(arr[id]);
+      const firstIndex = arr.indexOf(originalName);
       if (firstIndex < id) {
         previousResult = res[firstIndex];
       }
@@ -200,22 +221,22 @@ function uglifyArr(arr: string[]): string[] {
       continue;
     }
 
-    let prefix = `.#`.includes(arr[id][0]) ? arr[id][0] : "";
+    let prefix = `.#`.includes(originalName[0]) ? originalName[0] : "";
     let codePointSum = 0;
     let codePointCount = 0;
-    for (const character of arr[id]) {
+    for (const character of originalName) {
       codePointSum += tellCP(character);
       codePointCount += 1;
     }
     const nameCodePointCount = codePointCount - (prefix ? 1 : 0);
 
     if (nameCodePointCount < 3) {
-      let val = arr[id];
+      let val = originalName;
       if (!(generatedNames ? generatedNames.has(val) : res.includes(val))) {
         res.push(val);
         if (generatedNames && generatedByOriginal) {
           generatedNames.add(val);
-          generatedByOriginal.set(arr[id], val);
+          generatedByOriginal.set(originalName, val);
         }
 
         // the first candidates for single-character value are 2-char long classes:
@@ -254,7 +275,7 @@ function uglifyArr(arr: string[]): string[] {
     res.push(generated);
     if (generatedNames && generatedByOriginal) {
       generatedNames.add(generated);
-      generatedByOriginal.set(arr[id], generated);
+      generatedByOriginal.set(originalName, generated);
     }
     if (
       generated.startsWith(".") &&
