@@ -605,7 +605,7 @@ export const interdeps = [
   },
   {
     "name": "regex-empty-conditional-comments",
-    "size": 392,
+    "size": 516,
     "imports": []
   },
   {

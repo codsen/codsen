@@ -239,4 +239,27 @@ test("05 - rejects malformed and repeated partial openers", () => {
   );
 });
 
+test("06 - exposes fresh global, case-insensitive regex state", () => {
+  const comment = "<!--[if mso]><![endif]-->";
+  const first = emptyCondCommentRegex();
+  const second = emptyCondCommentRegex();
+
+  equal(first.flags, "gi", "06.01");
+  equal(first === second, false, "06.02");
+  equal(first.lastIndex, 0, "06.03");
+  equal(first.test(comment), true, "06.04");
+  equal(first.lastIndex, comment.length, "06.05");
+  equal(second.lastIndex, 0, "06.06");
+  equal(first.test("not a comment"), false, "06.07");
+  equal(first.lastIndex, 0, "06.08");
+
+  const matchRegex = emptyCondCommentRegex();
+  comment.match(matchRegex);
+  equal(matchRegex.lastIndex, 0, "06.09");
+
+  const replaceRegex = emptyCondCommentRegex();
+  comment.replace(replaceRegex, "");
+  equal(replaceRegex.lastIndex, 0, "06.10");
+});
+
 test.run();
