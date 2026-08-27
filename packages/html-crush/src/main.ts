@@ -484,37 +484,35 @@ function crush(str: string, opts?: Partial<Opts>): Res {
     contentStartsAt++;
   }
   let midLen = Math.floor(len / 2);
-  let leavePercForLastStage = 0.01; // in range of [0, 1]
+  const leavePercForLastStage = 0.01; // in range of [0, 1]
+  const mainProgressShare = 1 - leavePercForLastStage;
+  let lastPercentage: number | null = null;
 
-  // ceil - total range which is allocated to the main processing
-  let ceil;
-  if (resolvedOpts.reportProgressFunc) {
-    ceil = Math.floor(
-      resolvedOpts.reportProgressFuncTo -
+  function reportProgressAt(fraction: number): void {
+    if (!resolvedOpts.reportProgressFunc || len <= 1000) {
+      return;
+    }
+
+    const boundedFraction = Math.max(0, Math.min(fraction, 1));
+    const percentage = Math.floor(
+      resolvedOpts.reportProgressFuncFrom +
         (resolvedOpts.reportProgressFuncTo -
           resolvedOpts.reportProgressFuncFrom) *
-          leavePercForLastStage -
-        resolvedOpts.reportProgressFuncFrom,
+          boundedFraction,
     );
-    DEV &&
-      console.log(
-        `${`\u001b[${33}m${`ceil`}\u001b[${39}m`} = ${JSON.stringify(
-          ceil,
-          null,
-          4,
-        )}`,
-      );
+
+    if (percentage !== lastPercentage) {
+      lastPercentage = percentage;
+      resolvedOpts.reportProgressFunc(percentage);
+    }
   }
 
   // one more round to collapse the whitespace to:
   // 1. Tackle indentations
   // 2. Remove excessive whitespace between strings on each line (not touching indentations)
 
-  // progress-wise, 98% will be allocated to loop, rest 2% - to range applies and
-  // final return clauses
-
-  let currentPercentageDone;
-  let lastPercentage = 0;
+  // Progress-wise, 99% is allocated to the loop and the final 1% to applying
+  // ranges. Both paths explicitly report completion.
 
   let lineEnding = `\n`;
   if (str.includes(`\r\n`)) {
@@ -548,27 +546,10 @@ function crush(str: string, opts?: Partial<Opts>): Res {
       if (resolvedOpts.reportProgressFunc) {
         if (len > 1000 && len < 2000) {
           if (i === midLen) {
-            resolvedOpts.reportProgressFunc(
-              Math.floor(
-                (resolvedOpts.reportProgressFuncTo -
-                  resolvedOpts.reportProgressFuncFrom) /
-                  2,
-              ),
-            );
+            reportProgressAt(0.5);
           }
         } else if (len >= 2000) {
-          // defaults:
-          // resolvedOpts.reportProgressFuncFrom = 0
-          // resolvedOpts.reportProgressFuncTo = 100
-
-          currentPercentageDone =
-            resolvedOpts.reportProgressFuncFrom +
-            Math.floor((i / len) * (ceil || 1));
-
-          if (currentPercentageDone !== lastPercentage) {
-            lastPercentage = currentPercentageDone;
-            resolvedOpts.reportProgressFunc(currentPercentageDone);
-          }
+          reportProgressAt((i / len) * mainProgressShare);
         }
       }
 
@@ -2529,36 +2510,18 @@ function crush(str: string, opts?: Partial<Opts>): Res {
     if (ranges) {
       // This accumulator is local to the call, so no wipe is necessary.
 
-      let startingPercentageDone =
-        resolvedOpts.reportProgressFuncTo -
-        (resolvedOpts.reportProgressFuncTo -
-          resolvedOpts.reportProgressFuncFrom) *
-          leavePercForLastStage;
-      DEV &&
-        console.log(
-          `${`\u001b[${33}m${`startingPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
-            startingPercentageDone,
-            null,
-            4,
-          )}`,
-        );
-
       let res = rApply(str, ranges, (applyPercDone) => {
         // allocate remaining "leavePercForLastStage" percentage of the total
         // progress reporting to this stage:
         if (resolvedOpts.reportProgressFunc && len >= 2000) {
-          currentPercentageDone = Math.floor(
-            startingPercentageDone +
-              (resolvedOpts.reportProgressFuncTo - startingPercentageDone) *
-                (applyPercDone / 100),
+          reportProgressAt(
+            mainProgressShare +
+              leavePercForLastStage * (applyPercDone / 100),
           );
-
-          if (currentPercentageDone !== lastPercentage) {
-            lastPercentage = currentPercentageDone;
-            resolvedOpts.reportProgressFunc(currentPercentageDone);
-          }
         }
       });
+
+      reportProgressAt(1);
 
       DEV &&
         console.log(
@@ -2588,6 +2551,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
     }
   }
   // ELSE - return the original input string
+  reportProgressAt(1);
   DEV &&
     console.log(
       `returning original ${`\u001b[${33}m${`str`}\u001b[${39}m`} =\n\n${JSON.stringify(

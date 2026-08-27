@@ -341,4 +341,76 @@ test("03 - ranges-apply stage reaches the configured upper bound", () => {
   );
 });
 
+test("04 - progress respects thresholds and configured intervals", () => {
+  for (const [length, expected] of [
+    [1000, []],
+    [1001, [30, 40]],
+    [1999, [30, 40]],
+  ]) {
+    const percentages = [];
+    crush("a".repeat(length), {
+      reportProgressFunc: (percentage) => percentages.push(percentage),
+      reportProgressFuncFrom: 20,
+      reportProgressFuncTo: 40,
+    });
+    equal(percentages, expected, "04.01");
+  }
+
+  const longPercentages = [];
+  crush("a".repeat(2000), {
+    reportProgressFunc: (percentage) => longPercentages.push(percentage),
+    reportProgressFuncFrom: 20,
+    reportProgressFuncTo: 40,
+  });
+  equal(longPercentages[0], 20, "04.02");
+  equal(longPercentages.at(-1), 40, "04.03");
+  ok(
+    longPercentages.every(
+      (percentage, index) =>
+        percentage >= 20 &&
+        percentage <= 40 &&
+        (!index || percentage >= longPercentages[index - 1]),
+    ),
+    "04.04",
+  );
+
+  const defaultPercentages = [];
+  crush("a".repeat(1500), {
+    reportProgressFunc: (percentage) => defaultPercentages.push(percentage),
+  });
+  equal(defaultPercentages, [50, 100], "04.05");
+});
+
+test("05 - edited and unchanged inputs share completion semantics", () => {
+  const unchangedPercentages = [];
+  crush("a".repeat(2500), {
+    removeLineBreaks: true,
+    reportProgressFunc: (percentage) => unchangedPercentages.push(percentage),
+    reportProgressFuncFrom: 20,
+    reportProgressFuncTo: 40,
+  });
+  equal(unchangedPercentages.at(-1), 40, "05.01");
+
+  const editedPercentages = [];
+  crush("a ".repeat(1250), {
+    removeLineBreaks: true,
+    reportProgressFunc: (percentage) => editedPercentages.push(percentage),
+    reportProgressFuncFrom: 20,
+    reportProgressFuncTo: 40,
+  });
+  equal(editedPercentages.at(-1), 40, "05.02");
+
+  for (const percentages of [unchangedPercentages, editedPercentages]) {
+    ok(
+      percentages.every(
+        (percentage, index) =>
+          percentage >= 20 &&
+          percentage <= 40 &&
+          (!index || percentage >= percentages[index - 1]),
+      ),
+      "05.03",
+    );
+  }
+});
+
 test.run();
