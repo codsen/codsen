@@ -45,6 +45,90 @@ export type Callback = (
   stop: Stop,
 ) => TreeValue;
 
+function invalidTree(reason: string): never {
+  throw new TypeError(
+    `ast-monkey-traverse/traverse(): [THROW_ID_02] The first argument must be an acyclic, unaliased tree of arrays, plain objects, and supported primitive values; ${reason}.`,
+  );
+}
+
+function isArrayIndex(key: string, length: number): boolean {
+  let index = Number(key);
+  return (
+    Number.isInteger(index) &&
+    index >= 0 &&
+    index < length &&
+    `${index}` === key
+  );
+}
+
+function validateTree(value: unknown): asserts value is TreeValue {
+  let pending = [value];
+  let seen = new WeakSet<object>();
+
+  while (pending.length) {
+    let current = pending.pop();
+    if (
+      current === null ||
+      current === undefined ||
+      typeof current === "string" ||
+      typeof current === "number" ||
+      typeof current === "boolean"
+    ) {
+      continue;
+    }
+    if (typeof current !== "object") {
+      invalidTree(`encountered an unsupported ${typeof current} value`);
+    }
+    if (seen.has(current)) {
+      invalidTree("encountered a cycle or repeated object reference");
+    }
+    seen.add(current);
+
+    if (Array.isArray(current)) {
+      if (Object.getPrototypeOf(current) !== Array.prototype) {
+        invalidTree("encountered an array with a custom prototype");
+      }
+      for (let key of Reflect.ownKeys(current)) {
+        if (key === "length") {
+          continue;
+        }
+        if (typeof key !== "string") {
+          invalidTree("encountered a symbol-keyed array property");
+        }
+        if (!isArrayIndex(key, current.length)) {
+          invalidTree(
+            `encountered the non-index array property ${JSON.stringify(key)}`,
+          );
+        }
+        let descriptor = Object.getOwnPropertyDescriptor(current, key);
+        if (!descriptor?.enumerable || !("value" in descriptor)) {
+          invalidTree(
+            `encountered an accessor or non-enumerable array index ${key}`,
+          );
+        }
+        pending.push(descriptor.value);
+      }
+      continue;
+    }
+
+    if (Object.getPrototypeOf(current) !== Object.prototype) {
+      invalidTree("encountered a non-plain or custom-prototype object");
+    }
+    for (let key of Reflect.ownKeys(current)) {
+      if (typeof key !== "string") {
+        invalidTree("encountered a symbol-keyed object property");
+      }
+      let descriptor = Object.getOwnPropertyDescriptor(current, key);
+      if (!descriptor?.enumerable || !("value" in descriptor)) {
+        invalidTree(
+          `encountered an accessor or non-enumerable property ${JSON.stringify(key)}`,
+        );
+      }
+      pending.push(descriptor.value);
+    }
+  }
+}
+
 // Detaches one just-visited child for storing in a `parent` snapshot.
 // Primitives can hold no references, so only the rest is worth a clone.
 function snapshotChild(value: any): any {
@@ -91,6 +175,7 @@ function traverse(tree1: TreeValue, cb1: Callback): TreeValue {
       `ast-monkey-traverse/traverse(): [THROW_ID_01] The second argument must be a callback function. It was ${typeof cb1}.`,
     );
   }
+  validateTree(tree1);
   let stop2: Stop = { now: false };
 
   // Every node written, deleted or spliced anywhere in the tree bumps this.
@@ -247,7 +332,7 @@ function traverse(tree1: TreeValue, cb1: Callback): TreeValue {
     } else if (isObj(tree)) {
       DEV && console.log(`tree is object`);
 
-      for (let key in tree) {
+      for (let key of Object.keys(tree)) {
         DEV &&
           console.log(
             `${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`,

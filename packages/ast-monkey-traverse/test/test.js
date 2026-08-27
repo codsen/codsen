@@ -1572,4 +1572,92 @@ test("28 - path segments and parent keys preserve exact keys", () => {
   );
 });
 
+test("29 - unsupported graphs and property models fail early", () => {
+  let selfCycle = {};
+  selfCycle.self = selfCycle;
+  let shared = { value: 1 };
+  let symbolObject = { value: 1 };
+  symbolObject[Symbol("extra")] = 2;
+  let nonEnumerableObject = {};
+  Object.defineProperty(nonEnumerableObject, "hidden", { value: 1 });
+  let getterCalls = 0;
+  let accessorObject = {};
+  Object.defineProperty(accessorObject, "computed", {
+    enumerable: true,
+    get: () => {
+      getterCalls += 1;
+      return 1;
+    },
+  });
+  let extraArray = [];
+  extraArray.extra = true;
+  let symbolArray = [];
+  symbolArray[Symbol("extra")] = true;
+  let nonEnumerableArray = [1];
+  Object.defineProperty(nonEnumerableArray, "0", {
+    enumerable: false,
+    value: 1,
+  });
+  let customArray = [1];
+  Object.setPrototypeOf(customArray, {});
+  class CustomValue {
+    value = 1;
+  }
+
+  let invalidInputs = [
+    selfCycle,
+    { a: shared, b: shared },
+    new Date(0),
+    new Map([["a", 1]]),
+    new Set([1]),
+    new CustomValue(),
+    Object.assign(Object.create(null), { value: 1 }),
+    { value: () => 1 },
+    { value: Symbol("unsupported") },
+    { value: 1n },
+    symbolObject,
+    nonEnumerableObject,
+    accessorObject,
+    extraArray,
+    symbolArray,
+    nonEnumerableArray,
+    customArray,
+  ];
+  let callbackCalls = 0;
+
+  invalidInputs.forEach((input, index) => {
+    throws(
+      () => {
+        traverse(input, () => {
+          callbackCalls += 1;
+          return undefined;
+        });
+      },
+      /THROW_ID_02/,
+      `29.${`${index + 1}`.padStart(2, "0")}`,
+    );
+  });
+
+  equal(callbackCalls, 0, "29.18");
+  equal(getterCalls, 0, "29.19");
+
+  let visited = [];
+  Object.defineProperty(Object.prototype, "inheritedTraversalProbe", {
+    configurable: true,
+    enumerable: true,
+    value: "ignore",
+  });
+  try {
+    let actual = traverse({ own: 1 }, (key, value) => {
+      visited.push(key);
+      return value;
+    });
+    equal(Object.keys(actual), ["own"], "29.20");
+    equal(actual.own, 1, "29.21");
+  } finally {
+    delete Object.prototype.inheritedTraversalProbe;
+  }
+  equal(visited, ["own"], "29.22");
+});
+
 test.run();
