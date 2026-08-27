@@ -61,17 +61,19 @@ export interface Opts {
   str: string;
   from: number;
   to: number;
-  ifLeftSideIncludesThisThenCropTightly: string;
-  ifLeftSideIncludesThisCropItToo: string;
-  ifRightSideIncludesThisThenCropTightly: string;
-  ifRightSideIncludesThisCropItToo: string;
-  extendToOneSide: false | "left" | "right";
-  wipeAllWhitespaceOnLeft: boolean;
-  wipeAllWhitespaceOnRight: boolean;
-  addSingleSpaceToPreventAccidentalConcatenation: boolean;
+  ifLeftSideIncludesThisThenCropTightly?: string;
+  ifLeftSideIncludesThisCropItToo?: string;
+  ifRightSideIncludesThisThenCropTightly?: string;
+  ifRightSideIncludesThisCropItToo?: string;
+  extendToOneSide?: false | "left" | "right";
+  wipeAllWhitespaceOnLeft?: boolean;
+  wipeAllWhitespaceOnRight?: boolean;
+  addSingleSpaceToPreventAccidentalConcatenation?: boolean;
 }
 
-const defaults: Opts = {
+type ResolvedOpts = Required<Opts>;
+
+const defaults: ResolvedOpts = {
   str: "",
   from: 0,
   to: 0,
@@ -85,7 +87,7 @@ const defaults: Opts = {
   addSingleSpaceToPreventAccidentalConcatenation: false,
 };
 
-function expander(opts: Partial<Opts>): Range {
+function expander(opts: Opts): Range {
   let letterOrDigit = /^[0-9a-zA-Z]+$/;
 
   // Internal functions
@@ -112,34 +114,37 @@ function expander(opts: Partial<Opts>): Range {
     );
   } else if (!Object.keys(opts).length) {
     throw new Error(
-      `string-range-expander/expander(): [THROW_ID_02] Input must be a plain object but it's been given as a plain object without any keys. However, "from" and "to" settings are obligatory!`,
+      `string-range-expander/expander(): [THROW_ID_02] Input must be a plain object with the required "str", "from", and "to" keys, but it was given without any keys.`,
     );
   }
-  if (!isInt(opts.from)) {
+  if (!isStr(opts.str)) {
     throw new Error(
-      `string-range-expander/expander(): [THROW_ID_03] The input's "from" value resolvedOpts.from, is not a number! It's been given as ${typeof opts.from}, equal to ${formatDiagnosticValue(opts.from)}`,
+      `string-range-expander/expander(): [THROW_ID_03] The input's "str" value must be a string! It was given as ${typeof opts.str}, equal to ${formatDiagnosticValue(opts.str)}`,
     );
   }
-  if (!isInt(opts.to)) {
+  if (!isInt(opts.from) || opts.from < 0) {
     throw new Error(
-      `string-range-expander/expander(): [THROW_ID_04] The input's "to" value resolvedOpts.to, is not a number! It's been given as ${typeof opts.to}, equal to ${formatDiagnosticValue(opts.to)}`,
+      `string-range-expander/expander(): [THROW_ID_04] The input's "from" value must be a non-negative integer! It was given as ${typeof opts.from}, equal to ${formatDiagnosticValue(opts.from)}`,
     );
   }
-  if (opts?.str && !opts.str[opts.from] && opts.from !== opts.to) {
+  if (!isInt(opts.to) || opts.to < 0) {
     throw new Error(
-      `string-range-expander/expander(): [THROW_ID_05] The given input string resolvedOpts.str ("${opts.str}") must contain the character at index "from" ("${opts.from}")`,
+      `string-range-expander/expander(): [THROW_ID_05] The input's "to" value must be a non-negative integer! It was given as ${typeof opts.to}, equal to ${formatDiagnosticValue(opts.to)}`,
     );
   }
-  if (opts?.str && !opts.str[opts.to - 1]) {
+  if (opts.from > opts.str.length) {
     throw new Error(
-      `string-range-expander/expander(): [THROW_ID_06] The given input string, resolvedOpts.str ("${
-        opts.str
-      }") must contain the character at index before "to" ("${opts.to - 1}")`,
+      `string-range-expander/expander(): [THROW_ID_06] The input's "from" value (${opts.from}) must not exceed the string length (${opts.str.length}).`,
+    );
+  }
+  if (opts.to > opts.str.length) {
+    throw new Error(
+      `string-range-expander/expander(): [THROW_ID_07] The input's "to" value (${opts.to}) must not exceed the string length (${opts.str.length}).`,
     );
   }
   if (opts.from > opts.to) {
     throw new Error(
-      `string-range-expander/expander(): [THROW_ID_07] The given "from" index, "${opts.from}" is greater than "to" index, "${opts.to}". That's wrong!`,
+      `string-range-expander/expander(): [THROW_ID_08] The input's "from" value (${opts.from}) must not exceed its "to" value (${opts.to}).`,
     );
   }
   if (
@@ -152,7 +157,7 @@ function expander(opts: Partial<Opts>): Range {
       opts.extendToOneSide)
   ) {
     throw new Error(
-      `string-range-expander/expander(): [THROW_ID_08] The options value "extendToOneSide" is not recognisable! It's set to: "${
+      `string-range-expander/expander(): [THROW_ID_09] The options value "extendToOneSide" is not recognisable! It's set to: "${
         opts.extendToOneSide
       }" (${typeof opts.extendToOneSide}). It has to be either Boolean "false" or one of strings: "left" or "right"`,
     );
@@ -162,7 +167,7 @@ function expander(opts: Partial<Opts>): Range {
     !isStr(opts.ifLeftSideIncludesThisThenCropTightly)
   ) {
     throw new Error(
-      `string-range-expander/expander(): [THROW_ID_09] The option "ifLeftSideIncludesThisThenCropTightly", is not a string! It's been given as ${typeof opts.ifLeftSideIncludesThisThenCropTightly}, equal to ${formatDiagnosticValue(opts.ifLeftSideIncludesThisThenCropTightly)}`,
+      `string-range-expander/expander(): [THROW_ID_10] The option "ifLeftSideIncludesThisThenCropTightly", is not a string! It's been given as ${typeof opts.ifLeftSideIncludesThisThenCropTightly}, equal to ${formatDiagnosticValue(opts.ifLeftSideIncludesThisThenCropTightly)}`,
     );
   }
   if (
@@ -170,7 +175,7 @@ function expander(opts: Partial<Opts>): Range {
     !isStr(opts.ifLeftSideIncludesThisCropItToo)
   ) {
     throw new Error(
-      `string-range-expander/expander(): [THROW_ID_10] The option "ifLeftSideIncludesThisCropItToo", is not a string! It's been given as ${typeof opts.ifLeftSideIncludesThisCropItToo}, equal to ${formatDiagnosticValue(opts.ifLeftSideIncludesThisCropItToo)}`,
+      `string-range-expander/expander(): [THROW_ID_11] The option "ifLeftSideIncludesThisCropItToo", is not a string! It's been given as ${typeof opts.ifLeftSideIncludesThisCropItToo}, equal to ${formatDiagnosticValue(opts.ifLeftSideIncludesThisCropItToo)}`,
     );
   }
   if (
@@ -178,7 +183,7 @@ function expander(opts: Partial<Opts>): Range {
     !isStr(opts.ifRightSideIncludesThisThenCropTightly)
   ) {
     throw new Error(
-      `string-range-expander/expander(): [THROW_ID_11] The option "ifRightSideIncludesThisThenCropTightly", is not a string! It's been given as ${typeof opts.ifRightSideIncludesThisThenCropTightly}, equal to ${formatDiagnosticValue(opts.ifRightSideIncludesThisThenCropTightly)}`,
+      `string-range-expander/expander(): [THROW_ID_12] The option "ifRightSideIncludesThisThenCropTightly", is not a string! It's been given as ${typeof opts.ifRightSideIncludesThisThenCropTightly}, equal to ${formatDiagnosticValue(opts.ifRightSideIncludesThisThenCropTightly)}`,
     );
   }
   if (
@@ -186,14 +191,14 @@ function expander(opts: Partial<Opts>): Range {
     !isStr(opts.ifRightSideIncludesThisCropItToo)
   ) {
     throw new Error(
-      `string-range-expander/expander(): [THROW_ID_12] The option "ifRightSideIncludesThisCropItToo", is not a string! It's been given as ${typeof opts.ifRightSideIncludesThisCropItToo}, equal to ${formatDiagnosticValue(opts.ifRightSideIncludesThisCropItToo)}`,
+      `string-range-expander/expander(): [THROW_ID_13] The option "ifRightSideIncludesThisCropItToo", is not a string! It's been given as ${typeof opts.ifRightSideIncludesThisCropItToo}, equal to ${formatDiagnosticValue(opts.ifRightSideIncludesThisCropItToo)}`,
     );
   }
 
   // Prepare the resolvedOpts
   // ---------------------------------------------------------------------------
 
-  let resolvedOpts: Opts = { ...defaults, ...opts };
+  let resolvedOpts: ResolvedOpts = { ...defaults, ...opts };
 
   // Action
   // ---------------------------------------------------------------------------

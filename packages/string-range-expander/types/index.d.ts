@@ -7,17 +7,18 @@ interface Opts {
   str: string;
   from: number;
   to: number;
-  ifLeftSideIncludesThisThenCropTightly: string;
-  ifLeftSideIncludesThisCropItToo: string;
-  ifRightSideIncludesThisThenCropTightly: string;
-  ifRightSideIncludesThisCropItToo: string;
-  extendToOneSide: false | "left" | "right";
-  wipeAllWhitespaceOnLeft: boolean;
-  wipeAllWhitespaceOnRight: boolean;
-  addSingleSpaceToPreventAccidentalConcatenation: boolean;
+  ifLeftSideIncludesThisThenCropTightly?: string;
+  ifLeftSideIncludesThisCropItToo?: string;
+  ifRightSideIncludesThisThenCropTightly?: string;
+  ifRightSideIncludesThisCropItToo?: string;
+  extendToOneSide?: false | "left" | "right";
+  wipeAllWhitespaceOnLeft?: boolean;
+  wipeAllWhitespaceOnRight?: boolean;
+  addSingleSpaceToPreventAccidentalConcatenation?: boolean;
 }
-declare const defaults: Opts;
-declare function expander(opts: Partial<Opts>): Range;
+type ResolvedOpts = Required<Opts>;
+declare const defaults: ResolvedOpts;
+declare function expander(opts: Opts): Range;
 
 export { defaults, expander, version };
 export type { Opts, Range };

@@ -66,7 +66,7 @@ test('06 - throws when "from" is not a number', () => {
         to: 0,
       });
     },
-    /THROW_ID_03/,
+    /THROW_ID_04/,
     "06.01",
   );
 });
@@ -80,7 +80,7 @@ test('07 - throws when "to" is not a number', () => {
         to: "0",
       });
     },
-    /THROW_ID_04/,
+    /THROW_ID_05/,
     "07.01",
   );
 });
@@ -94,7 +94,7 @@ test('08 - throws when "from" is outside the str boundaries', () => {
         to: 20,
       });
     },
-    /THROW_ID_05/,
+    /THROW_ID_06/,
     "08.01",
   );
 });
@@ -108,7 +108,7 @@ test('09 - throws when "to" is way outside the str boundaries', () => {
         to: 4,
       });
     },
-    /THROW_ID_06/,
+    /THROW_ID_07/,
     "09.01",
   );
 
@@ -132,7 +132,7 @@ test("10 - throws when opts.extendToOneSide is unrecognised", () => {
         extendToOneSide: "zzz",
       });
     },
-    /THROW_ID_08/,
+    /THROW_ID_09/,
     "10.01",
   );
 
@@ -145,7 +145,7 @@ test("10 - throws when opts.extendToOneSide is unrecognised", () => {
         extendToOneSide: null,
       });
     },
-    /THROW_ID_08/,
+    /THROW_ID_09/,
     "10.02",
   );
 });
@@ -159,7 +159,7 @@ test("11 - throws when opts.to < opts.from", () => {
         to: 1,
       });
     },
-    /THROW_ID_07/,
+    /THROW_ID_08/,
     "11.01",
   );
 });
@@ -174,7 +174,7 @@ test("12 - throws when opts.ifLeftSideIncludesThisThenCropTightly is wrong", () 
         ifLeftSideIncludesThisThenCropTightly: 1,
       });
     },
-    /THROW_ID_09/,
+    /THROW_ID_10/,
     "12.01",
   );
 
@@ -187,7 +187,7 @@ test("12 - throws when opts.ifLeftSideIncludesThisThenCropTightly is wrong", () 
         ifLeftSideIncludesThisThenCropTightly: [],
       });
     },
-    /THROW_ID_09/,
+    /THROW_ID_10/,
     "12.02",
   );
 });
@@ -202,7 +202,7 @@ test("13 - throws when opts.ifLeftSideIncludesThisCropItToo is wrong", () => {
         ifLeftSideIncludesThisCropItToo: 1,
       });
     },
-    /THROW_ID_10/,
+    /THROW_ID_11/,
     "13.01",
   );
 
@@ -215,7 +215,7 @@ test("13 - throws when opts.ifLeftSideIncludesThisCropItToo is wrong", () => {
         ifLeftSideIncludesThisCropItToo: [],
       });
     },
-    /THROW_ID_10/,
+    /THROW_ID_11/,
     "13.02",
   );
 });
@@ -230,7 +230,7 @@ test("14 - throws when opts.ifRightSideIncludesThisThenCropTightly is wrong", ()
         ifRightSideIncludesThisThenCropTightly: 1,
       });
     },
-    /THROW_ID_11/,
+    /THROW_ID_12/,
     "14.01",
   );
 
@@ -243,7 +243,7 @@ test("14 - throws when opts.ifRightSideIncludesThisThenCropTightly is wrong", ()
         ifRightSideIncludesThisThenCropTightly: [],
       });
     },
-    /THROW_ID_11/,
+    /THROW_ID_12/,
     "14.02",
   );
 });
@@ -258,7 +258,7 @@ test("15 - throws when opts.ifRightSideIncludesThisCropItToo is wrong", () => {
         ifRightSideIncludesThisCropItToo: 1,
       });
     },
-    /THROW_ID_12/,
+    /THROW_ID_13/,
     "15.01",
   );
 
@@ -271,7 +271,7 @@ test("15 - throws when opts.ifRightSideIncludesThisCropItToo is wrong", () => {
         ifRightSideIncludesThisCropItToo: [],
       });
     },
-    /THROW_ID_12/,
+    /THROW_ID_13/,
     "15.02",
   );
 });
@@ -298,6 +298,59 @@ test("16 - hostile non-object inputs preserve the validation error", () => {
         error.message,
       ),
     "16.02",
+  );
+});
+
+test('17 - throws when "str" is not a string', () => {
+  [undefined, null, false, 0, [], {}].forEach((str, index) => {
+    throws(
+      () => {
+        e({ str, from: 0, to: 0 });
+      },
+      /THROW_ID_03/,
+      `17.${String(index + 1).padStart(2, "0")}`,
+    );
+  });
+});
+
+test("18 - rejects negative and fractional boundaries", () => {
+  throws(
+    () => e({ str: "abc", from: -1, to: 0 }),
+    /THROW_ID_04/,
+    "18.01",
+  );
+  throws(
+    () => e({ str: "abc", from: 0.5, to: 1 }),
+    /THROW_ID_04/,
+    "18.02",
+  );
+  throws(
+    () => e({ str: "abc", from: 0, to: -1 }),
+    /THROW_ID_05/,
+    "18.03",
+  );
+  throws(
+    () => e({ str: "abc", from: 0, to: 1.5 }),
+    /THROW_ID_05/,
+    "18.04",
+  );
+});
+
+test("19 - rejects boundaries beyond the string length", () => {
+  throws(
+    () => e({ str: "abc", from: 4, to: 4 }),
+    /THROW_ID_06/,
+    "19.01",
+  );
+  throws(
+    () => e({ str: "abc", from: 0, to: 4 }),
+    /THROW_ID_07/,
+    "19.02",
+  );
+  throws(
+    () => e({ str: "", from: 1, to: 1 }),
+    /THROW_ID_06/,
+    "19.03",
   );
 });
 
