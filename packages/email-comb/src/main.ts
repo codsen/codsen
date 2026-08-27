@@ -152,6 +152,127 @@ function characterSuitableForBodyToken(
     : char !== quote && char !== "{" && char !== "}";
 }
 
+function cleanBlankLines(
+  str: string,
+  backend: HeadsAndTailsObj[],
+): string {
+  const blankLineRegex = /\r?\n\s+\r?\n/g;
+  const protectedPairs = backend.filter(
+    ({ heads, tails }) => heads.length && tails.length,
+  );
+  let backendTails: string | null = null;
+  let comment = false;
+  let quote: '"' | "'" | null = null;
+  let rawTag: "script" | "style" | null = null;
+  let result = "";
+  let tagStartedAt: number | null = null;
+  let blankLineMatch = blankLineRegex.exec(str);
+
+  for (let i = 0; i < str.length; i++) {
+    if (blankLineMatch?.index === i) {
+      result +=
+        tagStartedAt !== null && !comment && backendTails === null
+          ? ""
+          : rawTag === "style"
+            ? " "
+            : rawTag || comment || backendTails
+            ? blankLineMatch[0]
+            : blankLineMatch[0].includes("\r\n")
+              ? "\r\n"
+              : "\n";
+      i += blankLineMatch[0].length - 1;
+      blankLineMatch = blankLineRegex.exec(str);
+      continue;
+    }
+
+    if (backendTails !== null) {
+      if (str.startsWith(backendTails, i)) {
+        result += backendTails;
+        i += backendTails.length - 1;
+        backendTails = null;
+      } else {
+        result += str[i];
+      }
+      continue;
+    }
+
+    const backendPair = protectedPairs.find(({ heads }) =>
+      str.startsWith(heads, i),
+    );
+    if (backendPair) {
+      result += backendPair.heads;
+      i += backendPair.heads.length - 1;
+      backendTails = backendPair.tails;
+      continue;
+    }
+
+    if (comment) {
+      if (str.startsWith("-->", i)) {
+        result += "-->";
+        i += 2;
+        comment = false;
+      } else {
+        result += str[i];
+      }
+      continue;
+    }
+
+    if (rawTag) {
+      const closingTag = `</${rawTag}`;
+      if (
+        str.slice(i, i + closingTag.length).toLowerCase() === closingTag &&
+        (isHtmlAsciiWhitespace(str[i + closingTag.length]) ||
+          str[i + closingTag.length] === ">")
+      ) {
+        rawTag = null;
+        tagStartedAt = i;
+      }
+      result += str[i];
+      continue;
+    }
+
+    if (tagStartedAt !== null) {
+      result += str[i];
+      if (quote) {
+        if (str[i] === quote) {
+          quote = null;
+        }
+      } else if (str[i] === '"' || str[i] === "'") {
+        quote = str[i] as '"' | "'";
+      } else if (str[i] === ">") {
+        const openingTagName = str
+          .slice(tagStartedAt, i + 1)
+          .match(/^<\s*([a-z][a-z\d:-]*)/i)?.[1]
+          ?.toLowerCase();
+        if (openingTagName === "script" || openingTagName === "style") {
+          rawTag = openingTagName;
+        }
+        tagStartedAt = null;
+      }
+      continue;
+    }
+
+    if (str.startsWith("<!--", i)) {
+      result += "<!--";
+      i += 3;
+      comment = true;
+    } else if (
+      str[i] === "<" &&
+      (str[i + 1] === "!" ||
+        str[i + 1] === "?" ||
+        str[i + 1] === "/" ||
+        /[a-z]/i.test(str[i + 1] || ""))
+    ) {
+      result += str[i];
+      tagStartedAt = i;
+    } else {
+      result += str[i];
+    }
+  }
+
+  return result;
+}
+
 interface NumValObj {
   [key: string]: number;
 }
@@ -616,13 +737,12 @@ function comb(str: string, opts?: InputOpts | null): Res {
     trailingNewline = detectEol(str) || "";
   }
 
-  // Deliberately deletes the whole match rather than collapsing it to one line
-  // break: a run of blank lines inside a tag has to close up completely, which
-  // test 02.03 in test/comments.js and 21.03 in test/basic.js both pin. The
-  // side effect is that the same happens in text content, where it joins the
-  // last word of one line to the first of the next; separating the two cases
-  // needs tag awareness this pre-pass does not have.
-  str = str.trim().replace(/\r?\n\s+\r?\n/g, "");
+  // A run of blank lines inside tag syntax has to close up completely, which
+  // test 02.03 in test/comments.js and 21.03 in test/basic.js both pin. In text
+  // content, retain one line break so adjacent words cannot concatenate. Raw
+  // script/style content, HTML comments, and configured backend regions are
+  // byte-preserved by this pre-pass.
+  str = cleanBlankLines(str.trim(), resolvedOpts.backend);
   // restore trailing newline
   if (trailingNewline) {
     str += trailingNewline;
