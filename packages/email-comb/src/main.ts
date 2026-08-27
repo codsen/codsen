@@ -273,6 +273,20 @@ function cleanBlankLines(
   return result;
 }
 
+function collectNextClosingBrackets(str: string): Int32Array {
+  const closingBrackets = new Int32Array(str.length);
+  let closingBracketAt = -1;
+
+  for (let i = str.length - 1; i >= 0; i--) {
+    if (str[i] === ">") {
+      closingBracketAt = i;
+    }
+    closingBrackets[i] = closingBracketAt;
+  }
+
+  return closingBrackets;
+}
+
 interface NumValObj {
   [key: string]: number;
 }
@@ -948,6 +962,8 @@ function comb(str: string, opts?: InputOpts | null): Res {
 
   let len = str.length;
   const bodyAttributes = collectBodyAttributes(str, resolvedOpts.backend);
+  const nextClosingBracketAt = collectNextClosingBrackets(str);
+  totalCounter += len;
 
   let leavePercForLastStage = 0.06; // in range of [0, 1]
 
@@ -1530,33 +1546,17 @@ function comb(str: string, opts?: InputOpts | null): Res {
           console.log(
             `\u001b[${36}m${`\n marching forward until ">":`}\u001b[${39}m`,
           );
-        for (let y = i; y < len; y++) {
-          totalCounter += 1;
+        totalCounter += 1;
+        const closingBracketAt = nextClosingBracketAt[i];
+        if (closingBracketAt !== -1) {
           DEV &&
-            console.log(`\u001b[${36}m${`str[i=${y}]=${str[y]}`}\u001b[${39}m`);
-          if (str[y] === ">") {
-            DEV &&
-              console.log(`\u001b[${36}m${` > found, stopping`}\u001b[${39}m`);
-            styleStartedAt = y + 1;
-            ruleChunkStartedAt = y + 1;
-            DEV &&
-              console.log(
-                `SET ${`\u001b[${33}m${`styleStartedAt`}\u001b[${39}m`} = ${styleStartedAt}; SET ${`\u001b[${33}m${`ruleChunkStartedAt`}\u001b[${39}m`} = ${ruleChunkStartedAt} THEN BREAK`,
-              );
-            // We can offset the main index ("jump" to an already-traversed closing
-            // closing bracket character of <style.....> tag because this tag
-            // will not have any CLASS or ID attributes).
-            // We would not do that with BODY tag for example.
-
-            // Offset the index because we traversed it already:
-            // i = y;
-            DEV &&
-              console.log(
-                `\u001b[${36}m${`stopped marching forward`}\u001b[${39}m`,
-              );
-            break;
-            // continue stepouter;
-          }
+            console.log(`\u001b[${36}m${` > found, stopping`}\u001b[${39}m`);
+          styleStartedAt = closingBracketAt + 1;
+          ruleChunkStartedAt = closingBracketAt + 1;
+          DEV &&
+            console.log(
+              `SET ${`\u001b[${33}m${`styleStartedAt`}\u001b[${39}m`} = ${styleStartedAt}; SET ${`\u001b[${33}m${`ruleChunkStartedAt`}\u001b[${39}m`} = ${ruleChunkStartedAt}`,
+            );
         }
       }
 
@@ -2577,18 +2577,14 @@ function comb(str: string, opts?: InputOpts | null): Res {
           console.log(
             `\u001b[${36}m${`march forward to find the ending of the opening body tag:`}\u001b[${39}m`,
           );
-        for (let y = i; y < len; y++) {
-          totalCounter += 1;
-          if (str[y] === ">") {
-            bodyStartedAt = y + 1;
-            DEV &&
-              console.log(
-                `SET ${`\u001b[${33}m${`bodyStartedAt`}\u001b[${39}m`} = ${bodyStartedAt}, then BREAK`,
-              );
-            // we can't offset the index because there might be unused classes
-            // or id's on the body tag itself.
-            break;
-          }
+        totalCounter += 1;
+        const closingBracketAt = nextClosingBracketAt[i];
+        if (closingBracketAt !== -1) {
+          bodyStartedAt = closingBracketAt + 1;
+          DEV &&
+            console.log(
+              `SET ${`\u001b[${33}m${`bodyStartedAt`}\u001b[${39}m`} = ${bodyStartedAt}`,
+            );
         }
         DEV &&
           console.log(`\u001b[${36}m${`stop marching forward`}\u001b[${39}m`);

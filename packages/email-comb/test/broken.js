@@ -193,4 +193,24 @@ test("07 - dirty code - space between class and =", () => {
   equal(actual, intended, "07.01");
 });
 
+test("08 - malformed opening-tag scans stay linear", () => {
+  let malformedStyle = "<style ".repeat(8);
+  let malformedBody = "<body ".repeat(8);
+
+  equal(comb(malformedStyle).result, malformedStyle.trim(), "08.01");
+  equal(comb(malformedBody).result, malformedBody.trim(), "08.02");
+
+  let styleAt100 = comb("<style ".repeat(100)).log.traversedTotalCharacters;
+  let styleAt200 = comb("<style ".repeat(200)).log.traversedTotalCharacters;
+  let styleAt400 = comb("<style ".repeat(400)).log.traversedTotalCharacters;
+  let bodyAt100 = comb("<body ".repeat(100)).log.traversedTotalCharacters;
+  let bodyAt200 = comb("<body ".repeat(200)).log.traversedTotalCharacters;
+  let bodyAt400 = comb("<body ".repeat(400)).log.traversedTotalCharacters;
+
+  equal(styleAt200 < styleAt100 * 2.2, true, "08.03");
+  equal(styleAt400 < styleAt200 * 2.2, true, "08.04");
+  equal(bodyAt200 < bodyAt100 * 2.2, true, "08.05");
+  equal(bodyAt400 < bodyAt200 * 2.2, true, "08.06");
+});
+
 test.run();
