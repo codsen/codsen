@@ -26,5 +26,32 @@ export function pathNext(str: string): string {
     return str;
   }
   let prefix = lastDotAt === -1 ? "" : str.slice(0, lastDotAt + 1);
-  return `${prefix}${+extractedValue + 1}`;
+  if (extractedValue.length < 16) {
+    return `${prefix}${+extractedValue + 1}`;
+  }
+
+  let firstNonZero = 0;
+  while (
+    firstNonZero < extractedValue.length &&
+    extractedValue.charCodeAt(firstNonZero) === 48
+  ) {
+    firstNonZero += 1;
+  }
+  if (firstNonZero === extractedValue.length) {
+    return `${prefix}1`;
+  }
+
+  let digitAt = extractedValue.length - 1;
+  while (digitAt >= firstNonZero && extractedValue.charCodeAt(digitAt) === 57) {
+    digitAt -= 1;
+  }
+  if (digitAt < firstNonZero) {
+    return `${prefix}1${"0".repeat(extractedValue.length - firstNonZero)}`;
+  }
+  return `${prefix}${extractedValue.slice(
+    firstNonZero,
+    digitAt,
+  )}${String.fromCharCode(
+    extractedValue.charCodeAt(digitAt) + 1,
+  )}${"0".repeat(extractedValue.length - digitAt - 1)}`;
 }

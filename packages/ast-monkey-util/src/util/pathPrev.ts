@@ -28,10 +28,30 @@ export function pathPrev(str: string): null | string {
   if (!containsOnlyDigits(extractedValue)) {
     return null;
   }
-  let numericValue = +extractedValue;
-  if (numericValue <= 0) {
+  let prefix = lastDotAt === -1 ? "" : str.slice(0, lastDotAt + 1);
+  if (extractedValue.length < 16) {
+    let numericValue = +extractedValue;
+    return numericValue <= 0 ? null : `${prefix}${numericValue - 1}`;
+  }
+
+  let firstNonZero = 0;
+  while (
+    firstNonZero < extractedValue.length &&
+    extractedValue.charCodeAt(firstNonZero) === 48
+  ) {
+    firstNonZero += 1;
+  }
+  if (firstNonZero === extractedValue.length) {
     return null;
   }
-  let prefix = lastDotAt === -1 ? "" : str.slice(0, lastDotAt + 1);
-  return `${prefix}${numericValue - 1}`;
+
+  let digitAt = extractedValue.length - 1;
+  while (extractedValue.charCodeAt(digitAt) === 48) {
+    digitAt -= 1;
+  }
+  let decremented = extractedValue.charCodeAt(digitAt) - 49;
+  let result = `${extractedValue.slice(firstNonZero, digitAt)}${
+    decremented ? String.fromCharCode(decremented + 48) : ""
+  }${"9".repeat(extractedValue.length - digitAt - 1)}`;
+  return `${prefix}${result || "0"}`;
 }
