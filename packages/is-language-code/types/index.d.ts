@@ -8,6 +8,6 @@ type Res =
       res: false;
       message: string;
     };
-declare function isLangCode(str: string): Res;
+declare function isLangCode(str?: unknown): Res;
 
 export { isLangCode, version };

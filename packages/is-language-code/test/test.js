@@ -844,6 +844,30 @@ test(`63 - non-string input`, () => {
     },
     "63.01",
   );
+  equal(
+    isLangCode(),
+    {
+      res: false,
+      message: "Not a string given.",
+    },
+    "63.02",
+  );
+  equal(
+    isLangCode(undefined),
+    {
+      res: false,
+      message: "Not a string given.",
+    },
+    "63.03",
+  );
+  equal(
+    isLangCode(123),
+    {
+      res: false,
+      message: "Not a string given.",
+    },
+    "63.04",
+  );
 });
 
 test(`64 - calls do not append regular expressions to shared arrays`, () => {
