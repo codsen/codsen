@@ -50,6 +50,7 @@ test("08 - second arg null", () => {
   let input = ["a"];
   let result = pullAll(input, null);
   equal(result, ["a"], "08.01");
+  is.not(result, input, "08.02");
 });
 
 test("09 - second arg empty", () => {
@@ -62,6 +63,7 @@ test("10 - second arg empty", () => {
   let input = ["a"];
   let result = pullAll(input, []);
   equal(result, ["a"], "10.01");
+  is.not(result, input, "10.02");
 });
 
 test("11 - both empty", () => {
@@ -116,6 +118,23 @@ test("17 - uses a Set for large inputs and removal lists", () => {
     input.filter((value) => value % 2 === 0),
     "17.01",
   );
+});
+
+test("18 - no-removal copies preserve holes and shallow element identity", () => {
+  let shared = { marker: true };
+  let input = new Array(4);
+  input[1] = shared;
+  input[3] = undefined;
+
+  let result = pullAll(input, []);
+
+  is.not(result, input, "18.01");
+  equal(result.length, 4, "18.02");
+  equal(0 in result, false, "18.03");
+  equal(1 in result, true, "18.04");
+  equal(2 in result, false, "18.05");
+  equal(3 in result, true, "18.06");
+  is(result[1], shared, "18.07");
 });
 
 test.run();

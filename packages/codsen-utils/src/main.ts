@@ -835,8 +835,7 @@ export function pullAll<T, U>(input: T[] = [], remove: U[] = []) {
     return [];
   }
   if (!remove || !Array.isArray(remove) || !remove.length) {
-    // does nothing
-    return input;
+    return input.slice();
   }
   // Array#includes is faster while there is little to scan. What decides it
   // is the product of the two lengths, not either one alone - a short input
