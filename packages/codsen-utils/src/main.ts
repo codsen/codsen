@@ -1165,7 +1165,7 @@ interface ResolvedFlag {
 
 /** Matches a token which is entirely a number, so that `-3` is read as input
  * rather than as a bundle of the flags `-3` */
-const numericToken = /^-?\d+(?:\.\d*)?(?:e[+-]?\d+)?$/i;
+const numericToken = /^-?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i;
 
 /** "line-ending" -> "lineEnding" */
 function camelise(input: string): string {

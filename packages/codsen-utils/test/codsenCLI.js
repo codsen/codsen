@@ -297,12 +297,24 @@ test("30 - negative numbers are input, not flags", () => {
   equal(cli(["-3"]).input, ["-3"], "30.01");
   equal(cli(["a", "-3.5", "b"]).input, ["a", "-3.5", "b"], "30.02");
   equal(cli(["-3"]).flags, {}, "30.03");
+  equal(cli(["-.5"]).input, ["-.5"], "30.04");
+  equal(cli(["-.5e2"]).input, ["-.5e2"], "30.05");
+  equal(cli(["-."]).flags, { ".": true }, "30.06");
 });
 
 test("31 - a negative number can be a flag's value", () => {
   let flags = { pad: { type: "number", shortFlag: "p" } };
   equal(cli(["-p", "-3"], flags).flags, { pad: -3 }, "31.01");
   equal(cli(["--pad", "-3"], flags).flags, { pad: -3 }, "31.02");
+  equal(cli(["-p", "-.5"], flags).flags, { pad: -0.5 }, "31.03");
+  equal(cli(["--pad", "-.5"], flags).flags, { pad: -0.5 }, "31.04");
+  equal(cli(["-p-.5"], flags).flags, { pad: -0.5 }, "31.05");
+  equal(cli(["--pad=-.5"], flags).flags, { pad: -0.5 }, "31.06");
+  equal(cli(["-p-.5e-2"], flags).flags, { pad: -0.005 }, "31.07");
+  equal(cli(["--pad", "-.5e+2"], flags).flags, { pad: -50 }, "31.08");
+  let malformed = cli(["--pad", "-.", "tail"], flags);
+  equal(malformed.flags, { pad: undefined, ".": "tail" }, "31.09");
+  equal(malformed.input, [], "31.10");
 });
 
 test("32 - a flag will not swallow the flag after it", () => {
