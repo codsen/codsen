@@ -1286,4 +1286,67 @@ test(`23 - parent snapshot picks up a scalar rewritten in an earlier sibling`, (
   equal(gathered[2], { a: 10, b: 20, c: 3 }, "23.04");
 });
 
+test("24 - sparse and undefined array entries are compacted", () => {
+  let failures = [];
+
+  for (let length = 1; length <= 6; length += 1) {
+    for (let mask = 0; mask < 2 ** length; mask += 1) {
+      let input = new Array(length);
+      let expected = [];
+      for (let index = 0; index < length; index += 1) {
+        if (mask & (1 << index)) {
+          input[index] = `v${index}`;
+          expected.push(`v${index}`);
+        } else if (index % 2 === 0) {
+          input[index] = undefined;
+        }
+      }
+
+      let visited = [];
+      let actual = traverse(input, (value, _unused, innerObj) => {
+        visited.push([value, innerObj.path]);
+        return value;
+      });
+      let expectedVisits = expected.map((value, index) => [value, `${index}`]);
+
+      if (!isEqual(actual, expected) || !isEqual(visited, expectedVisits)) {
+        failures.push({
+          actual,
+          expected,
+          expectedVisits,
+          length,
+          mask,
+          visited,
+        });
+      }
+    }
+  }
+
+  equal(failures, [], "24.01");
+
+  let visited = [];
+  let mixed = new Array(6);
+  mixed[0] = undefined;
+  mixed[1] = "a";
+  mixed[2] = Number.NaN;
+  mixed[3] = "b";
+  mixed[5] = "c";
+  let actual = traverse(mixed, (value, _unused, innerObj) => {
+    visited.push([value, innerObj.path]);
+    return value;
+  });
+
+  equal(actual, ["a", "b", "c"], "24.02");
+  equal(
+    visited,
+    [
+      ["a", "0"],
+      [Number.NaN, "1"],
+      ["b", "1"],
+      ["c", "2"],
+    ],
+    "24.03",
+  );
+});
+
 test.run();

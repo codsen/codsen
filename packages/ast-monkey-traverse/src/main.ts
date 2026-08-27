@@ -112,6 +112,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
           // a splice shifts every later index, so no single-slot patch
           // describes it - the next snapshot has to be cloned outright
           pendingSlot = undefined;
+          i -= 1;
           continue;
         }
         let currentPath = path ? `${path}.${i}` : `${i}`;
