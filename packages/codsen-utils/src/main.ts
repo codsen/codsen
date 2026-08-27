@@ -260,10 +260,15 @@ const regexpFlagsGetter = Object.getOwnPropertyDescriptor(
   RegExp.prototype,
   "flags",
 )?.get as (this: RegExp) => string;
+const regexpGlobalGetter = Object.getOwnPropertyDescriptor(
+  RegExp.prototype,
+  "global",
+)?.get as (this: RegExp) => boolean;
 const regexpSourceGetter = Object.getOwnPropertyDescriptor(
   RegExp.prototype,
   "source",
 )?.get as (this: RegExp) => string;
+const regexpTest = RegExp.prototype.test;
 let urlHrefGetter: ((this: URL) => string) | undefined;
 
 function isArrayBufferObject(value: object): value is ArrayBuffer {
@@ -677,25 +682,24 @@ export function isNull(something: unknown): something is null {
 // ----------------------------------------------------------------
 
 export function isRegExp(something: unknown): something is RegExp {
-  if (something instanceof RegExp) {
-    return true;
-  }
   if (something === null || typeof something !== "object") {
     return false;
   }
-  // Object#toString reads the [[RegExpMatcher]] slot, so it still clears the
-  // cross-realm regexes instanceof misses, and it rejects everything else
-  // without the getter below constructing a TypeError - two orders of
-  // magnitude of the cost of this call sat in that throw. Symbol.toStringTag
-  // can forge the tag, so a pass still has to be confirmed.
-  if (toStringTagOf.call(something) !== "[object RegExp]") {
-    // RegExp.prototype is an ordinary object carrying no [[RegExpMatcher]],
-    // so it fails the tag, yet the getter below answers "(?:)" for it rather
-    // than throwing - a legacy special case in the spec. Kept so this stays
-    // the answer it has always given, at the cost of one reference compare.
-    return something === RegExp.prototype;
-  }
   try {
+    if (something instanceof RegExp) {
+      // The property access is the quickest same-realm brand check. A RegExp
+      // proxy reaches the intrinsic getter with the proxy as receiver and
+      // throws, while ordinary subclasses retain the inherited getter.
+      void something.source;
+      return true;
+    }
+    if (toStringTagOf.call(something) !== "[object RegExp]") {
+      return false;
+    }
+    // The intrinsic getter verifies the [[RegExpMatcher]] slot. This rejects
+    // proxies and forged tags, while accepting subclasses and cross-realm
+    // expressions. Both same- and cross-realm RegExp prototypes fail the tag
+    // check above, avoiding the source getter's legacy prototype special case.
     regexpSourceGetter.call(something as RegExp);
     return true;
   } catch {
@@ -1039,11 +1043,12 @@ export function includes(
     }
 
     if (isRegExp(value)) {
-      if (value.global) {
+      const isGlobal = regexpGlobalGetter.call(value);
+      if (isGlobal) {
         value.lastIndex = 0;
       }
-      const matched = value.test(whatToMatch);
-      if (value.global) {
+      const matched = regexpTest.call(value, whatToMatch);
+      if (isGlobal) {
         value.lastIndex = 0;
       }
       if (matched) {

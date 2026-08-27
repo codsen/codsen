@@ -72,4 +72,25 @@ test("06 - ordinary non-global regexps leave their last index alone", () => {
   equal(regexp.lastIndex, 2, "06.02");
 });
 
+test("07 - unusable and overridden regex-like values do not throw", () => {
+  class ThrowingAccessors extends RegExp {
+    get global() {
+      throw new Error("must not run");
+    }
+
+    test() {
+      throw new Error("must not run");
+    }
+  }
+
+  let overridden = new ThrowingAccessors("app", "g");
+  overridden.lastIndex = 2;
+
+  equal(includes([RegExp.prototype], "apple"), false, "07.01");
+  equal(includes([new Proxy(/app/, {})], "apple"), false, "07.02");
+  equal(includes([{ [Symbol.toStringTag]: "RegExp" }], "apple"), false, "07.03");
+  equal(includes([overridden], "apple"), true, "07.04");
+  equal(overridden.lastIndex, 0, "07.05");
+});
+
 test.run();
