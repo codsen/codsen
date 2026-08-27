@@ -34,10 +34,22 @@ interface Res {
    * Observational fields do not affect the transformation. */
   log: {
     timeTakenInMilliseconds: number;
+    /** Legacy input length in UTF-16 code units. */
     originalLength: number;
+    /** Legacy output length in UTF-16 code units. */
     cleanedLength: number;
+    /** Legacy name: UTF-16 code units saved, not bytes. */
     bytesSaved: number;
+    /** Legacy percentage calculated from UTF-16 code units. */
     percentageReducedOfOriginal: number;
+    originalLengthInCodeUnits: number;
+    cleanedLengthInCodeUnits: number;
+    codeUnitsSaved: number;
+    percentageReducedOfOriginalInCodeUnits: number;
+    originalLengthInUtf8Bytes: number;
+    cleanedLengthInUtf8Bytes: number;
+    utf8BytesSaved: number;
+    percentageReducedOfOriginalInUtf8Bytes: number;
   };
   applicableOpts: {
     removeHTMLComments: boolean;

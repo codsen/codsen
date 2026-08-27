@@ -40,6 +40,36 @@ function isHtmlNameChar(char: string | undefined): boolean {
     (isWordCharCode(char.charCodeAt(0)) || `:-.`.includes(char))
   );
 }
+
+function utf8ByteLength(value: string): number {
+  let bytes = 0;
+
+  for (let i = 0; i < value.length; i++) {
+    const codeUnit = value.charCodeAt(i);
+    if (codeUnit <= 0x7f) {
+      bytes += 1;
+    } else if (codeUnit <= 0x7ff) {
+      bytes += 2;
+    } else if (
+      codeUnit >= 0xd800 &&
+      codeUnit <= 0xdbff &&
+      i + 1 < value.length
+    ) {
+      const nextCodeUnit = value.charCodeAt(i + 1);
+      if (nextCodeUnit >= 0xdc00 && nextCodeUnit <= 0xdfff) {
+        bytes += 4;
+        i += 1;
+      } else {
+        bytes += 3;
+      }
+    } else {
+      bytes += 3;
+    }
+  }
+
+  return bytes;
+}
+
 export interface Opts {
   lineLengthLimit: number;
   removeIndentations: boolean;
@@ -161,10 +191,22 @@ export interface Res {
    * Observational fields do not affect the transformation. */
   log: {
     timeTakenInMilliseconds: number;
+    /** Legacy input length in UTF-16 code units. */
     originalLength: number;
+    /** Legacy output length in UTF-16 code units. */
     cleanedLength: number;
+    /** Legacy name: UTF-16 code units saved, not bytes. */
     bytesSaved: number;
+    /** Legacy percentage calculated from UTF-16 code units. */
     percentageReducedOfOriginal: number;
+    originalLengthInCodeUnits: number;
+    cleanedLengthInCodeUnits: number;
+    codeUnitsSaved: number;
+    percentageReducedOfOriginalInCodeUnits: number;
+    originalLengthInUtf8Bytes: number;
+    cleanedLengthInUtf8Bytes: number;
+    utf8BytesSaved: number;
+    percentageReducedOfOriginalInUtf8Bytes: number;
   };
   applicableOpts: {
     removeHTMLComments: boolean;
@@ -503,6 +545,42 @@ function crush(str: string, opts?: InputOpts | null): Res {
   // it will be used to trim start of the file.
 
   let len = str.length;
+
+  function createLog(cleaned: string, unchanged = false): Res["log"] {
+    const cleanedLengthInCodeUnits = cleaned.length;
+    const codeUnitsSaved = Math.max(len - cleanedLengthInCodeUnits, 0);
+    const originalLengthInUtf8Bytes = utf8ByteLength(str);
+    const cleanedLengthInUtf8Bytes = unchanged
+      ? originalLengthInUtf8Bytes
+      : utf8ByteLength(cleaned);
+    const utf8BytesSaved = Math.max(
+      originalLengthInUtf8Bytes - cleanedLengthInUtf8Bytes,
+      0,
+    );
+
+    return {
+      timeTakenInMilliseconds: Date.now() - start,
+      originalLength: len,
+      cleanedLength: cleanedLengthInCodeUnits,
+      bytesSaved: codeUnitsSaved,
+      percentageReducedOfOriginal: len
+        ? Math.round((codeUnitsSaved * 100) / len)
+        : 0,
+      originalLengthInCodeUnits: len,
+      cleanedLengthInCodeUnits,
+      codeUnitsSaved,
+      percentageReducedOfOriginalInCodeUnits: len
+        ? Math.round((codeUnitsSaved * 100) / len)
+        : 0,
+      originalLengthInUtf8Bytes,
+      cleanedLengthInUtf8Bytes,
+      utf8BytesSaved,
+      percentageReducedOfOriginalInUtf8Bytes: originalLengthInUtf8Bytes
+        ? Math.round((utf8BytesSaved * 100) / originalLengthInUtf8Bytes)
+        : 0,
+    };
+  }
+
   // index of the first non-whitespace character, or "len" when the input is
   // whitespace-only; lets the loop answer "is there content to the left of
   // i?" in constant time. Walked rather than derived from trimStart(), which
@@ -2573,17 +2651,8 @@ function crush(str: string, opts?: InputOpts | null): Res {
         );
       DEV &&
         console.log(`\u001b[${90}m${`\n      ██ FIN ██\n\n`}\u001b[${39}m`);
-      let resLen = res.length;
       return {
-        log: {
-          timeTakenInMilliseconds: Date.now() - start,
-          originalLength: len,
-          cleanedLength: resLen,
-          bytesSaved: Math.max(len - resLen, 0),
-          percentageReducedOfOriginal: len
-            ? Math.round((Math.max(len - resLen, 0) * 100) / len)
-            : 0,
-        },
+        log: createLog(res),
         ranges,
         applicableOpts,
         result: res,
@@ -2608,13 +2677,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
   DEV && console.log();
 
   return {
-    log: {
-      timeTakenInMilliseconds: Date.now() - start,
-      originalLength: len,
-      cleanedLength: len,
-      bytesSaved: 0,
-      percentageReducedOfOriginal: 0,
-    },
+    log: createLog(str, true),
     applicableOpts,
     ranges: null,
     result: str,
