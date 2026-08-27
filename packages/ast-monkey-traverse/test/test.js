@@ -1412,6 +1412,7 @@ test("26 - in-place container edits update later parent snapshots", () => {
     { a: { nested: { z: 2 }, remove: true, x: 1 }, b: 0 },
     (key, value, innerObj) => {
       if (key === "a") {
+        void innerObj.parent;
         value.x = 1;
         value.x = 9;
         value.nested.z = 8;
@@ -1456,6 +1457,7 @@ test("26 - in-place container edits update later parent snapshots", () => {
     { a: [1, { x: 2 }], b: 0 },
     (key, value, innerObj) => {
       if (key === "a") {
+        void innerObj.parent;
         value.push(3);
         value[1].x = 9;
         value.splice(0, 1);
@@ -1598,6 +1600,15 @@ test("29 - unsupported graphs and property models fail early", () => {
     enumerable: false,
     value: 1,
   });
+  let accessorArrayCalls = 0;
+  let accessorArray = [1];
+  Object.defineProperty(accessorArray, "0", {
+    enumerable: true,
+    get: () => {
+      accessorArrayCalls += 1;
+      return 1;
+    },
+  });
   let customArray = [1];
   Object.setPrototypeOf(customArray, {});
   class CustomValue {
@@ -1605,6 +1616,7 @@ test("29 - unsupported graphs and property models fail early", () => {
   }
 
   let invalidInputs = [
+    () => 1,
     selfCycle,
     { a: shared, b: shared },
     new Date(0),
@@ -1621,6 +1633,7 @@ test("29 - unsupported graphs and property models fail early", () => {
     extraArray,
     symbolArray,
     nonEnumerableArray,
+    accessorArray,
     customArray,
   ];
   let callbackCalls = 0;
@@ -1638,8 +1651,9 @@ test("29 - unsupported graphs and property models fail early", () => {
     );
   });
 
-  equal(callbackCalls, 0, "29.18");
-  equal(getterCalls, 0, "29.19");
+  equal(callbackCalls, 0, "29.20");
+  equal(getterCalls, 0, "29.21");
+  equal(accessorArrayCalls, 0, "29.22");
 
   let visited = [];
   Object.defineProperty(Object.prototype, "inheritedTraversalProbe", {
@@ -1652,12 +1666,12 @@ test("29 - unsupported graphs and property models fail early", () => {
       visited.push(key);
       return value;
     });
-    equal(Object.keys(actual), ["own"], "29.20");
-    equal(actual.own, 1, "29.21");
+    equal(Object.keys(actual), ["own"], "29.23");
+    equal(actual.own, 1, "29.24");
   } finally {
     delete Object.prototype.inheritedTraversalProbe;
   }
-  equal(visited, ["own"], "29.22");
+  equal(visited, ["own"], "29.25");
 });
 
 test("30 - a depth-10000 unary tree is stack-safe", () => {
@@ -1835,6 +1849,65 @@ test("34 - callback replacements must stay inside the tree model", () => {
       `34.${`${index + 1}`.padStart(2, "0")}`,
     );
   });
+});
+
+test("35 - array snapshots track compaction and callback deletion", () => {
+  let input = new Array(5);
+  input[0] = "a";
+  input[2] = "b";
+  input[3] = "drop";
+  input[4] = "c";
+  let parents = [];
+  let actual = traverse(input, (value, _unused, innerObj) => {
+    parents.push(innerObj.parent);
+    return value === "drop" ? Number.NaN : value;
+  });
+
+  equal(actual, ["a", "b", "c"], "35.01");
+  let initial = new Array(5);
+  initial[0] = "a";
+  initial[2] = "b";
+  initial[3] = "drop";
+  initial[4] = "c";
+  equal(parents[0], initial, "35.02");
+  equal(parents[1], ["a", "b", "drop", "c"], "35.03");
+  equal(parents[2], ["a", "b", "drop", "c"], "35.04");
+  equal(parents[3], ["a", "b", "c"], "35.05");
+});
+
+test("36 - deep array metadata remains lazy and complete", () => {
+  let depthLimit = 101;
+  let input = [];
+  let cursor = input;
+  for (let depth = 0; depth < depthLimit; depth += 1) {
+    cursor[0] = [];
+    cursor = cursor[0];
+  }
+
+  let finalMetadata;
+  traverse(input, (value, _unused, innerObj) => {
+    if (innerObj.depth === depthLimit - 1) {
+      finalMetadata = {
+        parent: innerObj.parent,
+        parentType: innerObj.parentType,
+        path: innerObj.path,
+        pathSegments: innerObj.pathSegments,
+        topmostKey: innerObj.topmostKey,
+      };
+    }
+    return value;
+  });
+
+  equal(finalMetadata.parent, [[]], "36.01");
+  equal(finalMetadata.parentType, "array", "36.02");
+  equal(finalMetadata.pathSegments.length, depthLimit, "36.03");
+  equal(finalMetadata.path.split(".").length, depthLimit, "36.04");
+  equal(finalMetadata.topmostKey, undefined, "36.05");
+  equal(
+    Object.getOwnPropertyDescriptor(finalMetadata.parent, Symbol.iterator),
+    undefined,
+    "36.06",
+  );
 });
 
 test.run();

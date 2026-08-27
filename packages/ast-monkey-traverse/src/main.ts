@@ -59,74 +59,6 @@ function isArrayIndex(key: string, length: number): boolean {
   );
 }
 
-function validateTree(value: unknown): asserts value is TreeValue {
-  let pending = [value];
-  let seen = new WeakSet<object>();
-
-  while (pending.length) {
-    let current = pending.pop();
-    if (
-      current === null ||
-      current === undefined ||
-      typeof current === "string" ||
-      typeof current === "number" ||
-      typeof current === "boolean"
-    ) {
-      continue;
-    }
-    if (typeof current !== "object") {
-      invalidTree(`encountered an unsupported ${typeof current} value`);
-    }
-    if (seen.has(current)) {
-      invalidTree("encountered a cycle or repeated object reference");
-    }
-    seen.add(current);
-
-    if (Array.isArray(current)) {
-      if (Object.getPrototypeOf(current) !== Array.prototype) {
-        invalidTree("encountered an array with a custom prototype");
-      }
-      for (let key of Reflect.ownKeys(current)) {
-        if (key === "length") {
-          continue;
-        }
-        if (typeof key !== "string") {
-          invalidTree("encountered a symbol-keyed array property");
-        }
-        if (!isArrayIndex(key, current.length)) {
-          invalidTree(
-            `encountered the non-index array property ${JSON.stringify(key)}`,
-          );
-        }
-        let descriptor = Object.getOwnPropertyDescriptor(current, key);
-        if (!descriptor?.enumerable || !("value" in descriptor)) {
-          invalidTree(
-            `encountered an accessor or non-enumerable array index ${key}`,
-          );
-        }
-        pending.push(descriptor.value);
-      }
-      continue;
-    }
-
-    if (Object.getPrototypeOf(current) !== Object.prototype) {
-      invalidTree("encountered a non-plain or custom-prototype object");
-    }
-    for (let key of Reflect.ownKeys(current)) {
-      if (typeof key !== "string") {
-        invalidTree("encountered a symbol-keyed object property");
-      }
-      let descriptor = Object.getOwnPropertyDescriptor(current, key);
-      if (!descriptor?.enumerable || !("value" in descriptor)) {
-        invalidTree(
-          `encountered an accessor or non-enumerable property ${JSON.stringify(key)}`,
-        );
-      }
-      pending.push(descriptor.value);
-    }
-  }
-}
-
 interface CloneFrame {
   source: TreeArray | TreeObject;
   target: TreeArray | TreeObject;
@@ -143,75 +75,99 @@ function setOwnValue(
   key: string,
   value: TreeValue,
 ): void {
-  Object.defineProperty(target, key, {
-    configurable: true,
-    enumerable: true,
-    value,
-    writable: true,
-  });
+  if (key === "__proto__") {
+    Object.defineProperty(target, key, {
+      configurable: true,
+      enumerable: true,
+      value,
+      writable: true,
+    });
+  } else {
+    (target as TreeObject)[key] = value;
+  }
 }
 
-// Clones a validated tree without borrowing the JavaScript call stack. When a
+function isTreePrimitive(value: unknown): value is TreePrimitive {
+  return (
+    value === null ||
+    value === undefined ||
+    typeof value === "string" ||
+    typeof value === "number" ||
+    typeof value === "boolean"
+  );
+}
+
+// Validates and clones without borrowing the JavaScript call stack. When a
 // callback edited a container, enumerable accessors are read once and become
 // ordinary data properties, matching the historical clone-before-descent
-// behaviour. Everything else is checked by validateTree() afterwards.
-function cloneTree(value: TreeValue, normalizeAccessors = false): TreeValue {
-  if (typeof value !== "object" || value === null) {
+// behaviour.
+function cloneTree(value: unknown, normalizeAccessors = false): TreeValue {
+  if (isTreePrimitive(value)) {
     return value;
   }
+  if (typeof value !== "object") {
+    invalidTree(`encountered an unsupported ${typeof value} value`);
+  }
 
-  let root = createContainer(value);
-  let pending: CloneFrame[] = [{ source: value, target: root }];
-  let seen = new WeakSet<object>([value]);
+  let sourceRoot = value as TreeArray | TreeObject;
+  let root = createContainer(sourceRoot);
+  let pending: CloneFrame[] = [{ source: sourceRoot, target: root }];
+  let seen = new WeakSet<object>([sourceRoot]);
 
   while (pending.length) {
     let frame = pending.pop() as CloneFrame;
     let { source, target } = frame;
-    if (normalizeAccessors) {
-      if (Array.isArray(source)) {
-        if (Object.getPrototypeOf(source) !== Array.prototype) {
-          invalidTree("encountered an array with a custom prototype");
-        }
-        for (let key of Reflect.ownKeys(source)) {
-          if (key === "length") {
-            continue;
-          }
-          if (typeof key !== "string") {
-            invalidTree("encountered a symbol-keyed array property");
-          }
-          if (!isArrayIndex(key, source.length)) {
-            invalidTree(
-              `encountered the non-index array property ${JSON.stringify(key)}`,
-            );
-          }
-          if (!Object.getOwnPropertyDescriptor(source, key)?.enumerable) {
-            invalidTree(`encountered a non-enumerable array index ${key}`);
-          }
-        }
-      } else {
-        if (Object.getPrototypeOf(source) !== Object.prototype) {
-          invalidTree("encountered a non-plain or custom-prototype object");
-        }
-        for (let key of Reflect.ownKeys(source)) {
-          if (typeof key !== "string") {
-            invalidTree("encountered a symbol-keyed object property");
-          }
-          if (!Object.getOwnPropertyDescriptor(source, key)?.enumerable) {
-            invalidTree(
-              `encountered a non-enumerable property ${JSON.stringify(key)}`,
-            );
-          }
-        }
-      }
+    let arraySource = Array.isArray(source);
+    if (
+      Object.getPrototypeOf(source) !==
+      (arraySource ? Array.prototype : Object.prototype)
+    ) {
+      invalidTree(
+        arraySource
+          ? "encountered an array with a custom prototype"
+          : "encountered a non-plain or custom-prototype object",
+      );
     }
-    for (let key of Object.keys(source)) {
+
+    for (let key of Reflect.ownKeys(source)) {
+      if (arraySource && key === "length") {
+        continue;
+      }
+      if (typeof key !== "string") {
+        invalidTree(
+          arraySource
+            ? "encountered a symbol-keyed array property"
+            : "encountered a symbol-keyed object property",
+        );
+      }
+      if (arraySource && !isArrayIndex(key, (source as TreeArray).length)) {
+        invalidTree(
+          `encountered the non-index array property ${JSON.stringify(key)}`,
+        );
+      }
       let descriptor = Object.getOwnPropertyDescriptor(
         source,
         key,
       ) as PropertyDescriptor;
+      if (!descriptor.enumerable) {
+        invalidTree(
+          arraySource
+            ? `encountered a non-enumerable array index ${key}`
+            : `encountered a non-enumerable property ${JSON.stringify(key)}`,
+        );
+      }
+      if (!("value" in descriptor) && !normalizeAccessors) {
+        invalidTree(
+          arraySource
+            ? `encountered an accessor array index ${key}`
+            : `encountered an accessor property ${JSON.stringify(key)}`,
+        );
+      }
       let child =
         "value" in descriptor ? descriptor.value : (source as TreeObject)[key];
-      if (typeof child === "object" && child !== null) {
+      if (isTreePrimitive(child)) {
+        setOwnValue(target, key, child);
+      } else if (typeof child === "object") {
         if (seen.has(child)) {
           invalidTree("encountered a cycle or repeated object reference");
         }
@@ -223,7 +179,7 @@ function cloneTree(value: TreeValue, normalizeAccessors = false): TreeValue {
           target: childTarget,
         });
       } else {
-        setOwnValue(target, key, child as TreeValue);
+        invalidTree(`encountered an unsupported ${typeof child} value`);
       }
     }
   }
@@ -327,7 +283,10 @@ function writeSnapshot(
   if (history) {
     history.push({ value, version });
   } else {
-    node.entries.set(key, [{ value, version }]);
+    node.entries.set(key, [
+      { value: deletedSnapshot, version: version - 1 },
+      { value, version },
+    ]);
   }
 }
 
@@ -428,62 +387,6 @@ function readonlySnapshot(node: SnapshotNode, version: number): any {
   return wrap(node);
 }
 
-interface MutableView {
-  changed: () => boolean;
-  proxy: TreeArray | TreeObject;
-  unwrap: (value: TreeValue) => TreeValue;
-}
-
-function mutableView(value: TreeArray | TreeObject): MutableView {
-  let changed = false;
-  let targets = new WeakMap<object, object>();
-  let proxies = new WeakMap<object, object>();
-  let handler: ProxyHandler<object> = {
-    defineProperty: (target, property, descriptor) => {
-      changed = true;
-      return Reflect.defineProperty(target, property, descriptor);
-    },
-    deleteProperty: (target, property) => {
-      changed = true;
-      return Reflect.deleteProperty(target, property);
-    },
-    get: (target, property, receiver) =>
-      wrap(Reflect.get(target, property, receiver)),
-    set: (target, property, child, receiver) => {
-      changed = true;
-      return Reflect.set(target, property, unwrap(child), receiver);
-    },
-    setPrototypeOf: (target, prototype) => {
-      changed = true;
-      return Reflect.setPrototypeOf(target, prototype);
-    },
-  };
-
-  function wrap(target: any): any {
-    if (typeof target !== "object" || target === null) {
-      return target;
-    }
-    let existing = proxies.get(target);
-    if (existing) {
-      return existing;
-    }
-    let proxy = new Proxy(target, handler);
-    proxies.set(target, proxy);
-    targets.set(proxy, target);
-    return proxy;
-  }
-
-  function unwrap(child: any): any {
-    return targets.get(child) || child;
-  }
-
-  return {
-    changed: () => changed,
-    proxy: wrap(value),
-    unwrap,
-  };
-}
-
 interface PathNode {
   parent?: PathNode;
   segment: string;
@@ -507,17 +410,16 @@ function legacyPath(segments: string[]): string {
   return result;
 }
 
-/**
- * Utility library to traverse AST
- */
 interface TraverseFrame {
   container: TreeArray | TreeObject;
   depth: number;
   index: number;
   keys: string[];
   parentKey: string | null;
+  path?: string;
   pathNode?: PathNode;
-  snapshot: SnapshotNode;
+  pathSegments?: string[];
+  snapshot?: SnapshotNode;
   topmostKey?: string;
 }
 
@@ -530,13 +432,10 @@ function traverse(tree1: TreeValue, cb1: Callback): TreeValue {
       `ast-monkey-traverse/traverse(): [THROW_ID_01] The second argument must be a callback function. It was ${typeof cb1}.`,
     );
   }
-  validateTree(tree1);
-
   let tree = cloneTree(tree1);
   if (typeof tree !== "object" || tree === null) {
     return tree;
   }
-  let rootSnapshot = snapshotTree(tree) as SnapshotNode;
   let version = 0;
   let stop: Stop = { now: false };
   let stack: TraverseFrame[] = [
@@ -546,7 +445,6 @@ function traverse(tree1: TreeValue, cb1: Callback): TreeValue {
       index: 0,
       keys: Array.isArray(tree) ? [] : Object.keys(tree),
       parentKey: null,
-      snapshot: rootSnapshot,
     },
   ];
 
@@ -568,7 +466,9 @@ function traverse(tree1: TreeValue, cb1: Callback): TreeValue {
       if (arrayContainer[frame.index] === undefined) {
         arrayContainer.splice(frame.index, 1);
         version += 1;
-        spliceSnapshot(frame.snapshot, frame.index, version);
+        if (frame.snapshot) {
+          spliceSnapshot(frame.snapshot, frame.index, version);
+        }
         continue;
       }
       slot = `${frame.index}`;
@@ -584,40 +484,63 @@ function traverse(tree1: TreeValue, cb1: Callback): TreeValue {
 
     let currentValue = (frame.container as TreeObject)[slot];
     let pathNode: PathNode = { parent: frame.pathNode, segment: slot };
-    let cachedSegments: string[] | undefined;
-    let cachedPath: string | undefined;
     let topmostKey =
       frame.depth === 0 && !arrayParent ? slot : frame.topmostKey;
-    let parentView = readonlySnapshot(frame.snapshot, version);
-    let innerObj = {
-      depth: frame.depth,
-      get path() {
-        cachedSegments ||= materializePath(pathNode);
-        cachedPath ??= legacyPath(cachedSegments);
-        return cachedPath;
-      },
-      get pathSegments() {
-        cachedSegments ||= materializePath(pathNode);
-        return cachedSegments;
-      },
-      parent: parentView,
-      parentType: arrayParent ? ("array" as const) : ("object" as const),
-      parentKey: frame.parentKey,
-      ...(topmostKey === undefined ? {} : { topmostKey }),
-    } satisfies InnerObj;
+    let parentView: ReadonlyTreeContainer | undefined;
+    let callbackVersion = version;
+    let currentPath: string | undefined;
+    let currentPathSegments: string[] | undefined;
+    let innerObj: InnerObj;
 
-    let mutable =
-      typeof currentValue === "object" && currentValue !== null
-        ? mutableView(currentValue)
-        : undefined;
-    let callbackValue = mutable ? mutable.proxy : currentValue;
+    if (frame.depth < 100) {
+      currentPath = frame.path ? `${frame.path}.${slot}` : slot;
+      currentPathSegments = frame.pathSegments
+        ? [...frame.pathSegments, slot]
+        : [slot];
+      innerObj = {
+        depth: frame.depth,
+        path: currentPath,
+        pathSegments: currentPathSegments,
+        get parent(): ReadonlyTreeContainer {
+          frame.snapshot ||= snapshotTree(frame.container);
+          parentView ||= readonlySnapshot(frame.snapshot, callbackVersion);
+          return parentView as ReadonlyTreeContainer;
+        },
+        parentType: arrayParent ? "array" : "object",
+        parentKey: frame.parentKey,
+        ...(topmostKey === undefined ? {} : { topmostKey }),
+      };
+    } else {
+      let cachedSegments: string[] | undefined;
+      let cachedPath: string | undefined;
+      innerObj = {
+        depth: frame.depth,
+        get path() {
+          cachedSegments ||= materializePath(pathNode);
+          cachedPath ??= legacyPath(cachedSegments);
+          return cachedPath;
+        },
+        get pathSegments() {
+          cachedSegments ||= materializePath(pathNode);
+          return cachedSegments;
+        },
+        get parent(): ReadonlyTreeContainer {
+          frame.snapshot ||= snapshotTree(frame.container);
+          parentView ||= readonlySnapshot(frame.snapshot, callbackVersion);
+          return parentView as ReadonlyTreeContainer;
+        },
+        parentType: arrayParent ? "array" : "object",
+        parentKey: frame.parentKey,
+        ...(topmostKey === undefined ? {} : { topmostKey }),
+      };
+    }
+
     let result = cb1(
-      arrayParent ? (callbackValue as Exclude<TreeValue, undefined>) : slot,
-      arrayParent ? undefined : callbackValue,
+      arrayParent ? (currentValue as Exclude<TreeValue, undefined>) : slot,
+      arrayParent ? undefined : currentValue,
       innerObj,
       stop,
     );
-    result = mutable ? mutable.unwrap(result) : result;
 
     let removed = Number.isNaN(result);
     let resultIsContainer = typeof result === "object" && result !== null;
@@ -627,21 +550,20 @@ function traverse(tree1: TreeValue, cb1: Callback): TreeValue {
       resultIsContainer &&
       currentIsContainer &&
       result === currentValue &&
-      Boolean(mutable?.changed());
+      Boolean(frame.snapshot);
     let adopted = result;
-    let snapshotValue: SnapshotValue | undefined;
+    let snapshotValue: SnapshotNode | undefined;
+
+    if (!removed && !resultIsContainer && !isTreePrimitive(result)) {
+      invalidTree(`encountered an unsupported ${typeof result} value`);
+    }
 
     if (!removed && resultIsContainer) {
       if (result !== currentValue || changedContainer) {
         adopted = cloneTree(result, true);
-        validateTree(adopted);
-        snapshotValue = snapshotTree(adopted as TreeArray | TreeObject);
-      } else {
-        snapshotValue = readSnapshot(
-          frame.snapshot,
-          slot,
-          version,
-        ) as SnapshotNode;
+        if (frame.snapshot) {
+          snapshotValue = snapshotTree(adopted as TreeArray | TreeObject);
+        }
       }
     }
 
@@ -649,25 +571,31 @@ function traverse(tree1: TreeValue, cb1: Callback): TreeValue {
       if (arrayContainer) {
         arrayContainer.splice(frame.index, 1);
         version += 1;
-        spliceSnapshot(frame.snapshot, frame.index, version);
+        if (frame.snapshot) {
+          spliceSnapshot(frame.snapshot, frame.index, version);
+        }
       } else {
         delete (frame.container as TreeObject)[slot];
         version += 1;
-        writeSnapshot(frame.snapshot, slot, deletedSnapshot, version);
+        if (frame.snapshot) {
+          writeSnapshot(frame.snapshot, slot, deletedSnapshot, version);
+        }
         frame.index += 1;
       }
     } else {
       if (adopted !== currentValue || changedContainer) {
         setOwnValue(frame.container, slot, adopted);
         version += 1;
-        writeSnapshot(
-          frame.snapshot,
-          slot,
-          snapshotValue === undefined
-            ? (adopted as TreePrimitive)
-            : snapshotValue,
-          version,
-        );
+        if (frame.snapshot) {
+          writeSnapshot(
+            frame.snapshot,
+            slot,
+            snapshotValue === undefined
+              ? (adopted as TreePrimitive)
+              : snapshotValue,
+            version,
+          );
+        }
       }
       frame.index += 1;
 
@@ -678,8 +606,12 @@ function traverse(tree1: TreeValue, cb1: Callback): TreeValue {
           index: 0,
           keys: Array.isArray(adopted) ? [] : Object.keys(adopted),
           parentKey: slot,
+          ...(currentPath === undefined ? {} : { path: currentPath }),
           pathNode,
-          snapshot: snapshotValue as SnapshotNode,
+          ...(currentPathSegments === undefined
+            ? {}
+            : { pathSegments: currentPathSegments }),
+          ...(snapshotValue ? { snapshot: snapshotValue } : {}),
           ...(topmostKey === undefined ? {} : { topmostKey }),
         });
       }
@@ -688,7 +620,6 @@ function traverse(tree1: TreeValue, cb1: Callback): TreeValue {
 
   DEV && stop.now && console.log(`[31mBREAK[39m`);
   DEV && console.log("just returning tree", tree);
-  validateTree(tree);
   return tree;
 }
 
