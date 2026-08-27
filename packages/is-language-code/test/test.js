@@ -966,4 +966,55 @@ test(`68 - registered subtags are diagnosed by type and position`, () => {
   );
 });
 
+test(`69 - deprecated language subtags remain valid`, () => {
+  equal(
+    isLangCode("iw"),
+    {
+      res: true,
+      message: null,
+    },
+    "69.01",
+  );
+  equal(
+    isLangCode("ji"),
+    {
+      res: true,
+      message: null,
+    },
+    "69.02",
+  );
+  equal(
+    isLangCode("in"),
+    {
+      res: true,
+      message: null,
+    },
+    "69.03",
+  );
+  equal(
+    isLangCode("he"),
+    {
+      res: true,
+      message: null,
+    },
+    "69.04",
+  );
+  equal(
+    isLangCode("yi"),
+    {
+      res: true,
+      message: null,
+    },
+    "69.05",
+  );
+  equal(
+    isLangCode("id"),
+    {
+      res: true,
+      message: null,
+    },
+    "69.06",
+  );
+});
+
 test.run();
