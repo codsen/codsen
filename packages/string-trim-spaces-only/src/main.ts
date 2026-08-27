@@ -37,92 +37,110 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
       `string-trim-spaces-only/trimSpaces(): [THROW_ID_01] input must be string! It was given as ${typeof str}, equal to:\n${formatDiagnosticValue(str, 4)}`,
     );
   }
-  // resolvedOpts preparation:
-  let resolvedOpts = { ...defaults, ...opts };
+  // Avoid allocating a merged object on the dominant no-options path while
+  // still snapshotting every exported default once per call.
+  const resolvedOpts = opts ? { ...defaults, ...opts } : defaults;
+  const { classicTrim, cr, lf, tab, space, nbsp } = resolvedOpts;
 
   function check(char: string): boolean {
     return (
-      (resolvedOpts.classicTrim && !char.trim()) ||
-      (!resolvedOpts.classicTrim &&
-        ((resolvedOpts.space && char === " ") ||
-          (resolvedOpts.cr && char === "\r") ||
-          (resolvedOpts.lf && char === "\n") ||
-          (resolvedOpts.tab && char === "\t") ||
-          (resolvedOpts.nbsp && char === "\u00a0")))
+      (classicTrim && !char.trim()) ||
+      (!classicTrim &&
+        ((space && char === " ") ||
+          (cr && char === "\r") ||
+          (lf && char === "\n") ||
+          (tab && char === "\t") ||
+          (nbsp && char === "\u00a0")))
     );
   }
 
   // action:
-  let newStart;
-  let newEnd;
   DEV && console.log("about to check the length");
-  if (str.length) {
-    if (check(str[0])) {
-      DEV &&
-        console.log(
-          `\u001b[${36}m${`traverse forwards to trim heads`}\u001b[${39}m`,
-        );
-      for (let i = 0, len = str.length; i < len; i++) {
-        DEV &&
-          console.log(
-            `\u001b[${36}m${`------ str[${i}] = ${JSON.stringify(
-              str[i],
-              null,
-              0,
-            )}`}\u001b[${39}m`,
-          );
-        if (!check(str[i])) {
-          newStart = i;
+  const len = str.length;
+  if (len) {
+    let start = 0;
+    while (start < len) {
+      if (!check(str[start])) {
+        if (start) {
+          DEV &&
+            console.log(
+              `\u001b[${36}m${`------ str[${start}] = ${JSON.stringify(
+                str[start],
+                null,
+                0,
+              )}`}\u001b[${39}m`,
+            );
           DEV &&
             console.log(
               `SET ${`\u001b[${33}m${`newStart`}\u001b[${39}m`} = ${JSON.stringify(
-                newStart,
+                start,
                 null,
                 4,
               )}, then ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`,
             );
-          break;
         }
-        // if we traversed the whole string this way and didn't stumble on a non-
-        // space/whitespace character (depending on resolvedOpts.classicTrim), this means
-        // whole thing can be trimmed:
-        if (i === str.length - 1) {
-          // this means there are only spaces/whitespace from beginning to the end
-          DEV && console.log();
-          return {
-            res: "",
-            ranges: [[0, str.length]],
-          };
-        }
+        break;
       }
-    }
-
-    // if we reached this far, check the last character - find out, is it worth
-    // trimming the end of the given string:
-    if (check(str[str.length - 1])) {
-      DEV &&
-        console.log(
-          `\u001b[${36}m${`traverse backwards to trim tails`}\u001b[${39}m`,
-        );
-      for (let i = str.length; i--; ) {
+      if (start === 0) {
         DEV &&
           console.log(
-            `\u001b[${36}m${`------ str[${i}] = ${str[i]}`}\u001b[${39}m`,
+            `\u001b[${36}m${`traverse forwards to trim heads`}\u001b[${39}m`,
           );
-        if (!check(str[i])) {
-          newEnd = i + 1;
+      }
+      DEV &&
+        console.log(
+          `\u001b[${36}m${`------ str[${start}] = ${JSON.stringify(
+            str[start],
+            null,
+            0,
+          )}`}\u001b[${39}m`,
+        );
+      start += 1;
+    }
+
+    if (start === len) {
+      DEV && console.log();
+      return {
+        res: "",
+        ranges: [[0, len]],
+      };
+    }
+
+    let end = len;
+    while (end > start) {
+      const i = end - 1;
+      if (!check(str[i])) {
+        if (end < len) {
+          DEV &&
+            console.log(
+              `\u001b[${36}m${`------ str[${i}] = ${str[i]}`}\u001b[${39}m`,
+            );
           DEV &&
             console.log(
               `SET ${`\u001b[${33}m${`newEnd`}\u001b[${39}m`} = ${JSON.stringify(
-                newEnd,
+                end,
                 null,
                 4,
               )}, then ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`,
             );
-          break;
         }
+        break;
       }
+      if (end === len) {
+        DEV &&
+          console.log(
+            `\u001b[${36}m${`traverse backwards to trim tails`}\u001b[${39}m`,
+          );
+      }
+      DEV &&
+        console.log(
+          `\u001b[${36}m${`------ str[${i}] = ${str[i]}`}\u001b[${39}m`,
+        );
+      end = i;
     }
+
+    const newStart = start || undefined;
+    const newEnd = end < len ? end : undefined;
     DEV &&
       console.log(
         `CURRENTLY, ${`\u001b[${33}m${`newStart`}\u001b[${39}m`} = ${JSON.stringify(
@@ -139,14 +157,14 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
           4,
         )}`,
       );
-    if (newStart) {
-      if (newEnd) {
+    if (newStart !== undefined) {
+      if (newEnd !== undefined) {
         DEV && console.log("- returning trimmed both heads and tails");
         return {
           res: str.slice(newStart, newEnd),
           ranges: [
             [0, newStart],
-            [newEnd, str.length],
+            [newEnd, len],
           ],
         };
       }
@@ -156,11 +174,11 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
         ranges: [[0, newStart]],
       };
     }
-    if (newEnd) {
+    if (newEnd !== undefined) {
       DEV && console.log("- returning trimmed tails");
       return {
         res: str.slice(0, newEnd),
-        ranges: [[newEnd, str.length]],
+        ranges: [[newEnd, len]],
       };
     }
     // if we reached this far, there was nothing to trim:

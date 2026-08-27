@@ -800,7 +800,7 @@ export const interdeps = [
   },
   {
     "name": "string-trim-spaces-only",
-    "size": 1153,
+    "size": 1140,
     "imports": [
       "codsen-utils"
     ]
