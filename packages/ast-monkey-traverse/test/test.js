@@ -1349,4 +1349,55 @@ test("24 - sparse and undefined array entries are compacted", () => {
   );
 });
 
+test("25 - parent snapshots are isolated between callbacks", () => {
+  let input = { a: { x: 1 }, b: { y: 2 }, c: 3 };
+  let parents = [];
+  let nestedParents = [];
+  let actual = traverse(input, (key, value, innerObj) => {
+    if (innerObj.depth === 0) {
+      parents.push(innerObj.parent);
+      nestedParents.push(innerObj.parent.b);
+      if (key === "a") {
+        innerObj.parent.added = true;
+        innerObj.parent.b.y = 99;
+        delete innerObj.parent.c;
+        Object.defineProperty(innerObj.parent, "defined", {
+          enumerable: true,
+          value: true,
+        });
+        Object.setPrototypeOf(innerObj.parent, { polluted: true });
+      }
+    }
+    return value;
+  });
+
+  equal(actual, input, "25.01");
+  equal(input, { a: { x: 1 }, b: { y: 2 }, c: 3 }, "25.02");
+  equal(parents[1], { a: { x: 1 }, b: { y: 2 }, c: 3 }, "25.03");
+  equal(parents[2], { a: { x: 1 }, b: { y: 2 }, c: 3 }, "25.04");
+  is(parents[0], parents[1], "25.05");
+  is(parents[1], parents[2], "25.06");
+  is(nestedParents[0], nestedParents[1], "25.07");
+  is(nestedParents[1], nestedParents[2], "25.08");
+  not.ok(parents[0] === input, "25.09");
+  not.ok(nestedParents[0] === input.b, "25.10");
+
+  let arrayParents = [];
+  let arrayActual = traverse([[1], [2]], (value, _unused, innerObj) => {
+    if (innerObj.depth === 0) {
+      arrayParents.push(innerObj.parent);
+      if (innerObj.path === "0") {
+        innerObj.parent[1][0] = 99;
+        innerObj.parent.push([3]);
+      }
+    }
+    return value;
+  });
+
+  equal(arrayActual, [[1], [2]], "25.11");
+  equal(arrayParents[1], [[1], [2]], "25.12");
+  is(arrayParents[0], arrayParents[1], "25.13");
+  is(arrayParents[0][1], arrayParents[1][1], "25.14");
+});
+
 test.run();

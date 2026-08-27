@@ -34,6 +34,37 @@ function snapshotChild(value: any): any {
   return typeof value === "object" && value !== null ? clone(value) : value;
 }
 
+// Gives callbacks a deeply read-only view over detached snapshot storage.
+// Nested objects are wrapped only when read, and the caller caches each root
+// view until its snapshot changes.
+function readonlySnapshot(value: any): any {
+  let proxies: WeakMap<object, object> | undefined;
+  let handler: ProxyHandler<object> = {
+    defineProperty: () => true,
+    deleteProperty: () => true,
+    get: (target, property, receiver) =>
+      wrap(Reflect.get(target, property, receiver)),
+    set: () => true,
+    setPrototypeOf: () => true,
+  };
+
+  function wrap(target: any): any {
+    if (typeof target !== "object" || target === null) {
+      return target;
+    }
+    proxies ||= new WeakMap<object, object>();
+    let existing = proxies.get(target);
+    if (existing) {
+      return existing;
+    }
+    let proxy = new Proxy(target, handler);
+    proxies.set(target, proxy);
+    return proxy;
+  }
+
+  return new Proxy(value, handler);
+}
+
 /**
  * Utility library to traverse AST
  */
@@ -84,6 +115,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
     // parts neither of them touched. All of them stay detached from the live
     // tree, which is what the no-mutation guarantee rests on.
     let parent: any;
+    let parentView: any;
     let parentSnappedAt = -1;
     // Which single slot the previous iteration changed, applied only once a
     // later sibling actually asks for a snapshot. A container's last child
@@ -135,13 +167,14 @@ function traverse<T>(tree1: T, cb1: Callback): T {
               parent[pendingSlot] = snapshotChild(tree[pendingSlot]);
             }
           }
+          parentView = readonlySnapshot(parent);
           parentSnappedAt = mutations;
         }
         pendingSlot = undefined;
         let innerObj: InnerObj = {
           depth,
           path: currentPath,
-          parent,
+          parent: parentView,
           parentType: "array",
           parentKey,
         };
@@ -227,6 +260,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
               parent[pendingSlot] = snapshotChild(tree[pendingSlot]);
             }
           }
+          parentView = readonlySnapshot(parent);
           parentSnappedAt = mutations;
         }
         pendingSlot = undefined;
@@ -234,7 +268,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
         let innerObj: InnerObj = {
           depth,
           path: currentPath,
-          parent,
+          parent: parentView,
           parentType: "object",
           parentKey,
         };
