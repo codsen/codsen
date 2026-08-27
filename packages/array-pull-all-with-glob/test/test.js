@@ -239,4 +239,54 @@ test("19 - resolves the case-sensitive option", () => {
   );
 });
 
+test("20 - removal-pattern grammar", () => {
+  equal(
+    pull(["file.js", "prefix-file.js"], "file.js"),
+    ["prefix-file.js"],
+    "20.01",
+  );
+  equal(
+    pull(
+      ["src/main.js", "src/nested/main.js", "src/main.ts"],
+      "src/*.js",
+    ),
+    ["src/main.ts"],
+    "20.02",
+  );
+  equal(
+    pull(["top\nbottom", "top-middle-bottom"], "top*bottom"),
+    [],
+    "20.03",
+  );
+  equal(pull(["abc", "ac"], "a***c"), [], "20.04");
+  equal(
+    pull(
+      ["file?.js", "file[1].js", "file{1}.js", "file@(1).js", "file1.js"],
+      ["file?.js", "file[1].js", "file{1}.js", "file@(1).js"],
+    ),
+    ["file1.js"],
+    "20.05",
+  );
+  equal(pull(["file*", "file1"], String.raw`file\*`), ["file1"], "20.06");
+  equal(
+    pull(["!foo", "foo", "bar"], String.raw`\!foo`),
+    ["foo", "bar"],
+    "20.07",
+  );
+  equal(pull(["foo", "bar"], "!foo"), ["foo"], "20.08");
+  equal(
+    pull(["keep.js", "main.js", "notes.txt"], ["*.js", "!keep.js"]),
+    [],
+    "20.09",
+  );
+  equal(pull([String.raw`a\b`], String.raw`a\\b`), [], "20.10");
+  equal(
+    pull(["Ärger", "ärger", "ß", "SS", "𐐨", "𐐀"], ["ärger", "SS", "𐐀"], {
+      caseSensitive: false,
+    }),
+    ["ß", "𐐨"],
+    "20.11",
+  );
+});
+
 test.run();

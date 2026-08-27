@@ -1,6 +1,6 @@
 <h1 align="center">array-pull-all-with-glob</h1>
 
-<p align="center">Like _.pullAll but with globs (wildcards)</p>
+<p align="center">Remove array entries using whole-string wildcard patterns</p>
 
 <p align="center">
   <a href="https://codsen.com/os/array-pull-all-with-glob" rel="nofollow noreferrer noopener">

@@ -323,14 +323,13 @@ export const packageJSONData = {
   "array-pull-all-with-glob": {
     "name": "array-pull-all-with-glob",
     "version": "7.2.1",
-    "description": "Like _.pullAll but with globs (wildcards)",
+    "description": "Remove array entries using whole-string wildcard patterns",
     "keywords": [
       "array",
       "delete",
       "element",
       "from",
       "glob",
-      "globby",
       "pattern",
       "pulal",
       "pulall",

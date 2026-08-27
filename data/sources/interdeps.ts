@@ -21,7 +21,7 @@ export const interdeps = [
   },
   {
     "name": "array-pull-all-with-glob",
-    "size": 573,
+    "size": 627,
     "imports": [
       "codsen-utils"
     ]
