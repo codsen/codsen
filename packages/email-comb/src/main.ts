@@ -4368,8 +4368,8 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
       // potentially joined lumps from head. Let's see what's left afterwards.
       // ================
 
-      let preppedHeadSelectorsArr = Array.from(headSelectorsArr);
-      let preppedCanonicalSelectors = Array.from(canonicalSelectorsByHeadChunk);
+      const preppedHeadSelectorsArr: string[] = [];
+      const preppedCanonicalSelectors: string[][] = [];
       const allClassesAndIdsWithinBodySet = new Set(allClassesAndIdsWithinBody);
       let deletedFromHeadArr = [];
       DEV &&
@@ -4380,22 +4380,22 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
             4,
           )}`}\u001b[${39}m`,
         );
-      for (let y = 0, len2 = preppedHeadSelectorsArr.length; y < len2; y++) {
+      for (let y = 0; y < headSelectorsArr.length; y++) {
         totalCounter += 1;
         DEV && console.log(`\u001b[${36}m${`------------`}\u001b[${39}m`);
         DEV &&
           console.log(
-            `${`\u001b[${36}m${`██`}\u001b[${39}m`} preppedHeadSelectorsArr[${y}] = ${JSON.stringify(
-              preppedHeadSelectorsArr[y],
+            `${`\u001b[${36}m${`██`}\u001b[${39}m`} headSelectorsArr[${y}] = ${JSON.stringify(
+              headSelectorsArr[y],
               null,
               4,
             )}`,
           );
-        let temp = preppedCanonicalSelectors[y];
+        const temp = canonicalSelectorsByHeadChunk[y];
 
         // intentional loose comparison !=, that's existy():
         if (
-          preppedHeadSelectorsArr[y] != null &&
+          headSelectorsArr[y] != null &&
           !temp.every((el) => allClassesAndIdsWithinBodySet.has(el))
         ) {
           DEV &&
@@ -4411,10 +4411,9 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
                 4,
               )}`,
             );
-          preppedHeadSelectorsArr.splice(y, 1);
-          preppedCanonicalSelectors.splice(y, 1);
-          y -= 1;
-          len2 -= 1;
+        } else {
+          preppedHeadSelectorsArr.push(headSelectorsArr[y]);
+          preppedCanonicalSelectors.push(temp);
         }
       }
       DEV && console.log(`\u001b[${36}m${`------------`}\u001b[${39}m`);
