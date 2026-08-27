@@ -102,12 +102,21 @@ function isHtmlReferenceContext(input: string, offset: number): boolean {
 }
 
 function isReferenceContext(input: string, offset: number): boolean {
+  if (
+    input.lastIndexOf("(", offset) === -1 &&
+    input.lastIndexOf("<", offset) === -1
+  ) {
+    return false;
+  }
   return (
     isCssResourceContext(input, offset) || isHtmlReferenceContext(input, offset)
   );
 }
 
 function isLikelySelector(input: string, index: number): boolean {
+  if (input.indexOf("{", index) === -1) {
+    return false;
+  }
   let quote = "";
   let prefixIndex = 0;
   while (prefixIndex < index) {
@@ -255,6 +264,12 @@ function convertValue(
 function conv(): undefined;
 function conv<Input>(input: Input): Converted<Input>;
 function conv(input?: unknown): unknown {
+  if (typeof input === "string") {
+    return input.replace(hexColorRegex, toFullHex);
+  }
+  if (!Array.isArray(input) && !isPlainObject(input)) {
+    return input;
+  }
   return convertValue(input, new WeakMap<object, object>());
 }
 
