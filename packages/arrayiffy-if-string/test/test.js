@@ -21,4 +21,24 @@ test("02 - non-string input", () => {
   equal(a(true), true, "02.05");
 });
 
+test("03 - preserves identity and allocates primitive string results", () => {
+  const array = ["value"];
+  const object = { value: true };
+  const boxedString = Object("boxed");
+
+  is(a(array), array, "03.01");
+  is(a(object), object, "03.02");
+  is(a(boxedString), boxedString, "03.03");
+
+  const firstNonEmpty = a("value");
+  const secondNonEmpty = a("value");
+  const firstEmpty = a("");
+  const secondEmpty = a("");
+
+  equal(firstNonEmpty, ["value"], "03.04");
+  is(firstNonEmpty === secondNonEmpty, false, "03.05");
+  equal(firstEmpty, [], "03.06");
+  is(firstEmpty === secondEmpty, false, "03.07");
+});
+
 test.run();

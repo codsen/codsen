@@ -154,7 +154,7 @@ export const interdeps = [
   },
   {
     "name": "color-shorthand-hex-to-six-digit",
-    "size": 2592,
+    "size": 2743,
     "imports": [
       "codsen-utils"
     ]
