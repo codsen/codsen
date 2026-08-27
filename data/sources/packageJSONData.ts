@@ -7938,7 +7938,7 @@ export const packageJSONData = {
   "string-extract-class-names": {
     "name": "string-extract-class-names",
     "version": "8.2.1",
-    "description": "Extracts CSS class/id names from a string",
+    "description": "Extracts class and ID names from isolated CSS selector fragments",
     "keywords": [
       "class",
       "css",

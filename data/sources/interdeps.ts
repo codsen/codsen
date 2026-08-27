@@ -687,7 +687,7 @@ export const interdeps = [
   },
   {
     "name": "string-extract-class-names",
-    "size": 6038,
+    "size": 6061,
     "imports": [
       "codsen-utils",
       "string-left-right"

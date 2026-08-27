@@ -1,6 +1,6 @@
 <h1 align="center">string-extract-class-names</h1>
 
-<p align="center">Extracts CSS class/id names from a string</p>
+<p align="center">Extracts class and ID names from isolated CSS selector fragments</p>
 
 <p align="center">
   <a href="https://codsen.com/os/string-extract-class-names" rel="nofollow noreferrer noopener">
@@ -36,7 +36,7 @@ import { strict as assert } from "node:assert";
 
 import { extract } from "string-extract-class-names";
 
-// extracts classes and/or id's
+// Pass an isolated CSS selector fragment.
 const str = "div#brambles.nushes#croodles";
 const { res } = extract(str);
 assert.deepEqual(res, ["#brambles", ".nushes", "#croodles"]);

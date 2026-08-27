@@ -2275,4 +2275,59 @@ test("76 - reads HTML-style class and ID attribute selectors", () => {
   );
 });
 
+test("77 - context-free input boundary", () => {
+  equal(
+    e('.real{color:#fff;background:url("https://cdn.example.com/a.svg#frag")}'),
+    {
+      res: [".real", "#fff", ".example", ".com", ".svg", "#frag"],
+      ranges: [
+        [0, 5],
+        [12, 16],
+        [44, 52],
+        [52, 56],
+        [58, 62],
+        [62, 67],
+      ],
+    },
+    "77.01",
+  );
+  equal(
+    e('.real::before{content:".fake #fake"}'),
+    {
+      res: [".real", ".fake", "#fake"],
+      ranges: [
+        [0, 5],
+        [23, 28],
+        [29, 34],
+      ],
+    },
+    "77.02",
+  );
+  equal(
+    e("/* .commented #id */ .real{}"),
+    {
+      res: [".commented", "#id", ".real"],
+      ranges: [
+        [3, 13],
+        [14, 17],
+        [21, 26],
+      ],
+    },
+    "77.03",
+  );
+  equal(
+    e(String.raw`.css\:escape`),
+    { res: [String.raw`.css\:escape`], ranges: [[0, 12]] },
+    "77.04",
+  );
+  equal(e(".literal&copy;"), { res: [".literal"], ranges: [[0, 8]] }, "77.05");
+  let rule =
+    '.real { color: #fff; background: url("/icons/icon.svg#mark"); content: ".not-a-selector"; }';
+  equal(
+    e(rule.slice(0, rule.indexOf("{"))),
+    { res: [".real"], ranges: [[0, 5]] },
+    "77.06",
+  );
+});
+
 test.run();

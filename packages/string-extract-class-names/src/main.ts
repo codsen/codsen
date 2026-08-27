@@ -16,6 +16,13 @@ export interface Result {
 /**
  * Extract raw CSS class and ID selector spellings from a selector fragment.
  *
+ * Pass an isolated selector prelude or an already-tokenized selector fragment.
+ * This is a context-free scanner, not an HTML or stylesheet parser. Declarations,
+ * comments, strings outside attribute values, URLs, and HTML character references
+ * are not recognised as outer syntax and can produce matches if they are included
+ * in the input. Decode HTML character references in the HTML parsing layer before
+ * constructing the selector fragment. CSS escapes remain raw in `res`.
+ *
  * In addition to dot and hash selectors, this function recognises HTML-style
  * `[class=...]`, `[class~=...]`, and `[id=...]` attribute selectors. Attribute
  * names are ASCII-case-insensitive. Values can use CSS identifier or string
