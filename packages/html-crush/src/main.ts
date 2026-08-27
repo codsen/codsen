@@ -348,6 +348,35 @@ function crush(str: string, opts?: Partial<Opts>): Res {
     }
     return end > start && mindTheInlineTagsSet.has(str.slice(start, end));
   }
+
+  // Return the ASCII-lowercased attribute name whose quoted value starts at
+  // "idx". HTML allows whitespace on either side of the equals sign.
+  function attributeNameBeforeQuote(idx: number): string | null {
+    let equalsAt = idx - 1;
+    while (equalsAt >= 0 && isWhitespaceChar(str[equalsAt])) {
+      equalsAt--;
+    }
+    if (str[equalsAt] !== "=") {
+      return null;
+    }
+
+    let nameEndsAt = equalsAt;
+    let nameStartsAt = equalsAt - 1;
+    while (nameStartsAt >= 0 && isWhitespaceChar(str[nameStartsAt])) {
+      nameStartsAt--;
+      nameEndsAt--;
+    }
+    while (
+      nameStartsAt >= 0 &&
+      (isWordChar(str[nameStartsAt]) || `:-.`.includes(str[nameStartsAt]))
+    ) {
+      nameStartsAt--;
+    }
+
+    return nameStartsAt + 1 < nameEndsAt
+      ? str.slice(nameStartsAt + 1, nameEndsAt).toLowerCase()
+      : null;
+  }
   let lastLinebreak = null;
   let whitespaceStartedAt = null;
   let nonWhitespaceCharMet = false;
@@ -359,6 +388,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
   let withinStyleTag = false;
   let withinHTMLConditional = false; // <!--[if lte mso 11]> etc
   let withinInlineStyle = null;
+  let htmlAttributeQuoteStartedAt = null;
   let styleCommentStartedAt = null;
   let htmlCommentStartedAt = null;
   let scriptStartedAt = null;
@@ -648,6 +678,44 @@ function crush(str: string, opts?: Partial<Opts>): Res {
           console.log(
             `SET ${`\u001b[${33}m${`scriptStartedAt`}\u001b[${39}m`} = ${i}, ${`\u001b[${33}m${`scriptStartedAt`}\u001b[${39}m`} = true, RESET ${`\u001b[${33}m${`whitespaceStartedAt`}\u001b[${39}m`} = null; ${`\u001b[${33}m${`lastLinebreak`}\u001b[${39}m`} = null`,
           );
+      }
+
+      // Preserve ordinary quoted HTML attribute values verbatim. Inline style
+      // attributes deliberately enter their CSS-specific minification mode.
+      if (!doNothing && htmlAttributeQuoteStartedAt !== null) {
+        if (resolvedOpts.removeLineBreaks) {
+          countCharactersPerLine = `\r\n`.includes(str[i])
+            ? 0
+            : countCharactersPerLine + 1;
+        }
+        if (
+          i > htmlAttributeQuoteStartedAt &&
+          str[i] === str[htmlAttributeQuoteStartedAt]
+        ) {
+          htmlAttributeQuoteStartedAt = null;
+        }
+        continue;
+      }
+      if (
+        !doNothing &&
+        tagNameStartsAt !== null &&
+        !withinInlineStyle &&
+        `"'`.includes(str[i])
+      ) {
+        let attributeName = attributeNameBeforeQuote(i);
+        if (attributeName === "style") {
+          withinInlineStyle = i;
+          DEV &&
+            console.log(
+              `SET ${`\u001b[${33}m${`withinInlineStyle`}\u001b[${39}m`} = ${withinInlineStyle}`,
+          );
+        } else if (attributeName !== null) {
+          htmlAttributeQuoteStartedAt = i;
+          if (resolvedOpts.removeLineBreaks) {
+            countCharactersPerLine += 1;
+          }
+          continue;
+        }
       }
 
       //
