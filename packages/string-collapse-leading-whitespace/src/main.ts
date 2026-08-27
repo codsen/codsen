@@ -65,8 +65,6 @@ function collWhitespace(str: unknown, lineBreakLimit: unknown = 1): unknown {
       return whitespaceChunk;
     }
 
-    // let whitespace char count since last CR or LF
-    let whspCount = 0;
     let crlfCount = 0;
     let res = "";
     // let beginning = true;
@@ -101,8 +99,6 @@ function collWhitespace(str: unknown, lineBreakLimit: unknown = 1): unknown {
         `\r\n`.includes(whitespaceChunk[i]) ||
         whitespaceChunk[i] === rawNbsp
       ) {
-        whspCount = 0;
-
         if (whitespaceChunk[i] === rawNbsp) {
           res += whitespaceChunk[i];
           DEV &&
@@ -169,7 +165,6 @@ function collWhitespace(str: unknown, lineBreakLimit: unknown = 1): unknown {
             );
         }
       } else {
-        whspCount++;
         if (!whitespaceChunk[i + 1] && !crlfCount) {
           res += " ";
           DEV &&
@@ -178,7 +173,7 @@ function collWhitespace(str: unknown, lineBreakLimit: unknown = 1): unknown {
       }
       DEV &&
         console.log(
-          `${`\u001b[${90}m${`██ whspCount = ${whspCount}; res = ${JSON.stringify(
+          `${`\u001b[${90}m${`██ res = ${JSON.stringify(
             res,
             null,
             0,
