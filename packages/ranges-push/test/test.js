@@ -2,6 +2,7 @@
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
+import { rApply } from "../../ranges-apply/dist/ranges-apply.esm.js";
 import { Ranges } from "../dist/ranges-push.esm.js";
 
 const nbsp = "\xA0";
@@ -1790,6 +1791,12 @@ test("137 - CURRENT() - contained null insertion vetoes merged text", () => {
     [5, 6, null],
   ]);
   equal(ranges.current(), [[1, 10, null]], "137.01");
+});
+
+test("138 - CURRENT() - zero replacement survives ranges-apply", () => {
+  const ranges = new Ranges();
+  ranges.add(1, 1, 0);
+  equal(rApply("abc", ranges.current()), "a0bc", "138.01");
 });
 
 test.run();
