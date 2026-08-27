@@ -13,6 +13,50 @@ const version: string = v;
 
 declare let DEV: boolean;
 
+function markerIncludesCodePointAt(
+  markers: string,
+  str: string,
+  index: number,
+): boolean {
+  const char = str[index];
+  if (!markers || !char || !markers.includes(char)) {
+    return false;
+  }
+
+  const current = char.charCodeAt(0);
+  let highIndex = index;
+  let lowIndex = index + 1;
+
+  if (
+    current >= 0xd800 &&
+    current <= 0xdbff &&
+    str.charCodeAt(lowIndex) >= 0xdc00 &&
+    str.charCodeAt(lowIndex) <= 0xdfff
+  ) {
+    // current is the high surrogate of a complete pair
+  } else if (
+    current >= 0xdc00 &&
+    current <= 0xdfff &&
+    str.charCodeAt(index - 1) >= 0xd800 &&
+    str.charCodeAt(index - 1) <= 0xdbff
+  ) {
+    highIndex = index - 1;
+    lowIndex = index;
+  } else {
+    // Preserve the fast path for BMP characters and unpaired surrogates.
+    return markers.includes(str[index]);
+  }
+
+  const high = str.charCodeAt(highIndex);
+  const low = str.charCodeAt(lowIndex);
+  for (let i = 0; i < markers.length - 1; i++) {
+    if (markers.charCodeAt(i) === high && markers.charCodeAt(i + 1) === low) {
+      return true;
+    }
+  }
+  return false;
+}
+
 export interface Opts {
   str: string;
   from: number;
@@ -169,11 +213,17 @@ function expander(opts: Partial<Opts>): Range {
     resolvedOpts.extendToOneSide !== "right" &&
     ((isWhitespace(str[from - 1]) &&
       (isWhitespace(str[from - 2]) ||
-        resolvedOpts.ifLeftSideIncludesThisCropItToo.includes(
-          str[from - 2],
+        markerIncludesCodePointAt(
+          resolvedOpts.ifLeftSideIncludesThisCropItToo,
+          str,
+          from - 2,
         ))) ||
       (str[from - 1] &&
-        resolvedOpts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1])) ||
+        markerIncludesCodePointAt(
+          resolvedOpts.ifLeftSideIncludesThisCropItToo,
+          str,
+          from - 1,
+        )) ||
       (resolvedOpts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1])))
   ) {
     // loop backwards
@@ -181,11 +231,21 @@ function expander(opts: Partial<Opts>): Range {
     for (let i = from; i--; ) {
       DEV &&
         console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
-      if (!resolvedOpts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
+      if (
+        !markerIncludesCodePointAt(
+          resolvedOpts.ifLeftSideIncludesThisCropItToo,
+          str,
+          i,
+        )
+      ) {
         if (str[i].trim()) {
           if (
             resolvedOpts.wipeAllWhitespaceOnLeft ||
-            resolvedOpts.ifLeftSideIncludesThisCropItToo.includes(str[i + 1])
+            markerIncludesCodePointAt(
+              resolvedOpts.ifLeftSideIncludesThisCropItToo,
+              str,
+              i + 1,
+            )
           ) {
             from = i + 1;
           } else {
@@ -217,18 +277,32 @@ function expander(opts: Partial<Opts>): Range {
     resolvedOpts.extendToOneSide !== "left" &&
     ((isWhitespace(str[to]) &&
       (resolvedOpts.wipeAllWhitespaceOnRight || isWhitespace(str[to + 1]))) ||
-      resolvedOpts.ifRightSideIncludesThisCropItToo.includes(str[to]))
+      markerIncludesCodePointAt(
+        resolvedOpts.ifRightSideIncludesThisCropItToo,
+        str,
+        to,
+      ))
   ) {
     // loop forward
     DEV && console.log(`${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
     for (let i = to, len = str.length; i < len; i++) {
       DEV &&
         console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
-      if (!resolvedOpts.ifRightSideIncludesThisCropItToo.includes(str[i])) {
+      if (
+        !markerIncludesCodePointAt(
+          resolvedOpts.ifRightSideIncludesThisCropItToo,
+          str,
+          i,
+        )
+      ) {
         if (str[i].trim()) {
           if (
             resolvedOpts.wipeAllWhitespaceOnRight ||
-            resolvedOpts.ifRightSideIncludesThisCropItToo.includes(str[i - 1])
+            markerIncludesCodePointAt(
+              resolvedOpts.ifRightSideIncludesThisCropItToo,
+              str,
+              i - 1,
+            )
           ) {
             to = i;
             DEV && console.log();
@@ -263,23 +337,31 @@ function expander(opts: Partial<Opts>): Range {
       isStr(resolvedOpts.ifLeftSideIncludesThisThenCropTightly) &&
       resolvedOpts.ifLeftSideIncludesThisThenCropTightly &&
       ((str[from - 2] &&
-        resolvedOpts.ifLeftSideIncludesThisThenCropTightly.includes(
-          str[from - 2],
+        markerIncludesCodePointAt(
+          resolvedOpts.ifLeftSideIncludesThisThenCropTightly,
+          str,
+          from - 2,
         )) ||
         (str[from - 1] &&
-          resolvedOpts.ifLeftSideIncludesThisThenCropTightly.includes(
-            str[from - 1],
+          markerIncludesCodePointAt(
+            resolvedOpts.ifLeftSideIncludesThisThenCropTightly,
+            str,
+            from - 1,
           )))) ||
     (resolvedOpts.extendToOneSide !== "left" &&
       isStr(resolvedOpts.ifRightSideIncludesThisThenCropTightly) &&
       resolvedOpts.ifRightSideIncludesThisThenCropTightly &&
       ((str[to + 1] &&
-        resolvedOpts.ifRightSideIncludesThisThenCropTightly.includes(
-          str[to + 1],
+        markerIncludesCodePointAt(
+          resolvedOpts.ifRightSideIncludesThisThenCropTightly,
+          str,
+          to + 1,
         )) ||
         (str[to] &&
-          resolvedOpts.ifRightSideIncludesThisThenCropTightly.includes(
-            str[to],
+          markerIncludesCodePointAt(
+            resolvedOpts.ifRightSideIncludesThisThenCropTightly,
+            str,
+            to,
           ))))
   ) {
     DEV && console.log();
@@ -310,13 +392,17 @@ function expander(opts: Partial<Opts>): Range {
       !resolvedOpts.ifRightSideIncludesThisThenCropTightly) ||
       !(
         (!resolvedOpts.ifLeftSideIncludesThisThenCropTightly ||
-          resolvedOpts.ifLeftSideIncludesThisThenCropTightly.includes(
-            str[from - 1],
+          markerIncludesCodePointAt(
+            resolvedOpts.ifLeftSideIncludesThisThenCropTightly,
+            str,
+            from - 1,
           )) &&
         (!resolvedOpts.ifRightSideIncludesThisThenCropTightly ||
           (str[to] &&
-            resolvedOpts.ifRightSideIncludesThisThenCropTightly.includes(
-              str[to],
+            markerIncludesCodePointAt(
+              resolvedOpts.ifRightSideIncludesThisThenCropTightly,
+              str,
+              to,
             )))
       )) &&
     (letterOrDigit.test(str[from - 1]) || letterOrDigit.test(str[to]))
