@@ -219,9 +219,9 @@ test("18 - does not mutate the input args", () => {
 
   const unneededResult2 = pull(arr1, arr3);
   ok(unneededResult2, "18.02"); // filler to shut up the linter complaining it's unused
-  equal(arr1, ["a", "b", "c"], "18.01");
-  equal(arr2, "c", "18.02");
-  equal(arr3, ["c"], "18.03");
+  equal(arr1, ["a", "b", "c"], "18.03");
+  equal(arr2, "c", "18.04");
+  equal(arr3, ["c"], "18.05");
 });
 
 test("19 - resolves the case-sensitive option", () => {
