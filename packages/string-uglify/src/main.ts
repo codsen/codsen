@@ -17,6 +17,16 @@ function firstCodePoint(str: string, idNum = 0): string {
   return str.slice(idNum, idNum + (codePoint > 0xffff ? 2 : 1));
 }
 
+function encodeCollisionOrdinal(ordinal: number, alphabet: string): string {
+  let value = ordinal;
+  let result = "";
+  do {
+    result = alphabet[value % alphabet.length] + result;
+    value = Math.floor(value / alphabet.length);
+  } while (value > 0);
+  return result;
+}
+
 export interface Obj {
   [key: string]: any;
 }
@@ -171,6 +181,7 @@ function uglifyArr(arr: string[]): string[] {
   const generatedByOriginal = generatedNames
     ? new Map<string, string>()
     : undefined;
+  let collisionOrdinals: Map<string, number> | undefined;
 
   for (let id = 0, len = arr.length; id < len; id++) {
     // insurance against duplicate reference array values
@@ -234,49 +245,10 @@ function uglifyArr(arr: string[]): string[] {
     if (
       generatedNames ? generatedNames.has(generated) : res.includes(generated)
     ) {
-      // add more characters:
-      let soFarWeGot = generated;
-      let counter = 0;
-
-      let reducedCodePointSum = 0;
-      let magicNumber = 0;
-      for (const character of arr[id]) {
-        const codePoint = tellCP(character);
-        reducedCodePointSum =
-          reducedCodePointSum < 200
-            ? reducedCodePointSum + codePoint
-            : (reducedCodePointSum + codePoint) % lettersAndNumbers.length;
-        magicNumber += codePoint;
-        while (magicNumber >= 10) {
-          let digitSum = 0;
-          while (magicNumber > 0) {
-            digitSum += magicNumber % 10;
-            magicNumber = Math.floor(magicNumber / 10);
-          }
-          magicNumber = digitSum;
-        }
-      }
-      // DEV && console.log(
-      //   `${`\u001b[${33}m${`magicNumber`}\u001b[${39}m`} = ${JSON.stringify(
-      //     magicNumber,
-      //     null,
-      //     4
-      //   )}`
-      // );
-
-      while (
-        generatedNames
-          ? generatedNames.has(soFarWeGot)
-          : res.includes(soFarWeGot)
-      ) {
-        counter += 1;
-        soFarWeGot +=
-          lettersAndNumbers[
-            (reducedCodePointSum * magicNumber * counter) %
-              lettersAndNumbers.length
-          ];
-      }
-      generated = soFarWeGot;
+      collisionOrdinals ||= new Map<string, number>();
+      const ordinal = collisionOrdinals.get(generated) || 0;
+      collisionOrdinals.set(generated, ordinal + 1);
+      generated += encodeCollisionOrdinal(ordinal, lettersAndNumbers);
     }
 
     res.push(generated);

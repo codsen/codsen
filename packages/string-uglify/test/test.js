@@ -429,8 +429,8 @@ test("15 - the linear-to-indexed threshold preserves output", () => {
   equal(below.length, 47, "15.01");
   equal(at.length, 48, "15.02");
   equal(at.slice(0, 47), below, "15.03");
-  equal(below.slice(-3), [".ceq6m", ".dfzod", ".egaaa"], "15.04");
-  equal(at.at(-1), ".fhn0", "15.05");
+  equal(below.slice(-3), [".cec", ".dfc", ".egc"], "15.04");
+  equal(at.at(-1), ".fhb", "15.05");
 });
 
 function isWellFormed(value) {
@@ -518,6 +518,44 @@ test("19 - an empty result is a mutation-isolated copy", () => {
   is.not(result, input, "19.02");
   result.push("changed");
   equal(input, [], "19.03");
+});
+
+function makeSameSumNames(length, prefix = "") {
+  return Array.from(
+    { length },
+    (_, index) =>
+      `${prefix}x${String.fromCodePoint(0x1000 + index)}${String.fromCodePoint(
+        49000 - index,
+      )}`,
+  );
+}
+
+test("20 - same-sum collision families have bounded unique outputs", () => {
+  const belowInput = makeSameSumNames(47);
+  const atInput = makeSameSumNames(48);
+  const below = uglifyArr(belowInput);
+  const at = uglifyArr(atInput);
+  const large = uglifyArr(makeSameSumNames(1000));
+  const classes = uglifyArr(makeSameSumNames(60, "."));
+  const ids = uglifyArr(makeSameSumNames(60, "#"));
+
+  equal(new Set(below).size, below.length, "20.01");
+  equal(new Set(at).size, at.length, "20.02");
+  equal(at.slice(0, below.length), below, "20.03");
+  equal(new Set(large).size, large.length, "20.04");
+  ok(large.every((name) => name.length <= 4), "20.05");
+  ok(
+    large.reduce((total, name) => total + name.length, 0) <= large.length * 4,
+    "20.06",
+  );
+  ok(classes.every((name) => name.startsWith(".")), "20.07");
+  ok(ids.every((name) => name.startsWith("#")), "20.08");
+  equal(new Set(classes).size, classes.length, "20.09");
+  equal(new Set(ids).size, ids.length, "20.10");
+
+  const duplicateInput = [...atInput, atInput[0]];
+  const duplicateOutput = uglifyArr(duplicateInput);
+  equal(duplicateOutput.at(-1), duplicateOutput[0], "20.11");
 });
 
 test.run();
