@@ -36,6 +36,7 @@ import {
   type State,
   widowRegexTest,
 } from "./util";
+import { codePointAtIndex } from "./codePoint";
 
 declare let DEV: boolean;
 
@@ -722,7 +723,7 @@ function processCharacter(
         } else if (charcode === 38) {
           // IF AMPERSAND, the &
           DEV && console.log(`processCharacter.js - ampersand clauses`);
-          if (isLetter(str[i + 1])) {
+          if (isLetter(codePointAtIndex(str, i + 1))) {
             // it can be a named entity
             let temp = Object.keys(allNamedEntities).find(
               (entName) =>
@@ -1177,28 +1178,33 @@ function processCharacter(
             nextThreeChars + fourth !== "html" &&
             nextThreeChars + fourth !== "woff" &&
             !(
-              !isLetter(str[i - 2]) &&
+              !isLetter(codePointAtIndex(str, i - 2)) &&
               str[i - 1] === "p" &&
               str[y] === "s" &&
               str[y + 1] === "t" &&
-              !isLetter(str[y + 2])
+              !isLetter(codePointAtIndex(str, y + 2))
             )
           ) {
             // two tasks: deleting any spaces before and adding spaces after
             //
             // 2-1. ADDING A MISSING SPACE AFTER IT:
+            const nextCharacter = codePointAtIndex(str, y);
+            const followingCharacter = state.onUrlCurrently
+              ? codePointAtIndex(str, y + (nextCharacter?.length || 0))
+              : undefined;
             if (
-              str[y] !== undefined &&
+              nextCharacter !== undefined &&
               // - When it's not within a URL, the requirement for next letter to be uppercase letter.
               //   This prevents both numbers with decimal digits and short url's like "detergent.io"
               // - When it's within URL, it's stricter:
               //   next letter has to be an uppercase letter, followed by lowercase letter.
-              ((!state.onUrlCurrently && isUppercaseLetter(str[y])) ||
+              ((!state.onUrlCurrently &&
+                isUppercaseLetter(nextCharacter)) ||
                 (state.onUrlCurrently &&
-                  isLetter(str[y]) &&
-                  isUppercaseLetter(str[y]) &&
-                  isLetter(str[y + 1]) &&
-                  isLowercaseLetter(str[y + 1]))) &&
+                  isLetter(nextCharacter) &&
+                  isUppercaseLetter(nextCharacter) &&
+                  isLetter(followingCharacter) &&
+                  isLowercaseLetter(followingCharacter))) &&
               str[y] !== " " &&
               str[y] !== "." &&
               str[y] !== "\n"

@@ -202,4 +202,8 @@ test("02 - n-dash minimal", () => {
   });
 });
 
+test("04 - astral uppercase letters", () => {
+  equal(convertOne("𐐀-𐐀", { from: 2 }), [[2, 3, rawNDash]], "04.01");
+});
+
 test.run();

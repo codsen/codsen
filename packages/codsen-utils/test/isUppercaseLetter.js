@@ -59,4 +59,14 @@ test("13 - Unicode and multi-character strings", () => {
   equal(isUppercaseLetter("AA"), false, "13.02");
 });
 
+test("14 - astral, uncased, and malformed code points", () => {
+  equal(isUppercaseLetter("𐐀"), true, "14.01");
+  equal(isUppercaseLetter("𐐨"), false, "14.02");
+  equal(isUppercaseLetter("東"), false, "14.03");
+  equal(isUppercaseLetter("\u0301"), false, "14.04");
+  equal(isUppercaseLetter("\ud801"), false, "14.05");
+  equal(isUppercaseLetter("\udc00"), false, "14.06");
+  equal(isUppercaseLetter("\udc00\ud801"), false, "14.07");
+});
+
 test.run();

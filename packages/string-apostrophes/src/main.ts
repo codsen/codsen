@@ -14,6 +14,7 @@ import type { Range, Ranges } from "ranges-apply";
 import { rApply } from "ranges-apply";
 
 import { version as v } from "../package.json";
+import { codePointAtIndex, codePointBeforeIndex } from "./codePoint";
 
 const version: string = v;
 
@@ -84,6 +85,8 @@ function convertOne(str: string, opts: Opts): Ranges {
   // ======
 
   let rangesArr: Range[] = [];
+  const characterBefore = codePointBeforeIndex(str, from);
+  const characterAfter = codePointAtIndex(str, to as number);
 
   DEV &&
     console.log(
@@ -158,7 +161,7 @@ function convertOne(str: string, opts: Opts): Ranges {
       str[from - 1] &&
       str[to as number] &&
       isNumberChar(str[from - 1]) &&
-      !isLetter(str[to as number])
+      !isLetter(characterAfter)
     ) {
       DEV && console.log(`prime cases`);
       if (
@@ -466,8 +469,8 @@ function convertOne(str: string, opts: Opts): Ranges {
     } else if (
       str[from - 1] &&
       str[to as number] &&
-      (isLetter(str[from - 1]) || isNumberChar(str[from - 1])) &&
-      (isLetter(str[to as number]) || isNumberChar(str[to as number]))
+      (isLetter(characterBefore) || isNumberChar(characterBefore)) &&
+      (isLetter(characterAfter) || isNumberChar(characterAfter))
     ) {
       // equivalent of /(\w)'(\w)/g
       // single quote surrounded with alphanumeric characters
@@ -533,7 +536,7 @@ function convertOne(str: string, opts: Opts): Ranges {
       }
     } else if (
       str[to as number] &&
-      (isLetter(str[to as number]) || isNumberChar(str[to as number]))
+      (isLetter(characterAfter) || isNumberChar(characterAfter))
     ) {
       // equivalent of /'\b/g
       // alphanumeric follows
@@ -566,7 +569,7 @@ function convertOne(str: string, opts: Opts): Ranges {
             `string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} a plain apostrophe [${from}, ${to}, ']`,
           );
       }
-    } else if (isLetter(str[from - 1]) || isNumberChar(str[from - 1])) {
+    } else if (isLetter(characterBefore) || isNumberChar(characterBefore)) {
       // equivalent of /'\b/g
       // alphanumeric precedes
       DEV && console.log(`alphanumeric precedes`);
@@ -874,7 +877,7 @@ function convertOne(str: string, opts: Opts): Ranges {
       }
     } else if (
       str[to as number] &&
-      (isLetter(str[to as number]) || isNumberChar(str[to as number]))
+      (isLetter(characterAfter) || isNumberChar(characterAfter))
     ) {
       // equivalent of /"\b/g
       // 4.
@@ -909,7 +912,7 @@ function convertOne(str: string, opts: Opts): Ranges {
       }
     } else if (
       str[from - 1] &&
-      (isLetter(str[from - 1]) || isNumberChar(str[from - 1]))
+      (isLetter(characterBefore) || isNumberChar(characterBefore))
     ) {
       // equivalent of /"\b/g
       // 5.

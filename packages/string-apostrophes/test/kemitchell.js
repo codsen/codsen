@@ -434,4 +434,8 @@ test(`36 - kemitchell/straight-to-curly-quotes - all off, nothing fancy to start
   );
 });
 
+test(`37 - astral letters around an apostrophe`, () => {
+  equal(convertAll("𐐨'𐐨").result, "𐐨’𐐨", "37.01");
+});
+
 test.run();

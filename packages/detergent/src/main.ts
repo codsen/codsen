@@ -22,6 +22,7 @@ import { chompLeft, left, leftStopAtNewLines, right } from "string-left-right";
 import { removeWidows } from "string-remove-widows";
 import { type CbObj, stripHtml } from "string-strip-html";
 import { version as v } from "../package.json";
+import { codePointAtIndex, codePointBeforeIndex } from "./codePoint";
 import { processCharacter } from "./processCharacter";
 import {
   type ApplicableOpts,
@@ -277,7 +278,8 @@ function det(str: string, opts?: Partial<Opts>): Res {
           str[i + 1] &&
           ((str[i - 1].toLowerCase() === "n" &&
             str[i + 1].toLowerCase() === "t") ||
-            (isLetter(str[i - 1]) && str[i + 1].toLowerCase() === "s"))) ||
+            (isLetter(codePointBeforeIndex(str, i)) &&
+              str[i + 1].toLowerCase() === "s"))) ||
         (str[i + 2] &&
           (((str[i + 1].toLowerCase() === "r" ||
             str[i + 1].toLowerCase() === "v") &&
@@ -312,7 +314,9 @@ function det(str: string, opts?: Partial<Opts>): Res {
           str[i + 1] === "v" &&
           str[i + 2] === "e") ||
         (str[i - 1]?.toLowerCase() === "s" &&
-          (!str[i + 1] || (!isLetter(str[i + 1]) && !isNumberChar(str[i + 1]))))
+          (!str[i + 1] ||
+            (!isLetter(codePointAtIndex(str, i + 1)) &&
+              !isNumberChar(str[i + 1]))))
       ) {
         // 1. case of n�t, for example, couldn�t (n + � + t),
         // or case of <letter>�s, for example your�s (letter + � + s).
@@ -338,10 +342,10 @@ function det(str: string, opts?: Partial<Opts>): Res {
           );
       } else if (
         str[i - 2] &&
-        isLowercaseLetter(str[i - 2]) &&
+        isLowercaseLetter(codePointBeforeIndex(str, i - 1)) &&
         !str[i - 1].trim() &&
         str[i + 2] &&
-        isLowercaseLetter(str[i + 2]) &&
+        isLowercaseLetter(codePointAtIndex(str, i + 2)) &&
         !str[i + 1].trim()
       ) {
         // we don't encode here, no matter if resolvedOpts.convertEntities is on:

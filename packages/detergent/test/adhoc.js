@@ -289,4 +289,16 @@ test("018 - ad-hoc - custom EOL - CR present, CRLF requested", () => {
   ok(det1(source, opts).applicableOpts.eol, "18.02");
 });
 
+test("019 - astral letter before a broken apostrophe", () => {
+  equal(
+    det1("𐐨�s", {
+      convertApostrophes: true,
+      convertEntities: false,
+      removeWidows: false,
+    }).res,
+    "𐐨’s",
+    "019.01",
+  );
+});
+
 test.run();

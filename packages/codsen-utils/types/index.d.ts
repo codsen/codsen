@@ -52,10 +52,13 @@ declare function deepCloneWithMetadata<T>(value: T): DeepCloneResult<T>;
 declare function isNumberChar(value: unknown): boolean;
 declare function isCurrencyChar(value: unknown): boolean;
 declare function isCurrencySymbol(value: unknown): boolean;
+/** Return whether the input is exactly one Unicode Letter code point. */
 declare function isLetter(value: unknown): boolean;
 declare function isLatinLetter(value: unknown): boolean;
 declare function isQuote(value: unknown): boolean;
+/** Return whether the input is exactly one lowercase Unicode code point. */
 declare function isLowercaseLetter(value: unknown): boolean;
+/** Return whether the input is exactly one uppercase Unicode code point. */
 declare function isUppercaseLetter(value: unknown): boolean;
 declare function isWhitespaceChar(value: unknown): boolean;
 declare const removeTrailingSlash: <T>(value: T) => string | T;

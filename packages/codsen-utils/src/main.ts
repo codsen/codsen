@@ -1,5 +1,6 @@
 import { version as v } from "../package.json";
 import { formatDiagnosticValue } from "./formatDiagnosticValue";
+import { isUnicodeLetter } from "./unicode-letters";
 
 export { formatDiagnosticValue };
 
@@ -366,17 +367,31 @@ export function isCurrencySymbol(value: unknown): boolean {
   return isStr(value) && currencySymbols.has(value);
 }
 
+function nonAsciiSingleCodePoint(value: string): number {
+  if (value.length === 1) {
+    const code = value.charCodeAt(0);
+    return code < 0xd800 || code > 0xdfff ? code : -1;
+  }
+  if (value.length === 2) {
+    const high = value.charCodeAt(0);
+    const low = value.charCodeAt(1);
+    if (high >= 0xd800 && high <= 0xdbff && low >= 0xdc00 && low <= 0xdfff) {
+      return (high - 0xd800) * 0x400 + low - 0xdc00 + 0x10000;
+    }
+  }
+  return -1;
+}
+
+/** Return whether the input is exactly one Unicode Letter code point. */
 export function isLetter(value: unknown): boolean {
-  if (!isStr(value) || value.length !== 1) {
+  if (!isStr(value) || value.length === 0 || value.length > 2) {
     return false;
   }
   const code = value.charCodeAt(0);
-  if (code < 128) {
-    // ASCII settles without the two case conversions below, each of which
-    // would allocate a string
+  if (value.length === 1 && code < 128) {
     return (code > 64 && code < 91) || (code > 96 && code < 123);
   }
-  return value.toUpperCase() !== value.toLowerCase();
+  return isUnicodeLetter(nonAsciiSingleCodePoint(value));
 }
 
 export function isLatinLetter(value: unknown): boolean {
@@ -400,24 +415,32 @@ export function isQuote(value: unknown): boolean {
   );
 }
 
+/** Return whether the input is exactly one lowercase Unicode code point. */
 export function isLowercaseLetter(value: unknown): boolean {
-  if (!isStr(value) || value.length !== 1) {
+  if (!isStr(value) || value.length === 0 || value.length > 2) {
     return false;
   }
   const code = value.charCodeAt(0);
-  if (code < 128) {
+  if (value.length === 1 && code < 128) {
     return code > 96 && code < 123;
+  }
+  if (nonAsciiSingleCodePoint(value) < 0) {
+    return false;
   }
   return value === value.toLowerCase() && value !== value.toUpperCase();
 }
 
+/** Return whether the input is exactly one uppercase Unicode code point. */
 export function isUppercaseLetter(value: unknown): boolean {
-  if (!isStr(value) || value.length !== 1) {
+  if (!isStr(value) || value.length === 0 || value.length > 2) {
     return false;
   }
   const code = value.charCodeAt(0);
-  if (code < 128) {
+  if (value.length === 1 && code < 128) {
     return code > 64 && code < 91;
+  }
+  if (nonAsciiSingleCodePoint(value) < 0) {
+    return false;
   }
   return value === value.toUpperCase() && value !== value.toLowerCase();
 }

@@ -61,4 +61,14 @@ test("13 - Unicode and multi-character strings", () => {
   equal(isLowercaseLetter("aa"), false, "13.02");
 });
 
+test("14 - astral, uncased, and malformed code points", () => {
+  equal(isLowercaseLetter("𐐨"), true, "14.01");
+  equal(isLowercaseLetter("𐐀"), false, "14.02");
+  equal(isLowercaseLetter("東"), false, "14.03");
+  equal(isLowercaseLetter("\u0301"), false, "14.04");
+  equal(isLowercaseLetter("\ud801"), false, "14.05");
+  equal(isLowercaseLetter("\udc00"), false, "14.06");
+  equal(isLowercaseLetter("\udc00\ud801"), false, "14.07");
+});
+
 test.run();

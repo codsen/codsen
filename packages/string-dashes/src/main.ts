@@ -14,6 +14,7 @@ import { rApply } from "ranges-apply";
 import { left, right } from "string-left-right";
 
 import { version as v } from "../package.json";
+import { codePointAtIndex, codePointBeforeIndex } from "./codePoint";
 
 const version: string = v;
 
@@ -150,6 +151,17 @@ function convertOne(str: string, opts: Opts): Ranges {
     return null;
   }
 
+  const characterBefore = codePointBeforeIndex(str, from);
+  const characterBeforeBefore = codePointBeforeIndex(
+    str,
+    from - (characterBefore?.length || 0),
+  );
+  const characterAfter = codePointAtIndex(str, to);
+  const characterAfterAfter = codePointAtIndex(
+    str,
+    to + (characterAfter?.length || 0),
+  );
+
   // 1. N-DASH
   if (
     value === "-" ||
@@ -165,10 +177,10 @@ function convertOne(str: string, opts: Opts): Ranges {
         isNumberChar(str[from - 1]) &&
         isNumberChar(str[to])) ||
       // 1.2. A-Z
-      (!isLetter(str[from - 2]) &&
-        !isLetter(str[to + 1]) &&
-        isUppercaseLetter(str[from - 1]) &&
-        isUppercaseLetter(str[to]))
+      (!isLetter(characterBeforeBefore) &&
+        !isLetter(characterAfterAfter) &&
+        isUppercaseLetter(characterBefore) &&
+        isUppercaseLetter(characterAfter))
     ) {
       rangesArr.push([from, to, convertEntities ? "&ndash;" : rawNDash]);
       DEV &&
@@ -287,8 +299,8 @@ function convertOne(str: string, opts: Opts): Ranges {
       }
     } else if (
       // 2.2. letter-hyphen-single quote — cut-off speech quote
-      str[from - 1] &&
-      isLetter(str[from - 1]) &&
+      characterBefore &&
+      isLetter(characterBefore) &&
       str[to] &&
       isQuote(str[to])
     ) {

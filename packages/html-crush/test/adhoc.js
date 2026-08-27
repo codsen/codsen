@@ -167,4 +167,9 @@ test(`09 - adhoc 9 - nunjucks`, () => {
   );
 });
 
+test(`10 - astral letters keep tag-name prefixes ordinary`, () => {
+  const source = "<script𐐀> x </script𐐀>";
+  equal(m(equal, source).result, source, "10.01");
+});
+
 test.run();

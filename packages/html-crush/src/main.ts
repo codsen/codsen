@@ -13,6 +13,7 @@ import { expander } from "string-range-expander";
 import type { Ranges as RangesType } from "../../../ops/typedefs/common";
 
 import { version as v } from "../package.json";
+import { codePointAtIndex } from "./codePoint";
 
 const version: string = v;
 
@@ -554,7 +555,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
         scriptStartedAt !== null &&
         str[i] === "<" &&
         str.startsWith("</script", i) &&
-        !isLetter(str[i + 8])
+        !isLetter(codePointAtIndex(str, i + 8))
       ) {
         DEV && console.log(`ENDING OF A SCRIPT TAG CAUGHT`);
         // 1. if there is a line break, chunk of whitespace and </script>,
@@ -619,7 +620,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
         !withinStyleTag &&
         str[i] === "<" &&
         str.startsWith("<script", i) &&
-        !isLetter(str[i + 7])
+        !isLetter(codePointAtIndex(str, i + 7))
       ) {
         DEV && console.log(`STARTING OF A SCRIPT TAG CAUGHT`);
         scriptStartedAt = i;
@@ -1088,7 +1089,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
         styleCommentStartedAt === null &&
         str[i] === "<" &&
         str.startsWith("</style", i) &&
-        !isLetter(str[i + 7])
+        !isLetter(codePointAtIndex(str, i + 7))
       ) {
         withinStyleTag = false;
         DEV &&
@@ -1101,7 +1102,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
         styleCommentStartedAt === null &&
         str[i] === "<" &&
         str.startsWith("<style", i) &&
-        !isLetter(str[i + 6])
+        !isLetter(codePointAtIndex(str, i + 6))
       ) {
         withinStyleTag = true;
         DEV &&
@@ -2237,7 +2238,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
         !withinStyleTag &&
         str[i] === "<" &&
         str.startsWith("<pre", i) &&
-        !isLetter(str[i + 4])
+        !isLetter(codePointAtIndex(str, i + 4))
       ) {
         DEV && console.log(`OPENING PRE TAG CAUGHT`);
 
@@ -2259,7 +2260,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
         !withinStyleTag &&
         str[i] === "<" &&
         str.startsWith("<code", i) &&
-        !isLetter(str[i + 5])
+        !isLetter(codePointAtIndex(str, i + 5))
       ) {
         DEV && console.log(`OPENING CODE TAG CAUGHT`);
 
