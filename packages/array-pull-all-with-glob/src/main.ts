@@ -16,10 +16,13 @@ const defaults: Opts = {
 // codsen-utils keeps 256 compiled scalar patterns. A source-major traversal
 // above that boundary evicts the next pattern before it can be reused.
 const matcherCacheCapacity = 256;
+// As in codsen-utils.pullAll(), measured setup versus scan crossover is based
+// on the product of source values and exact removal strings.
+const literalSetThreshold = 400;
 
 function pullPatternMajor(
-  source: string[],
-  toBeRemoved: string[],
+  source: readonly string[],
+  toBeRemoved: readonly string[],
   caseSensitive: boolean,
 ): string[] {
   const removed = new Uint8Array(source.length);
@@ -27,6 +30,9 @@ function pullPatternMajor(
   let removedCount = 0;
 
   for (const remVal of toBeRemoved) {
+    if (!remVal) {
+      continue;
+    }
     for (let index = 0; index < source.length; index++) {
       if (!removed[index] && match(source[index], remVal, matchOptions)) {
         removed[index] = 1;
@@ -39,6 +45,76 @@ function pullPatternMajor(
   }
 
   return source.filter((_value, index) => !removed[index]);
+}
+
+function pullSourceMajor(
+  source: readonly string[],
+  toBeRemoved: readonly string[],
+  caseSensitive: boolean,
+): string[] {
+  const matchOptions = { caseSensitiveMatch: caseSensitive };
+  const result: string[] = [];
+
+  sourceLoop: for (let index = 0; index < source.length; index++) {
+    if (!(index in source)) {
+      continue;
+    }
+    const originalVal = source[index];
+    for (const remVal of toBeRemoved) {
+      if (remVal.length !== 0 && match(originalVal, remVal, matchOptions)) {
+        continue sourceLoop;
+      }
+    }
+    result.push(originalVal);
+  }
+
+  return result;
+}
+
+function pullWithLiteralSet(
+  source: readonly string[],
+  toBeRemoved: readonly string[],
+): string[] | undefined {
+  const literalPatterns: string[] = [];
+  const specialPatterns: string[] = [];
+
+  for (const pattern of toBeRemoved) {
+    if (!pattern) {
+      continue;
+    }
+    if (
+      pattern.charCodeAt(0) === 33 ||
+      pattern.includes("*") ||
+      pattern.includes("\\")
+    ) {
+      specialPatterns.push(pattern);
+    } else {
+      literalPatterns.push(pattern);
+    }
+  }
+
+  if (!literalPatterns.length) {
+    return undefined;
+  }
+  if (source.length * literalPatterns.length < literalSetThreshold) {
+    return undefined;
+  }
+  if (specialPatterns.length > matcherCacheCapacity) {
+    return undefined;
+  }
+
+  const literals = new Set(literalPatterns);
+  if (!specialPatterns.length) {
+    return source.filter((value) => !literals.has(value));
+  }
+
+  return source.filter(
+    (value) =>
+      !literals.has(value) &&
+      !specialPatterns.some((pattern) =>
+        match(value, pattern, { caseSensitiveMatch: true }),
+      ),
+  );
 }
 
 /**
@@ -75,39 +151,39 @@ function pull(
   if (!strArr.length) {
     return [];
   }
-  const resolvedToBeRemoved: string[] =
+  const resolvedToBeRemoved: readonly string[] =
     typeof toBeRemoved === "string"
       ? toBeRemoved
         ? [toBeRemoved]
         : []
-      : toBeRemoved.filter(Boolean);
+      : toBeRemoved;
   if (!resolvedToBeRemoved.length) {
     return Array.from(strArr);
   }
-  const resolvedOpts: Opts = {
-    caseSensitive: opts?.caseSensitive ?? defaults.caseSensitive,
-  };
+  const caseSensitive = opts?.caseSensitive ?? defaults.caseSensitive;
+
+  if (
+    caseSensitive &&
+    strArr.length * resolvedToBeRemoved.length >= literalSetThreshold
+  ) {
+    const literalResult = pullWithLiteralSet(strArr, resolvedToBeRemoved);
+    if (literalResult !== undefined) {
+      return literalResult;
+    }
+  }
 
   if (
     strArr.length > 1 &&
     resolvedToBeRemoved.length > matcherCacheCapacity
   ) {
     return pullPatternMajor(
-      Array.from(strArr),
+      strArr,
       resolvedToBeRemoved,
-      resolvedOpts.caseSensitive,
+      caseSensitive,
     );
   }
 
-  const res = Array.from(strArr).filter(
-    (originalVal) =>
-      !resolvedToBeRemoved.some((remVal) =>
-        match(originalVal, remVal, {
-          caseSensitiveMatch: resolvedOpts.caseSensitive,
-        }),
-      ),
-  );
-  return res;
+  return pullSourceMajor(strArr, resolvedToBeRemoved, caseSensitive);
 }
 
 export { defaults, pull, version };

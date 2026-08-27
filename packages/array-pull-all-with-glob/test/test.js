@@ -327,6 +327,7 @@ test("23 - preserves behavior above the matcher cache capacity", () => {
     { length: 257 },
     (_value, index) => `miss-${index}*tail`,
   );
+  caseInsensitivePatterns[0] = "";
   caseInsensitivePatterns[256] = "REMOVE*";
 
   const escapedPatterns = Array.from(
@@ -376,6 +377,125 @@ test("23 - preserves behavior above the matcher cache capacity", () => {
     "23.04",
   );
   equal(pull(["a", "b"], allRemovedPatterns), [], "23.05");
+});
+
+test("24 - uses a Set for large case-sensitive literal removals", () => {
+  const filler = Array.from({ length: 46 }, (_value, index) => `keep-${index}`);
+  const literalSource = ["remove-a", "keep", "remove-b", "keep", ...filler];
+  const literalPatterns = [
+    "remove-a",
+    "remove-b",
+    "miss-1",
+    "miss-2",
+    "miss-3",
+    "miss-4",
+    "miss-5",
+    "miss-6",
+    "",
+  ];
+
+  equal(
+    pull(literalSource, literalPatterns),
+    ["keep", "keep", ...filler],
+    "24.01",
+  );
+
+  const mixedSource = [
+    "remove-exact",
+    "glob-one",
+    "literal*",
+    String.raw`slash\value`,
+    "keep-only",
+    ...Array.from({ length: 95 }, (_value, index) => `mixed-keep-${index}`),
+  ];
+  const mixedPatterns = [
+    "remove-exact",
+    "glob-*",
+    String.raw`literal\*`,
+    String.raw`slash\\value`,
+    "mixed-miss-1",
+    "mixed-miss-2",
+    "mixed-miss-3",
+    "mixed-miss-4",
+  ];
+
+  equal(
+    pull(mixedSource, mixedPatterns),
+    [
+      "keep-only",
+      ...Array.from({ length: 95 }, (_value, index) => `mixed-keep-${index}`),
+    ],
+    "24.02",
+  );
+
+  const negativeSource = [
+    "remove-exact",
+    "keep-only",
+    ...Array.from({ length: 48 }, (_value, index) => `negative-${index}`),
+  ];
+  equal(
+    pull(negativeSource, [
+      "remove-exact",
+      "!keep-only",
+      "negative-miss-1",
+      "negative-miss-2",
+      "negative-miss-3",
+      "negative-miss-4",
+      "negative-miss-5",
+      "negative-miss-6",
+    ]),
+    ["keep-only"],
+    "24.03",
+  );
+
+  const caseInsensitiveSource = ["REMOVE", ...filler, "keep-a", "keep-b"];
+  equal(
+    pull(
+      caseInsensitiveSource,
+      [
+        "remove",
+        "case-miss-1",
+        "case-miss-2",
+        "case-miss-3",
+        "case-miss-4",
+        "case-miss-5",
+        "case-miss-6",
+        "case-miss-7",
+      ],
+      { caseSensitive: false },
+    ),
+    [...filler, "keep-a", "keep-b"],
+    "24.04",
+  );
+
+  const belowLiteralCrossover = Array.from(
+    { length: 256 },
+    (_value, index) => `small-literal-miss-${index}*tail`,
+  );
+  belowLiteralCrossover.push("remove");
+  equal(
+    pull(["remove", "keep"], belowLiteralCrossover),
+    ["keep"],
+    "24.05",
+  );
+
+  const tooManySpecialPatterns = [
+    ...Array.from({ length: 200 }, (_value, index) => `plain-miss-${index}`),
+    ...Array.from(
+      { length: 257 },
+      (_value, index) => `special-miss-${index}*tail`,
+    ),
+  ];
+  equal(
+    pull(["keep-a", "keep-b"], tooManySpecialPatterns),
+    ["keep-a", "keep-b"],
+    "24.06",
+  );
+
+  const sparseSource = [];
+  sparseSource[1] = "keep";
+  sparseSource[3] = "remove";
+  equal(pull(sparseSource, "remove"), ["keep"], "24.07");
 });
 
 test.run();
