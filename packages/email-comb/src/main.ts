@@ -3145,6 +3145,9 @@ function comb(str: string, opts?: InputOpts | null): Res {
         } else {
           // normal operations can continue
           let carvedClass = `${str.slice(bodyClass.valueStart, i)}`;
+          const canonicalClass = decodeHtmlEntities(carvedClass, {
+            scope: "attribute",
+          });
           DEV &&
             console.log(
               `CARVED OUT BODY CLASS "${`\u001b[${32}m${carvedClass}\u001b[${39}m`}"`,
@@ -3166,7 +3169,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
           // );
 
           if (round === 1) {
-            bodyClassesArr.push(`.${carvedClass}`);
+            bodyClassesArr.push(`.${canonicalClass}`);
             DEV &&
               console.log(
                 `\u001b[${35}m${`PUSH`}\u001b[${39}m slice ".${carvedClass}" to bodyClassesArr which becomes:\n${JSON.stringify(
@@ -3179,7 +3182,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
           // round 2
           else if (
             bodyClass.valueStart != null &&
-            bodyClassesToDeleteSet.has(carvedClass)
+            bodyClassesToDeleteSet.has(canonicalClass)
           ) {
             // submit this class for deletion
             DEV &&
@@ -3244,20 +3247,20 @@ function comb(str: string, opts?: InputOpts | null): Res {
               !(
                 Array.isArray(resolvedOpts.whitelist) &&
                 resolvedOpts.whitelist.length &&
-                match(`.${carvedClass}`, resolvedOpts.whitelist)
+                match(`.${canonicalClass}`, resolvedOpts.whitelist)
               )
             ) {
               DEV &&
                 console.log(
                   `${`\u001b[${31}m${`PUSH [${bodyClass.valueStart}, ${i},
                   ${uglifiedBySelector.get(
-                    `.${carvedClass}`,
+                    `.${canonicalClass}`,
                   )}]`}\u001b[${39}m`}`,
                 );
               finalIndexesToDelete.push(
                 bodyClass.valueStart,
                 i,
-                uglifiedBySelector.get(`.${carvedClass}`)?.slice(1),
+                uglifiedBySelector.get(`.${canonicalClass}`)?.slice(1),
               );
             }
           }
@@ -3281,12 +3284,15 @@ function comb(str: string, opts?: InputOpts | null): Res {
       ) {
         DEV && console.log();
         let carvedId = str.slice(bodyId.valueStart, i);
+        const canonicalId = decodeHtmlEntities(carvedId, {
+          scope: "attribute",
+        });
         DEV &&
           console.log(
             `CARVED OUT BODY ID "${`\u001b[${32}m${carvedId}\u001b[${39}m`}"`,
           );
         if (round === 1) {
-          bodyIdsArr.push(`#${carvedId}`);
+          bodyIdsArr.push(`#${canonicalId}`);
           DEV &&
             console.log(
               `\u001b[${35}m${`PUSH`}\u001b[${39}m slice "${`#${carvedId}`}" to bodyIdsArr which is now:\n${JSON.stringify(
@@ -3299,7 +3305,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
         // round 2
         else if (
           bodyId.valueStart != null &&
-          bodyIdsToDeleteSet.has(carvedId)
+          bodyIdsToDeleteSet.has(canonicalId)
         ) {
           // submit this id for deletion
           DEV &&
@@ -3380,22 +3386,22 @@ function comb(str: string, opts?: InputOpts | null): Res {
           // 2. uglify?
           if (
             resolvedOpts.uglify &&
-            !bodyIdsReferencedByForAttributesSet.has(`#${carvedId}`) &&
+            !bodyIdsReferencedByForAttributesSet.has(`#${canonicalId}`) &&
             !(
               Array.isArray(resolvedOpts.whitelist) &&
               resolvedOpts.whitelist.length &&
-              match(`#${carvedId}`, resolvedOpts.whitelist)
+              match(`#${canonicalId}`, resolvedOpts.whitelist)
             )
           ) {
             DEV &&
               console.log(
                 `${`\u001b[${31}m${`PUSH [${bodyId.valueStart}, ${i},
-                ${uglifiedBySelector.get(`#${carvedId}`)}]`}\u001b[${39}m`}`,
+                ${uglifiedBySelector.get(`#${canonicalId}`)}]`}\u001b[${39}m`}`,
               );
             finalIndexesToDelete.push(
               bodyId.valueStart,
               i,
-              uglifiedBySelector.get(`#${carvedId}`)?.slice(1),
+              uglifiedBySelector.get(`#${canonicalId}`)?.slice(1),
             );
           }
         }
