@@ -83,6 +83,7 @@ export interface JSONObject {
 }
 
 export type Obj = JSONObject;
+export type PlainObject = Record<PropertyKey, unknown>;
 
 export type EolChar = "\n" | "\r" | "\r\n";
 export type EolSetting = "lf" | "crlf" | "cr";
@@ -476,7 +477,7 @@ export const removeTrailingSlash = <T>(value: T) => {
  * @param value unknown
  * @returns boolean
  */
-export function isPlainObject(value: unknown): value is JSONObject {
+export function isPlainObject(value: unknown): value is PlainObject {
   if (value == null || typeof value !== "object") {
     return false;
   }
@@ -488,7 +489,7 @@ export function isPlainObject(value: unknown): value is JSONObject {
   ) {
     return false;
   }
-  return !(Symbol.iterator in value) && !(Symbol.toStringTag in value);
+  return true;
 }
 
 // ----------------------------------------------------------------
@@ -792,8 +793,9 @@ export function resolveEolSetting(
 
 // ----------------------------------------------------------------
 
-export function hasOwnProp(obj: unknown, prop: string): boolean {
-  return isPlainObject(obj) && isStr(prop) && hasOwn.call(obj, prop);
+/** Safely check an own string, number, or symbol property. */
+export function hasOwnProp(obj: unknown, prop: PropertyKey): boolean {
+  return obj !== null && obj !== undefined && hasOwn.call(obj, prop);
 }
 
 // ----------------------------------------------------------------

@@ -57,7 +57,10 @@ function flattenObject(obj: JSONObject, opts?: Partial<Opts>): any[] {
   if (isObj(resolvedObj)) {
     Object.keys(resolvedObj).forEach((key) => {
       if (isObj(resolvedObj[key])) {
-        resolvedObj[key] = flattenObject(resolvedObj[key], resolvedOpts);
+        resolvedObj[key] = flattenObject(
+          resolvedObj[key] as JSONObject,
+          resolvedOpts,
+        );
       }
       if (Array.isArray(resolvedObj[key])) {
         res = res.concat(

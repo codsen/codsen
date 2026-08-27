@@ -335,7 +335,13 @@ function compareInner(
             s[sKey],
           )}, on the second-one, it's ${typeLabel(b[sKey])}`;
         }
-      } else if (compareInner(b[sKey], s[sKey], resolvedOpts) !== true) {
+      } else if (
+        compareInner(
+          b[sKey] as JsonValue,
+          s[sKey] as JsonValue,
+          resolvedOpts,
+        ) !== true
+      ) {
         DEV && console.log(`case #3. - recursion returned false`);
         DEV &&
           console.log(

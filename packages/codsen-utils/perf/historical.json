@@ -4,9 +4,9 @@
   "1.8.0": 18_614_753,
   "lastSlowerRun": {
     "against": 18_614_753,
-    "score": 17_569_111,
-    "version": "1.8.0",
-    "worst": 17_569_111
+    "score": 17_361_852,
+    "version": "1.9.0",
+    "worst": 17_361_852
   },
   "lastVersion": 18_614_753
 }

@@ -58,4 +58,23 @@ test("06 - supports objects without Object.prototype", () => {
   equal(hasOwnProp(value, "missing"), false, "06.02");
 });
 
+test("07 - arrays, functions, and boxed primitive properties", () => {
+  function named() {}
+
+  equal(hasOwnProp([], "length"), true, "07.01");
+  equal(hasOwnProp(named, "prototype"), true, "07.02");
+  equal(hasOwnProp("abc", "0"), true, "07.03");
+  equal(hasOwnProp("abc", "length"), true, "07.04");
+  equal(hasOwnProp(1, "valueOf"), false, "07.05");
+});
+
+test("08 - symbol and numeric keys match Object.hasOwn", () => {
+  const symbolKey = Symbol("key");
+  const value = { [symbolKey]: 1, 0: "zero" };
+
+  equal(hasOwnProp(value, symbolKey), Object.hasOwn(value, symbolKey), "08.01");
+  equal(hasOwnProp(value, Symbol.iterator), false, "08.02");
+  equal(hasOwnProp(value, 0), Object.hasOwn(value, 0), "08.03");
+});
+
 test.run();

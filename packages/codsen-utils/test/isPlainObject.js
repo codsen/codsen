@@ -1,4 +1,6 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import vm from "node:vm";
+
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
@@ -78,6 +80,39 @@ test("10 - various", () => {
   equal(isPlainObject(Symbol("foo")), false, "10.11");
   // Null
   equal(isPlainObject(null), false, "10.12");
+});
+
+test("11 - contents and own symbols do not change plainness", () => {
+  const iterable = {
+    [Symbol.iterator]: function* iterator() {
+      yield 1;
+    },
+    count: 1n,
+    missing: undefined,
+    run() {},
+  };
+  const tagged = { [Symbol.toStringTag]: "Record", value: true };
+  const cyclic = {};
+  cyclic.self = cyclic;
+
+  equal(isPlainObject(iterable), true, "11.01");
+  equal(isPlainObject(tagged), true, "11.02");
+  equal(isPlainObject(cyclic), true, "11.03");
+});
+
+test("12 - cross-realm records and custom prototypes", () => {
+  equal(isPlainObject(vm.runInNewContext("({ answer: 42 })")), true, "12.01");
+  equal(
+    isPlainObject(vm.runInNewContext("Object.create(null)")),
+    true,
+    "12.02",
+  );
+  equal(
+    isPlainObject(vm.runInNewContext("new (class Example {})()")),
+    false,
+    "12.03",
+  );
+  equal(isPlainObject(Object.create({ inherited: true })), false, "12.04");
 });
 
 test.run();

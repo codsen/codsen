@@ -39,6 +39,7 @@ interface JSONObject {
   [key: string]: JSONValue;
 }
 type Obj = JSONObject;
+type PlainObject = Record<PropertyKey, unknown>;
 type EolChar = "\n" | "\r" | "\r\n";
 type EolSetting = "lf" | "crlf" | "cr";
 /** Clone nested data without retaining object or collection references. */
@@ -68,7 +69,7 @@ declare const removeTrailingSlash: <T>(value: T) => string | T;
  * @param value unknown
  * @returns boolean
  */
-declare function isPlainObject(value: unknown): value is JSONObject;
+declare function isPlainObject(value: unknown): value is PlainObject;
 /**
  * @param str input string
  * @param index starting index
@@ -123,7 +124,8 @@ declare function resolveEolSetting(
   eolSetting: EolSetting | unknown,
   defaultEolChar?: EolChar,
 ): EolChar;
-declare function hasOwnProp(obj: unknown, prop: string): boolean;
+/** Safely check an own string, number, or symbol property. */
+declare function hasOwnProp(obj: unknown, prop: PropertyKey): boolean;
 /**
  * Related to @typescript-eslint/require-array-sort-compare lint error
  */
@@ -315,4 +317,5 @@ export type {
   JsonObject,
   MatchOptions,
   Obj,
+  PlainObject,
 };

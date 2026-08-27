@@ -7,6 +7,7 @@ import {
   formatDiagnosticValue,
   isPlainObject as isObj,
   isStr,
+  type JSONObject,
   type JSONValue,
   match,
 } from "codsen-utils";
@@ -173,7 +174,7 @@ function flattenReferencing(
                 isStr(resolvedReference[key])
               ) {
                 resolvedInput[key] = flattenArr(
-                  flattenObject(resolvedInput[key], opts2),
+                  flattenObject(resolvedInput[key] as JSONObject, opts2),
                   opts2,
                   wrap,
                   joinArraysUsingBrs,

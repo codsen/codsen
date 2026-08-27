@@ -1,6 +1,6 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-import { compare } from "ast-compare";
+import { compare, type JsonValue } from "ast-compare";
 import { deepClone as clone, isPlainObject as isObj } from "codsen-utils";
 
 import { version as v } from "../package.json";
@@ -44,7 +44,7 @@ function internalApi(
     // DEV && console.log('\nwill compare:')
     // DEV && console.log('ast = ' + JSON.stringify(ast, null, 4))
     // DEV && console.log('keyValPair = ' + JSON.stringify(keyValPair, null, 4))
-    if (compare(ast, keyValPair)) {
+    if (compare(ast as JsonValue, keyValPair)) {
       if (set) {
         /* c8 ignore next */
         if ((replacementContentsArr as UnknownValueObj[]).length) {

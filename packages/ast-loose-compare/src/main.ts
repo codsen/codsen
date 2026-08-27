@@ -55,7 +55,11 @@ function internalCompare(
     if (smallObj.length) {
       for (i = 0, len = smallObj.length; i < len; i++) {
         if (Array.isArray(smallObj[i]) || isObj(smallObj[i])) {
-          res = internalCompare(bigObj[i], smallObj[i], res);
+          res = internalCompare(
+            bigObj[i] as JsonValue,
+            smallObj[i] as JsonValue,
+            res,
+          );
           if (!res) {
             return false;
           }
@@ -86,7 +90,11 @@ function internalCompare(
           isObj(smallObj[keysArr[i]]) ||
           typeof smallObj[keysArr[i]] === "string"
         ) {
-          res = internalCompare(bigObj[keysArr[i]], smallObj[keysArr[i]], res);
+          res = internalCompare(
+            bigObj[keysArr[i]] as JsonValue,
+            smallObj[keysArr[i]] as JsonValue,
+            res,
+          );
           if (!res) {
             return false;
           }
