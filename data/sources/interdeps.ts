@@ -655,7 +655,7 @@ export const interdeps = [
   },
   {
     "name": "string-collapse-leading-whitespace",
-    "size": 1170,
+    "size": 1167,
     "imports": []
   },
   {

@@ -8,7 +8,7 @@ function collWhitespace<T>(
   str: T,
   lineBreakLimit?: number,
 ): T extends string ? string : T;
-function collWhitespace(str: unknown, lineBreakLimit = 1): unknown {
+function collWhitespace(str: unknown, lineBreakLimit: unknown = 1): unknown {
   let rawNbsp = "\u00A0";
   // helpers
 
@@ -211,11 +211,11 @@ function collWhitespace(str: unknown, lineBreakLimit = 1): unknown {
     // without a fuss, set the max allowed line breaks as a leading/trailing whitespace:
     let resolvedLineBreakLimit = 1;
     if (
-      typeof +lineBreakLimit === "number" &&
-      Number.isInteger(+lineBreakLimit) &&
-      +lineBreakLimit >= 0
+      typeof lineBreakLimit === "number" &&
+      Number.isInteger(lineBreakLimit) &&
+      lineBreakLimit >= 0
     ) {
-      resolvedLineBreakLimit = +lineBreakLimit;
+      resolvedLineBreakLimit = lineBreakLimit;
     }
     DEV &&
       console.log(

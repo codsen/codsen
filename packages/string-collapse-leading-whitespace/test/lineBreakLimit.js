@@ -84,4 +84,37 @@ test("017 - CR", () => {
   equal(c("\r\r\rzzz\r\r\r", 0), "zzz", "017.01");
 });
 
+test("018 - invalid limits fall back to one without coercion", () => {
+  let input = "\n\ncontent\n\n";
+  let expected = "\ncontent\n";
+
+  equal(c(input, 1.5), expected, "018.01");
+  equal(c(input, -1), expected, "018.02");
+  equal(c(input, Number.NaN), expected, "018.03");
+  equal(c(input, Number.POSITIVE_INFINITY), expected, "018.04");
+  equal(c(input, Number.NEGATIVE_INFINITY), expected, "018.05");
+  equal(c(input, true), expected, "018.06");
+  equal(c(input, false), expected, "018.07");
+  equal(c(input, null), expected, "018.08");
+  equal(c(input, undefined), expected, "018.09");
+  equal(c(input, "0"), expected, "018.10");
+  equal(c(input, "2"), expected, "018.11");
+  equal(c(input, Symbol("limit")), expected, "018.12");
+  equal(c(input, 0n), expected, "018.13");
+  equal(c(input, {}), expected, "018.14");
+});
+
+test("019 - invalid limit conversion hooks are not called", () => {
+  let called = false;
+  let limit = {
+    valueOf() {
+      called = true;
+      throw new Error("must not run");
+    },
+  };
+
+  equal(c("\n\ncontent\n\n", limit), "\ncontent\n", "019.01");
+  equal(called, false, "019.02");
+});
+
 test.run();
