@@ -158,4 +158,56 @@ test(`03 - css comments - within body`, () => {
   );
 });
 
+test("04 - css comments - comment-looking text inside strings", () => {
+  const inputs = [
+    '<style>a::before{content:"/* keep */";}</style>',
+    "<style>a::before{content:'/* keep */';}</style>",
+    '<style>a::before{content:"{{ /* keep */ }}";}</style>',
+  ];
+
+  for (const input of inputs) {
+    const { applicableOpts, ranges, result } = m(equal, input, {
+      removeCSSComments: true,
+    });
+
+    equal(result, input, "04.01");
+    equal(ranges, null, "04.02");
+    equal(applicableOpts.removeCSSComments, false, "04.03");
+  }
+});
+
+test("05 - css comments - escaped quotes and adjacent real comments", () => {
+  const comment = "/* remove */";
+  const input = `<style>a::before{content:"x\\"/* keep */y";}${comment}</style>`;
+  const commentStartsAt = input.indexOf(comment);
+  const { applicableOpts, ranges, result } = m(equal, input, {
+    removeCSSComments: true,
+  });
+
+  equal(
+    result,
+    '<style>a::before{content:"x\\"/* keep */y";}</style>',
+    "05.01",
+  );
+  equal(ranges, [[commentStartsAt, commentStartsAt + comment.length]], "05.02");
+  equal(applicableOpts.removeCSSComments, true, "05.03");
+});
+
+test("06 - css comments - strings inside inline styles", () => {
+  const comment = "/* remove */";
+  const input = `<div style="content:'/* keep */';${comment}color:red"></div>`;
+  const commentStartsAt = input.indexOf(comment);
+  const { applicableOpts, ranges, result } = m(equal, input, {
+    removeCSSComments: true,
+  });
+
+  equal(
+    result,
+    '<div style="content:\'/* keep */\';color:red"></div>',
+    "06.01",
+  );
+  equal(ranges, [[commentStartsAt, commentStartsAt + comment.length]], "06.02");
+  equal(applicableOpts.removeCSSComments, true, "06.03");
+});
+
 test.run();

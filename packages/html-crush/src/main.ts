@@ -437,6 +437,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
   let withinHTMLConditional = false; // <!--[if lte mso 11]> etc
   let withinInlineStyle = null;
   let htmlAttributeQuoteStartedAt = null;
+  let cssQuoteStartedAt = null;
   let styleCommentStartedAt = null;
   let htmlCommentStartedAt = null;
   let scriptStartedAt = null;
@@ -760,6 +761,39 @@ function crush(str: string, opts?: Partial<Opts>): Res {
           }
           continue;
         }
+      }
+
+      // CSS comment delimiters and whitespace inside a quoted CSS value are
+      // data. Preserve the string until its matching unescaped quote.
+      if (!doNothing && cssQuoteStartedAt !== null) {
+        if (resolvedOpts.removeLineBreaks) {
+          countCharactersPerLine = `\r\n`.includes(str[i])
+            ? 0
+            : countCharactersPerLine + 1;
+        }
+        if (i > cssQuoteStartedAt && str[i] === str[cssQuoteStartedAt]) {
+          let backslashes = 0;
+          for (let y = i; y > 0 && str[y - 1] === "\\"; y--) {
+            backslashes++;
+          }
+          if (backslashes % 2 === 0) {
+            cssQuoteStartedAt = null;
+          }
+        }
+        continue;
+      }
+      if (
+        !doNothing &&
+        (withinStyleTag || withinInlineStyle) &&
+        (withinInlineStyle || tagNameStartsAt === null) &&
+        `"'`.includes(str[i]) &&
+        !(withinInlineStyle && str[i] === str[withinInlineStyle])
+      ) {
+        cssQuoteStartedAt = i;
+        if (resolvedOpts.removeLineBreaks) {
+          countCharactersPerLine += 1;
+        }
+        continue;
       }
 
       //
