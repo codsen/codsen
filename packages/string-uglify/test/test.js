@@ -375,4 +375,81 @@ test("15 - the linear-to-indexed threshold preserves output", () => {
   equal(at.at(-1), ".fhn0", "15.05");
 });
 
+function isWellFormed(value) {
+  for (let index = 0; index < value.length; index += 1) {
+    const codeUnit = value.charCodeAt(index);
+    if (codeUnit >= 0xd800 && codeUnit <= 0xdbff) {
+      const next = value.charCodeAt(index + 1);
+      if (!(next >= 0xdc00 && next <= 0xdfff)) {
+        return false;
+      }
+      index += 1;
+    } else if (codeUnit >= 0xdc00 && codeUnit <= 0xdfff) {
+      return false;
+    }
+  }
+  return true;
+}
+
+test("16 - distinct short plain names remain distinct in either order", () => {
+  const pairs = [
+    ["AA", "A"],
+    ["11", "1"],
+    ["!!", "!"],
+    ["éé", "é"],
+    ["😀😀", "😀"],
+  ];
+  let assertion = 1;
+
+  for (const pair of pairs) {
+    for (const input of [pair, [pair[1], pair[0]]]) {
+      const result = uglifyArr(input);
+      equal(result, input, `16.${String(assertion).padStart(2, "0")}`);
+      assertion += 1;
+      equal(
+        result.every(isWellFormed),
+        true,
+        `16.${String(assertion).padStart(2, "0")}`,
+      );
+      assertion += 1;
+    }
+  }
+});
+
+test("17 - Unicode shortening preserves duplicates and namespaces", () => {
+  equal(
+    uglifyArr(["😀😀", "😀😀", "😀", ".😀😀", ".😀", "#😀😀", "#😀"]),
+    ["😀😀", "😀😀", "😀", ".😀😀", ".😀", "#😀😀", "#😀"],
+    "17.01",
+  );
+  equal(uglifyArr(["😀😀", "😀😀"]), ["😀", "😀"], "17.02");
+  equal(
+    uglifyArr(["AA", "A", ".AA", ".A", "#AA", "#A"]),
+    ["AA", "A", ".AA", ".A", "#AA", "#A"],
+    "17.03",
+  );
+});
+
+test("18 - Unicode uniqueness holds below and at the indexing threshold", () => {
+  const belowInput = [
+    ...Array.from({ length: 45 }, (_, index) => `candidate-${index}`),
+    "😀😀",
+    "😀",
+  ];
+  const atInput = [
+    ...Array.from({ length: 46 }, (_, index) => `candidate-${index}`),
+    "😀😀",
+    "😀",
+  ];
+  const below = uglifyArr(belowInput);
+  const at = uglifyArr(atInput);
+
+  equal(new Set(below).size, belowInput.length, "18.01");
+  equal(new Set(at).size, atInput.length, "18.02");
+  equal(below.every(isWellFormed), true, "18.03");
+  equal(at.every(isWellFormed), true, "18.04");
+  equal(below.slice(-2), ["😀😀", "😀"], "18.05");
+  equal(at.slice(-2), ["😀😀", "😀"], "18.06");
+});
+
 test.run();

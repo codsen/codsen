@@ -9,6 +9,14 @@ function tellCP(str: string, idNum = 0): number {
   return str.codePointAt(idNum) || 0;
 }
 
+function firstCodePoint(str: string, idNum = 0): string {
+  const codePoint = str.codePointAt(idNum);
+  if (codePoint === undefined) {
+    return "";
+  }
+  return str.slice(idNum, idNum + (codePoint > 0xffff ? 2 : 1));
+}
+
 export interface Obj {
   [key: string]: any;
 }
@@ -137,14 +145,14 @@ function uglifyArr(arr: string[]): string[] {
 
     let prefix = `.#`.includes(arr[id][0]) ? arr[id][0] : "";
     let codePointSum = 0;
+    let codePointCount = 0;
     for (const character of arr[id]) {
       codePointSum += tellCP(character);
+      codePointCount += 1;
     }
+    const nameCodePointCount = codePointCount - (prefix ? 1 : 0);
 
-    if (
-      (`.#`.includes(arr[id][0]) && arr[id].length < 4) ||
-      (!`.#`.includes(arr[id][0]) && arr[id].length < 3)
-    ) {
+    if (nameCodePointCount < 3) {
       let val = arr[id];
       if (!(generatedNames ? generatedNames.has(val) : res.includes(val))) {
         res.push(val);
@@ -154,28 +162,20 @@ function uglifyArr(arr: string[]): string[] {
         }
 
         // the first candidates for single-character value are 2-char long classes:
-        if (
-          val.startsWith(".") &&
-          val.length === 2 &&
-          singleClasses[val.slice(1)] === false
-        ) {
+        const firstNameCodePoint = firstCodePoint(val, prefix ? 1 : 0);
+        if (val.startsWith(".") && nameCodePointCount === 1) {
           // mark the letter as used
-          singleClasses[val.slice(1)] = true;
-        } else if (
-          val.startsWith("#") &&
-          val.length === 2 &&
-          singleIds[val.slice(1)] === false
-        ) {
+          singleClasses[firstNameCodePoint] = true;
+        } else if (val.startsWith("#") && nameCodePointCount === 1) {
           // mark the letter as used
-          singleIds[val.slice(1)] = true;
+          singleIds[firstNameCodePoint] = true;
         } else if (
           !val.startsWith(".") &&
           !val.startsWith("#") &&
-          val.length === 1 &&
-          singleNameOnly[val] === false
+          nameCodePointCount === 1
         ) {
           // mark the letter as used
-          singleNameOnly[val] = true;
+          singleNameOnly[firstNameCodePoint] = true;
         }
         continue;
       }
@@ -287,64 +287,53 @@ function uglifyArr(arr: string[]): string[] {
         `processing res[i] = ${`\u001b[${36}m${res[i]}\u001b[${39}m`}`,
       );
     if (res[i].startsWith(".")) {
+      const firstNameCodePoint = firstCodePoint(res[i], 1);
       // if particular class name starts with a letter which hasn't been taken
-      if (singleClasses[res[i].slice(1, 2)] === false) {
-        singleClasses[res[i].slice(1, 2)] = res[i];
+      if (!singleClasses[firstNameCodePoint]) {
+        singleClasses[firstNameCodePoint] = res[i];
         DEV &&
           console.log(
-            `shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
-              i
-            ].slice(
-              0,
-              2,
-            )}\u001b[${39}m`}; set ${`\u001b[${33}m${`singleClasses[${res[
-              i
-            ].slice(1, 2)}]`}\u001b[${39}m`} = ${
-              singleClasses[res[i].slice(1, 2)]
+            `shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m.${firstNameCodePoint}\u001b[${39}m`}; set ${`\u001b[${33}m${`singleClasses[${firstNameCodePoint}]`}\u001b[${39}m`} = ${
+              singleClasses[firstNameCodePoint]
             }`,
           );
-        res[i] = res[i].slice(0, 2);
-      } else if (singleClasses[res[i].slice(1, 2)] === res[i]) {
+        res[i] = `.${firstNameCodePoint}`;
+      } else if (singleClasses[firstNameCodePoint] === res[i]) {
         DEV &&
           console.log(
-            `res[i] = ${res[i]} will also be shortened to ${res[i].slice(
-              0,
-              2,
-            )}`,
+            `res[i] = ${res[i]} will also be shortened to .${firstNameCodePoint}`,
           );
         // This means, particular class name was repeated in the list and
         // was shortened. We must shorten it to the same value.
-        res[i] = res[i].slice(0, 2);
+        res[i] = `.${firstNameCodePoint}`;
       }
     } else if (res[i].startsWith("#")) {
-      if (singleIds[res[i].slice(1, 2)] === false) {
-        singleIds[res[i].slice(1, 2)] = res[i];
+      const firstNameCodePoint = firstCodePoint(res[i], 1);
+      if (!singleIds[firstNameCodePoint]) {
+        singleIds[firstNameCodePoint] = res[i];
         DEV &&
           console.log(
-            `shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
-              i
-            ].slice(0, 2)}\u001b[${39}m`};`,
+            `shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m#${firstNameCodePoint}\u001b[${39}m`};`,
           );
-        res[i] = res[i].slice(0, 2);
-      } else if (singleIds[res[i].slice(1, 2)] === res[i]) {
+        res[i] = `#${firstNameCodePoint}`;
+      } else if (singleIds[firstNameCodePoint] === res[i]) {
         // This means, particular id name was repeated in the list and
         // was shortened. We must shorten it to the same value.
-        res[i] = res[i].slice(0, 2);
+        res[i] = `#${firstNameCodePoint}`;
       }
     } else if (!res[i].startsWith(".") && !res[i].startsWith("#")) {
-      if (!singleNameOnly[res[i].slice(0, 1)]) {
-        singleNameOnly[res[i].slice(0, 1)] = res[i];
+      const firstNameCodePoint = firstCodePoint(res[i]);
+      if (!singleNameOnly[firstNameCodePoint]) {
+        singleNameOnly[firstNameCodePoint] = res[i];
         DEV &&
           console.log(
-            `shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
-              i
-            ].slice(0, 1)}\u001b[${39}m`}`,
+            `shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${firstNameCodePoint}\u001b[${39}m`}`,
           );
-        res[i] = res[i].slice(0, 1);
-      } else if (singleNameOnly[res[i].slice(0, 1)] === res[i]) {
+        res[i] = firstNameCodePoint;
+      } else if (singleNameOnly[firstNameCodePoint] === res[i]) {
         // This means, particular id name was repeated in the list and
         // was shortened. We must shorten it to the same value.
-        res[i] = res[i].slice(0, 1);
+        res[i] = firstNameCodePoint;
       }
     }
   }
