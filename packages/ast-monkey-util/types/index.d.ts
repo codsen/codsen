@@ -1,4 +1,4 @@
-declare function parentItem(str: string): null | string;
+declare function parent(str: string): null | string;
 
 declare function pathNext(str: string): string;
 
@@ -8,4 +8,4 @@ declare function pathUp(str: string): string;
 
 declare const version: string;
 
-export { parentItem as parent, pathNext, pathPrev, pathUp, version };
+export { parent, pathNext, pathPrev, pathUp, version };
