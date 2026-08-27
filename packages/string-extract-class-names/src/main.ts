@@ -108,13 +108,15 @@ function extract(str: string): Result {
     }
 
     // catch zzz[class=]
-    let temp1 = right(str, i + 4);
     if (
+      str[i] &&
+      str[i].toLowerCase() === "c" &&
       str.slice(i, i + 5).toLowerCase() === "class" &&
       attributeNameCanEnd(str[i + 5]) &&
       typeof left(str, i) === "number" &&
       str[left(str, i) as number] === "["
     ) {
+      let temp1 = right(str, i + 4);
       let attribute = readAttributeSelector(str, i, ".", temp1);
       if (attribute !== null) {
         for (let selector of attribute.selectors) {
@@ -127,12 +129,14 @@ function extract(str: string): Result {
     }
 
     // catch zzz[id=]
-    let temp2 = right(str, i + 1);
     if (
+      str[i] &&
+      str[i].toLowerCase() === "i" &&
       str.slice(i, i + 2).toLowerCase() === "id" &&
       attributeNameCanEnd(str[i + 2]) &&
       str[left(str, i) as number] === "["
     ) {
+      let temp2 = right(str, i + 1);
       let attribute = readAttributeSelector(str, i, "#", temp2);
       if (attribute !== null) {
         for (let selector of attribute.selectors) {
