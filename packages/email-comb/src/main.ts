@@ -157,20 +157,25 @@ function cleanBlankLines(
   backend: HeadsAndTailsObj[],
 ): string {
   const blankLineRegex = /\r?\n\s+\r?\n/g;
+  let blankLineMatch = blankLineRegex.exec(str);
+  if (!blankLineMatch) {
+    return str;
+  }
+
   const protectedPairs = backend.filter(
     ({ heads, tails }) => heads.length && tails.length,
   );
   let backendTails: string | null = null;
   let comment = false;
+  let lastOutputAt = 0;
+  const output: string[] = [];
   let quote: '"' | "'" | null = null;
   let rawTag: "script" | "style" | null = null;
-  let result = "";
   let tagStartedAt: number | null = null;
-  let blankLineMatch = blankLineRegex.exec(str);
 
   for (let i = 0; i < str.length; i++) {
     if (blankLineMatch?.index === i) {
-      result +=
+      const replacement =
         tagStartedAt !== null && !comment && backendTails === null
           ? ""
           : rawTag === "style"
@@ -180,6 +185,8 @@ function cleanBlankLines(
             : blankLineMatch[0].includes("\r\n")
               ? "\r\n"
               : "\n";
+      output.push(str.slice(lastOutputAt, i), replacement);
+      lastOutputAt = i + blankLineMatch[0].length;
       i += blankLineMatch[0].length - 1;
       blankLineMatch = blankLineRegex.exec(str);
       continue;
@@ -187,20 +194,16 @@ function cleanBlankLines(
 
     if (backendTails !== null) {
       if (str.startsWith(backendTails, i)) {
-        result += backendTails;
         i += backendTails.length - 1;
         backendTails = null;
-      } else {
-        result += str[i];
       }
       continue;
     }
 
-    const backendPair = protectedPairs.find(({ heads }) =>
-      str.startsWith(heads, i),
-    );
+    const backendPair = protectedPairs.length
+      ? protectedPairs.find(({ heads }) => str.startsWith(heads, i))
+      : undefined;
     if (backendPair) {
-      result += backendPair.heads;
       i += backendPair.heads.length - 1;
       backendTails = backendPair.tails;
       continue;
@@ -208,11 +211,8 @@ function cleanBlankLines(
 
     if (comment) {
       if (str.startsWith("-->", i)) {
-        result += "-->";
         i += 2;
         comment = false;
-      } else {
-        result += str[i];
       }
       continue;
     }
@@ -220,6 +220,7 @@ function cleanBlankLines(
     if (rawTag) {
       const closingTag = `</${rawTag}`;
       if (
+        str[i] === "<" &&
         str.slice(i, i + closingTag.length).toLowerCase() === closingTag &&
         (isHtmlAsciiWhitespace(str[i + closingTag.length]) ||
           str[i + closingTag.length] === ">")
@@ -227,12 +228,10 @@ function cleanBlankLines(
         rawTag = null;
         tagStartedAt = i;
       }
-      result += str[i];
       continue;
     }
 
     if (tagStartedAt !== null) {
-      result += str[i];
       if (quote) {
         if (str[i] === quote) {
           quote = null;
@@ -253,7 +252,6 @@ function cleanBlankLines(
     }
 
     if (str.startsWith("<!--", i)) {
-      result += "<!--";
       i += 3;
       comment = true;
     } else if (
@@ -263,14 +261,12 @@ function cleanBlankLines(
         str[i + 1] === "/" ||
         /[a-z]/i.test(str[i + 1] || ""))
     ) {
-      result += str[i];
       tagStartedAt = i;
-    } else {
-      result += str[i];
     }
   }
 
-  return result;
+  output.push(str.slice(lastOutputAt));
+  return output.join("");
 }
 
 function collectNextClosingBrackets(str: string): Int32Array {
