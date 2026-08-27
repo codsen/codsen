@@ -273,4 +273,44 @@ test("20 - still converts colors outside selector preludes", () => {
   equal(conv("#abc"), "#aabbcc", "20.04");
 });
 
+test("21 - preserves complete CSS and HTML resource references", () => {
+  const references = [
+    "url(#abc)",
+    'URL("#abc")',
+    'url(/* comment */ "#abc")',
+    "url(\\#abc)",
+    "url(sprite.svg#abc)",
+    "url('sprite.svg#abc')",
+    "src(#abc)",
+    'SRC(/* comment */ "icons.svg#abc")',
+    '<a href="icons.svg#abc">',
+    "<use xlink:href='icons.svg#abc'>",
+    'a[href="icons.svg#abc"] {}',
+  ];
+
+  references.forEach((reference, index) => {
+    equal(
+      conv(reference),
+      reference,
+      `21.${String(index + 1).padStart(2, "0")}`,
+    );
+  });
+});
+
+test("22 - converts hashes in similarly named non-reference contexts", () => {
+  equal(conv("myurl(#abc)"), "myurl(#aabbcc)", "22.01");
+  equal(conv("curl(#abc)"), "curl(#aabbcc)", "22.02");
+  equal(conv("srcColor(#abc)"), "srcColor(#aabbcc)", "22.03");
+  equal(
+    conv('<a data-href="icons.svg#abc">'),
+    '<a data-href="icons.svg#aabbcc">',
+    "22.04",
+  );
+  equal(
+    conv("linear-gradient(#abc, #def)"),
+    "linear-gradient(#aabbcc, #ddeeff)",
+    "22.05",
+  );
+});
+
 test.run();

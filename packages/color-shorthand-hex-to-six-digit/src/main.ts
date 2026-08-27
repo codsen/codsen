@@ -6,63 +6,6 @@ import { version as v } from "../package.json";
 const version: string = v;
 const hexColorRegex = /#(?:[a-f0-9]{3}|[a-f0-9]{4}(?:[a-f0-9]{2}){0,2})\b/gi;
 
-function isWhitespace(input: string, index: number): boolean {
-  const code = input.charCodeAt(index);
-  if (code === 32 || (code >= 9 && code <= 13)) {
-    return true;
-  }
-  return code > 127 && !input[index].trim();
-}
-
-function canBeAttributeNameCharacter(character: string): boolean {
-  const code = character.charCodeAt(0);
-  return (
-    character === "-" ||
-    character === ":" ||
-    (code >= 65 && code <= 90) ||
-    (code >= 97 && code <= 122)
-  );
-}
-
-function isReferenceContext(input: string, offset: number): boolean {
-  let index = offset - 1;
-
-  while (isWhitespace(input, index)) {
-    index -= 1;
-  }
-  if (input[index] === '"' || input[index] === "'") {
-    index -= 1;
-    while (isWhitespace(input, index)) {
-      index -= 1;
-    }
-  }
-
-  if (input[index] === "(") {
-    index -= 1;
-    while (isWhitespace(input, index)) {
-      index -= 1;
-    }
-    return (
-      input.slice(Math.max(0, index - 2), index + 1).toLowerCase() === "url"
-    );
-  }
-
-  if (input[index] === "=") {
-    index -= 1;
-    while (isWhitespace(input, index)) {
-      index -= 1;
-    }
-    const attributeEnds = index + 1;
-    while (index >= 0 && canBeAttributeNameCharacter(input[index])) {
-      index -= 1;
-    }
-    const attribute = input.slice(index + 1, attributeEnds).toLowerCase();
-    return attribute === "href" || attribute === "xlink:href";
-  }
-
-  return false;
-}
-
 function isCssIdentifierContinuation(input: string, index: number): boolean {
   const character = input[index];
   const code = input.charCodeAt(index);
@@ -77,8 +20,113 @@ function isCssIdentifierContinuation(input: string, index: number): boolean {
   );
 }
 
+function isCssResourceContext(input: string, offset: number): boolean {
+  const functionStack: string[] = [];
+  let index = 0;
+  let quote = "";
+  while (index < offset) {
+    const character = input[index];
+    if (quote) {
+      if (character === "\\") {
+        index += 2;
+        continue;
+      }
+      if (character === quote) {
+        quote = "";
+      }
+      index += 1;
+      continue;
+    }
+    if (character === '"' || character === "'") {
+      quote = character;
+      index += 1;
+      continue;
+    }
+    if (character === "/" && input[index + 1] === "*") {
+      const commentEnds = input.indexOf("*/", index + 2);
+      if (commentEnds === -1 || commentEnds >= offset) {
+        break;
+      }
+      index = commentEnds + 2;
+      continue;
+    }
+    if (character === "\\") {
+      index += 2;
+      continue;
+    }
+    if (character === "(") {
+      let functionStarts = index;
+      while (
+        functionStarts > 0 &&
+        isCssIdentifierContinuation(input, functionStarts - 1)
+      ) {
+        functionStarts -= 1;
+      }
+      functionStack.push(
+        input.slice(functionStarts, index).toLowerCase(),
+      );
+    } else if (character === ")") {
+      functionStack.pop();
+    }
+    index += 1;
+  }
+
+  return functionStack.some(
+    (name) => name === "url" || name === "src",
+  );
+}
+
+function isHtmlReferenceContext(input: string, offset: number): boolean {
+  const tagStarts = input.lastIndexOf("<", offset);
+  if (tagStarts <= input.lastIndexOf(">", offset)) {
+    return false;
+  }
+  const tagPrefix = input.slice(tagStarts + 1, offset);
+  return (
+    /(?:^|\s)(?:href|xlink:href)\s*=\s*"[^"]*$/i.test(tagPrefix) ||
+    /(?:^|\s)(?:href|xlink:href)\s*=\s*'[^']*$/i.test(tagPrefix) ||
+    /(?:^|\s)(?:href|xlink:href)\s*=\s*[^\s"'=<>`]*$/i.test(tagPrefix)
+  );
+}
+
+function isReferenceContext(input: string, offset: number): boolean {
+  return (
+    isCssResourceContext(input, offset) ||
+    isHtmlReferenceContext(input, offset)
+  );
+}
+
 function isLikelySelector(input: string, index: number): boolean {
   let quote = "";
+  let prefixIndex = 0;
+  while (prefixIndex < index) {
+    const character = input[prefixIndex];
+    if (quote) {
+      if (character === "\\") {
+        prefixIndex += 2;
+        continue;
+      }
+      if (character === quote) {
+        quote = "";
+      }
+      prefixIndex += 1;
+      continue;
+    }
+    if (character === '"' || character === "'") {
+      quote = character;
+      prefixIndex += 1;
+      continue;
+    }
+    if (character === "/" && input[prefixIndex + 1] === "*") {
+      const commentEnds = input.indexOf("*/", prefixIndex + 2);
+      if (commentEnds === -1 || commentEnds >= index) {
+        return false;
+      }
+      prefixIndex = commentEnds + 2;
+      continue;
+    }
+    prefixIndex += 1;
+  }
   while (index < input.length) {
     const character = input[index];
     if (quote) {
@@ -119,12 +167,7 @@ function toFullHex(hex: string, offset: number, string: string): string {
   if (
     previous === "&" || // consider false positives like &#124;
     isCssIdentifierContinuation(string, matchEnds) ||
-    ((previous === '"' ||
-      previous === "'" ||
-      previous === "(" ||
-      previous === "=" ||
-      isWhitespace(string, offset - 1)) &&
-      isReferenceContext(string, offset)) ||
+    isReferenceContext(string, offset) ||
     isLikelySelector(string, matchEnds)
   ) {
     return hex;
