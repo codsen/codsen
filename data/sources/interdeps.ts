@@ -454,7 +454,7 @@ export const interdeps = [
   },
   {
     "name": "object-boolean-combinations",
-    "size": 1367,
+    "size": 1364,
     "imports": [
       "codsen-utils"
     ]

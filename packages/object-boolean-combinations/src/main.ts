@@ -1,18 +1,41 @@
 import {
   deepClone as clone,
   isPlainObject as isObj,
-  type Obj,
 } from "codsen-utils";
 import { version as v } from "../package.json";
 
 const version: string = v;
 
-export interface BoolObj {
-  [key: string]: boolean;
+export interface UnknownValueObject {
+  [key: string]: unknown;
 }
 
+/** A combination row when no values are pinned through an override. */
+export type BoolObj = Record<string, boolean>;
+
+export type BooleanCombination<Input extends UnknownValueObject> = {
+  -readonly [Key in keyof Input as Key extends string | number
+    ? Key
+    : never]: boolean;
+};
+
+export type Combination<
+  Input extends UnknownValueObject,
+  Override extends UnknownValueObject | undefined,
+> = Override extends UnknownValueObject
+  ? {
+      -readonly [Key in keyof Input as Key extends string | number
+        ? Key
+        : never]: Key extends keyof Override
+        ? Record<never, never> extends Pick<Override, Key>
+          ? boolean | Override[Key]
+          : Override[Key]
+        : boolean;
+    }
+  : BooleanCombination<Input>;
+
 function defineEnumerableDataProperty(
-  target: Obj,
+  target: UnknownValueObject,
   key: string,
   value: unknown,
 ): void {
@@ -24,7 +47,14 @@ function defineEnumerableDataProperty(
   });
 }
 
-function combinations(input: Obj, Override: undefined | Obj = {}): Obj[] {
+function combinations<
+  Input extends UnknownValueObject,
+  Override extends UnknownValueObject | undefined = undefined,
+>(input: Input, Override?: Override): Combination<Input, Override>[];
+function combinations(
+  input: UnknownValueObject,
+  Override: undefined | UnknownValueObject = {},
+): UnknownValueObject[] {
   // CHECKS
   // ======
 
@@ -63,7 +93,9 @@ function combinations(input: Obj, Override: undefined | Obj = {}): Obj[] {
   // Build each output directly instead of first allocating an equally large
   // matrix of zeroes and ones.
   const combinationsCount = 2 ** propertiesToMix.length;
-  const outgoingObjectsArray: Obj[] = new Array(combinationsCount);
+  const outgoingObjectsArray: UnknownValueObject[] = new Array(
+    combinationsCount,
+  );
   if (!inputKeySet.has("__proto__")) {
     // Preserve the branch-free common path: this loop is the package's hot
     // work and normally assigns hundreds of ordinary keys per call.
@@ -72,7 +104,7 @@ function combinations(input: Obj, Override: undefined | Obj = {}): Obj[] {
       combinationIndex < combinationsCount;
       combinationIndex++
     ) {
-      const result: Obj = {};
+      const result: UnknownValueObject = {};
       for (let keyIndex = 0; keyIndex < propertiesToMix.length; keyIndex++) {
         result[propertiesToMix[keyIndex]] =
           (combinationIndex & (1 << keyIndex)) !== 0;
@@ -90,7 +122,7 @@ function combinations(input: Obj, Override: undefined | Obj = {}): Obj[] {
       combinationIndex < combinationsCount;
       combinationIndex++
     ) {
-      const result: Obj = {};
+      const result: UnknownValueObject = {};
       for (let keyIndex = 0; keyIndex < propertiesToMix.length; keyIndex++) {
         const key = propertiesToMix[keyIndex];
         const value = (combinationIndex & (1 << keyIndex)) !== 0;
