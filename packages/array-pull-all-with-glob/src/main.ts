@@ -40,7 +40,7 @@ const defaults: Opts = {
 function pull(
   strArr: string[],
   toBeRemoved: string | string[],
-  opts?: Partial<Opts>,
+  opts?: Partial<Opts> | null,
 ): string[] {
   // insurance
   if (!strArr.length) {
