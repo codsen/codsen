@@ -349,6 +349,44 @@ function emailCombSmoke(api, equal) {
   );
 }
 
+function htmlCrushSmoke(api, equal) {
+  const body = new Array(1002).join("a");
+  const source = `<p>${body}<!--x--></p>`;
+  const progress = [];
+  const result = api.crush(source, {
+    removeHTMLComments: true,
+    reportProgressFunc: (percentage) => progress.push(percentage),
+    reportProgressFuncFrom: 20,
+    reportProgressFuncTo: 40,
+  });
+
+  equal(typeof api.crush, "function");
+  equal(result.result, `<p>${body}</p>`);
+  equal(result.ranges, [[1004, 1012]]);
+  equal(result.applicableOpts, {
+    removeHTMLComments: true,
+    removeCSSComments: false,
+  });
+  equal(
+    [
+      result.log.originalLengthInCodeUnits,
+      result.log.cleanedLengthInCodeUnits,
+      result.log.codeUnitsSaved,
+      result.log.originalLengthInUtf8Bytes,
+      result.log.cleanedLengthInUtf8Bytes,
+      result.log.utf8BytesSaved,
+    ],
+    [1016, 1008, 8, 1016, 1008, 8],
+  );
+  equal(progress, [30, 40]);
+  equal(
+    [result, result.log, result.applicableOpts].map(
+      (value) => Object.getPrototypeOf(value) === Object.prototype,
+    ),
+    [true, true, true],
+  );
+}
+
 function generateAtomicCssSmoke(api, equal) {
   equal(api.extractFromToSource("mt|10"), [0, 10, "mt"]);
   equal(api.extractFromToSource(".m$$$[lang|=en] { margin: $$$px; } | 2 | 4"), [
@@ -388,6 +426,7 @@ const IIFE_API_SMOKES = Object.freeze({
   detergent: detergentSmoke,
   "email-comb": emailCombSmoke,
   "generate-atomic-css": generateAtomicCssSmoke,
+  "html-crush": htmlCrushSmoke,
   "is-language-code": languageCodeSmoke,
   "object-boolean-combinations": objectBooleanCombinationsSmoke,
   "string-convert-indexes": stringConvertIndexesSmoke,
