@@ -46,4 +46,23 @@ test("02 - clones participating values as one graph", () => {
   is(rows[0].cycle.self, rows[0].cycle, "02.05");
 });
 
+test("03 - shares cloned fixed values between result rows", () => {
+  const shared = { mode: "safe" };
+  const cycle = {};
+  cycle.self = cycle;
+  const rows = combinations(
+    { first: false, second: false, cycle: false, varied: false },
+    { first: shared, second: shared, cycle },
+  );
+
+  is(rows[0].first, rows[1].first, "03.01");
+  is(rows[0].first, rows[1].second, "03.02");
+  is(rows[0].cycle, rows[1].cycle, "03.03");
+  is(rows[1].cycle.self, rows[0].cycle, "03.04");
+
+  rows[0].first.mode = "strict";
+  equal(rows[1].second.mode, "strict", "03.05");
+  equal(shared.mode, "safe", "03.06");
+});
+
 test.run();

@@ -49,6 +49,14 @@ function defineEnumerableDataProperty(
   });
 }
 
+/**
+ * Generates every supported boolean combination of the input object's own
+ * enumerable string keys.
+ *
+ * Override values are cloned once per call. Returned rows do not reference the
+ * caller's nested values, but the rows share those cloned fixed values with one
+ * another.
+ */
 function combinations<
   Input extends UnknownValueObject,
   Override extends UnknownValueObject | undefined = undefined,
