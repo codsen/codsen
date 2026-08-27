@@ -2284,7 +2284,10 @@ function crush(str: string, opts?: Partial<Opts>): Res {
       // catch the EOF
       // ███████████████████████████████████████
       if (!str[i + 1]) {
-        if (withinStyleTag && styleCommentStartedAt !== null) {
+        if (
+          (withinStyleTag || withinInlineStyle) &&
+          styleCommentStartedAt !== null
+        ) {
           DEV &&
             console.log(
               `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} THIS UNFINISHED COMMENT`,
@@ -2293,7 +2296,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
             ...expander({
               str,
               from: styleCommentStartedAt,
-              to: i,
+              to: i + 1,
               ifLeftSideIncludesThisThenCropTightly:
                 DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS || "",
               ifRightSideIncludesThisThenCropTightly:

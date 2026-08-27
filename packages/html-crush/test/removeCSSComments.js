@@ -210,4 +210,35 @@ test("06 - css comments - strings inside inline styles", () => {
   equal(applicableOpts.removeCSSComments, true, "06.03");
 });
 
+test("07 - unterminated CSS comments are removed through EOF", () => {
+  for (const source of [
+    "<style>/*abc",
+    "<style>/*abc   ",
+    "<style>/*a",
+    '<div style="color:red;/*abc',
+    "<style>/*abc\r\n",
+  ]) {
+    const commentStartsAt = source.indexOf("/*");
+    const { applicableOpts, ranges, result } = m(equal, source, {
+      removeCSSComments: true,
+    });
+
+    equal(result, source.slice(0, commentStartsAt), "07.01");
+    equal(ranges, [[commentStartsAt, source.length]], "07.02");
+    equal(applicableOpts.removeCSSComments, true, "07.03");
+  }
+});
+
+test("08 - disabled CSS comment removal preserves unterminated comments", () => {
+  for (const source of ["<style>/*abc", '<div style="color:red;/*abc']) {
+    const { applicableOpts, ranges, result } = m(equal, source, {
+      removeCSSComments: false,
+    });
+
+    equal(result, source, "08.01");
+    equal(ranges, null, "08.02");
+    equal(applicableOpts.removeCSSComments, true, "08.03");
+  }
+});
+
 test.run();
