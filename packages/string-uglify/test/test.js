@@ -452,4 +452,14 @@ test("18 - Unicode uniqueness holds below and at the indexing threshold", () => 
   equal(at.slice(-2), ["😀😀", "😀"], "18.06");
 });
 
+test("19 - an empty result is a mutation-isolated copy", () => {
+  const input = [];
+  const result = uglifyArr(input);
+
+  equal(result, [], "19.01");
+  is.not(result, input, "19.02");
+  result.push("changed");
+  equal(input, [], "19.03");
+});
+
 test.run();

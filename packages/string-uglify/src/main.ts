@@ -115,8 +115,11 @@ function uglifyArr(arr: string[]): string[] {
   let res: string[] = [];
 
   // quick end
-  if (!Array.isArray(arr) || !arr.length) {
+  if (!Array.isArray(arr)) {
     return arr;
+  }
+  if (!arr.length) {
+    return [];
   }
 
   // Linear scans win on the small selector lists most callers pass, while
