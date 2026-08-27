@@ -274,7 +274,7 @@ test(`11 - html comments - when line length limit is too tight - 1`, () => {
     lineLengthLimit: 2,
   });
 
-  equal(result, "<div>\n</div>", "11.01");
+  equal(result, "<div></div>", "11.01");
   equal(
     applicableOpts,
     {
@@ -283,7 +283,7 @@ test(`11 - html comments - when line length limit is too tight - 1`, () => {
     },
     "11.02",
   );
-  equal(ranges, [[5, 25, "\n"]], "11.03");
+  equal(ranges, [[5, 25]], "11.03");
 });
 
 // removeHTMLComments=2 - includes outlook conditional comments
@@ -294,7 +294,7 @@ test(`12 - html comments - when line length limit is too tight - 2`, () => {
     lineLengthLimit: 2,
   });
 
-  equal(result, "<div>\n</div>", "12.01");
+  equal(result, "<div></div>", "12.01");
   equal(
     applicableOpts,
     {
@@ -303,7 +303,47 @@ test(`12 - html comments - when line length limit is too tight - 2`, () => {
     },
     "12.02",
   );
-  equal(ranges, [[5, 25, "\n"]], "12.03");
+  equal(ranges, [[5, 25]], "12.03");
+});
+
+test("13 - html comments - earlier lines do not inject a line break", () => {
+  for (const lineEnding of ["\n", "\r\n", "\r"]) {
+    const prefix = `aa${lineEnding}`.repeat(6);
+    const source = `${prefix}x<!--comment-->y`;
+    const commentStartsAt = source.indexOf("<!--");
+    const expectedPrefix =
+      lineEnding === "\r\n" ? prefix.split("\r\n").join("\n") : prefix;
+
+    for (const removeHTMLComments of [1, 2]) {
+      const { ranges, result } = m(equal, source, {
+        lineLengthLimit: 10,
+        removeHTMLComments,
+        removeLineBreaks: false,
+      });
+
+      equal(result, `${expectedPrefix}xy`, "13.01");
+      equal(
+        ranges?.at(-1),
+        [commentStartsAt, commentStartsAt + 14],
+        "13.02",
+      );
+    }
+  }
+});
+
+test("14 - html comments - wrapping can insert a line break", () => {
+  const source = "<div><!-- remove this --></div>";
+
+  for (const removeHTMLComments of [1, 2]) {
+    const { ranges, result } = m(equal, source, {
+      lineLengthLimit: 2,
+      removeHTMLComments,
+      removeLineBreaks: true,
+    });
+
+    equal(result, "<div>\n</div>", "14.01");
+    equal(ranges, [[5, 25, "\n"]], "14.02");
+  }
 });
 
 //

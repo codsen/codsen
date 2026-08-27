@@ -1075,6 +1075,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
                 )}`,
               );
             if (
+              resolvedOpts.removeLineBreaks &&
               resolvedOpts.lineLengthLimit &&
               cpl - (stageTo - stageFrom) >= resolvedOpts.lineLengthLimit
             ) {
