@@ -237,7 +237,7 @@ test(`20 - language + variant - region cannot follow a variant`, () => {
     isLangCode("sl-rozaj-SL-biske"),
     {
       res: false,
-      message: 'Unrecognised language subtag, "sl".',
+      message: 'Region subtag "sl" is out of order.',
     },
     "20.01",
   );
@@ -592,7 +592,7 @@ test(`49 - adhoc - Windows XP is not legal but in private it is fine`, () => {
     isLangCode("en-US-Windows-x-XP"),
     {
       res: false,
-      message: 'Unrecognised language subtag, "windows".',
+      message: 'Unrecognised subtag, "windows".',
     },
     "49.01",
   );
@@ -611,7 +611,7 @@ test(`50 - adhoc - POSIX is not registered with IANA`, () => {
     isLangCode("en-US-POSIX"),
     {
       res: false,
-      message: 'Unrecognised language subtag, "posix".',
+      message: 'Unrecognised subtag, "posix".',
     },
     "50.01",
   );
@@ -794,7 +794,7 @@ test(`61 - the complete private-use script range is supported`, () => {
     isLangCode("en-Qaby"),
     {
       res: false,
-      message: 'Unrecognised language subtag, "qaby".',
+      message: 'Unrecognised subtag, "qaby".',
     },
     "61.04",
   );
@@ -895,7 +895,7 @@ test(`65 - script subtags appear at most once and before regions`, () => {
     isLangCode("en-Latn-Cyrl"),
     {
       res: false,
-      message: 'Unrecognised language subtag, "cyrl".',
+      message: 'Two script subtags, "latn" and "cyrl".',
     },
     "65.01",
   );
@@ -903,7 +903,7 @@ test(`65 - script subtags appear at most once and before regions`, () => {
     isLangCode("en-US-Latn"),
     {
       res: false,
-      message: 'Unrecognised language subtag, "latn".',
+      message: 'Script subtag "latn" is out of order.',
     },
     "65.02",
   );
@@ -928,6 +928,41 @@ test(`67 - a bare private-use singleton is rejected`, () => {
       message: 'Ends with private use subtag, "x".',
     },
     "67.01",
+  );
+});
+
+test(`68 - registered subtags are diagnosed by type and position`, () => {
+  equal(
+    isLangCode("sl-rozaj-IT"),
+    {
+      res: false,
+      message: 'Region subtag "it" is out of order.',
+    },
+    "68.01",
+  );
+  equal(
+    isLangCode("ZH-HANS-CMN"),
+    {
+      res: false,
+      message: 'Extended language subtag "cmn" is out of order.',
+    },
+    "68.02",
+  );
+  equal(
+    isLangCode("en-US-EO"),
+    {
+      res: false,
+      message: 'Language subtag "eo" is out of order.',
+    },
+    "68.03",
+  );
+  equal(
+    isLangCode("en-Latn-NOTREAL"),
+    {
+      res: false,
+      message: 'Unrecognised subtag, "notreal".',
+    },
+    "68.04",
   );
 });
 

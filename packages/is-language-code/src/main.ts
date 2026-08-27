@@ -172,7 +172,9 @@ function isLangCode(str?: unknown): Res {
     }
   }
 
+  let scriptMatched: string | undefined;
   if (subtags[index] && isScript(subtags[index])) {
+    scriptMatched = subtags[index];
     index += 1;
   }
 
@@ -240,13 +242,41 @@ function isLangCode(str?: unknown): Res {
   }
 
   if (subtags[index]) {
-    if (regionMatched && isRegion(subtags[index])) {
+    const misplacedSubtag = subtags[index];
+
+    if (regionMatched && isRegion(misplacedSubtag)) {
       return failure(
-        `Two region subtags, "${regionMatched}" and "${subtags[index]}".`,
+        `Two region subtags, "${regionMatched}" and "${misplacedSubtag}".`,
       );
     }
 
-    return failure(`Unrecognised language subtag, "${subtags[index]}".`);
+    if (isScript(misplacedSubtag)) {
+      return failure(
+        scriptMatched
+          ? `Two script subtags, "${scriptMatched}" and "${misplacedSubtag}".`
+          : `Script subtag "${misplacedSubtag}" is out of order.`,
+      );
+    }
+
+    if (isRegion(misplacedSubtag)) {
+      return failure(`Region subtag "${misplacedSubtag}" is out of order.`);
+    }
+
+    if (EXTLANGS.has(misplacedSubtag)) {
+      return failure(
+        `Extended language subtag "${misplacedSubtag}" is out of order.`,
+      );
+    }
+
+    if (VARIANTS.has(misplacedSubtag)) {
+      return failure(`Variant subtag "${misplacedSubtag}" is out of order.`);
+    }
+
+    if (isLanguage(misplacedSubtag)) {
+      return failure(`Language subtag "${misplacedSubtag}" is out of order.`);
+    }
+
+    return failure(`Unrecognised subtag, "${misplacedSubtag}".`);
   }
 
   return success();
