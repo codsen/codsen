@@ -282,6 +282,207 @@ export interface HeadsAndTailsObj {
   tails: string;
 }
 
+type BodyAttributeName = "class" | "id" | "style";
+
+interface BodyAttribute {
+  empty: boolean;
+  equalsAt: number;
+  name: BodyAttributeName;
+  nameEndsAt: number;
+  nameStartsAt: number;
+  quote: '"' | "'" | null;
+  quoteless: boolean;
+  valueEndsAt: number;
+  valueStartsAt: number;
+}
+
+function collectBodyAttributes(
+  str: string,
+  backend: HeadsAndTailsObj[],
+): Map<number, BodyAttribute> {
+  const attributes = new Map<number, BodyAttribute>();
+  const lowerStr = str.toLowerCase();
+  const protectedPairs = backend.filter(
+    ({ heads, tails }) => heads.length && tails.length,
+  );
+  let rawTag: "script" | "style" | null = null;
+
+  const skipBackend = (index: number): number | null => {
+    const pair = protectedPairs.find(({ heads }) =>
+      str.startsWith(heads, index),
+    );
+    if (!pair) {
+      return null;
+    }
+    const tailsAt = str.indexOf(pair.tails, index + pair.heads.length);
+    return tailsAt === -1 ? str.length : tailsAt + pair.tails.length;
+  };
+
+  for (let i = 0; i < str.length; i++) {
+    if (rawTag) {
+      const closingAt = lowerStr.indexOf(`</${rawTag}`, i);
+      if (closingAt === -1) {
+        break;
+      }
+      rawTag = null;
+      i = closingAt - 1;
+      continue;
+    }
+
+    if (str.startsWith("<!--", i)) {
+      const closingAt = str.indexOf("-->", i + 4);
+      if (closingAt === -1) {
+        break;
+      }
+      i = closingAt + 2;
+      continue;
+    }
+
+    if (str[i] !== "<") {
+      continue;
+    }
+
+    let cursor = i + 1;
+    while (isHtmlAsciiWhitespace(str[cursor])) {
+      cursor += 1;
+    }
+    if (
+      str[cursor] === "/" ||
+      str[cursor] === "!" ||
+      str[cursor] === "?" ||
+      !/[a-z]/i.test(str[cursor] || "")
+    ) {
+      continue;
+    }
+
+    const tagNameStartsAt = cursor;
+    while (
+      str[cursor] &&
+      !isHtmlAsciiWhitespace(str[cursor]) &&
+      !"/>".includes(str[cursor])
+    ) {
+      cursor += 1;
+    }
+    const tagName = lowerStr.slice(tagNameStartsAt, cursor);
+
+    while (cursor < str.length) {
+      while (isHtmlAsciiWhitespace(str[cursor])) {
+        cursor += 1;
+      }
+      if (str[cursor] === ">") {
+        i = cursor;
+        break;
+      }
+      if (str[cursor] === "/" && str[cursor + 1] === ">") {
+        i = cursor + 1;
+        break;
+      }
+
+      const nameStartsAt = cursor;
+      while (
+        str[cursor] &&
+        !isHtmlAsciiWhitespace(str[cursor]) &&
+        !"=/>".includes(str[cursor])
+      ) {
+        cursor += 1;
+      }
+      const nameEndsAt = cursor;
+      if (nameStartsAt === nameEndsAt) {
+        cursor += 1;
+        continue;
+      }
+
+      const name = lowerStr.slice(nameStartsAt, nameEndsAt);
+      while (isHtmlAsciiWhitespace(str[cursor])) {
+        cursor += 1;
+      }
+      if (str[cursor] !== "=") {
+        continue;
+      }
+
+      const equalsAt = cursor;
+      cursor += 1;
+      const whitespaceAfterEqualsStartsAt = cursor;
+      while (isHtmlAsciiWhitespace(str[cursor])) {
+        cursor += 1;
+      }
+
+      let prospectiveNameEndsAt = cursor;
+      while (
+        str[prospectiveNameEndsAt] &&
+        !isHtmlAsciiWhitespace(str[prospectiveNameEndsAt]) &&
+        !"=/>".includes(str[prospectiveNameEndsAt])
+      ) {
+        prospectiveNameEndsAt += 1;
+      }
+      let afterProspectiveName = prospectiveNameEndsAt;
+      while (isHtmlAsciiWhitespace(str[afterProspectiveName])) {
+        afterProspectiveName += 1;
+      }
+      const empty =
+        str[cursor] === ">" ||
+        (str[cursor] === "/" && str[cursor + 1] === ">") ||
+        (cursor > whitespaceAfterEqualsStartsAt &&
+          str[afterProspectiveName] === "=");
+
+      let quote: '"' | "'" | null = null;
+      let quoteless = true;
+      if (!empty && (str[cursor] === '"' || str[cursor] === "'")) {
+        quote = str[cursor] as '"' | "'";
+        quoteless = false;
+        cursor += 1;
+      }
+      const valueStartsAt = cursor;
+
+      while (!empty && cursor < str.length) {
+        const afterBackend = skipBackend(cursor);
+        if (afterBackend !== null) {
+          cursor = afterBackend;
+          continue;
+        }
+        if (
+          (quote && str[cursor] === quote) ||
+          (!quote &&
+            (isHtmlAsciiWhitespace(str[cursor]) ||
+              `"'<=\``.includes(str[cursor]) ||
+              str[cursor] === ">"))
+        ) {
+          break;
+        }
+        cursor += 1;
+      }
+
+      let valueEndsAt = cursor;
+      if (!quote && str[valueEndsAt - 1] === "/" && str[cursor] === ">") {
+        valueEndsAt -= 1;
+      }
+      if (name === "class" || name === "id" || name === "style") {
+        attributes.set(nameStartsAt, {
+          empty,
+          equalsAt,
+          name,
+          nameEndsAt,
+          nameStartsAt,
+          quote,
+          quoteless,
+          valueEndsAt,
+          valueStartsAt,
+        });
+      }
+
+      if (quote && str[cursor] === quote) {
+        cursor += 1;
+      }
+    }
+
+    if (tagName === "script" || tagName === "style") {
+      rawTag = tagName;
+    }
+  }
+
+  return attributes;
+}
+
 export interface Opts {
   whitelist: string[];
   backend: HeadsAndTailsObj[];
@@ -531,9 +732,6 @@ function comb(str: string, opts?: InputOpts | null): Res {
   let nonIndentationsWhitespaceLength = 0;
   let commentsLength = 0;
 
-  // same as used in string-extract-class-names
-  let badChars = `.# ~\\!@$%^&*()+=,/';:"?><[]{}|\`\t\n`;
-
   // Rules which might wrap the media queries, for example:
   // @supports (display: grid) {...
   // We need to process their contents only (and disregard their curlies).
@@ -749,6 +947,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
   }
 
   let len = str.length;
+  const bodyAttributes = collectBodyAttributes(str, resolvedOpts.backend);
 
   let leavePercForLastStage = 0.06; // in range of [0, 1]
 
@@ -796,6 +995,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
   let lastPercentage = 0;
   let stateWithinBody;
   let stateWithinBodyInlineStyle: number | null;
+  let stateWithinBodyInlineStyleEndsAt: number | null;
   let bodyIdsToDelete: string[] = [];
   let bodyIdsToDeleteSet = new Set<string>();
   let bodyIdsReferencedByForAttributes: string[] = [];
@@ -906,6 +1106,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
     ruleChunkStartedAt = null;
     stateWithinBody = false;
     stateWithinBodyInlineStyle = null;
+    stateWithinBodyInlineStyleEndsAt = null;
     commentStartedAt = null;
     doNothingUntil = null;
     styleStartedAt = null;
@@ -935,6 +1136,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
         chrCode === 32 ||
         (chrCode >= 9 && chrCode <= 13) ||
         (chrCode > 127 && chr.trim() === "");
+      const bodyAttribute = bodyAttributes.get(i);
 
       // logging:
       if (round !== 9) {
@@ -1037,6 +1239,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
         stateWithinStyleTag = true;
         stateWithinBody = false;
         stateWithinBodyInlineStyle = null;
+        stateWithinBodyInlineStyleEndsAt = null;
       } else if (
         !stateWithinBody &&
         bodyStartedAt !== null &&
@@ -1072,17 +1275,15 @@ function comb(str: string, opts?: InputOpts | null): Res {
         //                     false      also false              real
         commentStartedAt === null &&
         // opening has been caught:
-        stateWithinBodyInlineStyle !== null &&
-        // we're past the opening:
-        i > stateWithinBodyInlineStyle &&
-        // that's the same quotes as opening-ones:
-        str[i] === str[stateWithinBodyInlineStyle]
+        stateWithinBodyInlineStyleEndsAt !== null &&
+        i >= stateWithinBodyInlineStyleEndsAt
       ) {
         DEV &&
           console.log(
             `███████████████████████████████████████ INLINE STYLE END CAUGHT`,
           );
         stateWithinBodyInlineStyle = null;
+        stateWithinBodyInlineStyleEndsAt = null;
         DEV &&
           console.log(
             `SET ${`\u001b[${33}m${`stateWithinBodyInlineStyle`}\u001b[${39}m`} = ${stateWithinBodyInlineStyle}`,
@@ -1097,18 +1298,18 @@ function comb(str: string, opts?: InputOpts | null): Res {
         stateWithinBody &&
         commentStartedAt === null &&
         stateWithinBodyInlineStyle === null &&
-        str.startsWith("style=", i) &&
-        (str[i + 6] === `'` || str[i + 6] === `"`)
+        bodyAttribute?.name === "style"
       ) {
         DEV &&
           console.log(
             `███████████████████████████████████████ INLINE STYLE START CAUGHT`,
           );
-        stateWithinBodyInlineStyle = i + 6;
+        stateWithinBodyInlineStyle = bodyAttribute.equalsAt;
+        stateWithinBodyInlineStyleEndsAt = bodyAttribute.valueEndsAt;
         DEV &&
           console.log(
             `SET ${`\u001b[${33}m${`stateWithinBodyInlineStyle`}\u001b[${39}m`} = ${stateWithinBodyInlineStyle} (at character "${
-              str[stateWithinBodyInlineStyle]
+              str[bodyAttribute.valueStartsAt]
             }")`,
           );
       }
@@ -2399,22 +2600,13 @@ function comb(str: string, opts?: InputOpts | null): Res {
         !doNothing &&
         stateWithinBody &&
         !stateWithinStyleTag &&
-        str[i] === "s" &&
-        str[i + 1] === "t" &&
-        str[i + 2] === "y" &&
-        str[i + 3] === "l" &&
-        str[i + 4] === "e" &&
-        str[i + 5] === "=" &&
-        badChars.includes(str[i - 1]) // this is to prevent false positives like attribute "urlid=..."
+        bodyAttribute?.name === "style"
       ) {
-        // TODO - tend the case when there are spaces around equal in style attribute
-        if (`"'`.includes(str[i + 6])) {
-          styleAttributeStartedAt = i + 7;
-          DEV &&
-            console.log(
-              `${`\u001b[${33}m${`styleAttributeStartedAt`}\u001b[${39}m`} = ${styleAttributeStartedAt}`,
-            );
-        }
+        styleAttributeStartedAt = bodyAttribute.valueStartsAt;
+        DEV &&
+          console.log(
+            `${`\u001b[${33}m${`styleAttributeStartedAt`}\u001b[${39}m`} = ${styleAttributeStartedAt}`,
+          );
       }
 
       // catch the start of a class attribute within body
@@ -2424,24 +2616,54 @@ function comb(str: string, opts?: InputOpts | null): Res {
         stateWithinBody &&
         !stateWithinStyleTag &&
         !currentlyWithinQuotes &&
-        str[i] === "c" &&
-        str[i + 1] === "l" &&
-        str[i + 2] === "a" &&
-        str[i + 3] === "s" &&
-        str[i + 4] === "s" &&
-        // a character in front exists
-        str[i - 1] &&
-        // it's a whitespace character
-        isWhitespace(str[i - 1])
+        bodyAttribute?.name === "class"
       ) {
-        // TODO: record which double quote it was exactly, single or double
-
         DEV && console.log();
-        let valuesStart;
-        let quoteless = false;
-        let quote: '"' | "'" | null = null;
+        let valuesStart: number | undefined = bodyAttribute.valueStartsAt;
+        let quoteless = bodyAttribute.quoteless;
+        let quote = bodyAttribute.quote;
 
-        if (str[i + 5] === "=") {
+        if (bodyAttribute.empty) {
+          if (round === 1) {
+            const calculatedRange = expander({
+              str,
+              from: bodyAttribute.nameStartsAt,
+              to: bodyAttribute.valueStartsAt,
+              ifRightSideIncludesThisThenCropTightly: "/>",
+              wipeAllWhitespaceOnLeft: true,
+            });
+            (finalIndexesToDelete as any).push(
+              ...calculatedRange,
+              str[bodyAttribute.valueStartsAt] &&
+                !"/>".includes(str[bodyAttribute.valueStartsAt])
+                ? " "
+                : "",
+            );
+          }
+          valuesStart = undefined;
+        } else if (round === 1) {
+          if (bodyAttribute.nameEndsAt < bodyAttribute.equalsAt) {
+            finalIndexesToDelete.push(
+              bodyAttribute.nameEndsAt,
+              bodyAttribute.equalsAt,
+            );
+          }
+          const valueOpeningAt = bodyAttribute.quote
+            ? bodyAttribute.valueStartsAt - 1
+            : bodyAttribute.valueStartsAt;
+          if (bodyAttribute.equalsAt + 1 < valueOpeningAt) {
+            finalIndexesToDelete.push(
+              bodyAttribute.equalsAt + 1,
+              valueOpeningAt,
+            );
+          }
+        }
+
+        if (
+          !bodyAttribute.empty &&
+          valuesStart === undefined &&
+          str[i + 5] === "="
+        ) {
           if (str[i + 6] === '"' || str[i + 6] === "'") {
             valuesStart = i + 7;
             quote = str[i + 6] as '"' | "'";
@@ -2465,7 +2687,11 @@ function comb(str: string, opts?: InputOpts | null): Res {
               console.log(`PUSH ${JSON.stringify(calculatedRange, null, 0)}`);
             (finalIndexesToDelete as any).push(...calculatedRange);
           }
-        } else if (isWhitespace(str[i + 5])) {
+        } else if (
+          !bodyAttribute.empty &&
+          valuesStart === undefined &&
+          isWhitespace(str[i + 5])
+        ) {
           // loop forward:
           for (let y = i + 5; y < len; y++) {
             totalCounter += 1;
@@ -2571,19 +2797,54 @@ function comb(str: string, opts?: InputOpts | null): Res {
         stateWithinBody &&
         !stateWithinStyleTag &&
         !currentlyWithinQuotes &&
-        str[i] === "i" &&
-        str[i + 1] === "d" &&
-        // a character in front exists
-        str[i - 1] &&
-        // it's a whitespace character
-        isWhitespace(str[i - 1])
+        bodyAttribute?.name === "id"
       ) {
         DEV && console.log();
-        let valuesStart;
-        let quoteless = false;
-        let quote: '"' | "'" | null = null;
+        let valuesStart: number | undefined = bodyAttribute.valueStartsAt;
+        let quoteless = bodyAttribute.quoteless;
+        let quote = bodyAttribute.quote;
 
-        if (str[i + 2] === "=") {
+        if (bodyAttribute.empty) {
+          if (round === 1) {
+            const calculatedRange = expander({
+              str,
+              from: bodyAttribute.nameStartsAt,
+              to: bodyAttribute.valueStartsAt,
+              ifRightSideIncludesThisThenCropTightly: "/>",
+              wipeAllWhitespaceOnLeft: true,
+            });
+            (finalIndexesToDelete as any).push(
+              ...calculatedRange,
+              str[bodyAttribute.valueStartsAt] &&
+                !"/>".includes(str[bodyAttribute.valueStartsAt])
+                ? " "
+                : "",
+            );
+          }
+          valuesStart = undefined;
+        } else if (round === 1) {
+          if (bodyAttribute.nameEndsAt < bodyAttribute.equalsAt) {
+            finalIndexesToDelete.push(
+              bodyAttribute.nameEndsAt,
+              bodyAttribute.equalsAt,
+            );
+          }
+          const valueOpeningAt = bodyAttribute.quote
+            ? bodyAttribute.valueStartsAt - 1
+            : bodyAttribute.valueStartsAt;
+          if (bodyAttribute.equalsAt + 1 < valueOpeningAt) {
+            finalIndexesToDelete.push(
+              bodyAttribute.equalsAt + 1,
+              valueOpeningAt,
+            );
+          }
+        }
+
+        if (
+          !bodyAttribute.empty &&
+          valuesStart === undefined &&
+          str[i + 2] === "="
+        ) {
           if (str[i + 3] === '"' || str[i + 3] === "'") {
             valuesStart = i + 4;
             quote = str[i + 3] as '"' | "'";
@@ -2607,7 +2868,11 @@ function comb(str: string, opts?: InputOpts | null): Res {
               console.log(`PUSH ${JSON.stringify(calculatedRange, null, 0)}`);
             (finalIndexesToDelete as any).push(...calculatedRange);
           }
-        } else if (isWhitespace(str[i + 2])) {
+        } else if (
+          !bodyAttribute.empty &&
+          valuesStart === undefined &&
+          isWhitespace(str[i + 2])
+        ) {
           // loop forward:
           for (let y = i + 2; y < len; y++) {
             totalCounter += 1;
@@ -3197,12 +3462,12 @@ function comb(str: string, opts?: InputOpts | null): Res {
             DEV &&
               console.log(
                 `${`\u001b[${33}m${`initial range`}\u001b[${39}m`}: [${
-                  bodyClass.valuesStart - 7
+                  bodyClass.nameStart
                 }, ${attributeEndsAt}]`,
               );
             let expandedRange = expander({
               str,
-              from: bodyClass.valuesStart - 7,
+              from: bodyClass.nameStart as number,
               to: attributeEndsAt,
               ifRightSideIncludesThisThenCropTightly: "/>",
               wipeAllWhitespaceOnLeft: true,
@@ -3334,7 +3599,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
 
             let expandedRange = expander({
               str,
-              from: bodyId.valuesStart - 4,
+              from: bodyId.nameStart as number,
               to:
                 bodyId.quoteless && chr === ">" && str[i - 1] === "/"
                   ? i - 1
