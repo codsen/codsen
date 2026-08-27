@@ -213,4 +213,28 @@ test("09 - stray opening only", () => {
   equal(ranges, [[4, 30]], "09.03");
 });
 
+test("10 - stray conditional tail reports applicability in every mode", () => {
+  const source = "<![endif]-->";
+  for (const [mode, expectedResult, expectedRanges] of [
+    [0, source, null],
+    [1, source, null],
+    [2, "", [[0, source.length]]],
+  ]) {
+    const { result, applicableOpts, ranges } = m(equal, source, {
+      removeHTMLComments: mode,
+    });
+
+    equal(result, expectedResult, "10.01");
+    equal(
+      applicableOpts,
+      {
+        removeHTMLComments: true,
+        removeCSSComments: false,
+      },
+      "10.02",
+    );
+    equal(ranges, expectedRanges, "10.03");
+  }
+});
+
 test.run();

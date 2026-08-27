@@ -1129,9 +1129,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
         !withinStyleTag &&
         !withinInlineStyle &&
         str[i] === "<" &&
-        (str.startsWith("<!--", i) ||
-          (resolvedOpts.removeHTMLComments === 2 &&
-            str.startsWith("<![endif", i))) &&
+        (str.startsWith("<!--", i) || str.startsWith("<![endif", i)) &&
         htmlCommentStartedAt === null
       ) {
         DEV &&
@@ -1139,8 +1137,14 @@ function crush(str: string, opts?: Partial<Opts>): Res {
             `${`\u001b[${32}m${`STARTING OF AN HTML COMMENT CAUGHT`}\u001b[${39}m`}`,
           );
 
-        // detect outlook conditionals
-        if (str.startsWith("[if", i + 4)) {
+        // A bare conditional tail is applicable in every mode but removable
+        // only when conditional-comment removal is enabled.
+        if (str.startsWith("<![endif", i)) {
+          if (resolvedOpts.removeHTMLComments === 2) {
+            htmlCommentStartedAt = i;
+          }
+        } else if (str.startsWith("[if", i + 4)) {
+          // detect outlook conditionals
           DEV && console.log();
           if (!withinHTMLConditional) {
             DEV &&
