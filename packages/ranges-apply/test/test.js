@@ -492,16 +492,17 @@ test("22 - numeric replacements preserve zero and merge deterministically", () =
     [2, 4, 2],
   ];
 
-  equal(rApply("abc", [[1, 1, 0]]), "a0bc", "22.01");
-  equal(rApply("abc", [[1, 2, 0]]), "a0c", "22.02");
-  equal(rApply("abcdef", ranges), "a3ef", "22.03");
+  equal(rApply("abc", [0, 0, 0]), "0abc", "22.01");
+  equal(rApply("abc", [[1, 1, 0]]), "a0bc", "22.02");
+  equal(rApply("abc", [[1, 2, 0]]), "a0c", "22.03");
+  equal(rApply("abcdef", ranges), "a3ef", "22.04");
   equal(
     rApply("abcdef", [
       [1, 3, "1"],
       [2, 4, 2],
     ]),
     "a12ef",
-    "22.04",
+    "22.05",
   );
   equal(
     ranges,
@@ -509,7 +510,7 @@ test("22 - numeric replacements preserve zero and merge deterministically", () =
       [1, 3, 1],
       [2, 4, 2],
     ],
-    "22.05",
+    "22.06",
   );
 });
 

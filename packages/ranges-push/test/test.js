@@ -1795,8 +1795,8 @@ test("137 - CURRENT() - contained null insertion vetoes merged text", () => {
 
 test("138 - CURRENT() - zero replacement survives ranges-apply", () => {
   const ranges = new Ranges();
-  ranges.add(1, 1, 0);
-  equal(rApply("abc", ranges.current()), "a0bc", "138.01");
+  ranges.add(0, 0, 0);
+  equal(rApply("abc", ranges.current()), "0abc", "138.01");
 });
 
 test.run();

@@ -49,8 +49,12 @@ function rApply(
       `ranges-apply/rApply(): [THROW_ID_04] the third input argument must be a function (or falsy)! Currently it's: ${typeof progressFn}, equal to: ${formatDiagnosticValue(progressFn, 4)}`,
     );
   }
-  // insurance against array of nulls
-  if (!originalRangesArr?.some(Boolean)) {
+  // insurance against an empty array or an array of nullish members
+  if (
+    originalRangesArr == null ||
+    !originalRangesArr.length ||
+    originalRangesArr.every((range) => range == null)
+  ) {
     // quick ending - no ranges passed
     if (progressFn) {
       progressFn(100);
