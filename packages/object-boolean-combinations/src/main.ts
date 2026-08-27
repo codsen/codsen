@@ -34,6 +34,8 @@ export type Combination<
     }
   : BooleanCombination<Input>;
 
+const maxEagerCombinations = 16_384;
+
 function defineEnumerableDataProperty(
   target: UnknownValueObject,
   key: string,
@@ -93,6 +95,14 @@ function combinations(
   // Build each output directly instead of first allocating an equally large
   // matrix of zeroes and ones.
   const combinationsCount = 2 ** propertiesToMix.length;
+  if (combinationsCount > maxEagerCombinations) {
+    const requestedRows = Number.isSafeInteger(combinationsCount)
+      ? `${combinationsCount} rows (2^${propertiesToMix.length})`
+      : `2^${propertiesToMix.length} rows`;
+    throw new Error(
+      `object-boolean-combinations/combinations(): [THROW_ID_04] ${propertiesToMix.length} unpinned keys would create ${requestedRows}, above the supported maximum of ${maxEagerCombinations}. Pin more keys through the override object.`,
+    );
+  }
   const outgoingObjectsArray: UnknownValueObject[] = new Array(
     combinationsCount,
   );
