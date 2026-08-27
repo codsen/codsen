@@ -153,4 +153,18 @@ test("08 - safely retains or removes a proto data key", () => {
   equal(removed, { keep: { value: 1 } }, "08.07");
 });
 
+test("09 - preserves a null-prototype root result", () => {
+  const input = Object.assign(Object.create(null), {
+    keep: { nested: true },
+    remove: "value",
+  });
+
+  const result = omit(input, ["remove"]);
+
+  is(Object.getPrototypeOf(result), null, "09.01");
+  equal(Object.keys(result), ["keep"], "09.02");
+  equal(result.keep, { nested: true }, "09.03");
+  is.not(result.keep, input.keep, "09.04");
+});
+
 test.run();

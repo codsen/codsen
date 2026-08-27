@@ -260,8 +260,19 @@ function cloneValue<T>(value: T, memo: CloneMemo): T {
   // complete collection/view checks below. Cross-realm and class instances
   // still take the generic fallback after those checks.
   const prototype = Object.getPrototypeOf(value);
-  if (prototype === Object.prototype || prototype === null) {
+  if (prototype === Object.prototype) {
     const result: Record<string, unknown> = {};
+    memo.set(value, result);
+    cloneOwnKeys(
+      result,
+      value as Record<string, unknown>,
+      Object.keys(value),
+      memo,
+    );
+    return result as T;
+  }
+  if (prototype === null) {
+    const result: Record<string, unknown> = Object.create(null);
     memo.set(value, result);
     cloneOwnKeys(
       result,
@@ -1312,7 +1323,8 @@ export function omit(obj: JSONObject, keysToRemove: string[] = []): JSONObject {
     throw new Error(
       `codsen-utils/omit(): [THROW_ID_02] Input must be a plain object! It was given as ${formatDiagnosticValue(obj, 4)} (typeof is "${typeof obj}")`,
     );
-  const result: JSONObject = {};
+  const result: JSONObject =
+    Object.getPrototypeOf(obj) === null ? Object.create(null) : {};
   const memo = new CloneMemo();
   memo.set(obj, result);
   const keys = Object.keys(obj);
