@@ -4,7 +4,11 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-function collWhitespace(str: string, lineBreakLimit = 1): string {
+function collWhitespace<T>(
+  str: T,
+  lineBreakLimit?: number,
+): T extends string ? string : T;
+function collWhitespace(str: unknown, lineBreakLimit = 1): unknown {
   let rawNbsp = "\u00A0";
   // helpers
 
