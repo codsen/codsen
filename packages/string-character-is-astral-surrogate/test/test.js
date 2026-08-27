@@ -104,4 +104,20 @@ test("05 - isLowSurrogate()", () => {
   );
 });
 
+test("06 - UTF-16 surrogate boundaries", () => {
+  equal(isHighSurrogate("\uD7FF"), false, "06.01");
+  equal(isHighSurrogate("\uD800"), true, "06.02");
+  equal(isHighSurrogate("\uDBFF"), true, "06.03");
+  equal(isHighSurrogate("\uDC00"), false, "06.04");
+  equal(isHighSurrogate("\uDFFF"), false, "06.05");
+  equal(isHighSurrogate("\uE000"), false, "06.06");
+
+  equal(isLowSurrogate("\uD7FF"), false, "06.07");
+  equal(isLowSurrogate("\uD800"), false, "06.08");
+  equal(isLowSurrogate("\uDBFF"), false, "06.09");
+  equal(isLowSurrogate("\uDC00"), true, "06.10");
+  equal(isLowSurrogate("\uDFFF"), true, "06.11");
+  equal(isLowSurrogate("\uE000"), false, "06.12");
+});
+
 test.run();

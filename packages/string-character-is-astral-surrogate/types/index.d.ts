@@ -1,4 +1,4 @@
-declare function isHighSurrogate(something: string | undefined): boolean;
-declare function isLowSurrogate(something: string | undefined): boolean;
+declare function isHighSurrogate(something?: string): boolean;
+declare function isLowSurrogate(something?: string): boolean;
 
 export { isHighSurrogate, isLowSurrogate };
