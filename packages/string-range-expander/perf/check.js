@@ -6,13 +6,14 @@ import { expander } from "../dist/string-range-expander.esm.js";
 
 const callerDir = path.resolve(".");
 
-const testme = () =>
-  expander({
-    str: "aaaaaaaaaaaa",
-    from: 2,
-    to: 5,
-    addSingleSpaceToPreventAccidentalConcatenation: true,
-  });
+const fixture = {
+  str: "something>\n\t    zzzz <here",
+  from: 16,
+  to: 20,
+  ifRightSideIncludesThisThenCropTightly: "<",
+};
+
+const testme = () => expander(fixture);
 
 // action
 runPerf(testme, callerDir);
