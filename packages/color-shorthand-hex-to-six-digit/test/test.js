@@ -313,4 +313,55 @@ test("22 - converts hashes in similarly named non-reference contexts", () => {
   );
 });
 
+test("23 - preserves own proto keys and plain-object prototypes", () => {
+  const parsed = JSON.parse(
+    '{"__proto__":{"color":"#def"},"regular":"#abc"}',
+  );
+  const parsedResult = conv(parsed);
+  const protoDescriptor = Object.getOwnPropertyDescriptor(
+    parsedResult,
+    "__proto__",
+  );
+
+  equal(parsedResult.regular, "#aabbcc", "23.01");
+  equal(protoDescriptor.value, { color: "#ddeeff" }, "23.02");
+  equal(
+    {
+      configurable: protoDescriptor.configurable,
+      enumerable: protoDescriptor.enumerable,
+      writable: protoDescriptor.writable,
+    },
+    { configurable: true, enumerable: true, writable: true },
+    "23.03",
+  );
+  is(Object.getPrototypeOf(parsedResult), Object.prototype, "23.04");
+  is(Object.getPrototypeOf(protoDescriptor.value), Object.prototype, "23.05");
+
+  const dictionary = Object.create(null);
+  Object.defineProperty(dictionary, "__proto__", {
+    configurable: true,
+    enumerable: true,
+    value: "#abc",
+    writable: true,
+  });
+  dictionary.nested = Object.create(null);
+  dictionary.nested.color = "#def";
+  const dictionaryResult = conv(dictionary);
+
+  is(Object.getPrototypeOf(dictionaryResult), null, "23.06");
+  is(Object.getPrototypeOf(dictionaryResult.nested), null, "23.07");
+  equal(
+    Object.getOwnPropertyDescriptor(dictionaryResult, "__proto__").value,
+    "#aabbcc",
+    "23.08",
+  );
+  equal(dictionaryResult.nested.color, "#ddeeff", "23.09");
+  equal(
+    Object.getOwnPropertyDescriptor(dictionary, "__proto__").value,
+    "#abc",
+    "23.10",
+  );
+  equal(dictionary.nested.color, "#def", "23.11");
+});
+
 test.run();

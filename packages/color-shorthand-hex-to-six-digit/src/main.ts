@@ -181,6 +181,23 @@ function toFullHex(hex: string, offset: number, string: string): string {
   return hex.toLowerCase();
 }
 
+function setOwnEnumerableValue(
+  target: Record<string, any>,
+  key: string,
+  value: any,
+): void {
+  if (key === "__proto__") {
+    Object.defineProperty(target, key, {
+      configurable: true,
+      enumerable: true,
+      value,
+      writable: true,
+    });
+  } else {
+    target[key] = value;
+  }
+}
+
 /**
  * Convert shorthand hex color codes into full
  */
@@ -203,9 +220,11 @@ function conv(input: any): any {
     return input.map(conv);
   }
   if (isPlainObject(input)) {
-    let result: Record<string, any> = {};
+    let result: Record<string, any> = Object.create(
+      Object.getPrototypeOf(input),
+    );
     for (const key of Object.keys(input)) {
-      result[key] = conv(input[key]);
+      setOwnEnumerableValue(result, key, conv(input[key]));
     }
     return result;
   }
