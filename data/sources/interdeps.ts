@@ -219,8 +219,7 @@ export const interdeps = [
       "string-left-right",
       "string-range-expander",
       "string-remove-widows",
-      "string-strip-html",
-      "string-trim-spaces-only"
+      "string-strip-html"
     ]
   },
   {

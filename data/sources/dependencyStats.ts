@@ -192,7 +192,7 @@ export const dependencyStats: DependencyStats = {
     "string-remove-thousand-separators": 1,
     "string-remove-widows": 2,
     "string-strip-html": 2,
-    "string-trim-spaces-only": 2,
+    "string-trim-spaces-only": 1,
     "string-uglify": 1,
     "string-unfancy": 2,
     "type-detect": 1,

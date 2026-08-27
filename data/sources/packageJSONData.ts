@@ -2732,8 +2732,7 @@ export const packageJSONData = {
       "string-left-right": "^6.2.1",
       "string-range-expander": "^4.2.1",
       "string-remove-widows": "^4.2.2",
-      "string-strip-html": "^13.6.2",
-      "string-trim-spaces-only": "^5.2.1"
+      "string-strip-html": "^13.6.2"
     },
     "devDependencies": {
       "test-mixer": "^4.3.1"
