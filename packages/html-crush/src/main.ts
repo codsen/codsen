@@ -33,6 +33,13 @@ function isWordCharCode(code: number): boolean {
 function isWordChar(char: string | undefined): boolean {
   return char !== undefined && isWordCharCode(char.charCodeAt(0));
 }
+
+function isHtmlNameChar(char: string | undefined): boolean {
+  return (
+    char !== undefined &&
+    (isWordCharCode(char.charCodeAt(0)) || `:-.`.includes(char))
+  );
+}
 export interface Opts {
   lineLengthLimit: number;
   removeIndentations: boolean;
@@ -368,7 +375,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
     }
     while (
       nameStartsAt >= 0 &&
-      (isWordChar(str[nameStartsAt]) || `:-.`.includes(str[nameStartsAt]))
+      isHtmlNameChar(str[nameStartsAt])
     ) {
       nameStartsAt--;
     }
@@ -376,6 +383,47 @@ function crush(str: string, opts?: Partial<Opts>): Res {
     return nameStartsAt + 1 < nameEndsAt
       ? str.slice(nameStartsAt + 1, nameEndsAt).toLowerCase()
       : null;
+  }
+
+  function isHtmlTagAt(idx: number, name: string, closing: boolean): boolean {
+    if (str[idx] !== "<") {
+      return false;
+    }
+    let nameStartsAt = idx + 1;
+    if (closing) {
+      if (str[nameStartsAt] !== "/") {
+        return false;
+      }
+      nameStartsAt++;
+    } else if (str[nameStartsAt] === "/") {
+      return false;
+    }
+
+    for (let offset = 0; offset < name.length; offset++) {
+      let code = str.charCodeAt(nameStartsAt + offset);
+      if (code > 64 && code < 91) {
+        code += 32;
+      }
+      if (code !== name.charCodeAt(offset)) {
+        return false;
+      }
+    }
+
+    return (
+      !isHtmlNameChar(str[nameStartsAt + name.length]) &&
+      !isLetter(codePointAtIndex(str, nameStartsAt + name.length))
+    );
+  }
+
+  function findClosingHtmlTag(from: number, name: string): number {
+    let candidate = str.indexOf("<", from);
+    while (candidate !== -1) {
+      if (isHtmlTagAt(candidate, name, true)) {
+        return candidate;
+      }
+      candidate = str.indexOf("<", candidate + 1);
+    }
+    return -1;
   }
   let lastLinebreak = null;
   let whitespaceStartedAt = null;
@@ -583,9 +631,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
 
       if (
         scriptStartedAt !== null &&
-        str[i] === "<" &&
-        str.startsWith("</script", i) &&
-        !isLetter(codePointAtIndex(str, i + 8))
+        isHtmlTagAt(i, "script", true)
       ) {
         DEV && console.log(`ENDING OF A SCRIPT TAG CAUGHT`);
         // 1. if there is a line break, chunk of whitespace and </script>,
@@ -648,9 +694,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
       if (
         !doNothing &&
         !withinStyleTag &&
-        str[i] === "<" &&
-        str.startsWith("<script", i) &&
-        !isLetter(codePointAtIndex(str, i + 7))
+        isHtmlTagAt(i, "script", false)
       ) {
         DEV && console.log(`STARTING OF A SCRIPT TAG CAUGHT`);
         scriptStartedAt = i;
@@ -1155,9 +1199,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
         !doNothing &&
         withinStyleTag &&
         styleCommentStartedAt === null &&
-        str[i] === "<" &&
-        str.startsWith("</style", i) &&
-        !isLetter(codePointAtIndex(str, i + 7))
+        isHtmlTagAt(i, "style", true)
       ) {
         withinStyleTag = false;
         DEV &&
@@ -1168,9 +1210,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
         !doNothing &&
         !withinStyleTag &&
         styleCommentStartedAt === null &&
-        str[i] === "<" &&
-        str.startsWith("<style", i) &&
-        !isLetter(codePointAtIndex(str, i + 6))
+        isHtmlTagAt(i, "style", false)
       ) {
         withinStyleTag = true;
         DEV &&
@@ -2298,46 +2338,29 @@ function crush(str: string, opts?: Partial<Opts>): Res {
           );
       }
 
-      // catch <pre...>
+      // catch raw and preformatted element contents
       // ███████████████████████████████████████
 
-      if (
-        !doNothing &&
-        !withinStyleTag &&
-        str[i] === "<" &&
-        str.startsWith("<pre", i) &&
-        !isLetter(codePointAtIndex(str, i + 4))
-      ) {
-        DEV && console.log(`OPENING PRE TAG CAUGHT`);
-
-        let locationOfClosingPre = str.indexOf("</pre", i + 5);
-        if (locationOfClosingPre > 0) {
-          doNothing = locationOfClosingPre;
-          DEV &&
-            console.log(
-              `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`}`,
-            );
+      if (!doNothing && !withinStyleTag && str[i] === "<") {
+        let protectedTagName = null;
+        if (isHtmlTagAt(i, "pre", false)) {
+          protectedTagName = "pre";
+        } else if (isHtmlTagAt(i, "code", false)) {
+          protectedTagName = "code";
+        } else if (isHtmlTagAt(i, "textarea", false)) {
+          protectedTagName = "textarea";
         }
-      }
 
-      // catch <code...>
-      // ███████████████████████████████████████
-
-      if (
-        !doNothing &&
-        !withinStyleTag &&
-        str[i] === "<" &&
-        str.startsWith("<code", i) &&
-        !isLetter(codePointAtIndex(str, i + 5))
-      ) {
-        DEV && console.log(`OPENING CODE TAG CAUGHT`);
-
-        let locationOfClosingCode = str.indexOf("</code", i + 5);
-        if (locationOfClosingCode > 0) {
-          doNothing = locationOfClosingCode;
+        if (protectedTagName !== null) {
           DEV &&
             console.log(
-              `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`}`,
+              `OPENING ${protectedTagName.toUpperCase()} TAG CAUGHT`,
+            );
+          let closingTagAt = findClosingHtmlTag(i + 2, protectedTagName);
+          doNothing = closingTagAt === -1 ? len : closingTagAt;
+          DEV &&
+            console.log(
+              `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`,
             );
         }
       }
