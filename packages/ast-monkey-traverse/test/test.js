@@ -6,6 +6,12 @@ import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { traverse } from "../dist/ast-monkey-traverse.esm.js";
 
+function withoutPathSegments(innerObj) {
+  let result = { ...innerObj };
+  delete result.pathSegments;
+  return result;
+}
+
 // -----------------------------------------------------------------------------
 // traverse
 // -----------------------------------------------------------------------------
@@ -268,7 +274,7 @@ test(`10 - stopping - objects - a reference traversal`, () => {
   let gathered = [];
   traverse(input, (key1, val1, innerObj) => {
     let current = val1 !== undefined ? val1 : key1;
-    gathered.push(innerObj);
+    gathered.push(withoutPathSegments(innerObj));
     return current;
   });
   equal(
@@ -372,7 +378,7 @@ test(`14 - traverse - array of objects, just traversing`, () => {
   let gathered = [];
   traverse(input, (key1, val1, internalObj) => {
     let current = val1 !== undefined ? val1 : key1;
-    gathered.push([key1, val1, internalObj]);
+    gathered.push([key1, val1, withoutPathSegments(internalObj)]);
     return current;
   });
   equal(
@@ -507,7 +513,7 @@ test(`15 - traverse - traversal continues after the hole`, () => {
   let gathered = [];
   traverse(input, (key1, val1, internalObj) => {
     let current = val1 !== undefined ? val1 : key1;
-    gathered.push([key1, val1, internalObj]);
+    gathered.push([key1, val1, withoutPathSegments(internalObj)]);
     return current;
   });
   equal(
@@ -573,7 +579,7 @@ test(`16 - traverse - traversal continues after the hole`, () => {
   let gathered = [];
   traverse(input, (key1, val1, internalObj) => {
     let current = val1 !== undefined ? val1 : key1;
-    gathered.push([key1, val1, internalObj]);
+    gathered.push([key1, val1, withoutPathSegments(internalObj)]);
     return current;
   });
   equal(
@@ -660,7 +666,7 @@ test(`17 - traverse - more complex AST`, () => {
   let gathered = [];
   traverse(input, (key1, val1, internalObj) => {
     let current = val1 !== undefined ? val1 : key1;
-    gathered.push([key1, val1, internalObj]);
+    gathered.push([key1, val1, withoutPathSegments(internalObj)]);
     return current;
   });
   equal(
@@ -1123,7 +1129,7 @@ test(`18 - traverse - more traversal`, () => {
   let gathered = [];
   traverse(input, (key1, val1, internalObj) => {
     let current = val1 !== undefined ? val1 : key1;
-    gathered.push([key1, val1, internalObj]);
+    gathered.push([key1, val1, withoutPathSegments(internalObj)]);
     return current;
   });
   equal(
@@ -1510,6 +1516,60 @@ test("27 - own proto data keys remain data and are traversed", () => {
     "27.07",
   );
   equal(Object.prototype.marker, undefined, "27.08");
+});
+
+test("28 - path segments and parent keys preserve exact keys", () => {
+  let input = {
+    "a.b": { c: 1 },
+    a: { b: { c: 2 } },
+    "": { c: 3 },
+    0: { x: 4 },
+    array: [{ "": 5 }],
+  };
+  let records = [];
+  let currentValues = [];
+  let resolvedValues = [];
+
+  let actual = traverse(input, (key, value, innerObj) => {
+    let current = value !== undefined ? value : key;
+    records.push({
+      parentKey: innerObj.parentKey,
+      path: innerObj.path,
+      pathSegments: innerObj.pathSegments,
+    });
+    currentValues.push(current);
+    resolvedValues.push(objectPath.get(input, innerObj.pathSegments));
+    return current;
+  });
+
+  equal(actual, input, "28.01");
+  equal(currentValues, resolvedValues, "28.02");
+  equal(
+    records,
+    [
+      { parentKey: null, path: "0", pathSegments: ["0"] },
+      { parentKey: "0", path: "0.x", pathSegments: ["0", "x"] },
+      { parentKey: null, path: "a.b", pathSegments: ["a.b"] },
+      { parentKey: "a.b", path: "a.b.c", pathSegments: ["a.b", "c"] },
+      { parentKey: null, path: "a", pathSegments: ["a"] },
+      { parentKey: "a", path: "a.b", pathSegments: ["a", "b"] },
+      { parentKey: "b", path: "a.b.c", pathSegments: ["a", "b", "c"] },
+      { parentKey: null, path: "", pathSegments: [""] },
+      { parentKey: "", path: "c", pathSegments: ["", "c"] },
+      { parentKey: null, path: "array", pathSegments: ["array"] },
+      {
+        parentKey: "array",
+        path: "array.0",
+        pathSegments: ["array", "0"],
+      },
+      {
+        parentKey: "0",
+        path: "array.0.",
+        pathSegments: ["array", "0", ""],
+      },
+    ],
+    "28.03",
+  );
 });
 
 test.run();

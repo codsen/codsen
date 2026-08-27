@@ -5,6 +5,7 @@ interface Stop {
 interface InnerObj {
   depth: number;
   path: string;
+  pathSegments: string[];
   topmostKey?: string;
   parent: any;
   parentType: string;

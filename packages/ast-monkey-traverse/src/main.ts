@@ -15,6 +15,7 @@ export interface Stop {
 export interface InnerObj {
   depth: number;
   path: string;
+  pathSegments: string[];
   topmostKey?: string;
   parent: any;
   parentType: string;
@@ -92,15 +93,14 @@ function traverse<T>(tree1: T, cb1: Callback): T {
     callback: Callback,
     depth: number,
     path: string,
+    pathSegments: string[],
+    parentKey: string | null,
     topmostKey: string | undefined,
     stop: Stop,
   ): U {
     DEV && console.log(`======= traverseInner() =======`);
     let tree: any = treeOriginal;
 
-    // parentKey depends on this frame's path, not on the child being visited,
-    // so it is settled once, ahead of either loop below
-    let parentKey = path ? path.slice(path.lastIndexOf(".") + 1) : null;
     DEV &&
       console.log(
         `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`parentKey`}\u001b[${39}m`} = ${JSON.stringify(
@@ -148,6 +148,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
           continue;
         }
         let currentPath = path ? `${path}.${i}` : `${i}`;
+        let currentPathSegments = [...pathSegments, `${i}`];
         DEV &&
           console.log(
             `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
@@ -174,6 +175,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
         let innerObj: InnerObj = {
           depth,
           path: currentPath,
+          pathSegments: currentPathSegments,
           parent: parentView,
           parentType: "array",
           parentKey,
@@ -200,6 +202,8 @@ function traverse<T>(tree1: T, cb1: Callback): T {
             callback,
             depth + 1,
             currentPath,
+            currentPathSegments,
+            `${i}`,
             topmostKey,
             stop,
           );
@@ -245,6 +249,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
             )}`,
           );
         let currentPath = path ? `${path}.${key}` : key;
+        let currentPathSegments = [...pathSegments, key];
         DEV &&
           console.log(
             `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
@@ -275,6 +280,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
         let innerObj: InnerObj = {
           depth,
           path: currentPath,
+          pathSegments: currentPathSegments,
           parent: parentView,
           parentType: "object",
           parentKey,
@@ -295,6 +301,8 @@ function traverse<T>(tree1: T, cb1: Callback): T {
             callback,
             depth + 1,
             currentPath,
+            currentPathSegments,
+            key,
             topmostKey,
             stop,
           );
@@ -317,7 +325,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
     DEV && console.log(`just returning tree, ${JSON.stringify(tree, null, 4)}`);
     return tree;
   }
-  return traverseInner(clone(tree1), cb1, 0, "", undefined, stop2);
+  return traverseInner(clone(tree1), cb1, 0, "", [], null, undefined, stop2);
 }
 
 // -----------------------------------------------------------------------------
