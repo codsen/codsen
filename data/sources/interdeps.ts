@@ -744,7 +744,7 @@ export const interdeps = [
   },
   {
     "name": "string-range-expander",
-    "size": 6046,
+    "size": 12396,
     "imports": [
       "codsen-utils"
     ]
