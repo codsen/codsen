@@ -21,8 +21,54 @@ export interface Obj {
   [key: string]: any;
 }
 
+function assertStringArray(
+  value: unknown,
+  functionName: "uglifyArr" | "uglifyById",
+): asserts value is string[] {
+  let isArray = false;
+  try {
+    isArray = Array.isArray(value);
+  } catch {
+    // A revoked Proxy must still produce this package's deliberate error.
+  }
+
+  if (!isArray) {
+    throw new TypeError(
+      `string-uglify/${functionName}(): [THROW_ID_01] The first input argument must be an array of strings. It was given as type ${value === null ? "null" : typeof value}.`,
+    );
+  }
+
+  const arr = value as unknown[];
+  let length = 0;
+  try {
+    length = arr.length;
+  } catch {
+    throw new TypeError(
+      `string-uglify/${functionName}(): [THROW_ID_02] The first input argument must be a readable array of strings.`,
+    );
+  }
+
+  for (let index = 0; index < length; index += 1) {
+    let member: unknown;
+    try {
+      member = arr[index];
+    } catch {
+      throw new TypeError(
+        `string-uglify/${functionName}(): [THROW_ID_02] The first input argument contains an unreadable item at index ${index}.`,
+      );
+    }
+    if (typeof member !== "string") {
+      throw new TypeError(
+        `string-uglify/${functionName}(): [THROW_ID_02] The first input argument contains a non-string item at index ${index} (type ${typeof member}).`,
+      );
+    }
+  }
+}
+
 // converts whole array into array uglified names
 function uglifyArr(arr: string[]): string[] {
+  assertStringArray(arr, "uglifyArr");
+
   let letters = "abcdefghijklmnopqrstuvwxyz";
   let lettersAndNumbers = "abcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -115,9 +161,6 @@ function uglifyArr(arr: string[]): string[] {
   let res: string[] = [];
 
   // quick end
-  if (!Array.isArray(arr)) {
-    return arr;
-  }
   if (!arr.length) {
     return [];
   }
@@ -346,14 +389,16 @@ function uglifyArr(arr: string[]): string[] {
 
 // main function - converts n-th string in a given reference array of strings
 function uglifyById(refArr: string[], idNum: number): string {
+  assertStringArray(refArr, "uglifyById");
+
   if (!Number.isInteger(idNum)) {
     throw new TypeError(
-      `string-uglify/uglifyById(): [THROW_ID_01] The second input argument, idNum, must be an integer. It was given as ${String(idNum)} (type ${typeof idNum}).`,
+      `string-uglify/uglifyById(): [THROW_ID_03] The second input argument, idNum, must be an integer. It was given as type ${idNum === null ? "null" : typeof idNum}${typeof idNum === "number" ? ` with value ${String(idNum)}` : ""}.`,
     );
   }
   if (idNum < 0 || idNum >= refArr.length) {
     throw new RangeError(
-      `string-uglify/uglifyById(): [THROW_ID_02] The second input argument, idNum, must point to an item in refArr. It was given as ${idNum}, while refArr contains ${refArr.length} item${refArr.length === 1 ? "" : "s"}.`,
+      `string-uglify/uglifyById(): [THROW_ID_04] The second input argument, idNum, must point to an item in refArr. It was given as ${idNum}, while refArr contains ${refArr.length} item${refArr.length === 1 ? "" : "s"}.`,
     );
   }
   return uglifyArr(refArr)[idNum];

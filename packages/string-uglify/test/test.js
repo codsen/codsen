@@ -79,10 +79,48 @@ test(`05 - makeRandomArr - generates unique elements array`, () => {
   });
 });
 
-test(`06 - wrong cases - bypasses for everything else`, () => {
-  equal(uglifyArr(true), true, "06.01");
-  equal(uglifyArr("z"), "z", "06.02");
-  equal(uglifyArr(1), 1, "06.03");
+test("06 - uglifyArr rejects invalid inputs deliberately", () => {
+  const revoked = Proxy.revocable([], {});
+  revoked.revoke();
+  const invalidContainers = [
+    true,
+    "z",
+    1,
+    null,
+    undefined,
+    { 0: "name", length: 1 },
+    revoked.proxy,
+  ];
+  const invalidMembers = [
+    [true],
+    [null],
+    [undefined],
+    [{}],
+    Array(1),
+  ];
+  let assertion = 1;
+
+  for (const input of invalidContainers) {
+    throws(
+      () => {
+        uglifyArr(input);
+      },
+      /string-uglify\/uglifyArr\(\): \[THROW_ID_01\]/,
+      `06.${String(assertion).padStart(2, "0")}`,
+    );
+    assertion += 1;
+  }
+
+  for (const input of invalidMembers) {
+    throws(
+      () => {
+        uglifyArr(input);
+      },
+      /string-uglify\/uglifyArr\(\): \[THROW_ID_02\]/,
+      `06.${String(assertion).padStart(2, "0")}`,
+    );
+    assertion += 1;
+  }
 });
 
 // -----------------------------------------------------------------------------
@@ -316,11 +354,31 @@ test("13 - readme examples", () => {
   );
 });
 
-test("14 - uglifyById validates the index", () => {
+test("14 - uglifyById validates the array before the index", () => {
   let input = [".alpha", ".bravo"];
 
   equal(uglifyById(input, 0), uglifyArr(input)[0], "14.01");
   equal(uglifyById(input, 1), uglifyArr(input)[1], "14.02");
+
+  [null, "abc", { 0: ".alpha", length: 1 }].forEach((refArr, i) => {
+    throws(
+      () => {
+        uglifyById(refArr, 0);
+      },
+      /string-uglify\/uglifyById\(\): \[THROW_ID_01\]/,
+      `14.${String(i + 3).padStart(2, "0")}`,
+    );
+  });
+
+  [[true], Array(1)].forEach((refArr, i) => {
+    throws(
+      () => {
+        uglifyById(refArr, 0);
+      },
+      /string-uglify\/uglifyById\(\): \[THROW_ID_02\]/,
+      `14.${String(i + 6).padStart(2, "0")}`,
+    );
+  });
 
   [undefined, "0", 0.5, Number.NaN, Number.POSITIVE_INFINITY].forEach(
     (idx, i) => {
@@ -328,8 +386,8 @@ test("14 - uglifyById validates the index", () => {
         () => {
           uglifyById(input, idx);
         },
-        /THROW_ID_01/,
-        `14.${String(i + 3).padStart(2, "0")}`,
+        /string-uglify\/uglifyById\(\): \[THROW_ID_03\]/,
+        `14.${String(i + 8).padStart(2, "0")}`,
       );
     },
   );
@@ -339,8 +397,8 @@ test("14 - uglifyById validates the index", () => {
       () => {
         uglifyById(input, idx);
       },
-      /THROW_ID_02/,
-      `14.${String(i + 8).padStart(2, "0")}`,
+      /string-uglify\/uglifyById\(\): \[THROW_ID_04\]/,
+      `14.${String(i + 13).padStart(2, "0")}`,
     );
   });
 
@@ -348,15 +406,15 @@ test("14 - uglifyById validates the index", () => {
     () => {
       uglifyById([], 0);
     },
-    /THROW_ID_02/,
-    "14.10",
+    /string-uglify\/uglifyById\(\): \[THROW_ID_04\]/,
+    "14.15",
   );
   throws(
     () => {
       uglifyById([".alpha"], 1);
     },
     /contains 1 item\./,
-    "14.11",
+    "14.16",
   );
 });
 
