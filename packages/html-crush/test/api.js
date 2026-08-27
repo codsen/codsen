@@ -72,10 +72,21 @@ test(`03 - throws - when opts.breakToTheLeftOf contains non-string elements`, ()
   }, "03.04");
 });
 
+test("04 - API - supported falsy input sentinels", () => {
+  not.throws(() => {
+    crush("zzz", {
+      reportProgressFunc: 0,
+    });
+  }, "04.01");
+  not.throws(() => {
+    crush("zzz", null);
+  }, "04.02");
+});
+
 // API
 // -----------------------------------------------------------------------------
 
-test(`04 - API - plain object is exported and contains correct keys`, () => {
+test(`05 - API - plain object is exported and contains correct keys`, () => {
   equal(
     Object.keys(defaults).sort(),
     [
@@ -90,12 +101,12 @@ test(`04 - API - plain object is exported and contains correct keys`, () => {
       "reportProgressFuncTo",
       "breakToTheLeftOf",
     ].sort(),
-    "04.01",
+    "05.01",
   );
 });
 
-test(`05 - API - plain object is exported`, () => {
-  match(version, /\d+\.\d+\.\d+/, "05.01");
+test(`06 - API - plain object is exported`, () => {
+  match(version, /\d+\.\d+\.\d+/, "06.01");
 });
 
 test.run();

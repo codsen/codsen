@@ -16,6 +16,18 @@ interface Opts {
   breakToTheLeftOf: string[];
   mindTheInlineTags: string[];
 }
+interface InputOpts {
+  lineLengthLimit?: number;
+  removeIndentations?: boolean;
+  removeLineBreaks?: boolean;
+  removeHTMLComments?: boolean | 0 | 1 | 2;
+  removeCSSComments?: boolean;
+  reportProgressFunc?: null | false | 0 | ((percDone: number) => void);
+  reportProgressFuncFrom?: number;
+  reportProgressFuncTo?: number;
+  breakToTheLeftOf?: string[] | null | false;
+  mindTheInlineTags?: string[];
+}
 declare const defaults: Opts;
 interface Res {
   /** Best-effort completion statistics for user-facing feedback.
@@ -37,7 +49,7 @@ interface Res {
 /**
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
  */
-declare function crush(str: string, opts?: Partial<Opts>): Res;
+declare function crush(str: string, opts?: InputOpts | null): Res;
 
 export { crush, defaults, version };
-export type { Opts, Res };
+export type { InputOpts, Opts, Res };

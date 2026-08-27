@@ -53,6 +53,19 @@ export interface Opts {
   mindTheInlineTags: string[];
 }
 
+export interface InputOpts {
+  lineLengthLimit?: number;
+  removeIndentations?: boolean;
+  removeLineBreaks?: boolean;
+  removeHTMLComments?: boolean | 0 | 1 | 2;
+  removeCSSComments?: boolean;
+  reportProgressFunc?: null | false | 0 | ((percDone: number) => void);
+  reportProgressFuncFrom?: number;
+  reportProgressFuncTo?: number;
+  breakToTheLeftOf?: string[] | null | false;
+  mindTheInlineTags?: string[];
+}
+
 const defaults: Opts = {
   lineLengthLimit: 500,
   removeIndentations: true,
@@ -164,7 +177,7 @@ export interface Res {
 /**
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
  */
-function crush(str: string, opts?: Partial<Opts>): Res {
+function crush(str: string, opts?: InputOpts | null): Res {
   const start = Date.now();
   // insurance:
   if (!isStr(str)) {
@@ -185,18 +198,20 @@ function crush(str: string, opts?: Partial<Opts>): Res {
     );
   }
 
+  const inputOpts = opts as InputOpts | null | undefined;
+
   if (
-    opts &&
-    Array.isArray(opts.breakToTheLeftOf) &&
-    opts.breakToTheLeftOf.length
+    inputOpts &&
+    Array.isArray(inputOpts.breakToTheLeftOf) &&
+    inputOpts.breakToTheLeftOf.length
   ) {
-    for (let z = 0, len = opts.breakToTheLeftOf.length; z < len; z++) {
-      if (!isStr(opts.breakToTheLeftOf[z])) {
+    for (let z = 0, len = inputOpts.breakToTheLeftOf.length; z < len; z++) {
+      if (!isStr(inputOpts.breakToTheLeftOf[z])) {
         throw new TypeError(
-          `html-crush/crush(): [THROW_ID_04] the resolvedOpts.breakToTheLeftOf array contains non-string elements! For example, element at index ${z} is of a type "${typeof opts
+          `html-crush/crush(): [THROW_ID_04] the resolvedOpts.breakToTheLeftOf array contains non-string elements! For example, element at index ${z} is of a type "${typeof inputOpts
             .breakToTheLeftOf[
             z
-          ]}" and is equal to:\n${formatDiagnosticValue(opts.breakToTheLeftOf[z], 4)}`,
+          ]}" and is equal to:\n${formatDiagnosticValue(inputOpts.breakToTheLeftOf[z], 4)}`,
         );
       }
     }
@@ -205,7 +220,20 @@ function crush(str: string, opts?: Partial<Opts>): Res {
   const finalIndexesToDelete = new Ranges<string | null | undefined>({
     limitToBeAddedWhitespace: true,
   });
-  let resolvedOpts: Opts = { ...defaults, ...opts };
+  let resolvedOpts: Opts = {
+    ...defaults,
+    ...inputOpts,
+    reportProgressFunc:
+      typeof inputOpts?.reportProgressFunc === "function"
+        ? inputOpts.reportProgressFunc
+        : null,
+    breakToTheLeftOf:
+      inputOpts?.breakToTheLeftOf === undefined
+        ? defaults.breakToTheLeftOf
+        : Array.isArray(inputOpts.breakToTheLeftOf)
+          ? inputOpts.breakToTheLeftOf
+          : [],
+  };
   DEV &&
     console.log(
       `FINAL ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
