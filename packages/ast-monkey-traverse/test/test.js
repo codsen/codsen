@@ -1465,4 +1465,51 @@ test("26 - in-place container edits update later parent snapshots", () => {
   equal(arrayParent, expectedArray, "26.04");
 });
 
+test("27 - own proto data keys remain data and are traversed", () => {
+  let input = JSON.parse(
+    '{"__proto__":{"marker":true,"constructor":{"prototype":"nested"}},"constructor":{"prototype":{"__proto__":"data"}},"prototype":"root"}',
+  );
+  let paths = [];
+  let actual = traverse(input, (key, value, innerObj) => {
+    paths.push(innerObj.path);
+    return value !== undefined ? value : key;
+  });
+
+  equal(JSON.stringify(actual), JSON.stringify(input), "27.01");
+  equal(
+    paths,
+    [
+      "__proto__",
+      "__proto__.marker",
+      "__proto__.constructor",
+      "__proto__.constructor.prototype",
+      "constructor",
+      "constructor.prototype",
+      "constructor.prototype.__proto__",
+      "prototype",
+    ],
+    "27.02",
+  );
+  equal(Object.hasOwn(actual, "__proto__"), true, "27.03");
+  equal(
+    Object.hasOwn(actual.constructor.prototype, "__proto__"),
+    true,
+    "27.04",
+  );
+  is(Object.getPrototypeOf(actual), Object.prototype, "27.05");
+  is(
+    Object.getPrototypeOf(
+      Object.getOwnPropertyDescriptor(actual, "__proto__").value,
+    ),
+    Object.prototype,
+    "27.06",
+  );
+  is(
+    Object.getPrototypeOf(actual.constructor.prototype),
+    Object.prototype,
+    "27.07",
+  );
+  equal(Object.prototype.marker, undefined, "27.08");
+});
+
 test.run();
