@@ -226,6 +226,80 @@ function isCssNewline(char: string | undefined): boolean {
   return char !== undefined && "\n\r\f".includes(char);
 }
 
+interface CssCodePoint {
+  codePoint: number;
+  rawLength: number;
+  value: string;
+}
+
+function cssCodePointAt(str: string, start: number): CssCodePoint | null {
+  let first = str.charCodeAt(start);
+  if (Number.isNaN(first)) {
+    return null;
+  }
+
+  if (first === 0 || (first >= 0xdc00 && first <= 0xdfff)) {
+    return { codePoint: 0xfffd, rawLength: 1, value: "\uFFFD" };
+  }
+
+  if (first >= 0xd800 && first <= 0xdbff) {
+    let second = str.charCodeAt(start + 1);
+    if (second >= 0xdc00 && second <= 0xdfff) {
+      return {
+        codePoint: Number(str.codePointAt(start)),
+        rawLength: 2,
+        value: str.slice(start, start + 2),
+      };
+    }
+    return { codePoint: 0xfffd, rawLength: 1, value: "\uFFFD" };
+  }
+
+  return { codePoint: first, rawLength: 1, value: str[start] };
+}
+
+function isCssNameStartCodePoint(codePoint: number): boolean {
+  return (
+    codePoint === 0x5f ||
+    (codePoint >= 0x41 && codePoint <= 0x5a) ||
+    (codePoint >= 0x61 && codePoint <= 0x7a) ||
+    codePoint >= 0x80
+  );
+}
+
+function isCssNameCodePoint(codePoint: number): boolean {
+  return (
+    isCssNameStartCodePoint(codePoint) ||
+    codePoint === 0x2d ||
+    (codePoint >= 0x30 && codePoint <= 0x39)
+  );
+}
+
+function startsValidCssEscape(str: string, start: number): boolean {
+  return str[start] === "\\" && !isCssNewline(str[start + 1]);
+}
+
+function wouldStartCssIdentSequence(str: string, start: number): boolean {
+  let first = cssCodePointAt(str, start);
+  if (first === null) {
+    return false;
+  }
+
+  if (first.codePoint === 0x2d) {
+    let secondAt = start + first.rawLength;
+    let second = cssCodePointAt(str, secondAt);
+    return (
+      (second !== null &&
+        (isCssNameStartCodePoint(second.codePoint) ||
+          second.codePoint === 0x2d)) ||
+      startsValidCssEscape(str, secondAt)
+    );
+  }
+
+  return (
+    isCssNameStartCodePoint(first.codePoint) || startsValidCssEscape(str, start)
+  );
+}
+
 function selectorCharacterIsBoundary(char: string | undefined): boolean {
   return char === undefined || isCssWhitespace(char);
 }
@@ -235,15 +309,14 @@ function selectorCharacterIsBoundary(char: string | undefined): boolean {
  * whitespace terminator of a hexadecimal escape.
  */
 function cssEscapeEndsAt(str: string, start: number): number | null {
-  if (
-    str[start] !== "\\" ||
-    str[start + 1] === undefined ||
-    isCssNewline(str[start + 1])
-  ) {
+  if (!startsValidCssEscape(str, start)) {
     return null;
   }
 
   let i = start + 1;
+  if (str[i] === undefined) {
+    return i;
+  }
   if (isCssHexDigit(str[i])) {
     let hexDigits = 0;
     while (hexDigits < 6 && isCssHexDigit(str[i])) {
@@ -259,7 +332,7 @@ function cssEscapeEndsAt(str: string, start: number): number | null {
     return i;
   }
 
-  return start + 1 + (Number(str.codePointAt(start + 1)) > 0xffff ? 2 : 1);
+  return start + 1 + (cssCodePointAt(str, start + 1) as CssCodePoint).rawLength;
 }
 
 function markerIsEscaped(str: string, markerAt: number): boolean {
@@ -276,7 +349,8 @@ function readCssSelectorTokenInternal(
 ): CssSelectorToken | null {
   if (
     !(str[start] === "." || str[start] === "#") ||
-    markerIsEscaped(str, start)
+    markerIsEscaped(str, start) ||
+    !wouldStartCssIdentSequence(str, start + 1)
   ) {
     return null;
   }
@@ -290,17 +364,11 @@ function readCssSelectorTokenInternal(
         continue;
       }
     }
-    if (
-      selectorCharacterIsBoundary(str[i]) ||
-      selectorBreakCharacters.includes(str[i])
-    ) {
+    let current = cssCodePointAt(str, i);
+    if (current === null || !isCssNameCodePoint(current.codePoint)) {
       break;
     }
-    i += 1;
-  }
-
-  if (i === start + 1) {
-    return null;
+    i += current.rawLength;
   }
 
   let raw = str.slice(start, i);
@@ -325,7 +393,11 @@ function decodeCssSelector(selector: string): string {
   let result = "";
   for (let i = 0; i < selector.length; i++) {
     if (selector[i] !== "\\") {
-      result += selector[i];
+      let current = cssCodePointAt(selector, i);
+      if (current !== null) {
+        result += current.value;
+        i += current.rawLength - 1;
+      }
       continue;
     }
 
@@ -336,7 +408,11 @@ function decodeCssSelector(selector: string): string {
     }
 
     if (isCssHexDigit(selector[i + 1])) {
-      let hex = selector.slice(i + 1, Math.min(i + 7, escapeEndsAt)).trim();
+      let hexEndsAt = i + 1;
+      while (hexEndsAt < i + 7 && isCssHexDigit(selector[hexEndsAt])) {
+        hexEndsAt += 1;
+      }
+      let hex = selector.slice(i + 1, hexEndsAt);
       let codePoint = Number.parseInt(hex, 16);
       result +=
         codePoint === 0 ||
@@ -345,7 +421,7 @@ function decodeCssSelector(selector: string): string {
           ? "\uFFFD"
           : String.fromCodePoint(codePoint);
     } else {
-      result += String.fromCodePoint(Number(selector.codePointAt(i + 1)));
+      result += cssCodePointAt(selector, i + 1)?.value || "\uFFFD";
     }
     i = escapeEndsAt - 1;
   }

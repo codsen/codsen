@@ -1831,7 +1831,7 @@ test("69 - CSS selector escape decoding", () => {
   equal(decodeCssSelector(String.raw`.\110000 x`), ".�x", "69.10");
   equal(decodeCssSelector(String.raw`.\💩-pile`), ".💩-pile", "69.11");
   equal(decodeCssSelector(String.raw`.foo\\bar`), ".foo\\bar", "69.12");
-  equal(decodeCssSelector(".foo\\"), ".foo\\", "69.13");
+  equal(decodeCssSelector(".foo\\"), ".foo�", "69.13");
   equal(decodeCssSelector(".foo\\\nbar"), ".foo\\\nbar", "69.14");
   equal(decodeCssSelector(".\\40\r\nsm"), ".@sm", "69.15");
 });
@@ -2058,6 +2058,61 @@ test("74 - failed attribute selectors do not affect later selectors", () => {
     },
     "74.06",
   );
+});
+
+test("75 - exact tokens follow CSS identifier rules", () => {
+  equal(readCssSelectorToken(".1a", 0), null, "75.01");
+  equal(readCssSelectorToken(".-", 0), null, "75.02");
+  equal(readCssSelectorToken("#1a", 0), null, "75.03");
+  equal(readCssSelectorToken(".\u0001a", 0), null, "75.04");
+  equal(
+    readCssSelectorToken(".a\u0001b", 0),
+    { value: ".a", raw: ".a", range: [0, 2] },
+    "75.05",
+  );
+  equal(
+    readCssSelectorToken(".\u0000x", 0),
+    { value: ".�x", raw: ".\u0000x", range: [0, 3] },
+    "75.06",
+  );
+  equal(
+    readCssSelectorToken(".\ud800x", 0),
+    { value: ".�x", raw: ".\ud800x", range: [0, 3] },
+    "75.07",
+  );
+  equal(
+    readCssSelectorToken(".💩x", 0),
+    { value: ".💩x", raw: ".💩x", range: [0, 4] },
+    "75.08",
+  );
+  equal(
+    readCssSelectorToken(".a\\", 0),
+    { value: ".a�", raw: ".a\\", range: [0, 3] },
+    "75.09",
+  );
+  equal(
+    readCssSelectorToken(".a\\\nb", 0),
+    { value: ".a", raw: ".a", range: [0, 2] },
+    "75.10",
+  );
+  equal(
+    readCssSelectorToken(".-name", 0),
+    { value: ".-name", raw: ".-name", range: [0, 6] },
+    "75.11",
+  );
+  equal(
+    readCssSelectorToken(".--name", 0),
+    { value: ".--name", raw: ".--name", range: [0, 7] },
+    "75.12",
+  );
+  equal(
+    readCssSelectorToken(String.raw`.\31 name`, 0),
+    { value: ".1name", raw: String.raw`.\31 name`, range: [0, 9] },
+    "75.13",
+  );
+  equal(decodeCssSelector(".\u0000\ud800"), ".��", "75.14");
+  equal(decodeCssSelector(".\\\u0000"), ".�", "75.15");
+  equal(decodeCssSelector(".\udc00"), ".�", "75.16");
 });
 
 test.run();

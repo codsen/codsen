@@ -368,6 +368,19 @@ function stringStripHtmlSmoke(api, equal) {
   );
 }
 
+function stringExtractClassNamesSmoke(api, equal) {
+  equal(api.readCssSelectorToken(".\\31 23:hover", 0), {
+    value: ".123",
+    raw: ".\\31 23",
+    range: [0, 7],
+  });
+  equal(api.readCssSelectorToken(".a\\", 0), {
+    value: ".a\uFFFD",
+    raw: ".a\\",
+    range: [0, 3],
+  });
+}
+
 const IIFE_API_SMOKES = Object.freeze({
   "array-group-str-omit-num-char": arrayGroupSmoke,
   "ast-deep-contains": astDeepContainsSmoke,
@@ -378,6 +391,7 @@ const IIFE_API_SMOKES = Object.freeze({
   "is-language-code": languageCodeSmoke,
   "object-boolean-combinations": objectBooleanCombinationsSmoke,
   "string-convert-indexes": stringConvertIndexesSmoke,
+  "string-extract-class-names": stringExtractClassNamesSmoke,
   "string-strip-html": stringStripHtmlSmoke,
   "test-mixer": testMixerSmoke,
 });
