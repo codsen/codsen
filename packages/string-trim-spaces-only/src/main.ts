@@ -1,5 +1,5 @@
 import { formatDiagnosticValue } from "codsen-utils";
-import type { Ranges } from "../../../ops/typedefs/common";
+import type { Range } from "../../../ops/typedefs/common";
 
 import { version as v } from "../package.json";
 
@@ -27,7 +27,7 @@ const defaults: Opts = {
 
 export interface Res {
   res: string;
-  ranges: Ranges;
+  ranges: Range[];
 }
 
 function trimSpaces(str: string, opts?: Partial<Opts>): Res {

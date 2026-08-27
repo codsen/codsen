@@ -1,7 +1,6 @@
 type Range =
   | [from: number, to: number]
   | [from: number, to: number, whatToInsert: string | null | undefined];
-type Ranges = Range[] | null;
 
 declare const version: string;
 interface Opts {
@@ -15,7 +14,7 @@ interface Opts {
 declare const defaults: Opts;
 interface Res {
   res: string;
-  ranges: Ranges;
+  ranges: Range[];
 }
 declare function trimSpaces(str: string, opts?: Partial<Opts>): Res;
 

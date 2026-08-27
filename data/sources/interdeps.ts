@@ -142,7 +142,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-utils",
-    "size": 18996,
+    "size": 24080,
     "imports": []
   },
   {
@@ -196,7 +196,7 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "size": 24550,
+    "size": 25005,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -292,7 +292,7 @@ export const interdeps = [
   },
   {
     "name": "html-crush",
-    "size": 11548,
+    "size": 11804,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -641,7 +641,7 @@ export const interdeps = [
   },
   {
     "name": "string-apostrophes",
-    "size": 7217,
+    "size": 7580,
     "imports": [
       "codsen-utils",
       "ranges-apply"
@@ -672,7 +672,7 @@ export const interdeps = [
   },
   {
     "name": "string-dashes",
-    "size": 2806,
+    "size": 3244,
     "imports": [
       "codsen-utils",
       "ranges-apply",
