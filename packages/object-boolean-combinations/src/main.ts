@@ -86,10 +86,10 @@ function combinations(
   );
   const overriddenKeySet = new Set(propertiesToBeOverridden);
   const propertiesToMix = inputKeys.filter((key) => !overriddenKeySet.has(key));
-  // Clone only the part of the input that is ever returned. The input object's
-  // values are intentionally ignored; only its keys define the combinations.
-  const overrideObject = propertiesToBeOverridden.length
-    ? clone(Override)
+  // Clone the selected values as one graph. The array keeps repeated-reference
+  // and cycle relationships intact without reading unrelated override keys.
+  const overrideValues = propertiesToBeOverridden.length
+    ? clone(propertiesToBeOverridden.map((key) => Override[key]))
     : null;
 
   // Build each output directly instead of first allocating an equally large
@@ -119,9 +119,9 @@ function combinations(
         result[propertiesToMix[keyIndex]] =
           (combinationIndex & (1 << keyIndex)) !== 0;
       }
-      if (overrideObject) {
-        for (const key of propertiesToBeOverridden) {
-          result[key] = overrideObject[key];
+      if (overrideValues) {
+        for (let keyIndex = 0; keyIndex < propertiesToBeOverridden.length; keyIndex++) {
+          result[propertiesToBeOverridden[keyIndex]] = overrideValues[keyIndex];
         }
       }
       outgoingObjectsArray[combinationIndex] = result;
@@ -142,12 +142,13 @@ function combinations(
           result[key] = value;
         }
       }
-      if (overrideObject) {
-        for (const key of propertiesToBeOverridden) {
+      if (overrideValues) {
+        for (let keyIndex = 0; keyIndex < propertiesToBeOverridden.length; keyIndex++) {
+          const key = propertiesToBeOverridden[keyIndex];
           if (key === "__proto__") {
-            defineEnumerableDataProperty(result, key, overrideObject[key]);
+            defineEnumerableDataProperty(result, key, overrideValues[keyIndex]);
           } else {
-            result[key] = overrideObject[key];
+            result[key] = overrideValues[keyIndex];
           }
         }
       }
