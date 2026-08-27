@@ -114,6 +114,11 @@ function rApply(
       }
       rangesArr[i][1] = Number(el[1]);
     }
+    if (rangesArr[i][0] > rangesArr[i][1]) {
+      throw new RangeError(
+        `ranges-apply/rApply(): [THROW_ID_08] ranges array, second input arg. has ${i}th element, array ${formatDiagnosticValue(el)}. Its first index (${rangesArr[i][0]}) must not be greater than its second index (${rangesArr[i][1]}).`,
+      );
+    }
 
     counter += 1;
   });

@@ -513,4 +513,37 @@ test("22 - numeric replacements preserve zero and merge deterministically", () =
   );
 });
 
+test("23 - rejects reversed ranges without mutating input", () => {
+  throws(() => rApply("abcdef", [5, 2, "X"]), /THROW_ID_08/, "23.01");
+  throws(() => rApply("abcdef", ["5", "2", "X"]), /THROW_ID_08/, "23.02");
+  throws(() => rApply("abcdef", [[5, 2, "X"]]), /THROW_ID_08/, "23.03");
+  throws(
+    () => rApply("abcdef", [["5", "2", "X"]]),
+    /THROW_ID_08/,
+    "23.04",
+  );
+
+  const ranges = [
+    [0, 1, "A"],
+    ["5", "2", "X"],
+  ];
+  throws(
+    () => rApply("abcdef", ranges),
+    (error) =>
+      error instanceof RangeError &&
+      /THROW_ID_08/.test(error.message) &&
+      /has 1th element/.test(error.message),
+    "23.05",
+  );
+  equal(
+    ranges,
+    [
+      [0, 1, "A"],
+      ["5", "2", "X"],
+    ],
+    "23.06",
+  );
+  equal(rApply("abc", [[1, 1, "X"]]), "aXbc", "23.07");
+});
+
 test.run();
