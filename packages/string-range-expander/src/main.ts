@@ -8,6 +8,7 @@ import {
 import type { Range } from "../../../ops/typedefs/common";
 
 import { version as v } from "../package.json";
+import { isUnicodeLetterOrNumber } from "./unicode-letters-and-numbers";
 
 const version: string = v;
 
@@ -57,6 +58,40 @@ function markerIncludesCodePointAt(
   return false;
 }
 
+function isLetterOrNumberAt(str: string, index: number): boolean {
+  const current = str.charCodeAt(index);
+  if (current >= 48 && current <= 57) {
+    return true;
+  }
+  if ((current >= 65 && current <= 90) || (current >= 97 && current <= 122)) {
+    return true;
+  }
+
+  let codePoint = current;
+  if (
+    current >= 0xd800 &&
+    current <= 0xdbff &&
+    str.charCodeAt(index + 1) >= 0xdc00 &&
+    str.charCodeAt(index + 1) <= 0xdfff
+  ) {
+    codePoint =
+      (current - 0xd800) * 0x400 +
+      (str.charCodeAt(index + 1) - 0xdc00) +
+      0x10000;
+  } else if (
+    current >= 0xdc00 &&
+    current <= 0xdfff &&
+    str.charCodeAt(index - 1) >= 0xd800 &&
+    str.charCodeAt(index - 1) <= 0xdbff
+  ) {
+    codePoint =
+      (str.charCodeAt(index - 1) - 0xd800) * 0x400 +
+      (current - 0xdc00) +
+      0x10000;
+  }
+  return isUnicodeLetterOrNumber(codePoint);
+}
+
 export interface Opts {
   str: string;
   from: number;
@@ -88,8 +123,6 @@ const defaults: ResolvedOpts = {
 };
 
 function expander(opts: Opts): Range {
-  let letterOrDigit = /^[0-9a-zA-Z]+$/;
-
   // Internal functions
   // ---------------------------------------------------------------------------
 
@@ -416,7 +449,7 @@ function expander(opts: Opts): Range {
               to,
             )))
       )) &&
-    (letterOrDigit.test(str[from - 1]) || letterOrDigit.test(str[to]))
+    (isLetterOrNumberAt(str, from - 1) || isLetterOrNumberAt(str, to))
   ) {
     DEV && console.log(`RETURN: [${from}, ${to}, " "]`);
     return [from, to, " "];
