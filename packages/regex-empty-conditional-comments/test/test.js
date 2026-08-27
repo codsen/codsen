@@ -124,4 +124,119 @@ test("03 - deletes comments from code", () => {
   );
 });
 
+test("04 - accepts only HTML ASCII whitespace as an empty body", () => {
+  equal(
+    emptyCondCommentRegex().test("<!--[if mso]>\t<![endif]-->"),
+    true,
+    "04.01",
+  );
+  equal(
+    emptyCondCommentRegex().test("<!--[if mso]>\n<![endif]-->"),
+    true,
+    "04.02",
+  );
+  equal(
+    emptyCondCommentRegex().test("<!--[if mso]>\f<![endif]-->"),
+    true,
+    "04.03",
+  );
+  equal(
+    emptyCondCommentRegex().test("<!--[if mso]>\r<![endif]-->"),
+    true,
+    "04.04",
+  );
+  equal(
+    emptyCondCommentRegex().test("<!--[if mso]> <![endif]-->"),
+    true,
+    "04.05",
+  );
+  equal(
+    emptyCondCommentRegex().test("<!--[if mso]>\r\n<![endif]-->"),
+    true,
+    "04.06",
+  );
+  equal(
+    emptyCondCommentRegex().test("<!--[if !mso]><!--><!--<![endif]-->"),
+    true,
+    "04.07",
+  );
+  equal(
+    emptyCondCommentRegex().test("<!--[if !mso]><!-- -->\n<!--<![endif]-->"),
+    true,
+    "04.08",
+  );
+
+  equal(
+    emptyCondCommentRegex().test("<!--[if mso]>!!!<![endif]-->"),
+    false,
+    "04.09",
+  );
+  equal(
+    emptyCondCommentRegex().test("<!--[if mso]>---<![endif]-->"),
+    false,
+    "04.10",
+  );
+  equal(
+    emptyCondCommentRegex().test("<!--[if mso]>\v<![endif]-->"),
+    false,
+    "04.11",
+  );
+  equal(
+    emptyCondCommentRegex().test("<!--[if mso]>\u00A0<![endif]-->"),
+    false,
+    "04.12",
+  );
+  equal(
+    emptyCondCommentRegex().test("<!--[if mso]>\u2003<![endif]-->"),
+    false,
+    "04.13",
+  );
+  equal(
+    emptyCondCommentRegex().test("<!--[if mso]>\u2028<![endif]-->"),
+    false,
+    "04.14",
+  );
+  equal(
+    emptyCondCommentRegex().test("<!--[if mso]>\uFEFF<![endif]-->"),
+    false,
+    "04.15",
+  );
+  equal(
+    emptyCondCommentRegex().test("<!--[if mso]>&nbsp;<![endif]-->"),
+    false,
+    "04.16",
+  );
+});
+
+test("05 - rejects malformed and repeated partial openers", () => {
+  equal(emptyCondCommentRegex().test("<![if mso"), false, "05.01");
+  equal(emptyCondCommentRegex().test("<![if mso]>"), false, "05.02");
+  equal(
+    emptyCondCommentRegex().test("<![if mso]><![endif]-->"),
+    false,
+    "05.03",
+  );
+  equal(
+    emptyCondCommentRegex().test("<!--[if mso]><![endif]>"),
+    false,
+    "05.04",
+  );
+  equal(
+    emptyCondCommentRegex().test("<!--[if !mso]><!--><![endif]-->"),
+    false,
+    "05.05",
+  );
+  equal(
+    emptyCondCommentRegex().test("<!--[iffy mso]><![endif]-->"),
+    false,
+    "05.06",
+  );
+  equal(emptyCondCommentRegex().test("<![if ".repeat(1000)), false, "05.07");
+  equal(
+    emptyCondCommentRegex().test("<!--[IF\nmso]><![ENDIF]-->"),
+    true,
+    "05.08",
+  );
+});
+
 test.run();

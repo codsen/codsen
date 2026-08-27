@@ -649,6 +649,36 @@ test("22 - empty Outlook conditional comments respect removal option", () => {
   equal(retained.log.commentsLength, 0, "22.05");
 });
 
+test("23 - preserves nonempty conditional-comment bodies", () => {
+  equal(
+    comb("<!--[if mso]>!!!<![endif]-->", { removeHTMLComments: true }).result,
+    "<!--[if mso]>!!!<![endif]-->",
+    "23.01",
+  );
+  equal(
+    comb("<!--[if mso]>---<![endif]-->", { removeHTMLComments: true }).result,
+    "<!--[if mso]>---<![endif]-->",
+    "23.02",
+  );
+  equal(
+    comb("<!--[if mso]>\u00A0<![endif]-->", { removeHTMLComments: true })
+      .result,
+    "<!--[if mso]>\u00A0<![endif]-->",
+    "23.03",
+  );
+  equal(
+    comb("<!--[if mso]>\u2003<![endif]-->", { removeHTMLComments: true })
+      .result,
+    "<!--[if mso]>\u2003<![endif]-->",
+    "23.04",
+  );
+  equal(
+    comb("<!--[if mso]>\t<![endif]-->", { removeHTMLComments: true }).result,
+    "",
+    "23.05",
+  );
+});
+
 // test("22 - comments in the inline styles", () => {
 //   let actual = comb(
 //     `<head>
