@@ -1877,6 +1877,82 @@ export const packageJSONData = {
       "registry": "https://registry.npmjs.org/"
     }
   },
+  "codsen-format-diagnostic-value": {
+    "name": "codsen-format-diagnostic-value",
+    "version": "1.0.0",
+    "description": "Safely format untrusted JavaScript values for diagnostics",
+    "keywords": [
+      "diagnostic",
+      "error",
+      "format",
+      "safe",
+      "serialize",
+      "value"
+    ],
+    "homepage": "https://codsen.com/os/codsen-format-diagnostic-value",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/codsen/codsen.git",
+      "directory": "packages/codsen-format-diagnostic-value"
+    },
+    "license": "MIT",
+    "author": {
+      "name": "Roy Revelt",
+      "email": "roy@codsen.com",
+      "url": "https://codsen.com"
+    },
+    "type": "module",
+    "exports": {
+      "types": "./types/index.d.ts",
+      "script": "./dist/codsen-format-diagnostic-value.umd.js",
+      "default": "./dist/codsen-format-diagnostic-value.esm.js"
+    },
+    "types": "types/index.d.ts",
+    "scripts": {
+      "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
+      "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
+      "devtest": "c8 npm run unit && npm run examples && npm run lint",
+      "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
+      "examples": "node '../../ops/scripts/run-examples.js'",
+      "lect": "node '../../ops/lect/lect.js'",
+      "lect:check": "node '../../ops/lect/lect.js' --check",
+      "lint": "biome lint --error-on-warnings . && npm run typecheck",
+      "lint:fix": "biome lint --write --error-on-warnings . && npm run typecheck",
+      "perf": "node perf/check.js",
+      "prep": "echo 'ready'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
+      "pretest": "npm run lect:check && npm run build",
+      "test": "npm run devtest",
+      "typecheck": "tsc --noEmit --pretty false --project tsconfig.json",
+      "unit": "uvu test"
+    },
+    "c8": {
+      "all": true,
+      "check-coverage": true,
+      "exclude": [
+        "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
+      ],
+      "lines": 100
+    },
+    "lect": {
+      "licence": {
+        "extras": [
+          ""
+        ]
+      }
+    },
+    "engines": {
+      "node": ">=18.20.8"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
+    }
+  },
   "codsen-glob": {
     "name": "codsen-glob",
     "version": "1.1.0",
@@ -2032,6 +2108,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "dependencies": {
+      "codsen-format-diagnostic-value": "^1.0.0"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -9166,7 +9245,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "codsen-utils": "^1.9.0"
+      "codsen-format-diagnostic-value": "^1.0.0"
     },
     "engines": {
       "node": ">=18.20.8"

@@ -136,14 +136,21 @@ export const interdeps = [
     ]
   },
   {
+    "name": "codsen-format-diagnostic-value",
+    "size": 2959,
+    "imports": []
+  },
+  {
     "name": "codsen-glob",
     "size": 12769,
     "imports": []
   },
   {
     "name": "codsen-utils",
-    "size": 24080,
-    "imports": []
+    "size": 21457,
+    "imports": [
+      "codsen-format-diagnostic-value"
+    ]
   },
   {
     "name": "color-shorthand-hex-to-six-digit",
@@ -800,9 +807,9 @@ export const interdeps = [
   },
   {
     "name": "string-trim-spaces-only",
-    "size": 1140,
+    "size": 1158,
     "imports": [
-      "codsen-utils"
+      "codsen-format-diagnostic-value"
     ]
   },
   {

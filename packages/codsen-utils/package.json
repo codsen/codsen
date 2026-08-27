@@ -57,6 +57,9 @@
       "extras": [""]
     }
   },
+  "dependencies": {
+    "codsen-format-diagnostic-value": "^1.0.0"
+  },
   "engines": {
     "node": ">=18.20.8"
   },

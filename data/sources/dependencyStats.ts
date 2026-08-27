@@ -52,6 +52,7 @@ export const dependencyStats: DependencyStats = {
     "ast-monkey-traverse",
     "ast-monkey-traverse-with-lookahead",
     "check-types-mini",
+    "codsen-format-diagnostic-value",
     "codsen-glob",
     "codsen-parser",
     "codsen-utils",
@@ -125,9 +126,10 @@ export const dependencyStats: DependencyStats = {
     "ast-monkey-traverse": 7,
     "ast-monkey-traverse-with-lookahead": 1,
     "check-types-mini": 2,
+    "codsen-format-diagnostic-value": 2,
     "codsen-glob": 8,
     "codsen-parser": 1,
-    "codsen-utils": 81,
+    "codsen-utils": 80,
     "csv-sort": 1,
     "csv-split-easy": 1,
     "currency.js": 1,
@@ -259,7 +261,7 @@ export const dependencyStats: DependencyStats = {
   ],
   "top10OwnDeps": [
     {
-      "codsen-utils": 81
+      "codsen-utils": 80
     },
     {
       "ranges-apply": 16

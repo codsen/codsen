@@ -1,4 +1,4 @@
-import { formatDiagnosticValue } from "codsen-utils";
+import { formatDiagnosticValue } from "codsen-format-diagnostic-value";
 import type { Range } from "../../../ops/typedefs/common";
 
 import { version as v } from "../package.json";

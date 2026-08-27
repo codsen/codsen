@@ -19,6 +19,7 @@
     "ast-monkey-util",
     "charcode-is-valid-xml-name-character",
     "check-types-mini",
+    "codsen-format-diagnostic-value",
     "codsen-glob",
     "codsen-utils",
     "color-shorthand-hex-to-six-digit",
