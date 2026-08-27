@@ -98,12 +98,41 @@ test("02 - first input is not an object - throws", () => {
 });
 
 test("03 - second input is not an object - throws", () => {
-  throws(
-    () => {
-      combinations({ a: "a" }, "a");
-    },
-    /THROW_ID_03/,
-    "03.01",
+  const invalidOverrides = [
+    null,
+    false,
+    0,
+    Number.NaN,
+    "",
+    [],
+    new Date(),
+    () => {},
+    "a",
+    1,
+    true,
+  ];
+
+  invalidOverrides.forEach((invalidOverride, index) => {
+    throws(
+      () => {
+        combinations({ a: "a" }, invalidOverride);
+      },
+      /object-boolean-combinations\/combinations\(\): \[THROW_ID_03\]/,
+      `03.${String(index + 1).padStart(2, "0")}`,
+    );
+  });
+});
+
+test("04 - omitted and undefined overrides use the default", () => {
+  equal(
+    combinations({ a: "ignored" }),
+    [{ a: false }, { a: true }],
+    "04.01",
+  );
+  equal(
+    combinations({ a: "ignored" }, undefined),
+    [{ a: false }, { a: true }],
+    "04.02",
   );
 });
 

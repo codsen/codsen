@@ -38,7 +38,7 @@ function combinations(input: Obj, Override: undefined | Obj = {}): Obj[] {
       "object-boolean-combinations/combinations(): [THROW_ID_02] the first input object must be a plain object",
     );
   }
-  if (Override && !isObj(Override)) {
+  if (!isObj(Override)) {
     throw new Error(
       "object-boolean-combinations/combinations(): [THROW_ID_03] the second override object must be a plain object",
     );
