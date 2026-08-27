@@ -6,7 +6,9 @@ import { collWhitespace } from "../dist/string-collapse-leading-whitespace.esm.j
 
 const callerDir = path.resolve(".");
 
-const testme = () => collWhitespace("\n \n\n\n", 5);
+const source = "\n \r\n \n  content with inner  spacing  \n \r\n \n";
+
+const testme = () => collWhitespace(source, 2);
 
 // action
 runPerf(testme, callerDir);
