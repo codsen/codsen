@@ -354,4 +354,74 @@ test("19 - rejects boundaries beyond the string length", () => {
   );
 });
 
+test("20 - rejects every wrong marker-option type", () => {
+  const markerOptions = [
+    ["ifLeftSideIncludesThisThenCropTightly", "10"],
+    ["ifLeftSideIncludesThisCropItToo", "11"],
+    ["ifRightSideIncludesThisThenCropTightly", "12"],
+    ["ifRightSideIncludesThisCropItToo", "13"],
+  ];
+  const invalidValues = [null, false, 0, Number.NaN, [], {}];
+  let assertion = 0;
+
+  markerOptions.forEach(([option, throwId]) => {
+    invalidValues.forEach((value) => {
+      assertion += 1;
+      throws(
+        () => e({ str: "abc", from: 1, to: 2, [option]: value }),
+        new RegExp(`THROW_ID_${throwId}`),
+        `20.${String(assertion).padStart(2, "0")}`,
+      );
+    });
+  });
+});
+
+test("21 - accepts only the declared one-side modes", () => {
+  const invalidValues = [null, true, 0, Number.NaN, "", "up", [], {}];
+  const validValues = [undefined, false, "left", "right"];
+
+  invalidValues.forEach((extendToOneSide, index) => {
+    throws(
+      () => e({ str: "abc", from: 1, to: 2, extendToOneSide }),
+      /THROW_ID_09/,
+      `21.${String(index + 1).padStart(2, "0")}`,
+    );
+  });
+  validValues.forEach((extendToOneSide, index) => {
+    not.throws(
+      () => e({ str: "abc", from: 1, to: 2, extendToOneSide }),
+      `21.${String(invalidValues.length + index + 1).padStart(2, "0")}`,
+    );
+  });
+});
+
+test("22 - requires Boolean wipe and insertion options", () => {
+  const booleanOptions = [
+    ["wipeAllWhitespaceOnLeft", "14"],
+    ["wipeAllWhitespaceOnRight", "15"],
+    ["addSingleSpaceToPreventAccidentalConcatenation", "16"],
+  ];
+  const invalidValues = [null, 0, 1, "", "false", [], {}];
+  const validValues = [undefined, false, true];
+  let assertion = 0;
+
+  booleanOptions.forEach(([option, throwId]) => {
+    invalidValues.forEach((value) => {
+      assertion += 1;
+      throws(
+        () => e({ str: "abc", from: 1, to: 2, [option]: value }),
+        new RegExp(`THROW_ID_${throwId}`),
+        `22.${String(assertion).padStart(2, "0")}`,
+      );
+    });
+    validValues.forEach((value) => {
+      assertion += 1;
+      not.throws(
+        () => e({ str: "abc", from: 1, to: 2, [option]: value }),
+        `22.${String(assertion).padStart(2, "0")}`,
+      );
+    });
+  });
+});
+
 test.run();

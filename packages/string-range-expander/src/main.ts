@@ -181,13 +181,10 @@ function expander(opts: Opts): Range {
     );
   }
   if (
-    opts.extendToOneSide === null ||
-    (isStr(opts.extendToOneSide) &&
-      opts.extendToOneSide !== "left" &&
-      opts.extendToOneSide !== "right") ||
-    (!isStr(opts.extendToOneSide) &&
-      opts.extendToOneSide !== undefined &&
-      opts.extendToOneSide)
+    opts.extendToOneSide !== undefined &&
+    opts.extendToOneSide !== false &&
+    opts.extendToOneSide !== "left" &&
+    opts.extendToOneSide !== "right"
   ) {
     throw new Error(
       `string-range-expander/expander(): [THROW_ID_09] The options value "extendToOneSide" is not recognisable! It's set to: "${
@@ -196,7 +193,7 @@ function expander(opts: Opts): Range {
     );
   }
   if (
-    opts?.ifLeftSideIncludesThisThenCropTightly &&
+    opts.ifLeftSideIncludesThisThenCropTightly !== undefined &&
     !isStr(opts.ifLeftSideIncludesThisThenCropTightly)
   ) {
     throw new Error(
@@ -204,7 +201,7 @@ function expander(opts: Opts): Range {
     );
   }
   if (
-    opts?.ifLeftSideIncludesThisCropItToo &&
+    opts.ifLeftSideIncludesThisCropItToo !== undefined &&
     !isStr(opts.ifLeftSideIncludesThisCropItToo)
   ) {
     throw new Error(
@@ -212,7 +209,7 @@ function expander(opts: Opts): Range {
     );
   }
   if (
-    opts?.ifRightSideIncludesThisThenCropTightly &&
+    opts.ifRightSideIncludesThisThenCropTightly !== undefined &&
     !isStr(opts.ifRightSideIncludesThisThenCropTightly)
   ) {
     throw new Error(
@@ -220,18 +217,65 @@ function expander(opts: Opts): Range {
     );
   }
   if (
-    opts?.ifRightSideIncludesThisCropItToo &&
+    opts.ifRightSideIncludesThisCropItToo !== undefined &&
     !isStr(opts.ifRightSideIncludesThisCropItToo)
   ) {
     throw new Error(
       `string-range-expander/expander(): [THROW_ID_13] The option "ifRightSideIncludesThisCropItToo", is not a string! It's been given as ${typeof opts.ifRightSideIncludesThisCropItToo}, equal to ${formatDiagnosticValue(opts.ifRightSideIncludesThisCropItToo)}`,
     );
   }
+  if (
+    opts.wipeAllWhitespaceOnLeft !== undefined &&
+    typeof opts.wipeAllWhitespaceOnLeft !== "boolean"
+  ) {
+    throw new Error(
+      `string-range-expander/expander(): [THROW_ID_14] The option "wipeAllWhitespaceOnLeft" must be a Boolean! It was given as ${typeof opts.wipeAllWhitespaceOnLeft}, equal to ${formatDiagnosticValue(opts.wipeAllWhitespaceOnLeft)}`,
+    );
+  }
+  if (
+    opts.wipeAllWhitespaceOnRight !== undefined &&
+    typeof opts.wipeAllWhitespaceOnRight !== "boolean"
+  ) {
+    throw new Error(
+      `string-range-expander/expander(): [THROW_ID_15] The option "wipeAllWhitespaceOnRight" must be a Boolean! It was given as ${typeof opts.wipeAllWhitespaceOnRight}, equal to ${formatDiagnosticValue(opts.wipeAllWhitespaceOnRight)}`,
+    );
+  }
+  if (
+    opts.addSingleSpaceToPreventAccidentalConcatenation !== undefined &&
+    typeof opts.addSingleSpaceToPreventAccidentalConcatenation !== "boolean"
+  ) {
+    throw new Error(
+      `string-range-expander/expander(): [THROW_ID_16] The option "addSingleSpaceToPreventAccidentalConcatenation" must be a Boolean! It was given as ${typeof opts.addSingleSpaceToPreventAccidentalConcatenation}, equal to ${formatDiagnosticValue(opts.addSingleSpaceToPreventAccidentalConcatenation)}`,
+    );
+  }
 
   // Prepare the resolvedOpts
   // ---------------------------------------------------------------------------
 
-  let resolvedOpts: ResolvedOpts = { ...defaults, ...opts };
+  let resolvedOpts: ResolvedOpts = {
+    ...defaults,
+    ...opts,
+    ifLeftSideIncludesThisThenCropTightly:
+      opts.ifLeftSideIncludesThisThenCropTightly ??
+      defaults.ifLeftSideIncludesThisThenCropTightly,
+    ifLeftSideIncludesThisCropItToo:
+      opts.ifLeftSideIncludesThisCropItToo ??
+      defaults.ifLeftSideIncludesThisCropItToo,
+    ifRightSideIncludesThisThenCropTightly:
+      opts.ifRightSideIncludesThisThenCropTightly ??
+      defaults.ifRightSideIncludesThisThenCropTightly,
+    ifRightSideIncludesThisCropItToo:
+      opts.ifRightSideIncludesThisCropItToo ??
+      defaults.ifRightSideIncludesThisCropItToo,
+    extendToOneSide: opts.extendToOneSide ?? defaults.extendToOneSide,
+    wipeAllWhitespaceOnLeft:
+      opts.wipeAllWhitespaceOnLeft ?? defaults.wipeAllWhitespaceOnLeft,
+    wipeAllWhitespaceOnRight:
+      opts.wipeAllWhitespaceOnRight ?? defaults.wipeAllWhitespaceOnRight,
+    addSingleSpaceToPreventAccidentalConcatenation:
+      opts.addSingleSpaceToPreventAccidentalConcatenation ??
+      defaults.addSingleSpaceToPreventAccidentalConcatenation,
+  };
 
   // Action
   // ---------------------------------------------------------------------------
