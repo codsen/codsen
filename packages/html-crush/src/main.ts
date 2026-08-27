@@ -2300,26 +2300,31 @@ function crush(str: string, opts?: Partial<Opts>): Res {
                 DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || "",
             }),
           ]);
-        } else if (whitespaceStartedAt && str[i] !== "\n" && str[i] !== "\r") {
-          // catch trailing whitespace at the end of the string which is not legit
-          // trailing linebreak
-          finalIndexesToDelete.push(whitespaceStartedAt, i + 1);
-          DEV &&
-            console.log(
-              `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} string's trailing whitespace [${whitespaceStartedAt}, ${
-                i + 1
-              }]`,
-            );
         } else if (
-          whitespaceStartedAt &&
-          ((str[i] === "\r" && str[i + 1] === "\n") ||
-            (str[i] === "\n" && str[i - 1] !== "\r"))
+          whitespaceStartedAt !== null &&
+          (contentStartsAt < len ||
+            resolvedOpts.removeIndentations ||
+            resolvedOpts.removeLineBreaks)
         ) {
-          finalIndexesToDelete.push(whitespaceStartedAt, i);
-          DEV &&
-            console.log(
-              `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} string's trailing whitespace [${whitespaceStartedAt}, ${i}]`,
+          // Preserve at most one final line-ending sequence. A whitespace-only
+          // input is trimmed only when either whitespace option is enabled,
+          // matching the leading-whitespace policy used when content exists.
+          const finalLineEndingStartsAt = str.endsWith("\r\n")
+            ? len - 2
+            : str.endsWith("\n") || str.endsWith("\r")
+              ? len - 1
+              : len;
+
+          if (whitespaceStartedAt < finalLineEndingStartsAt) {
+            finalIndexesToDelete.push(
+              whitespaceStartedAt,
+              finalLineEndingStartsAt,
             );
+            DEV &&
+              console.log(
+                `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} string's trailing whitespace [${whitespaceStartedAt}, ${finalLineEndingStartsAt}]`,
+              );
+          }
         }
       }
 
