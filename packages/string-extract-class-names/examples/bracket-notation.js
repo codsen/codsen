@@ -1,16 +1,21 @@
-// Supports legacy bracket notation emails used to use
+// Extract selectors from HTML-style attribute selectors
 
 import { strict as assert } from "node:assert";
 
 import { extract } from "../dist/string-extract-class-names.esm.js";
 
-// Yahoo has changed many years ago so email template
-// must be really arcane to contain this notation
-// https://github.com/hteumeuleu/email-bugs/issues/49
+const source = String.raw`td[class=" alpha \31 beta "][class~=gamma][id=_main]`;
 
-assert.deepEqual(extract('td[id=" abc-def "]'), {
-  res: ["#abc-def"],
-  ranges: [[8, 15]],
+// Attribute names use HTML's ASCII-case-insensitive matching. Exact class
+// strings can contain multiple class tokens, and values can use CSS escapes.
+assert.deepEqual(extract(source), {
+  res: [".alpha", String.raw`.\31 beta`, ".gamma", "#_main"],
+  ranges: [
+    [11, 16],
+    [17, 25],
+    [36, 41],
+    [46, 51],
+  ],
 });
 
-// notice the hash # is not covered by range indexes!
+// The synthetic dot and hash are not covered by the source ranges.

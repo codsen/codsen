@@ -9,7 +9,13 @@ interface Result {
   ranges: Ranges;
 }
 /**
- * Extracts CSS class/id names from a string
+ * Extract raw CSS class and ID selector spellings from a selector fragment.
+ *
+ * In addition to dot and hash selectors, this function recognises HTML-style
+ * `[class=...]`, `[class~=...]`, and `[id=...]` attribute selectors. Attribute
+ * names are ASCII-case-insensitive. Values can use CSS identifier or string
+ * syntax, and an exact class string can contain multiple HTML class tokens.
+ * Partial-match attribute operators do not produce selectors.
  */
 declare function extract(str: string): Result;
 interface CssSelectorToken {

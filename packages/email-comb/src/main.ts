@@ -6,7 +6,6 @@ import {
   formatDiagnosticValue,
   hasOwnProp,
   intersection,
-  isLatinLetter,
   isPlainObject as isObj,
   match,
   pullAll,
@@ -73,6 +72,65 @@ function isHtmlAsciiWhitespace(char: string | undefined): boolean {
 
 function extractCanonicalSelectors(str: string): string[] {
   return extract(str).res.map((selector) => decodeCssSelector(selector));
+}
+
+interface AttributeSelectorQueueItem {
+  endsAt: number;
+  marker: "." | "#";
+  startsAt: number;
+}
+
+function cssAttributeEndsAt(str: string, start: number): number | null {
+  let quote: '"' | "'" | undefined;
+
+  for (let i = start + 1; i < str.length; i++) {
+    if (str[i] === "\\") {
+      i += 1;
+    } else if (quote) {
+      if (str[i] === quote) {
+        quote = undefined;
+      }
+    } else if (str[i] === '"' || str[i] === "'") {
+      quote = str[i] as '"' | "'";
+    } else if (str[i] === "]") {
+      return i;
+    }
+  }
+
+  return null;
+}
+
+function attributeSelectorQueue(
+  str: string,
+  openingAt: number,
+): AttributeSelectorQueueItem[] {
+  let closingAt = cssAttributeEndsAt(str, openingAt);
+  if (closingAt === null) {
+    return [];
+  }
+
+  let fragment = str.slice(openingAt, closingAt + 1);
+  let extracted = extract(fragment);
+  if (extracted.ranges === null) {
+    return [];
+  }
+
+  let result: AttributeSelectorQueueItem[] = [];
+  extracted.ranges.forEach((range, index) => {
+    let selector = extracted.res[index];
+    let raw = fragment.slice(range[0], range[1]);
+    if (
+      (selector[0] === "." || selector[0] === "#") &&
+      selector.slice(1) === raw
+    ) {
+      result.push({
+        endsAt: openingAt + range[1],
+        marker: selector[0] as "." | "#",
+        startsAt: openingAt + range[0],
+      });
+    }
+  });
+  return result;
 }
 
 function characterSuitableForBodyToken(
@@ -184,9 +242,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
   let finalIndexesToDelete = new Ranges<string | null | undefined>({
     limitToBeAddedWhitespace: true,
   });
-  let currentChunksMinifiedSelectors = new Ranges<
-    string | null | undefined
-  >();
+  let currentChunksMinifiedSelectors = new Ranges<string | null | undefined>();
   let lineBreaksToDelete = new Ranges<string | null | undefined>();
 
   // PS. badChars is also used
@@ -315,6 +371,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
 
   let singleSelectorStartedAt;
   let singleSelectorEndsAt: number | null;
+  let singleSelectorQueue: AttributeSelectorQueueItem[] = [];
 
   // Used in marking is it class or id (because there's no dot/hash in front
   // when square bracket notation is used), for example:
@@ -718,6 +775,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
     onlyDeletedChunksFollow = false;
     singleSelectorStartedAt = null;
     singleSelectorEndsAt = null;
+    singleSelectorQueue = [];
     bodyId = resetBodyClassOrId();
     commentNearlyStartedAt = null;
     lastKeptChunksCommaAt = null;
@@ -1217,6 +1275,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
         selectorChunkCanBeDeleted = false;
         singleSelectorStartedAt = null;
         singleSelectorEndsAt = null;
+        singleSelectorQueue = [];
         singleSelectorType = undefined;
         headWholeLineCanBeDeleted = true;
         lastKeptChunksCommaAt = null;
@@ -1590,6 +1649,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
         headWholeLineCanBeDeleted = true;
         singleSelectorStartedAt = null;
         singleSelectorEndsAt = null;
+        singleSelectorQueue = [];
         lastKeptChunksCommaAt = null;
         onlyDeletedChunksFollow = false;
 
@@ -1647,54 +1707,16 @@ function comb(str: string, opts?: InputOpts | null): Res {
                   `SET ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}`,
                 );
             }
-          } else if (matchLeft(str, i, "[class=")) {
-            DEV &&
-              console.log(
-                `${`\u001b[${33}m${`██`}\u001b[${39}m`} [class= detected`,
-              );
-            if (isLatinLetter(chr)) {
-              singleSelectorStartedAt = i;
-              singleSelectorEndsAt = null;
-              singleSelectorType = ".";
+          } else if (chr === "[") {
+            singleSelectorQueue = attributeSelectorQueue(str, i);
+            let firstAttributeSelector = singleSelectorQueue.shift();
+            if (firstAttributeSelector) {
+              singleSelectorStartedAt = firstAttributeSelector.startsAt;
+              singleSelectorEndsAt = firstAttributeSelector.endsAt;
+              singleSelectorType = firstAttributeSelector.marker;
               DEV &&
                 console.log(
-                  `SET ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}; ${`\u001b[${33}m${`singleSelectorType`}\u001b[${39}m`} = ${singleSelectorType}`,
-                );
-            } else if (
-              `"'`.includes(chr) &&
-              isLatinLetter(str[right(str, i) as number])
-            ) {
-              singleSelectorStartedAt = right(str, i);
-              singleSelectorEndsAt = null;
-              singleSelectorType = ".";
-              DEV &&
-                console.log(
-                  `SET ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}; ${`\u001b[${33}m${`singleSelectorType`}\u001b[${39}m`} = ${singleSelectorType}`,
-                );
-            }
-          } else if (matchLeft(str, i, "[id=")) {
-            DEV &&
-              console.log(
-                `${`\u001b[${33}m${`██`}\u001b[${39}m`} [id= detected`,
-              );
-            if (isLatinLetter(chr)) {
-              singleSelectorStartedAt = i;
-              singleSelectorEndsAt = null;
-              singleSelectorType = "#";
-              DEV &&
-                console.log(
-                  `SET ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}; ${`\u001b[${33}m${`singleSelectorType`}\u001b[${39}m`} = ${singleSelectorType}`,
-                );
-            } else if (
-              `"'`.includes(chr) &&
-              isLatinLetter(str[right(str, i) as number])
-            ) {
-              singleSelectorStartedAt = right(str, i);
-              singleSelectorEndsAt = null;
-              singleSelectorType = "#";
-              DEV &&
-                console.log(
-                  `SET ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}; ${`\u001b[${33}m${`singleSelectorType`}\u001b[${39}m`} = ${singleSelectorType}`,
+                  `SET attribute selector: ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}; ${`\u001b[${33}m${`singleSelectorEndsAt`}\u001b[${39}m`} = ${singleSelectorEndsAt}; ${`\u001b[${33}m${`singleSelectorType`}\u001b[${39}m`} = ${singleSelectorType}`,
                 );
             }
           } else if (!chrIsWhitespace) {
@@ -1769,6 +1791,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
             singleSelectorStartedAt,
             selectorEndsAt,
           );
+          let syntheticSelectorType = singleSelectorType;
           if (singleSelectorType) {
             singleSelector = `${singleSelectorType}${singleSelector}`;
             singleSelectorType = undefined;
@@ -1815,16 +1838,21 @@ function comb(str: string, opts?: InputOpts | null): Res {
                 !resolvedOpts.whitelist.length ||
                 !match(singleSelector, resolvedOpts.whitelist))
             ) {
+              let uglifiedSelector = uglifiedBySelector.get(singleSelector);
+              if (
+                syntheticSelectorType &&
+                uglifiedSelector?.startsWith(syntheticSelectorType)
+              ) {
+                uglifiedSelector = uglifiedSelector.slice(1);
+              }
               DEV &&
                 console.log(
-                  `${`\u001b[${31}m${`PUSH [${singleSelectorStartedAt}, ${selectorEndsAt}, ${uglifiedBySelector.get(
-                    singleSelector,
-                  )}]`}\u001b[${39}m`}`,
+                  `${`\u001b[${31}m${`PUSH [${singleSelectorStartedAt}, ${selectorEndsAt}, ${uglifiedSelector}]`}\u001b[${39}m`}`,
                 );
               currentChunksMinifiedSelectors.push(
                 singleSelectorStartedAt,
                 selectorEndsAt,
-                uglifiedBySelector.get(singleSelector),
+                uglifiedSelector,
               );
             }
             // 2. tend trailing comma issue (lastKeptChunksCommaAt and
@@ -1841,7 +1869,12 @@ function comb(str: string, opts?: InputOpts | null): Res {
             }
           }
 
-          if (chr === "." || chr === "#") {
+          let nextAttributeSelector = singleSelectorQueue.shift();
+          if (nextAttributeSelector) {
+            singleSelectorStartedAt = nextAttributeSelector.startsAt;
+            singleSelectorEndsAt = nextAttributeSelector.endsAt;
+            singleSelectorType = nextAttributeSelector.marker;
+          } else if (chr === "." || chr === "#") {
             let token = readCssSelectorToken(str, i);
             if (token) {
               singleSelectorStartedAt = i;
@@ -1857,6 +1890,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
           } else {
             singleSelectorStartedAt = null;
             singleSelectorEndsAt = null;
+            singleSelectorType = undefined;
             DEV && console.log(`WIPE singleSelectorStartedAt = null`);
           }
         }

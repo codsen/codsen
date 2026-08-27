@@ -250,7 +250,7 @@ export const interdeps = [
   },
   {
     "name": "email-comb",
-    "size": 25246,
+    "size": 25716,
     "imports": [
       "array-pull-all-with-glob",
       "codsen-utils",
@@ -687,7 +687,7 @@ export const interdeps = [
   },
   {
     "name": "string-extract-class-names",
-    "size": 3355,
+    "size": 5982,
     "imports": [
       "codsen-utils",
       "string-left-right"
@@ -813,7 +813,7 @@ export const interdeps = [
   },
   {
     "name": "string-uglify",
-    "size": 2978,
+    "size": 3622,
     "imports": []
   },
   {

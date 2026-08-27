@@ -2115,4 +2115,164 @@ test("75 - exact tokens follow CSS identifier rules", () => {
   equal(decodeCssSelector(".\udc00"), ".�", "75.16");
 });
 
+test("76 - reads HTML-style class and ID attribute selectors", () => {
+  equal(
+    e("[class=_foo][class=-foo][class=--foo][class=é]"),
+    {
+      res: ["._foo", ".-foo", ".--foo", ".é"],
+      ranges: [
+        [7, 11],
+        [19, 23],
+        [31, 36],
+        [44, 45],
+      ],
+    },
+    "76.01",
+  );
+  equal(
+    e("[id=_foo][id=-foo][id=--foo][id=é]"),
+    {
+      res: ["#_foo", "#-foo", "#--foo", "#é"],
+      ranges: [
+        [4, 8],
+        [13, 17],
+        [22, 27],
+        [32, 33],
+      ],
+    },
+    "76.02",
+  );
+  equal(
+    e('[class=" foo bar\tbaz "]'),
+    {
+      res: [".foo", ".bar", ".baz"],
+      ranges: [
+        [9, 12],
+        [13, 16],
+        [17, 20],
+      ],
+    },
+    "76.03",
+  );
+  equal(
+    e("[class='foo bar']"),
+    {
+      res: [".foo", ".bar"],
+      ranges: [
+        [8, 11],
+        [12, 15],
+      ],
+    },
+    "76.04",
+  );
+  equal(
+    e('[class~=foo][class~="bar"]'),
+    {
+      res: [".foo", ".bar"],
+      ranges: [
+        [8, 11],
+        [21, 24],
+      ],
+    },
+    "76.05",
+  );
+  equal(
+    e("[CLASS=foo][ID=bar]"),
+    {
+      res: [".foo", "#bar"],
+      ranges: [
+        [7, 10],
+        [15, 18],
+      ],
+    },
+    "76.06",
+  );
+  equal(
+    e(String.raw`[class=\66 oo][class="\31 one two"][id='\--thing']`),
+    {
+      res: [
+        String.raw`.\66 oo`,
+        String.raw`.\31 one`,
+        ".two",
+        String.raw`#\--thing`,
+      ],
+      ranges: [
+        [7, 13],
+        [22, 29],
+        [30, 33],
+        [40, 48],
+      ],
+    },
+    "76.07",
+  );
+  equal(
+    e(String.raw`[class="foo\20 bar"]`),
+    {
+      res: [".foo", ".bar"],
+      ranges: [
+        [8, 11],
+        [15, 18],
+      ],
+    },
+    "76.08",
+  );
+  equal(
+    e('[class^=".fake"][class*="#bad"].real#id'),
+    {
+      res: [".real", "#id"],
+      ranges: [
+        [31, 36],
+        [36, 39],
+      ],
+    },
+    "76.09",
+  );
+  equal(
+    e('[class="foo:bar"][class="foo\\:bar"]'),
+    { res: [String.raw`.foo\:bar`], ranges: [[25, 33]] },
+    "76.10",
+  );
+  equal(
+    e('[class="&copy;"][class="\\26 copy"]'),
+    { res: [String.raw`.\26 copy`], ranges: [[24, 32]] },
+    "76.11",
+  );
+  equal(
+    e('[class="foo bar"][id="foo bar"]'),
+    {
+      res: [".foo", ".bar"],
+      ranges: [
+        [8, 11],
+        [12, 15],
+      ],
+    },
+    "76.12",
+  );
+  equal(
+    e('[class~=" foo "].real'),
+    { res: [".real"], ranges: [[16, 21]] },
+    "76.13",
+  );
+  equal(
+    e('[class="foo]bar"].real'),
+    { res: [".real"], ranges: [[17, 22]] },
+    "76.14",
+  );
+  equal(
+    e('[class="foo\nbar"].real'),
+    { res: [".real"], ranges: [[17, 22]] },
+    "76.15",
+  );
+  equal(
+    e('[class="foo\\\nbar"].real'),
+    { res: [".real"], ranges: [[18, 23]] },
+    "76.16",
+  );
+  equal(
+    e('[class="foo\\\r\nbar"].real'),
+    { res: [".real"], ranges: [[19, 24]] },
+    "76.17",
+  );
+});
+
 test.run();

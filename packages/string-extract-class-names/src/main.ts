@@ -14,7 +14,13 @@ export interface Result {
 }
 
 /**
- * Extracts CSS class/id names from a string
+ * Extract raw CSS class and ID selector spellings from a selector fragment.
+ *
+ * In addition to dot and hash selectors, this function recognises HTML-style
+ * `[class=...]`, `[class~=...]`, and `[id=...]` attribute selectors. Attribute
+ * names are ASCII-case-insensitive. Values can use CSS identifier or string
+ * syntax, and an exact class string can contain multiple HTML class tokens.
+ * Partial-match attribute operators do not produce selectors.
  */
 function extract(str: string): Result {
   // insurance
@@ -26,20 +32,6 @@ function extract(str: string): Result {
   }
 
   let badChars = selectorBreakCharacters;
-  let stateCurrentlyIs: "." | "#" | undefined; // "." or "#"
-
-  // functions
-  // =========
-
-  function isLatinLetter(char: string): boolean {
-    // we mean Latin letters A-Z, a-z
-    return (
-      typeof char === "string" &&
-      !!char.length &&
-      ((char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91) ||
-        (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123))
-    );
-  }
 
   // action
   // ======
@@ -93,17 +85,7 @@ function extract(str: string): Result {
           selectorStartsAt,
           i,
         ]);
-        result.res.push(
-          `${stateCurrentlyIs || ""}${str.slice(selectorStartsAt, i)}`,
-        );
-
-        if (stateCurrentlyIs) {
-          stateCurrentlyIs = undefined;
-          DEV &&
-            console.log(
-              `${`\u001b[${32}m${`SET`}\u001b[${39}m`} stateCurrentlyIs = undefined`,
-            );
-        }
+        result.res.push(str.slice(selectorStartsAt, i));
       }
       selectorStartsAt = null;
       DEV &&
@@ -128,61 +110,37 @@ function extract(str: string): Result {
     // catch zzz[class=]
     let temp1 = right(str, i + 4);
     if (
-      str.startsWith("class", i) &&
+      str.slice(i, i + 5).toLowerCase() === "class" &&
+      attributeNameCanEnd(str[i + 5]) &&
       typeof left(str, i) === "number" &&
-      str[left(str, i) as number] === "[" &&
-      typeof temp1 === "number" &&
-      str[temp1] === "="
+      str[left(str, i) as number] === "["
     ) {
-      DEV && console.log(`[class= caught`);
-      // if it's zzz[class=something] (without quotes)
-      /* c8 ignore next */
-      if (
-        right(str, temp1) &&
-        (isLatinLetter(str[right(str, temp1) as number]) ||
-          cssEscapeEndsAt(str, right(str, temp1) as number) !== null)
-      ) {
-        selectorStartsAt = right(str, temp1);
-        stateCurrentlyIs = ".";
-        DEV && console.log(`SET selectorStartsAt = ${selectorStartsAt}`);
-      } else if (
-        `'"`.includes(str[right(str, temp1) as number]) &&
-        (isLatinLetter(str[right(str, right(str, temp1)) as number]) ||
-          cssEscapeEndsAt(str, right(str, right(str, temp1)) as number) !==
-            null)
-      ) {
-        selectorStartsAt = right(str, right(str, temp1));
-        stateCurrentlyIs = ".";
-        DEV && console.log(`SET selectorStartsAt = ${selectorStartsAt}`);
+      let attribute = readAttributeSelector(str, i, ".", temp1);
+      if (attribute !== null) {
+        for (let selector of attribute.selectors) {
+          result.res.push(`.${selector.raw}`);
+          (result.ranges as [from: number, to: number][]).push(selector.range);
+        }
+        i = attribute.closeAt;
+        continue;
       }
     }
 
     // catch zzz[id=]
     let temp2 = right(str, i + 1);
     if (
-      str.startsWith("id", i) &&
-      str[left(str, i) as number] === "[" &&
-      temp2 !== null &&
-      str[temp2] === "="
+      str.slice(i, i + 2).toLowerCase() === "id" &&
+      attributeNameCanEnd(str[i + 2]) &&
+      str[left(str, i) as number] === "["
     ) {
-      DEV && console.log(`[id= caught`);
-      // if it's zzz[id=something] (without quotes)
-      if (
-        isLatinLetter(str[right(str, temp2) as number]) ||
-        cssEscapeEndsAt(str, right(str, temp2) as number) !== null
-      ) {
-        selectorStartsAt = right(str, temp2);
-        stateCurrentlyIs = "#";
-        DEV && console.log(`SET selectorStartsAt = ${selectorStartsAt}`);
-      } else if (
-        `'"`.includes(str[right(str, temp2) as number]) &&
-        (isLatinLetter(str[right(str, right(str, temp2)) as number]) ||
-          cssEscapeEndsAt(str, right(str, right(str, temp2)) as number) !==
-            null)
-      ) {
-        selectorStartsAt = right(str, right(str, temp2));
-        stateCurrentlyIs = "#";
-        DEV && console.log(`SET selectorStartsAt = ${selectorStartsAt}`);
+      let attribute = readAttributeSelector(str, i, "#", temp2);
+      if (attribute !== null) {
+        for (let selector of attribute.selectors) {
+          result.res.push(`#${selector.raw}`);
+          (result.ranges as [from: number, to: number][]).push(selector.range);
+        }
+        i = attribute.closeAt;
+        continue;
       }
     }
 
@@ -343,19 +301,54 @@ function markerIsEscaped(str: string, markerAt: number): boolean {
   return backslashes % 2 === 1;
 }
 
-function readCssSelectorTokenInternal(
+interface CssIdentifierValue {
+  value: string;
+  raw: string;
+  range: [from: number, to: number];
+}
+
+interface CssDecodedUnit {
+  value: string;
+  range: [from: number, to: number];
+}
+
+interface CssStringValue {
+  endsAt: number;
+  units: CssDecodedUnit[];
+}
+
+interface AttributeSelectorValue {
+  raw: string;
+  range: [from: number, to: number];
+}
+
+interface AttributeSelectorRead {
+  closeAt: number;
+  selectors: AttributeSelectorValue[];
+}
+
+function attributeNameCanEnd(char: string | undefined): boolean {
+  return (
+    char === "=" ||
+    char === "~" ||
+    char === "^" ||
+    char === "$" ||
+    char === "*" ||
+    char === "|" ||
+    char === "]" ||
+    isCssWhitespace(char)
+  );
+}
+
+function readCssIdentifierValue(
   str: string,
   start: number,
-): CssSelectorToken | null {
-  if (
-    !(str[start] === "." || str[start] === "#") ||
-    markerIsEscaped(str, start) ||
-    !wouldStartCssIdentSequence(str, start + 1)
-  ) {
+): CssIdentifierValue | null {
+  if (!wouldStartCssIdentSequence(str, start)) {
     return null;
   }
 
-  let i = start + 1;
+  let i = start;
   while (i < str.length) {
     if (str[i] === "\\") {
       let escapeEndsAt = cssEscapeEndsAt(str, i);
@@ -376,6 +369,237 @@ function readCssSelectorTokenInternal(
     value: decodeCssSelector(raw),
     raw,
     range: [start, i],
+  };
+}
+
+function findCssAttributeEnd(str: string, start: number): number | null {
+  let quote: '"' | "'" | undefined;
+
+  for (let i = start; i < str.length; i++) {
+    if (quote) {
+      if (str[i] === "\\") {
+        if (isCssNewline(str[i + 1])) {
+          i += str[i + 1] === "\r" && str[i + 2] === "\n" ? 2 : 1;
+          continue;
+        }
+        let escapeEndsAt = cssEscapeEndsAt(str, i);
+        if (escapeEndsAt !== null) {
+          i = escapeEndsAt - 1;
+          continue;
+        }
+      } else if (str[i] === quote) {
+        quote = undefined;
+      }
+      continue;
+    }
+
+    if (str[i] === '"' || str[i] === "'") {
+      quote = str[i] as '"' | "'";
+    } else if (str[i] === "\\") {
+      let escapeEndsAt = cssEscapeEndsAt(str, i);
+      if (escapeEndsAt !== null) {
+        i = escapeEndsAt - 1;
+      }
+    } else if (str[i] === "]") {
+      return i;
+    }
+  }
+
+  return null;
+}
+
+function readCssStringValue(
+  str: string,
+  quoteAt: number,
+): CssStringValue | null {
+  let quote = str[quoteAt];
+  let units: CssDecodedUnit[] = [];
+
+  for (let i = quoteAt + 1; ; ) {
+    if (str[i] === quote) {
+      return { endsAt: i + 1, units };
+    }
+    if (isCssNewline(str[i])) {
+      return null;
+    }
+    if (str[i] === "\\") {
+      if (isCssNewline(str[i + 1])) {
+        i += str[i + 1] === "\r" && str[i + 2] === "\n" ? 3 : 2;
+        continue;
+      }
+      let escapeEndsAt = cssEscapeEndsAt(str, i) as number;
+      units.push({
+        value: decodeCssSelector(str.slice(i, escapeEndsAt)),
+        range: [i, escapeEndsAt],
+      });
+      i = escapeEndsAt;
+      continue;
+    }
+    let current = cssCodePointAt(str, i) as CssCodePoint;
+    units.push({
+      value: current.value,
+      range: [i, i + current.rawLength],
+    });
+    i += current.rawLength;
+  }
+}
+
+function decodeCssIdentifierUnits(
+  str: string,
+  from: number,
+  to: number,
+): CssDecodedUnit[] {
+  let units: CssDecodedUnit[] = [];
+  for (let i = from; i < to; ) {
+    if (str[i] === "\\") {
+      let escapeEndsAt = cssEscapeEndsAt(str, i) as number;
+      units.push({
+        value: decodeCssSelector(str.slice(i, escapeEndsAt)),
+        range: [i, escapeEndsAt],
+      });
+      i = escapeEndsAt;
+      continue;
+    }
+    let current = cssCodePointAt(str, i) as CssCodePoint;
+    units.push({
+      value: current.value,
+      range: [i, i + current.rawLength],
+    });
+    i += current.rawLength;
+  }
+  return units;
+}
+
+function isHtmlAsciiWhitespace(char: string): boolean {
+  return (
+    char === " " ||
+    char === "\n" ||
+    char === "\r" ||
+    char === "\t" ||
+    char === "\f"
+  );
+}
+
+function splitHtmlClassTokens(
+  str: string,
+  units: CssDecodedUnit[],
+): AttributeSelectorValue[] {
+  let tokens: AttributeSelectorValue[] = [];
+  let tokenStartsAt: number | null = null;
+  let tokenEndsAt = 0;
+
+  function commit(): void {
+    if (tokenStartsAt !== null) {
+      tokens.push({
+        raw: str.slice(tokenStartsAt, tokenEndsAt),
+        range: [tokenStartsAt, tokenEndsAt],
+      });
+      tokenStartsAt = null;
+    }
+  }
+
+  for (let unit of units) {
+    if (isHtmlAsciiWhitespace(unit.value)) {
+      commit();
+    } else {
+      if (tokenStartsAt === null) {
+        tokenStartsAt = unit.range[0];
+      }
+      tokenEndsAt = unit.range[1];
+    }
+  }
+  commit();
+
+  return tokens;
+}
+
+function rawSpellsCssIdentifier(
+  str: string,
+  selector: AttributeSelectorValue,
+): boolean {
+  let raw = str.slice(selector.range[0], selector.range[1]);
+  let identifier = readCssIdentifierValue(raw, 0);
+  return identifier !== null && identifier.range[1] === raw.length;
+}
+
+function readAttributeSelector(
+  str: string,
+  nameStartsAt: number,
+  marker: "." | "#",
+  operatorAt: number | null,
+): AttributeSelectorRead | null {
+  let closeAt = findCssAttributeEnd(str, nameStartsAt);
+  if (closeAt === null) {
+    return null;
+  }
+
+  let membership =
+    marker === "." &&
+    operatorAt !== null &&
+    str[operatorAt] === "~" &&
+    str[operatorAt + 1] === "=";
+  let equalsAt = membership ? (operatorAt as number) + 1 : operatorAt;
+  if (equalsAt === null || str[equalsAt] !== "=") {
+    return { closeAt, selectors: [] };
+  }
+
+  let valueStartsAt = right(str, equalsAt);
+  if (valueStartsAt === null || valueStartsAt >= closeAt) {
+    return { closeAt, selectors: [] };
+  }
+
+  let units: CssDecodedUnit[];
+  if (str[valueStartsAt] === '"' || str[valueStartsAt] === "'") {
+    let value = readCssStringValue(str, valueStartsAt);
+    if (value === null || right(str, value.endsAt - 1) !== closeAt) {
+      return { closeAt, selectors: [] };
+    }
+    units = value.units;
+  } else {
+    let value = readCssIdentifierValue(str, valueStartsAt);
+    if (
+      value === null ||
+      value.range[1] > closeAt ||
+      right(str, value.range[1] - 1) !== closeAt
+    ) {
+      return { closeAt, selectors: [] };
+    }
+    units = decodeCssIdentifierUnits(str, value.range[0], value.range[1]);
+  }
+
+  let selectors = splitHtmlClassTokens(str, units);
+  if (
+    (membership && units.some((unit) => isHtmlAsciiWhitespace(unit.value))) ||
+    (marker === "#" && selectors.length !== 1)
+  ) {
+    return { closeAt, selectors: [] };
+  }
+
+  return {
+    closeAt,
+    selectors: selectors.filter((selector) =>
+      rawSpellsCssIdentifier(str, selector),
+    ),
+  };
+}
+
+function readCssSelectorTokenInternal(
+  str: string,
+  start: number,
+): CssSelectorToken | null {
+  if (
+    !(str[start] === "." || str[start] === "#") ||
+    markerIsEscaped(str, start) ||
+    !wouldStartCssIdentSequence(str, start + 1)
+  ) {
+    return null;
+  }
+
+  let identifier = readCssIdentifierValue(str, start + 1) as CssIdentifierValue;
+  return {
+    value: `${str[start]}${identifier.value}`,
+    raw: `${str[start]}${identifier.raw}`,
+    range: [start, identifier.range[1]],
   };
 }
 
