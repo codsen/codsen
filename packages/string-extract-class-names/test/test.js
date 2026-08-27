@@ -1991,4 +1991,73 @@ test("73 - only CSS whitespace terminates selector identifiers", () => {
   equal(decodeCssSelector(emSpaceSelector), emSpaceSelector, "73.09");
 });
 
+test("74 - failed attribute selectors do not affect later selectors", () => {
+  equal(
+    e("[class=]#id [class=] .class"),
+    {
+      res: ["#id", ".class"],
+      ranges: [
+        [8, 11],
+        [21, 27],
+      ],
+    },
+    "74.01",
+  );
+  equal(
+    e('[class=""]#id [class=""] .class'),
+    {
+      res: ["#id", ".class"],
+      ranges: [
+        [10, 13],
+        [25, 31],
+      ],
+    },
+    "74.02",
+  );
+  equal(
+    e("[class=1]#id [class=1] .class"),
+    {
+      res: ["#id", ".class"],
+      ranges: [
+        [9, 12],
+        [23, 29],
+      ],
+    },
+    "74.03",
+  );
+  equal(
+    e("[id=].class [id=] #id"),
+    {
+      res: [".class", "#id"],
+      ranges: [
+        [5, 11],
+        [18, 21],
+      ],
+    },
+    "74.04",
+  );
+  equal(
+    e("[id=''].class [id=''] #id"),
+    {
+      res: [".class", "#id"],
+      ranges: [
+        [7, 13],
+        [22, 25],
+      ],
+    },
+    "74.05",
+  );
+  equal(
+    e("[id=1].class [id=1] #id"),
+    {
+      res: [".class", "#id"],
+      ranges: [
+        [6, 12],
+        [20, 23],
+      ],
+    },
+    "74.06",
+  );
+});
+
 test.run();

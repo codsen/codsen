@@ -143,6 +143,7 @@ function extract(str: string): Result {
           cssEscapeEndsAt(str, right(str, temp1) as number) !== null)
       ) {
         selectorStartsAt = right(str, temp1);
+        stateCurrentlyIs = ".";
         DEV && console.log(`SET selectorStartsAt = ${selectorStartsAt}`);
       } else if (
         `'"`.includes(str[right(str, temp1) as number]) &&
@@ -151,9 +152,9 @@ function extract(str: string): Result {
             null)
       ) {
         selectorStartsAt = right(str, right(str, temp1));
+        stateCurrentlyIs = ".";
         DEV && console.log(`SET selectorStartsAt = ${selectorStartsAt}`);
       }
-      stateCurrentlyIs = ".";
     }
 
     // catch zzz[id=]
@@ -171,6 +172,7 @@ function extract(str: string): Result {
         cssEscapeEndsAt(str, right(str, temp2) as number) !== null
       ) {
         selectorStartsAt = right(str, temp2);
+        stateCurrentlyIs = "#";
         DEV && console.log(`SET selectorStartsAt = ${selectorStartsAt}`);
       } else if (
         `'"`.includes(str[right(str, temp2) as number]) &&
@@ -179,9 +181,9 @@ function extract(str: string): Result {
             null)
       ) {
         selectorStartsAt = right(str, right(str, temp2));
+        stateCurrentlyIs = "#";
         DEV && console.log(`SET selectorStartsAt = ${selectorStartsAt}`);
       }
-      stateCurrentlyIs = "#";
     }
 
     DEV &&
