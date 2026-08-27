@@ -303,4 +303,23 @@ test("21 - ignores empty removal patterns", () => {
   equal(emptyPatterns, [""], "21.07");
 });
 
+test("22 - accepts frozen arrays and returns a fresh array", () => {
+  const emptySource = Object.freeze([]);
+  const source = Object.freeze(["a", "b"]);
+  const noMatchPatterns = Object.freeze(["z"]);
+  const partialPatterns = Object.freeze(["a"]);
+  const fullPatterns = Object.freeze(["*"]);
+  const emptyResult = pull(emptySource, noMatchPatterns);
+  const noMatchResult = pull(source, noMatchPatterns);
+
+  equal(emptyResult, [], "22.01");
+  is.not(emptyResult, emptySource, "22.02");
+  equal(noMatchResult, ["a", "b"], "22.03");
+  is.not(noMatchResult, source, "22.04");
+  equal(pull(source, partialPatterns), ["b"], "22.05");
+  equal(pull(source, fullPatterns), [], "22.06");
+  equal(source, ["a", "b"], "22.07");
+  equal(partialPatterns, ["a"], "22.08");
+});
+
 test.run();

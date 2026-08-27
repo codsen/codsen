@@ -20,7 +20,8 @@ declare const defaults: Opts;
  * it is not locale-aware and does not apply multi-code-point case folding.
  *
  * @param strArr source values; this array is not mutated
- * @param toBeRemoved one removal pattern or an array of patterns
+ * @param toBeRemoved one removal pattern or an array of patterns; arrays are
+ * not mutated
  * @param opts matching options
  * @returns a new array containing the values that no pattern removed
  * @example
@@ -28,8 +29,8 @@ declare const defaults: Opts;
  * // => ["keep.js"]
  */
 declare function pull(
-  strArr: string[],
-  toBeRemoved: string | string[],
+  strArr: readonly string[],
+  toBeRemoved: string | readonly string[],
   opts?: Partial<Opts> | null,
 ): string[];
 
