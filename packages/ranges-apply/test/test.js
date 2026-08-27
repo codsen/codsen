@@ -138,6 +138,14 @@ test("01 - wrong inputs", () => {
     /THROW_ID_04/g,
     "01.16",
   );
+
+  throws(
+    () => {
+      rApply("abc", [[1, 2]], Number.NaN);
+    },
+    /THROW_ID_04/g,
+    "01.17",
+  );
 });
 
 test("02 - correct inputs", () => {
@@ -170,6 +178,9 @@ test("02 - correct inputs", () => {
   equal(rApply("", [null, null], null), "", "02.16");
   equal(rApply(" ", [null, null], null), " ", "02.17");
   equal(rApply("abc", [null, null], null), "abc", "02.18");
+  equal(rApply("abc", [], false), "abc", "02.19");
+  equal(rApply("abc", [], 0), "abc", "02.20");
+  equal(rApply("abc", [], ""), "abc", "02.21");
 });
 
 // -----------------------------------------------------------------------------
@@ -518,11 +529,7 @@ test("23 - rejects reversed ranges without mutating input", () => {
   throws(() => rApply("abcdef", [5, 2, "X"]), /THROW_ID_08/, "23.01");
   throws(() => rApply("abcdef", ["5", "2", "X"]), /THROW_ID_08/, "23.02");
   throws(() => rApply("abcdef", [[5, 2, "X"]]), /THROW_ID_08/, "23.03");
-  throws(
-    () => rApply("abcdef", [["5", "2", "X"]]),
-    /THROW_ID_08/,
-    "23.04",
-  );
+  throws(() => rApply("abcdef", [["5", "2", "X"]]), /THROW_ID_08/, "23.04");
 
   const ranges = [
     [0, 1, "A"],

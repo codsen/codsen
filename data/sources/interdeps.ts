@@ -513,7 +513,7 @@ export const interdeps = [
   },
   {
     "name": "ranges-apply",
-    "size": 2549,
+    "size": 2897,
     "imports": [
       "codsen-utils",
       "ranges-merge"
@@ -558,7 +558,7 @@ export const interdeps = [
   },
   {
     "name": "ranges-merge",
-    "size": 2275,
+    "size": 2244,
     "imports": [
       "codsen-utils",
       "ranges-sort"
@@ -575,7 +575,7 @@ export const interdeps = [
   },
   {
     "name": "ranges-push",
-    "size": 6574,
+    "size": 9419,
     "imports": [
       "codsen-utils",
       "ranges-sort",
@@ -592,7 +592,7 @@ export const interdeps = [
   },
   {
     "name": "ranges-sort",
-    "size": 1356,
+    "size": 2883,
     "imports": [
       "codsen-utils"
     ]
@@ -729,7 +729,7 @@ export const interdeps = [
   },
   {
     "name": "string-match-left-right",
-    "size": 5620,
+    "size": 6654,
     "imports": [
       "arrayiffy-if-string",
       "codsen-utils"
@@ -751,7 +751,7 @@ export const interdeps = [
   },
   {
     "name": "string-remove-duplicate-heads-tails",
-    "size": 3086,
+    "size": 3106,
     "imports": [
       "arrayiffy-if-string",
       "codsen-utils",

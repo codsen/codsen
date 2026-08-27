@@ -6,7 +6,14 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
-type RangesInput = Range | Ranges;
+type IndexInput = number | string;
+type ReplacementInput = string | number | null | undefined;
+type RangeInput =
+  | [from: IndexInput, to: IndexInput]
+  | [from: IndexInput, to: IndexInput, whatToInsert: ReplacementInput];
+type RangesInput = RangeInput | (RangeInput | null)[] | null;
+type ProgressFn = (percentageDone: number) => void;
+type ProgressInput = false | null | undefined | 0 | "" | ProgressFn;
 
 function isNaturalNumberOrNumericString(value: unknown): boolean {
   if (typeof value === "number") {
@@ -22,7 +29,7 @@ function isNaturalNumberOrNumericString(value: unknown): boolean {
 function rApply(
   str: string,
   originalRangesArr: RangesInput,
-  progressFn?: null | false | 0 | ((percentageDone: number) => void),
+  progressFn?: ProgressInput,
 ): string {
   let percentageDone = 0;
   let lastPercentageDone = 0;
@@ -44,9 +51,16 @@ function rApply(
       `ranges-apply/rApply(): [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${formatDiagnosticValue(originalRangesArr, 4)}`,
     );
   }
-  if (progressFn && typeof progressFn !== "function") {
+  if (
+    progressFn !== undefined &&
+    progressFn !== null &&
+    progressFn !== false &&
+    progressFn !== 0 &&
+    progressFn !== "" &&
+    typeof progressFn !== "function"
+  ) {
     throw new TypeError(
-      `ranges-apply/rApply(): [THROW_ID_04] the third input argument must be a function (or falsy)! Currently it's: ${typeof progressFn}, equal to: ${formatDiagnosticValue(progressFn, 4)}`,
+      `ranges-apply/rApply(): [THROW_ID_04] the third input argument must be a function, false, null, undefined, 0, or an empty string! Currently it's: ${typeof progressFn}, equal to: ${formatDiagnosticValue(progressFn, 4)}`,
     );
   }
   // insurance against an empty array or an array of nullish members
@@ -70,7 +84,9 @@ function rApply(
     isNaturalNumberOrNumericString(originalRangesArr[1])
   ) {
     // if single array was passed, wrap it into an array
-    rangesArr = [Array.from(originalRangesArr as Range) as Range];
+    rangesArr = [
+      Array.from(originalRangesArr as RangeInput) as unknown as Range,
+    ];
   } else {
     rangesArr = Array.from(originalRangesArr as any);
   }
@@ -170,4 +186,13 @@ function rApply(
   return str;
 }
 
-export { type Range, type Ranges, type RangesInput, rApply, version };
+export {
+  type ProgressFn,
+  type ProgressInput,
+  type Range,
+  type RangeInput,
+  type Ranges,
+  type RangesInput,
+  rApply,
+  version,
+};
