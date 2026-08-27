@@ -42,13 +42,29 @@ type Obj = JSONObject;
 type PlainObject = Record<PropertyKey, unknown>;
 type EolChar = "\n" | "\r" | "\r\n";
 type EolSetting = "lf" | "crlf" | "cr";
-/** Clone nested data without retaining object or collection references. */
+/**
+ * Clone nested data without retaining object or collection references.
+ *
+ * Functions and primitive values, including symbols, retain their identities.
+ * Arrays, plain and null-prototype records, dates, maps, sets, binary buffers
+ * and views, regular expressions, errors, URLs, and ordinary class instances
+ * retain their usable runtime shape. The built-in cases also accept
+ * cross-realm values; SharedArrayBuffer support depends on the current realm
+ * exposing its constructor. Enumerable accessors on records and arrays are
+ * read once and become data properties on the clone. Class behavior must rely
+ * on cloneable own state rather than private or other hidden internal slots.
+ * Cycles and repeated references remain cycles and repeated references within
+ * the cloned graph.
+ */
 declare function deepClone<T>(value: T): T;
 interface DeepCloneResult<T> {
   hasRepeatedReferences: boolean;
   value: T;
 }
-/** Clone nested data and report whether its source graph reused an object. */
+/**
+ * Clone nested data under {@link deepClone}'s value contract and report whether
+ * its source graph reused an object.
+ */
 declare function deepCloneWithMetadata<T>(value: T): DeepCloneResult<T>;
 declare function isNumberChar(value: unknown): boolean;
 declare function isCurrencyChar(value: unknown): boolean;

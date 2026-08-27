@@ -163,7 +163,10 @@ function cloneArrayBufferView(
     memo,
   );
 
-  if (value instanceof DataView) {
+  if (
+    value instanceof DataView ||
+    Object.prototype.toString.call(value) === "[object DataView]"
+  ) {
     const result = new DataView(
       clonedBuffer,
       value.byteOffset,
@@ -221,6 +224,85 @@ function cloneOwnKeys(
     } else {
       result[key] = clonedItem;
     }
+  }
+}
+
+function cloneOwnDescriptors(
+  result: object,
+  input: object,
+  keys: PropertyKey[],
+  memo: CloneMemo,
+): void {
+  for (const key of keys) {
+    const descriptor = Object.getOwnPropertyDescriptor(input, key);
+    if (!descriptor) {
+      continue;
+    }
+    if ("value" in descriptor) {
+      const item = descriptor.value;
+      descriptor.value =
+        typeof item !== "object" || item === null
+          ? item
+          : cloneValue(item, memo);
+    }
+    Object.defineProperty(result, key, descriptor);
+  }
+}
+
+const mapEntries = Map.prototype.entries;
+const setValues = Set.prototype.values;
+const toStringTagOf = Object.prototype.toString;
+const arrayBufferByteLengthGetter = Object.getOwnPropertyDescriptor(
+  ArrayBuffer.prototype,
+  "byteLength",
+)?.get as (this: ArrayBuffer) => number;
+const regexpFlagsGetter = Object.getOwnPropertyDescriptor(
+  RegExp.prototype,
+  "flags",
+)?.get as (this: RegExp) => string;
+const regexpSourceGetter = Object.getOwnPropertyDescriptor(
+  RegExp.prototype,
+  "source",
+)?.get as (this: RegExp) => string;
+let urlHrefGetter: ((this: URL) => string) | undefined;
+
+function isArrayBufferObject(value: object): value is ArrayBuffer {
+  if (value instanceof ArrayBuffer) {
+    return true;
+  }
+  try {
+    arrayBufferByteLengthGetter.call(value as ArrayBuffer);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function mapEntriesOf(value: object): IterableIterator<[unknown, unknown]> | null {
+  try {
+    return mapEntries.call(value as Map<unknown, unknown>);
+  } catch {
+    return null;
+  }
+}
+
+function setValuesOf(value: object): IterableIterator<unknown> | null {
+  try {
+    return setValues.call(value as Set<unknown>);
+  } catch {
+    return null;
+  }
+}
+
+function urlHrefOf(value: object): string | null {
+  try {
+    if (!urlHrefGetter) {
+      urlHrefGetter = Object.getOwnPropertyDescriptor(URL.prototype, "href")
+        ?.get as (this: URL) => string;
+    }
+    return urlHrefGetter.call(value as URL);
+  } catch {
+    return null;
   }
 }
 
@@ -285,9 +367,10 @@ function cloneValue<T>(value: T, memo: CloneMemo): T {
     return result as T;
   }
 
-  if (value instanceof Date) {
-    const result = new Date(value.getTime());
+  if (isDate(value)) {
+    const result = new Date(dateGetTime.call(value));
     memo.set(value, result);
+    cloneOwnDescriptors(result, value, Object.keys(value), memo);
     return result as T;
   }
 
@@ -296,32 +379,65 @@ function cloneValue<T>(value: T, memo: CloneMemo): T {
   }
 
   if (
-    value instanceof ArrayBuffer ||
+    isArrayBufferObject(value) ||
     (typeof SharedArrayBuffer !== "undefined" &&
       value instanceof SharedArrayBuffer)
   ) {
     return cloneArrayBuffer(value, memo) as T;
   }
 
-  if (value instanceof Map) {
+  const entries = mapEntriesOf(value);
+  if (entries) {
     const result = new Map();
     memo.set(value, result);
-    for (const [mapKey, mapValue] of value) {
+    for (const [mapKey, mapValue] of entries) {
       result.set(cloneValue(mapKey, memo), cloneValue(mapValue, memo));
     }
+    cloneOwnDescriptors(result, value, Object.keys(value), memo);
     return result as T;
   }
 
-  if (value instanceof Set) {
+  const values = setValuesOf(value);
+  if (values) {
     const result = new Set();
     memo.set(value, result);
-    for (const setValue of value) {
+    for (const setValue of values) {
       result.add(cloneValue(setValue, memo));
     }
+    cloneOwnDescriptors(result, value, Object.keys(value), memo);
     return result as T;
   }
 
-  const result: Record<string, unknown> = {};
+  if (isRegExp(value) && value !== RegExp.prototype) {
+    const result = new RegExp(
+      regexpSourceGetter.call(value),
+      regexpFlagsGetter.call(value),
+    );
+    result.lastIndex = value.lastIndex;
+    memo.set(value, result);
+    cloneOwnDescriptors(result, value, Object.keys(value), memo);
+    return result as T;
+  }
+
+  const href = urlHrefOf(value);
+  if (href !== null) {
+    const result = new URL(href);
+    memo.set(value, result);
+    cloneOwnDescriptors(result, value, Object.keys(value), memo);
+    return result as T;
+  }
+
+  if (
+    value instanceof Error ||
+    toStringTagOf.call(value) === "[object Error]"
+  ) {
+    const result = Object.create(Object.getPrototypeOf(value)) as Error;
+    memo.set(value, result);
+    cloneOwnDescriptors(result, value, Reflect.ownKeys(value), memo);
+    return result as T;
+  }
+
+  const result: Record<string, unknown> = Object.create(prototype);
   memo.set(value, result);
   cloneOwnKeys(
     result,
@@ -332,7 +448,20 @@ function cloneValue<T>(value: T, memo: CloneMemo): T {
   return result as T;
 }
 
-/** Clone nested data without retaining object or collection references. */
+/**
+ * Clone nested data without retaining object or collection references.
+ *
+ * Functions and primitive values, including symbols, retain their identities.
+ * Arrays, plain and null-prototype records, dates, maps, sets, binary buffers
+ * and views, regular expressions, errors, URLs, and ordinary class instances
+ * retain their usable runtime shape. The built-in cases also accept
+ * cross-realm values; SharedArrayBuffer support depends on the current realm
+ * exposing its constructor. Enumerable accessors on records and arrays are
+ * read once and become data properties on the clone. Class behavior must rely
+ * on cloneable own state rather than private or other hidden internal slots.
+ * Cycles and repeated references remain cycles and repeated references within
+ * the cloned graph.
+ */
 export function deepClone<T>(value: T): T {
   return cloneValue(value, new CloneMemo());
 }
@@ -342,7 +471,10 @@ export interface DeepCloneResult<T> {
   value: T;
 }
 
-/** Clone nested data and report whether its source graph reused an object. */
+/**
+ * Clone nested data under {@link deepClone}'s value contract and report whether
+ * its source graph reused an object.
+ */
 export function deepCloneWithMetadata<T>(value: T): DeepCloneResult<T> {
   const memo = new CloneMemo();
   const clonedValue = cloneValue(value, memo);
@@ -543,13 +675,6 @@ export function isNull(something: unknown): something is null {
 }
 
 // ----------------------------------------------------------------
-
-const regexpSourceGetter = Object.getOwnPropertyDescriptor(
-  RegExp.prototype,
-  "source",
-)?.get as (this: RegExp) => string;
-
-const toStringTagOf = Object.prototype.toString;
 
 export function isRegExp(something: unknown): something is RegExp {
   if (something instanceof RegExp) {

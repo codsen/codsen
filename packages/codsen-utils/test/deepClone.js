@@ -1,5 +1,6 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { Buffer } from "node:buffer";
+import vm from "node:vm";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
@@ -38,6 +39,7 @@ test("03 - undefined, functions and symbols are retained", () => {
   is(result.missing, undefined, "03.02");
   is(result.fn, fn, "03.03");
   is(result.marker, marker, "03.04");
+  equal(result.fn(), "value", "03.05");
 });
 
 test("04 - dates are cloned", () => {
@@ -45,7 +47,8 @@ test("04 - dates are cloned", () => {
   let result = deepClone(input);
 
   equal(result, input, "04.01");
-  is.not(result, input, "04.02");
+  equal(result.getTime(), input.getTime(), "04.02");
+  is.not(result, input, "04.03");
 });
 
 test("05 - map keys and values are cloned", () => {
@@ -215,20 +218,25 @@ test("14 - large graphs retain shared references after memo promotion", () => {
   is(result.nullPrototype.shared, result.shared, "14.05");
 });
 
-test("15 - class instances retain enumerable data as plain records", () => {
+test("15 - ordinary class instances retain their prototype and cloned state", () => {
   class Wrapper {
     constructor() {
       this.value = { marker: true };
+    }
+
+    read() {
+      return this.value.marker;
     }
   }
 
   let input = new Wrapper();
   let result = deepClone(input);
 
-  equal(result, { value: { marker: true } }, "15.01");
-  is.not(result, input, "15.02");
-  is.not(result.value, input.value, "15.03");
-  is(Object.getPrototypeOf(result), Object.prototype, "15.04");
+  equal(result.value, { marker: true }, "15.01");
+  equal(result.read(), true, "15.02");
+  is.not(result, input, "15.03");
+  is.not(result.value, input.value, "15.04");
+  is(Object.getPrototypeOf(result), Wrapper.prototype, "15.05");
 });
 
 test("16 - clone metadata identifies reused source objects", () => {
@@ -241,6 +249,134 @@ test("16 - clone metadata identifies reused source objects", () => {
   equal(graph.hasRepeatedReferences, true, "16.03");
   is.not(graph.value.left, shared, "16.04");
   is(graph.value.left, graph.value.right, "16.05");
+});
+
+test("17 - regular expressions retain their behaviour and state", () => {
+  let input = /a+/gi;
+  input.lastIndex = 3;
+  input.extra = { marker: true };
+
+  let result = deepClone(input);
+
+  equal(result.source, "a+", "17.01");
+  equal(result.flags, "gi", "17.02");
+  equal(result.lastIndex, 3, "17.03");
+  equal(result.extra, { marker: true }, "17.04");
+  equal(result instanceof RegExp, true, "17.05");
+  is.not(result, input, "17.06");
+  is.not(result.extra, input.extra, "17.07");
+});
+
+test("18 - errors retain their prototype, message, cause and own state", () => {
+  let input = new TypeError("bad input");
+  input.cause = { marker: true };
+  input.extra = { nested: true };
+
+  let result = deepClone(input);
+
+  equal(result instanceof TypeError, true, "18.01");
+  equal(result.name, "TypeError", "18.02");
+  equal(result.message, "bad input", "18.03");
+  equal(result.cause, { marker: true }, "18.04");
+  equal(result.extra, { nested: true }, "18.05");
+  equal(result.toString(), "TypeError: bad input", "18.06");
+  is.not(result.cause, input.cause, "18.07");
+  is.not(result.extra, input.extra, "18.08");
+});
+
+test("19 - URLs retain their behaviour and clone enumerable own state", () => {
+  let input = new URL("https://example.com/a?q=one");
+  input.extra = { marker: true };
+
+  let result = deepClone(input);
+
+  equal(result.href, "https://example.com/a?q=one", "19.01");
+  equal(result.searchParams.get("q"), "one", "19.02");
+  equal(result.extra, { marker: true }, "19.03");
+  equal(result instanceof URL, true, "19.04");
+  is.not(result, input, "19.05");
+  is.not(result.extra, input.extra, "19.06");
+});
+
+test("20 - accessors are read once and symbol values retain identity", () => {
+  let reads = 0;
+  let marker = Symbol("marker");
+  let computed = { nested: true };
+  let input = { marker };
+  Object.defineProperty(input, "computed", {
+    enumerable: true,
+    get() {
+      reads += 1;
+      return computed;
+    },
+  });
+
+  let result = deepClone(input);
+  let descriptor = Object.getOwnPropertyDescriptor(result, "computed");
+
+  equal(reads, 1, "20.01");
+  is(result.marker, marker, "20.02");
+  equal(result.computed, { nested: true }, "20.03");
+  equal(descriptor.get, undefined, "20.04");
+  equal(descriptor.enumerable, true, "20.05");
+  equal(descriptor.writable, true, "20.06");
+  is.not(result.computed, computed, "20.07");
+});
+
+test("21 - cross-realm values retain usable built-in and class behaviour", () => {
+  let input = vm.runInNewContext(`(() => {
+    class Wrapper {
+      constructor() {
+        this.value = { marker: true };
+      }
+      read() {
+        return this.value.marker;
+      }
+    }
+    const buffer = new ArrayBuffer(6);
+    new Uint8Array(buffer).set([0, 1, 2, 3, 4, 5]);
+    return {
+      record: { nested: { marker: true } },
+      date: new Date(123),
+      map: new Map([[{ key: 1 }, { value: 2 }]]),
+      set: new Set([{ value: 3 }]),
+      buffer,
+      view: new Uint8Array(buffer, 1, 3),
+      dataView: new DataView(buffer, 2, 2),
+      regex: /a+/gi,
+      error: new TypeError("bad input"),
+      instance: new Wrapper()
+    };
+  })()`);
+
+  let result = deepClone(input);
+  let [[mapKey, mapValue]] = result.map;
+  let [setValue] = result.set;
+
+  equal(result.date.getTime(), 123, "21.01");
+  equal(result.regex.test("AA"), true, "21.02");
+  equal(mapKey.key, 1, "21.03");
+  equal(mapValue.value, 2, "21.04");
+  equal(setValue.value, 3, "21.05");
+  equal([...new Uint8Array(result.buffer)], [0, 1, 2, 3, 4, 5], "21.06");
+  equal([...result.view], [1, 2, 3], "21.07");
+  equal(result.dataView.getUint8(0), 2, "21.08");
+  equal(result.error.toString(), "TypeError: bad input", "21.09");
+  equal(result.instance.read(), true, "21.10");
+  is.not(result.record, input.record, "21.11");
+  is.not(result.record.nested, input.record.nested, "21.12");
+  is.not(result.date, input.date, "21.13");
+  is.not(result.regex, input.regex, "21.14");
+  is.not(result.map, input.map, "21.15");
+  is.not(result.set, input.set, "21.16");
+  is.not(result.buffer, input.buffer, "21.17");
+  is.not(result.view, input.view, "21.18");
+  is.not(result.dataView, input.dataView, "21.19");
+  is(
+    Object.getPrototypeOf(result.instance),
+    Object.getPrototypeOf(input.instance),
+    "21.20",
+  );
 });
 
 test.run();
