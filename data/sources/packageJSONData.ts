@@ -1439,9 +1439,6 @@ export const packageJSONData = {
         ]
       }
     },
-    "dependencies": {
-      "codsen-utils": "^1.9.0"
-    },
     "devDependencies": {
       "deep-equal": "^2.2.3"
     },

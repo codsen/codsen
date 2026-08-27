@@ -1660,4 +1660,181 @@ test("29 - unsupported graphs and property models fail early", () => {
   equal(visited, ["own"], "29.22");
 });
 
+test("30 - a depth-10000 unary tree is stack-safe", () => {
+  let depthLimit = 10_000;
+  let input = {};
+  let cursor = input;
+  for (let depth = 0; depth < depthLimit; depth += 1) {
+    cursor.next = {};
+    cursor = cursor.next;
+  }
+
+  let callbackCount = 0;
+  let finalMetadata;
+  let actual = traverse(input, (_key, value, innerObj) => {
+    callbackCount += 1;
+    if (innerObj.depth === depthLimit - 1) {
+      finalMetadata = {
+        path: innerObj.path,
+        pathSegments: innerObj.pathSegments,
+      };
+    }
+    return value;
+  });
+
+  equal(callbackCount, depthLimit, "30.01");
+  equal(finalMetadata.pathSegments.length, depthLimit, "30.02");
+  equal(finalMetadata.path.split(".").length, depthLimit, "30.03");
+  cursor = actual;
+  let outputDepth = 0;
+  while (cursor.next) {
+    outputDepth += 1;
+    cursor = cursor.next;
+  }
+  equal(outputDepth, depthLimit, "30.04");
+});
+
+test("31 - a wide transforming traversal visits each slot once", () => {
+  let widthLimit = 10_000;
+  let input = {};
+  for (let index = 0; index < widthLimit; index += 1) {
+    input[`k${index}`] = index;
+  }
+
+  let callbackCount = 0;
+  let actual = traverse(input, (_key, value) => {
+    callbackCount += 1;
+    return value + 1;
+  });
+
+  equal(callbackCount, widthLimit, "31.01");
+  equal(Object.keys(actual).length, widthLimit, "31.02");
+  equal(actual.k0, 1, "31.03");
+  equal(actual[`k${widthLimit - 1}`], widthLimit, "31.04");
+});
+
+test("32 - a balanced traversal retains pre-order and exact node counts", () => {
+  let depthLimit = 12;
+  let input = {};
+  let level = [input];
+  for (let depth = 0; depth < depthLimit; depth += 1) {
+    let nextLevel = [];
+    for (let parent of level) {
+      parent.left = {};
+      parent.right = {};
+      nextLevel.push(parent.left, parent.right);
+    }
+    level = nextLevel;
+  }
+
+  let callbackCount = 0;
+  let firstPaths = [];
+  traverse(input, (_key, value, innerObj) => {
+    callbackCount += 1;
+    if (firstPaths.length < 5) {
+      firstPaths.push(innerObj.path);
+    }
+    return value;
+  });
+
+  equal(callbackCount, 2 ** (depthLimit + 1) - 2, "32.01");
+  equal(
+    firstPaths,
+    [
+      "left",
+      "left.left",
+      "left.left.left",
+      "left.left.left.left",
+      "left.left.left.left.left",
+    ],
+    "32.02",
+  );
+});
+
+test("33 - snapshot views support read-only reflection", () => {
+  let reflected = false;
+  let actual = traverse({ a: [1], b: 2 }, (key, value, innerObj) => {
+    if (key === "a") {
+      ok("a" in innerObj.parent, "33.01");
+      not.ok("missing" in innerObj.parent, "33.02");
+      ok("toString" in innerObj.parent, "33.03");
+      equal(
+        Object.getOwnPropertyDescriptor(innerObj.parent, "missing"),
+        undefined,
+        "33.04",
+      );
+      let nested = innerObj.parent.a;
+      is(nested, innerObj.parent.a, "33.05");
+      equal(nested.length, 1, "33.06");
+      equal(
+        Object.getOwnPropertyDescriptor(nested, "length").value,
+        1,
+        "33.07",
+      );
+      ok(Symbol.iterator in nested, "33.08");
+      equal(Object.keys(nested), ["0"], "33.09");
+      equal([...nested], [1], "33.10");
+      reflected = true;
+    }
+    return value !== undefined ? value : key;
+  });
+
+  equal(actual, { a: [1], b: 2 }, "33.11");
+  equal(reflected, true, "33.12");
+  equal(
+    traverse(1, () => 2),
+    1,
+    "33.13",
+  );
+  equal(
+    traverse(null, () => 2),
+    null,
+    "33.14",
+  );
+});
+
+test("34 - callback replacements must stay inside the tree model", () => {
+  let cyclic = {};
+  cyclic.self = cyclic;
+  let shared = {};
+  let customArray = [1];
+  Object.setPrototypeOf(customArray, {});
+  let symbolArray = [1];
+  symbolArray[Symbol("extra")] = 2;
+  let extraArray = [1];
+  extraArray.extra = 2;
+  let hiddenArray = [1];
+  Object.defineProperty(hiddenArray, "0", { enumerable: false, value: 1 });
+  let customObject = Object.create(null);
+  customObject.value = 1;
+  let symbolObject = { value: 1 };
+  symbolObject[Symbol("extra")] = 2;
+  let hiddenObject = {};
+  Object.defineProperty(hiddenObject, "value", {
+    enumerable: false,
+    value: 1,
+  });
+  let replacements = [
+    customArray,
+    symbolArray,
+    extraArray,
+    hiddenArray,
+    customObject,
+    symbolObject,
+    hiddenObject,
+    cyclic,
+    { a: shared, b: shared },
+    new Date(0),
+    () => 1,
+  ];
+
+  replacements.forEach((replacement, index) => {
+    throws(
+      () => traverse({ value: 1 }, () => replacement),
+      /THROW_ID_02/,
+      `34.${`${index + 1}`.padStart(2, "0")}`,
+    );
+  });
+});
+
 test.run();

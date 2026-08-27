@@ -26,7 +26,12 @@ function formatPackageJson(object) {
   );
   const resolutionsIndex = customSortOrder.indexOf("resolutions");
   customSortOrder.splice(resolutionsIndex, 0, "tap", "lect");
-  return sortPackageJson(object, { sortOrder: customSortOrder });
+  // sort-package-json deliberately uses null-prototype maps for some nested
+  // sections. Normalize its JSON-shaped result before passing it to the
+  // ordinary-object traversal contract.
+  return structuredClone(
+    sortPackageJson(object, { sortOrder: customSortOrder }),
+  );
 }
 
 function normalizeLineEndings(stringified, eolChar) {

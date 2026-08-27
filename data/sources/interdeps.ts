@@ -104,10 +104,8 @@ export const interdeps = [
   },
   {
     "name": "ast-monkey-traverse",
-    "size": 3531,
-    "imports": [
-      "codsen-utils"
-    ]
+    "size": 7214,
+    "imports": []
   },
   {
     "name": "ast-monkey-traverse-with-lookahead",

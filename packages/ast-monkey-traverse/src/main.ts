@@ -1,7 +1,5 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types:0 */
 
-import { deepClone as clone, isPlainObject as isObj } from "codsen-utils";
-
 import { version as v } from "../package.json";
 
 const version: string = v;
@@ -129,41 +127,398 @@ function validateTree(value: unknown): asserts value is TreeValue {
   }
 }
 
-// Detaches one just-visited child for storing in a `parent` snapshot.
-// Primitives can hold no references, so only the rest is worth a clone.
-function snapshotChild(value: any): any {
-  return typeof value === "object" && value !== null ? clone(value) : value;
+interface CloneFrame {
+  source: TreeArray | TreeObject;
+  target: TreeArray | TreeObject;
 }
 
-// Gives callbacks a deeply read-only view over detached snapshot storage.
-// Nested objects are wrapped only when read, and the caller caches each root
-// view until its snapshot changes.
-function readonlySnapshot(value: any): any {
-  let proxies: WeakMap<object, object> | undefined;
+function createContainer(
+  source: TreeArray | TreeObject,
+): TreeArray | TreeObject {
+  return Array.isArray(source) ? new Array(source.length) : {};
+}
+
+function setOwnValue(
+  target: TreeArray | TreeObject,
+  key: string,
+  value: TreeValue,
+): void {
+  Object.defineProperty(target, key, {
+    configurable: true,
+    enumerable: true,
+    value,
+    writable: true,
+  });
+}
+
+// Clones a validated tree without borrowing the JavaScript call stack. When a
+// callback edited a container, enumerable accessors are read once and become
+// ordinary data properties, matching the historical clone-before-descent
+// behaviour. Everything else is checked by validateTree() afterwards.
+function cloneTree(value: TreeValue, normalizeAccessors = false): TreeValue {
+  if (typeof value !== "object" || value === null) {
+    return value;
+  }
+
+  let root = createContainer(value);
+  let pending: CloneFrame[] = [{ source: value, target: root }];
+  let seen = new WeakSet<object>([value]);
+
+  while (pending.length) {
+    let frame = pending.pop() as CloneFrame;
+    let { source, target } = frame;
+    if (normalizeAccessors) {
+      if (Array.isArray(source)) {
+        if (Object.getPrototypeOf(source) !== Array.prototype) {
+          invalidTree("encountered an array with a custom prototype");
+        }
+        for (let key of Reflect.ownKeys(source)) {
+          if (key === "length") {
+            continue;
+          }
+          if (typeof key !== "string") {
+            invalidTree("encountered a symbol-keyed array property");
+          }
+          if (!isArrayIndex(key, source.length)) {
+            invalidTree(
+              `encountered the non-index array property ${JSON.stringify(key)}`,
+            );
+          }
+          if (!Object.getOwnPropertyDescriptor(source, key)?.enumerable) {
+            invalidTree(`encountered a non-enumerable array index ${key}`);
+          }
+        }
+      } else {
+        if (Object.getPrototypeOf(source) !== Object.prototype) {
+          invalidTree("encountered a non-plain or custom-prototype object");
+        }
+        for (let key of Reflect.ownKeys(source)) {
+          if (typeof key !== "string") {
+            invalidTree("encountered a symbol-keyed object property");
+          }
+          if (!Object.getOwnPropertyDescriptor(source, key)?.enumerable) {
+            invalidTree(
+              `encountered a non-enumerable property ${JSON.stringify(key)}`,
+            );
+          }
+        }
+      }
+    }
+    for (let key of Object.keys(source)) {
+      let descriptor = Object.getOwnPropertyDescriptor(
+        source,
+        key,
+      ) as PropertyDescriptor;
+      let child =
+        "value" in descriptor ? descriptor.value : (source as TreeObject)[key];
+      if (typeof child === "object" && child !== null) {
+        if (seen.has(child)) {
+          invalidTree("encountered a cycle or repeated object reference");
+        }
+        seen.add(child);
+        let childTarget = createContainer(child as TreeArray | TreeObject);
+        setOwnValue(target, key, childTarget);
+        pending.push({
+          source: child as TreeArray | TreeObject,
+          target: childTarget,
+        });
+      } else {
+        setOwnValue(target, key, child as TreeValue);
+      }
+    }
+  }
+
+  return root;
+}
+
+const deletedSnapshot = Symbol("deleted snapshot entry");
+type SnapshotValue = TreePrimitive | SnapshotNode;
+type SnapshotEntry = SnapshotValue | typeof deletedSnapshot;
+
+interface SnapshotChange {
+  version: number;
+  value: SnapshotEntry;
+}
+
+interface SnapshotNode {
+  array: boolean;
+  entries: Map<string, SnapshotChange[]>;
+  lengths?: Array<{ version: number; value: number }>;
+}
+
+function snapshotTree(value: TreeArray | TreeObject): SnapshotNode {
+  let root: SnapshotNode = {
+    array: Array.isArray(value),
+    entries: new Map(),
+    ...(Array.isArray(value)
+      ? { lengths: [{ value: value.length, version: 0 }] }
+      : {}),
+  };
+  let pending: Array<{ source: TreeArray | TreeObject; target: SnapshotNode }> =
+    [{ source: value, target: root }];
+
+  while (pending.length) {
+    let frame = pending.pop() as {
+      source: TreeArray | TreeObject;
+      target: SnapshotNode;
+    };
+    let { source, target } = frame;
+    for (let key of Object.keys(source)) {
+      let child = (source as TreeObject)[key];
+      if (typeof child === "object" && child !== null) {
+        let childTarget: SnapshotNode = {
+          array: Array.isArray(child),
+          entries: new Map(),
+          ...(Array.isArray(child)
+            ? { lengths: [{ value: child.length, version: 0 }] }
+            : {}),
+        };
+        target.entries.set(key, [{ value: childTarget, version: 0 }]);
+        pending.push({ source: child, target: childTarget });
+      } else {
+        target.entries.set(key, [{ value: child, version: 0 }]);
+      }
+    }
+  }
+
+  return root;
+}
+
+function atVersion<T extends { version: number }>(
+  history: T[],
+  version: number,
+): T {
+  let low = 0;
+  let high = history.length - 1;
+  while (low < high) {
+    let middle = Math.ceil((low + high) / 2);
+    if (history[middle].version <= version) {
+      low = middle;
+    } else {
+      high = middle - 1;
+    }
+  }
+  return history[low];
+}
+
+function readSnapshot(
+  node: SnapshotNode,
+  key: string,
+  version: number,
+): SnapshotEntry {
+  let history = node.entries.get(key);
+  return history ? atVersion(history, version).value : deletedSnapshot;
+}
+
+function snapshotLength(node: SnapshotNode, version: number): number {
+  return atVersion(
+    node.lengths as Array<{ version: number; value: number }>,
+    version,
+  ).value;
+}
+
+function writeSnapshot(
+  node: SnapshotNode,
+  key: string,
+  value: SnapshotEntry,
+  version: number,
+): void {
+  let history = node.entries.get(key);
+  if (history) {
+    history.push({ value, version });
+  } else {
+    node.entries.set(key, [{ value, version }]);
+  }
+}
+
+function spliceSnapshot(
+  node: SnapshotNode,
+  index: number,
+  version: number,
+): void {
+  let previousVersion = version - 1;
+  let oldLength = snapshotLength(node, previousVersion);
+  for (let current = index; current < oldLength - 1; current += 1) {
+    writeSnapshot(
+      node,
+      `${current}`,
+      readSnapshot(node, `${current + 1}`, previousVersion),
+      version,
+    );
+  }
+  if (oldLength) {
+    writeSnapshot(node, `${oldLength - 1}`, deletedSnapshot, version);
+  }
+  (node.lengths as Array<{ version: number; value: number }>).push({
+    value: Math.max(0, oldLength - 1),
+    version,
+  });
+}
+
+// Each callback receives a fresh proxy identity, but every proxy reads a
+// particular immutable version of compact snapshot storage. Historical views
+// therefore remain stable without cloning the remaining subtree per node.
+function readonlySnapshot(node: SnapshotNode, version: number): any {
+  let proxies = new WeakMap<SnapshotNode, object>();
+
+  function wrap(current: SnapshotNode): any {
+    let existing = proxies.get(current);
+    if (existing) {
+      return existing;
+    }
+    let target: any = current.array
+      ? new Array(snapshotLength(current, version))
+      : {};
+    let handler: ProxyHandler<object> = {
+      defineProperty: () => true,
+      deleteProperty: () => true,
+      get: (unusedTarget, property, receiver) => {
+        if (current.array && property === "length") {
+          return snapshotLength(current, version);
+        }
+        if (typeof property === "string") {
+          let entry = readSnapshot(current, property, version);
+          if (entry !== deletedSnapshot) {
+            return typeof entry === "object" && entry !== null
+              ? wrap(entry)
+              : entry;
+          }
+        }
+        return Reflect.get(unusedTarget, property, receiver);
+      },
+      getOwnPropertyDescriptor: (unusedTarget, property) => {
+        if (current.array && property === "length") {
+          return Reflect.getOwnPropertyDescriptor(unusedTarget, property);
+        }
+        if (typeof property === "string") {
+          let entry = readSnapshot(current, property, version);
+          if (entry === deletedSnapshot) {
+            return undefined;
+          }
+          return {
+            configurable: true,
+            enumerable: true,
+            value:
+              typeof entry === "object" && entry !== null ? wrap(entry) : entry,
+            writable: true,
+          };
+        }
+        return undefined;
+      },
+      has: (unusedTarget, property) =>
+        (typeof property === "string" &&
+          readSnapshot(current, property, version) !== deletedSnapshot) ||
+        Reflect.has(unusedTarget, property),
+      ownKeys: () => {
+        let keys = [...current.entries]
+          .filter(
+            ([key]) => readSnapshot(current, key, version) !== deletedSnapshot,
+          )
+          .map(([key]) => key);
+        return current.array ? [...keys, "length"] : keys;
+      },
+      set: () => true,
+      setPrototypeOf: () => true,
+    };
+    let proxy = new Proxy(target, handler);
+    proxies.set(current, proxy);
+    return proxy;
+  }
+
+  return wrap(node);
+}
+
+interface MutableView {
+  changed: () => boolean;
+  proxy: TreeArray | TreeObject;
+  unwrap: (value: TreeValue) => TreeValue;
+}
+
+function mutableView(value: TreeArray | TreeObject): MutableView {
+  let changed = false;
+  let targets = new WeakMap<object, object>();
+  let proxies = new WeakMap<object, object>();
   let handler: ProxyHandler<object> = {
-    defineProperty: () => true,
-    deleteProperty: () => true,
+    defineProperty: (target, property, descriptor) => {
+      changed = true;
+      return Reflect.defineProperty(target, property, descriptor);
+    },
+    deleteProperty: (target, property) => {
+      changed = true;
+      return Reflect.deleteProperty(target, property);
+    },
     get: (target, property, receiver) =>
       wrap(Reflect.get(target, property, receiver)),
-    set: () => true,
-    setPrototypeOf: () => true,
+    set: (target, property, child, receiver) => {
+      changed = true;
+      return Reflect.set(target, property, unwrap(child), receiver);
+    },
+    setPrototypeOf: (target, prototype) => {
+      changed = true;
+      return Reflect.setPrototypeOf(target, prototype);
+    },
   };
 
   function wrap(target: any): any {
     if (typeof target !== "object" || target === null) {
       return target;
     }
-    proxies ||= new WeakMap<object, object>();
     let existing = proxies.get(target);
     if (existing) {
       return existing;
     }
     let proxy = new Proxy(target, handler);
     proxies.set(target, proxy);
+    targets.set(proxy, target);
     return proxy;
   }
 
-  return new Proxy(value, handler);
+  function unwrap(child: any): any {
+    return targets.get(child) || child;
+  }
+
+  return {
+    changed: () => changed,
+    proxy: wrap(value),
+    unwrap,
+  };
+}
+
+interface PathNode {
+  parent?: PathNode;
+  segment: string;
+}
+
+function materializePath(node: PathNode): string[] {
+  let result: string[] = [];
+  let current: PathNode | undefined = node;
+  while (current) {
+    result.push(current.segment);
+    current = current.parent;
+  }
+  return result.reverse();
+}
+
+function legacyPath(segments: string[]): string {
+  let result = "";
+  for (let segment of segments) {
+    result = result ? `${result}.${segment}` : segment;
+  }
+  return result;
+}
+
+/**
+ * Utility library to traverse AST
+ */
+interface TraverseFrame {
+  container: TreeArray | TreeObject;
+  depth: number;
+  index: number;
+  keys: string[];
+  parentKey: string | null;
+  pathNode?: PathNode;
+  snapshot: SnapshotNode;
+  topmostKey?: string;
 }
 
 /**
@@ -176,257 +531,165 @@ function traverse(tree1: TreeValue, cb1: Callback): TreeValue {
     );
   }
   validateTree(tree1);
-  let stop2: Stop = { now: false };
 
-  // Every node written, deleted or spliced anywhere in the tree bumps this.
-  // Each frame records the value its `parent` snapshot was taken at and
-  // re-clones only once the counter has moved on - siblings whose parent did
-  // not change share one snapshot instead of deep-cloning it once each. The
-  // counter being shared through this closure is what makes an edit deep
-  // inside a child subtree invalidate every ancestor's snapshot as well.
-  let mutations = 0;
-
-  //
-  // traverseInner() needs a wrapper to shield the last args from the outside
-  //
-  function traverseInner(
-    treeOriginal: TreeValue,
-    callback: Callback,
-    depth: number,
-    path: string,
-    pathSegments: string[],
-    parentKey: string | null,
-    topmostKey: string | undefined,
-    stop: Stop,
-  ): TreeValue {
-    DEV && console.log(`======= traverseInner() =======`);
-    let tree: any = treeOriginal;
-
-    DEV &&
-      console.log(
-        `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`parentKey`}\u001b[${39}m`} = ${JSON.stringify(
-          parentKey,
-          null,
-          4,
-        )}`,
-      );
-    // The snapshot handed to callbacks as `innerObj.parent`. It is deep-cloned
-    // in full only once per frame; afterwards each sibling gets a shallow copy
-    // with the one changed slot restated, so consecutive snapshots share the
-    // parts neither of them touched. All of them stay detached from the live
-    // tree, which is what the no-mutation guarantee rests on.
-    let parent: any;
-    let parentView: any;
-    let parentSnappedAt = -1;
-    // Which single slot the previous iteration changed, applied only once a
-    // later sibling actually asks for a snapshot. A container's last child
-    // never has one asked for, so it never pays for one.
-    let pendingSlot: any;
-    let pendingRemoved = false;
-
-    if (Array.isArray(tree)) {
-      DEV && console.log(`tree is array!`);
-      // the length is read live: the splices below only ever shorten the
-      // array, so a stale upper bound would merely spin through out-of-range
-      // indices, splicing nothing
-      for (let i = 0; i < tree.length; i++) {
-        DEV &&
-          console.log(
-            `a ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`,
-          );
-        if (stop.now) {
-          DEV && console.log(`${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
-          break;
-        }
-        let currentValue = tree[i];
-        if (currentValue === undefined) {
-          tree.splice(i, 1);
-          mutations += 1;
-          // a splice shifts every later index, so no single-slot patch
-          // describes it - the next snapshot has to be cloned outright
-          pendingSlot = undefined;
-          i -= 1;
-          continue;
-        }
-        let currentPath = path ? `${path}.${i}` : `${i}`;
-        let currentPathSegments = [...pathSegments, `${i}`];
-        DEV &&
-          console.log(
-            `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
-              currentPath,
-              null,
-              4,
-            )}`,
-          );
-        if (parentSnappedAt !== mutations) {
-          if (pendingSlot === undefined) {
-            parent = clone(tree);
-          } else {
-            parent = parent.slice();
-            if (pendingRemoved) {
-              parent.splice(pendingSlot, 1);
-            } else {
-              parent[pendingSlot] = snapshotChild(tree[pendingSlot]);
-            }
-          }
-          parentView = readonlySnapshot(parent);
-          parentSnappedAt = mutations;
-        }
-        pendingSlot = undefined;
-        let innerObj: InnerObj = {
-          depth,
-          path: currentPath,
-          pathSegments: currentPathSegments,
-          parent: parentView,
-          parentType: "array",
-          parentKey,
-        };
-        if (topmostKey !== undefined) {
-          innerObj.topmostKey = topmostKey;
-        }
-        let res = callback(currentValue, undefined, innerObj, stop);
-        // A callback receives the live cloned container and can edit any level
-        // of it synchronously. Conservatively invalidate ancestor snapshots;
-        // proving that no deep edit happened would cost a scan or a proxy on
-        // every container callback.
-        if (typeof currentValue === "object" && currentValue !== null) {
-          mutations += 1;
-        }
-        // primitives - the bulk of any AST - can hold no references and have
-        // nothing to descend into, so they skip both calls below outright
-        if (typeof res === "object" && res !== null) {
-          if (res !== currentValue) {
-            res = clone(res);
-          }
-          res = traverseInner(
-            res,
-            callback,
-            depth + 1,
-            currentPath,
-            currentPathSegments,
-            `${i}`,
-            topmostKey,
-            stop,
-          );
-        }
-        let spliced = false;
-        if (Number.isNaN(res) && i < tree.length) {
-          tree.splice(i, 1);
-          mutations += 1;
-          spliced = true;
-        } else if (res !== currentValue) {
-          tree[i] = res;
-          mutations += 1;
-        }
-        // Depth-first order means index `i` is the only slot that can have
-        // moved since the snapshot above, so record it and let the next
-        // sibling, if there is one, fold it into that snapshot
-        if (parentSnappedAt !== mutations) {
-          pendingSlot = i;
-          pendingRemoved = spliced;
-        }
-        if (spliced) {
-          i -= 1;
-        }
-      }
-    } else if (isObj(tree)) {
-      DEV && console.log(`tree is object`);
-
-      for (let key of Object.keys(tree)) {
-        DEV &&
-          console.log(
-            `${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`,
-          );
-        if (stop.now) {
-          DEV && console.log(`${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
-          break;
-        }
-        DEV &&
-          console.log(
-            `FIY, ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
-              path,
-              null,
-              4,
-            )}`,
-          );
-        let currentPath = path ? `${path}.${key}` : key;
-        let currentPathSegments = [...pathSegments, key];
-        DEV &&
-          console.log(
-            `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
-              currentPath,
-              null,
-              4,
-            )}`,
-          );
-        if (depth === 0) {
-          topmostKey = key;
-        }
-        if (parentSnappedAt !== mutations) {
-          if (pendingSlot === undefined) {
-            parent = clone(tree);
-          } else {
-            parent = { ...parent };
-            if (pendingRemoved) {
-              delete parent[pendingSlot];
-            } else {
-              parent[pendingSlot] = snapshotChild(tree[pendingSlot]);
-            }
-          }
-          parentView = readonlySnapshot(parent);
-          parentSnappedAt = mutations;
-        }
-        pendingSlot = undefined;
-        let currentValue = tree[key];
-        let innerObj: InnerObj = {
-          depth,
-          path: currentPath,
-          pathSegments: currentPathSegments,
-          parent: parentView,
-          parentType: "object",
-          parentKey,
-        };
-        if (topmostKey !== undefined) {
-          innerObj.topmostKey = topmostKey;
-        }
-        let res = callback(key, currentValue, innerObj, stop);
-        if (typeof currentValue === "object" && currentValue !== null) {
-          mutations += 1;
-        }
-        if (typeof res === "object" && res !== null) {
-          if (res !== currentValue) {
-            res = clone(res);
-          }
-          res = traverseInner(
-            res,
-            callback,
-            depth + 1,
-            currentPath,
-            currentPathSegments,
-            key,
-            topmostKey,
-            stop,
-          );
-        }
-        let removed = false;
-        if (Number.isNaN(res)) {
-          delete tree[key];
-          mutations += 1;
-          removed = true;
-        } else if (res !== currentValue) {
-          (tree as TreeObject)[key] = res;
-          mutations += 1;
-        }
-        if (parentSnappedAt !== mutations) {
-          pendingSlot = key;
-          pendingRemoved = removed;
-        }
-      }
-    }
-    DEV && console.log(`just returning tree, ${JSON.stringify(tree, null, 4)}`);
+  let tree = cloneTree(tree1);
+  if (typeof tree !== "object" || tree === null) {
     return tree;
   }
-  return traverseInner(clone(tree1), cb1, 0, "", [], null, undefined, stop2);
+  let rootSnapshot = snapshotTree(tree) as SnapshotNode;
+  let version = 0;
+  let stop: Stop = { now: false };
+  let stack: TraverseFrame[] = [
+    {
+      container: tree,
+      depth: 0,
+      index: 0,
+      keys: Array.isArray(tree) ? [] : Object.keys(tree),
+      parentKey: null,
+      snapshot: rootSnapshot,
+    },
+  ];
+
+  DEV && console.log(`======= traverse() =======`);
+
+  while (stack.length && !stop.now) {
+    let frame = stack[stack.length - 1];
+    let arrayContainer = Array.isArray(frame.container)
+      ? frame.container
+      : undefined;
+    let arrayParent = Boolean(arrayContainer);
+    let slot: string;
+
+    if (arrayContainer) {
+      if (frame.index >= arrayContainer.length) {
+        stack.pop();
+        continue;
+      }
+      if (arrayContainer[frame.index] === undefined) {
+        arrayContainer.splice(frame.index, 1);
+        version += 1;
+        spliceSnapshot(frame.snapshot, frame.index, version);
+        continue;
+      }
+      slot = `${frame.index}`;
+    } else {
+      if (frame.index >= frame.keys.length) {
+        stack.pop();
+        continue;
+      }
+      slot = frame.keys[frame.index];
+    }
+
+    DEV && console.log(`[36m--------------------------------------------[39m`);
+
+    let currentValue = (frame.container as TreeObject)[slot];
+    let pathNode: PathNode = { parent: frame.pathNode, segment: slot };
+    let cachedSegments: string[] | undefined;
+    let cachedPath: string | undefined;
+    let topmostKey =
+      frame.depth === 0 && !arrayParent ? slot : frame.topmostKey;
+    let parentView = readonlySnapshot(frame.snapshot, version);
+    let innerObj = {
+      depth: frame.depth,
+      get path() {
+        cachedSegments ||= materializePath(pathNode);
+        cachedPath ??= legacyPath(cachedSegments);
+        return cachedPath;
+      },
+      get pathSegments() {
+        cachedSegments ||= materializePath(pathNode);
+        return cachedSegments;
+      },
+      parent: parentView,
+      parentType: arrayParent ? ("array" as const) : ("object" as const),
+      parentKey: frame.parentKey,
+      ...(topmostKey === undefined ? {} : { topmostKey }),
+    } satisfies InnerObj;
+
+    let mutable =
+      typeof currentValue === "object" && currentValue !== null
+        ? mutableView(currentValue)
+        : undefined;
+    let callbackValue = mutable ? mutable.proxy : currentValue;
+    let result = cb1(
+      arrayParent ? (callbackValue as Exclude<TreeValue, undefined>) : slot,
+      arrayParent ? undefined : callbackValue,
+      innerObj,
+      stop,
+    );
+    result = mutable ? mutable.unwrap(result) : result;
+
+    let removed = Number.isNaN(result);
+    let resultIsContainer = typeof result === "object" && result !== null;
+    let currentIsContainer =
+      typeof currentValue === "object" && currentValue !== null;
+    let changedContainer =
+      resultIsContainer &&
+      currentIsContainer &&
+      result === currentValue &&
+      Boolean(mutable?.changed());
+    let adopted = result;
+    let snapshotValue: SnapshotValue | undefined;
+
+    if (!removed && resultIsContainer) {
+      if (result !== currentValue || changedContainer) {
+        adopted = cloneTree(result, true);
+        validateTree(adopted);
+        snapshotValue = snapshotTree(adopted as TreeArray | TreeObject);
+      } else {
+        snapshotValue = readSnapshot(
+          frame.snapshot,
+          slot,
+          version,
+        ) as SnapshotNode;
+      }
+    }
+
+    if (removed) {
+      if (arrayContainer) {
+        arrayContainer.splice(frame.index, 1);
+        version += 1;
+        spliceSnapshot(frame.snapshot, frame.index, version);
+      } else {
+        delete (frame.container as TreeObject)[slot];
+        version += 1;
+        writeSnapshot(frame.snapshot, slot, deletedSnapshot, version);
+        frame.index += 1;
+      }
+    } else {
+      if (adopted !== currentValue || changedContainer) {
+        setOwnValue(frame.container, slot, adopted);
+        version += 1;
+        writeSnapshot(
+          frame.snapshot,
+          slot,
+          snapshotValue === undefined
+            ? (adopted as TreePrimitive)
+            : snapshotValue,
+          version,
+        );
+      }
+      frame.index += 1;
+
+      if (!stop.now && typeof adopted === "object" && adopted !== null) {
+        stack.push({
+          container: adopted,
+          depth: frame.depth + 1,
+          index: 0,
+          keys: Array.isArray(adopted) ? [] : Object.keys(adopted),
+          parentKey: slot,
+          pathNode,
+          snapshot: snapshotValue as SnapshotNode,
+          ...(topmostKey === undefined ? {} : { topmostKey }),
+        });
+      }
+    }
+  }
+
+  DEV && stop.now && console.log(`[31mBREAK[39m`);
+  DEV && console.log("just returning tree", tree);
+  validateTree(tree);
+  return tree;
 }
 
 // -----------------------------------------------------------------------------

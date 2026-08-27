@@ -127,7 +127,7 @@ export const dependencyStats: DependencyStats = {
     "check-types-mini": 2,
     "codsen-glob": 8,
     "codsen-parser": 1,
-    "codsen-utils": 82,
+    "codsen-utils": 81,
     "csv-sort": 1,
     "csv-split-easy": 1,
     "currency.js": 1,
@@ -259,7 +259,7 @@ export const dependencyStats: DependencyStats = {
   ],
   "top10OwnDeps": [
     {
-      "codsen-utils": 82
+      "codsen-utils": 81
     },
     {
       "ranges-apply": 16
