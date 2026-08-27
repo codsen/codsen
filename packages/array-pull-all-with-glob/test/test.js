@@ -322,4 +322,60 @@ test("22 - accepts frozen arrays and returns a fresh array", () => {
   equal(partialPatterns, ["a"], "22.08");
 });
 
+test("23 - preserves behavior above the matcher cache capacity", () => {
+  const caseInsensitivePatterns = Array.from(
+    { length: 257 },
+    (_value, index) => `miss-${index}*tail`,
+  );
+  caseInsensitivePatterns[256] = "REMOVE*";
+
+  const escapedPatterns = Array.from(
+    { length: 257 },
+    (_value, index) => `escaped-miss-${index}*tail`,
+  );
+  escapedPatterns[256] = String.raw`remove\*`;
+
+  const negativePatterns = Array.from(
+    { length: 257 },
+    (_value, index) => `negative-miss-${index}*tail`,
+  );
+  negativePatterns[256] = "!keep";
+
+  const earlyMatchPatterns = Array.from(
+    { length: 257 },
+    (_value, index) => `early-miss-${index}*tail`,
+  );
+  earlyMatchPatterns[0] = "remove*";
+
+  const allRemovedPatterns = Array.from(
+    { length: 257 },
+    (_value, index) => `all-miss-${index}*tail`,
+  );
+  allRemovedPatterns[0] = "*";
+
+  equal(
+    pull(["keep", "remove-1", "keep", "remove-2"], caseInsensitivePatterns, {
+      caseSensitive: false,
+    }),
+    ["keep", "keep"],
+    "23.01",
+  );
+  equal(
+    pull(["remove*", "remove-1", "keep"], escapedPatterns),
+    ["remove-1", "keep"],
+    "23.02",
+  );
+  equal(
+    pull(["keep", "remove-1", "keep", "remove-2"], negativePatterns),
+    ["keep", "keep"],
+    "23.03",
+  );
+  equal(
+    pull(["keep", "remove-1", "keep", "remove-2"], earlyMatchPatterns),
+    ["keep", "keep"],
+    "23.04",
+  );
+  equal(pull(["a", "b"], allRemovedPatterns), [], "23.05");
+});
+
 test.run();

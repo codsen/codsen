@@ -13,6 +13,34 @@ const defaults: Opts = {
   caseSensitive: true,
 };
 
+// codsen-utils keeps 256 compiled scalar patterns. A source-major traversal
+// above that boundary evicts the next pattern before it can be reused.
+const matcherCacheCapacity = 256;
+
+function pullPatternMajor(
+  source: string[],
+  toBeRemoved: string[],
+  caseSensitive: boolean,
+): string[] {
+  const removed = new Uint8Array(source.length);
+  const matchOptions = { caseSensitiveMatch: caseSensitive };
+  let removedCount = 0;
+
+  for (const remVal of toBeRemoved) {
+    for (let index = 0; index < source.length; index++) {
+      if (!removed[index] && match(source[index], remVal, matchOptions)) {
+        removed[index] = 1;
+        removedCount++;
+      }
+    }
+    if (removedCount === source.length) {
+      return [];
+    }
+  }
+
+  return source.filter((_value, index) => !removed[index]);
+}
+
 /**
  * Return a new array without values that match any removal pattern.
  *
@@ -59,6 +87,17 @@ function pull(
   const resolvedOpts: Opts = {
     caseSensitive: opts?.caseSensitive ?? defaults.caseSensitive,
   };
+
+  if (
+    strArr.length > 1 &&
+    resolvedToBeRemoved.length > matcherCacheCapacity
+  ) {
+    return pullPatternMajor(
+      Array.from(strArr),
+      resolvedToBeRemoved,
+      resolvedOpts.caseSensitive,
+    );
+  }
 
   const res = Array.from(strArr).filter(
     (originalVal) =>
