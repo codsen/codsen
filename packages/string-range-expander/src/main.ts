@@ -281,7 +281,13 @@ function expander(opts: Opts): Range {
   if (
     resolvedOpts.extendToOneSide !== "left" &&
     ((isWhitespace(str[to]) &&
-      (resolvedOpts.wipeAllWhitespaceOnRight || isWhitespace(str[to + 1]))) ||
+      (resolvedOpts.wipeAllWhitespaceOnRight ||
+        isWhitespace(str[to + 1]) ||
+        markerIncludesCodePointAt(
+          resolvedOpts.ifRightSideIncludesThisCropItToo,
+          str,
+          to + 1,
+        ))) ||
       markerIncludesCodePointAt(
         resolvedOpts.ifRightSideIncludesThisCropItToo,
         str,

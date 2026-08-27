@@ -74,4 +74,72 @@ test("01 - combo with tight crop", () => {
   );
 });
 
+test("02 - crop markers beyond one space behave symmetrically", () => {
+  equal(
+    e({
+      str: "a ;a",
+      from: 1,
+      to: 1,
+      ifRightSideIncludesThisCropItToo: ";",
+    }),
+    [1, 3],
+    "02.01",
+  );
+  equal(
+    e({
+      str: "a; a",
+      from: 3,
+      to: 3,
+      ifLeftSideIncludesThisCropItToo: ";",
+    }),
+    [1, 3],
+    "02.02",
+  );
+  equal(
+    e({
+      str: "ax ;a",
+      from: 1,
+      to: 2,
+      ifRightSideIncludesThisCropItToo: ";",
+    }),
+    [1, 4],
+    "02.03",
+  );
+  equal(
+    e({
+      str: "a; xa",
+      from: 3,
+      to: 4,
+      ifLeftSideIncludesThisCropItToo: ";",
+    }),
+    [1, 4],
+    "02.04",
+  );
+});
+
+test("03 - one-side controls still suppress the opposite crop", () => {
+  equal(
+    e({
+      str: "a ;a",
+      from: 1,
+      to: 1,
+      ifRightSideIncludesThisCropItToo: ";",
+      extendToOneSide: "left",
+    }),
+    [1, 1],
+    "03.01",
+  );
+  equal(
+    e({
+      str: "a; a",
+      from: 3,
+      to: 3,
+      ifLeftSideIncludesThisCropItToo: ";",
+      extendToOneSide: "right",
+    }),
+    [3, 3],
+    "03.02",
+  );
+});
+
 test.run();
