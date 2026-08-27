@@ -77,29 +77,45 @@ function isCssIdentifierContinuation(input: string, index: number): boolean {
   );
 }
 
-function isLikelySelectorSuffix(input: string, index: number): boolean {
-  while (isWhitespace(input, index)) {
+function isLikelySelector(input: string, index: number): boolean {
+  let quote = "";
+  while (index < input.length) {
+    const character = input[index];
+    if (quote) {
+      if (character === "\\") {
+        index += 2;
+        continue;
+      }
+      if (character === quote) {
+        quote = "";
+      }
+      index += 1;
+      continue;
+    }
+    if (character === '"' || character === "'") {
+      quote = character;
+      index += 1;
+      continue;
+    }
+    if (character === "/" && input[index + 1] === "*") {
+      const commentEnds = input.indexOf("*/", index + 2);
+      if (commentEnds === -1) {
+        return false;
+      }
+      index = commentEnds + 2;
+      continue;
+    }
+    if (character === "{" || character === "}" || character === ";") {
+      return character === "{";
+    }
     index += 1;
   }
-  const character = input[index];
-  if (
-    character === "{" ||
-    character === ":" ||
-    character === "[" ||
-    character === "#" ||
-    character === ">" ||
-    character === "+" ||
-    character === "~"
-  ) {
-    return true;
-  }
-  return character === "." && isCssIdentifierContinuation(input, index + 1);
+  return false;
 }
 
 function toFullHex(hex: string, offset: number, string: string): string {
   const matchEnds = offset + hex.length;
   const previous = string[offset - 1];
-  const next = string[matchEnds];
   if (
     previous === "&" || // consider false positives like &#124;
     isCssIdentifierContinuation(string, matchEnds) ||
@@ -109,16 +125,7 @@ function toFullHex(hex: string, offset: number, string: string): string {
       previous === "=" ||
       isWhitespace(string, offset - 1)) &&
       isReferenceContext(string, offset)) ||
-    ((next === "{" ||
-      next === ":" ||
-      next === "[" ||
-      next === "#" ||
-      next === ">" ||
-      next === "+" ||
-      next === "~" ||
-      next === "." ||
-      isWhitespace(string, matchEnds)) &&
-      isLikelySelectorSuffix(string, matchEnds))
+    isLikelySelector(string, matchEnds)
   ) {
     return hex;
   }

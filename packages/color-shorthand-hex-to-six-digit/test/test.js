@@ -243,4 +243,34 @@ test("18 - avoids likely CSS selectors and references", () => {
   equal(conv('fn("#abc")'), 'fn("#aabbcc")', "18.17");
 });
 
+test("19 - preserves ID selectors across selector grammar", () => {
+  const selectors = [
+    "#abc, #def {}",
+    "#abc div {}",
+    "#abc * {}",
+    "#abc/* comment */.child {}",
+    "#abc /* comment */ div {}",
+    ":not(#abc, #def) {}",
+    ":is(.root, #abc) {}",
+    "#abc || td {}",
+    '#abc[data-token="{"] {}',
+    "#abc > * + [data-kind] {}",
+  ];
+
+  selectors.forEach((selector, index) => {
+    equal(selector, conv(selector), `19.${String(index + 1).padStart(2, "0")}`);
+  });
+});
+
+test("20 - still converts colors outside selector preludes", () => {
+  equal(conv("color: #abc;"), "color: #aabbcc;", "20.01");
+  equal(
+    conv("background: linear-gradient(#abc, #def);"),
+    "background: linear-gradient(#aabbcc, #ddeeff);",
+    "20.02",
+  );
+  equal(conv("the colour #abc."), "the colour #aabbcc.", "20.03");
+  equal(conv("#abc"), "#aabbcc", "20.04");
+});
+
 test.run();
