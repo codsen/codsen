@@ -897,7 +897,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
   resolvedOpts.backend = [...resolvedOpts.backend];
   resolvedOpts.doNotRemoveHTMLCommentsWhoseOpeningTagContains = [
     ...resolvedOpts.doNotRemoveHTMLCommentsWhoseOpeningTagContains,
-  ];
+  ].map((value) => value.toLowerCase());
   const idsReferencedByForAttributes = extractIdsReferencedByForAttributes(str);
   const idsReferencedByForAttributesSet = new Set(idsReferencedByForAttributes);
   if (!resolvedOpts.reportProgressFunc) {
@@ -3942,7 +3942,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
                   str,
                   i + 3,
                   resolvedOpts.doNotRemoveHTMLCommentsWhoseOpeningTagContains,
-                  { trimBeforeMatching: true },
+                  { i: true, trimBeforeMatching: true },
                 )
               )
             ) {

@@ -679,6 +679,58 @@ test("23 - preserves nonempty conditional-comment bodies", () => {
   );
 });
 
+test("24 - matches comment exclusions case-insensitively", () => {
+  let source = "<body><!-- KEEP: legal --></body>";
+
+  equal(
+    comb(source, {
+      doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["keep:"],
+    }).result,
+    source,
+    "24.01",
+  );
+  equal(
+    comb(source, {
+      doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["KEEP:"],
+    }).result,
+    source,
+    "24.02",
+  );
+  equal(
+    comb(source, {
+      doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["Keep:"],
+    }).result,
+    source,
+    "24.03",
+  );
+  equal(
+    comb("<body><!-- Keep: legal --></body>", {
+      doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["kEeP:"],
+    }).result,
+    "<body><!-- Keep: legal --></body>",
+    "24.04",
+  );
+  equal(
+    comb("<body><! KEEP: legal ></body>", {
+      doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["Keep:"],
+    }).result,
+    "<body><! KEEP: legal ></body>",
+    "24.05",
+  );
+  equal(
+    comb("<body><!-- KEEP: legal --><!-- remove --></body>", {
+      doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["keep:"],
+    }).result,
+    "<body><!-- KEEP: legal --></body>",
+    "24.06",
+  );
+  equal(
+    comb("<body><!--[IF MSO]>x<![ENDIF]--></body>").result,
+    "<body><!--[IF MSO]>x<![ENDIF]--></body>",
+    "24.07",
+  );
+});
+
 // test("22 - comments in the inline styles", () => {
 //   let actual = comb(
 //     `<head>
