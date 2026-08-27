@@ -62,18 +62,14 @@ function isCssResourceContext(input: string, offset: number): boolean {
       ) {
         functionStarts -= 1;
       }
-      functionStack.push(
-        input.slice(functionStarts, index).toLowerCase(),
-      );
+      functionStack.push(input.slice(functionStarts, index).toLowerCase());
     } else if (character === ")") {
       functionStack.pop();
     }
     index += 1;
   }
 
-  return functionStack.some(
-    (name) => name === "url" || name === "src",
-  );
+  return functionStack.some((name) => name === "url" || name === "src");
 }
 
 function isHtmlReferenceContext(input: string, offset: number): boolean {
@@ -91,8 +87,7 @@ function isHtmlReferenceContext(input: string, offset: number): boolean {
 
 function isReferenceContext(input: string, offset: number): boolean {
   return (
-    isCssResourceContext(input, offset) ||
-    isHtmlReferenceContext(input, offset)
+    isCssResourceContext(input, offset) || isHtmlReferenceContext(input, offset)
   );
 }
 
@@ -198,10 +193,7 @@ function setOwnEnumerableValue(
   }
 }
 
-/**
- * Convert shorthand hex color codes into full
- */
-function conv(input: any): any {
+function convertValue(input: any, converted: WeakMap<object, any>): any {
   if (
     typeof input !== "string" &&
     !Array.isArray(input) &&
@@ -216,19 +208,40 @@ function conv(input: any): any {
   if (typeof input === "string") {
     return input.replace(hexColorRegex, toFullHex);
   }
+
+  const existingResult = converted.get(input);
+  if (existingResult !== undefined) {
+    return existingResult;
+  }
+
   if (Array.isArray(input)) {
-    return input.map(conv);
+    const result = new Array(input.length);
+    converted.set(input, result);
+    for (let index = 0; index < input.length; index += 1) {
+      if (index in input) {
+        result[index] = convertValue(input[index], converted);
+      }
+    }
+    return result;
   }
   if (isPlainObject(input)) {
     let result: Record<string, any> = Object.create(
       Object.getPrototypeOf(input),
     );
+    converted.set(input, result);
     for (const key of Object.keys(input)) {
-      setOwnEnumerableValue(result, key, conv(input[key]));
+      setOwnEnumerableValue(result, key, convertValue(input[key], converted));
     }
     return result;
   }
   return input;
+}
+
+/**
+ * Convert shorthand hex color codes into full
+ */
+function conv(input: any): any {
+  return convertValue(input, new WeakMap());
 }
 
 export { conv, version };

@@ -2,7 +2,7 @@
 /* eslint func-names:0 */
 
 import { test } from "uvu";
-import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+import { equal, is, match, ok, throws, type } from "uvu/assert";
 
 import { conv } from "../dist/color-shorthand-hex-to-six-digit.esm.js";
 
@@ -314,9 +314,7 @@ test("22 - converts hashes in similarly named non-reference contexts", () => {
 });
 
 test("23 - preserves own proto keys and plain-object prototypes", () => {
-  const parsed = JSON.parse(
-    '{"__proto__":{"color":"#def"},"regular":"#abc"}',
-  );
+  const parsed = JSON.parse('{"__proto__":{"color":"#def"},"regular":"#abc"}');
   const parsedResult = conv(parsed);
   const protoDescriptor = Object.getOwnPropertyDescriptor(
     parsedResult,
@@ -362,6 +360,59 @@ test("23 - preserves own proto keys and plain-object prototypes", () => {
     "23.10",
   );
   equal(dictionary.nested.color, "#def", "23.11");
+});
+
+test("24 - preserves graph shape and propagates property access errors", () => {
+  const cyclicObject = { color: "#abc" };
+  cyclicObject.self = cyclicObject;
+  const cyclicObjectResult = conv(cyclicObject);
+
+  is(cyclicObjectResult === cyclicObject, false, "24.01");
+  equal(cyclicObjectResult.color, "#aabbcc", "24.02");
+  is(cyclicObjectResult.self, cyclicObjectResult, "24.03");
+
+  const cyclicArray = ["#def"];
+  cyclicArray.push(cyclicArray);
+  const cyclicArrayResult = conv(cyclicArray);
+
+  is(cyclicArrayResult === cyclicArray, false, "24.04");
+  equal(cyclicArrayResult[0], "#ddeeff", "24.05");
+  is(cyclicArrayResult[1], cyclicArrayResult, "24.06");
+
+  const shared = { color: "#abc" };
+  const sharedResult = conv({ first: shared, second: shared });
+
+  is(sharedResult.first === shared, false, "24.07");
+  is(sharedResult.first, sharedResult.second, "24.08");
+  equal(sharedResult.first.color, "#aabbcc", "24.09");
+
+  const sparse = new Array(3);
+  sparse[2] = "#abc";
+  const sparseResult = conv(sparse);
+
+  equal(sparseResult.length, 3, "24.10");
+  is(0 in sparseResult, false, "24.11");
+  equal(sparseResult[2], "#aabbcc", "24.12");
+
+  let deeplyNested = "#abc";
+  for (let index = 0; index < 250; index += 1) {
+    deeplyNested = { value: deeplyNested };
+  }
+  let deeplyNestedResult = conv(deeplyNested);
+  for (let index = 0; index < 250; index += 1) {
+    deeplyNestedResult = deeplyNestedResult.value;
+  }
+  equal(deeplyNestedResult, "#aabbcc", "24.13");
+
+  const accessorError = new Error("getter failed");
+  const withThrowingAccessor = {};
+  Object.defineProperty(withThrowingAccessor, "color", {
+    enumerable: true,
+    get() {
+      throw accessorError;
+    },
+  });
+  throws(() => conv(withThrowingAccessor), accessorError, "24.14");
 });
 
 test.run();
