@@ -1375,10 +1375,10 @@ test("25 - parent snapshots are isolated between callbacks", () => {
   equal(input, { a: { x: 1 }, b: { y: 2 }, c: 3 }, "25.02");
   equal(parents[1], { a: { x: 1 }, b: { y: 2 }, c: 3 }, "25.03");
   equal(parents[2], { a: { x: 1 }, b: { y: 2 }, c: 3 }, "25.04");
-  is(parents[0], parents[1], "25.05");
-  is(parents[1], parents[2], "25.06");
-  is(nestedParents[0], nestedParents[1], "25.07");
-  is(nestedParents[1], nestedParents[2], "25.08");
+  not.ok(parents[0] === parents[1], "25.05");
+  not.ok(parents[1] === parents[2], "25.06");
+  not.ok(nestedParents[0] === nestedParents[1], "25.07");
+  not.ok(nestedParents[1] === nestedParents[2], "25.08");
   not.ok(parents[0] === input, "25.09");
   not.ok(nestedParents[0] === input.b, "25.10");
 
@@ -1396,8 +1396,73 @@ test("25 - parent snapshots are isolated between callbacks", () => {
 
   equal(arrayActual, [[1], [2]], "25.11");
   equal(arrayParents[1], [[1], [2]], "25.12");
-  is(arrayParents[0], arrayParents[1], "25.13");
-  is(arrayParents[0][1], arrayParents[1][1], "25.14");
+  not.ok(arrayParents[0] === arrayParents[1], "25.13");
+  not.ok(arrayParents[0][1] === arrayParents[1][1], "25.14");
+});
+
+test("26 - in-place container edits update later parent snapshots", () => {
+  let objectParent;
+  let objectActual = traverse(
+    { a: { nested: { z: 2 }, remove: true, x: 1 }, b: 0 },
+    (key, value, innerObj) => {
+      if (key === "a") {
+        value.x = 1;
+        value.x = 9;
+        value.nested.z = 8;
+        value.added = true;
+        delete value.remove;
+        delete value.absent;
+        Object.defineProperty(value, "defined", {
+          configurable: true,
+          enumerable: true,
+          value: "yes",
+          writable: true,
+        });
+        Object.defineProperty(value, "computed", {
+          configurable: true,
+          enumerable: true,
+          get: () => "getter",
+        });
+        Object.setPrototypeOf(value, null);
+        Object.setPrototypeOf(value, Object.prototype);
+      } else if (key === "b" && innerObj.depth === 0) {
+        objectParent = innerObj.parent;
+      }
+      return value !== undefined ? value : key;
+    },
+  );
+  let expectedObject = {
+    a: {
+      added: true,
+      computed: "getter",
+      defined: "yes",
+      nested: { z: 8 },
+      x: 9,
+    },
+    b: 0,
+  };
+
+  equal(objectActual, expectedObject, "26.01");
+  equal(objectParent, expectedObject, "26.02");
+
+  let arrayParent;
+  let arrayActual = traverse(
+    { a: [1, { x: 2 }], b: 0 },
+    (key, value, innerObj) => {
+      if (key === "a") {
+        value.push(3);
+        value[1].x = 9;
+        value.splice(0, 1);
+      } else if (key === "b" && innerObj.depth === 0) {
+        arrayParent = innerObj.parent;
+      }
+      return value !== undefined ? value : key;
+    },
+  );
+  let expectedArray = { a: [{ x: 9 }, 3], b: 0 };
+
+  equal(arrayActual, expectedArray, "26.03");
+  equal(arrayParent, expectedArray, "26.04");
 });
 
 test.run();

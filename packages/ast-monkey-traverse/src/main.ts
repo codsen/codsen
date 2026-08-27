@@ -182,6 +182,13 @@ function traverse<T>(tree1: T, cb1: Callback): T {
           innerObj.topmostKey = topmostKey;
         }
         let res = callback(currentValue, undefined, innerObj, stop);
+        // A callback receives the live cloned container and can edit any level
+        // of it synchronously. Conservatively invalidate ancestor snapshots;
+        // proving that no deep edit happened would cost a scan or a proxy on
+        // every container callback.
+        if (typeof currentValue === "object" && currentValue !== null) {
+          mutations += 1;
+        }
         // primitives - the bulk of any AST - can hold no references and have
         // nothing to descend into, so they skip both calls below outright
         if (typeof res === "object" && res !== null) {
@@ -276,6 +283,9 @@ function traverse<T>(tree1: T, cb1: Callback): T {
           innerObj.topmostKey = topmostKey;
         }
         let res = callback(key, currentValue, innerObj, stop);
+        if (typeof currentValue === "object" && currentValue !== null) {
+          mutations += 1;
+        }
         if (typeof res === "object" && res !== null) {
           if (res !== currentValue) {
             res = clone(res);
