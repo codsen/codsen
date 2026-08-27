@@ -46,11 +46,15 @@ function pull(
   if (!strArr.length) {
     return [];
   }
-  if (!strArr.length || !toBeRemoved.length) {
+  const resolvedToBeRemoved: string[] =
+    typeof toBeRemoved === "string"
+      ? toBeRemoved
+        ? [toBeRemoved]
+        : []
+      : toBeRemoved.filter(Boolean);
+  if (!resolvedToBeRemoved.length) {
     return Array.from(strArr);
   }
-  const resolvedToBeRemoved: string[] =
-    typeof toBeRemoved === "string" ? [toBeRemoved] : Array.from(toBeRemoved);
   const resolvedOpts: Opts = {
     caseSensitive: opts?.caseSensitive ?? defaults.caseSensitive,
   };

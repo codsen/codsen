@@ -289,4 +289,18 @@ test("20 - removal-pattern grammar", () => {
   );
 });
 
+test("21 - ignores empty removal patterns", () => {
+  const source = ["", "a", "a", "b"];
+  const emptyPatterns = [""];
+  const result = pull(source, emptyPatterns);
+
+  equal(pull(["", "a"], ""), ["", "a"], "21.01");
+  equal(result, source, "21.02");
+  is.not(result, source, "21.03");
+  equal(pull(source, ["", "a", ""]), ["", "b"], "21.04");
+  equal(pull(["", "a", "b"], ["", "", "b", "b"]), ["", "a"], "21.05");
+  equal(source, ["", "a", "a", "b"], "21.06");
+  equal(emptyPatterns, [""], "21.07");
+});
+
 test.run();
