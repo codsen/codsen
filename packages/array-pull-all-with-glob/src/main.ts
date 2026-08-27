@@ -30,7 +30,9 @@ function pull(
   }
   const resolvedToBeRemoved: string[] =
     typeof toBeRemoved === "string" ? [toBeRemoved] : Array.from(toBeRemoved);
-  const resolvedOpts: Opts = { ...defaults, ...opts };
+  const resolvedOpts: Opts = {
+    caseSensitive: opts?.caseSensitive ?? defaults.caseSensitive,
+  };
 
   const res = Array.from(strArr).filter(
     (originalVal) =>

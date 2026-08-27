@@ -224,4 +224,19 @@ test("18 - does not mutate the input args", () => {
   equal(arr3, ["c"], "18.03");
 });
 
+test("19 - resolves the case-sensitive option", () => {
+  equal(pull(["Alpha"], "alpha"), ["Alpha"], "19.01");
+  equal(pull(["Alpha"], "alpha", {}), ["Alpha"], "19.02");
+  equal(
+    pull(["Alpha"], "alpha", { caseSensitive: undefined }),
+    ["Alpha"],
+    "19.03",
+  );
+  equal(
+    pull(["Alpha"], "alpha", { caseSensitive: false }),
+    [],
+    "19.04",
+  );
+});
+
 test.run();
