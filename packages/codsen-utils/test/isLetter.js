@@ -85,7 +85,11 @@ test("14 - agrees with Unicode Letter for every scalar", () => {
       continue;
     }
     const character = String.fromCodePoint(codePoint);
-    equal(isLetter(character), unicodeLetter.test(character), `14.${codePoint}`);
+    equal(
+      isLetter(character),
+      unicodeLetter.test(character),
+      `14.${codePoint}`,
+    );
   }
 });
 

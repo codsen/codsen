@@ -6,8 +6,7 @@ import { formatDiagnosticValue } from "../dist/codsen-format-diagnostic-value.es
 
 const callerDir = path.resolve(".");
 
-const testme = () =>
-  formatDiagnosticValue({ input: ["value", 1, true, null] });
+const testme = () => formatDiagnosticValue({ input: ["value", 1, true, null] });
 
 // action
 runPerf(testme, callerDir);

@@ -319,10 +319,7 @@ function leftStopAtNewLines(
   return leftMain({ str, idx, stopAtNewlines: true, stopAtRawNbsp: false });
 }
 
-function leftStopAtRawNbsp(
-  str: string,
-  idx: number | null = 0,
-): number | null {
+function leftStopAtRawNbsp(str: string, idx: number | null = 0): number | null {
   return leftMain({ str, idx, stopAtNewlines: false, stopAtRawNbsp: true });
 }
 
@@ -1102,11 +1099,7 @@ function chompLeft(
   idx: number,
   ...args:
     | [value: string, ...values: string[]]
-    | [
-        opts: ChompOpts | null | undefined,
-        value: string,
-        ...values: string[],
-      ]
+    | [opts: ChompOpts | null | undefined, value: string, ...values: string[]]
 ): number | null;
 function chompLeft(str: string, idx: number, ...args: any[]): number | null {
   DEV &&
@@ -1199,11 +1192,7 @@ function chompRight(
   idx: number,
   ...args:
     | [value: string, ...values: string[]]
-    | [
-        opts: ChompOpts | null | undefined,
-        value: string,
-        ...values: string[],
-      ]
+    | [opts: ChompOpts | null | undefined, value: string, ...values: string[]]
 ): number | null;
 function chompRight(str: string, idx: number, ...args: any[]): number | null {
   DEV &&

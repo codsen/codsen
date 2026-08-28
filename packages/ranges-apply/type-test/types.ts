@@ -1,11 +1,11 @@
 import {
-  rApply,
   type ProgressFn,
   type ProgressInput,
   type Range,
   type RangeInput,
   type Ranges,
   type RangesInput,
+  rApply,
 } from "ranges-apply";
 
 const callback: ProgressFn = (percentage) => {

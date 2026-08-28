@@ -88,7 +88,11 @@ test("07 - unusable and overridden regex-like values do not throw", () => {
 
   equal(includes([RegExp.prototype], "apple"), false, "07.01");
   equal(includes([new Proxy(/app/, {})], "apple"), false, "07.02");
-  equal(includes([{ [Symbol.toStringTag]: "RegExp" }], "apple"), false, "07.03");
+  equal(
+    includes([{ [Symbol.toStringTag]: "RegExp" }], "apple"),
+    false,
+    "07.03",
+  );
   equal(includes([overridden], "apple"), true, "07.04");
   equal(overridden.lastIndex, 0, "07.05");
 });

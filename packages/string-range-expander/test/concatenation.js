@@ -4,15 +4,7 @@ import { equal } from "uvu/assert";
 import { expander } from "../dist/string-range-expander.esm.js";
 
 test("01 - prevents concatenation across Unicode letter and number categories", () => {
-  const fixtures = [
-    "a a",
-    "é é",
-    "你 你",
-    "١ ١",
-    "१ १",
-    "Ⅻ Ⅻ",
-    "𐐀 𐐀",
-  ];
+  const fixtures = ["a a", "é é", "你 你", "١ ١", "१ १", "Ⅻ Ⅻ", "𐐀 𐐀"];
   const expectedRanges = [
     [1, 2, " "],
     [1, 2, " "],

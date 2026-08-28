@@ -283,7 +283,9 @@ function isArrayBufferObject(value: object): value is ArrayBuffer {
   }
 }
 
-function mapEntriesOf(value: object): IterableIterator<[unknown, unknown]> | null {
+function mapEntriesOf(
+  value: object,
+): IterableIterator<[unknown, unknown]> | null {
   try {
     return mapEntries.call(value as Map<unknown, unknown>);
   } catch {

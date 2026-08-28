@@ -232,11 +232,7 @@ test("19 - resolves the case-sensitive option", () => {
     ["Alpha"],
     "19.03",
   );
-  equal(
-    pull(["Alpha"], "alpha", { caseSensitive: false }),
-    [],
-    "19.04",
-  );
+  equal(pull(["Alpha"], "alpha", { caseSensitive: false }), [], "19.04");
 });
 
 test("20 - removal-pattern grammar", () => {
@@ -246,18 +242,11 @@ test("20 - removal-pattern grammar", () => {
     "20.01",
   );
   equal(
-    pull(
-      ["src/main.js", "src/nested/main.js", "src/main.ts"],
-      "src/*.js",
-    ),
+    pull(["src/main.js", "src/nested/main.js", "src/main.ts"], "src/*.js"),
     ["src/main.ts"],
     "20.02",
   );
-  equal(
-    pull(["top\nbottom", "top-middle-bottom"], "top*bottom"),
-    [],
-    "20.03",
-  );
+  equal(pull(["top\nbottom", "top-middle-bottom"], "top*bottom"), [], "20.03");
   equal(pull(["abc", "ac"], "a***c"), [], "20.04");
   equal(
     pull(
@@ -473,11 +462,7 @@ test("24 - uses a Set for large case-sensitive literal removals", () => {
     (_value, index) => `small-literal-miss-${index}*tail`,
   );
   belowLiteralCrossover.push("remove");
-  equal(
-    pull(["remove", "keep"], belowLiteralCrossover),
-    ["keep"],
-    "24.05",
-  );
+  equal(pull(["remove", "keep"], belowLiteralCrossover), ["keep"], "24.05");
 
   const tooManySpecialPatterns = [
     ...Array.from({ length: 200 }, (_value, index) => `plain-miss-${index}`),

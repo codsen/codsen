@@ -52,11 +52,7 @@ test("06 - preserves an unmatched quoted attribute without throwing", () => {
   const input = '<div data-x="a   b';
 
   not.throws(() => m(equal, input, { removeLineBreaks: true }), "06.01");
-  equal(
-    m(equal, input, { removeLineBreaks: true }).result,
-    input,
-    "06.02",
-  );
+  equal(m(equal, input, { removeLineBreaks: true }).result, input, "06.02");
 });
 
 test.run();

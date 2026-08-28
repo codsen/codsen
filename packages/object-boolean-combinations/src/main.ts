@@ -1,7 +1,4 @@
-import {
-  deepClone as clone,
-  isPlainObject as isObj,
-} from "codsen-utils";
+import { deepClone as clone, isPlainObject as isObj } from "codsen-utils";
 import { version as v } from "../package.json";
 
 const version: string = v;
@@ -128,7 +125,11 @@ function combinations(
           (combinationIndex & (1 << keyIndex)) !== 0;
       }
       if (overrideValues) {
-        for (let keyIndex = 0; keyIndex < propertiesToBeOverridden.length; keyIndex++) {
+        for (
+          let keyIndex = 0;
+          keyIndex < propertiesToBeOverridden.length;
+          keyIndex++
+        ) {
           result[propertiesToBeOverridden[keyIndex]] = overrideValues[keyIndex];
         }
       }
@@ -151,7 +152,11 @@ function combinations(
         }
       }
       if (overrideValues) {
-        for (let keyIndex = 0; keyIndex < propertiesToBeOverridden.length; keyIndex++) {
+        for (
+          let keyIndex = 0;
+          keyIndex < propertiesToBeOverridden.length;
+          keyIndex++
+        ) {
           const key = propertiesToBeOverridden[keyIndex];
           if (key === "__proto__") {
             defineEnumerableDataProperty(result, key, overrideValues[keyIndex]);

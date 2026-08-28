@@ -29,6 +29,7 @@ import {
   rightStopAtNewLines,
 } from "string-left-right";
 import { expander } from "string-range-expander";
+import { codePointAtIndex } from "./codePoint";
 import {
   type ApplicableOpts,
   doConvertEntities,
@@ -36,7 +37,6 @@ import {
   type State,
   widowRegexTest,
 } from "./util";
-import { codePointAtIndex } from "./codePoint";
 
 declare let DEV: boolean;
 
@@ -1198,8 +1198,7 @@ function processCharacter(
               //   This prevents both numbers with decimal digits and short url's like "detergent.io"
               // - When it's within URL, it's stricter:
               //   next letter has to be an uppercase letter, followed by lowercase letter.
-              ((!state.onUrlCurrently &&
-                isUppercaseLetter(nextCharacter)) ||
+              ((!state.onUrlCurrently && isUppercaseLetter(nextCharacter)) ||
                 (state.onUrlCurrently &&
                   isLetter(nextCharacter) &&
                   isUppercaseLetter(nextCharacter) &&

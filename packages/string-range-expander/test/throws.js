@@ -314,44 +314,16 @@ test('17 - throws when "str" is not a string', () => {
 });
 
 test("18 - rejects negative and fractional boundaries", () => {
-  throws(
-    () => e({ str: "abc", from: -1, to: 0 }),
-    /THROW_ID_04/,
-    "18.01",
-  );
-  throws(
-    () => e({ str: "abc", from: 0.5, to: 1 }),
-    /THROW_ID_04/,
-    "18.02",
-  );
-  throws(
-    () => e({ str: "abc", from: 0, to: -1 }),
-    /THROW_ID_05/,
-    "18.03",
-  );
-  throws(
-    () => e({ str: "abc", from: 0, to: 1.5 }),
-    /THROW_ID_05/,
-    "18.04",
-  );
+  throws(() => e({ str: "abc", from: -1, to: 0 }), /THROW_ID_04/, "18.01");
+  throws(() => e({ str: "abc", from: 0.5, to: 1 }), /THROW_ID_04/, "18.02");
+  throws(() => e({ str: "abc", from: 0, to: -1 }), /THROW_ID_05/, "18.03");
+  throws(() => e({ str: "abc", from: 0, to: 1.5 }), /THROW_ID_05/, "18.04");
 });
 
 test("19 - rejects boundaries beyond the string length", () => {
-  throws(
-    () => e({ str: "abc", from: 4, to: 4 }),
-    /THROW_ID_06/,
-    "19.01",
-  );
-  throws(
-    () => e({ str: "abc", from: 0, to: 4 }),
-    /THROW_ID_07/,
-    "19.02",
-  );
-  throws(
-    () => e({ str: "", from: 1, to: 1 }),
-    /THROW_ID_06/,
-    "19.03",
-  );
+  throws(() => e({ str: "abc", from: 4, to: 4 }), /THROW_ID_06/, "19.01");
+  throws(() => e({ str: "abc", from: 0, to: 4 }), /THROW_ID_07/, "19.02");
+  throws(() => e({ str: "", from: 1, to: 1 }), /THROW_ID_06/, "19.03");
 });
 
 test("20 - rejects every wrong marker-option type", () => {

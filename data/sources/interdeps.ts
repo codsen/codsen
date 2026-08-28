@@ -250,7 +250,7 @@ export const interdeps = [
   },
   {
     "name": "email-comb",
-    "size": 25716,
+    "size": 29262,
     "imports": [
       "array-pull-all-with-glob",
       "codsen-utils",
@@ -298,10 +298,9 @@ export const interdeps = [
   },
   {
     "name": "html-crush",
-    "size": 11804,
+    "size": 13526,
     "imports": [
       "codsen-utils",
-      "ranges-apply",
       "ranges-push",
       "string-left-right",
       "string-match-left-right",

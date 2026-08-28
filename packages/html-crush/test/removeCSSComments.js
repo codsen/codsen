@@ -203,7 +203,7 @@ test("06 - css comments - strings inside inline styles", () => {
 
   equal(
     result,
-    '<div style="content:\'/* keep */\';color:red"></div>',
+    "<div style=\"content:'/* keep */';color:red\"></div>",
     "06.01",
   );
   equal(ranges, [[commentStartsAt, commentStartsAt + comment.length]], "06.02");

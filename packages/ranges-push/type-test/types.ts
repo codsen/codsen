@@ -1,9 +1,4 @@
-import {
-  Ranges,
-  type Opts,
-  type Range,
-  type RangeInput,
-} from "ranges-push";
+import { type Opts, type Range, type RangeInput, Ranges } from "ranges-push";
 
 const ranges = new Ranges();
 ranges.add();

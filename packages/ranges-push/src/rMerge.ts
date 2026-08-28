@@ -68,18 +68,19 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
   const mergeType = opts?.mergeType ?? defaults.mergeType;
   const joinRangesThatTouchEdges =
     opts?.joinRangesThatTouchEdges ?? defaults.joinRangesThatTouchEdges;
-  if (
-    progressFn &&
-    isObj(progressFn) &&
-    !Object.keys(progressFn).length
-  ) {
+  if (progressFn && isObj(progressFn) && !Object.keys(progressFn).length) {
     progressFn = null;
   } else if (progressFn && typeof progressFn !== "function") {
     throw new TypeError(
       `ranges-push/rMerge(): [THROW_ID_08] resolvedOpts.progressFn must be a function! It was given of a type: "${typeof progressFn}", equal to ${formatDiagnosticValue(progressFn, 4)}`,
     );
   }
-  if (mergeType !== 1 && mergeType !== 2 && mergeType !== "1" && mergeType !== "2") {
+  if (
+    mergeType !== 1 &&
+    mergeType !== 2 &&
+    mergeType !== "1" &&
+    mergeType !== "2"
+  ) {
     throw new TypeError(
       `ranges-push/rMerge(): [THROW_ID_09] resolvedOpts.mergeType was customised to a wrong thing! It was given of a type: "${typeof mergeType}", equal to ${formatDiagnosticValue(mergeType, 4)}`,
     );

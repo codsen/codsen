@@ -381,11 +381,7 @@ test("12 - more complex case", () => {
     ],
     "12.04",
   );
-  equal(
-    percentages[percentages.length - 1],
-    99,
-    "12.05",
-  );
+  equal(percentages[percentages.length - 1], 99, "12.05");
   equal(new Set(percentages).size, percentages.length, "12.06");
   equal(
     percentages.every(
@@ -937,7 +933,14 @@ test("26 - contained null insertion vetoes merged text", () => {
 });
 
 test("27 - progress handles zero, one, and two ranges", () => {
-  const sequences = [[], [[1, 2]], [[1, 2], [3, 4]]].map((ranges) => {
+  const sequences = [
+    [],
+    [[1, 2]],
+    [
+      [1, 2],
+      [3, 4],
+    ],
+  ].map((ranges) => {
     const percentages = [];
     rMerge(ranges, {
       progressFn: (percentage) => percentages.push(percentage),
@@ -951,7 +954,8 @@ test("27 - progress handles zero, one, and two ranges", () => {
   equal(sequences[2], [...new Set(sequences[2])], "27.04");
   equal(
     sequences[2].every(
-      (percentage, index) => index === 0 || percentage > sequences[2][index - 1],
+      (percentage, index) =>
+        index === 0 || percentage > sequences[2][index - 1],
     ),
     true,
     "27.05",
@@ -967,20 +971,13 @@ test("28 - exact ties retain insertion order above old V8 cutoff", () => {
   const nativeSort = Array.prototype.sort;
   Array.prototype.sort = function deliberatelyUnstableSort(compareFn) {
     nativeSort.call(this, compareFn);
-    if (
-      this.length > 10 &&
-      compareFn(this[0], this[this.length - 1]) === 0
-    ) {
+    if (this.length > 10 && compareFn(this[0], this[this.length - 1]) === 0) {
       this.reverse();
     }
     return this;
   };
   try {
-    equal(
-      rMerge(input, { mergeType: 1 }),
-      [[1, 2, "abcdefghijkl"]],
-      "28.01",
-    );
+    equal(rMerge(input, { mergeType: 1 }), [[1, 2, "abcdefghijkl"]], "28.01");
     equal(rMerge(input, { mergeType: 2 }), [[1, 2, "l"]], "28.02");
   } finally {
     Array.prototype.sort = nativeSort;

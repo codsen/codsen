@@ -58,8 +58,16 @@ test("04 - whitespace-only inputs follow the whitespace options", () => {
   for (const lineEnding of ["", "\n", "\r\n", "\r"]) {
     const source = `   ${lineEnding}`;
     for (const [opts, expectedResult, expectedRanges] of [
-      [{ removeIndentations: true, removeLineBreaks: false }, lineEnding, [[0, 3]]],
-      [{ removeIndentations: false, removeLineBreaks: true }, lineEnding, [[0, 3]]],
+      [
+        { removeIndentations: true, removeLineBreaks: false },
+        lineEnding,
+        [[0, 3]],
+      ],
+      [
+        { removeIndentations: false, removeLineBreaks: true },
+        lineEnding,
+        [[0, 3]],
+      ],
       [{ removeIndentations: false, removeLineBreaks: false }, source, null],
     ]) {
       const { result, ranges } = m(equal, source, opts);

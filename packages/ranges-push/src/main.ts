@@ -193,7 +193,9 @@ class Ranges<InsertValue extends AddValue = AddValue> {
         ? defaults.limitLinebreaksCount
         : supplied.limitLinebreaksCount;
     const suppliedMergeType =
-      supplied.mergeType === undefined ? defaults.mergeType : supplied.mergeType;
+      supplied.mergeType === undefined
+        ? defaults.mergeType
+        : supplied.mergeType;
     const mergeType =
       suppliedMergeType === "1"
         ? 1
@@ -260,7 +262,9 @@ class Ranges<InsertValue extends AddValue = AddValue> {
     return cursor === snapshot.length;
   }
 
-  private snapshotRanges(ranges: Range<InsertValue>[] | null): unknown[] | null {
+  private snapshotRanges(
+    ranges: Range<InsertValue>[] | null,
+  ): unknown[] | null {
     if (!Array.isArray(ranges)) {
       return null;
     }
@@ -292,17 +296,13 @@ class Ranges<InsertValue extends AddValue = AddValue> {
     );
   }
 
-  private recordCurrentSnapshot(
-    result: Range<InsertValue>[] | null,
-  ): void {
+  private recordCurrentSnapshot(result: Range<InsertValue>[] | null): void {
     const rangesSnapshot = this.snapshotRanges(this.ranges);
     this.currentCache = {
       rangesSnapshot,
       result,
       resultSnapshot:
-        result === this.ranges
-          ? rangesSnapshot
-          : this.snapshotRanges(result),
+        result === this.ranges ? rangesSnapshot : this.snapshotRanges(result),
     };
   }
 
@@ -310,11 +310,7 @@ class Ranges<InsertValue extends AddValue = AddValue> {
     this.currentCache = null;
   }
 
-  private addValidated(
-    from: number,
-    to: number,
-    addVal?: InsertValue,
-  ): void {
+  private addValidated(from: number, to: number, addVal?: InsertValue): void {
     this.invalidateCurrentCache();
     DEV &&
       console.log(
@@ -393,7 +389,8 @@ class Ranges<InsertValue extends AddValue = AddValue> {
     DEV &&
       console.log(`PUSH whatToPush = ${JSON.stringify(whatToPush, null, 4)}`);
     this.ranges.push(whatToPush);
-    DEV && console.log(`this.ranges = ${JSON.stringify(this.ranges, null, 4)};`);
+    DEV &&
+      console.log(`this.ranges = ${JSON.stringify(this.ranges, null, 4)};`);
   }
 
   // A D D ()
@@ -465,11 +462,7 @@ class Ranges<InsertValue extends AddValue = AddValue> {
         validationError = `the first index must be a natural number, zero, or a digit-only numeric string; received ${formatDiagnosticValue(originalFrom, 4)} (type ${typeof originalFrom})`;
       } else if (to === null) {
         validationError = `the second index must be a natural number, zero, or a digit-only numeric string; received ${formatDiagnosticValue(originalTo, 4)} (type ${typeof originalTo})`;
-      } else if (
-        existy(addValue) &&
-        !isStr(addValue) &&
-        !isNum(addValue)
-      ) {
+      } else if (existy(addValue) && !isStr(addValue) && !isNum(addValue)) {
         validationError = `the third value must be a string, number, null, or undefined; received ${formatDiagnosticValue(addValue, 4)} (type ${typeof addValue})`;
       } else if (from > to) {
         validationError = `the first index (${from}) must not be greater than the second index (${to})`;
@@ -624,9 +617,7 @@ class Ranges<InsertValue extends AddValue = AddValue> {
 
   // R E P L A C E ()
   // ==========
-  replace(
-    givenRanges: RangeInput<InsertValue>[] | null | undefined,
-  ): void {
+  replace(givenRanges: RangeInput<InsertValue>[] | null | undefined): void {
     if (Array.isArray(givenRanges) && givenRanges.length) {
       // Now, ranges can be array of arrays, correct format but also single
       // range, an array of two natural numbers might be given.
@@ -661,4 +652,4 @@ class Ranges<InsertValue extends AddValue = AddValue> {
   }
 }
 
-export { defaults, Ranges, type Range, type RangeInput, version };
+export { defaults, type Range, type RangeInput, Ranges, version };

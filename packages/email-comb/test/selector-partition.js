@@ -17,9 +17,7 @@ test("01 - retains selectors used in the body", () => {
 });
 
 test("02 - removes selectors absent from the body", () => {
-  let actual = comb(
-    "<style>.a{a:1}.b{b:2}</style><body><p>x</p></body>",
-  );
+  let actual = comb("<style>.a{a:1}.b{b:2}</style><body><p>x</p></body>");
 
   equal(actual.result, "<body><p>x</p></body>", "02.01");
   equal(actual.deletedFromHead, [".a", ".b"], "02.02");

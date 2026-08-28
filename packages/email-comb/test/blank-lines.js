@@ -50,8 +50,7 @@ test("03 - preserves separators in protected regions", () => {
     "03.01",
   );
   equal(
-    comb("<body><script>const value = `one\n  \ntwo`;</script></body>")
-      .result,
+    comb("<body><script>const value = `one\n  \ntwo`;</script></body>").result,
     "<body><script>const value = `one\n  \ntwo`;</script></body>",
     "03.02",
   );

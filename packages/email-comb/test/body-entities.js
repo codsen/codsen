@@ -23,13 +23,10 @@ test("02 - matches named references with escaped CSS selectors", () => {
 });
 
 test("03 - uses canonical identities for whitelists and reports", () => {
-  const whitelisted = comb(
-    '<body><div class="us&#101;d">x</div></body>',
-    { whitelist: [".used"] },
-  );
-  const deleted = comb(
-    '<body><div class="gh&#111;st">x</div></body>',
-  );
+  const whitelisted = comb('<body><div class="us&#101;d">x</div></body>', {
+    whitelist: [".used"],
+  });
+  const deleted = comb('<body><div class="gh&#111;st">x</div></body>');
 
   equal(
     whitelisted.result,

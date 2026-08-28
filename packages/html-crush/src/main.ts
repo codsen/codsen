@@ -470,10 +470,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
       nameStartsAt--;
       nameEndsAt--;
     }
-    while (
-      nameStartsAt >= 0 &&
-      isHtmlNameChar(str[nameStartsAt])
-    ) {
+    while (nameStartsAt >= 0 && isHtmlNameChar(str[nameStartsAt])) {
       nameStartsAt--;
     }
 
@@ -744,10 +741,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
       // catch ending of </script...
       // ███████████████████████████████████████
 
-      if (
-        scriptStartedAt !== null &&
-        isHtmlTagAt(i, "script", true)
-      ) {
+      if (scriptStartedAt !== null && isHtmlTagAt(i, "script", true)) {
         DEV && console.log(`ENDING OF A SCRIPT TAG CAUGHT`);
         // 1. if there is a line break, chunk of whitespace and </script>,
         // delete that chunk of whitespace, leave line break.
@@ -806,11 +800,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
       // catch start of <script...
       // ███████████████████████████████████████
 
-      if (
-        !doNothing &&
-        !withinStyleTag &&
-        isHtmlTagAt(i, "script", false)
-      ) {
+      if (!doNothing && !withinStyleTag && isHtmlTagAt(i, "script", false)) {
         DEV && console.log(`STARTING OF A SCRIPT TAG CAUGHT`);
         scriptStartedAt = i;
         doNothing = true;
@@ -867,7 +857,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
           DEV &&
             console.log(
               `SET ${`\u001b[${33}m${`withinInlineStyle`}\u001b[${39}m`} = ${withinInlineStyle}`,
-          );
+            );
         } else if (attributeName !== null) {
           htmlAttributeQuoteStartedAt = i;
           if (resolvedOpts.removeLineBreaks) {
@@ -2514,9 +2504,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
 
         if (protectedTagName !== null) {
           DEV &&
-            console.log(
-              `OPENING ${protectedTagName.toUpperCase()} TAG CAUGHT`,
-            );
+            console.log(`OPENING ${protectedTagName.toUpperCase()} TAG CAUGHT`);
           let closingTagAt = findClosingHtmlTag(i + 2, protectedTagName);
           doNothing = closingTagAt === -1 ? len : closingTagAt;
           DEV &&

@@ -322,11 +322,7 @@ test("13 - html comments - earlier lines do not inject a line break", () => {
       });
 
       equal(result, `${expectedPrefix}xy`, "13.01");
-      equal(
-        ranges?.at(-1),
-        [commentStartsAt, commentStartsAt + 14],
-        "13.02",
-      );
+      equal(ranges?.at(-1), [commentStartsAt, commentStartsAt + 14], "13.02");
     }
   }
 });

@@ -124,11 +124,7 @@ test("03 - second input is not an object - throws", () => {
 });
 
 test("04 - omitted and undefined overrides use the default", () => {
-  equal(
-    combinations({ a: "ignored" }),
-    [{ a: false }, { a: true }],
-    "04.01",
-  );
+  equal(combinations({ a: "ignored" }), [{ a: false }, { a: true }], "04.01");
   equal(
     combinations({ a: "ignored" }, undefined),
     [{ a: false }, { a: true }],

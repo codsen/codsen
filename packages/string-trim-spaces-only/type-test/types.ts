@@ -1,4 +1,4 @@
-import { trimSpaces, type Res } from "string-trim-spaces-only";
+import { type Res, trimSpaces } from "string-trim-spaces-only";
 
 const result: Res = trimSpaces("  value  ");
 const rangeCount: number = result.ranges.length;

@@ -2,10 +2,7 @@
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
-import {
-  deepClone,
-  deepCloneWithMetadata,
-} from "../dist/codsen-utils.esm.js";
+import { deepClone, deepCloneWithMetadata } from "../dist/codsen-utils.esm.js";
 
 const hasOwn = Object.prototype.hasOwnProperty;
 
@@ -136,8 +133,7 @@ test("05 - preserves proto data on arrays and metadata clones", () => {
   sparse[2] = 3;
   const input = defineProto(sparse, { nested: true });
 
-  const { hasRepeatedReferences, value: result } =
-    deepCloneWithMetadata(input);
+  const { hasRepeatedReferences, value: result } = deepCloneWithMetadata(input);
 
   equal(hasRepeatedReferences, false, "05.01");
   equal(1 in result, false, "05.02");

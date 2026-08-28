@@ -73,11 +73,7 @@ test("04 - protects unclosed raw and preformatted contents", () => {
 test("05 - preserves nested preformatted markup", () => {
   const input = "<PRE> a <CODE>  b\n c </CODE> d </PRE>";
 
-  equal(
-    m(equal, input, { removeLineBreaks: true }).result,
-    input,
-    "05.01",
-  );
+  equal(m(equal, input, { removeLineBreaks: true }).result, input, "05.01");
 });
 
 test.run();

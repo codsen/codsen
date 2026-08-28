@@ -1593,18 +1593,10 @@ test("127 - validation rejects unsafe index coercions", () => {
 test("128 - validation checks complete batches before mutation", () => {
   const ranges = new Ranges();
   ranges.add(0, 1, "kept");
-  throws(
-    () => ranges.add([[1, 2], [3]]),
-    /THROW_ID_03/,
-    "128.01",
-  );
+  throws(() => ranges.add([[1, 2], [3]]), /THROW_ID_03/, "128.01");
   equal(ranges.current(), [[0, 1, "kept"]], "128.02");
 
-  throws(
-    () => ranges.add([[1, 2], "not a range"]),
-    /THROW_ID_03/,
-    "128.03",
-  );
+  throws(() => ranges.add([[1, 2], "not a range"]), /THROW_ID_03/, "128.03");
   throws(() => ranges.add([1]), /THROW_ID_03/, "128.04");
   throws(() => ranges.add(1, 2, undefined, 3), /THROW_ID_03/, "128.05");
   throws(() => ranges.add([1, 2, "x", 3]), /THROW_ID_03/, "128.06");
@@ -1645,7 +1637,10 @@ test("130 - FIRSTCOVERS() - observes mutations through public views", () => {
 test("131 - FIRSTCOVERS() - reversed chains scale without repeated scans", () => {
   function countReads(size) {
     const ranges = new Ranges();
-    const chain = Array.from({ length: size }, (_, index) => [index, index + 1]);
+    const chain = Array.from({ length: size }, (_, index) => [
+      index,
+      index + 1,
+    ]);
     chain.reverse();
     let indexedReads = 0;
     ranges.ranges = new Proxy(chain, {
@@ -1673,22 +1668,30 @@ test("132 - constructor defaults explicit undefined option values", () => {
     mergeType: undefined,
   });
   equal(explicit.opts, omitted.opts, "132.01");
-  equal(explicit.opts, {
-    limitToBeAddedWhitespace: false,
-    limitLinebreaksCount: 1,
-    mergeType: 1,
-  }, "132.02");
+  equal(
+    explicit.opts,
+    {
+      limitToBeAddedWhitespace: false,
+      limitLinebreaksCount: 1,
+      mergeType: 1,
+    },
+    "132.02",
+  );
 
   const zeroLinebreaks = new Ranges({
     limitToBeAddedWhitespace: true,
     limitLinebreaksCount: 0,
     mergeType: "2",
   });
-  equal(zeroLinebreaks.opts, {
-    limitToBeAddedWhitespace: true,
-    limitLinebreaksCount: 0,
-    mergeType: 2,
-  }, "132.03");
+  equal(
+    zeroLinebreaks.opts,
+    {
+      limitToBeAddedWhitespace: true,
+      limitLinebreaksCount: 0,
+      mergeType: 2,
+    },
+    "132.03",
+  );
 });
 
 test("133 - constructor validates and freezes normalized options", () => {
@@ -1703,18 +1706,18 @@ test("133 - constructor validates and freezes normalized options", () => {
     );
   }
   for (const limitLinebreaksCount of [null, -1, 1.5, "2", Number.NaN]) {
-    throws(
-      () => new Ranges({ limitLinebreaksCount }),
-      /THROW_ID_02/,
-      "133.03",
-    );
+    throws(() => new Ranges({ limitLinebreaksCount }), /THROW_ID_02/, "133.03");
   }
 
   const ranges = new Ranges();
   ok(Object.isFrozen(ranges.opts), "133.04");
-  throws(() => {
-    ranges.opts.mergeType = 2;
-  }, /read only|Cannot assign/, "133.05");
+  throws(
+    () => {
+      ranges.opts.mergeType = 2;
+    },
+    /read only|Cannot assign/,
+    "133.05",
+  );
   equal(ranges.opts.mergeType, 1, "133.06");
 });
 

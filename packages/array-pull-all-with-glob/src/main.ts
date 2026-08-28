@@ -172,15 +172,8 @@ function pull(
     }
   }
 
-  if (
-    strArr.length > 1 &&
-    resolvedToBeRemoved.length > matcherCacheCapacity
-  ) {
-    return pullPatternMajor(
-      strArr,
-      resolvedToBeRemoved,
-      caseSensitive,
-    );
+  if (strArr.length > 1 && resolvedToBeRemoved.length > matcherCacheCapacity) {
+    return pullPatternMajor(strArr, resolvedToBeRemoved, caseSensitive);
   }
 
   return pullSourceMajor(strArr, resolvedToBeRemoved, caseSensitive);

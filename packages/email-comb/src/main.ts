@@ -152,10 +152,7 @@ function characterSuitableForBodyToken(
     : char !== quote && char !== "{" && char !== "}";
 }
 
-function cleanBlankLines(
-  str: string,
-  backend: HeadsAndTailsObj[],
-): string {
+function cleanBlankLines(str: string, backend: HeadsAndTailsObj[]): string {
   const blankLineRegex = /\r?\n\s+\r?\n/g;
   let blankLineMatch = blankLineRegex.exec(str);
   if (!blankLineMatch) {
@@ -181,10 +178,10 @@ function cleanBlankLines(
           : rawTag === "style"
             ? " "
             : rawTag || comment || backendTails
-            ? blankLineMatch[0]
-            : blankLineMatch[0].includes("\r\n")
-              ? "\r\n"
-              : "\n";
+              ? blankLineMatch[0]
+              : blankLineMatch[0].includes("\r\n")
+                ? "\r\n"
+                : "\n";
       output.push(str.slice(lastOutputAt, i), replacement);
       lastOutputAt = i + blankLineMatch[0].length;
       i += blankLineMatch[0].length - 1;

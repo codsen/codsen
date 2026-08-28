@@ -160,7 +160,7 @@ export const dependencyStats: DependencyStats = {
     "p-reduce": 3,
     "package-json": 1,
     "picomatch": 1,
-    "ranges-apply": 16,
+    "ranges-apply": 15,
     "ranges-crop": 2,
     "ranges-invert": 2,
     "ranges-is-index-within": 2,
@@ -264,10 +264,10 @@ export const dependencyStats: DependencyStats = {
       "codsen-utils": 80
     },
     {
-      "ranges-apply": 16
+      "string-left-right": 16
     },
     {
-      "string-left-right": 16
+      "ranges-apply": 15
     },
     {
       "ranges-push": 12

@@ -91,13 +91,7 @@ test("06 - uglifyArr rejects invalid inputs deliberately", () => {
     { 0: "name", length: 1 },
     revoked.proxy,
   ];
-  const invalidMembers = [
-    [true],
-    [null],
-    [undefined],
-    [{}],
-    Array(1),
-  ];
+  const invalidMembers = [[true], [null], [undefined], [{}], Array(1)];
   let assertion = 1;
 
   for (const input of invalidContainers) {
@@ -543,13 +537,22 @@ test("20 - same-sum collision families have bounded unique outputs", () => {
   equal(new Set(at).size, at.length, "20.02");
   equal(at.slice(0, below.length), below, "20.03");
   equal(new Set(large).size, large.length, "20.04");
-  ok(large.every((name) => name.length <= 4), "20.05");
+  ok(
+    large.every((name) => name.length <= 4),
+    "20.05",
+  );
   ok(
     large.reduce((total, name) => total + name.length, 0) <= large.length * 4,
     "20.06",
   );
-  ok(classes.every((name) => name.startsWith(".")), "20.07");
-  ok(ids.every((name) => name.startsWith("#")), "20.08");
+  ok(
+    classes.every((name) => name.startsWith(".")),
+    "20.07",
+  );
+  ok(
+    ids.every((name) => name.startsWith("#")),
+    "20.08",
+  );
   equal(new Set(classes).size, classes.length, "20.09");
   equal(new Set(ids).size, ids.length, "20.10");
 
