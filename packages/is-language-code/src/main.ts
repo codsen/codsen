@@ -109,7 +109,7 @@ function isSingleton(subtag: string): boolean {
   return SINGLETON_RE.test(subtag);
 }
 
-function isLangCode(str?: unknown): Res {
+function isLangCode(str: string): Res {
   if (typeof str !== "string") {
     return failure("Not a string given.");
   }
