@@ -2,7 +2,7 @@
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
-import { pathPrev } from "../dist/ast-monkey-util.esm.js";
+import { pathNext, pathPrev } from "../dist/ast-monkey-util.esm.js";
 
 test("01", () => {
   equal(pathPrev(""), null, "01.01");
@@ -59,6 +59,31 @@ test("08 - exact decimal arithmetic beyond the safe integer range", () => {
   equal(pathPrev("00000000000000000000000000000042"), "41", "08.05");
   equal(pathPrev("00000000000000000000000000000001"), "0", "08.06");
   equal(pathPrev("00000000000000000000000000000000"), null, "08.07");
+});
+
+test("09 - non-leading one is replaced with zero", () => {
+  equal(pathPrev("9007199254740991"), "9007199254740990", "09.01");
+  equal(pathPrev("1100000000000000"), "1099999999999999", "09.02");
+  equal(
+    pathPrev("root.children.1010000000000000"),
+    "root.children.1009999999999999",
+    "09.03",
+  );
+});
+
+test("10 - long decimal differential and round-trip matrix", () => {
+  let failures = [];
+  for (let offset = 0n; offset < 10000n; offset += 1n) {
+    let value = 1000000000000000n + offset;
+    let valueAsString = value.toString();
+    if (pathPrev(valueAsString) !== (value - 1n).toString()) {
+      failures.push(`previous:${valueAsString}`);
+    }
+    if (pathPrev(pathNext(valueAsString)) !== valueAsString) {
+      failures.push(`round-trip:${valueAsString}`);
+    }
+  }
+  equal(failures, [], "10.01");
 });
 
 test.run();

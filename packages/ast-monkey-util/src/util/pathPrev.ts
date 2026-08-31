@@ -50,8 +50,12 @@ export function pathPrev(str: string): null | string {
     digitAt -= 1;
   }
   let decremented = extractedValue.charCodeAt(digitAt) - 49;
+  let decrementedDigit =
+    decremented || digitAt !== firstNonZero
+      ? String.fromCharCode(decremented + 48)
+      : "";
   let result = `${extractedValue.slice(firstNonZero, digitAt)}${
-    decremented ? String.fromCharCode(decremented + 48) : ""
+    decrementedDigit
   }${"9".repeat(extractedValue.length - digitAt - 1)}`;
   return `${prefix}${result || "0"}`;
 }
