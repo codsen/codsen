@@ -13,22 +13,41 @@ function containsOnlyDigits(value: string): boolean {
   return true;
 }
 
-export function pathPrev(str: string): null | string {
-  if (typeof str !== "string") {
-    throw new TypeError(
-      `ast-monkey-util/pathPrev(): [THROW_ID_03] The first argument must be a string; it was ${typeof str}.`,
-    );
+export function pathPrev(path: string): null | string;
+export function pathPrev(path: readonly string[]): null | string[];
+export function pathPrev(
+  path: string | readonly string[],
+): null | string | string[] {
+  if (typeof path !== "string") {
+    if (
+      !Array.isArray(path) ||
+      path.some((segment) => typeof segment !== "string")
+    ) {
+      throw new TypeError(
+        `ast-monkey-util/pathPrev(): [THROW_ID_03] The first argument must be a string or an array of strings; it was ${typeof path}.`,
+      );
+    }
+    if (!path.length) {
+      return null;
+    }
+    let previousSegment = pathPrev(path[path.length - 1]);
+    if (previousSegment === null) {
+      return null;
+    }
+    let result = path.slice();
+    result[result.length - 1] = previousSegment;
+    return result;
   }
-  if (!str) {
+  if (!path) {
     return null;
   }
 
-  let lastDotAt = str.lastIndexOf(".");
-  let extractedValue = str.slice(lastDotAt + 1);
+  let lastDotAt = path.lastIndexOf(".");
+  let extractedValue = path.slice(lastDotAt + 1);
   if (!containsOnlyDigits(extractedValue)) {
     return null;
   }
-  let prefix = lastDotAt === -1 ? "" : str.slice(0, lastDotAt + 1);
+  let prefix = lastDotAt === -1 ? "" : path.slice(0, lastDotAt + 1);
   if (extractedValue.length < 16) {
     let numericValue = +extractedValue;
     return numericValue <= 0 ? null : `${prefix}${numericValue - 1}`;
