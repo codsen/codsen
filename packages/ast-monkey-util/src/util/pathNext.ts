@@ -22,6 +22,9 @@ export function pathNext(str: string): string {
 
   let lastDotAt = str.lastIndexOf(".");
   let extractedValue = str.slice(lastDotAt + 1);
+  if (lastDotAt !== -1 && !extractedValue) {
+    return str;
+  }
   if (!containsOnlyDigits(extractedValue)) {
     return str;
   }

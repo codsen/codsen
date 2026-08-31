@@ -56,4 +56,14 @@ test("07 - exact decimal arithmetic beyond the safe integer range", () => {
   equal(pathNext("00000000000000000000000000000000"), "1", "07.06");
 });
 
+test("08 - empty final path segments are keys", () => {
+  equal(pathNext("article."), "article.", "08.01");
+  equal(pathNext("array.0."), "array.0.", "08.02");
+  equal(pathNext("."), ".", "08.03");
+  equal(pathNext("array.."), "array..", "08.04");
+  equal(pathNext(""), "1", "08.05");
+  equal(pathNext("array.0"), "array.1", "08.06");
+  equal(pathNext("array.key"), "array.key", "08.07");
+});
+
 test.run();
