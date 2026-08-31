@@ -211,6 +211,32 @@ function astDeepContainsSmoke(api, equal) {
   equal(errors, []);
 }
 
+function astMonkeyUtilSmoke(api, equal) {
+  equal(
+    [
+      typeof api.parent,
+      typeof api.pathNext,
+      typeof api.pathPrev,
+      typeof api.pathUp,
+      typeof api.version,
+    ],
+    ["function", "function", "function", "function", "string"],
+  );
+  equal(api.parent("a.0.c"), "0");
+  equal(api.pathNext("9.children.3"), "9.children.4");
+  equal(api.pathPrev("9.children.33"), "9.children.32");
+  equal(api.pathUp("9.children.3"), "9");
+  equal(api.pathPrev("9007199254740991"), "9007199254740990");
+  equal(
+    api.pathNext("root.children.99999999999999999999"),
+    "root.children.100000000000000000000",
+  );
+  equal(api.pathNext("article."), "article.");
+  equal(api.pathUp(".a"), "0");
+  equal(api.pathNext(["a.b", "children", "0"]), ["a.b", "children", "1"]);
+  equal(api.pathUp(["", "children", "0"]), [""]);
+}
+
 function codsenUtilsSmoke(api, equal) {
   const value = Object.create(null);
   value.hasOwnProperty = "shadowed";
@@ -422,6 +448,7 @@ function stringExtractClassNamesSmoke(api, equal) {
 const IIFE_API_SMOKES = Object.freeze({
   "array-group-str-omit-num-char": arrayGroupSmoke,
   "ast-deep-contains": astDeepContainsSmoke,
+  "ast-monkey-util": astMonkeyUtilSmoke,
   "codsen-utils": codsenUtilsSmoke,
   detergent: detergentSmoke,
   "email-comb": emailCombSmoke,

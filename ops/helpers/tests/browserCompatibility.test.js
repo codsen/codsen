@@ -93,6 +93,7 @@ test("05 - keeps browser smoke functions self-contained and serializable", () =>
     [
       "array-group-str-omit-num-char",
       "ast-deep-contains",
+      "ast-monkey-util",
       "codsen-utils",
       "detergent",
       "email-comb",
