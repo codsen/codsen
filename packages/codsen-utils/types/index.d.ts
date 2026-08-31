@@ -222,6 +222,22 @@ interface MatchOptions {
   caseSensitiveMatch?: boolean;
 }
 /**
+ * Prepare one or more wildcard patterns once and return a reusable matcher.
+ *
+ * The returned function has the same whole-string, wildcard, escaping,
+ * negation, and case-folding behavior as {@link match}. The returned closure
+ * retains its prepared state even when the bounded process-wide cache evicts a
+ * pattern or declines to cache a long one.
+ *
+ * @param patterns one pattern or an array of cohesive allow/deny patterns
+ * @param options matching options
+ * @returns a function that tests one input string against the prepared patterns
+ */
+declare function createMatcher(
+  patterns: string | readonly string[],
+  options?: MatchOptions,
+): (input: string) => boolean;
+/**
  * Match a whole string against one or more wildcard patterns.
  *
  * Patterns are anchored — they must consume the whole input, not a part of
@@ -253,6 +269,7 @@ export {
   backtick,
   codsenCLI,
   compareFn,
+  createMatcher,
   deepClone,
   deepCloneWithMetadata,
   detectEol,

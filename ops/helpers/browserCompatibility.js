@@ -445,8 +445,44 @@ function stringExtractClassNamesSmoke(api, equal) {
   });
 }
 
+function arrayIncludesWithGlobSmoke(api, equal) {
+  const progress = [];
+  let completion;
+
+  equal(typeof api.includesWithGlob, "function");
+  equal(typeof api.version, "string");
+  equal(Object.isFrozen(api.defaults), true);
+  equal(api.includesWithGlob([null, "index.js"], "*.js"), true);
+  equal(
+    api.includesWithGlob(
+      ["index.js", "theme.css", "index.test.js"],
+      ["*.js", "*.css", "!*.test.js"],
+      { arrayVsArrayAllMustBeFound: "all" },
+    ),
+    true,
+  );
+  equal(api.includesWithGlob(["index.test.js"], ["*.js", "!*.test.js"]), false);
+  equal(api.includesWithGlob("", [""]), true);
+  equal(
+    api.includesWithGlob(["miss", "hit"], ["hit", "hit"], {
+      reportCompletionFunc: function (stats) {
+        completion = stats;
+      },
+      reportProgressFunc: function (percentageDone) {
+        progress.push(percentageDone);
+      },
+    }),
+    true,
+  );
+  equal(progress, [0, 50, 100]);
+  equal(completion.patternComparisons, 2);
+  equal(completion.sourceItemsVisited, 2);
+  equal(typeof completion.timeTakenInMilliseconds, "number");
+}
+
 const IIFE_API_SMOKES = Object.freeze({
   "array-group-str-omit-num-char": arrayGroupSmoke,
+  "array-includes-with-glob": arrayIncludesWithGlobSmoke,
   "ast-deep-contains": astDeepContainsSmoke,
   "ast-monkey-util": astMonkeyUtilSmoke,
   "codsen-utils": codsenUtilsSmoke,

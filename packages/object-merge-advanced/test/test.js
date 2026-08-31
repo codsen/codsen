@@ -2612,4 +2612,34 @@ test("70 - reuseInputs reuses owned inputs", () => {
   equal(input1, { nested: { a: 1, b: 2 } }, "70.02");
 });
 
+test("71 - glob exclusions apply to every key selector", () => {
+  equal(
+    m(
+      { "main.js": "left", "main.test.js": "left" },
+      { "main.js": ["right"], "main.test.js": ["right"] },
+      { ignoreKeys: ["*.js", "!*.test.js"] },
+    ),
+    { "main.js": "left", "main.test.js": ["right"] },
+    "71.01",
+  );
+  equal(
+    m(
+      { "main.js": ["left"], "main.test.js": ["left"] },
+      { "main.js": "right", "main.test.js": "right" },
+      { hardMergeKeys: ["*.js", "!*.test.js"] },
+    ),
+    { "main.js": "right", "main.test.js": ["left"] },
+    "71.02",
+  );
+  equal(
+    m(
+      { "main.js": [{ a: 1 }], "main.test.js": [{ a: 1 }] },
+      { "main.js": [{ a: 2 }], "main.test.js": [{ a: 2 }] },
+      { hardArrayConcatKeys: ["*.js", "!*.test.js"] },
+    ),
+    { "main.js": [{ a: 1 }, { a: 2 }], "main.test.js": [{ a: 2 }] },
+    "71.03",
+  );
+});
+
 test.run();

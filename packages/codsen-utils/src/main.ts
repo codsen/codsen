@@ -1527,6 +1527,11 @@ interface MatchInputState {
   tokens?: MatchInputTokens;
 }
 
+interface PreparedMatchPattern {
+  compiled?: CompiledMatchPattern;
+  negative: boolean;
+}
+
 type MatchInputTokens = number[] | Uint32Array;
 
 const matchPatternCacheLimit = 256;
@@ -2162,6 +2167,120 @@ function matchesArrayMatchPattern(
 
   inputState.tokens ??= tokeniseMatchInput(input, caseSensitiveMatch);
   return matchesTokenCompiledPattern(inputState.tokens, compiled);
+}
+
+function prepareMatchPattern(
+  rawPattern: string,
+  caseSensitiveMatch: boolean,
+): PreparedMatchPattern {
+  const negative = rawPattern.charCodeAt(0) === 33;
+  const pattern = negative ? rawPattern.slice(1) : rawPattern;
+
+  return {
+    compiled:
+      pattern.length === 0
+        ? undefined
+        : compileMatchPattern(pattern, caseSensitiveMatch),
+    negative,
+  };
+}
+
+function matchesPreparedMatchPattern(
+  input: string,
+  prepared: PreparedMatchPattern,
+  caseSensitiveMatch: boolean,
+  inputState: MatchInputState,
+): boolean {
+  let matched: boolean;
+
+  if (!prepared.compiled) {
+    matched = input.length === 0;
+  } else if (prepared.compiled.asciiOnly) {
+    matched = matchesAsciiCompiledPattern(
+      input,
+      prepared.compiled,
+      caseSensitiveMatch,
+    );
+  } else {
+    inputState.tokens ??= tokeniseMatchInput(input, caseSensitiveMatch);
+    matched = matchesTokenCompiledPattern(
+      inputState.tokens,
+      prepared.compiled,
+    );
+  }
+
+  return prepared.negative ? !matched : matched;
+}
+
+/**
+ * Prepare one or more wildcard patterns once and return a reusable matcher.
+ *
+ * The returned function has the same whole-string, wildcard, escaping,
+ * negation, and case-folding behavior as {@link match}. The returned closure
+ * retains its prepared state even when the bounded process-wide cache evicts a
+ * pattern or declines to cache a long one.
+ *
+ * @param patterns one pattern or an array of cohesive allow/deny patterns
+ * @param options matching options
+ * @returns a function that tests one input string against the prepared patterns
+ */
+export function createMatcher(
+  patterns: string | readonly string[],
+  options?: MatchOptions,
+): (input: string) => boolean {
+  const caseSensitiveMatch = options?.caseSensitiveMatch === true;
+  const rawPatterns =
+    typeof patterns === "string" ? [patterns] : Array.from(new Set(patterns));
+
+  if (rawPatterns.length === 0) {
+    return () => false;
+  }
+
+  const preparedPatterns = rawPatterns.map((pattern) =>
+    prepareMatchPattern(pattern, caseSensitiveMatch),
+  );
+
+  if (typeof patterns === "string") {
+    const prepared = preparedPatterns[0];
+    return (input: string) =>
+      matchesPreparedMatchPattern(input, prepared, caseSensitiveMatch, {});
+  }
+
+  return (input: string) => {
+    const inputState: MatchInputState = {};
+    let hasPositive = false;
+    let positiveMatched = false;
+
+    for (const prepared of preparedPatterns) {
+      if (prepared.negative) {
+        if (
+          !matchesPreparedMatchPattern(
+            input,
+            prepared,
+            caseSensitiveMatch,
+            inputState,
+          )
+        ) {
+          return false;
+        }
+      } else {
+        hasPositive = true;
+        if (
+          !positiveMatched &&
+          matchesPreparedMatchPattern(
+            input,
+            prepared,
+            caseSensitiveMatch,
+            inputState,
+          )
+        ) {
+          positiveMatched = true;
+        }
+      }
+    }
+
+    return hasPositive ? positiveMatched : true;
+  };
 }
 
 /**

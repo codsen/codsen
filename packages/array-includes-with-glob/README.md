@@ -1,6 +1,6 @@
 <h1 align="center">array-includes-with-glob</h1>
 
-<p align="center">Like _.includes but with wildcards</p>
+<p align="center">Check strings against whole-string wildcard patterns</p>
 
 <p align="center">
   <a href="https://codsen.com/os/array-includes-with-glob" rel="nofollow noreferrer noopener">

@@ -1,7 +1,7 @@
 import { test } from "uvu";
 import { equal } from "uvu/assert";
 
-import { match } from "../dist/codsen-utils.esm.js";
+import { createMatcher, match } from "../dist/codsen-utils.esm.js";
 
 test("01 - exact and anchored matching", () => {
   equal(match("", ""), true, "01.01");
@@ -282,6 +282,29 @@ test("18 - fast paths reject exhausted search regions", () => {
     "18.03",
   );
   equal(match("😀x", "\\😀*", { caseSensitiveMatch: true }), true, "18.04");
+});
+
+test("19 - a reusable matcher prepares patterns once", () => {
+  const longPart = "a*".repeat(600);
+  const longMatcher = createMatcher(`${longPart}tail`, {
+    caseSensitiveMatch: true,
+  });
+  const cohesiveMatcher = createMatcher(
+    Object.freeze(["*.js", "!*.test.js", "*.js"]),
+    { caseSensitiveMatch: true },
+  );
+
+  equal(longMatcher("short"), false, "19.01");
+  equal(longMatcher("short"), false, "19.02");
+  equal(cohesiveMatcher("index.js"), true, "19.03");
+  equal(cohesiveMatcher("index.test.js"), false, "19.04");
+  equal(createMatcher([])("index.js"), false, "19.05");
+  equal(createMatcher("")(""), true, "19.06");
+  equal(createMatcher("!")(""), false, "19.07");
+  equal(createMatcher("!")("x"), true, "19.08");
+  equal(createMatcher("😀*")("😀rocket"), true, "19.09");
+  equal(createMatcher(["!draft*"])("published"), true, "19.10");
+  equal(createMatcher(["!draft*"])("draft-notes"), false, "19.11");
 });
 
 test.run();
