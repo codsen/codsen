@@ -6,7 +6,7 @@ export function pathUp(str: string): string {
   }
 
   let lastDotAt = str.lastIndexOf(".");
-  if (lastDotAt !== -1) {
+  if (lastDotAt > 0) {
     let previousDotAt = str.lastIndexOf(".", lastDotAt - 1);
     if (previousDotAt !== -1) {
       return str.slice(0, previousDotAt);

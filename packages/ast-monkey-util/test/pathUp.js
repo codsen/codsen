@@ -38,4 +38,14 @@ test("07 - non-string input", () => {
   );
 });
 
+test("08 - leading empty key", () => {
+  equal(pathUp(".0"), "0", "08.01");
+  equal(pathUp(".a"), "0", "08.02");
+  equal(pathUp("."), "0", "08.03");
+  equal(pathUp(".a.b"), "", "08.04");
+  equal(pathUp(".a.b.c"), ".a", "08.05");
+  equal(pathUp("a.b"), "0", "08.06");
+  equal(pathUp("a.b.c"), "a", "08.07");
+});
+
 test.run();
