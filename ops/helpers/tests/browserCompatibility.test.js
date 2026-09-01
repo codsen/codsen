@@ -94,6 +94,7 @@ test("05 - keeps browser smoke functions self-contained and serializable", () =>
       "array-group-str-omit-num-char",
       "array-includes-with-glob",
       "ast-compare",
+      "ast-contains-only-empty-space",
       "ast-deep-contains",
       "ast-monkey",
       "ast-monkey-util",

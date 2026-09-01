@@ -14,5 +14,6 @@ assert.equal(empty(["   ", " "]), true);
 // Works on strings as well:
 assert.equal(empty("   "), true);
 
-// Object keys that have values as null are considered empty:
-assert.equal(empty({ a: null }), true);
+// Empty arrays and plain objects are empty, but other leaves are meaningful:
+assert.equal(empty({ a: [] }), true);
+assert.equal(empty({ a: null }), false);

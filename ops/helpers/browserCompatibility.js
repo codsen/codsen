@@ -271,6 +271,47 @@ function astCompareSmoke(api, equal) {
   );
 }
 
+function astContainsOnlyEmptySpaceSmoke(api, equal) {
+  const symbolDecoratedRecord = { content: "visible" };
+  symbolDecoratedRecord[Symbol.toStringTag] = "Record";
+  const progress = [];
+  let completion;
+
+  equal(typeof api.empty, "function");
+  equal(typeof api.version, "string");
+  equal(Object.isFrozen(api.defaults), true);
+  equal(api.empty({ nodes: [" \n", { value: "\t" }] }), true);
+  equal(api.empty({ nodes: [" ", { value: "visible" }] }), false);
+  equal(api.empty(symbolDecoratedRecord), false);
+  equal(
+    api.empty(
+      { nodes: [" \n", { value: "\t" }] },
+      {
+        reportCompletionFunc: (stats) => {
+          completion = stats;
+        },
+        reportProgressFunc: (percentageDone) => {
+          progress.push(percentageDone);
+        },
+        reportProgressFuncFrom: 20,
+        reportProgressFuncTo: 40,
+      },
+    ),
+    true,
+  );
+  equal(progress, [20, 40]);
+  equal(
+    [
+      completion.arrayElementsVisited,
+      completion.maxDepth,
+      completion.objectPropertiesVisited,
+      completion.uniqueContainersVisited,
+      Object.isFrozen(completion),
+    ],
+    [2, 3, 2, 3, true],
+  );
+}
+
 function astMonkeySmoke(api, equal) {
   equal(
     [
@@ -730,6 +771,7 @@ const IIFE_API_SMOKES = Object.freeze({
   "array-group-str-omit-num-char": arrayGroupSmoke,
   "array-includes-with-glob": arrayIncludesWithGlobSmoke,
   "ast-compare": astCompareSmoke,
+  "ast-contains-only-empty-space": astContainsOnlyEmptySpaceSmoke,
   "ast-deep-contains": astDeepContainsSmoke,
   "ast-monkey": astMonkeySmoke,
   "ast-monkey-util": astMonkeyUtilSmoke,

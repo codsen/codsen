@@ -540,4 +540,29 @@ test("47 - two functions given - returns false", () => {
   equal(looseCompare(dummy, dummy), false, "47.01");
 });
 
+test("48 - empty structures never absorb meaningful leaves", () => {
+  const tagged = { text: "visible" };
+  tagged[Symbol.toStringTag] = "Record";
+  const iterable = { text: "visible" };
+  iterable[Symbol.iterator] = undefined;
+
+  equal(
+    [tagged, iterable].map((record) => looseCompare(record, {})),
+    [false, false],
+    "48.01",
+  );
+  equal(
+    [tagged, iterable].map((record) => looseCompare({}, record)),
+    [false, false],
+    "48.02",
+  );
+  equal(
+    [0, false, null, undefined].map((value) => looseCompare({ value }, {})),
+    [false, false, false, false],
+    "48.03",
+  );
+  equal(looseCompare({ value: { count: 0 } }, { value: {} }), false, "48.04");
+  equal(looseCompare({ value: [" ", { nested: "\n" }] }, {}), true, "48.05");
+});
+
 test.run();

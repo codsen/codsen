@@ -479,4 +479,44 @@ test("13 - whitespace caches and an empty unordered graph stay deterministic", (
   );
 });
 
+test("14 - symbol metadata cannot hide meaningful record values", () => {
+  const tagged = { text: "visible" };
+  tagged[Symbol.toStringTag] = "Record";
+  const iterable = { text: "visible" };
+  iterable[Symbol.iterator] = undefined;
+  const records = [tagged, iterable];
+  const modes = [
+    { hungryForWhitespace: true },
+    { hungryForWhitespace: true, matchStrictly: true },
+  ];
+
+  equal(
+    modes.map((options) =>
+      records.map((record) => compare(record, {}, options)),
+    ),
+    [
+      [false, false],
+      [false, false],
+    ],
+    "14.01",
+  );
+  equal(
+    modes.map((options) =>
+      records.map((record) => compare({}, record, options)),
+    ),
+    [
+      [false, false],
+      [false, false],
+    ],
+    "14.02",
+  );
+  equal(
+    [0, false, null, undefined].map((value) =>
+      compare({ value }, {}, { hungryForWhitespace: true }),
+    ),
+    [false, false, false, false],
+    "14.03",
+  );
+});
+
 test.run();

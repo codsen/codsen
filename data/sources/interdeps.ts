@@ -40,7 +40,7 @@ export const interdeps = [
   },
   {
     "name": "ast-contains-only-empty-space",
-    "size": 745,
+    "size": 4781,
     "imports": []
   },
   {
