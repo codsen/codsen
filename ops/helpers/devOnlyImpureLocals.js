@@ -5,6 +5,7 @@ import {
   locationAt,
   parseError,
   parseSourceFile,
+  unwrapExpression,
 } from "./devGuardedSource.js";
 
 // A `DEV && console.log(...)` guard is removed at build time, but only the
@@ -99,6 +100,93 @@ function initializerCalls(node) {
   return found;
 }
 
+// A discarded native-style iteration is another way for diagnostic work to
+// survive the production build without ever being assigned to a local:
+//
+//   makeString().split("").forEach((char) => {
+//     DEV && console.log(char);
+//   });
+//
+// Esbuild removes the log but conservatively retains every call in the chain
+// and the now-empty callback. Keep this deliberately narrow to `forEach`: its
+// return value is specified to be discarded, so a freestanding call exists for
+// callback effects, whereas an arbitrary callback-taking method may perform
+// independent work when it registers or schedules that callback.
+function forEachCallback(node) {
+  if (!ts.isCallExpression(node)) {
+    return undefined;
+  }
+  const callee = node.expression;
+  if (
+    !ts.isPropertyAccessExpression(callee) ||
+    callee.name.text !== "forEach"
+  ) {
+    return undefined;
+  }
+  const callback = node.arguments[0];
+  return callback &&
+    (ts.isArrowFunction(callback) || ts.isFunctionExpression(callback))
+    ? callback
+    : undefined;
+}
+
+function isAssignment(node) {
+  return (
+    ts.isBinaryExpression(node) &&
+    node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment &&
+    node.operatorToken.kind <= ts.SyntaxKind.LastAssignment
+  );
+}
+
+// Calls are the important case, but the callback may also mutate state without
+// one. Property reads are included because a getter can have effects which the
+// syntax alone cannot prove safe to discard. Pure arithmetic and a bare return
+// do not count: `forEach` ignores the callback's return value.
+function isPotentialRuntimeEffect(node) {
+  return (
+    ts.isCallExpression(node) ||
+    ts.isNewExpression(node) ||
+    ts.isTaggedTemplateExpression(node) ||
+    ts.isAwaitExpression(node) ||
+    ts.isYieldExpression(node) ||
+    ts.isDeleteExpression(node) ||
+    ts.isThrowStatement(node) ||
+    ts.isPropertyAccessExpression(node) ||
+    ts.isElementAccessExpression(node) ||
+    ts.isSpreadElement(node) ||
+    ts.isSpreadAssignment(node) ||
+    isAssignment(node) ||
+    ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) &&
+      (node.operator === ts.SyntaxKind.PlusPlusToken ||
+        node.operator === ts.SyntaxKind.MinusMinusToken))
+  );
+}
+
+function callbackEffects(callback) {
+  let guarded = 0;
+  let unguarded = 0;
+  const root = callback.body;
+
+  const visit = (node) => {
+    // Declaring a nested function does not execute its body during this
+    // iteration. In particular, a guarded log inside that deferred body must
+    // not make an otherwise empty callback look like a debug traversal.
+    if (node !== root && ts.isFunctionLike(node)) {
+      return;
+    }
+    if (isPotentialRuntimeEffect(node)) {
+      if (isDevGuarded(node)) {
+        guarded += 1;
+      } else {
+        unguarded += 1;
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(root);
+  return { guarded, unguarded };
+}
+
 // an identifier which reads the value, rather than naming a declaration,
 // a property, a label, or a type
 function isValueRead(node) {
@@ -179,6 +267,7 @@ function auditDevOnlyImpureLocals(sourceText, filePath = "source.ts") {
   let checkedCount = 0;
 
   const candidates = [];
+  const expressionCandidates = [];
   const readsBySymbol = new Map();
 
   function collect(node) {
@@ -192,6 +281,13 @@ function auditDevOnlyImpureLocals(sourceText, filePath = "source.ts") {
     ) {
       checkedCount += 1;
       candidates.push(node);
+    }
+    if (ts.isExpressionStatement(node)) {
+      const expression = unwrapExpression(node.expression);
+      const callback = forEachCallback(expression);
+      if (callback && !isDevGuarded(expression)) {
+        expressionCandidates.push({ callback, statement: node });
+      }
     }
     if (ts.isIdentifier(node) && isValueRead(node)) {
       // an identifier which resolves to nothing is a global this file never
@@ -229,6 +325,20 @@ function auditDevOnlyImpureLocals(sourceText, filePath = "source.ts") {
       message: `"${name}" is initialised from a call and read only inside DEV logging, so the call survives minification into the published bundle; compute it inside the log instead`,
       name,
       reads: reads.length,
+    });
+  }
+
+  for (const { callback, statement } of expressionCandidates) {
+    const effects = callbackEffects(callback);
+    if (!effects.guarded || effects.unguarded) {
+      continue;
+    }
+    problems.push({
+      ...locationAt(sourceFile, statement.getStart(sourceFile)),
+      kind: "dev-only-impure-expression",
+      message:
+        'a freestanding "forEach" call chain has only DEV-guarded callback effects, so the chain survives minification with an empty callback; guard the complete expression instead',
+      method: "forEach",
     });
   }
 

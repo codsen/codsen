@@ -470,4 +470,115 @@ test("18 - counts a shorthand property as a read of the local", () => {
   );
 });
 
+test("19 - flags a freestanding call chain with DEV-only callback work", () => {
+  const source = [
+    "function render(str: string, ranges: Ranges): string {",
+    '  rApply(str, ranges.current()).split("").forEach((char) => {',
+    "    DEV && console.log(char);",
+    "  });",
+    "  return rApply(str, ranges.current());",
+    "}",
+  ].join("\n");
+  const result = auditDevOnlyImpureLocals(source);
+
+  equal(result.checkedCount, 0, "19.01");
+  equal(
+    result.problems.map(({ column, kind, line, method }) => ({
+      column,
+      kind,
+      line,
+      method,
+    })),
+    [
+      {
+        column: 3,
+        kind: "dev-only-impure-expression",
+        line: 2,
+        method: "forEach",
+      },
+    ],
+    "19.02",
+  );
+});
+
+test("20 - accepts call chains removed wholly by a DEV guard", () => {
+  const logicalGuard = [
+    "function render(result: string): void {",
+    '  DEV && result.split("").forEach((char) => {',
+    "    console.log(char);",
+    "  });",
+    "}",
+  ].join("\n");
+  const ifGuard = [
+    "function render(result: string): void {",
+    "  if (DEV) {",
+    '    result.split("").forEach((char) => {',
+    "      console.log(char);",
+    "    });",
+    "  }",
+    "}",
+  ].join("\n");
+
+  equal(found(logicalGuard), [], "20.01");
+  equal(found(ifGuard), [], "20.02");
+});
+
+test("21 - accepts a callback with production effects", () => {
+  const source = [
+    "function collect(chars: string[], output: string[]): void {",
+    "  chars.forEach((char) => {",
+    "    output.push(char);",
+    "    DEV && console.log(char);",
+    "  });",
+    "}",
+  ].join("\n");
+
+  equal(found(source), [], "21.01");
+});
+
+test("22 - recognises both supported DEV guard forms in callbacks", () => {
+  const source = [
+    "function render(chars: string[]): void {",
+    "  chars.forEach((char) => DEV && console.log(char));",
+    "  chars.forEach(function (char) {",
+    "    if (DEV) {",
+    "      console.log(char);",
+    "    }",
+    "  });",
+    "}",
+  ].join("\n");
+
+  equal(
+    auditDevOnlyImpureLocals(source).problems.map(({ kind, line }) => ({
+      kind,
+      line,
+    })),
+    [
+      { kind: "dev-only-impure-expression", line: 2 },
+      { kind: "dev-only-impure-expression", line: 3 },
+    ],
+    "22.01",
+  );
+});
+
+test("23 - ignores callbacks with no DEV work or only deferred DEV work", () => {
+  const empty = [
+    "function render(chars: string[]): void {",
+    "  chars.forEach(() => {});",
+    "}",
+  ].join("\n");
+  const deferred = [
+    "function render(chars: string[]): void {",
+    "  chars.forEach(() => {",
+    "    function debug(): void {",
+    "      DEV && console.log('debug');",
+    "    }",
+    "  });",
+    "}",
+  ].join("\n");
+
+  equal(found(empty), [], "23.01");
+  equal(found(deferred), [], "23.02");
+});
+
 test.run();

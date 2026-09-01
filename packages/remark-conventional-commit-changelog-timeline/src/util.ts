@@ -41,6 +41,10 @@ export const extractStartingVersionString = (str: unknown) => {
  * "# 3.1.0 (2022-08-12)"
  * or
  * "# [3.1.0](https://github.com/...) (2022-08-12)"
+ *
+ * Typographic pipelines can replace the date's hyphens with en dashes before
+ * this plugin runs. Accept either separator and always return an ISO-shaped
+ * string that the Date constructor can parse consistently.
  * @param str
  * @returns string
  */
@@ -48,6 +52,6 @@ export const extractDateString = (str: unknown) => {
   if (typeof str !== "string") {
     return "";
   }
-  let res = str.match(/\((\d\d\d\d-\d\d-\d\d)\)$/);
-  return res?.length ? res[0].slice(1, -1) : "";
+  let res = str.match(/\((\d\d\d\d[-–]\d\d[-–]\d\d)\)$/);
+  return res?.length ? res[0].slice(1, -1).replace(/–/g, "-") : "";
 };

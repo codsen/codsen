@@ -11,5 +11,5 @@ assert.equal(
     .processSync("The `deno`'s and `verb`'s approaches.")
     .toString()
     .trim(),
-  "The `deno`’s and `verb`’s approaches.",
+  "The `deno`’s and `verb`’s\u00A0approaches.",
 );

@@ -38,10 +38,12 @@ export const dependencyStats: DependencyStats = {
     "unified",
     "unist-builder",
     "unist-util-visit",
-    "update-notifier"
+    "update-notifier",
+    "vfile"
   ],
   "allOwnDeps": [
     "all-named-html-entities",
+    "array-includes-with-glob",
     "array-pull-all-with-glob",
     "arrayiffy-if-string",
     "ast-compare",
@@ -116,6 +118,7 @@ export const dependencyStats: DependencyStats = {
     "all-named-html-entities": 2,
     "ansi-diff-stream": 1,
     "ansi-regex": 1,
+    "array-includes-with-glob": 1,
     "array-pull-all-with-glob": 1,
     "arrayiffy-if-string": 7,
     "ast-compare": 3,
@@ -123,13 +126,13 @@ export const dependencyStats: DependencyStats = {
     "ast-get-values-by-key": 1,
     "ast-is-empty": 1,
     "ast-monkey": 1,
-    "ast-monkey-traverse": 7,
+    "ast-monkey-traverse": 6,
     "ast-monkey-traverse-with-lookahead": 1,
     "check-types-mini": 2,
     "codsen-format-diagnostic-value": 2,
     "codsen-glob": 8,
     "codsen-parser": 1,
-    "codsen-utils": 80,
+    "codsen-utils": 79,
     "csv-sort": 1,
     "csv-split-easy": 1,
     "currency.js": 1,
@@ -185,7 +188,7 @@ export const dependencyStats: DependencyStats = {
     "string-find-heads-tails": 1,
     "string-fix-broken-named-entities": 1,
     "string-left-right": 16,
-    "string-match-left-right": 8,
+    "string-match-left-right": 7,
     "string-process-comma-separated": 1,
     "string-range-expander": 3,
     "string-remove-duplicate-heads-tails": 1,
@@ -199,10 +202,11 @@ export const dependencyStats: DependencyStats = {
     "unicode-segmenter": 1,
     "unified": 3,
     "unist-builder": 1,
-    "unist-util-visit": 3,
+    "unist-util-visit": 2,
     "update-notifier": 9,
     "util-array-object-or-both": 2,
-    "util-nonempty": 1
+    "util-nonempty": 1,
+    "vfile": 1
   },
   "devDependencies": {
     "@types/he": 2,
@@ -244,9 +248,6 @@ export const dependencyStats: DependencyStats = {
       "unified": 3
     },
     {
-      "unist-util-visit": 3
-    },
-    {
       "@inquirer/prompts": 2
     },
     {
@@ -257,11 +258,14 @@ export const dependencyStats: DependencyStats = {
     },
     {
       "leven": 2
+    },
+    {
+      "unist-util-visit": 2
     }
   ],
   "top10OwnDeps": [
     {
-      "codsen-utils": 80
+      "codsen-utils": 79
     },
     {
       "string-left-right": 16
@@ -276,13 +280,13 @@ export const dependencyStats: DependencyStats = {
       "codsen-glob": 8
     },
     {
-      "string-match-left-right": 8
-    },
-    {
       "arrayiffy-if-string": 7
     },
     {
-      "ast-monkey-traverse": 7
+      "string-match-left-right": 7
+    },
+    {
+      "ast-monkey-traverse": 6
     },
     {
       "ranges-merge": 5

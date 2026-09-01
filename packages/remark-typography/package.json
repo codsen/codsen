@@ -44,7 +44,7 @@
     "lect:check": "node '../../ops/lect/lect.js' --check",
     "lint": "biome lint --error-on-warnings . && npm run typecheck",
     "lint:fix": "biome lint --write --error-on-warnings . && npm run typecheck",
-    "perf": "echo 'skip perf'",
+    "perf": "node perf/check.js",
     "prep": "echo 'ready'",
     "prettier": "biome format",
     "prettier:format": "biome format --write .",
@@ -76,7 +76,7 @@
     "string-dashes": "^1.4.2",
     "string-remove-widows": "^4.2.2",
     "unified": "^11.0.5",
-    "unist-util-visit": "^5.1.0"
+    "vfile": "^6.0.3"
   },
   "engines": {
     "node": ">=18.20.8"

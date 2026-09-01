@@ -233,7 +233,7 @@ export const packageJSONData = {
   "array-includes-with-glob": {
     "name": "array-includes-with-glob",
     "version": "5.2.1",
-    "description": "Like _.includes but with wildcards",
+    "description": "Check strings against whole-string wildcard patterns",
     "keywords": [
       "array",
       "arrays",
@@ -4738,9 +4738,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "ast-monkey-traverse": "^4.2.2",
       "codsen-glob": "^1.1.0",
-      "codsen-utils": "^1.9.0",
       "sort-package-json": "^2.15.1",
       "update-notifier": "^7.3.1"
     },
@@ -5625,6 +5623,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "array-includes-with-glob": "^5.2.1",
       "codsen-utils": "^1.9.0",
       "util-nonempty": "^5.2.1"
     },
@@ -7286,7 +7285,7 @@ export const packageJSONData = {
       "lect:check": "node '../../ops/lect/lect.js' --check",
       "lint": "biome lint --error-on-warnings . && npm run typecheck",
       "lint:fix": "biome lint --write --error-on-warnings . && npm run typecheck",
-      "perf": "echo 'skip perf'",
+      "perf": "node perf/check.js",
       "prep": "echo 'ready'",
       "prettier": "biome format",
       "prettier:format": "biome format --write .",
@@ -7324,7 +7323,7 @@ export const packageJSONData = {
       "string-dashes": "^1.4.2",
       "string-remove-widows": "^4.2.2",
       "unified": "^11.0.5",
-      "unist-util-visit": "^5.1.0"
+      "vfile": "^6.0.3"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -8964,8 +8963,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.9.0",
       "ranges-apply": "^7.2.2",
       "ranges-push": "^7.2.1",
-      "string-left-right": "^6.2.1",
-      "string-match-left-right": "^9.2.2"
+      "string-left-right": "^6.2.1"
     },
     "devDependencies": {
       "string-strip-html": "^13.6.2"

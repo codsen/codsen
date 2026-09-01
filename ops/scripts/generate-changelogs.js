@@ -7,9 +7,9 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 import { cleanChangelogs } from "../../packages/lerna-clean-changelogs/dist/lerna-clean-changelogs.esm.js";
+import changelogTimeline from "../../packages/remark-conventional-commit-changelog-timeline/dist/remark-conventional-commit-changelog-timeline.esm.js";
 import remarkTypography from "../../packages/remark-typography/dist/remark-typography.esm.js";
 import { writeGeneratedFile } from "../helpers/generatedFiles.js";
-import changelogTimeline from "./remark-conventional-commit-changelog-timeline.esm.js";
 
 const arguments_ = process.argv.slice(2);
 if (arguments_.some((argument) => argument !== "--check")) {
@@ -68,13 +68,15 @@ for (let packageName of packageNames) {
       .data("settings", { fragment: true })
       .use(remarkParse)
       .use(remarkGfm)
+      // Typography maps MDAST phrasing nodes; keep it before MDAST becomes HAST.
+      .use(remarkTypography)
       .use(remarkRehype)
+      // The timeline plugin intentionally receives HAST.
       .use(changelogTimeline, {
         dateDivLocale: "en-UK",
         dateDivMarkup: ({ year, month, day }) =>
           `${day} ${month} <span>${year}</span>`,
       })
-      .use(remarkTypography)
       // .use(rehypeFormat)
       .use(rehypeStringify)
       .processSync(changelogContents);

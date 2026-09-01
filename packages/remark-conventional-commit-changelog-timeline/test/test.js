@@ -145,4 +145,22 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
   equal(render(input), expected, "03.01");
 });
 
+test("04 - typographic date separators remain parseable", () => {
+  let input = `
+## 1.2.3 (2022–08–12)
+
+- abc
+`;
+
+  let expected = `
+<h2>1.2.3</h2>
+<div class="release-date">Aug 12, <span>2022</span></div>
+<ul>
+  <li>abc</li>
+</ul>
+`;
+
+  equal(render(input), expected, "04.01");
+});
+
 test.run();

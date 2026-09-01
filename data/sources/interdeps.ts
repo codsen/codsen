@@ -14,7 +14,7 @@ export const interdeps = [
   },
   {
     "name": "array-includes-with-glob",
-    "size": 740,
+    "size": 3963,
     "imports": [
       "codsen-utils"
     ]
@@ -33,7 +33,7 @@ export const interdeps = [
   },
   {
     "name": "ast-compare",
-    "size": 11578,
+    "size": 11541,
     "imports": [
       "codsen-utils"
     ]
@@ -146,7 +146,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-utils",
-    "size": 21457,
+    "size": 22096,
     "imports": [
       "codsen-format-diagnostic-value"
     ]
@@ -202,7 +202,7 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "size": 25005,
+    "size": 25116,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -405,11 +405,9 @@ export const interdeps = [
   },
   {
     "name": "json-sort-cli",
-    "size": 9927,
+    "size": 12026,
     "imports": [
-      "ast-monkey-traverse",
-      "codsen-glob",
-      "codsen-utils"
+      "codsen-glob"
     ]
   },
   {
@@ -495,8 +493,9 @@ export const interdeps = [
   },
   {
     "name": "object-merge-advanced",
-    "size": 7510,
+    "size": 7116,
     "imports": [
+      "array-includes-with-glob",
       "codsen-utils",
       "util-nonempty"
     ]
@@ -623,14 +622,14 @@ export const interdeps = [
   },
   {
     "name": "remark-conventional-commit-changelog-timeline",
-    "size": 3263,
+    "size": 3293,
     "imports": [
       "object-delete-key"
     ]
   },
   {
     "name": "remark-typography",
-    "size": 992,
+    "size": 6826,
     "imports": [
       "codsen-utils",
       "string-apostrophes",
@@ -776,13 +775,12 @@ export const interdeps = [
   },
   {
     "name": "string-remove-widows",
-    "size": 7297,
+    "size": 17602,
     "imports": [
       "codsen-utils",
       "ranges-apply",
       "ranges-push",
-      "string-left-right",
-      "string-match-left-right"
+      "string-left-right"
     ]
   },
   {
