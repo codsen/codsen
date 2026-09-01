@@ -4,7 +4,9 @@ import objectPath from "object-path";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
-import { traverse } from "../dist/ast-monkey-traverse.esm.js";
+import { DELETE, traverse } from "../dist/ast-monkey-traverse.esm.js";
+
+const hasOwn = Object.prototype.hasOwnProperty;
 
 function withoutPathSegments(innerObj) {
   let result = { ...innerObj };
@@ -31,7 +33,7 @@ test(`01 - traverse - use traverse to delete one key from an array`, () => {
   let actual01 = traverse(input, (key1, val1) => {
     let current = val1 !== undefined ? val1 : key1;
     if (isEqual(current, { a: "b" })) {
-      return NaN;
+      return DELETE;
     }
     return current;
   });
@@ -48,7 +50,7 @@ test(`01 - traverse - use traverse to delete one key from an array`, () => {
   let actual02 = traverse(input, (key1, val1) => {
     let current = val1 !== undefined ? val1 : key1;
     if (isEqual(current, { c: "d" })) {
-      return NaN;
+      return DELETE;
     }
     return current;
   });
@@ -65,7 +67,7 @@ test(`01 - traverse - use traverse to delete one key from an array`, () => {
   let actual03 = traverse(input, (key1, val1) => {
     let current = val1 !== undefined ? val1 : key1;
     if (isEqual(current, { e: "f" })) {
-      return NaN;
+      return DELETE;
     }
     return current;
   });
@@ -96,7 +98,7 @@ test(`02 - traverse - more deletion from arrays`, () => {
   let actual01 = traverse(input, (key1, val1) => {
     let current = val1 !== undefined ? val1 : key1;
     if (isEqual(current, { a: "b" })) {
-      return NaN;
+      return DELETE;
     }
     return current;
   });
@@ -177,7 +179,7 @@ test(`04 - traverse - use traverse, passing undefined, write over values`, () =>
   equal(actual01, intended01, "04.01");
 });
 
-test(`05 - traverse - traverse automatically patches up holes in arrays`, () => {
+test(`05 - traverse - preserves explicit undefined array entries`, () => {
   let input = ["a", undefined, "b"];
 
   let actual01 = traverse(input, (key1, val1) => {
@@ -185,7 +187,7 @@ test(`05 - traverse - traverse automatically patches up holes in arrays`, () => 
     // we do nothing here
     return current;
   });
-  let intended01 = ["a", "b"];
+  let intended01 = ["a", undefined, "b"];
   equal(actual01, intended01, "05.01");
 });
 
@@ -199,7 +201,7 @@ test(`06 - traverse - delete key-value pair from plain object in root`, () => {
   let actual = traverse(input, (key1, val1) => {
     let current = val1 !== undefined ? val1 : key1;
     if (current === "a") {
-      return NaN;
+      return DELETE;
     }
     return current;
   });
@@ -1229,7 +1231,7 @@ test(`20 - parent snapshot drops a key deleted from an earlier sibling`, () => {
     (key1, val1, innerObj) => {
       let current = val1 !== undefined ? val1 : key1;
       gathered.push(innerObj.parent);
-      return current === "drop" ? Number.NaN : current;
+      return current === "drop" ? DELETE : current;
     },
   );
 
@@ -1292,19 +1294,23 @@ test(`23 - parent snapshot picks up a scalar rewritten in an earlier sibling`, (
   equal(gathered[2], { a: 10, b: 20, c: 3 }, "23.04");
 });
 
-test("24 - sparse and undefined array entries are compacted", () => {
+test("24 - sparse holes and explicit undefined entries are preserved", () => {
   let failures = [];
 
   for (let length = 1; length <= 6; length += 1) {
     for (let mask = 0; mask < 2 ** length; mask += 1) {
       let input = new Array(length);
-      let expected = [];
+      let expected = new Array(length);
+      let expectedVisits = [];
       for (let index = 0; index < length; index += 1) {
         if (mask & (1 << index)) {
           input[index] = `v${index}`;
-          expected.push(`v${index}`);
+          expected[index] = `v${index}`;
+          expectedVisits.push([`v${index}`, `${index}`]);
         } else if (index % 2 === 0) {
           input[index] = undefined;
+          expected[index] = undefined;
+          expectedVisits.push([undefined, `${index}`]);
         }
       }
 
@@ -1313,8 +1319,6 @@ test("24 - sparse and undefined array entries are compacted", () => {
         visited.push([value, innerObj.path]);
         return value;
       });
-      let expectedVisits = expected.map((value, index) => [value, `${index}`]);
-
       if (!isEqual(actual, expected) || !isEqual(visited, expectedVisits)) {
         failures.push({
           actual,
@@ -1342,14 +1346,15 @@ test("24 - sparse and undefined array entries are compacted", () => {
     return value;
   });
 
-  equal(actual, ["a", "b", "c"], "24.02");
+  equal(actual, mixed, "24.02");
   equal(
     visited,
     [
-      ["a", "0"],
-      [Number.NaN, "1"],
-      ["b", "1"],
-      ["c", "2"],
+      [undefined, "0"],
+      ["a", "1"],
+      [Number.NaN, "2"],
+      ["b", "3"],
+      ["c", "5"],
     ],
     "24.03",
   );
@@ -1851,7 +1856,7 @@ test("34 - callback replacements must stay inside the tree model", () => {
   });
 });
 
-test("35 - array snapshots track compaction and callback deletion", () => {
+test("35 - array snapshots preserve holes and track callback deletion", () => {
   let input = new Array(5);
   input[0] = "a";
   input[2] = "b";
@@ -1860,19 +1865,23 @@ test("35 - array snapshots track compaction and callback deletion", () => {
   let parents = [];
   let actual = traverse(input, (value, _unused, innerObj) => {
     parents.push(innerObj.parent);
-    return value === "drop" ? Number.NaN : value;
+    return value === "drop" ? DELETE : value;
   });
 
-  equal(actual, ["a", "b", "c"], "35.01");
+  let intended = new Array(4);
+  intended[0] = "a";
+  intended[2] = "b";
+  intended[3] = "c";
+  equal(actual, intended, "35.01");
   let initial = new Array(5);
   initial[0] = "a";
   initial[2] = "b";
   initial[3] = "drop";
   initial[4] = "c";
   equal(parents[0], initial, "35.02");
-  equal(parents[1], ["a", "b", "drop", "c"], "35.03");
-  equal(parents[2], ["a", "b", "drop", "c"], "35.04");
-  equal(parents[3], ["a", "b", "c"], "35.05");
+  equal(parents[1], initial, "35.03");
+  equal(parents[2], initial, "35.04");
+  equal(parents[3], intended, "35.05");
 });
 
 test("36 - deep array metadata remains lazy and complete", () => {
@@ -1908,6 +1917,30 @@ test("36 - deep array metadata remains lazy and complete", () => {
     undefined,
     "36.06",
   );
+});
+
+test("37 - callback replacements preserve signed zero", () => {
+  let negative = traverse([0], () => -0);
+  let positive = traverse([-0], () => 0);
+
+  equal(Object.is(negative[0], -0), true, "37.01");
+  equal(Object.is(positive[0], 0), true, "37.02");
+});
+
+test("38 - deleting before a trailing hole updates snapshots", () => {
+  let input = new Array(2);
+  input[0] = "drop";
+  let parent;
+  let actual = traverse(input, (_value, _unused, innerObj) => {
+    parent = innerObj.parent;
+    return DELETE;
+  });
+
+  equal(actual.length, 1, "38.01");
+  equal(hasOwn.call(actual, 0), false, "38.02");
+  equal(parent.length, 2, "38.03");
+  equal(parent[0], "drop", "38.04");
+  equal(hasOwn.call(parent, 1), false, "38.05");
 });
 
 test.run();

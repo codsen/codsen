@@ -7,7 +7,7 @@ import { traverse } from "../dist/ast-monkey-traverse.esm.js";
 const metadata = [];
 
 traverse({ users: [{ name: "Ada" }] }, (key, value, inner) => {
-  const current = value !== undefined ? value : key;
+  const current = inner.parentType === "object" ? value : key;
   metadata.push([inner.path, inner.depth, inner.parentType, inner.topmostKey]);
   return current;
 });

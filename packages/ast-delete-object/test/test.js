@@ -3430,14 +3430,21 @@ test("66 - strict mode, deletes everything", () => {
   );
 });
 
-test("67 - treats holes in arrays - ast-monkey will fix them", () => {
+test("67 - keeps explicit undefined and sparse holes distinct", () => {
   equal(
     deleteObj(["a", undefined, "b"], {
       x: "y",
     }),
-    ["a", "b"],
+    ["a", undefined, "b"],
     "67.01",
   );
+
+  let sparse = new Array(3);
+  sparse[0] = "a";
+  sparse[2] = "b";
+  let result = deleteObj(sparse, { x: "y" });
+  equal(result, sparse, "67.02");
+  equal(1 in result, false, "67.03");
 });
 
 // ==============================

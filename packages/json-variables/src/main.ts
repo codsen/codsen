@@ -4,7 +4,6 @@ import { arrayiffy } from "arrayiffy-if-string";
 import { type Findings, getByKey } from "ast-get-values-by-key";
 import { traverse } from "ast-monkey-traverse";
 import {
-  existy,
   formatDiagnosticValue,
   isBool,
   isNull,
@@ -872,17 +871,21 @@ function jVar(input: Obj, opts?: Partial<Opts>): Obj {
   //
 
   // we return the result of the traversal:
-  return traverse(input, (key, val, innerObj) => {
+  const result = traverse(input, (key, val, innerObj) => {
     DEV && console.log("\n========================================");
-    if (existy(val) && containsHeadsOrTails(key, resolvedOpts)) {
+    if (
+      innerObj.parentType === "object" &&
+      typeof key === "string" &&
+      containsHeadsOrTails(key, resolvedOpts)
+    ) {
       throw new Error(
         `json-variables/jVar(): [THROW_ID_20] Alas! Object keys can't contain variables!\nPlease check the following key: ${key}`,
       );
     }
     // * * *
     // Get the current values which are being traversed by ast-monkey:
-    // If it's an array, val will not exist, only key.
-    if (val !== undefined) {
+    // If it's an array, the current value is passed in the key position.
+    if (innerObj.parentType === "object") {
       // if it's object currently being traversed, we'll get both key and value
       current = val;
       DEV && console.log(`SET current = ${current} (type ${typeof current})`);
@@ -909,14 +912,15 @@ function jVar(input: Obj, opts?: Partial<Opts>): Obj {
     // *
     // If the "current" that monkey brought us is equal to whole heads or tails:
     if (
-      (resolvedOpts.heads.length &&
+      isStr(current) &&
+      ((resolvedOpts.heads.length &&
         trimIfString(current) === trimIfString(resolvedOpts.heads)) ||
-      (resolvedOpts.tails.length &&
-        trimIfString(current) === trimIfString(resolvedOpts.tails)) ||
-      (resolvedOpts.headsNoWrap.length &&
-        trimIfString(current) === trimIfString(resolvedOpts.headsNoWrap)) ||
-      (resolvedOpts.tailsNoWrap.length &&
-        trimIfString(current) === trimIfString(resolvedOpts.tailsNoWrap))
+        (resolvedOpts.tails.length &&
+          trimIfString(current) === trimIfString(resolvedOpts.tails)) ||
+        (resolvedOpts.headsNoWrap.length &&
+          trimIfString(current) === trimIfString(resolvedOpts.headsNoWrap)) ||
+        (resolvedOpts.tailsNoWrap.length &&
+          trimIfString(current) === trimIfString(resolvedOpts.tailsNoWrap)))
     ) {
       if (!resolvedOpts.noSingleMarkers) {
         return current;
@@ -971,6 +975,9 @@ function jVar(input: Obj, opts?: Partial<Opts>): Obj {
     // END OF MONKEY'S TRAVERSE
     // -------------------------------------------------------------------------
   });
+  // traverse() never replaces the root itself, and input was validated as a
+  // plain object above.
+  return result as Obj;
 }
 
 export { defaults, jVar, version };

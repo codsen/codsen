@@ -88,7 +88,7 @@ test("05 - drops in mixed things #3 - index is not a natural number", () => {
     () => {
       drop(input, { index });
     },
-    /THROW_ID_18/g,
+    /THROW_ID_22/g,
     "05.01",
   );
 });

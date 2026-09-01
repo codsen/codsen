@@ -41,7 +41,7 @@ glob([
       // console.log(`processing: ${idx}/${wholeArr.length}`);
       traverse(obj, (key, val, innerObj) => {
         // console.log(`path ${innerObj.path}`);
-        let current = val !== undefined ? val : key;
+        let current = innerObj.parentType === "object" ? val : key;
         // 1. test SET
         // ensure that if we set this path to something using set() result
         // is the same as to object-path.set()

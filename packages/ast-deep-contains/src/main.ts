@@ -93,7 +93,11 @@ function deepContains(
   } else {
     // release AST monkey to traverse tree2, check each node's presence in tree1
     traverse(tree2, (key, val, innerObj, stop) => {
-      let current = val !== undefined ? val : key;
+      let current = innerObj.parentType === "object" ? val : key;
+      const parentArray =
+        innerObj.parentType === "array" && Array.isArray(innerObj.parent)
+          ? innerObj.parent
+          : undefined;
       let { path } = innerObj;
       // retrieve the path of the current node from the monkey
       DEV && console.log("\n");
@@ -118,8 +122,8 @@ function deepContains(
         if (
           !resolvedOpts.arrayStrictComparison &&
           isPlainObject(current) &&
-          innerObj.parentType === "array" &&
-          innerObj.parent.length > 1
+          parentArray &&
+          parentArray.length > 1
         ) {
           DEV &&
             console.log(
@@ -128,7 +132,7 @@ function deepContains(
           // stop the monkey, we'll go further recursively
           stop.now = true;
 
-          let arr1: UnknownValueObj[] = Array.from(
+          let arr1: unknown[] = Array.from(
             innerObj.path.includes(".")
               ? objectPath.get(tree1, goUp(path))
               : tree1,
@@ -142,7 +146,7 @@ function deepContains(
               )}`,
             );
 
-          if (arr1.length < innerObj.parent.length) {
+          if (arr1.length < parentArray.length) {
             // source array from tree1 has less elements than array from tree2!
             // It will not be possible to match them all!
             errCb(
@@ -151,14 +155,14 @@ function deepContains(
                 null,
                 4,
               )}\nhas less objects than array we're matching against, ${JSON.stringify(
-                innerObj.parent,
+                parentArray,
                 null,
                 4,
               )}`,
             );
           } else {
             DEV && console.log();
-            let arr2: UnknownValueObj[] = innerObj.parent;
+            let arr2 = Array.from(parentArray);
             DEV &&
               console.log(
                 `SET ${`\u001b[${33}m${`arr2`}\u001b[${39}m`} = ${JSON.stringify(

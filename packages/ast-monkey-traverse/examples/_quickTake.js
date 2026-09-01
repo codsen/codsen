@@ -23,12 +23,11 @@ const source = {
 };
 
 traverse(source, (key, val, innerObj) => {
-  // if currently an object is traversed, you get both "key" and "val"
-  // if it's array, only "key" is present, "val" is undefined
-  let current = val !== undefined ? val : key;
+  // Objects supply a property key and value; arrays supply the element as key.
+  let current = innerObj.parentType === "object" ? val : key;
   if (
     // it's object (not array)
-    val !== undefined &&
+    innerObj.parentType === "object" &&
     // and has the key we need
     key === "foo"
   ) {

@@ -8,7 +8,7 @@ const paths = [];
 
 traverse({ a: "1", b: { c: "2" } }, (key, value, metadata) => {
   paths.push(metadata.path);
-  return value === undefined ? key : value;
+  return metadata.parentType === "object" ? value : key;
 });
 
 assert.deepEqual(paths, ["a", "b", "b.c"]);

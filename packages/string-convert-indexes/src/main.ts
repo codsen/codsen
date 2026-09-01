@@ -48,7 +48,7 @@ function strConvertIndexes(
   mode: "n" | "u",
   str: string,
   indexes: any,
-): string | number {
+): any {
   const functionName = mode === "n" ? "nativeToUnicode" : "unicodeToNative";
 
   function isItOk(something: any): boolean {
@@ -156,7 +156,7 @@ function strConvertIndexes(
     // if it's array or object, traverse
     return mode === "u"
       ? traverse(indexes, (key, val, innerObj) => {
-          let current = val !== undefined ? val : key;
+          let current = innerObj.parentType === "object" ? val : key;
           if (isStringOrNumber(current)) {
             // process it then
             if (isItOk(current)) {
@@ -172,7 +172,7 @@ function strConvertIndexes(
           return current;
         })
       : traverse(indexes, (key, val, innerObj) => {
-          let current = val !== undefined ? val : key;
+          let current = innerObj.parentType === "object" ? val : key;
           if (isStringOrNumber(current)) {
             // process it then
             if (isItOk(current)) {

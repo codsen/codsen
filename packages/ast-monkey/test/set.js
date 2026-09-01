@@ -108,7 +108,7 @@ test("06 - throws when inputs are wrong", () => {
         },
       );
     },
-    /THROW_ID_11/g,
+    /THROW_ID_14/g,
     "06.01",
   );
   throws(
@@ -120,7 +120,7 @@ test("06 - throws when inputs are wrong", () => {
         },
       );
     },
-    /THROW_ID_12/g,
+    /THROW_ID_15/g,
     "06.02",
   );
   throws(
@@ -133,7 +133,7 @@ test("06 - throws when inputs are wrong", () => {
         },
       );
     },
-    /THROW_ID_13/g,
+    /THROW_ID_16/g,
     "06.03",
   );
   throws(
@@ -146,7 +146,7 @@ test("06 - throws when inputs are wrong", () => {
         },
       );
     },
-    /THROW_ID_13/g,
+    /THROW_ID_16/g,
     "06.04",
   );
 });

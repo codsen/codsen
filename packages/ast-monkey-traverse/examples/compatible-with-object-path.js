@@ -11,7 +11,7 @@ const result1 = [];
 
 // the full traversal would look like this:
 traverse(input, (key1, val1, innerObj) => {
-  let current = val1 !== undefined ? val1 : key1;
+  let current = innerObj.parentType === "object" ? val1 : key1;
   result1.push(innerObj.path);
   return current;
 });

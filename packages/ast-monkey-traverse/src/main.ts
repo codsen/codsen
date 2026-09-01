@@ -26,6 +26,10 @@ export interface ReadonlyTreeObject {
 }
 export type ReadonlyTreeContainer = ReadonlyTreeArray | ReadonlyTreeObject;
 
+/** Return this value from a traversal callback to delete the current node. */
+const DELETE: unique symbol = Symbol.for("ast-monkey-traverse.delete");
+const hasOwn = Object.prototype.hasOwnProperty;
+
 export interface InnerObj {
   depth: number;
   path: string;
@@ -37,11 +41,11 @@ export interface InnerObj {
 }
 
 export type Callback = (
-  key: string | Exclude<TreeValue, undefined>,
+  key: string | TreeValue,
   val: TreeValue | undefined,
   innerObj: InnerObj,
   stop: Stop,
-) => TreeValue;
+) => TreeValue | typeof DELETE;
 
 function invalidTree(reason: string): never {
   throw new TypeError(
@@ -463,12 +467,8 @@ function traverse(tree1: TreeValue, cb1: Callback): TreeValue {
         stack.pop();
         continue;
       }
-      if (arrayContainer[frame.index] === undefined) {
-        arrayContainer.splice(frame.index, 1);
-        version += 1;
-        if (frame.snapshot) {
-          spliceSnapshot(frame.snapshot, frame.index, version);
-        }
+      if (!hasOwn.call(arrayContainer, frame.index)) {
+        frame.index += 1;
         continue;
       }
       slot = `${frame.index}`;
@@ -536,13 +536,13 @@ function traverse(tree1: TreeValue, cb1: Callback): TreeValue {
     }
 
     let result = cb1(
-      arrayParent ? (currentValue as Exclude<TreeValue, undefined>) : slot,
+      arrayParent ? currentValue : slot,
       arrayParent ? undefined : currentValue,
       innerObj,
       stop,
     );
 
-    let removed = Number.isNaN(result);
+    let removed = result === DELETE;
     let resultIsContainer = typeof result === "object" && result !== null;
     let currentIsContainer =
       typeof currentValue === "object" && currentValue !== null;
@@ -551,7 +551,7 @@ function traverse(tree1: TreeValue, cb1: Callback): TreeValue {
       currentIsContainer &&
       result === currentValue &&
       Boolean(frame.snapshot);
-    let adopted = result;
+    let adopted: TreeValue = result === DELETE ? currentValue : result;
     let snapshotValue: SnapshotNode | undefined;
 
     if (!removed && !resultIsContainer && !isTreePrimitive(result)) {
@@ -583,7 +583,7 @@ function traverse(tree1: TreeValue, cb1: Callback): TreeValue {
         frame.index += 1;
       }
     } else {
-      if (adopted !== currentValue || changedContainer) {
+      if (!Object.is(adopted, currentValue) || changedContainer) {
         setOwnValue(frame.container, slot, adopted);
         version += 1;
         if (frame.snapshot) {
@@ -625,4 +625,4 @@ function traverse(tree1: TreeValue, cb1: Callback): TreeValue {
 
 // -----------------------------------------------------------------------------
 
-export { traverse, version };
+export { DELETE, traverse, version };

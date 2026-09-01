@@ -29,9 +29,10 @@ function getByKey(
 
   let findings: Findings[] = [];
   let amended = traverse(originalInput, (key, val, innerObj) => {
-    let current = val !== undefined ? val : key;
+    let current = innerObj.parentType === "object" ? val : key;
     if (
-      val !== undefined &&
+      innerObj.parentType === "object" &&
+      typeof key === "string" &&
       match(key, whatToFind, { caseSensitiveMatch: true })
     ) {
       if (replacement === undefined) {

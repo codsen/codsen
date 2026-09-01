@@ -45,14 +45,14 @@ export const interdeps = [
   },
   {
     "name": "ast-deep-contains",
-    "size": 2555,
+    "size": 2597,
     "imports": [
       "ast-monkey-traverse"
     ]
   },
   {
     "name": "ast-delete-object",
-    "size": 1227,
+    "size": 1250,
     "imports": [
       "ast-compare",
       "ast-monkey-traverse",
@@ -69,7 +69,7 @@ export const interdeps = [
   },
   {
     "name": "ast-get-values-by-key",
-    "size": 659,
+    "size": 705,
     "imports": [
       "ast-monkey-traverse",
       "codsen-utils"
@@ -92,7 +92,7 @@ export const interdeps = [
   },
   {
     "name": "ast-monkey",
-    "size": 5245,
+    "size": 11608,
     "imports": [
       "ast-compare",
       "ast-monkey-traverse",
@@ -103,7 +103,7 @@ export const interdeps = [
   },
   {
     "name": "ast-monkey-traverse",
-    "size": 6133,
+    "size": 6179,
     "imports": []
   },
   {
@@ -412,7 +412,7 @@ export const interdeps = [
   },
   {
     "name": "json-variables",
-    "size": 10341,
+    "size": 10387,
     "imports": [
       "arrayiffy-if-string",
       "ast-get-values-by-key",
@@ -667,7 +667,7 @@ export const interdeps = [
   },
   {
     "name": "string-convert-indexes",
-    "size": 3816,
+    "size": 3842,
     "imports": [
       "ast-monkey-traverse",
       "codsen-utils"

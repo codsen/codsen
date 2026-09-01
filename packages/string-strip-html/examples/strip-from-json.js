@@ -6,16 +6,15 @@ import { traverse } from "ast-monkey-traverse";
 import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 const stripFromJsonStr = (str) => {
-  return traverse(JSON.parse(str), (key, val) => {
-    // if currently an object is traversed, you get both "key" and "val"
-    // if it's array, only "key" is present, "val" is undefined
-    let current = val !== undefined ? val : key;
+  return traverse(JSON.parse(str), (key, val, innerObj) => {
+    // Objects supply a property key and value; arrays supply the element as key.
+    let current = innerObj.parentType === "object" ? val : key;
     if (
       // ensure it's a plain object, not array (monkey will report only "key" in
       // arrays and "val" will be undefined)
       // also ensure object's value a string, not boolean or number, because we
       // don't strip HTML from booleans or numbers or anything else than strings
-      typeof val === "string"
+      innerObj.parentType === "object" && typeof val === "string"
     ) {
       // monkey's callback is like Array.map - whatever you return gets written:
       return stripHtml(val).result;

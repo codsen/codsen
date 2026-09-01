@@ -236,22 +236,23 @@ function astCompareSmoke(api, equal) {
     false,
   );
   equal(
-    api.compare({ alpha: { value: 1 } }, { "a*": { value: 2 } }, {
-      useWildcards: true,
-    }),
+    api.compare(
+      { alpha: { value: 1 } },
+      { "a*": { value: 2 } },
+      {
+        useWildcards: true,
+      },
+    ),
     false,
   );
-  equal(
-    api.compare(["real"], [" "], { hungryForWhitespace: true }),
-    false,
-  );
+  equal(api.compare(["real"], [" "], { hungryForWhitespace: true }), false);
   equal(
     api.compare(["a", "b"], ["b", "a"], {
       arrayOrder: "any",
-      reportCompletionFunc: function (stats) {
+      reportCompletionFunc: (stats) => {
         completion = stats;
       },
-      reportProgressFunc: function (percentageDone) {
+      reportProgressFunc: (percentageDone) => {
         progress.push(percentageDone);
       },
       reportProgressFuncFrom: 20,
@@ -319,7 +320,7 @@ function astIsEmptySmoke(api, equal) {
   cycle.self = cycle;
   const iteratorPoisoned = [""];
   Object.defineProperty(iteratorPoisoned, Symbol.iterator, {
-    get: function () {
+    get: () => {
       throw new Error("iterator accessed");
     },
   });
@@ -367,14 +368,18 @@ function astMonkeySmoke(api, equal) {
   equal(
     [
       typeof api.arrayFirstOnly,
+      typeof api.DELETE,
       typeof api.del,
       typeof api.drop,
       typeof api.find,
       typeof api.get,
       typeof api.set,
+      typeof api.traverse,
       typeof api.version,
     ],
     [
+      "function",
+      "symbol",
       "function",
       "function",
       "function",
@@ -384,9 +389,62 @@ function astMonkeySmoke(api, equal) {
       "string",
     ],
   );
+  equal(api.DELETE === Symbol.for("ast-monkey-traverse.delete"), true);
   equal(api.find({ a: 1 }, { key: "a" }), [
     { index: 1, key: "a", val: 1, path: [1] },
   ]);
+  equal(
+    api.find([undefined], {
+      criteria: { kind: "key", key: undefined },
+    }),
+    [{ index: 1, key: undefined, val: undefined, path: [1] }],
+  );
+  var protoInput = JSON.parse('{"__proto__":{"safe":true}}');
+  var protoResult = api.get(protoInput, { index: 1, only: "object" });
+  var protoDescriptor = Object.getOwnPropertyDescriptor(
+    protoResult,
+    "__proto__",
+  );
+  equal(Object.getPrototypeOf(protoResult) === Object.prototype, true);
+  equal(protoDescriptor !== undefined, true);
+  equal(protoDescriptor.value, { safe: true });
+  equal(api.get({ a: 1 }, { index: 1, only: "array" }), null);
+  equal(api.get({ a: 1 }, { index: "1", only: "o" }), { a: 1 });
+  var nanSet = api.set({ a: 1 }, { index: 1, val: Number.NaN });
+  equal(Number.isNaN(nanSet.a), true);
+  var negativeZeroSet = api.set({ a: 0 }, { index: 1, val: -0 });
+  equal(Object.is(negativeZeroSet.a, -0), true);
+  var explicitUndefined = [undefined, "tail"];
+  var sparse = new Array(3);
+  sparse[0] = undefined;
+  sparse[2] = "tail";
+  var sparseResult = api.set(sparse, { index: 1, val: "first" });
+  equal(
+    [
+      sparseResult.length,
+      sparseResult[0],
+      Object.getOwnPropertyDescriptor(sparseResult, "1") !== undefined,
+      sparseResult[2],
+    ],
+    [3, "first", false, "tail"],
+  );
+  equal(api.set(explicitUndefined, { index: 1, val: undefined }), [
+    undefined,
+    "tail",
+  ]);
+  equal(api.drop({ remove: 1, keep: 2 }, { index: 1 }), { keep: 2 });
+  equal(api.del({ remove: 1, keep: Number.NaN }, { key: "remove" }), {
+    keep: Number.NaN,
+  });
+  equal(api.arrayFirstOnly({ a: [[1, 2], 3] }), { a: [[1]] });
+  equal(
+    api.traverse({ remove: 1, keep: Number.NaN }, (key, value) =>
+      key === "remove" ? api.DELETE : value,
+    ),
+    { keep: Number.NaN },
+  );
+  var positiveZeroTraversal = api.traverse({ zero: -0 }, (_key, _value) => 0);
+  equal(Object.is(positiveZeroTraversal.zero, 0), true);
   var message = "";
   try {
     api.find({ a: 1 }, { key: 1 });
@@ -435,10 +493,10 @@ function checkTypesMiniSmoke(api, equal) {
     ["function", "function", "string", true],
   );
   api.checkTypesMini({ config: { enabled: true } }, null, {
-    reportCompletionFunc: function (stats) {
+    reportCompletionFunc: (stats) => {
       completion = stats;
     },
-    reportProgressFunc: function (percentageDone) {
+    reportProgressFunc: (percentageDone) => {
       progress.push(percentageDone);
     },
     reportProgressFuncFrom: 20,
@@ -803,10 +861,10 @@ function arrayIncludesWithGlobSmoke(api, equal) {
   equal(api.includesWithGlob("", [""]), true);
   equal(
     api.includesWithGlob(["miss", "hit"], ["hit", "hit"], {
-      reportCompletionFunc: function (stats) {
+      reportCompletionFunc: (stats) => {
         completion = stats;
       },
-      reportProgressFunc: function (percentageDone) {
+      reportProgressFunc: (percentageDone) => {
         progress.push(percentageDone);
       },
     }),

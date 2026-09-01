@@ -1,5 +1,6 @@
 import {
   type Callback,
+  DELETE,
   type ReadonlyTreeContainer,
   type TreeValue,
   traverse,
@@ -19,7 +20,7 @@ const transformed: TreeValue = traverse(
     if (value === 1) {
       return "one";
     }
-    return value !== undefined ? value : key;
+    return innerObj.parentType === "object" ? value : key;
   },
 );
 
@@ -27,17 +28,20 @@ void transformed;
 
 const deleteNumbers: Callback = (key, value) => {
   const current = value !== undefined ? value : key;
-  return typeof current === "number" ? Number.NaN : current;
+  return typeof current === "number" ? DELETE : current;
 };
 
 traverse([1, 2, 3], deleteNumbers);
+
+const numbersRemainData: TreeValue = traverse([Number.NaN], (key) => key);
+void numbersRemainData;
 
 traverse({ nested: { value: 1 } }, (key, value, innerObj) => {
   // @ts-expect-error Parent snapshots are deeply readonly.
   innerObj.parent.changed = true;
   // @ts-expect-error Exact metadata paths are readonly.
   innerObj.pathSegments.push("changed");
-  return value !== undefined ? value : key;
+  return innerObj.parentType === "object" ? value : key;
 });
 
 // @ts-expect-error Traversal can replace or delete nodes, so the result is not the input shape.
