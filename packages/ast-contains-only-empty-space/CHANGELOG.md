@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.1 (2026-09-01)
+
+### Bug Fixes
+
+- **ast-contains-only-empty-space:** harden traversal contracts ([34cd77e](https://github.com/codsen/codsen/commit/34cd77e9273347ec8d8c6c69bbc85ea89b8b9aa9))
+
+### Performance Improvements
+
+- optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+
 ## 4.2.0 (2026-08-19)
 
 ### Bug Fixes

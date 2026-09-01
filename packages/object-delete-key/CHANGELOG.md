@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.3 (2026-09-01)
+
+### Bug Fixes
+
+- **object-delete-key:** make deletion linear and safe ([6d2623f](https://github.com/codsen/codsen/commit/6d2623fc25bc0a67f9f291c2e530d5f7584e7d27))
+
 ## 4.2.2 (2026-08-22)
 
 ### Performance Improvements

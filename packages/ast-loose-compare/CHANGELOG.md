@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.2 (2026-09-01)
+
+### Bug Fixes
+
+- align object predicate contracts ([2268d1b](https://github.com/codsen/codsen/commit/2268d1b75188c2ec9c13b14ace4360f6836fd1bd))
+- **ast-contains-only-empty-space:** harden traversal contracts ([34cd77e](https://github.com/codsen/codsen/commit/34cd77e9273347ec8d8c6c69bbc85ea89b8b9aa9))
+
 ## 4.2.1 (2026-08-22)
 
 ### Performance Improvements

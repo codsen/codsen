@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.2.1 (2026-09-01)
+
+### Bug Fixes
+
+- allow omitted surrogate inputs ([ae1f614](https://github.com/codsen/codsen/commit/ae1f6146d4a1e6e868e2612934bcc5e5dec95967))
+
+### Performance Improvements
+
+- optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+
 ## 3.2.0 (2026-08-19)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "util-nonempty",
-  "version": "5.2.1",
+  "version": "5.2.2",
   "description": "Is the input (plain object, array, string or whatever) not empty?",
   "keywords": ["array", "empty", "is", "not", "object", "string", "util"],
   "homepage": "https://codsen.com/os/util-nonempty",

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.3 (2026-09-01)
+
+### Bug Fixes
+
+- **json-sort-cli:** preserve data and write safely ([16617ea](https://github.com/codsen/codsen/commit/16617eab2e1c204d8480c4ac8247b951efa5d907))
+- make ast traversal stack-safe ([fce2227](https://github.com/codsen/codsen/commit/fce22270cbec4406974b3b89e964ec3e78584374))
+
 ## 4.2.0 (2026-08-19)
 
 ### Bug Fixes

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 9.2.3 (2026-09-01)
+
+### Bug Fixes
+
+- align range input and output types ([1a13db6](https://github.com/codsen/codsen/commit/1a13db665fe2f9e77c6b5fd509980c87e5a57baf))
+- align range merge progress types ([2939de8](https://github.com/codsen/codsen/commit/2939de82524580b9aaed230c08dec22d80647d1f))
+- complete range sort progress reporting ([19d66bf](https://github.com/codsen/codsen/commit/19d66bfcc4a479ff31591b5ee06f08d832b58f12))
+- preserve contained null range insertions ([2d9efe3](https://github.com/codsen/codsen/commit/2d9efe35a95079b63ba5b91a5a3d2047b599acd8))
+- preserve tied range insertion order ([63b3fa3](https://github.com/codsen/codsen/commit/63b3fa313cd9ca822189371eac868d93cf770195))
+- report terminal range merge progress ([cfdcf84](https://github.com/codsen/codsen/commit/cfdcf84de3362c390d648e3729b890972f96ab4f))
+- validate range merge options ([ad062e5](https://github.com/codsen/codsen/commit/ad062e57a3b4dd64322053265b94a38b7e5fe9bd))
+
 ## 9.2.2 (2026-08-22)
 
 ### Performance Improvements

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 8.2.2 (2026-09-01)
+
+### Bug Fixes
+
+- **check-types-mini:** harden validation contracts ([ee91068](https://github.com/codsen/codsen/commit/ee910686461b2fcc531a37710917ae6cd58118f2))
+
 ## 8.2.1 (2026-08-22)
 
 ### Performance Improvements

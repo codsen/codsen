@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.2.3 (2026-09-01)
+
+### Bug Fixes
+
+- align range input and output types ([1a13db6](https://github.com/codsen/codsen/commit/1a13db665fe2f9e77c6b5fd509980c87e5a57baf))
+- align ranges-apply input types ([5db3a0b](https://github.com/codsen/codsen/commit/5db3a0be33ccdf6db2c43f1f940454a586e1f4ee))
+- preserve zero insertion at index zero ([b854dbc](https://github.com/codsen/codsen/commit/b854dbcf5b5cb84753dc9a16859fe7d118c77353))
+- reject reversed application ranges ([f89a3fd](https://github.com/codsen/codsen/commit/f89a3fddb7d92e63bd6b4809d252a6483d451d2c))
+- report terminal range merge progress ([cfdcf84](https://github.com/codsen/codsen/commit/cfdcf84de3362c390d648e3729b890972f96ab4f))
+- report terminal ranges-apply progress ([329e080](https://github.com/codsen/codsen/commit/329e0800a6b6186a0ff140619c07908c4923c8ac))
+
 ## 7.2.2 (2026-08-22)
 
 ### Performance Improvements

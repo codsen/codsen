@@ -1,6 +1,6 @@
 {
   "name": "ast-contains-only-empty-space",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "Does AST contain only empty space?",
   "keywords": [
     "ast",

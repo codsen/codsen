@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.3 (2026-09-01)
+
+### Bug Fixes
+
+- align adjacent range value merging ([a812fd7](https://github.com/codsen/codsen/commit/a812fd7c5569a08a20b460519cf191bb32f0d011))
+- align range input and output types ([1a13db6](https://github.com/codsen/codsen/commit/1a13db665fe2f9e77c6b5fd509980c87e5a57baf))
+- **string-remove-widows:** preserve text and API contracts ([3bba0cf](https://github.com/codsen/codsen/commit/3bba0cffdbcc140f76bec09fa124e230f43fe07d))
+
 ## 4.2.2 (2026-08-22)
 
 ### Performance Improvements

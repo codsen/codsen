@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.3.0 (2026-09-01)
+
+### Bug Fixes
+
+- align input option types with runtime ([ecbe95f](https://github.com/codsen/codsen/commit/ecbe95f3776101ae759b632b964c5f53579f012b))
+- align range input and output types ([1a13db6](https://github.com/codsen/codsen/commit/1a13db665fe2f9e77c6b5fd509980c87e5a57baf))
+- avoid unrelated comment line breaks ([e5e2ae6](https://github.com/codsen/codsen/commit/e5e2ae681ece0695a74d2f4b022665d81e867835))
+- classify Unicode letters by code point ([e166119](https://github.com/codsen/codsen/commit/e166119a72e032ff4e3faffe6d35d766f8a011d0))
+- keep progress within configured bounds ([4486713](https://github.com/codsen/codsen/commit/4486713f5c7a94e5c6e9ccb8aabcd6dbdc31e834))
+- normalize end-of-file whitespace cleanup ([e13fd99](https://github.com/codsen/codsen/commit/e13fd99e705d6fd92ec39d0efedbaea6d60f7dce))
+- preserve comment-like CSS strings ([4680eac](https://github.com/codsen/codsen/commit/4680eac5b16d868a4022e846e53b81e571415f53))
+- preserve quoted attribute values ([6b0546e](https://github.com/codsen/codsen/commit/6b0546e98947ee98fdc4bd466fef46285eaec064))
+- protect raw HTML element contents ([c6ffb0a](https://github.com/codsen/codsen/commit/c6ffb0a50a33a8586e83eeff409c0fefe6222730))
+- remove unfinished CSS comments through EOF ([a0ebd01](https://github.com/codsen/codsen/commit/a0ebd01ba92970299ca7c5763eb9edc1e5cbb724))
+- report conditional comment applicability ([2ee76fd](https://github.com/codsen/codsen/commit/2ee76fd9441715cfe5cde00121b359ad3ac2ae18))
+- report terminal ranges-apply progress ([329e080](https://github.com/codsen/codsen/commit/329e0800a6b6186a0ff140619c07908c4923c8ac))
+
+### Features
+
+- report explicit output size units ([70f0cad](https://github.com/codsen/codsen/commit/70f0cada7e74b6451e5eaade3432a3a8d316372a))
+
+### Performance Improvements
+
+- avoid repeated range normalization ([07185c0](https://github.com/codsen/codsen/commit/07185c053a644004f378295758def93d66b90d02))
+
 ## 6.2.2 (2026-08-22)
 
 ### Performance Improvements

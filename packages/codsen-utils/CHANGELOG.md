@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.10.0 (2026-09-01)
+
+### Bug Fixes
+
+- align object predicate contracts ([2268d1b](https://github.com/codsen/codsen/commit/2268d1b75188c2ec9c13b14ace4360f6836fd1bd))
+- classify Unicode letters by code point ([e166119](https://github.com/codsen/codsen/commit/e166119a72e032ff4e3faffe6d35d766f8a011d0))
+- copy no-op pullAll results ([d09cdf0](https://github.com/codsen/codsen/commit/d09cdf0965cf175d136a8f346d88afb1055c2767))
+- harden glob inclusion matching ([ac901db](https://github.com/codsen/codsen/commit/ac901db39ef29003493a2c76beca9ee23aa5c7ad))
+- parse leading-dot CLI numbers ([8372959](https://github.com/codsen/codsen/commit/8372959d53f80ed9ffe66797f9607b6cf58178bc))
+- preserve deep clone runtime shapes ([a62c091](https://github.com/codsen/codsen/commit/a62c0912158f24238e73c674d8be9c2414748966))
+- preserve null-prototype records ([f2ea76f](https://github.com/codsen/codsen/commit/f2ea76f830bb5d9a8239ff1f0e5c6aef0a32b5c5))
+- preserve proto data keys ([6747b19](https://github.com/codsen/codsen/commit/6747b198c8af2444b75856734422e495d28c11e1))
+- reject unusable regular expressions ([56b79d5](https://github.com/codsen/codsen/commit/56b79d53d4b8067e267aeec3b58328387ea36528))
+- **util-nonempty:** harden shallow value checks ([6f1eda6](https://github.com/codsen/codsen/commit/6f1eda6108ec38d15d30d4b3cb24a8880fcb4656))
+
+### Features
+
+- isolate diagnostic value formatting ([a7dc987](https://github.com/codsen/codsen/commit/a7dc987a57d3d39f175b942dd8244bdb896ada28))
+
 ## 1.9.0 (2026-08-22)
 
 ### Features

@@ -1,6 +1,6 @@
 {
   "name": "codsen-format-diagnostic-value",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Safely format untrusted JavaScript values for diagnostics",
   "keywords": ["diagnostic", "error", "format", "safe", "serialize", "value"],
   "homepage": "https://codsen.com/os/codsen-format-diagnostic-value",

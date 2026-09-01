@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.2.2 (2026-09-01)
+
+### Bug Fixes
+
+- **util-nonempty:** harden shallow value checks ([6f1eda6](https://github.com/codsen/codsen/commit/6f1eda6108ec38d15d30d4b3cb24a8880fcb4656))
+
 ## 5.2.1 (2026-08-22)
 
 ### Performance Improvements

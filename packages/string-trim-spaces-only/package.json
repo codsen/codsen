@@ -1,6 +1,6 @@
 {
   "name": "string-trim-spaces-only",
-  "version": "5.2.1",
+  "version": "5.3.0",
   "description": "Like String.trim() but you can choose granularly what to trim",
   "keywords": [
     "characters",
@@ -69,7 +69,7 @@
     }
   },
   "dependencies": {
-    "codsen-format-diagnostic-value": "^1.0.0"
+    "codsen-format-diagnostic-value": "^1.1.0"
   },
   "engines": {
     "node": ">=18.20.8"

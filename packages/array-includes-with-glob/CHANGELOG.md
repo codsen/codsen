@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.2.2 (2026-09-01)
+
+### Bug Fixes
+
+- harden glob inclusion matching ([ac901db](https://github.com/codsen/codsen/commit/ac901db39ef29003493a2c76beca9ee23aa5c7ad))
+
 ## 5.2.1 (2026-08-22)
 
 ### Performance Improvements

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.2.1 (2026-09-01)
+
+### Bug Fixes
+
+- preserve Unicode uglify mappings ([9d8d1b6](https://github.com/codsen/codsen/commit/9d8d1b650dc4c1550f6a661ee00f8f6146d389e1))
+- return an isolated empty uglify result ([16ac475](https://github.com/codsen/codsen/commit/16ac4758f74e0140cae409aceae7dd636b702e0b))
+- validate string uglify inputs ([de630e5](https://github.com/codsen/codsen/commit/de630e50a5ca1e69448cabf4fe786ef5273f99ac))
+
+### Performance Improvements
+
+- bound string uglify collisions ([f01b4ce](https://github.com/codsen/codsen/commit/f01b4ce7d763555f5576abb44255d94ec380004f))
+- optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+- stabilize string uglify validation ([bec9147](https://github.com/codsen/codsen/commit/bec9147eb3dd779250ff73e2665898c5ec68506f))
+
 ## 3.2.0 (2026-08-19)
 
 ### Bug Fixes

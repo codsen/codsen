@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 9.2.3 (2026-09-01)
+
+### Bug Fixes
+
+- align callback trim matching ([c87aca2](https://github.com/codsen/codsen/commit/c87aca20dc168bd90242c65b33d041b2e0671f50))
+- align matcher alternative types ([b82ef30](https://github.com/codsen/codsen/commit/b82ef302d374babb22b32250e3c2867f4a51093e))
+- bound matcher mismatch work ([5b92249](https://github.com/codsen/codsen/commit/5b92249a7116ca87cd1f79eca15637e7e924cbe7))
+- enforce left match boundaries ([d81d631](https://github.com/codsen/codsen/commit/d81d631c0b2cc2f5391efbb97b4dea486b70be16))
+- reject out-of-range match positions ([dc889f9](https://github.com/codsen/codsen/commit/dc889f9f80a746f81701474fae81d96edf2d16a4))
+- return complete matcher callback context ([76bfcdb](https://github.com/codsen/codsen/commit/76bfcdbc6d424d424086a6e12e9b804a8f0de725))
+- stabilize end-of-line matchers ([e5f4df9](https://github.com/codsen/codsen/commit/e5f4df9fbb51133a36d8286c2e2a9240706a5be4))
+
+### Performance Improvements
+
+- streamline strict string matching ([3c3beca](https://github.com/codsen/codsen/commit/3c3beca31fb5b19a5ba5136a10d02966a56c68a2))
+
 ## 9.2.2 (2026-08-22)
 
 ### Performance Improvements

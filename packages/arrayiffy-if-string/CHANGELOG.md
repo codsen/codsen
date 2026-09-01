@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.2.2 (2026-09-01)
+
+### Bug Fixes
+
+- preserve broad arrayiffy result types ([326ab4b](https://github.com/codsen/codsen/commit/326ab4b55583dcb5cd676f571c10e147f9681c91))
+
+### Performance Improvements
+
+- establish the Node 24 arrayiffy baseline ([f78d36b](https://github.com/codsen/codsen/commit/f78d36b39f4506756ba62c1b0111991726da48e1))
+- optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+
 ## 5.2.0 (2026-08-19)
 
 ### Bug Fixes

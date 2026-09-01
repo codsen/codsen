@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.3.0 (2026-09-01)
+
+### Bug Fixes
+
+- expose parent declaration directly ([7b5ef85](https://github.com/codsen/codsen/commit/7b5ef851d1682235a6d94c738431be5ed50d1e38))
+- handle leading empty AST path keys ([9415aec](https://github.com/codsen/codsen/commit/9415aeca01b40b2197d3eaa45cbb76c6c7e0ebb0))
+- keep long AST paths exact ([62da3ec](https://github.com/codsen/codsen/commit/62da3ec4965d01fc12dc1a52a6717a59436462ad))
+- preserve empty AST path keys ([ad7b429](https://github.com/codsen/codsen/commit/ad7b4296621c3267aab35590da39436b53bcbbe7))
+- preserve zeros in long AST paths ([dafb2e0](https://github.com/codsen/codsen/commit/dafb2e000b00a5e2c75384c27de42a0a8865bb80))
+
+### Features
+
+- support exact AST path segments ([686e2a0](https://github.com/codsen/codsen/commit/686e2a0352be468cab356cace8615cd0b6be3242))
+
+### Performance Improvements
+
+- optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+- refresh AST path baseline ([cf61a7a](https://github.com/codsen/codsen/commit/cf61a7a4be6ceb5b366dd23db13f7589d4566e24))
+
 ## 3.2.0 (2026-08-19)
 
 ### Bug Fixes

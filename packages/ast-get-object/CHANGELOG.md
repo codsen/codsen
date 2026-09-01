@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.3 (2026-09-01)
+
+### Bug Fixes
+
+- align object predicate contracts ([2268d1b](https://github.com/codsen/codsen/commit/2268d1b75188c2ec9c13b14ace4360f6836fd1bd))
+
 ## 4.2.2 (2026-08-22)
 
 ### Performance Improvements

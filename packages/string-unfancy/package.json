@@ -1,6 +1,6 @@
 {
   "name": "string-unfancy",
-  "version": "6.2.1",
+  "version": "6.2.2",
   "description": "Replace all n/m dashes, curly quotes with their simpler equivalents",
   "keywords": [
     "alt",
@@ -70,7 +70,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.9.0",
+    "codsen-utils": "^1.10.0",
     "he": "^1.2.0"
   },
   "devDependencies": {

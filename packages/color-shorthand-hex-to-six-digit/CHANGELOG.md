@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.2.2 (2026-09-01)
+
+### Bug Fixes
+
+- preserve complete ID selectors ([7c79358](https://github.com/codsen/codsen/commit/7c79358a9a3ea0fc71ae9e782fc53716db6573a4))
+- preserve complete resource fragments ([3776e95](https://github.com/codsen/codsen/commit/3776e956aac024d980ea66052aee8392c897bfbc))
+- preserve converted object graphs ([0bb3c08](https://github.com/codsen/codsen/commit/0bb3c08acc53682dd19999168b407406949f23f1))
+- preserve object data properties ([b1da33a](https://github.com/codsen/codsen/commit/b1da33ae72b8923e233186c009cacb5f542e290c))
+- publish recursive conversion types ([f01a9da](https://github.com/codsen/codsen/commit/f01a9dae93557fe59e84683f43267ec2583d728c))
+
+### Performance Improvements
+
+- avoid unnecessary context scans ([b23b596](https://github.com/codsen/codsen/commit/b23b596ffb7646639ee462093ac36c8f63065a61))
+
 ## 5.2.1 (2026-08-22)
 
 ### Performance Improvements

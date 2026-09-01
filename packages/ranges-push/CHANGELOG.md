@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.3.0 (2026-09-01)
+
+### Bug Fixes
+
+- accept declared replacement indexes ([afb11c5](https://github.com/codsen/codsen/commit/afb11c52d948f0627842d2aa56696cc34ab52f60))
+- align adjacent range value merging ([a812fd7](https://github.com/codsen/codsen/commit/a812fd7c5569a08a20b460519cf191bb32f0d011))
+- align range input and output types ([1a13db6](https://github.com/codsen/codsen/commit/1a13db665fe2f9e77c6b5fd509980c87e5a57baf))
+- normalize constructor options ([6c3a70c](https://github.com/codsen/codsen/commit/6c3a70c54572ec520afca64217cd9d5dad8369e5))
+- preserve contained null range insertions ([2d9efe3](https://github.com/codsen/codsen/commit/2d9efe35a95079b63ba5b91a5a3d2047b599acd8))
+- preserve zero insertion at index zero ([b854dbc](https://github.com/codsen/codsen/commit/b854dbcf5b5cb84753dc9a16859fe7d118c77353))
+- validate ranges before mutation ([8cee677](https://github.com/codsen/codsen/commit/8cee6779cb54f7c843c6d9f797dd2cd97569948f))
+
+### Features
+
+- perf improvements ([e3e4d8e](https://github.com/codsen/codsen/commit/e3e4d8ede2add7e4b0e2369e1f69b0bd030a35c5))
+
+### Performance Improvements
+
+- add ranges-push diagnostics ([43a3d92](https://github.com/codsen/codsen/commit/43a3d92aca132269423c860ce0cb419fa52d1fba))
+- bound first range coverage checks ([71be193](https://github.com/codsen/codsen/commit/71be1938b8838e562a24e02d83680119cb120ec1))
+- cache unchanged current ranges ([a4a40af](https://github.com/codsen/codsen/commit/a4a40af94eefef05b889c6f486831275720a4146))
+- streamline range ingestion ([c147d35](https://github.com/codsen/codsen/commit/c147d35c7b1d24d6c7906b4d32e568b915cbb942))
+
 ## 7.2.1 (2026-08-22)
 
 ### Performance Improvements

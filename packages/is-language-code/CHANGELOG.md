@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.2.1 (2026-09-01)
+
+### Bug Fixes
+
+- clarify invalid language subtags ([a2ddf70](https://github.com/codsen/codsen/commit/a2ddf704ec4b8c396aa0cf4fe1f57571470ab6df))
+- set input arg type back to string and obligatory one at that ([636bf2f](https://github.com/codsen/codsen/commit/636bf2f20baa2e853e1d288c02ea3720c9631605))
+- type defensive language validation ([0f5123e](https://github.com/codsen/codsen/commit/0f5123e1ce72d3854071b5e481e76ed5fa8d6c57))
+
+### Performance Improvements
+
+- optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+- reduce complete tag lookups ([682371a](https://github.com/codsen/codsen/commit/682371a329d57281aea5eb34972b50efd83776a9))
+
 ## 5.2.0 (2026-08-19)
 
 ### Bug Fixes

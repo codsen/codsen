@@ -3,6 +3,58 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.5.0 (2026-09-01)
+
+### Bug Fixes
+
+- accept readonly array removal inputs ([804254d](https://github.com/codsen/codsen/commit/804254dac354c85ad20d831f9df65fbef78f4589))
+- align null options type contract ([4693b8a](https://github.com/codsen/codsen/commit/4693b8a16cf2fcbf25b1166f13b567e7a9097995))
+- align ranges-apply input types ([5db3a0b](https://github.com/codsen/codsen/commit/5db3a0be33ccdf6db2c43f1f940454a586e1f4ee))
+- allow omitted surrogate inputs ([ae1f614](https://github.com/codsen/codsen/commit/ae1f6146d4a1e6e868e2612934bcc5e5dec95967))
+- **ast-compare:** correct matching semantics ([2ebcd60](https://github.com/codsen/codsen/commit/2ebcd601c231a01043f46bc5afbcac2eaaf91db3))
+- **ast-contains-only-empty-space:** harden traversal contracts ([34cd77e](https://github.com/codsen/codsen/commit/34cd77e9273347ec8d8c6c69bbc85ea89b8b9aa9))
+- **ast-is-empty:** make traversal graph-safe ([653714b](https://github.com/codsen/codsen/commit/653714bc23a3cffe46099781f2d24f2f0ad5445a))
+- **ast-monkey:** preserve traversal data semantics ([861b9fc](https://github.com/codsen/codsen/commit/861b9fc242abb9e6a06c665a80e884970276b22d))
+- **check-types-mini:** harden validation contracts ([ee91068](https://github.com/codsen/codsen/commit/ee910686461b2fcc531a37710917ae6cd58118f2))
+- enforce traversal tree inputs ([c539860](https://github.com/codsen/codsen/commit/c5398605891bca6e8074a9ab1cd8903489e0ddb0))
+- expose parent declaration directly ([7b5ef85](https://github.com/codsen/codsen/commit/7b5ef851d1682235a6d94c738431be5ed50d1e38))
+- make ast traversal stack-safe ([fce2227](https://github.com/codsen/codsen/commit/fce22270cbec4406974b3b89e964ec3e78584374))
+- model fixed combination values ([9bbc12b](https://github.com/codsen/codsen/commit/9bbc12bda952db28e1081a8cb2df9c7eac2c3662))
+- narrow trim range result type ([cd59232](https://github.com/codsen/codsen/commit/cd592322564c786a1d0b99187ef67762bca1d8e7))
+- **object-delete-key:** make deletion linear and safe ([6d2623f](https://github.com/codsen/codsen/commit/6d2623fc25bc0a67f9f291c2e530d5f7584e7d27))
+- **object-merge-advanced:** harden merge contracts ([a2908fa](https://github.com/codsen/codsen/commit/a2908fa22147628eaea643d82907bd9814d2d3b7))
+- preserve broad arrayiffy result types ([326ab4b](https://github.com/codsen/codsen/commit/326ab4b55583dcb5cd676f571c10e147f9681c91))
+- preserve proto data keys ([6747b19](https://github.com/codsen/codsen/commit/6747b198c8af2444b75856734422e495d28c11e1))
+- publish recursive conversion types ([f01a9da](https://github.com/codsen/codsen/commit/f01a9dae93557fe59e84683f43267ec2583d728c))
+- publish sound traversal types ([03f3d46](https://github.com/codsen/codsen/commit/03f3d467978a27d41a16599a17d6cccf15d35634))
+- **remark-typography:** preserve phrasing context ([371dd5e](https://github.com/codsen/codsen/commit/371dd5e98481277017d90182e33125a96f179abd))
+- remove stale detergent dependency ([ee87124](https://github.com/codsen/codsen/commit/ee8712468e96fcb9ea9bcc3ae13ebdad8bd0c7b2))
+- **string-left-right:** align stop helper index types ([21a8768](https://github.com/codsen/codsen/commit/21a876865715da43bb7c20c1f97f6a41ba1078a8))
+- **string-left-right:** type variadic match arguments ([f20a40a](https://github.com/codsen/codsen/commit/f20a40a3f6230180785b717cc747b8e4af79c3c0))
+- **test-mixer:** isolate generated option values ([07111a6](https://github.com/codsen/codsen/commit/07111a6c852bac5cfad6b1dc4a5f11b48cb738de))
+- **test-mixer:** type generated option rows ([8a4775c](https://github.com/codsen/codsen/commit/8a4775c56d2f2cee0e12655607e25fdb4e87e47a))
+- **test-mixer:** validate input objects ([40a8cce](https://github.com/codsen/codsen/commit/40a8cceac1d76e0a823e301893ec3ea9efd33a2c))
+- type whitespace passthrough values ([1bdf211](https://github.com/codsen/codsen/commit/1bdf2115dfee943d58e5dbf6518adb663a9e5407))
+- **util-nonempty:** harden shallow value checks ([6f1eda6](https://github.com/codsen/codsen/commit/6f1eda6108ec38d15d30d4b3cb24a8880fcb4656))
+- validate whitespace line break limits ([604e433](https://github.com/codsen/codsen/commit/604e4332634b6fdd285969126efa9f82457461d4))
+
+### Features
+
+- expand HTML attribute selector support ([dce1556](https://github.com/codsen/codsen/commit/dce15563659efaee1b739570346919daaddb575d))
+- isolate diagnostic value formatting ([a7dc987](https://github.com/codsen/codsen/commit/a7dc987a57d3d39f175b942dd8244bdb896ada28))
+- support exact AST path segments ([686e2a0](https://github.com/codsen/codsen/commit/686e2a0352be468cab356cace8615cd0b6be3242))
+- **test-mixer:** bound eager combinations ([d3a9824](https://github.com/codsen/codsen/commit/d3a9824af4ae972f7e7a2b36991b0b412adb07bf))
+
+### Performance Improvements
+
+- accelerate literal array removals ([fbbd70c](https://github.com/codsen/codsen/commit/fbbd70ce3f35f903b09d150635d9ffa3d34737e9))
+- avoid array matcher cache thrashing ([2daab5f](https://github.com/codsen/codsen/commit/2daab5fad46dbeadb0cfa2d0fe2876d9e6a7f876))
+- establish corrected traversal baseline ([fd8b705](https://github.com/codsen/codsen/commit/fd8b705aec8373b1cd1e9b8e11dbcaacd15bf202))
+- keep selector extraction linear ([ae03343](https://github.com/codsen/codsen/commit/ae03343dd4f29ffc33e80c67faaf4077cfd654a1))
+- remove debug-only loop bookkeeping ([d97eb45](https://github.com/codsen/codsen/commit/d97eb453a69b649bba338eab2159fe4827582eed))
+- streamline trim boundary scans ([98273ed](https://github.com/codsen/codsen/commit/98273ed6087fca18e4e525be426fd7ee7b825c92))
+- **test-mixer:** stream boolean combinations ([21fb192](https://github.com/codsen/codsen/commit/21fb1924c978371023ba6386a7053059132d61f4))
+
 ## 0.4.0 (2026-08-22)
 
 ### Features

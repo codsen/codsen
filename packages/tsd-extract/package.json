@@ -1,6 +1,6 @@
 {
   "name": "tsd-extract",
-  "version": "0.10.2",
+  "version": "0.10.3",
   "description": "Extract any definition from TS definitions file string",
   "keywords": [
     "ts",
@@ -71,8 +71,8 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.9.0",
-    "string-left-right": "^6.2.1"
+    "codsen-utils": "^1.10.0",
+    "string-left-right": "^6.2.2"
   },
   "engines": {
     "node": ">=18.20.8"
