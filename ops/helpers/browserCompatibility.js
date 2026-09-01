@@ -312,6 +312,57 @@ function astContainsOnlyEmptySpaceSmoke(api, equal) {
   );
 }
 
+function astIsEmptySmoke(api, equal) {
+  const progress = [];
+  let completion;
+  const cycle = {};
+  cycle.self = cycle;
+  const iteratorPoisoned = [""];
+  Object.defineProperty(iteratorPoisoned, Symbol.iterator, {
+    get: function () {
+      throw new Error("iterator accessed");
+    },
+  });
+  const shared = { value: "" };
+
+  equal(typeof api.isEmpty, "function");
+  equal(typeof api.version, "string");
+  equal(Object.isFrozen(api.defaults), true);
+  equal(api.isEmpty({ nodes: ["", { value: "" }] }), true);
+  equal(api.isEmpty({ nodes: ["", { value: "visible" }] }), false);
+  equal(api.isEmpty(" "), false);
+  equal(api.isEmpty(["visible", 0]), null);
+  equal(api.isEmpty([0, "visible"]), null);
+  equal(api.isEmpty(cycle), null);
+  equal(api.isEmpty(iteratorPoisoned), true);
+  equal(
+    api.isEmpty([shared, shared], {
+      reportCompletionFunc: (stats) => {
+        completion = stats;
+      },
+      reportProgressFunc: (percentageDone) => {
+        progress.push(percentageDone);
+      },
+      reportProgressFuncFrom: 20,
+      reportProgressFuncTo: 40,
+    }),
+    true,
+  );
+  equal(progress, [20, 40]);
+  equal(
+    [
+      completion.aliasesSkipped,
+      completion.arrayElementsVisited,
+      completion.maxDepth,
+      completion.objectPropertiesVisited,
+      completion.uniqueContainersVisited,
+      typeof completion.timeTakenInMilliseconds,
+      Object.isFrozen(completion),
+    ],
+    [1, 2, 2, 1, 2, "number", true],
+  );
+}
+
 function astMonkeySmoke(api, equal) {
   equal(
     [
@@ -773,6 +824,7 @@ const IIFE_API_SMOKES = Object.freeze({
   "ast-compare": astCompareSmoke,
   "ast-contains-only-empty-space": astContainsOnlyEmptySpaceSmoke,
   "ast-deep-contains": astDeepContainsSmoke,
+  "ast-is-empty": astIsEmptySmoke,
   "ast-monkey": astMonkeySmoke,
   "ast-monkey-util": astMonkeyUtilSmoke,
   "check-types-mini": checkTypesMiniSmoke,

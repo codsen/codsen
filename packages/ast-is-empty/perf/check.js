@@ -7,13 +7,20 @@ import { isEmpty } from "../dist/ast-is-empty.esm.js";
 
 const callerDir = path.resolve(".");
 
-const testme = () =>
-  isEmpty([
-    {
-      a: [""],
-      b: { c: ["", "", { d: [""] }] },
-    },
-  ]);
+const fixture = Object.freeze([
+  Object.freeze({
+    a: Object.freeze([""]),
+    b: Object.freeze({
+      c: Object.freeze([
+        "",
+        "",
+        Object.freeze({ d: Object.freeze([""]) }),
+      ]),
+    }),
+  }),
+]);
+
+const testme = () => isEmpty(fixture);
 
 assert.equal(testme(), true);
 

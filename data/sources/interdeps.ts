@@ -77,7 +77,7 @@ export const interdeps = [
   },
   {
     "name": "ast-is-empty",
-    "size": 648,
+    "size": 5340,
     "imports": [
       "codsen-utils"
     ]
