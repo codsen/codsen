@@ -277,4 +277,46 @@ test("14 - drop - throws when there's no index", () => {
   );
 });
 
+test("15 - delegated validation errors retain caller prefixes", () => {
+  throws(
+    () => {
+      find(defaultInput, { key: 1 });
+    },
+    /^ast-monkey\/find\(\): \[THROW_ID_03]/,
+    "15.01",
+  );
+  throws(
+    () => {
+      set(defaultInput, { index: 1, key: 1 });
+    },
+    /^ast-monkey\/set\(\): \[THROW_ID_14]/,
+    "15.02",
+  );
+  throws(
+    () => {
+      del(defaultInput, { key: 1 });
+    },
+    /^ast-monkey\/del\(\): \[THROW_ID_22]/,
+    "15.03",
+  );
+  for (const [thrownValue, label] of [
+    [new TypeError("raw validator dependency error"), "15.04"],
+    ["raw non-error value", "15.05"],
+  ]) {
+    const key = {};
+    Object.defineProperty(key, Symbol.toStringTag, {
+      get() {
+        throw thrownValue;
+      },
+    });
+    throws(
+      () => {
+        find(defaultInput, { key });
+      },
+      /^ast-monkey\/find\(\): \[THROW_ID_03]/,
+      label,
+    );
+  }
+});
+
 test.run();

@@ -23,6 +23,19 @@ function isObj(something: unknown): boolean {
   );
 }
 
+function validationReason(error: unknown): string {
+  if (
+    error !== null &&
+    typeof error === "object" &&
+    typeof (error as { reason?: unknown }).reason === "string"
+  ) {
+    return (error as { reason: string }).reason;
+  }
+  return error instanceof Error
+    ? error.message
+    : formatDiagnosticValue(error, 4);
+}
+
 function alts(str: string, opts?: Partial<Opts>): string {
   // validate
   // ================
@@ -67,9 +80,13 @@ function alts(str: string, opts?: Partial<Opts>): string {
   // resolvedOpts
   // ================
   let resolvedOpts: Opts = { ...defaults, ...opts };
-  checkTypesMini(resolvedOpts, defaults, {
-    msg: "html-img-alt/alts(): [THROW_ID_03]",
-  });
+  try {
+    checkTypesMini(resolvedOpts, defaults);
+  } catch (error) {
+    throw new TypeError(
+      `html-img-alt/alts(): [THROW_ID_03] ${validationReason(error)}`,
+    );
+  }
 
   // traverse the string
   // ================

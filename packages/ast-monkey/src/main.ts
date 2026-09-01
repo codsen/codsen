@@ -1,7 +1,11 @@
 import { compare } from "ast-compare";
 import { traverse } from "ast-monkey-traverse";
 import { checkTypesMini } from "check-types-mini";
-import { isPlainObject as isObj, isStr } from "codsen-utils";
+import {
+  formatDiagnosticValue,
+  isPlainObject as isObj,
+  isStr,
+} from "codsen-utils";
 import { arrObjOrBoth } from "util-array-object-or-both";
 
 import { version as v } from "../package.json";
@@ -40,6 +44,19 @@ export interface Finding {
 }
 function existy(x: any): boolean {
   return x != null;
+}
+
+function validationReason(error: unknown): string {
+  if (
+    error !== null &&
+    typeof error === "object" &&
+    typeof (error as { reason?: unknown }).reason === "string"
+  ) {
+    return (error as { reason: string }).reason;
+  }
+  return error instanceof Error
+    ? error.message
+    : formatDiagnosticValue(error, 4);
 }
 
 function compareIsEqual(a: any, b: any): boolean {
@@ -138,7 +155,7 @@ function monkey(originalInput: JsonValue, opts: InternalOpts) {
       if (data.count === resolvedOpts.index) {
         if (innerObj.parentType === "object") {
           data.finding = {};
-          data.finding[key] = val;
+          data.finding[key as string] = val;
         } else {
           data.finding = key;
         }
@@ -160,7 +177,7 @@ function monkey(originalInput: JsonValue, opts: InternalOpts) {
         if (resolvedOpts.mode === "find") {
           temp = {
             index: data.count,
-            key,
+            key: key as string,
             val,
             path: [...data.gatherPath],
           };
@@ -225,14 +242,19 @@ function find(input: JsonValue, opts: FindOpts): Finding[] {
     );
   }
   let resolvedOpts = { ...opts };
-  checkTypesMini(resolvedOpts, null, {
-    schema: {
-      key: ["null", "string"],
-      val: "any",
-      only: ["undefined", "null", "string"],
-    },
-    msg: "ast-monkey/find(): [THROW_ID_03*]",
-  });
+  try {
+    checkTypesMini(resolvedOpts, null, {
+      schema: {
+        key: ["null", "string"],
+        val: "any",
+        only: ["undefined", "null", "string"],
+      },
+    });
+  } catch (error) {
+    throw new TypeError(
+      `ast-monkey/find(): [THROW_ID_03] ${validationReason(error)}`,
+    );
+  }
   if (isStr(resolvedOpts.only) && resolvedOpts.only.length) {
     resolvedOpts.only = arrObjOrBoth(resolvedOpts.only, {
       optsVarName: "resolvedOpts.only",
@@ -310,14 +332,19 @@ function set(input: JsonValue, opts: SetOpts): JsonValue {
   if (existy(resolvedOpts.key) && resolvedOpts.val === undefined) {
     resolvedOpts.val = resolvedOpts.key;
   }
-  checkTypesMini(resolvedOpts, null, {
-    schema: {
-      key: [null, "string"],
-      val: "any",
-      index: "number",
-    },
-    msg: "ast-monkey/set(): [THROW_ID_14*]",
-  });
+  try {
+    checkTypesMini(resolvedOpts, null, {
+      schema: {
+        key: [null, "string"],
+        val: "any",
+        index: "number",
+      },
+    });
+  } catch (error) {
+    throw new TypeError(
+      `ast-monkey/set(): [THROW_ID_14] ${validationReason(error)}`,
+    );
+  }
   return monkey(input, { ...resolvedOpts, mode: "set" });
 }
 
@@ -371,14 +398,19 @@ function del(input: JsonValue, opts: DelOpts): JsonValue {
     );
   }
   let resolvedOpts = { ...opts };
-  checkTypesMini(resolvedOpts, null, {
-    schema: {
-      key: [null, "string"],
-      val: "any",
-      only: ["undefined", "null", "string"],
-    },
-    msg: "ast-monkey/del(): [THROW_ID_22*]",
-  });
+  try {
+    checkTypesMini(resolvedOpts, null, {
+      schema: {
+        key: [null, "string"],
+        val: "any",
+        only: ["undefined", "null", "string"],
+      },
+    });
+  } catch (error) {
+    throw new TypeError(
+      `ast-monkey/del(): [THROW_ID_22] ${validationReason(error)}`,
+    );
+  }
   if (isStr(resolvedOpts.only) && resolvedOpts.only.length) {
     resolvedOpts.only = arrObjOrBoth(resolvedOpts.only, {
       msg: "ast-monkey/del(): [THROW_ID_23*]",

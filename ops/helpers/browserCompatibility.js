@@ -271,6 +271,39 @@ function astCompareSmoke(api, equal) {
   );
 }
 
+function astMonkeySmoke(api, equal) {
+  equal(
+    [
+      typeof api.arrayFirstOnly,
+      typeof api.del,
+      typeof api.drop,
+      typeof api.find,
+      typeof api.get,
+      typeof api.set,
+      typeof api.version,
+    ],
+    [
+      "function",
+      "function",
+      "function",
+      "function",
+      "function",
+      "function",
+      "string",
+    ],
+  );
+  equal(api.find({ a: 1 }, { key: "a" }), [
+    { index: 1, key: "a", val: 1, path: [1] },
+  ]);
+  var message = "";
+  try {
+    api.find({ a: 1 }, { key: 1 });
+  } catch (error) {
+    message = error.message;
+  }
+  equal(message.indexOf("ast-monkey/find(): [THROW_ID_03]") === 0, true);
+}
+
 function astMonkeyUtilSmoke(api, equal) {
   equal(
     [
@@ -295,6 +328,72 @@ function astMonkeyUtilSmoke(api, equal) {
   equal(api.pathUp(".a"), "0");
   equal(api.pathNext(["a.b", "children", "0"]), ["a.b", "children", "1"]);
   equal(api.pathUp(["", "children", "0"]), [""]);
+}
+
+function checkTypesMiniSmoke(api, equal) {
+  var progress = [];
+  var completion;
+  equal(
+    [
+      typeof api.CheckTypesMiniError,
+      typeof api.checkTypesMini,
+      typeof api.version,
+      Object.isFrozen(api.defaults),
+    ],
+    ["function", "function", "string", true],
+  );
+  api.checkTypesMini({ config: { enabled: true } }, null, {
+    reportCompletionFunc: function (stats) {
+      completion = stats;
+    },
+    reportProgressFunc: function (percentageDone) {
+      progress.push(percentageDone);
+    },
+    reportProgressFuncFrom: 20,
+    reportProgressFuncTo: 40,
+    schema: { config: { enabled: "boolean" } },
+  });
+  equal(progress, [20, 40]);
+  equal(
+    [
+      completion.arrayElementsVisited,
+      completion.maxDepth,
+      completion.objectPropertiesVisited,
+      completion.schemaEntries,
+      completion.valuesIgnored,
+      completion.valuesValidated,
+      typeof completion.timeTakenInMilliseconds,
+    ],
+    [0, 2, 2, 2, 0, 2, "number"],
+  );
+  api.checkTypesMini({ "literal.dot": 1 }, null, {
+    schema: { "literal\\.dot": "number" },
+  });
+  var error;
+  try {
+    api.checkTypesMini({ enabled: "yes" }, { enabled: false });
+  } catch (caught) {
+    error = caught;
+  }
+  equal(error instanceof api.CheckTypesMiniError, true);
+  equal(
+    [
+      error.actualType,
+      error.context,
+      error.expectedTypes,
+      error.path,
+      error.validatorCode,
+      error.toJSON().validatorCode,
+    ],
+    [
+      "string",
+      "check-types-mini",
+      ["boolean"],
+      ["enabled"],
+      "THROW_ID_21",
+      "THROW_ID_21",
+    ],
+  );
 }
 
 function codsenUtilsSmoke(api, equal) {
@@ -473,6 +572,22 @@ function htmlCrushSmoke(api, equal) {
   );
 }
 
+function htmlImgAltSmoke(api, equal) {
+  equal(typeof api.alts, "function");
+  equal(typeof api.version, "string");
+  equal(
+    api.alts('zzz<img src="spacer.gif" >zzz'),
+    'zzz<img src="spacer.gif" alt="" >zzz',
+  );
+  var message = "";
+  try {
+    api.alts("text", { rogue: true });
+  } catch (error) {
+    message = error.message;
+  }
+  equal(message.indexOf("html-img-alt/alts(): [THROW_ID_03]") === 0, true);
+}
+
 function generateAtomicCssSmoke(api, equal) {
   equal(api.extractFromToSource("mt|10"), [0, 10, "mt"]);
   equal(api.extractFromToSource(".m$$$[lang|=en] { margin: $$$px; } | 2 | 4"), [
@@ -616,12 +731,15 @@ const IIFE_API_SMOKES = Object.freeze({
   "array-includes-with-glob": arrayIncludesWithGlobSmoke,
   "ast-compare": astCompareSmoke,
   "ast-deep-contains": astDeepContainsSmoke,
+  "ast-monkey": astMonkeySmoke,
   "ast-monkey-util": astMonkeyUtilSmoke,
+  "check-types-mini": checkTypesMiniSmoke,
   "codsen-utils": codsenUtilsSmoke,
   detergent: detergentSmoke,
   "email-comb": emailCombSmoke,
   "generate-atomic-css": generateAtomicCssSmoke,
   "html-crush": htmlCrushSmoke,
+  "html-img-alt": htmlImgAltSmoke,
   "is-language-code": languageCodeSmoke,
   "object-boolean-combinations": objectBooleanCombinationsSmoke,
   "string-convert-indexes": stringConvertIndexesSmoke,

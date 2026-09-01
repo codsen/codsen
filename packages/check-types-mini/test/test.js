@@ -251,7 +251,7 @@ test("06 - opts.ignorePaths", () => {
       );
     },
     /OPTS\.ccc\.bbb was customised to/g,
-    "06.01",
+    "06.02",
   );
 
   not.throws(() => {
@@ -386,7 +386,7 @@ test("06 - opts.ignorePaths", () => {
       );
     },
     'msg: OPTS.ccc.bbb was customised to "d" which is not boolean but string',
-    "06.02",
+    "06.07",
   );
 
   not.throws(() => {
@@ -723,7 +723,7 @@ test("09 - some keys bailed through ignoreKeys, some through ignorePaths and as 
       );
     },
     "09.04",
-    "09.03",
+    "09.05",
   );
 });
 
@@ -792,7 +792,7 @@ test("10 - opts.acceptArrays, strings+arrays", () => {
       );
     },
     /varname.option2 was customised to be array/,
-    "10.02",
+    "10.03",
   );
 });
 
@@ -932,7 +932,7 @@ test("15 - opts.acceptArraysIgnore", () => {
       );
     },
     /\[THROW_ID_01\]/,
-    "15.01",
+    "15.02",
   );
 
   throws(
@@ -957,7 +957,7 @@ test("15 - opts.acceptArraysIgnore", () => {
       );
     },
     /opts\.option1 was customised to "\[1,0,1,0\]"/,
-    "15.02",
+    "15.03",
   );
 });
 
@@ -998,7 +998,7 @@ test("17 - throws/notThrows when keysets mismatch", () => {
       );
     },
     "17.01",
-    "17.01",
+    "17.02",
   );
   throws(
     () => {
@@ -1014,8 +1014,8 @@ test("17 - throws/notThrows when keysets mismatch", () => {
         },
       );
     },
-    "17.02",
-    "17.02",
+    "17.03",
+    "17.04",
   );
   not.throws(() => {
     checkTypesMini(
@@ -1032,7 +1032,7 @@ test("17 - throws/notThrows when keysets mismatch", () => {
         enforceStrictKeyset: false,
       },
     );
-  }, "17.03");
+  }, "17.05");
   not.throws(() => {
     checkTypesMini(
       {
@@ -1048,7 +1048,7 @@ test("17 - throws/notThrows when keysets mismatch", () => {
         enforceStrictKeyset: false,
       },
     );
-  }, "17.04");
+  }, "17.06");
 });
 
 test("18 - opts.enforceStrictKeyset set to a wrong thing", () => {
@@ -1071,7 +1071,7 @@ test("18 - opts.enforceStrictKeyset set to a wrong thing", () => {
       );
     },
     "18.01",
-    "18.01",
+    "18.02",
   );
 });
 
@@ -1088,7 +1088,7 @@ test("19 - throws when reference and schema are both missing", () => {
       );
     },
     "19.01",
-    "19.01",
+    "19.02",
   );
 });
 
@@ -1162,7 +1162,7 @@ test("20 - acceptArrays + schema + nested", () => {
       );
     },
     /opts\.opt2\.opt3 was customised to/,
-    "20.01",
+    "20.03",
   );
 
   not.throws(() => {
@@ -1208,7 +1208,7 @@ test("20 - acceptArrays + schema + nested", () => {
       );
     },
     /opts\.opt2\.opt3\.1/,
-    "20.02",
+    "20.05",
   ); // throws because schema and opts.acceptArrays detects wrong type within input's array
 });
 
@@ -1331,7 +1331,7 @@ test("22 - strict mode, customising keys", () => {
       );
     },
     /opts\.ignoreThese\.1 is neither covered by reference object/,
-    "22.01",
+    "22.05",
   );
 });
 
@@ -1355,7 +1355,7 @@ test(`23 - opts.acceptArrays - strings + arrays`, () => {
       );
     },
     "23.01",
-    "23.01",
+    "23.02",
   );
   not.throws(() => {
     checkTypesMini(
@@ -1372,7 +1372,7 @@ test(`23 - opts.acceptArrays - strings + arrays`, () => {
         enforceStrictKeyset: false,
       },
     );
-  }, "23.02");
+  }, "23.03");
 });
 
 // ======================
@@ -1434,7 +1434,7 @@ test(`24 - opts.schema only - located in root`, () => {
       );
     },
     /opts\.option2 was customised to "null"/,
-    "24.02",
+    "24.03",
   );
 
   not.throws(() => {
@@ -1470,7 +1470,7 @@ test(`24 - opts.schema only - located in root`, () => {
       );
     },
     /opts\.enforceStrictKeyset is on and the following key/,
-    "24.03",
+    "24.05",
   );
 
   // true not allowed, - only false or null or string
@@ -1493,7 +1493,7 @@ test(`24 - opts.schema only - located in root`, () => {
       );
     },
     /opts\.option2 was customised to "true"/,
-    "24.04",
+    "24.06",
   );
 
   not.throws(() => {
@@ -1572,7 +1572,7 @@ test(`24 - opts.schema only - located in root`, () => {
       );
     },
     /check-types-mini: opts\.option2 was customised to "false" \(type: boolean\)/,
-    "24.05",
+    "24.10",
   );
 
   throws(
@@ -1594,7 +1594,7 @@ test(`24 - opts.schema only - located in root`, () => {
       );
     },
     /check-types-mini: opts\.option2 was customised to "null"/,
-    "24.06",
+    "24.11",
   );
 
   throws(
@@ -1616,7 +1616,7 @@ test(`24 - opts.schema only - located in root`, () => {
       );
     },
     /check-types-mini: opts\.option2 was customised to "0"/,
-    "24.07",
+    "24.12",
   );
 
   not.throws(() => {
@@ -1656,7 +1656,7 @@ test(`24 - opts.schema only - located in root`, () => {
       );
     },
     /check-types-mini: opts\.option2 was customised to "zzz"/,
-    "24.08",
+    "24.14",
   );
 
   not.throws(() => {
@@ -1768,7 +1768,7 @@ test(`24 - opts.schema only - located in root`, () => {
       );
     },
     /check-types-mini: opts\.option2 was customised to "true" \(type: string\)/,
-    "24.09",
+    "24.20",
   );
 });
 
@@ -1789,7 +1789,7 @@ test(`25 - opts.schema only - deeper level key doesn't even exist in ref`, () =>
       );
     },
     "25.01",
-    "25.01",
+    "25.02",
   );
 
   throws(
@@ -1810,7 +1810,7 @@ test(`25 - opts.schema only - deeper level key doesn't even exist in ref`, () =>
       );
     },
     /check-types-mini: opts\.option2.option3 was customised to "null" which is not null but string/,
-    "25.02",
+    "25.03",
   );
 
   throws(
@@ -1831,7 +1831,7 @@ test(`25 - opts.schema only - deeper level key doesn't even exist in ref`, () =>
       );
     },
     /check-types-mini: opts\.option2\.option3 was customised to "null" which is not string but null/,
-    "25.03",
+    "25.04",
   );
 });
 
@@ -1941,31 +1941,27 @@ test(`27 - opts.schema only - located deeper`, () => {
         },
       );
     },
-    /option1, option2/,
-    "27.02",
-  );
-
-  // make error message mention a missing deeper-level path:
-  throws(
-    () => {
-      checkTypesMini(
-        {
-          option1: { option2: "setting1" },
-          option3: { option4: null },
-        },
-        null,
-        {
-          schema: {
-            option1: "object", // option1.option2 is missing!
-            option3: "object",
-            "option3.option4": ["stRing", null],
-          },
-        },
-      );
-    },
-    /check-types-mini: opts\.option1\.option2 is neither covered by reference object/,
+    /option1/,
     "27.03",
   );
+
+  // A leaf object descriptor validates only the value's top-level type.
+  not.throws(() => {
+    checkTypesMini(
+      {
+        option1: { option2: "setting1" },
+        option3: { option4: null },
+      },
+      null,
+      {
+        schema: {
+          option1: "object",
+          option3: "object",
+          "option3.option4": ["stRing", null],
+        },
+      },
+    );
+  }, "27.04");
 
   // true not allowed, - only false or null or string
   throws(
@@ -1987,7 +1983,7 @@ test(`27 - opts.schema only - located deeper`, () => {
       );
     },
     /check-types-mini: opts\.option2 was customised to "true" \(type: boolean\)/,
-    "27.04",
+    "27.05",
   );
 
   not.throws(() => {
@@ -2066,7 +2062,7 @@ test(`27 - opts.schema only - located deeper`, () => {
       );
     },
     /check-types-mini: opts\.option2 was customised to "false" \(type: boolean\)/,
-    "27.05",
+    "27.09",
   );
 
   throws(
@@ -2088,7 +2084,7 @@ test(`27 - opts.schema only - located deeper`, () => {
       );
     },
     /check-types-mini: opts\.option2 was customised to "null" \(type: null\)/,
-    "27.06",
+    "27.10",
   );
 
   throws(
@@ -2110,7 +2106,7 @@ test(`27 - opts.schema only - located deeper`, () => {
       );
     },
     /check-types-mini: opts\.option2 was customised to "0" \(type: number\)/,
-    "27.07",
+    "27.11",
   );
 
   not.throws(() => {
@@ -2150,7 +2146,7 @@ test(`27 - opts.schema only - located deeper`, () => {
       );
     },
     /check-types-mini: opts\.option2 was customised to "zzz" \(type: string\)/,
-    "27.08",
+    "27.13",
   );
 
   not.throws(() => {
@@ -2262,7 +2258,7 @@ test(`27 - opts.schema only - located deeper`, () => {
       );
     },
     /check-types-mini: opts\.option2 was customised to "true" \(type: string\)/,
-    "27.09",
+    "27.19",
   );
 });
 
@@ -2341,7 +2337,7 @@ test(`28 - opts.schema values as strings + "whatever" keys`, () => {
       );
     },
     /check-types-mini: opts\.option1 was customised to "{"somekey":"setting1"}" \(type: object\)/,
-    "28.02",
+    "28.04",
   );
 
   not.throws(() => {
@@ -2444,7 +2440,7 @@ test(`30 - opts.schema is set to a wrong thing - throws`, () => {
         },
       );
     },
-    /check-types-mini\/checkTypesMini\(\): \[THROW_ID_02] opts\.schema was customised to "zzz" which is not object but string/,
+    /check-types-mini\/checkTypesMini\(\): \[THROW_ID_07].*opts\.schema was customised to "zzz" which is not a plain object but string/,
     "30.01",
   );
 });
@@ -2519,7 +2515,7 @@ test(`31 - opts.schema understands opts.acceptArrays`, () => {
       );
     },
     /opts\.option2\.1, the 1th element \(equal to 999\) is of a type number, but only the following are allowed by the opts\.schema: string/,
-    "31.02",
+    "31.04",
   ); // throws because schema and opts.acceptArrays detects wrong type within input's array
 
   not.throws(() => {
@@ -2559,7 +2555,7 @@ test(`31 - opts.schema understands opts.acceptArrays`, () => {
       );
     },
     /check-types-mini: opts\.option2 was customised to "\["setting2",999\]" \(type: array\)/,
-    "31.03",
+    "31.06",
   ); // number is allowed in schema, but not in an array, and opts.acceptArrays is off, so throws
 
   not.throws(() => {
@@ -2836,7 +2832,7 @@ test("36 - nested schema arrays are normalized without mutating the input", () =
         nested: [" String ", "NUMBER"],
       },
     },
-    "36.01",
+    "36.02",
   );
 });
 
@@ -2878,10 +2874,14 @@ test("39 - strict-keyset errors omit ignored keys", () => {
   );
 });
 
-test("40 - root arrays, sparse values and message normalisation", () => {
-  not.throws(() => {
-    checkTypesMini([1], [1], { enforceStrictKeyset: false });
-  }, "40.01");
+test("40 - root arrays, explicit undefined and message normalisation", () => {
+  throws(
+    () => {
+      checkTypesMini([1], [1], { enforceStrictKeyset: false });
+    },
+    /THROW_ID_01/,
+    "40.01",
+  );
   not.throws(() => {
     checkTypesMini({ a: [undefined] }, { a: [undefined] });
   }, "40.02");

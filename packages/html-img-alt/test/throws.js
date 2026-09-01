@@ -74,7 +74,7 @@ test("03 - throws if opts is not a plain object", () => {
       alts("zzz", 1);
     },
     /THROW_ID_02/g,
-    "03.02",
+    "03.04",
   );
   not.throws(() => {
     alts("zzz", {});
@@ -83,8 +83,8 @@ test("03 - throws if opts is not a plain object", () => {
     () => {
       alts("zzz", { zzz: "yyy" }); // rogue keys - throws. WTF?
     },
-    /THROW_ID_03/g,
-    "03.03",
+    /^html-img-alt\/alts\(\): \[THROW_ID_03]/,
+    "03.06",
   );
 });
 

@@ -92,7 +92,7 @@ export const interdeps = [
   },
   {
     "name": "ast-monkey",
-    "size": 4985,
+    "size": 5245,
     "imports": [
       "ast-compare",
       "ast-monkey-traverse",
@@ -122,7 +122,7 @@ export const interdeps = [
   },
   {
     "name": "check-types-mini",
-    "size": 5805,
+    "size": 13181,
     "imports": [
       "codsen-utils"
     ]
@@ -313,7 +313,7 @@ export const interdeps = [
   },
   {
     "name": "html-img-alt",
-    "size": 3072,
+    "size": 3230,
     "imports": [
       "check-types-mini",
       "codsen-utils",
