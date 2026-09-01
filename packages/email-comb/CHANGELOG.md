@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.3.0 (2026-09-01)
+
+### Bug Fixes
+
+- align range input and output types ([1a13db6](https://github.com/codsen/codsen/commit/1a13db665fe2f9e77c6b5fd509980c87e5a57baf))
+- canonicalize encoded body selectors ([806ffc8](https://github.com/codsen/codsen/commit/806ffc855231c5634b513fdf9dd3c49ccb920c0f))
+- match comment exclusions across case ([708fb0a](https://github.com/codsen/codsen/commit/708fb0a9e96d082eb2326fa2ba4e3fbfb872566b))
+- parse body attributes within opening tags ([265528a](https://github.com/codsen/codsen/commit/265528a2ab7b13916443d2951725b869670e12b3))
+- preserve text across blank lines ([ba963a7](https://github.com/codsen/codsen/commit/ba963a7c5d0842aa3f3e2c6193a734ebb0d0e3f6))
+- tighten empty conditional comment matching ([fc6692c](https://github.com/codsen/codsen/commit/fc6692cc2c6fc0a3415dfc0d6e2c42cff4015805))
+
+### Features
+
+- expand HTML attribute selector support ([dce1556](https://github.com/codsen/codsen/commit/dce15563659efaee1b739570346919daaddb575d))
+
+### Performance Improvements
+
+- bound malformed opening tag scans ([bc75e27](https://github.com/codsen/codsen/commit/bc75e27fd189fdcb6a0e8b15cffa27c34ca34507))
+- bound string uglify collisions ([f01b4ce](https://github.com/codsen/codsen/commit/f01b4ce7d763555f5576abb44255d94ec380004f))
+- partition unused selectors linearly ([e4bd269](https://github.com/codsen/codsen/commit/e4bd269c2a8079b77de2c7e55701183817ffd7e3))
+- refresh the email comb benchmark ([68b2b02](https://github.com/codsen/codsen/commit/68b2b02c6e3c4108a2519935b8d9ee8aec92dac2))
+
 ## 7.2.2 (2026-08-22)
 
 ### Performance Improvements

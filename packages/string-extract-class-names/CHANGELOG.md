@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 8.3.0 (2026-09-01)
+
+### Bug Fixes
+
+- follow CSS selector token rules ([fbf896e](https://github.com/codsen/codsen/commit/fbf896e25f1f48eaf5a75e22104d710bf8c512f3))
+- isolate failed attribute selectors ([729ea22](https://github.com/codsen/codsen/commit/729ea2238dbf3ac47b4daa06ef9394abf75ec7aa))
+
+### Features
+
+- expand HTML attribute selector support ([dce1556](https://github.com/codsen/codsen/commit/dce15563659efaee1b739570346919daaddb575d))
+
+### Performance Improvements
+
+- keep selector extraction linear ([ae03343](https://github.com/codsen/codsen/commit/ae03343dd4f29ffc33e80c67faaf4077cfd654a1))
+
 ## 8.2.1 (2026-08-22)
 
 ### Performance Improvements

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.2 (2026-09-01)
+
+### Bug Fixes
+
+- **ast-is-empty:** make traversal graph-safe ([653714b](https://github.com/codsen/codsen/commit/653714bc23a3cffe46099781f2d24f2f0ad5445a))
+
 ## 4.2.1 (2026-08-22)
 
 ### Performance Improvements

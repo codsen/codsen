@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 13.7.0 (2026-09-01)
+
+### Bug Fixes
+
+- align combined callback range fields ([fcb5336](https://github.com/codsen/codsen/commit/fcb533644e4a5e538a0d5a482ba46f74ab386682))
+- align incomplete tag policy at EOF ([f5a3bff](https://github.com/codsen/codsen/commit/f5a3bff68b717e1299fd9e487a5727bc2502a72c))
+- align range input and output types ([1a13db6](https://github.com/codsen/codsen/commit/1a13db665fe2f9e77c6b5fd509980c87e5a57baf))
+- **ast-monkey:** preserve traversal data semantics ([861b9fc](https://github.com/codsen/codsen/commit/861b9fc242abb9e6a06c665a80e884970276b22d))
+- avoid quote-named callback attributes ([efa75c9](https://github.com/codsen/codsen/commit/efa75c9cbccd35921fe4a0e3d590bd611c4b72e0))
+- derive filtered tag locations from output ranges ([d1141e0](https://github.com/codsen/codsen/commit/d1141e0bb9fc81edf5d5017dcf4ff0c8f9344cc6))
+- expose callback coordinates in source space ([ed2f109](https://github.com/codsen/codsen/commit/ed2f109b5634323416da93dd306d66fe90fdc641))
+- isolate callback metadata snapshots ([0e8a4c4](https://github.com/codsen/codsen/commit/0e8a4c40ce55e0fa7229aa1106dfa8ff969ff5bd))
+- isolate dirty-tag recognition probes ([b2fc940](https://github.com/codsen/codsen/commit/b2fc94034906bdf7e0ec501ee2e38a4f51577522))
+- match configured tag names case-insensitively ([d526a12](https://github.com/codsen/codsen/commit/d526a12535fce5ac2576e807f1afbc64d4b06c14))
+- normalize callback-forwarded edge ranges ([b1bf8d1](https://github.com/codsen/codsen/commit/b1bf8d19f69cb4d8d6d52939f184f118c9b99cf5))
+- parse unquoted attribute values ([078194b](https://github.com/codsen/codsen/commit/078194bef3b31a137547b066a047acc5c937acd3))
+- publish truthful callback token shapes ([3decb41](https://github.com/codsen/codsen/commit/3decb41207762ab0cda853c74aa25f1078315622))
+- report progress across skipped input spans ([5604860](https://github.com/codsen/codsen/commit/56048602d89719d59773014b80c4436540a8bf7b))
+- require exact script closing tag names ([bed43c6](https://github.com/codsen/codsen/commit/bed43c699f8f94ccbc600c6f4bb2eba805170381))
+- reset malformed tag candidates ([e6a42e9](https://github.com/codsen/codsen/commit/e6a42e929759be33549557fe77851b59b37688da))
+- tweak the perf ([d5c7290](https://github.com/codsen/codsen/commit/d5c72900152ba83bb92425d10ea402038634884e))
+- validate callback options eagerly ([0f8c8e0](https://github.com/codsen/codsen/commit/0f8c8e010331e2cdbcdafb5cc7b594bfd008c3f5))
+
+### Features
+
+- correct the proposedReturn ending range index to cover the whole tag ([047304f](https://github.com/codsen/codsen/commit/047304fa1aac34a23f02a3124e052ebc51add04d))
+- perf improvements ([1c444a3](https://github.com/codsen/codsen/commit/1c444a3bb8725c7f53144f3d1f70006ce669cb20))
+
+### Performance Improvements
+
+- record string-strip-html regression ([23e7842](https://github.com/codsen/codsen/commit/23e7842913f2c3128755fc8d2ce3ddaa2df29474))
+
 ## 13.6.2 (2026-08-22)
 
 ### Performance Improvements

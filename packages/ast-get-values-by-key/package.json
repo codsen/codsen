@@ -1,6 +1,6 @@
 {
   "name": "ast-get-values-by-key",
-  "version": "5.2.2",
+  "version": "5.2.3",
   "description": "Extract values and paths from AST by keys OR set them by keys",
   "keywords": [
     "ast",
@@ -76,8 +76,8 @@
     }
   },
   "dependencies": {
-    "ast-monkey-traverse": "^4.2.2",
-    "codsen-utils": "^1.9.0"
+    "ast-monkey-traverse": "^4.3.0",
+    "codsen-utils": "^1.10.0"
   },
   "engines": {
     "node": ">=18.20.8"

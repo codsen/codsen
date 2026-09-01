@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.2.2 (2026-09-01)
+
+### Bug Fixes
+
+- **string-left-right:** align stop helper index types ([21a8768](https://github.com/codsen/codsen/commit/21a876865715da43bb7c20c1f97f6a41ba1078a8))
+- **string-left-right:** bound leftward indexes ([374c8b8](https://github.com/codsen/codsen/commit/374c8b87f44e617151782e7dd9a30420637c917a))
+- **string-left-right:** require sequence successors ([fa8361f](https://github.com/codsen/codsen/commit/fa8361f8bfa79dae471058b1aedff7f65a440843))
+- **string-left-right:** type variadic match arguments ([f20a40a](https://github.com/codsen/codsen/commit/f20a40a3f6230180785b717cc747b8e4af79c3c0))
+
+### Performance Improvements
+
+- **string-left-right:** benchmark paired core lookups ([c836bfa](https://github.com/codsen/codsen/commit/c836bfa56a32e995b3c3fa17d470e44dbd2e857f))
+- **string-left-right:** streamline leftward scans ([c6f4a49](https://github.com/codsen/codsen/commit/c6f4a49a864570ed1f04a0dd875456e55c0999d4))
+
 ## 6.2.1 (2026-08-22)
 
 ### Performance Improvements

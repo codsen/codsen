@@ -1,6 +1,6 @@
 {
   "name": "extract-search-index",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "Extract unique keyword input list string for search",
   "keywords": [
     "string",
@@ -67,9 +67,9 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.9.0",
-    "string-strip-html": "^13.6.2",
-    "string-unfancy": "^6.2.1"
+    "codsen-utils": "^1.10.0",
+    "string-strip-html": "^13.7.0",
+    "string-unfancy": "^6.2.2"
   },
   "engines": {
     "node": ">=18.20.8"

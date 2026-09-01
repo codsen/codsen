@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.4.0 (2026-09-01)
+
+### Bug Fixes
+
+- preserve proto data keys ([6747b19](https://github.com/codsen/codsen/commit/6747b198c8af2444b75856734422e495d28c11e1))
+- **test-mixer:** isolate generated option values ([07111a6](https://github.com/codsen/codsen/commit/07111a6c852bac5cfad6b1dc4a5f11b48cb738de))
+- **test-mixer:** type generated option rows ([8a4775c](https://github.com/codsen/codsen/commit/8a4775c56d2f2cee0e12655607e25fdb4e87e47a))
+- **test-mixer:** validate input objects ([40a8cce](https://github.com/codsen/codsen/commit/40a8cceac1d76e0a823e301893ec3ea9efd33a2c))
+
+### Features
+
+- **test-mixer:** bound eager combinations ([d3a9824](https://github.com/codsen/codsen/commit/d3a9824af4ae972f7e7a2b36991b0b412adb07bf))
+
+### Performance Improvements
+
+- **test-mixer:** benchmark realistic combinations ([488293b](https://github.com/codsen/codsen/commit/488293b5a9efb90db51fe2bdde23d86222043e6d))
+- **test-mixer:** stream boolean combinations ([21fb192](https://github.com/codsen/codsen/commit/21fb1924c978371023ba6386a7053059132d61f4))
+
 ## 4.3.1 (2026-08-22)
 
 ### Performance Improvements

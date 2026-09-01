@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.2 (2026-09-01)
+
+### Bug Fixes
+
+- enforce range expander boundaries ([44e8500](https://github.com/codsen/codsen/commit/44e85002283cdd592cab2c3ef0a8404243d22b3f))
+- enforce range expander option types ([1d560f0](https://github.com/codsen/codsen/commit/1d560f0f730418ab86a13d75862dec9c060dc5b3))
+- mirror crop marker expansion ([60f417b](https://github.com/codsen/codsen/commit/60f417b5e9dc93772e776d55c7b40884115573c7))
+- preserve international token boundaries ([7cf225d](https://github.com/codsen/codsen/commit/7cf225d1f4472614bbe5efe2e9b54770d6622a6f))
+- preserve Unicode marker boundaries ([4e51bc8](https://github.com/codsen/codsen/commit/4e51bc8149bd7adb3a43e229921d44149fd4d2b4))
+
+### Performance Improvements
+
+- benchmark representative range expansion ([dbc0cfa](https://github.com/codsen/codsen/commit/dbc0cfaa045a740130c48ae2ca4f813719a9c800))
+- refresh range expander baseline ([a06eccf](https://github.com/codsen/codsen/commit/a06eccff6189a8c528820599bc82858604c349d2))
+
 ## 4.2.1 (2026-08-22)
 
 ### Performance Improvements

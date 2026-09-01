@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.2.2 (2026-09-01)
+
+### Bug Fixes
+
+- **string-left-right:** type variadic match arguments ([f20a40a](https://github.com/codsen/codsen/commit/f20a40a3f6230180785b717cc747b8e4af79c3c0))
+
 ## 7.2.1 (2026-08-22)
 
 ### Performance Improvements

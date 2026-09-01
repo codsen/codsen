@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 14.2.2 (2026-09-01)
+
+### Bug Fixes
+
+- harden glob inclusion matching ([ac901db](https://github.com/codsen/codsen/commit/ac901db39ef29003493a2c76beca9ee23aa5c7ad))
+- **object-merge-advanced:** harden merge contracts ([a2908fa](https://github.com/codsen/codsen/commit/a2908fa22147628eaea643d82907bd9814d2d3b7))
+- **util-nonempty:** harden shallow value checks ([6f1eda6](https://github.com/codsen/codsen/commit/6f1eda6108ec38d15d30d4b3cb24a8880fcb4656))
+
 ## 14.2.1 (2026-08-22)
 
 ### Performance Improvements

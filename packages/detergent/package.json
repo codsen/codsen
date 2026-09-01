@@ -1,6 +1,6 @@
 {
   "name": "detergent",
-  "version": "9.4.2",
+  "version": "9.4.3",
   "description": "Extract, clean, encode text and fix English style",
   "keywords": [
     "brief",
@@ -73,24 +73,24 @@
   "dependencies": {
     "all-named-html-entities": "^3.2.0",
     "ansi-regex": "^6.2.2",
-    "codsen-utils": "^1.9.0",
+    "codsen-utils": "^1.10.0",
     "he": "^1.2.0",
     "html-entities-not-email-friendly": "^0.10.0",
-    "ranges-apply": "^7.2.2",
-    "ranges-invert": "^6.2.2",
-    "ranges-process-outside": "^6.2.2",
-    "ranges-push": "^7.2.1",
-    "string-apostrophes": "^4.2.2",
-    "string-collapse-white-space": "^11.2.2",
-    "string-dashes": "^1.4.2",
-    "string-fix-broken-named-entities": "^7.2.1",
-    "string-left-right": "^6.2.1",
-    "string-range-expander": "^4.2.1",
-    "string-remove-widows": "^4.2.2",
-    "string-strip-html": "^13.6.2"
+    "ranges-apply": "^7.2.3",
+    "ranges-invert": "^6.2.3",
+    "ranges-process-outside": "^6.2.3",
+    "ranges-push": "^7.3.0",
+    "string-apostrophes": "^4.2.3",
+    "string-collapse-white-space": "^11.2.3",
+    "string-dashes": "^1.4.3",
+    "string-fix-broken-named-entities": "^7.2.2",
+    "string-left-right": "^6.2.2",
+    "string-range-expander": "^4.2.2",
+    "string-remove-widows": "^4.2.3",
+    "string-strip-html": "^13.7.0"
   },
   "devDependencies": {
-    "test-mixer": "^4.3.1"
+    "test-mixer": "^4.4.0"
   },
   "engines": {
     "node": ">=18.20.8"

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.4.3 (2026-09-01)
+
+### Bug Fixes
+
+- classify Unicode letters by code point ([e166119](https://github.com/codsen/codsen/commit/e166119a72e032ff4e3faffe6d35d766f8a011d0))
+
 ## 1.4.2 (2026-08-22)
 
 ### Performance Improvements

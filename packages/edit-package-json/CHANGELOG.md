@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.10.3 (2026-09-01)
+
+### Bug Fixes
+
+- **ast-monkey:** preserve traversal data semantics ([861b9fc](https://github.com/codsen/codsen/commit/861b9fc242abb9e6a06c665a80e884970276b22d))
+
 ## 0.10.2 (2026-08-22)
 
 ### Performance Improvements

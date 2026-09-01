@@ -1,6 +1,6 @@
 {
   "name": "array-group-str-omit-num-char",
-  "version": "6.2.2",
+  "version": "6.2.3",
   "description": "Groups array of strings by omitting number characters",
   "keywords": [
     "array",
@@ -67,8 +67,8 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.9.0",
-    "ranges-apply": "^7.2.2"
+    "codsen-utils": "^1.10.0",
+    "ranges-apply": "^7.2.3"
   },
   "engines": {
     "node": ">=18.20.8"

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.2.2 (2026-09-01)
+
+### Bug Fixes
+
+- tighten empty conditional comment matching ([fc6692c](https://github.com/codsen/codsen/commit/fc6692cc2c6fc0a3415dfc0d6e2c42cff4015805))
+
+### Performance Improvements
+
+- optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+
 ## 3.2.0 (2026-08-19)
 
 ### Bug Fixes

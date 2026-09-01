@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 9.2.3 (2026-09-01)
+
+### Bug Fixes
+
+- **ast-compare:** correct matching semantics ([2ebcd60](https://github.com/codsen/codsen/commit/2ebcd601c231a01043f46bc5afbcac2eaaf91db3))
+- **ast-monkey:** preserve traversal data semantics ([861b9fc](https://github.com/codsen/codsen/commit/861b9fc242abb9e6a06c665a80e884970276b22d))
+- **check-types-mini:** harden validation contracts ([ee91068](https://github.com/codsen/codsen/commit/ee910686461b2fcc531a37710917ae6cd58118f2))
+- **util-nonempty:** harden shallow value checks ([6f1eda6](https://github.com/codsen/codsen/commit/6f1eda6108ec38d15d30d4b3cb24a8880fcb4656))
+
 ## 9.2.2 (2026-08-22)
 
 ### Performance Improvements

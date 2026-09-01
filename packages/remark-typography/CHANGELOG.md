@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.3 (2026-09-01)
+
+### Bug Fixes
+
+- **remark-typography:** preserve phrasing context ([371dd5e](https://github.com/codsen/codsen/commit/371dd5e98481277017d90182e33125a96f179abd))
+
 ## 0.8.0 (2026-08-19)
 
 ### Bug Fixes

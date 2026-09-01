@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 9.4.3 (2026-09-01)
+
+### Bug Fixes
+
+- align range input and output types ([1a13db6](https://github.com/codsen/codsen/commit/1a13db665fe2f9e77c6b5fd509980c87e5a57baf))
+- classify Unicode letters by code point ([e166119](https://github.com/codsen/codsen/commit/e166119a72e032ff4e3faffe6d35d766f8a011d0))
+- isolate callback metadata snapshots ([0e8a4c4](https://github.com/codsen/codsen/commit/0e8a4c40ce55e0fa7229aa1106dfa8ff969ff5bd))
+- publish truthful callback token shapes ([3decb41](https://github.com/codsen/codsen/commit/3decb41207762ab0cda853c74aa25f1078315622))
+- remove stale detergent dependency ([ee87124](https://github.com/codsen/codsen/commit/ee8712468e96fcb9ea9bcc3ae13ebdad8bd0c7b2))
+- **string-remove-widows:** preserve text and API contracts ([3bba0cf](https://github.com/codsen/codsen/commit/3bba0cffdbcc140f76bec09fa124e230f43fe07d))
+
 ## 9.4.2 (2026-08-22)
 
 ### Performance Improvements

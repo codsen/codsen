@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 12.2.3 (2026-09-01)
+
+### Bug Fixes
+
+- align range input and output types ([1a13db6](https://github.com/codsen/codsen/commit/1a13db665fe2f9e77c6b5fd509980c87e5a57baf))
+- **ast-monkey:** preserve traversal data semantics ([861b9fc](https://github.com/codsen/codsen/commit/861b9fc242abb9e6a06c665a80e884970276b22d))
+
 ## 12.2.2 (2026-08-22)
 
 ### Performance Improvements

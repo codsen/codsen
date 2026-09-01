@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.3.2 (2026-09-01)
+
+### Bug Fixes
+
+- bound eager combination output ([2ab2194](https://github.com/codsen/codsen/commit/2ab21949730c231c918b76ca875051c7abcb6397))
+- model fixed combination values ([9bbc12b](https://github.com/codsen/codsen/commit/9bbc12bda952db28e1081a8cb2df9c7eac2c3662))
+- preserve proto data keys ([6747b19](https://github.com/codsen/codsen/commit/6747b198c8af2444b75856734422e495d28c11e1))
+- validate override objects consistently ([e96da01](https://github.com/codsen/codsen/commit/e96da01079f4aab564d9c9fdfeab9845496767e4))
+
+### Performance Improvements
+
+- clone only participating overrides ([c80f8c3](https://github.com/codsen/codsen/commit/c80f8c37c95a38740905a90a734910e9d484938e))
+
 ## 6.3.1 (2026-08-22)
 
 ### Performance Improvements

@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.3.0 (2026-09-01)
+
+### Bug Fixes
+
+- **ast-monkey:** preserve traversal data semantics ([861b9fc](https://github.com/codsen/codsen/commit/861b9fc242abb9e6a06c665a80e884970276b22d))
+- enforce traversal tree inputs ([c539860](https://github.com/codsen/codsen/commit/c5398605891bca6e8074a9ab1cd8903489e0ddb0))
+- isolate traversal parent snapshots ([10b3735](https://github.com/codsen/codsen/commit/10b3735f6d243dc831f6cf84e3be89094730b351))
+- make ast traversal stack-safe ([fce2227](https://github.com/codsen/codsen/commit/fce22270cbec4406974b3b89e964ec3e78584374))
+- publish sound traversal types ([03f3d46](https://github.com/codsen/codsen/commit/03f3d467978a27d41a16599a17d6cccf15d35634))
+- refresh metadata after container callbacks ([a39d320](https://github.com/codsen/codsen/commit/a39d32002d4d46b19ebe234c7e46256546fae822))
+- traverse compacted array entries ([815cb45](https://github.com/codsen/codsen/commit/815cb4511820d7cf409ea081ed30360c34105045))
+
+### Features
+
+- expose exact traversal path segments ([7fad3cb](https://github.com/codsen/codsen/commit/7fad3cbe99b0bcb9eae2c7600ccdd2318d5c2d02))
+
+### Performance Improvements
+
+- establish corrected traversal baseline ([fd8b705](https://github.com/codsen/codsen/commit/fd8b705aec8373b1cd1e9b8e11dbcaacd15bf202))
+
 ## 4.2.2 (2026-08-22)
 
 ### Performance Improvements

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.2.2 (2026-09-01)
+
+### Bug Fixes
+
+- align range input and output types ([1a13db6](https://github.com/codsen/codsen/commit/1a13db665fe2f9e77c6b5fd509980c87e5a57baf))
+- complete range sort progress reporting ([19d66bf](https://github.com/codsen/codsen/commit/19d66bfcc4a479ff31591b5ee06f08d832b58f12))
+- preserve tied range insertion order ([63b3fa3](https://github.com/codsen/codsen/commit/63b3fa313cd9ca822189371eac868d93cf770195))
+- reject malformed range members ([2daef3c](https://github.com/codsen/codsen/commit/2daef3c051a9aeff1f388f5d96ecb837310644be))
+- validate range sort options ([ce2de21](https://github.com/codsen/codsen/commit/ce2de21fa5d890b2505f69221e7e959f8c241a5f))
+
+### Performance Improvements
+
+- streamline range sorting ([63782fd](https://github.com/codsen/codsen/commit/63782fd52bb77483a602a95fb2ced2d3caa824c7))
+
 ## 6.2.1 (2026-08-22)
 
 ### Performance Improvements

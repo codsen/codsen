@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.3.0 (2026-09-01)
+
+### Bug Fixes
+
+- type whitespace passthrough values ([1bdf211](https://github.com/codsen/codsen/commit/1bdf2115dfee943d58e5dbf6518adb663a9e5407))
+- validate whitespace line break limits ([604e433](https://github.com/codsen/codsen/commit/604e4332634b6fdd285969126efa9f82457461d4))
+
+### Features
+
+- perf improvements ([eae7328](https://github.com/codsen/codsen/commit/eae732883e7798fbf7969f08a2839ec7d3a520a8))
+
+### Performance Improvements
+
+- benchmark representative boundary collapse ([76172b8](https://github.com/codsen/codsen/commit/76172b8097a4f69c9c7aa449660dfc4125b1c4dd))
+- optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+- remove debug-only loop bookkeeping ([d97eb45](https://github.com/codsen/codsen/commit/d97eb453a69b649bba338eab2159fe4827582eed))
+
 ## 7.2.0 (2026-08-19)
 
 ### Bug Fixes

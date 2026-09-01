@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.2.2 (2026-09-01)
+
+### Bug Fixes
+
+- accept readonly array removal inputs ([804254d](https://github.com/codsen/codsen/commit/804254dac354c85ad20d831f9df65fbef78f4589))
+- align null options type contract ([4693b8a](https://github.com/codsen/codsen/commit/4693b8a16cf2fcbf25b1166f13b567e7a9097995))
+- normalize empty array removal patterns ([6f7c03e](https://github.com/codsen/codsen/commit/6f7c03ebe944e3a7c5d0d59f63e9b5a997c23d17))
+- preserve array pull option defaults ([0799e99](https://github.com/codsen/codsen/commit/0799e99def43c94eb06cfbab91fae976f0969abc))
+
+### Performance Improvements
+
+- accelerate literal array removals ([fbbd70c](https://github.com/codsen/codsen/commit/fbbd70ce3f35f903b09d150635d9ffa3d34737e9))
+- avoid array matcher cache thrashing ([2daab5f](https://github.com/codsen/codsen/commit/2daab5fad46dbeadb0cfa2d0fe2876d9e6a7f876))
+
 ## 7.2.1 (2026-08-22)
 
 ### Performance Improvements

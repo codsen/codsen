@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.3.0 (2026-09-01)
+
+### Bug Fixes
+
+- narrow trim range result type ([cd59232](https://github.com/codsen/codsen/commit/cd592322564c786a1d0b99187ef67762bca1d8e7))
+
+### Features
+
+- isolate diagnostic value formatting ([a7dc987](https://github.com/codsen/codsen/commit/a7dc987a57d3d39f175b942dd8244bdb896ada28))
+
+### Performance Improvements
+
+- streamline trim boundary scans ([98273ed](https://github.com/codsen/codsen/commit/98273ed6087fca18e4e525be426fd7ee7b825c92))
+
 ## 5.2.1 (2026-08-22)
 
 ### Performance Improvements

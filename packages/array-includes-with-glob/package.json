@@ -1,6 +1,6 @@
 {
   "name": "array-includes-with-glob",
-  "version": "5.2.1",
+  "version": "5.2.2",
   "description": "Check strings against whole-string wildcard patterns",
   "keywords": [
     "array",
@@ -73,7 +73,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.9.0"
+    "codsen-utils": "^1.10.0"
   },
   "engines": {
     "node": ">=18.20.8"
