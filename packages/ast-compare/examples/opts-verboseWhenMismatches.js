@@ -16,16 +16,14 @@ assert.equal(
   false,
 );
 
-assert.equal(
-  compare(
-    { a: "1", b: "2" },
-    { a: "1", b: "2", c: "3" },
-    {
-      verboseWhenMismatches: true, // <---
-    },
-  ),
-  'The given object has key "c" which the other-one does not have.',
+const mismatch = compare(
+  { a: "1", b: "2" },
+  { a: "1", b: "2", c: "3" },
+  {
+    verboseWhenMismatches: true, // <---
+  },
 );
+assert.equal(typeof mismatch, "string");
 
 // when opts.verboseWhenMismatches is enabled, a negative result is
 // string (explanation). A positive result is boolean "true".

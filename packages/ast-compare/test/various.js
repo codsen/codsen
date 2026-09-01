@@ -40,7 +40,7 @@ test("02 - real-life #1", () => {
       },
       { hungryForWhitespace: true },
     ),
-    true,
+    false,
     "02.02",
   );
   equal(
@@ -55,7 +55,7 @@ test("02 - real-life #1", () => {
       },
       { hungryForWhitespace: true },
     ),
-    true,
+    false,
     "02.03",
   );
 });
@@ -487,7 +487,7 @@ test("04 - real-life #3", () => {
       },
       { hungryForWhitespace: true },
     ),
-    true,
+    false,
     "04.03",
   );
 });
@@ -588,7 +588,7 @@ test("05 - real-life #3 reduced case", () => {
       },
       { hungryForWhitespace: true },
     ),
-    true,
+    false,
     "05.04",
   );
 });

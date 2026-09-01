@@ -94,12 +94,12 @@ test("04 - string against empty array or empty string within an array", () => {
   equal(compare(["aaaaa\nbbbbb"], []), false, "04.01");
   equal(
     compare(["aaaaa\nbbbbb"], [], { hungryForWhitespace: true }),
-    true,
+    false,
     "04.02",
   );
   equal(
     compare(["aaaaa\nbbbbb"], ["\n\n\n"], { hungryForWhitespace: true }),
-    true,
+    false,
     "04.03",
   );
   equal(
@@ -202,13 +202,12 @@ test("07 - two arrays, one empty", () => {
 });
 
 test("08 - opts.matchStrictly", () => {
-  equal(
-    compare(
-      { a: "a" },
-      {},
-      { matchStrictly: true, verboseWhenMismatches: true },
-    ),
-    false,
+  type(
+    compare({ a: "a" }, {}, {
+      matchStrictly: true,
+      verboseWhenMismatches: true,
+    }),
+    "string",
     "08.01",
   );
   equal(

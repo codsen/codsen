@@ -33,9 +33,8 @@ export const interdeps = [
   },
   {
     "name": "ast-compare",
-    "size": 4133,
+    "size": 11578,
     "imports": [
-      "ast-contains-only-empty-space",
       "codsen-utils"
     ]
   },

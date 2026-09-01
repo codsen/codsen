@@ -581,7 +581,6 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "ast-contains-only-empty-space": "^4.2.0",
       "codsen-utils": "^1.9.0"
     },
     "engines": {

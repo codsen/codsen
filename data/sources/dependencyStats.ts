@@ -119,7 +119,7 @@ export const dependencyStats: DependencyStats = {
     "array-pull-all-with-glob": 1,
     "arrayiffy-if-string": 7,
     "ast-compare": 3,
-    "ast-contains-only-empty-space": 2,
+    "ast-contains-only-empty-space": 1,
     "ast-get-values-by-key": 1,
     "ast-is-empty": 1,
     "ast-monkey": 1,

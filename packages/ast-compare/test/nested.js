@@ -134,7 +134,7 @@ test("12 - empty string and empty nested object - hungryForWhitespace + matchStr
         matchStrictly: true,
       },
     ),
-    false,
+    true,
     "12.01",
   );
 });

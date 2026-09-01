@@ -275,7 +275,7 @@ test("04 - wildcards in deeper levels within arrays", () => {
       },
       { useWildcards: true },
     ),
-    true,
+    false,
     "04.05",
   );
 });
@@ -293,7 +293,7 @@ test("05 - every wildcard key in the subset must match", () => {
   equal(
     compare(
       { alpha: "x", beta: "y" },
-      { "a*": "ignored", "b*": "ignored" },
+      { "a*": "x", "b*": "y" },
       { useWildcards: true },
     ),
     true,

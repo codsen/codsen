@@ -4,7 +4,7 @@ import { strict as assert } from "node:assert";
 
 import { compare } from "../dist/ast-compare.esm.js";
 
-// Find out, does an object/array/string/nested-mix is a subset or equal to another input:
+// Check whether the second nested value is equal to, or a subset of, the first.
 assert.equal(
   compare(
     {

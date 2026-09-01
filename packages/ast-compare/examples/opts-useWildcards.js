@@ -4,7 +4,7 @@ import { strict as assert } from "node:assert";
 
 import { compare } from "../dist/ast-compare.esm.js";
 
-// by default, key values are matches as strings
+// By default, string values are compared literally.
 assert.equal(
   compare(
     { a: "1", b: "2a", c: "3" },

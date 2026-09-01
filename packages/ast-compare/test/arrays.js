@@ -557,7 +557,7 @@ test("10 - two arrays, one empty, string within", () => {
   );
   equal(
     compare(["a", "b", "c"], [], { hungryForWhitespace: true }),
-    true,
+    false,
     "10.03",
   );
 });

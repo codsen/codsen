@@ -7,20 +7,30 @@ import { compare } from "../dist/ast-compare.esm.js";
 
 const callerDir = path.resolve(".");
 
+const superset = [
+  { metadata: { name: "alpha" } },
+  { metadata: { name: "alpine" } },
+  { metadata: { name: "beta" } },
+  { metadata: { name: "bravo" } },
+  { metadata: { name: "charlie" } },
+  { metadata: { name: "delta" } },
+  { metadata: { name: "echo" } },
+  { metadata: { name: "foxtrot" } },
+];
+const subset = [
+  { metadata: { name: "*" } },
+  { metadata: { name: "alpha" } },
+  { metadata: { name: "b*" } },
+  { metadata: { name: "charlie" } },
+  { metadata: { name: "delta" } },
+  { metadata: { name: "echo" } },
+];
+
 const testme = () =>
-  compare(
-    [
-      { a: "a" },
-      { b: "b" },
-      { c1: "c1", c2: "c2" },
-      { d1: "d1", d2: "d2" },
-      { e: "e" },
-    ],
-    [
-      { c2: "c2", c1: "c1" },
-      { d2: "d2", d1: "d1" },
-    ],
-  );
+  compare(superset, subset, {
+    arrayOrder: "any",
+    useWildcards: true,
+  });
 
 // action
 assert.equal(testme(), true);

@@ -23,13 +23,13 @@ test("02 - plain objects", () => {
 });
 
 test("03 - plain objects", () => {
-  is(
+  match(
     compare(
       { a: "1", b: "2" },
       { a: "1", b: "2", c: "3" },
       { verboseWhenMismatches: true },
     ),
-    'The given object has key "c" which the other-one does not have.',
+    /Mismatch at \$:.*First value.*second pattern/su,
     "03.01",
   );
 });
@@ -425,7 +425,7 @@ test("40 - comparison of empty plain objects - hungryForWhitespace", () => {
       },
       { hungryForWhitespace: true, matchStrictly: false },
     ),
-    true,
+    false,
     "40.01",
   );
 });

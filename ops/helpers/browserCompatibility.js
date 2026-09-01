@@ -211,6 +211,66 @@ function astDeepContainsSmoke(api, equal) {
   equal(errors, []);
 }
 
+function astCompareSmoke(api, equal) {
+  const progress = [];
+  let completion;
+
+  equal(typeof api.compare, "function");
+  equal(typeof api.version, "string");
+  equal(Object.isFrozen(api.defaults), true);
+  equal(api.compare(["a", "b", "c"], ["a", "c"]), true);
+  equal(
+    api.compare(["alpha", "beta"], ["*", "a*"], {
+      arrayOrder: "any",
+      matchStrictly: true,
+      useWildcards: true,
+    }),
+    true,
+  );
+  equal(
+    api.compare(
+      { alpha: "x", beta: "y" },
+      { "a*": "x", "al*": "x" },
+      { matchStrictly: true, useWildcards: true },
+    ),
+    false,
+  );
+  equal(
+    api.compare({ alpha: { value: 1 } }, { "a*": { value: 2 } }, {
+      useWildcards: true,
+    }),
+    false,
+  );
+  equal(
+    api.compare(["real"], [" "], { hungryForWhitespace: true }),
+    false,
+  );
+  equal(
+    api.compare(["a", "b"], ["b", "a"], {
+      arrayOrder: "any",
+      reportCompletionFunc: function (stats) {
+        completion = stats;
+      },
+      reportProgressFunc: function (percentageDone) {
+        progress.push(percentageDone);
+      },
+      reportProgressFuncFrom: 20,
+      reportProgressFuncTo: 40,
+    }),
+    true,
+  );
+  equal(progress, [20, 40]);
+  equal(
+    [
+      completion.candidateComparisons,
+      completion.comparisons,
+      completion.matchingEdges,
+      typeof completion.timeTakenInMilliseconds,
+    ],
+    [4, 5, 2, "number"],
+  );
+}
+
 function astMonkeyUtilSmoke(api, equal) {
   equal(
     [
@@ -483,6 +543,7 @@ function arrayIncludesWithGlobSmoke(api, equal) {
 const IIFE_API_SMOKES = Object.freeze({
   "array-group-str-omit-num-char": arrayGroupSmoke,
   "array-includes-with-glob": arrayIncludesWithGlobSmoke,
+  "ast-compare": astCompareSmoke,
   "ast-deep-contains": astDeepContainsSmoke,
   "ast-monkey-util": astMonkeyUtilSmoke,
   "codsen-utils": codsenUtilsSmoke,

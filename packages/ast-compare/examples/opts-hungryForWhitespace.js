@@ -28,8 +28,7 @@ assert.equal(
   true,
 );
 
-// the fun doesn't stop here, any "empty" structures will be
-// reported as matching:
+// Empty structures containing only whitespace strings also match:
 assert.equal(
   compare(
     { a: { z: "\n\n\n" }, b: ["\t\t\t"], c: "whatever" },
@@ -40,7 +39,7 @@ assert.equal(
   ),
   true, // <--- !!!
 );
-// "empty" thing is:
+// An empty value is:
 //   - string that trims to zero-length
 //   - array with zero or more whitespace strings only
 //   - plain object with zero or more keys with "empty" values

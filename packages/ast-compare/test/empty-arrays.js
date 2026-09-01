@@ -106,7 +106,7 @@ test("11 - array vs string", () => {
 test("12 - array vs null", () => {
   equal(
     compare([" "], [null], { hungryForWhitespace: true, matchStrictly: true }),
-    true,
+    false,
     "12.01",
   );
 });
@@ -133,7 +133,7 @@ test("15", () => {
       hungryForWhitespace: true,
       matchStrictly: true,
     }),
-    true,
+    false,
     "15.01",
   );
 });

@@ -1,12 +1,15 @@
-import { empty } from "ast-contains-only-empty-space";
-import { hasOwnProp, isPlainObject as isObj, match } from "codsen-utils";
+import {
+  createMatcher,
+  formatDiagnosticValue,
+  hasOwnProp,
+  isPlainObject,
+  match,
+} from "codsen-utils";
 
 import { version as v } from "../package.json";
 
 const version: string = v;
 
-/* eslint no-use-before-define: 0 */
-// From "type-fest" by Sindre Sorhus:
 export type JsonValue =
   | string
   | number
@@ -14,436 +17,995 @@ export type JsonValue =
   | null
   | JsonObject
   | JsonArray;
-export type JsonObject = { [Key in string]?: JsonValue };
-export type JsonArray = JsonValue[];
+export type JsonObject = {
+  readonly [Key in string]?: JsonValue | undefined;
+};
+export type JsonArray = readonly (JsonValue | undefined)[];
+export type ComparableValue = JsonValue | undefined;
 
 export interface AnyObject {
-  [key: string]: any;
+  readonly [key: string]: unknown;
 }
 
-declare let DEV: boolean;
-
-// -----------------------------------------------------------------------------
-
-/* c8 ignore next */
-function isBlank(something: any): boolean {
-  if (isObj(something)) {
-    return !Object.keys(something).length;
-  }
-  if (Array.isArray(something) || typeof something === "string") {
-    return !something.length;
-  }
-  return false;
-}
-
-function sameType(a: unknown, b: unknown): boolean {
-  if (a === null || b === null) return a === b;
-  if (Array.isArray(a) || Array.isArray(b)) {
-    return Array.isArray(a) && Array.isArray(b);
-  }
-  return typeof a === typeof b;
-}
-
-function typeLabel(value: unknown): string {
-  if (value === null) return "null";
-  if (Array.isArray(value)) return "Array";
-  if (isObj(value)) return "Object";
-  return typeof value;
+export interface CompletionStats {
+  candidateComparisons: number;
+  comparisons: number;
+  matchingEdges: number;
+  timeTakenInMilliseconds: number;
 }
 
 export interface Opts {
   arrayOrder: "ordered" | "any";
   hungryForWhitespace: boolean;
   matchStrictly: boolean;
+  reportCompletionFunc: null | ((stats: CompletionStats) => void);
+  reportProgressFunc: null | ((percentageDone: number) => void);
+  reportProgressFuncFrom: number;
+  reportProgressFuncTo: number;
   verboseWhenMismatches: boolean;
   useWildcards: boolean;
 }
 
-const defaults: Opts = {
+export type BooleanOpts = Partial<Opts> & {
+  verboseWhenMismatches?: false | undefined;
+};
+export type VerboseOpts = Partial<Opts> & {
+  verboseWhenMismatches: true;
+};
+
+interface ResolvedOpts extends Opts {}
+
+interface Mismatch {
+  first: unknown;
+  path: string;
+  reason: string;
+  second: unknown;
+}
+
+interface Outcome {
+  matched: boolean;
+  mismatch?: Mismatch;
+}
+
+interface PairFrame {
+  first: unknown;
+  kind: "pair";
+  path: string;
+  second: unknown;
+}
+
+interface ReleasePairFrame {
+  first: object;
+  kind: "release-pair";
+  second: object;
+}
+
+interface OrderedArrayFrame {
+  first: readonly unknown[];
+  firstIndex: number;
+  kind: "ordered-array";
+  path: string;
+  second: readonly unknown[];
+  secondIndex: number;
+}
+
+interface OrderedArrayAfterFrame extends Omit<OrderedArrayFrame, "kind"> {
+  kind: "ordered-array-after";
+}
+
+interface ExactObjectFrame {
+  exactKeys: readonly string[];
+  first: Record<string, unknown>;
+  index: number;
+  kind: "exact-object";
+  path: string;
+  second: Record<string, unknown>;
+  wildcardFirstKeys: readonly string[];
+  wildcardKeys: readonly string[];
+}
+
+interface ExactObjectAfterFrame extends Omit<ExactObjectFrame, "kind"> {
+  kind: "exact-object-after";
+}
+
+interface ArrayCandidatesFrame {
+  adjacency: CandidateRow[];
+  first: readonly unknown[];
+  firstIndex: number;
+  kind: "array-candidates";
+  path: string;
+  second: readonly unknown[];
+  secondIndex: number;
+}
+
+interface ArrayCandidatesAfterFrame
+  extends Omit<ArrayCandidatesFrame, "kind"> {
+  kind: "array-candidates-after";
+}
+
+interface ObjectCandidatesFrame {
+  adjacency: CandidateRow[];
+  first: Record<string, unknown>;
+  firstIndex: number;
+  firstKeys: readonly string[];
+  keyMatchers: readonly ((input: string) => boolean)[];
+  kind: "object-candidates";
+  path: string;
+  second: Record<string, unknown>;
+  secondIndex: number;
+  wildcardKeys: readonly string[];
+}
+
+interface ObjectCandidatesAfterFrame
+  extends Omit<ObjectCandidatesFrame, "kind"> {
+  kind: "object-candidates-after";
+}
+
+type Frame =
+  | PairFrame
+  | ReleasePairFrame
+  | OrderedArrayFrame
+  | OrderedArrayAfterFrame
+  | ExactObjectFrame
+  | ExactObjectAfterFrame
+  | ArrayCandidatesFrame
+  | ArrayCandidatesAfterFrame
+  | ObjectCandidatesFrame
+  | ObjectCandidatesAfterFrame;
+
+interface EmptyFrame {
+  allEmpty: boolean;
+  children: unknown[];
+  index: number;
+  value: object;
+}
+
+type CandidateRow = number[] | Uint32Array;
+
+interface ComparisonContext {
+  activePairs: WeakMap<object, WeakSet<object>>;
+  candidateComparisons: number;
+  comparisons: number;
+  emptyCache: WeakMap<object, boolean>;
+  lastProgress: number | undefined;
+  matchingEdges: number;
+  opts: ResolvedOpts;
+}
+
+const canonicalDefaults: Readonly<Opts> = Object.freeze({
   arrayOrder: "ordered",
   hungryForWhitespace: false,
   matchStrictly: false,
+  reportCompletionFunc: null,
+  reportProgressFunc: null,
+  reportProgressFuncFrom: 0,
+  reportProgressFuncTo: 100,
   verboseWhenMismatches: false,
   useWildcards: false,
-};
+});
 
-// -----------------------------------------------------------------------------
+const defaults: Readonly<Opts> = Object.freeze({ ...canonicalDefaults });
+const MATCH_OPTIONS = Object.freeze({ caseSensitiveMatch: true });
+const MATCHED: Outcome = Object.freeze({ matched: true });
 
-// Legend:
-// b - superset object; s - subset object
-
-/**
- * Compare anything: AST, objects, arrays, strings and nested thereof
- */
-function compare(
-  b: JsonValue,
-  s: JsonValue,
-  opts?: Partial<Opts>,
-): boolean | string {
-  return compareInner(b, s, { ...defaults, ...opts });
+function mismatch(
+  path: string,
+  reason: string,
+  first: unknown,
+  second: unknown,
+): Outcome {
+  return { matched: false, mismatch: { first, path, reason, second } };
 }
 
-function compareInner(
-  b: JsonValue,
-  s: JsonValue,
-  resolvedOpts: Opts,
-): boolean | string {
-  DEV && console.log("\n███████████████████████████████████████\n ");
-  DEV && console.log(`compare() CALLED`);
+function propertyPath(path: string, key: string): string {
+  return `${path}[${JSON.stringify(key)}]`;
+}
 
-  let sKeys: string[];
-  let bKeys: string[];
-  let found: boolean;
-  let bOffset = 0;
+function valueType(value: unknown): string {
+  if (value === null) return "null";
+  if (Array.isArray(value)) return "array";
+  if (isPlainObject(value)) return "plain object";
+  return typeof value;
+}
 
-  DEV &&
-    console.log(
-      `compare(): ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
-        resolvedOpts,
-        null,
-        4,
-      )}`,
-    );
+function formatMismatch(value: Mismatch): string {
+  return `Mismatch at ${value.path}: ${value.reason} First value is ${formatDiagnosticValue(
+    value.first,
+    4,
+  )}; second pattern is ${formatDiagnosticValue(value.second, 4)}.`;
+}
 
-  // edge case when hungryForWhitespace=true, matchStrictly=true and matching against blank object:
-  if (
-    resolvedOpts.hungryForWhitespace &&
-    resolvedOpts.matchStrictly &&
-    isObj(b) &&
-    empty(b) &&
-    isObj(s) &&
-    !Object.keys(s).length
-  ) {
-    DEV && console.log(`return true`);
-    return true;
+function hasActivePair(
+  activePairs: WeakMap<object, WeakSet<object>>,
+  first: object,
+  second: object,
+): boolean {
+  return activePairs.get(first)?.has(second) === true;
+}
+
+function addActivePair(
+  activePairs: WeakMap<object, WeakSet<object>>,
+  first: object,
+  second: object,
+): void {
+  let seconds = activePairs.get(first);
+  if (!seconds) {
+    seconds = new WeakSet<object>();
+    activePairs.set(first, seconds);
+  }
+  seconds.add(second);
+}
+
+function removeActivePair(
+  activePairs: WeakMap<object, WeakSet<object>>,
+  first: object,
+  second: object,
+): void {
+  activePairs.get(first)?.delete(second);
+}
+
+function emptyPrimitive(value: unknown): boolean {
+  return typeof value === "string" && value.trim().length === 0;
+}
+
+function emptyChildren(value: object): unknown[] {
+  if (Array.isArray(value)) {
+    const children = new Array<unknown>(value.length);
+    for (let index = 0; index < value.length; index++) {
+      children[index] = value[index];
+    }
+    return children;
+  }
+  return Object.keys(value).map(
+    (key) => (value as Record<string, unknown>)[key],
+  );
+}
+
+/**
+ * Resolve semantic whitespace emptiness without recursion. A cycle, sparse
+ * hole, explicit undefined, null, number, or Boolean is meaningful data and is
+ * therefore non-empty.
+ */
+function isWhitespaceEmpty(
+  value: unknown,
+  cache: WeakMap<object, boolean>,
+): boolean {
+  if (!Array.isArray(value) && !isPlainObject(value)) {
+    return emptyPrimitive(value);
   }
 
-  // instant (falsy) result
-  if (
-    ((!resolvedOpts.hungryForWhitespace ||
-      (resolvedOpts.hungryForWhitespace && !empty(b) && empty(s))) &&
-      isObj(b) &&
-      Object.keys(b).length !== 0 &&
-      isObj(s) &&
-      Object.keys(s).length === 0) ||
-    (!sameType(b, s) &&
-      (!resolvedOpts.hungryForWhitespace ||
-        (resolvedOpts.hungryForWhitespace && !empty(b))))
-  ) {
-    DEV && console.log(`return false`);
-    return false;
-  }
+  const cached = cache.get(value);
+  if (cached !== undefined) return cached;
 
-  // A C T I O N
+  const active = new WeakSet<object>();
+  const stack: EmptyFrame[] = [
+    { allEmpty: true, children: emptyChildren(value), index: 0, value },
+  ];
+  active.add(value);
+  let result = false;
 
-  if (typeof b === "string" && typeof s === "string") {
-    DEV &&
-      console.log(
-        `${`\u001b[${33}m${`big`}\u001b[${39}m`}: ${JSON.stringify(
-          b,
-          null,
-          4,
-        )} (empty: ${empty(b)})`,
-      );
-    DEV &&
-      console.log(
-        `${`\u001b[${33}m${`small`}\u001b[${39}m`}: ${JSON.stringify(
-          s,
-          null,
-          4,
-        )} (empty: ${empty(s)})`,
-      );
-    if (resolvedOpts.hungryForWhitespace && empty(b) && empty(s)) {
-      DEV &&
-        console.log(
-          `${`\u001b[${32}m${`return true, both empty`}\u001b[${39}m`}`,
-        );
-      return true;
+  while (stack.length) {
+    const frame = stack[stack.length - 1];
+    if (!frame.allEmpty || frame.index === frame.children.length) {
+      result = frame.allEmpty;
+      cache.set(frame.value, result);
+      active.delete(frame.value);
+      stack.pop();
+      if (stack.length && !result) stack[stack.length - 1].allEmpty = false;
+      continue;
     }
-    const stringsMatch = resolvedOpts.useWildcards
-      ? match(b, s, { caseSensitiveMatch: true })
-      : b === s;
-    if (resolvedOpts.verboseWhenMismatches) {
-      DEV && console.log(`return ${stringsMatch}`);
-      return stringsMatch
-        ? true
-        : `Given string ${s} is not matched! We have ${b} on the other end.`;
+
+    const child = frame.children[frame.index++];
+    if (!Array.isArray(child) && !isPlainObject(child)) {
+      if (!emptyPrimitive(child)) frame.allEmpty = false;
+      continue;
     }
-    DEV && console.log(`return ${stringsMatch}`);
-    return stringsMatch;
-  }
-  if (Array.isArray(b) && Array.isArray(s)) {
-    DEV && console.log(`both arrays`);
-    if (
-      resolvedOpts.hungryForWhitespace &&
-      empty(s) &&
-      (!resolvedOpts.matchStrictly ||
-        (resolvedOpts.matchStrictly && b.length === s.length))
-    ) {
-      DEV && console.log(`return true`);
-      return true;
-    }
-    if (
-      (!resolvedOpts.hungryForWhitespace && s.length > b.length) ||
-      (resolvedOpts.matchStrictly && s.length !== b.length)
-    ) {
-      if (!resolvedOpts.verboseWhenMismatches) {
-        DEV && console.log(`return false`);
-        return false;
-      }
-      DEV && console.log(`return`);
-      return `The length of a given array, ${JSON.stringify(s, null, 4)} is ${
-        s.length
-      } but the length of an array on the other end, ${JSON.stringify(
-        b,
-        null,
-        4,
-      )} is ${b.length}`;
-    }
-    if (s.length === 0) {
-      if (b.length === 0) {
-        DEV && console.log(`return true`);
-        return true;
-      }
-      // so b is not zero-long, but s is.
-      if (resolvedOpts.verboseWhenMismatches) {
-        DEV && console.log(`return`);
-        return `The given array has no elements, but the array on the other end, ${JSON.stringify(
-          b,
-          null,
-          4,
-        )} does have some`;
-      }
-      DEV && console.log(`return false`);
-      return false;
-    }
-    if (resolvedOpts.arrayOrder === "any") {
-      found = arraysMatchInAnyOrder(b, s, resolvedOpts);
+
+    const childCached = cache.get(child);
+    if (childCached !== undefined) {
+      if (!childCached) frame.allEmpty = false;
+    } else if (active.has(child)) {
+      frame.allEmpty = false;
     } else {
-      found = true;
-      for (let i = 0, sLen = s.length; i < sLen; i++) {
-        found = false;
-        for (let j = bOffset, bLen = b.length; j < bLen; j++) {
-          bOffset += 1;
-          DEV && console.log(`enter recursion`);
-          if (compareInner(b[j], s[i], resolvedOpts) === true) {
-            found = true;
+      active.add(child);
+      stack.push({
+        allEmpty: true,
+        children: emptyChildren(child),
+        index: 0,
+        value: child,
+      });
+    }
+  }
+
+  return result;
+}
+
+function callSafely(callback: null | ((value: any) => void), value: any): void {
+  if (!callback) return;
+  try {
+    callback(value);
+  } catch {
+    // Observability callbacks must not change comparison semantics.
+  }
+}
+
+function reportProgress(context: ComparisonContext, complete = false): void {
+  const { opts } = context;
+  if (!opts.reportProgressFunc) return;
+
+  const span = opts.reportProgressFuncTo - opts.reportProgressFuncFrom;
+  const work = context.comparisons + context.candidateComparisons;
+  const percentage = complete
+    ? opts.reportProgressFuncTo
+    : opts.reportProgressFuncFrom + span * Math.min(0.99, work / (work + 1000));
+  if (percentage !== context.lastProgress) {
+    context.lastProgress = percentage;
+    callSafely(opts.reportProgressFunc, percentage);
+  }
+}
+
+function recordComparison(context: ComparisonContext): void {
+  context.comparisons += 1;
+  if (context.comparisons % 1000 === 0) reportProgress(context);
+}
+
+function recordCandidate(context: ComparisonContext): void {
+  context.candidateComparisons += 1;
+  if (context.candidateComparisons % 1000 === 0) reportProgress(context);
+}
+
+function compactCandidateRow(row: number[]): Uint32Array {
+  const result = new Uint32Array(row.length);
+  for (let index = 0; index < row.length; index++) result[index] = row[index];
+  return result;
+}
+
+/**
+ * Test whether a bipartite graph contains a matching for every left vertex.
+ * Hopcroft-Karp layers the graph, while the augmenting traversal uses explicit
+ * stacks so ambiguous inputs cannot overflow the native call stack.
+ */
+function hasCompleteMatching(
+  adjacency: readonly CandidateRow[],
+  rightCount: number,
+): boolean {
+  const leftCount = adjacency.length;
+  if (leftCount === 0) return true;
+
+  const leftPair = new Int32Array(leftCount);
+  const rightPair = new Int32Array(rightCount);
+  const distance = new Int32Array(leftCount);
+  leftPair.fill(-1);
+  rightPair.fill(-1);
+  let matchingSize = 0;
+
+  while (true) {
+    const queue = new Int32Array(leftCount);
+    let queueStart = 0;
+    let queueEnd = 0;
+    let foundFreeRight = false;
+
+    for (let left = 0; left < leftCount; left++) {
+      if (leftPair[left] === -1) {
+        distance[left] = 0;
+        queue[queueEnd++] = left;
+      } else {
+        distance[left] = -1;
+      }
+    }
+
+    while (queueStart < queueEnd) {
+      const left = queue[queueStart++];
+      for (const right of adjacency[left]) {
+        const pairedLeft = rightPair[right];
+        if (pairedLeft === -1) {
+          foundFreeRight = true;
+        } else if (distance[pairedLeft] === -1) {
+          distance[pairedLeft] = distance[left] + 1;
+          queue[queueEnd++] = pairedLeft;
+        }
+      }
+    }
+
+    if (!foundFreeRight) return matchingSize === leftCount;
+
+    const edgeCursor = new Int32Array(leftCount);
+    for (let start = 0; start < leftCount; start++) {
+      if (leftPair[start] !== -1) continue;
+
+      const leftStack: number[] = [start];
+      const chosenRights: number[] = [];
+      let augmented = false;
+
+      while (leftStack.length && !augmented) {
+        const depth = leftStack.length - 1;
+        const left = leftStack[depth];
+        const edges = adjacency[left];
+        let advanced = false;
+
+        while (edgeCursor[left] < edges.length) {
+          const right = edges[edgeCursor[left]++];
+          const pairedLeft = rightPair[right];
+          if (pairedLeft === -1) {
+            leftPair[left] = right;
+            rightPair[right] = left;
+            for (let index = depth - 1; index >= 0; index--) {
+              const parentLeft = leftStack[index];
+              const parentRight = chosenRights[index];
+              leftPair[parentLeft] = parentRight;
+              rightPair[parentRight] = parentLeft;
+            }
+            augmented = true;
+            break;
+          }
+          if (distance[pairedLeft] === distance[left] + 1) {
+            chosenRights[depth] = right;
+            leftStack.push(pairedLeft);
+            advanced = true;
             break;
           }
         }
-        if (!found) {
-          break;
+
+        if (!advanced && !augmented) {
+          distance[left] = -1;
+          leftStack.pop();
+          chosenRights.length = Math.max(0, leftStack.length - 1);
         }
       }
-    }
-    if (!found) {
-      if (!resolvedOpts.verboseWhenMismatches) {
-        DEV && console.log(`return false`);
-        return false;
-      }
-      DEV && console.log(`return`);
-      return `The given array ${JSON.stringify(
-        s,
-        null,
-        4,
-      )} is not a subset of an array on the other end, ${JSON.stringify(
-        b,
-        null,
-        4,
-      )}`;
-    }
-  } else if (isObj(b) && isObj(s)) {
-    sKeys = Object.keys(s);
-    bKeys = Object.keys(b);
-    if (resolvedOpts.matchStrictly && sKeys.length !== bKeys.length) {
-      if (!resolvedOpts.verboseWhenMismatches) {
-        DEV && console.log(`return false`);
-        return false;
-      }
-      let sKeySet = new Set(sKeys);
-      let bKeySet = new Set(bKeys);
-      let uniqueKeysOnS = sKeys.filter((x) => !bKeySet.has(x));
-      let sMessage = uniqueKeysOnS.length
-        ? ` First object has unique keys: ${JSON.stringify(
-            uniqueKeysOnS,
-            null,
-            4,
-          )}.`
-        : "";
 
-      let uniqueKeysOnB = bKeys.filter((x) => !sKeySet.has(x));
-      let bMessage = uniqueKeysOnB.length
-        ? ` Second object has unique keys:
-        ${JSON.stringify(uniqueKeysOnB, null, 4)}.`
-        : "";
-
-      DEV && console.log(`return`);
-      return `When matching strictly, we found that both objects have different amount of keys.${sMessage}${bMessage}`;
+      if (augmented) {
+        matchingSize += 1;
+      }
     }
 
-    DEV && console.log(`${`\u001b[${36}m${`LOOP`}\u001b[${39}m`}`);
-
-    for (const sKey of sKeys) {
-      DEV && console.log(`${`\u001b[${35}m${`sKey = ${sKey}`}\u001b[${39}m`}`);
-      if (!hasOwnProp(b, sKey)) {
-        DEV && console.log(`case #1.`);
-        if (
-          !resolvedOpts.useWildcards ||
-          (resolvedOpts.useWildcards && !sKey.includes("*"))
-        ) {
-          if (!resolvedOpts.verboseWhenMismatches) {
-            DEV && console.log(`return false`);
-            return false;
-          }
-          DEV && console.log(`return`);
-          return `The given object has key "${sKey}" which the other-one does not have.`;
-        }
-        // so wildcards are on and sKeys[i] contains a wildcard
-        if (
-          bKeys.some((bKey) => match(bKey, sKey, { caseSensitiveMatch: true }))
-        ) {
-          // This wildcard key matched; keep checking the remaining subset keys.
-          DEV && console.log(`continue`);
-          continue;
-        }
-        if (!resolvedOpts.verboseWhenMismatches) {
-          DEV && console.log(`return false`);
-          return false;
-        }
-        DEV && console.log(`return`);
-        return `The given object has key "${sKey}" which the other-one does not have.`;
-      }
-      if (b[sKey] != null && !sameType(b[sKey], s[sKey])) {
-        DEV && console.log(`case #2.`);
-        DEV && console.log(`types mismatch`);
-        // Types mismatch. Probably falsy result, unless comparing with
-        // empty/blank things. Let's check.
-        // it might be blank array vs blank object:
-        if (
-          !(
-            empty(b[sKey]) &&
-            empty(s[sKey]) &&
-            resolvedOpts.hungryForWhitespace
-          )
-        ) {
-          if (!resolvedOpts.verboseWhenMismatches) {
-            DEV && console.log(`return false`);
-            return false;
-          }
-          DEV && console.log(`return`);
-          return `The given key ${sKey} is of a different type on both objects. On the first-one, it's ${typeLabel(
-            s[sKey],
-          )}, on the second-one, it's ${typeLabel(b[sKey])}`;
-        }
-      } else if (
-        compareInner(
-          b[sKey] as JsonValue,
-          s[sKey] as JsonValue,
-          resolvedOpts,
-        ) !== true
-      ) {
-        DEV && console.log(`case #3. - recursion returned false`);
-        DEV &&
-          console.log(
-            `██ ${`\u001b[${33}m${`b[sKey]`}\u001b[${39}m`} = ${JSON.stringify(
-              b[sKey],
-              null,
-              4,
-            )}`,
-          );
-        DEV &&
-          console.log(
-            `██ ${`\u001b[${33}m${`s[sKey]`}\u001b[${39}m`} = ${JSON.stringify(
-              s[sKey],
-              null,
-              4,
-            )}`,
-          );
-        DEV && console.log(`so key does exist and type matches`);
-        if (!resolvedOpts.verboseWhenMismatches) {
-          DEV && console.log(`return false`);
-          return false;
-        }
-        DEV && console.log(`return`);
-        return `The given piece ${JSON.stringify(
-          s[sKey],
-          null,
-          4,
-        )} and ${JSON.stringify(b[sKey], null, 4)} don't match.`;
-      }
-      DEV && console.log(`end reached, case #4.`);
-    }
-  } else {
-    DEV && console.log(`else clauses`);
-    if (
-      resolvedOpts.hungryForWhitespace &&
-      empty(b) &&
-      empty(s) &&
-      (!resolvedOpts.matchStrictly ||
-        (resolvedOpts.matchStrictly && isBlank(s)))
-    ) {
-      DEV && console.log(`return true`);
-      return true;
-    }
-    DEV && console.log(`return ${b === s}`);
-    return b === s;
+    if (matchingSize === leftCount) return true;
   }
-  DEV && console.log(`return true`);
-  return true;
+}
+
+function evaluate(
+  first: unknown,
+  second: unknown,
+  context: ComparisonContext,
+): Outcome {
+  const { opts } = context;
+  const stack: Frame[] = [{ first, kind: "pair", path: "$", second }];
+  let outcome: Outcome = MATCHED;
+
+  while (stack.length) {
+    const frame = stack.pop() as Frame;
+
+    if (frame.kind === "release-pair") {
+      removeActivePair(context.activePairs, frame.first, frame.second);
+      continue;
+    }
+
+    if (frame.kind === "ordered-array-after") {
+      if (outcome.matched) {
+        stack.push({
+          ...frame,
+          firstIndex: frame.firstIndex + 1,
+          kind: "ordered-array",
+          secondIndex: frame.secondIndex + 1,
+        });
+      } else {
+        outcome = MATCHED;
+        stack.push({
+          ...frame,
+          firstIndex: frame.firstIndex + 1,
+          kind: "ordered-array",
+        });
+      }
+      continue;
+    }
+
+    if (frame.kind === "ordered-array") {
+      if (frame.secondIndex === frame.second.length) {
+        outcome = MATCHED;
+      } else if (frame.firstIndex === frame.first.length) {
+        outcome = mismatch(
+          frame.path,
+          "the second array is not an ordered subset of the first array.",
+          frame.first,
+          frame.second,
+        );
+      } else {
+        stack.push({ ...frame, kind: "ordered-array-after" });
+        stack.push({
+          first: frame.first[frame.firstIndex],
+          kind: "pair",
+          path: `${frame.path}[${frame.firstIndex}]`,
+          second: frame.second[frame.secondIndex],
+        });
+      }
+      continue;
+    }
+
+    if (frame.kind === "exact-object-after") {
+      if (outcome.matched) {
+        stack.push({
+          ...frame,
+          index: frame.index + 1,
+          kind: "exact-object",
+        });
+      }
+      continue;
+    }
+
+    if (frame.kind === "exact-object") {
+      if (frame.index < frame.exactKeys.length) {
+        const key = frame.exactKeys[frame.index];
+        stack.push({ ...frame, kind: "exact-object-after" });
+        stack.push({
+          first: frame.first[key],
+          kind: "pair",
+          path: propertyPath(frame.path, key),
+          second: frame.second[key],
+        });
+      } else if (frame.wildcardKeys.length) {
+        stack.push({
+          adjacency: Array.from(
+            { length: frame.wildcardKeys.length },
+            () => [],
+          ),
+          first: frame.first,
+          firstIndex: 0,
+          firstKeys: frame.wildcardFirstKeys,
+          keyMatchers: frame.wildcardKeys.map((key) =>
+            createMatcher(key, MATCH_OPTIONS),
+          ),
+          kind: "object-candidates",
+          path: frame.path,
+          second: frame.second,
+          secondIndex: 0,
+          wildcardKeys: frame.wildcardKeys,
+        });
+      } else {
+        outcome = MATCHED;
+      }
+      continue;
+    }
+
+    if (frame.kind === "array-candidates-after") {
+      if (outcome.matched) {
+        (frame.adjacency[frame.secondIndex] as number[]).push(frame.firstIndex);
+        context.matchingEdges += 1;
+      }
+      outcome = MATCHED;
+      stack.push({
+        ...frame,
+        firstIndex: frame.firstIndex + 1,
+        kind: "array-candidates",
+      });
+      continue;
+    }
+
+    if (frame.kind === "array-candidates") {
+      if (frame.secondIndex === frame.second.length) {
+        outcome = hasCompleteMatching(frame.adjacency, frame.first.length)
+          ? MATCHED
+          : mismatch(
+              frame.path,
+              "the second array has no injective unordered match in the first array.",
+              frame.first,
+              frame.second,
+            );
+      } else if (frame.firstIndex === frame.first.length) {
+        frame.adjacency[frame.secondIndex] = compactCandidateRow(
+          frame.adjacency[frame.secondIndex] as number[],
+        );
+        stack.push({
+          ...frame,
+          firstIndex: 0,
+          kind: "array-candidates",
+          secondIndex: frame.secondIndex + 1,
+        });
+      } else {
+        recordCandidate(context);
+        stack.push({ ...frame, kind: "array-candidates-after" });
+        stack.push({
+          first: frame.first[frame.firstIndex],
+          kind: "pair",
+          path: `${frame.path}[${frame.firstIndex}]`,
+          second: frame.second[frame.secondIndex],
+        });
+      }
+      continue;
+    }
+
+    if (frame.kind === "object-candidates-after") {
+      if (outcome.matched) {
+        (frame.adjacency[frame.secondIndex] as number[]).push(frame.firstIndex);
+        context.matchingEdges += 1;
+      }
+      outcome = MATCHED;
+      stack.push({
+        ...frame,
+        firstIndex: frame.firstIndex + 1,
+        kind: "object-candidates",
+      });
+      continue;
+    }
+
+    if (frame.kind === "object-candidates") {
+      if (frame.secondIndex === frame.wildcardKeys.length) {
+        outcome = hasCompleteMatching(frame.adjacency, frame.firstKeys.length)
+          ? MATCHED
+          : mismatch(
+              frame.path,
+              "the wildcard properties in the second object have no injective key-and-value match in the first object.",
+              frame.first,
+              frame.second,
+            );
+      } else if (frame.firstIndex === frame.firstKeys.length) {
+        frame.adjacency[frame.secondIndex] = compactCandidateRow(
+          frame.adjacency[frame.secondIndex] as number[],
+        );
+        stack.push({
+          ...frame,
+          firstIndex: 0,
+          kind: "object-candidates",
+          secondIndex: frame.secondIndex + 1,
+        });
+      } else {
+        recordCandidate(context);
+        const firstKey = frame.firstKeys[frame.firstIndex];
+        if (frame.keyMatchers[frame.secondIndex](firstKey)) {
+          const secondKey = frame.wildcardKeys[frame.secondIndex];
+          stack.push({ ...frame, kind: "object-candidates-after" });
+          stack.push({
+            first: frame.first[firstKey],
+            kind: "pair",
+            path: propertyPath(frame.path, firstKey),
+            second: frame.second[secondKey],
+          });
+        } else {
+          stack.push({
+            ...frame,
+            firstIndex: frame.firstIndex + 1,
+            kind: "object-candidates",
+          });
+        }
+      }
+      continue;
+    }
+
+    recordComparison(context);
+    if (frame.first === frame.second) {
+      outcome = MATCHED;
+      continue;
+    }
+
+    if (
+      opts.hungryForWhitespace &&
+      isWhitespaceEmpty(frame.first, context.emptyCache) &&
+      isWhitespaceEmpty(frame.second, context.emptyCache)
+    ) {
+      outcome = MATCHED;
+      continue;
+    }
+
+    if (typeof frame.first === "string" && typeof frame.second === "string") {
+      const stringsMatch = opts.useWildcards
+        ? match(frame.first, frame.second, MATCH_OPTIONS)
+        : false;
+      outcome = stringsMatch
+        ? MATCHED
+        : mismatch(
+            frame.path,
+            "the strings do not match.",
+            frame.first,
+            frame.second,
+          );
+      continue;
+    }
+
+    const bothArrays = Array.isArray(frame.first) && Array.isArray(frame.second);
+    const bothObjects =
+      isPlainObject(frame.first) && isPlainObject(frame.second);
+
+    if (!bothArrays && !bothObjects) {
+      const reason =
+        valueType(frame.first) === valueType(frame.second)
+          ? "the values are not equal."
+          : `the value types differ (${valueType(frame.first)} versus ${valueType(
+              frame.second,
+            )}).`;
+      outcome = mismatch(frame.path, reason, frame.first, frame.second);
+      continue;
+    }
+
+    const firstContainer = frame.first as object;
+    const secondContainer = frame.second as object;
+    if (hasActivePair(context.activePairs, firstContainer, secondContainer)) {
+      outcome = MATCHED;
+      continue;
+    }
+
+    if (bothArrays) {
+      const firstArray = frame.first as readonly unknown[];
+      const secondArray = frame.second as readonly unknown[];
+      if (
+        (opts.matchStrictly && firstArray.length !== secondArray.length) ||
+        secondArray.length > firstArray.length ||
+        (secondArray.length === 0 && firstArray.length !== 0)
+      ) {
+        outcome = mismatch(
+          frame.path,
+          opts.matchStrictly
+            ? "strict array matching requires equal lengths."
+            : "the second array cannot be an empty or larger subset of the first array.",
+          frame.first,
+          frame.second,
+        );
+        continue;
+      }
+
+      addActivePair(context.activePairs, firstContainer, secondContainer);
+      stack.push({
+        first: firstContainer,
+        kind: "release-pair",
+        second: secondContainer,
+      });
+      if (opts.arrayOrder === "any") {
+        stack.push({
+          adjacency: Array.from({ length: secondArray.length }, () => []),
+          first: firstArray,
+          firstIndex: 0,
+          kind: "array-candidates",
+          path: frame.path,
+          second: secondArray,
+          secondIndex: 0,
+        });
+      } else {
+        stack.push({
+          first: firstArray,
+          firstIndex: 0,
+          kind: "ordered-array",
+          path: frame.path,
+          second: secondArray,
+          secondIndex: 0,
+        });
+      }
+      continue;
+    }
+
+    const firstObject = frame.first as Record<string, unknown>;
+    const secondObject = frame.second as Record<string, unknown>;
+    const firstKeys = Object.keys(firstObject);
+    const secondKeys = Object.keys(secondObject);
+    if (
+      (opts.matchStrictly && firstKeys.length !== secondKeys.length) ||
+      secondKeys.length > firstKeys.length ||
+      (secondKeys.length === 0 && firstKeys.length !== 0)
+    ) {
+      outcome = mismatch(
+        frame.path,
+        opts.matchStrictly
+          ? "strict object matching requires equal key counts."
+          : "the second object cannot be an empty or larger subset of the first object.",
+        frame.first,
+        frame.second,
+      );
+      continue;
+    }
+
+    const exactKeys: string[] = [];
+    const wildcardKeys: string[] = [];
+    const reservedFirstKeys = new Set<string>();
+    let missingKey: string | undefined;
+    for (const key of secondKeys) {
+      if (hasOwnProp(firstObject, key)) {
+        exactKeys.push(key);
+        reservedFirstKeys.add(key);
+      } else if (opts.useWildcards) {
+        wildcardKeys.push(key);
+      } else {
+        missingKey = key;
+        break;
+      }
+    }
+
+    if (missingKey !== undefined) {
+      outcome = mismatch(
+        propertyPath(frame.path, missingKey),
+        `the first object does not have the second object's key ${JSON.stringify(
+          missingKey,
+        )}.`,
+        undefined,
+        secondObject[missingKey],
+      );
+      continue;
+    }
+
+    addActivePair(context.activePairs, firstContainer, secondContainer);
+    stack.push({
+      first: firstContainer,
+      kind: "release-pair",
+      second: secondContainer,
+    });
+    stack.push({
+      exactKeys,
+      first: firstObject,
+      index: 0,
+      kind: "exact-object",
+      path: frame.path,
+      second: secondObject,
+      wildcardFirstKeys: firstKeys.filter(
+        (key) => !reservedFirstKeys.has(key),
+      ),
+      wildcardKeys,
+    });
+  }
+
+  return outcome;
+}
+
+function resolveOptions(opts: Partial<Opts> | null | undefined): ResolvedOpts {
+  if (opts !== undefined && opts !== null && !isPlainObject(opts)) {
+    throw new TypeError(
+      `ast-compare/compare(): [THROW_ID_03] The third argument must be a plain object, null, or undefined; received ${formatDiagnosticValue(opts, 4)}.`,
+    );
+  }
+
+  const input = (opts ?? {}) as Record<string, unknown>;
+  const allowedKeys = new Set(Object.keys(canonicalDefaults));
+  const unknownKey = Object.keys(input).find((key) => !allowedKeys.has(key));
+  if (unknownKey !== undefined) {
+    throw new TypeError(
+      `ast-compare/compare(): [THROW_ID_04] Unknown option ${JSON.stringify(unknownKey)}.`,
+    );
+  }
+
+  const ownValue = <Key extends keyof Opts>(key: Key): Opts[Key] =>
+    (hasOwnProp(input, key) ? input[key] : canonicalDefaults[key]) as Opts[Key];
+  const arrayOrder = ownValue("arrayOrder");
+  if (arrayOrder !== "ordered" && arrayOrder !== "any") {
+    throw new TypeError(
+      `ast-compare/compare(): [THROW_ID_05] opts.arrayOrder must be "ordered" or "any"; received ${formatDiagnosticValue(arrayOrder, 4)}.`,
+    );
+  }
+
+  const hungryForWhitespace = ownValue("hungryForWhitespace");
+  if (typeof hungryForWhitespace !== "boolean") {
+    throw new TypeError(
+      `ast-compare/compare(): [THROW_ID_06] opts.hungryForWhitespace must be a Boolean; received ${formatDiagnosticValue(hungryForWhitespace, 4)}.`,
+    );
+  }
+  const matchStrictly = ownValue("matchStrictly");
+  if (typeof matchStrictly !== "boolean") {
+    throw new TypeError(
+      `ast-compare/compare(): [THROW_ID_07] opts.matchStrictly must be a Boolean; received ${formatDiagnosticValue(matchStrictly, 4)}.`,
+    );
+  }
+  const verboseWhenMismatches = ownValue("verboseWhenMismatches");
+  if (typeof verboseWhenMismatches !== "boolean") {
+    throw new TypeError(
+      `ast-compare/compare(): [THROW_ID_08] opts.verboseWhenMismatches must be a Boolean; received ${formatDiagnosticValue(verboseWhenMismatches, 4)}.`,
+    );
+  }
+  const useWildcards = ownValue("useWildcards");
+  if (typeof useWildcards !== "boolean") {
+    throw new TypeError(
+      `ast-compare/compare(): [THROW_ID_09] opts.useWildcards must be a Boolean; received ${formatDiagnosticValue(useWildcards, 4)}.`,
+    );
+  }
+
+  const reportCompletionFunc = ownValue("reportCompletionFunc");
+  if (
+    reportCompletionFunc !== null &&
+    typeof reportCompletionFunc !== "function"
+  ) {
+    throw new TypeError(
+      `ast-compare/compare(): [THROW_ID_10] opts.reportCompletionFunc must be a function or null; received ${formatDiagnosticValue(reportCompletionFunc, 4)}.`,
+    );
+  }
+
+  const reportProgressFunc = ownValue("reportProgressFunc");
+  if (reportProgressFunc !== null && typeof reportProgressFunc !== "function") {
+    throw new TypeError(
+      `ast-compare/compare(): [THROW_ID_11] opts.reportProgressFunc must be a function or null; received ${formatDiagnosticValue(reportProgressFunc, 4)}.`,
+    );
+  }
+
+  const reportProgressFuncFrom = ownValue("reportProgressFuncFrom");
+  if (!Number.isFinite(reportProgressFuncFrom)) {
+    throw new TypeError(
+      `ast-compare/compare(): [THROW_ID_12] opts.reportProgressFuncFrom must be a finite number; received ${formatDiagnosticValue(reportProgressFuncFrom, 4)}.`,
+    );
+  }
+
+  const reportProgressFuncTo = ownValue("reportProgressFuncTo");
+  if (!Number.isFinite(reportProgressFuncTo)) {
+    throw new TypeError(
+      `ast-compare/compare(): [THROW_ID_13] opts.reportProgressFuncTo must be a finite number; received ${formatDiagnosticValue(reportProgressFuncTo, 4)}.`,
+    );
+  }
+  if (reportProgressFuncFrom > reportProgressFuncTo) {
+    throw new RangeError(
+      `ast-compare/compare(): [THROW_ID_14] opts.reportProgressFuncFrom cannot exceed opts.reportProgressFuncTo; received ${reportProgressFuncFrom} and ${reportProgressFuncTo}.`,
+    );
+  }
+
+  return {
+    arrayOrder,
+    hungryForWhitespace,
+    matchStrictly,
+    reportCompletionFunc,
+    reportProgressFunc,
+    reportProgressFuncFrom,
+    reportProgressFuncTo,
+    verboseWhenMismatches,
+    useWildcards,
+  };
 }
 
 /**
- * Find an injective match from the subset array into the superset array.
- * Reassigning an earlier match is necessary when wildcard or subset matches
- * make more than one pairing possible.
+ * Check whether the second value is equal to, or a subset of, the first value.
  */
-function arraysMatchInAnyOrder(
-  b: JsonArray,
-  s: JsonArray,
-  resolvedOpts: Opts,
-): boolean {
-  const candidateOpts = resolvedOpts.verboseWhenMismatches
-    ? { ...resolvedOpts, verboseWhenMismatches: false }
-    : resolvedOpts;
-  const candidates = Array.from({ length: s.length }, (_, subsetIndex) =>
-    Array.from(
-      { length: b.length },
-      (_, supersetIndex) =>
-        compareInner(b[supersetIndex], s[subsetIndex], candidateOpts) === true,
-    ),
+function compare(
+  b: ComparableValue,
+  s: ComparableValue,
+  opts: VerboseOpts,
+): true | string;
+function compare(
+  b: ComparableValue,
+  s: ComparableValue,
+  opts?: BooleanOpts | null,
+): boolean;
+function compare(
+  b: ComparableValue,
+  s: ComparableValue,
+  opts?: Partial<Opts> | null,
+): boolean | string;
+function compare(
+  ...args: [
+    b?: ComparableValue,
+    s?: ComparableValue,
+    opts?: Partial<Opts> | null,
+  ]
+): boolean | string {
+  if (args.length < 1) {
+    throw new TypeError(
+      "ast-compare/compare(): [THROW_ID_01] The first value is missing.",
+    );
+  }
+  if (args.length < 2) {
+    throw new TypeError(
+      "ast-compare/compare(): [THROW_ID_02] The second pattern is missing.",
+    );
+  }
+
+  const [b, s, opts] = args;
+  const resolvedOpts = resolveOptions(opts);
+  const startedAt = Date.now();
+  const context: ComparisonContext = {
+    activePairs: new WeakMap<object, WeakSet<object>>(),
+    candidateComparisons: 0,
+    comparisons: 0,
+    emptyCache: new WeakMap<object, boolean>(),
+    lastProgress: undefined,
+    matchingEdges: 0,
+    opts: resolvedOpts,
+  };
+  callSafely(resolvedOpts.reportProgressFunc, resolvedOpts.reportProgressFuncFrom);
+  context.lastProgress = resolvedOpts.reportProgressFuncFrom;
+
+  const outcome = evaluate(b, s, context);
+  reportProgress(context, true);
+  callSafely(
+    resolvedOpts.reportCompletionFunc,
+    Object.freeze({
+      candidateComparisons: context.candidateComparisons,
+      comparisons: context.comparisons,
+      matchingEdges: context.matchingEdges,
+      timeTakenInMilliseconds: Date.now() - startedAt,
+    }),
   );
-  const subsetIndexBySupersetIndex = new Array<number>(b.length).fill(-1);
 
-  function assign(
-    subsetIndex: number,
-    visitedSupersetIndexes: boolean[],
-  ): boolean {
-    for (let supersetIndex = 0; supersetIndex < b.length; supersetIndex++) {
-      if (
-        !candidates[subsetIndex][supersetIndex] ||
-        visitedSupersetIndexes[supersetIndex]
-      ) {
-        continue;
-      }
-      visitedSupersetIndexes[supersetIndex] = true;
-      const previousSubsetIndex = subsetIndexBySupersetIndex[supersetIndex];
-      if (
-        previousSubsetIndex === -1 ||
-        assign(previousSubsetIndex, visitedSupersetIndexes)
-      ) {
-        subsetIndexBySupersetIndex[supersetIndex] = subsetIndex;
-        return true;
-      }
-    }
-    return false;
-  }
-
-  for (let subsetIndex = 0; subsetIndex < s.length; subsetIndex++) {
-    if (!assign(subsetIndex, new Array<boolean>(b.length).fill(false))) {
-      return false;
-    }
-  }
-  return true;
+  if (outcome.matched) return true;
+  return resolvedOpts.verboseWhenMismatches
+    ? formatMismatch(outcome.mismatch as Mismatch)
+    : false;
 }
 
 export { compare, defaults, version };
