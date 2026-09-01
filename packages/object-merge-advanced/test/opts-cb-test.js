@@ -340,8 +340,9 @@ test("08 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Boole
     ),
     {
       a: {
-        b: false,
-        c: true,
+        // The callback reverses hard merging for Boolean clashes.
+        b: true,
+        c: false,
         d: true,
         e: false,
       },
@@ -467,6 +468,7 @@ test("11 - \u001b[33mOPTS\u001b[39m - opts.cb - pin the 4th arg values", () => {
             {
               key: "b",
               path: "a.b",
+              pathSegments: ["a", "b"],
               type: ["string", "string"],
             },
             "11.01 - cb values pinned an object",
@@ -479,6 +481,7 @@ test("11 - \u001b[33mOPTS\u001b[39m - opts.cb - pin the 4th arg values", () => {
             {
               key: "d",
               path: "a.d",
+              pathSegments: ["a", "d"],
               type: ["null", "array"],
             },
             "11.02 - cb values pinned a key which has a value of array",
@@ -491,6 +494,7 @@ test("11 - \u001b[33mOPTS\u001b[39m - opts.cb - pin the 4th arg values", () => {
             {
               key: "x",
               path: "a.m.0",
+              pathSegments: ["a", "m", 0],
               type: ["array", "array"],
             },
             "11.03 - cb values pinned an element within an array",

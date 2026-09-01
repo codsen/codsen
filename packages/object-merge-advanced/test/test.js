@@ -2521,6 +2521,7 @@ test("62", () => {
         currRes: date2,
         infoObj: {
           path: "a",
+          pathSegments: ["a"],
           key: "a",
           type: ["date", "date"],
         },
@@ -2531,6 +2532,7 @@ test("62", () => {
         currRes: { a: date2 },
         infoObj: {
           path: "",
+          pathSegments: [],
           key: null,
           type: ["object", "object"],
         },

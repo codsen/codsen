@@ -109,6 +109,7 @@ test("05 - keeps browser smoke functions self-contained and serializable", () =>
       "is-language-code",
       "object-boolean-combinations",
       "object-delete-key",
+      "object-merge-advanced",
       "string-convert-indexes",
       "string-extract-class-names",
       "string-remove-widows",

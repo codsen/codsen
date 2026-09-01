@@ -776,6 +776,96 @@ function objectDeleteKeySmoke(api, equal) {
   );
 }
 
+function objectMergeAdvancedSmoke(api, equal) {
+  var hasOwn = Object.prototype.hasOwnProperty;
+
+  equal(Object.keys(api).sort(), ["defaults", "mergeAdvanced", "version"]);
+  equal(
+    [
+      typeof api.mergeAdvanced,
+      typeof api.version,
+      api.defaults.cb,
+      api.defaults.hardArrayConcatKeys,
+      api.defaults.ignoreKeys,
+      api.defaults.reuseInputs,
+    ],
+    ["function", "string", null, [], [], false],
+  );
+
+  var hostile = JSON.parse('{"__proto__":{"polluted":true}}');
+  var hostileResult = api.mergeAdvanced({ safe: true }, hostile);
+  var hostileDescriptor = Object.getOwnPropertyDescriptor(
+    hostileResult,
+    "__proto__",
+  );
+  equal(
+    [
+      hasOwn.call(hostileResult, "__proto__"),
+      hostileDescriptor.value,
+      Object.getPrototypeOf(hostileResult) === Object.prototype,
+      Object.prototype.polluted,
+    ],
+    [true, { polluted: true }, true, undefined],
+  );
+
+  var leftCycle = { left: true };
+  leftCycle.self = leftCycle;
+  var rightCycle = { right: true };
+  rightCycle.self = rightCycle;
+  var cycleResult = api.mergeAdvanced(leftCycle, rightCycle);
+  equal(
+    [cycleResult.left, cycleResult.right, cycleResult.self === cycleResult],
+    [true, true, true],
+  );
+
+  var dottedKeyInfo;
+  api.mergeAdvanced(
+    { "a.b": 1 },
+    { "a.b": 2 },
+    {
+      cb: (_left, _right, result, info) => {
+        if (info.key === "a.b") {
+          dottedKeyInfo = info;
+        }
+        return result;
+      },
+    },
+  );
+  equal(
+    [dottedKeyInfo.path, dottedKeyInfo.pathSegments, dottedKeyInfo.type],
+    ["a.b", ["a.b"], ["number", "number"]],
+  );
+
+  equal(
+    api.mergeAdvanced(
+      { drop: 1, keep: 1 },
+      { drop: 2, keep: 2 },
+      { ignoreKeys: ["*", "!keep"] },
+    ),
+    { drop: 1, keep: 2 },
+  );
+
+  var oneInput = { nested: { value: true } };
+  var oneInputResult = api.mergeAdvanced(oneInput);
+  equal(
+    [
+      oneInputResult,
+      oneInputResult === oneInput,
+      oneInputResult.nested === oneInput.nested,
+    ],
+    [{ nested: { value: true } }, false, false],
+  );
+
+  equal(
+    api.mergeAdvanced(
+      { tags: [1, 2] },
+      { tags: [2, 3] },
+      { hardArrayConcatKeys: "tags" },
+    ),
+    { tags: [1, 2, 2, 3] },
+  );
+}
+
 function arrayGroupSmoke(api, equal) {
   equal(api.groupStr(["a1-1", "a2-2", "b3-3", "c4-4"]), {
     "a*-*": 2,
@@ -1004,6 +1094,7 @@ const IIFE_API_SMOKES = Object.freeze({
   "is-language-code": languageCodeSmoke,
   "object-boolean-combinations": objectBooleanCombinationsSmoke,
   "object-delete-key": objectDeleteKeySmoke,
+  "object-merge-advanced": objectMergeAdvancedSmoke,
   "string-convert-indexes": stringConvertIndexesSmoke,
   "string-extract-class-names": stringExtractClassNamesSmoke,
   "string-remove-widows": stringRemoveWidowsSmoke,

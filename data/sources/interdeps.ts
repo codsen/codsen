@@ -491,7 +491,7 @@ export const interdeps = [
   },
   {
     "name": "object-merge-advanced",
-    "size": 7116,
+    "size": 9283,
     "imports": [
       "array-includes-with-glob",
       "codsen-utils",
