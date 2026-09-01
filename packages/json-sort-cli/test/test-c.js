@@ -279,7 +279,7 @@ test("16 - errors out when unsorted array within json, --ci & --arrays flags", a
   match(output.stdout, /Unsorted files:/, "16.02");
 });
 
-test("17 - unsorted array within json, --ci flag", async () => {
+test("17 - missing final EOL is unsorted even without --arrays", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   mkdirSync(path.resolve(tempFolder), { recursive: true });
@@ -296,18 +296,18 @@ test("17 - unsorted array within json, --ci flag", async () => {
 }`,
   );
 
-  let output = await execa("./cli.js", [tempFolder, "--ci"]).catch((err) => {
-    throw new Error(err);
+  let output = await execa("./cli.js", [tempFolder, "--ci"], {
+    reject: false,
   });
   await execaCommand(`rm -rf ${tempFolder}`).catch((err) => {
     throw new Error(err);
   });
 
-  equal(output.exitCode, 0, "17.01");
-  match(output.stdout, /All files were already sorted/, "17.02");
+  equal(output.exitCode, 9, "17.01");
+  match(output.stdout, /Unsorted files:/, "17.02");
 });
 
-test("18 - sorted nested plain object, --ci flag", async () => {
+test("18 - missing final EOL is unsorted for a nested object", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   mkdirSync(path.resolve(tempFolder), { recursive: true });
@@ -323,15 +323,15 @@ test("18 - sorted nested plain object, --ci flag", async () => {
 }`,
   );
 
-  let output = await execa("./cli.js", [tempFolder, "--ci"]).catch((err) => {
-    throw new Error(err);
+  let output = await execa("./cli.js", [tempFolder, "--ci"], {
+    reject: false,
   });
   await execaCommand(`rm -rf ${tempFolder}`).catch((err) => {
     throw new Error(err);
   });
 
-  equal(output.exitCode, 0, "18.01");
-  match(output.stdout, /All files were already sorted/, "18.02");
+  equal(output.exitCode, 9, "18.01");
+  match(output.stdout, /Unsorted files:/, "18.02");
 });
 
 test("19 - unsorted nested plain object, --ci flag", async () => {

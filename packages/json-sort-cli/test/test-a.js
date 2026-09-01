@@ -43,12 +43,12 @@ test("01 - when asked, sorts arrays which contain only strings", async () => {
   equal(
     await processedFileContents,
     `[
-  "a",
   "A",
-  "m",
   "M",
-  "z",
-  "Z"
+  "Z",
+  "a",
+  "m",
+  "z"
 ]\n`,
     "01.01",
   );

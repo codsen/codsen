@@ -104,8 +104,8 @@
       "config": {
         "lines": 97
       },
-      "reason": "The extensive subprocess suite covers normal and flag-driven behaviour, while rare read/write failure and summary branches remain uncovered.",
-      "followUp": "Add subprocess fixtures for the remaining failure branches, raise the line threshold to 100%, and remove this waiver."
+      "reason": "Direct formatter and filesystem tests plus the subprocess suite cover data fidelity, option validation, normal and CI workflows, atomic replacement, and classified failures. The remaining lines are defensive interactive-notifier, glob-infrastructure, platform ownership, temporary-handle cleanup, and unexpected-internal-error branches.",
+      "followUp": "Add injectable notifier, glob, and filesystem-operation seams or targeted platform fixtures for the remaining defensive branches, then raise the line threshold to 100% and remove this waiver."
     },
     "lerna-clean-changelogs-cli": {
       "config": {

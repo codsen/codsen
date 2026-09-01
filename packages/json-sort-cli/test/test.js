@@ -1,6 +1,6 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { mkdirSync } from "node:fs";
-import { chmod, readFile, writeFile } from "node:fs/promises";
+import { chmod, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { execa, execaCommand } from "execa";
 import pMap from "p-map";
@@ -125,9 +125,9 @@ test("02 - sort, there's a broken JSON among files", async () => {
   );
 
   equal(result.exitCode, 1, "02.01");
-  match(result.stdout, /broken\.json.*BAD/, "02.02");
+  match(result.stderr, /broken\.json.*BAD/, "02.02");
   match(result.stdout, /files sorted/, "02.03");
-  match(result.stdout, /1 file could not be sorted/, "02.04");
+  match(result.stderr, /1 file could not be sorted/, "02.04");
   equal(processedFileContents, sortedTestFileContents, "02.05");
 });
 
@@ -210,7 +210,7 @@ test("05 - no files found in the given directory", async () => {
   // CLI will complain no files could be found
   match(
     stdOutContents.stdout,
-    /The inputs don't lead to any json files! Exiting./,
+    /The inputs don't lead to any JSON files\. Exiting\./,
     "05.01",
   );
 });
@@ -241,7 +241,7 @@ test("07 - includes node_modules when requested for a directory", async () => {
   );
 });
 
-test("08 - reports a file which cannot be written", async () => {
+test("08 - atomically replaces a read-only file and preserves its mode", async () => {
   let tempFolder = temporaryDirectory();
   let pathOfTheTestfile = path.join(tempFolder, "readonly.json");
   await writeFile(pathOfTheTestfile, '{"z":1,"a":2}');
@@ -251,9 +251,13 @@ test("08 - reports a file which cannot be written", async () => {
     let result = await execa("./cli.js", [pathOfTheTestfile], {
       reject: false,
     });
-    equal(result.exitCode, 1, "08.01");
-    match(result.stdout, /readonly\.json.*BAD/, "08.02");
-    match(result.stdout, /1 file could not be sorted/, "08.03");
+    equal(result.exitCode, 0, "08.01");
+    equal(
+      await readFile(pathOfTheTestfile, "utf8"),
+      '{\n  "a": 2,\n  "z": 1\n}\n',
+      "08.02",
+    );
+    equal((await stat(pathOfTheTestfile)).mode & 0o777, 0o444, "08.03");
   } finally {
     await chmod(pathOfTheTestfile, 0o644);
   }
@@ -362,7 +366,7 @@ test("13 - malformed CI input never claims all files are sorted", async () => {
   equal(result.exitCode, 1, "13.01");
   match(result.stdout, /Unsorted files:/, "13.02");
   match(result.stdout, /unsorted\.json/, "13.03");
-  match(result.stdout, /1 file could not be checked/, "13.04");
+  match(result.stderr, /1 file could not be checked/, "13.04");
   equal(
     result.stdout.includes("All files were already sorted"),
     false,
@@ -388,7 +392,7 @@ test("14 - CI failures still report already-sorted files", async () => {
   equal(result.exitCode, 1, "14.01");
   match(result.stdout, /1 file already sorted:/, "14.02");
   match(result.stdout, /(?:^|\n)sorted\.json(?:\n|$)/, "14.03");
-  match(result.stdout, /1 file could not be checked/, "14.04");
+  match(result.stderr, /1 file could not be checked/, "14.04");
   not.match(result.stdout, /All files were already sorted/, "14.05");
   equal(await readFile(malformedPath, "utf8"), '{"a":}\n', "14.06");
 });

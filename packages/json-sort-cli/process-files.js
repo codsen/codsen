@@ -1,92 +1,144 @@
-import { readFile } from "node:fs/promises";
+import { randomUUID } from "node:crypto";
+import { constants } from "node:fs";
+import { lstat, open, realpath, rename, unlink } from "node:fs/promises";
 import path from "node:path";
-import { traverse } from "ast-monkey-traverse";
-import { isPlainObject, resolveEolSetting } from "codsen-utils";
-import sortPackageJson, { sortOrder } from "sort-package-json";
-import { writeJson } from "./json-file.js";
+import { decodeJson, formatParsedJson, parseJson } from "./json-formatter.js";
 
 function asError(error) {
-  return error instanceof Error ? error : new Error(String(error));
+  if (error instanceof Error) {
+    return error;
+  }
+
+  let description;
+  try {
+    description = String(error);
+  } catch {
+    description = "Unknown non-Error value";
+  }
+  return new Error(description, { cause: error });
 }
 
-function sortObject(object) {
-  const result = {};
-  for (const key of Object.keys(object).sort()) {
-    result[key] = object[key];
-  }
-  return result;
+async function openWithoutFollowing(filePath) {
+  const noFollow = constants.O_NOFOLLOW ?? 0;
+  return open(filePath, constants.O_RDONLY | noFollow);
 }
 
-function formatPackageJson(object) {
-  if (typeof object !== "object") {
-    return object;
+async function readFileSnapshot(filePath) {
+  const realPath = await realpath(filePath);
+  const pathStat = await lstat(filePath, { bigint: true });
+  if (pathStat.isSymbolicLink()) {
+    throw new Error(`Refusing to process symbolic link: ${filePath}`);
   }
-  const customSortOrder = sortOrder.filter(
-    (field) => !["lect", "tap"].includes(field),
+
+  const handle = await openWithoutFollowing(filePath);
+  try {
+    const stat = await handle.stat({ bigint: true });
+    if (!stat.isFile()) {
+      throw new Error(`Refusing to process a non-file: ${filePath}`);
+    }
+    if (!sameIdentity(pathStat, stat)) {
+      throw new Error(
+        `The file changed while it was being opened: ${filePath}`,
+      );
+    }
+    if ((await realpath(filePath)) !== realPath) {
+      throw new Error(`The file route changed while opening: ${filePath}`);
+    }
+    return { contents: await handle.readFile(), realPath, stat };
+  } finally {
+    await handle.close();
+  }
+}
+
+function sameIdentity(left, right) {
+  return (
+    left.dev === right.dev &&
+    left.ino === right.ino &&
+    left.size === right.size &&
+    left.mtimeNs === right.mtimeNs &&
+    left.ctimeNs === right.ctimeNs
   );
-  const resolutionsIndex = customSortOrder.indexOf("resolutions");
-  customSortOrder.splice(resolutionsIndex, 0, "tap", "lect");
-  // sort-package-json deliberately uses null-prototype maps for some nested
-  // sections. Normalize its JSON-shaped result before passing it to the
-  // ordinary-object traversal contract.
-  return structuredClone(
-    sortPackageJson(object, { sortOrder: customSortOrder }),
-  );
 }
 
-function normalizeLineEndings(stringified, eolChar) {
-  if (eolChar === "\r\n") {
-    return stringified
-      .replaceAll(/(?<!\r)\n/g, "\r\n")
-      .replaceAll(/\r(?!\n)/g, "\n");
-  }
-  return stringified.replaceAll(/(?:\r?\n)|\r/g, eolChar);
-}
-
-function prepareJson(
-  parsedJson,
-  { arrays, contents, filePath, indentationCount, lineEnding, pack, tabs },
-) {
-  const eol = resolveEolSetting(contents, lineEnding);
-  let result = isPlainObject(parsedJson) ? sortObject(parsedJson) : parsedJson;
+async function commitFile(filePath, output, snapshot) {
   if (
-    arrays &&
-    Array.isArray(result) &&
-    result.length &&
-    result.every((item) => typeof item === "string")
+    !snapshot?.stat ||
+    !Buffer.isBuffer(snapshot.contents) ||
+    typeof snapshot.realPath !== "string"
   ) {
-    result.sort((a, b) => a.localeCompare(b));
-  } else if (!pack && path.basename(filePath) === "package.json") {
-    result = formatPackageJson(result);
+    throw new Error("Cannot safely commit without the original file snapshot");
   }
 
-  const value = traverse(result, (key, val) => {
-    const current = val !== undefined ? val : key;
-    if (isPlainObject(current)) {
-      return sortObject(current);
-    }
-    if (
-      arrays &&
-      Array.isArray(current) &&
-      current.length > 1 &&
-      current.every((item) => typeof item === "string")
-    ) {
-      return current.sort((a, b) => a.localeCompare(b));
-    }
-    return current;
-  });
-  const spaces = tabs ? "\t".repeat(indentationCount) : indentationCount;
-  const stringified = normalizeLineEndings(
-    JSON.stringify(value, null, spaces),
-    eol,
+  const commitPath = snapshot.realPath;
+  const directory = path.dirname(commitPath);
+  const temporaryPath = path.join(
+    directory,
+    `.${path.basename(commitPath)}.${process.pid}.${randomUUID()}.tmp`,
   );
+  let temporaryHandle;
 
-  return {
-    changed: stringified.trimEnd() !== contents.trimEnd(),
-    eol,
-    spaces,
-    value,
-  };
+  try {
+    if ((await realpath(filePath)) !== snapshot.realPath) {
+      throw new Error(
+        "The file route changed after it was read; refusing to overwrite it",
+      );
+    }
+    temporaryHandle = await open(
+      temporaryPath,
+      "wx",
+      Number(snapshot.stat.mode & 0o7777n),
+    );
+    await temporaryHandle.writeFile(output, "utf8");
+    await temporaryHandle.chmod(Number(snapshot.stat.mode & 0o7777n));
+
+    const temporaryStat = await temporaryHandle.stat({ bigint: true });
+    if (
+      temporaryStat.uid !== snapshot.stat.uid ||
+      temporaryStat.gid !== snapshot.stat.gid
+    ) {
+      await temporaryHandle.chown(
+        Number(snapshot.stat.uid),
+        Number(snapshot.stat.gid),
+      );
+    }
+    await temporaryHandle.sync();
+    await temporaryHandle.close();
+    temporaryHandle = undefined;
+
+    const current = await readFileSnapshot(filePath);
+    if (
+      !sameIdentity(snapshot.stat, current.stat) ||
+      !snapshot.contents.equals(current.contents)
+    ) {
+      throw new Error(
+        "The file changed after it was read; refusing to overwrite it",
+      );
+    }
+
+    if ((await realpath(filePath)) !== snapshot.realPath) {
+      throw new Error(
+        "The file route changed before commit; refusing to overwrite it",
+      );
+    }
+    await rename(temporaryPath, commitPath);
+
+    // Directory syncing is not supported by every platform. The file is
+    // already durable and atomically visible when this best-effort step runs.
+    try {
+      const directoryHandle = await open(directory, "r");
+      try {
+        await directoryHandle.sync();
+      } finally {
+        await directoryHandle.close();
+      }
+    } catch {}
+  } catch (error) {
+    if (temporaryHandle) {
+      await temporaryHandle.close().catch(() => {});
+    }
+    await unlink(temporaryPath).catch(() => {});
+    throw error;
+  }
 }
 
 export class FileProcessingError extends Error {
@@ -118,33 +170,43 @@ async function processFile(
   options,
   { parse, read, transform, write },
 ) {
-  let contents;
+  let snapshot;
   try {
-    contents = await read(filePath, "utf8");
+    const received = await read(filePath);
+    snapshot =
+      received && typeof received === "object" && "contents" in received
+        ? received
+        : { contents: received };
   } catch (error) {
     throw new FileProcessingError(filePath, "read", error);
   }
 
-  let parsedJson;
+  let decoded;
   try {
-    parsedJson = parse(contents);
+    decoded = decodeJson(snapshot.contents);
+  } catch (error) {
+    throw new FileProcessingError(filePath, "decode", error);
+  }
+
+  let parsed;
+  try {
+    parsed = (parse ?? parseJson)(decoded);
   } catch (error) {
     throw new FileProcessingError(filePath, "parse", error);
   }
 
   let prepared;
   try {
-    prepared = transform(parsedJson, { contents, filePath, ...options });
+    prepared = transform
+      ? transform(parsed, { contents: decoded, filePath, ...options })
+      : formatParsedJson(parsed, decoded, { filePath, ...options });
   } catch (error) {
     throw new FileProcessingError(filePath, "transform", error);
   }
 
-  if (!options.ci) {
+  if (!options.ci && prepared.changed) {
     try {
-      await write(filePath, prepared.value, {
-        EOL: prepared.eol,
-        spaces: prepared.spaces,
-      });
+      await write(filePath, prepared.output, snapshot);
     } catch (error) {
       throw new FileProcessingError(filePath, "write", error);
     }
@@ -182,11 +244,11 @@ export async function processFiles(
     lineEnding,
     onOutcome = () => {},
     pack = false,
-    parse = JSON.parse,
-    read = readFile,
+    parse,
+    read = readFileSnapshot,
     tabs = false,
-    transform = prepareJson,
-    write = writeJson,
+    transform,
+    write = commitFile,
   } = {},
 ) {
   const failures = [];
@@ -200,21 +262,33 @@ export async function processFiles(
     pack,
     tabs,
   };
+  let callbackError;
+
+  function report(outcome) {
+    try {
+      onOutcome(outcome);
+    } catch (error) {
+      callbackError ??= asError(error);
+    }
+  }
 
   async function captureOutcome(filePath) {
+    let outcome;
     try {
-      const outcome = await processFile(filePath, options, {
-        parse,
-        read,
-        transform,
-        write,
-      });
-      return { ...outcome, status: "success" };
+      outcome = {
+        ...(await processFile(filePath, options, {
+          parse,
+          read,
+          transform,
+          write,
+        })),
+        status: "success",
+      };
     } catch (error) {
       if (!(error instanceof FileProcessingError)) {
         throw error;
       }
-      return {
+      outcome = {
         error: error.error,
         failure: error,
         path: error.path,
@@ -222,6 +296,8 @@ export async function processFiles(
         status: "failure",
       };
     }
+    report(outcome);
+    return outcome;
   }
 
   const outcomes = ci
@@ -242,11 +318,13 @@ export async function processFiles(
         unsorted.push(outcome.path);
       }
     }
-    onOutcome(outcome);
   }
 
   if (failures.length) {
     throw new ProcessingError(failures, successful, unsorted);
+  }
+  if (callbackError) {
+    throw callbackError;
   }
   return { failures, successful, unsorted };
 }

@@ -1,26 +1,52 @@
 import { readFile, writeFile } from "node:fs/promises";
+import { decodeJson } from "./json-formatter.js";
 
 export async function readJson(file, options = {}) {
   if (typeof options === "string") {
     options = { encoding: options };
   }
-
-  const shouldThrow = "throws" in options ? options.throws : true;
-  let content = await readFile(file, options);
-
-  if (Buffer.isBuffer(content)) {
-    content = content.toString("utf8");
+  if (
+    options?.encoding !== undefined &&
+    !["utf8", "utf-8"].includes(String(options.encoding).toLowerCase())
+  ) {
+    throw new TypeError(
+      "json-sort-cli/readJson(): [THROW_ID_01] options.encoding must be utf8 or utf-8",
+    );
   }
 
+  const shouldThrow = "throws" in options ? options.throws : true;
+  const bytes = await readFile(file);
+
   try {
+    const content = decodeJson(bytes);
     return JSON.parse(content.replace(/^\uFEFF/, ""), options.reviver);
   } catch (error) {
     if (!shouldThrow) {
       return null;
     }
 
-    error.message = `${file}: ${error.message}`;
-    throw error;
+    if (error instanceof Error) {
+      const message = `${file}: ${error.message}`;
+      try {
+        error.message = message;
+        throw error;
+      } catch (assignmentError) {
+        if (assignmentError === error) {
+          throw error;
+        }
+        throw new Error(message, { cause: error });
+      }
+    }
+
+    let description;
+    try {
+      description = String(error);
+    } catch {
+      description = "Unknown non-Error value";
+    }
+    throw new Error(`${file}: JSON reviver threw ${description}`, {
+      cause: error,
+    });
   }
 }
 
