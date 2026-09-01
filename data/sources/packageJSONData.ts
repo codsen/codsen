@@ -5275,10 +5275,8 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "ast-is-empty": "^4.2.1",
-      "ast-monkey": "^9.2.2",
-      "codsen-utils": "^1.9.0",
-      "util-array-object-or-both": "^5.2.1"
+      "ast-compare": "^4.2.2",
+      "codsen-utils": "^1.9.0"
     },
     "engines": {
       "node": ">=18.20.8"

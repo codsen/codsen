@@ -118,8 +118,7 @@ interface ArrayCandidatesFrame {
   secondIndex: number;
 }
 
-interface ArrayCandidatesAfterFrame
-  extends Omit<ArrayCandidatesFrame, "kind"> {
+interface ArrayCandidatesAfterFrame extends Omit<ArrayCandidatesFrame, "kind"> {
   kind: "array-candidates-after";
 }
 
@@ -326,6 +325,15 @@ function callSafely(callback: null | ((value: any) => void), value: any): void {
     callback(value);
   } catch {
     // Observability callbacks must not change comparison semantics.
+  }
+}
+
+function safeNow(): number | null {
+  try {
+    const value = Date.now();
+    return Number.isFinite(value) ? value : null;
+  } catch {
+    return null;
   }
 }
 
@@ -699,7 +707,8 @@ function evaluate(
       continue;
     }
 
-    const bothArrays = Array.isArray(frame.first) && Array.isArray(frame.second);
+    const bothArrays =
+      Array.isArray(frame.first) && Array.isArray(frame.second);
     const bothObjects =
       isPlainObject(frame.first) && isPlainObject(frame.second);
 
@@ -830,9 +839,7 @@ function evaluate(
       kind: "exact-object",
       path: frame.path,
       second: secondObject,
-      wildcardFirstKeys: firstKeys.filter(
-        (key) => !reservedFirstKeys.has(key),
-      ),
+      wildcardFirstKeys: firstKeys.filter((key) => !reservedFirstKeys.has(key)),
       wildcardKeys,
     });
   }
@@ -977,7 +984,7 @@ function compare(
 
   const [b, s, opts] = args;
   const resolvedOpts = resolveOptions(opts);
-  const startedAt = Date.now();
+  const startedAt = resolvedOpts.reportCompletionFunc ? safeNow() : null;
   const context: ComparisonContext = {
     activePairs: new WeakMap<object, WeakSet<object>>(),
     candidateComparisons: 0,
@@ -987,20 +994,30 @@ function compare(
     matchingEdges: 0,
     opts: resolvedOpts,
   };
-  callSafely(resolvedOpts.reportProgressFunc, resolvedOpts.reportProgressFuncFrom);
+  callSafely(
+    resolvedOpts.reportProgressFunc,
+    resolvedOpts.reportProgressFuncFrom,
+  );
   context.lastProgress = resolvedOpts.reportProgressFuncFrom;
 
   const outcome = evaluate(b, s, context);
   reportProgress(context, true);
-  callSafely(
-    resolvedOpts.reportCompletionFunc,
-    Object.freeze({
-      candidateComparisons: context.candidateComparisons,
-      comparisons: context.comparisons,
-      matchingEdges: context.matchingEdges,
-      timeTakenInMilliseconds: Date.now() - startedAt,
-    }),
-  );
+  if (resolvedOpts.reportCompletionFunc) {
+    const finishedAt = safeNow();
+    const difference =
+      startedAt === null || finishedAt === null ? 0 : finishedAt - startedAt;
+    callSafely(
+      resolvedOpts.reportCompletionFunc,
+      Object.freeze({
+        candidateComparisons: context.candidateComparisons,
+        comparisons: context.comparisons,
+        matchingEdges: context.matchingEdges,
+        timeTakenInMilliseconds: Number.isFinite(difference)
+          ? Math.max(0, difference)
+          : 0,
+      }),
+    );
+  }
 
   if (outcome.matched) return true;
   return resolvedOpts.verboseWhenMismatches

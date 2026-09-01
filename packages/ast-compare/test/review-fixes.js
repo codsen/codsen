@@ -1,12 +1,6 @@
 import { match as wildcardMatch } from "codsen-utils";
 import { test } from "uvu";
-import {
-  equal,
-  match as matchesText,
-  ok,
-  throws,
-  type,
-} from "uvu/assert";
+import { equal, match as matchesText, ok, throws, type } from "uvu/assert";
 
 import { compare, defaults } from "../dist/ast-compare.esm.js";
 
@@ -111,9 +105,13 @@ test("03 - whitespace matching never consumes meaningful primitives", () => {
     "03.03",
   );
   equal(
-    compare({ value: [false] }, { value: [true] }, {
-      hungryForWhitespace: true,
-    }),
+    compare(
+      { value: [false] },
+      { value: [true] },
+      {
+        hungryForWhitespace: true,
+      },
+    ),
     false,
     "03.04",
   );
@@ -179,30 +177,46 @@ test("06 - wildcard object keys consume one key and compare values", () => {
     "06.01",
   );
   equal(
-    compare({ alpha: { value: 1 } }, { "a*": { value: 1 } }, {
-      useWildcards: true,
-    }),
+    compare(
+      { alpha: { value: 1 } },
+      { "a*": { value: 1 } },
+      {
+        useWildcards: true,
+      },
+    ),
     true,
     "06.02",
   );
   equal(
-    compare({ alpha: { value: 2 } }, { "a*": { value: 1 } }, {
-      useWildcards: true,
-    }),
+    compare(
+      { alpha: { value: 2 } },
+      { "a*": { value: 1 } },
+      {
+        useWildcards: true,
+      },
+    ),
     false,
     "06.03",
   );
   equal(
-    compare({ "a*": "literal", alpha: "fallback" }, { "a*": "literal" }, {
-      useWildcards: true,
-    }),
+    compare(
+      { "a*": "literal", alpha: "fallback" },
+      { "a*": "literal" },
+      {
+        useWildcards: true,
+      },
+    ),
     true,
     "06.04",
   );
   equal(
-    compare({ "a*": "wrong", alpha: "literal" }, { "a*": "literal" }, {
-      useWildcards: true,
-    }),
+    compare(
+      { "a*": "wrong", alpha: "literal" },
+      { "a*": "literal" },
+      {
+        useWildcards: true,
+      },
+    ),
     false,
     "06.05",
   );
@@ -220,11 +234,23 @@ test("06 - wildcard object keys consume one key and compare values", () => {
 
 test("07 - unordered matching agrees with a brute-force reference", () => {
   const cases = [
-    [["alpha", "alpine"], ["a*", "al*"]],
-    [["alpha", "beta"], ["*", "a*"]],
+    [
+      ["alpha", "alpine"],
+      ["a*", "al*"],
+    ],
+    [
+      ["alpha", "beta"],
+      ["*", "a*"],
+    ],
     [["alpha"], ["a*", "al*"]],
-    [["alpha", "beta"], ["a*", "z*"]],
-    [["alpha", "beta", "gamma"], ["*a", "b*", "g*"]],
+    [
+      ["alpha", "beta"],
+      ["a*", "z*"],
+    ],
+    [
+      ["alpha", "beta", "gamma"],
+      ["*a", "b*", "g*"],
+    ],
   ];
 
   function sequences(values, length, prefix = [], result = []) {
@@ -291,7 +317,11 @@ test("08 - deep acyclic values do not use the native call stack", () => {
     }
   }
 
-  equal(compare(equalFirst, equalSecond, { matchStrictly: true }), true, "08.01");
+  equal(
+    compare(equalFirst, equalSecond, { matchStrictly: true }),
+    true,
+    "08.01",
+  );
   equal(
     compare(equalFirst, differentSecond, { matchStrictly: true }),
     false,
@@ -330,13 +360,25 @@ test("10 - verbose mode explains every mismatch with stable sides", () => {
       arrayOrder: "any",
       verboseWhenMismatches: true,
     }),
-    compare({ alpha: 1 }, { "a*": 2 }, {
-      useWildcards: true,
-      verboseWhenMismatches: true,
-    }),
+    compare(
+      { alpha: 1 },
+      { "a*": 2 },
+      {
+        useWildcards: true,
+        verboseWhenMismatches: true,
+      },
+    ),
   ];
-  equal(results.every((result) => typeof result === "string"), true, "10.01");
-  matchesText(results[3], /\$\["a"\].*First value is 1; second pattern is 2/u, "10.02");
+  equal(
+    results.every((result) => typeof result === "string"),
+    true,
+    "10.01",
+  );
+  matchesText(
+    results[3],
+    /\$\["a"\].*First value is 1; second pattern is 2/u,
+    "10.02",
+  );
 });
 
 test("11 - progress and completion are additive observability", () => {
@@ -368,7 +410,9 @@ test("11 - progress and completion are additive observability", () => {
     equal(progress[0], 10, "11.02");
     equal(progress.at(-1), 20, "11.03");
     equal(
-      progress.every((value, index) => index === 0 || value >= progress[index - 1]),
+      progress.every(
+        (value, index) => index === 0 || value >= progress[index - 1],
+      ),
       true,
       "11.04",
     );
@@ -401,6 +445,63 @@ test("11 - progress and completion are additive observability", () => {
     true,
     "11.08",
   );
+
+  let unobservedClockReads = 0;
+  try {
+    Date.now = () => {
+      unobservedClockReads += 1;
+      throw new Error("clock unavailable");
+    };
+    equal(
+      compare(
+        { nested: { x: 1 } },
+        { nested: { x: 1 } },
+        {
+          matchStrictly: true,
+        },
+      ),
+      true,
+      "11.09",
+    );
+  } finally {
+    Date.now = originalNow;
+  }
+  equal(unobservedClockReads, 0, "11.10");
+
+  const clockResults = [];
+  for (const fakeNow of [
+    () => Number.NaN,
+    () => {
+      throw new Error("clock unavailable");
+    },
+    (() => {
+      const values = [50, 40];
+      return () => values.shift() ?? 0;
+    })(),
+    (() => {
+      const values = [-Number.MAX_VALUE, Number.MAX_VALUE];
+      return () => values.shift() ?? 0;
+    })(),
+  ]) {
+    let stats;
+    try {
+      Date.now = fakeNow;
+      compare(
+        { x: 1 },
+        { x: 1 },
+        {
+          matchStrictly: true,
+          reportCompletionFunc(value) {
+            stats = value;
+          },
+        },
+      );
+    } finally {
+      Date.now = originalNow;
+    }
+    clockResults.push(stats.timeTakenInMilliseconds);
+  }
+  equal(clockResults, [0, 0, 0, 0], "11.11");
 });
 
 test("12 - inputs remain unchanged", () => {
@@ -411,7 +512,9 @@ test("12 - inputs remain unchanged", () => {
     ]),
   });
   const second = Object.freeze({
-    nodes: Object.freeze([Object.freeze({ name: "a*", value: Object.freeze(["\n"]) })]),
+    nodes: Object.freeze([
+      Object.freeze({ name: "a*", value: Object.freeze(["\n"]) }),
+    ]),
   });
 
   type(

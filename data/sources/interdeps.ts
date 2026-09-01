@@ -33,7 +33,7 @@ export const interdeps = [
   },
   {
     "name": "ast-compare",
-    "size": 11541,
+    "size": 11734,
     "imports": [
       "codsen-utils"
     ]
@@ -457,12 +457,10 @@ export const interdeps = [
   },
   {
     "name": "object-delete-key",
-    "size": 1630,
+    "size": 10833,
     "imports": [
-      "ast-is-empty",
-      "ast-monkey",
-      "codsen-utils",
-      "util-array-object-or-both"
+      "ast-compare",
+      "codsen-utils"
     ]
   },
   {

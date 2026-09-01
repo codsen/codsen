@@ -1,9 +1,7 @@
-import { deleteKey } from "object-delete-key";
+import { deleteKey, type ReadonlyTreeObject } from "object-delete-key";
 import semverRegex from "semver-regex";
 
-export interface Obj {
-  [key: string]: any;
-}
+export interface Obj extends ReadonlyTreeObject {}
 
 /**
  * Deletes the "position" keys from AST for cleaner logs

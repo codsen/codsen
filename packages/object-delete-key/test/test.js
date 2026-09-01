@@ -662,7 +662,7 @@ test("18 - both key and value missing - throws", () => {
     () => {
       deleteKey({ a: "a" }, {});
     },
-    /THROW_ID_04/,
+    /THROW_ID_07/,
     "18.01",
   );
 });
@@ -709,7 +709,7 @@ test("22 - wrong input args - throws", () => {
         },
       );
     },
-    /opts\.key/g,
+    /THROW_ID_06/,
     "22.01",
   );
 });
@@ -726,7 +726,7 @@ test("23 - wrong input args - throws", () => {
         },
       );
     },
-    /opts\.key/,
+    /THROW_ID_06/,
     "23.01",
   );
 });
@@ -944,7 +944,7 @@ test("28 - does not mutate input args", () => {
       a: "a",
       b: "b",
     },
-    "28.01",
+    "28.02",
   ); // real deal
 });
 

@@ -1,4 +1,5 @@
 // deps
+import { strict as assert } from "node:assert";
 import path from "node:path";
 
 import { runPerf } from "../../../ops/scripts/perf.js";
@@ -25,6 +26,8 @@ const testme = () =>
       key: "b",
     },
   );
+
+assert.deepEqual(testme(), [{ a: "a" }]);
 
 // action
 runPerf(testme, callerDir);

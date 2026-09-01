@@ -667,6 +667,115 @@ function objectBooleanCombinationsSmoke(api, equal) {
   );
 }
 
+function objectDeleteKeySmoke(api, equal) {
+  var hasOwn = Object.prototype.hasOwnProperty;
+  var progress = [];
+  var completion;
+
+  equal(Object.keys(api).sort(), ["defaults", "deleteKey", "version"]);
+  equal(
+    [
+      typeof api.deleteKey,
+      typeof api.version,
+      Object.isFrozen(api.defaults),
+      api.defaults.cleanup,
+      api.defaults.key,
+      api.defaults.only,
+      api.defaults.reportCompletionFunc,
+      api.defaults.reportProgressFunc,
+      api.defaults.reportProgressFuncFrom,
+      api.defaults.reportProgressFuncTo,
+      hasOwn.call(api.defaults, "val"),
+      api.defaults.val === undefined,
+    ],
+    [
+      "function",
+      "string",
+      true,
+      true,
+      null,
+      "any",
+      null,
+      null,
+      0,
+      100,
+      true,
+      true,
+    ],
+  );
+
+  equal(
+    api.deleteKey(
+      { keep: true, remove: true, nested: { remove: true } },
+      {
+        key: "remove",
+        reportCompletionFunc: (stats) => {
+          completion = stats;
+        },
+        reportProgressFunc: (percentageDone) => {
+          progress.push(percentageDone);
+        },
+        reportProgressFuncFrom: 20,
+        reportProgressFuncTo: 40,
+      },
+    ),
+    { keep: true },
+  );
+  equal(progress, [20, 25, 30, 35, 40]);
+  equal(
+    [
+      completion.cleanupPrunedContainers,
+      completion.directDeletions,
+      completion.maxDepth,
+      completion.totalEntries,
+      completion.visitedEntries,
+      typeof completion.timeTakenInMilliseconds,
+      Object.isFrozen(completion),
+    ],
+    [1, 2, 2, 4, 4, "number", true],
+  );
+
+  var sparse = new Array(4);
+  sparse[1] = "remove";
+  sparse[2] = undefined;
+  sparse[3] = Number.NaN;
+  var sparseResult = api.deleteKey(sparse, { key: "remove" });
+  equal(
+    [
+      sparseResult.length,
+      hasOwn.call(sparseResult, "0"),
+      hasOwn.call(sparseResult, "1"),
+      sparseResult[1] === undefined,
+      Number.isNaN(sparseResult[2]),
+    ],
+    [3, false, true, true, true],
+  );
+
+  var undefinedResult = api.deleteKey(
+    { keep: null, remove: undefined },
+    { val: undefined },
+  );
+  equal(
+    [
+      hasOwn.call(undefinedResult, "keep"),
+      undefinedResult.keep,
+      hasOwn.call(undefinedResult, "remove"),
+    ],
+    [true, null, false],
+  );
+
+  var message = "";
+  try {
+    api.deleteKey({ keep: true }, {});
+  } catch (error) {
+    message = error.message;
+  }
+  equal(
+    message.indexOf("object-delete-key/deleteKey(): [THROW_ID_07]") === 0,
+    true,
+  );
+}
+
 function arrayGroupSmoke(api, equal) {
   equal(api.groupStr(["a1-1", "a2-2", "b3-3", "c4-4"]), {
     "a*-*": 2,
@@ -894,6 +1003,7 @@ const IIFE_API_SMOKES = Object.freeze({
   "html-img-alt": htmlImgAltSmoke,
   "is-language-code": languageCodeSmoke,
   "object-boolean-combinations": objectBooleanCombinationsSmoke,
+  "object-delete-key": objectDeleteKeySmoke,
   "string-convert-indexes": stringConvertIndexesSmoke,
   "string-extract-class-names": stringExtractClassNamesSmoke,
   "string-remove-widows": stringRemoveWidowsSmoke,

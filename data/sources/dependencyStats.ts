@@ -49,8 +49,6 @@ export const dependencyStats: DependencyStats = {
     "ast-compare",
     "ast-contains-only-empty-space",
     "ast-get-values-by-key",
-    "ast-is-empty",
-    "ast-monkey",
     "ast-monkey-traverse",
     "ast-monkey-traverse-with-lookahead",
     "check-types-mini",
@@ -121,11 +119,9 @@ export const dependencyStats: DependencyStats = {
     "array-includes-with-glob": 1,
     "array-pull-all-with-glob": 1,
     "arrayiffy-if-string": 7,
-    "ast-compare": 3,
+    "ast-compare": 4,
     "ast-contains-only-empty-space": 1,
     "ast-get-values-by-key": 1,
-    "ast-is-empty": 1,
-    "ast-monkey": 1,
     "ast-monkey-traverse": 6,
     "ast-monkey-traverse-with-lookahead": 1,
     "check-types-mini": 2,
@@ -204,7 +200,7 @@ export const dependencyStats: DependencyStats = {
     "unist-builder": 1,
     "unist-util-visit": 2,
     "update-notifier": 9,
-    "util-array-object-or-both": 2,
+    "util-array-object-or-both": 1,
     "util-nonempty": 1,
     "vfile": 1
   },
@@ -292,7 +288,7 @@ export const dependencyStats: DependencyStats = {
       "ranges-merge": 5
     },
     {
-      "ast-compare": 3
+      "ast-compare": 4
     }
   ]
 };
