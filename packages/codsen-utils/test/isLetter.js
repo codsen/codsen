@@ -78,14 +78,26 @@ test("13 - Unicode scripts and scalar boundaries", () => {
   equal(isLetter("\udc00\ud801"), false, "13.16");
 });
 
-test("14 - agrees with Unicode Letter for every scalar", () => {
+test("14 - matches Unicode 17 and covers every older-runtime Letter", () => {
   const unicodeLetter = /^\p{L}$/u;
+  // isLetter() freezes Unicode 17. Older Node releases expose older property
+  // tables, so they can prove inclusion but cannot classify the newer letters.
+  const runtimeHasUnicode17 =
+    Number.parseInt(process.versions.unicode, 10) >= 17;
   for (let codePoint = 0; codePoint <= 0x10ffff; codePoint += 1) {
     if (codePoint >= 0xd800 && codePoint <= 0xdfff) {
       continue;
     }
     const character = String.fromCodePoint(codePoint);
-    equal(isLetter(character), unicodeLetter.test(character), "14.01");
+    const actual = isLetter(character);
+    const runtimeExpected = unicodeLetter.test(character);
+    equal(
+      runtimeHasUnicode17
+        ? actual === runtimeExpected
+        : actual || !runtimeExpected,
+      true,
+      "14.01",
+    );
   }
 });
 
