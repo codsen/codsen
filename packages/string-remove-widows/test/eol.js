@@ -12,16 +12,16 @@ import {
   // rawMdash,
 } from "./util.js";
 
-const languages = ["html`, `css`, `js"];
+const languages = ["html", "css", "js"];
 const encodedNbsps = [encodedNbspHtml, encodedNbspCss, encodedNbspJs];
-const eolTypes = ["LF`, `CR`, `CRLF"];
+const eolTypes = ["LF", "CR", "CRLF"];
 
 // -----------------------------------------------------------------------------
 // line endings
 // -----------------------------------------------------------------------------
 
 test(`01 - line endings - does not mangle string with consistent line endings`, () => {
-  ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
+  ["\n", "\r", "\r\n"].forEach((eolType, idx) => {
     languages.forEach((targetLanguage, i) => {
       equal(
         removeWidows(

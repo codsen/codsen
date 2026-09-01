@@ -608,7 +608,7 @@ test("029 - HTML tags - tag in the end", () => {
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, 'a a a a<a something="whatever" and="here">', opt).res,
-      'a a a&nbsp;a<a something="whatever" and="here">',
+      'a a a a<a something="whatever" and="here">',
       "029.01",
     );
   });
@@ -622,7 +622,7 @@ test("030 - HTML tags - tag in the end", () => {
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, 'a a a a <a something="whatever" and="here">', opt).res,
-      'a a a a&nbsp;<a something="whatever" and="here">',
+      'a a a a <a something="whatever" and="here">',
       "030.01",
     );
   });

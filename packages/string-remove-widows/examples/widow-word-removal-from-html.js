@@ -18,9 +18,7 @@ assert.equal(
 // luckily, removeWidows() consumes optional HTML tag locations
 assert.equal(
   removeWidows(someHtml, {
-    tagRanges: stripHtml(someHtml)
-      // remove the third argument, what to insert ("&nbsp;" string in these cases)
-      .ranges.map(([from, to]) => [from, to]),
+    tagRanges: stripHtml(someHtml).allTagLocations,
   }).res,
   'The quick brown fox jumps of the lazy&nbsp;dog.<div class="a">', // ✅
 );

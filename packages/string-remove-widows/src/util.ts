@@ -1,6 +1,6 @@
 // consts
 export const encodedNbspHtml = "&nbsp;";
-export const encodedNbspCss = "\\00A0";
+export const encodedNbspCss = "\\0000A0";
 export const encodedNbspJs = "\\u00A0";
 
 export const encodedNdashHtml = "&ndash;";

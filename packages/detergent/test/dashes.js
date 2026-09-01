@@ -927,12 +927,12 @@ test(`064 - opts.convertDashes - \u001b[${33}m${"insurance"}\u001b[${39}m - repo
   }).forEach((opt, n) => {
     equal(
       det1(source, opt).res,
-      "{% if x %}a{% endif %} a&nbsp;&mdash;&nbsp;b",
+      "{% if x %}a{% endif %} a&nbsp;&mdash; b",
       "064.01",
     );
     equal(
       det(ok, not, n, source, opt).res,
-      "{% if x %}a{% endif %} a&nbsp;&mdash;&nbsp;b",
+      "{% if x %}a{% endif %} a&nbsp;&mdash; b",
       "064.02",
     );
     ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "064.03");
@@ -960,7 +960,7 @@ test(`066 - opts.convertDashes - \u001b[${33}m${"insurance"}\u001b[${39}m - repo
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, source, opt).res,
-      `{% if x %}a{% endif %} a${rawNbsp}${rawMDash}${rawNbsp}b`,
+      `{% if x %}a{% endif %} a${rawNbsp}${rawMDash} b`,
       "066.01",
     );
     ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "066.02");
@@ -992,7 +992,7 @@ test(`068 - opts.convertDashes - \u001b[${33}m${"insurance"}\u001b[${39}m - repo
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, source, opt).res,
-      "{% if x %}a{% endif %} a&nbsp;-&nbsp;b",
+      "{% if x %}a{% endif %} a&nbsp;- b",
       "068.01",
     );
     ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "068.02");
@@ -1024,7 +1024,7 @@ test(`070 - opts.convertDashes - \u001b[${33}m${"insurance"}\u001b[${39}m - repo
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, source, opt).res,
-      `{% if x %}a{% endif %} a${rawNbsp}-${rawNbsp}b`,
+      `{% if x %}a{% endif %} a${rawNbsp}- b`,
       "070.01",
     );
     ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "070.02");

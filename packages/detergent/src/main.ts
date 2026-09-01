@@ -1218,13 +1218,19 @@ function det(str: string, opts?: Partial<Opts>): Res {
     );
 
   // remove widow words
+  const widowTagRanges = str.includes("<")
+    ? stripHtml(str, {
+        skipHtmlDecoding: true,
+        trimOnlySpaces: true,
+      }).allTagLocations
+    : [];
   let widowFixes = removeWidows(str, {
     ignore: "all",
     convertEntities: resolvedOpts.convertEntities, // full-on setup
     targetLanguage: "html",
     UKPostcodes: true, // full-on setup
     hyphens: true, // widow protection around dashes is independent of conversion
-    tagRanges,
+    tagRanges: widowTagRanges,
   });
 
   DEV &&
@@ -1235,29 +1241,20 @@ function det(str: string, opts?: Partial<Opts>): Res {
         4,
       )}`,
     );
-  if (widowFixes?.ranges?.length) {
-    // 1. report option as potentially applicable:
-    if (!applicableOpts.removeWidows && widowFixes.whatWasDone.removeWidows) {
-      applicableOpts.removeWidows = true;
+  // Keep compatibility with older allowed string-remove-widows 4.x releases,
+  // which reported applicability through whatWasDone only.
+  const widowApplicableOpts =
+    widowFixes.applicableOpts ?? widowFixes.whatWasDone;
+  // 1. Report potential applicability independently from the chosen options
+  // and from whether the current output already has the requested spelling.
+  if (!applicableOpts.removeWidows && widowApplicableOpts.removeWidows) {
+    applicableOpts.removeWidows = true;
 
-      DEV &&
-        console.log(
-          `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts.removeWidows`}\u001b[${39}m`} = true`,
-        );
-      if (resolvedOpts.removeWidows) {
-        applicableOpts.convertEntities = true;
-
-        DEV &&
-          console.log(
-            `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts.convertEntities`}\u001b[${39}m`} = true`,
-          );
-      }
-    }
-    // 2.
-    if (
-      !applicableOpts.convertEntities &&
-      widowFixes.whatWasDone.convertEntities
-    ) {
+    DEV &&
+      console.log(
+        `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts.removeWidows`}\u001b[${39}m`} = true`,
+      );
+    if (resolvedOpts.removeWidows) {
       applicableOpts.convertEntities = true;
 
       DEV &&
@@ -1265,7 +1262,22 @@ function det(str: string, opts?: Partial<Opts>): Res {
           `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts.convertEntities`}\u001b[${39}m`} = true`,
         );
     }
+  }
+  // 2.
+  if (
+    !applicableOpts.convertEntities &&
+    resolvedOpts.removeWidows &&
+    widowApplicableOpts.convertEntities
+  ) {
+    applicableOpts.convertEntities = true;
 
+    DEV &&
+      console.log(
+        `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts.convertEntities`}\u001b[${39}m`} = true`,
+      );
+  }
+
+  if (widowFixes?.ranges?.length) {
     // 3. if option is enabled, apply it:
     if (resolvedOpts.removeWidows) {
       str = widowFixes.res;

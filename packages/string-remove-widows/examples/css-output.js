@@ -9,5 +9,5 @@ assert.equal(
     targetLanguage: "css",
     minCharCount: 5,
   }).res,
-  "aaa bbb ccc\\00A0ddd",
+  "aaa bbb ccc\\0000A0ddd",
 );

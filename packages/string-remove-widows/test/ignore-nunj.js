@@ -12,7 +12,7 @@ import {
   // rawMdash,
 } from "./util.js";
 
-const languages = ["html`, `css`, `js"];
+const languages = ["html", "css", "js"];
 const encodedNbsps = [encodedNbspHtml, encodedNbspCss, encodedNbspJs];
 // const eolTypes = ["LF`, `CR`, `CRLF"];
 

@@ -9,5 +9,5 @@ assert.equal(
     "Some {{ value }} and <%= page.title %>\n\nmore text and more text.",
     { ignore: "all", minCharCount: 5 },
   ).res,
-  "Some {{ value }} and <%= page.title %>\n\nmore text and more&nbsp;text.",
+  "Some {{ value }}&nbsp;and <%= page.title %>\n\nmore text and more&nbsp;text.",
 );

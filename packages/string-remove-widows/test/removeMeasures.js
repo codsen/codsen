@@ -12,9 +12,9 @@ import {
   // rawMdash,
 } from "./util.js";
 
-const languages = ["html`, `css`, `js"];
+const languages = ["html", "css", "js"];
 const encodedNbsps = [encodedNbspHtml, encodedNbspCss, encodedNbspJs];
-const eolTypes = ["LF`, `CR`, `CRLF"];
+const eolTypes = ["LF", "CR", "CRLF"];
 
 // -----------------------------------------------------------------------------
 // opts.removeWidowPreventionMeasures
@@ -48,7 +48,7 @@ test(`02 - opts.removeWidowPreventionMeasures - comes in without nbsp's`, () => 
 });
 
 test(`03 - opts.removeWidowPreventionMeasures - comes in with nbsp's`, () => {
-  ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
+  ["\n", "\r", "\r\n"].forEach((eolType, idx) => {
     languages.forEach((targetLanguage, i) => {
       equal(
         removeWidows(

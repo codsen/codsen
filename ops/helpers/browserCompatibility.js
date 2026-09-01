@@ -505,6 +505,77 @@ function stringExtractClassNamesSmoke(api, equal) {
   });
 }
 
+function stringRemoveWidowsSmoke(api, equal) {
+  var progress = [];
+  var result = api.removeWidows("&nbsp; aaa bbb ccc ddd", {
+    minWordCount: 0,
+    minCharCount: 0,
+    reportProgressFunc: (percentageDone) => {
+      progress.push(percentageDone);
+    },
+    reportProgressFuncFrom: 20,
+    reportProgressFuncTo: 40,
+    tagRanges: [[0, 6]],
+  });
+
+  equal(typeof api.removeWidows, "function");
+  equal(typeof api.version, "string");
+  equal(
+    [
+      Object.isFrozen(api.defaults),
+      Object.isFrozen(api.defaults.ignore),
+      Object.isFrozen(api.defaults.tagRanges),
+    ],
+    [true, true, true],
+  );
+  var defaultsSnapshot = JSON.stringify(api.defaults);
+  try {
+    api.defaults.minWordCount = 0;
+  } catch (_error) {}
+  try {
+    api.defaults.ignore.push("jinja");
+  } catch (_error) {}
+  equal(JSON.stringify(api.defaults), defaultsSnapshot);
+  equal(api.removeWidows("aaa bbb ccc").res, "aaa bbb ccc");
+  equal(result.res, "&nbsp; aaa bbb ccc&nbsp;ddd");
+  equal(result.ranges, [[18, 19, "&nbsp;"]]);
+  equal(result.whatWasDone, {
+    removeWidows: true,
+    convertEntities: false,
+  });
+  equal(result.applicableOpts, {
+    removeWidows: true,
+    convertEntities: true,
+  });
+  equal([progress[0], progress[progress.length - 1]], [20, 40]);
+  equal(
+    progress.every(
+      (value, index) =>
+        Number.isFinite(value) &&
+        Math.floor(value) === value &&
+        value >= 20 &&
+        value <= 40 &&
+        (index === 0 || value > progress[index - 1]),
+    ),
+    true,
+  );
+  equal(typeof result.log.timeTakenInMilliseconds, "number");
+  equal(
+    [result, result.log, result.whatWasDone, result.applicableOpts].map(
+      (value) => Object.getPrototypeOf(value) === Object.prototype,
+    ),
+    [true, true, true, true],
+  );
+  equal(
+    api.removeWidows("aaa bbb ccc ddd", {
+      minWordCount: 0,
+      minCharCount: 0,
+      targetLanguage: "css",
+    }).res,
+    "aaa bbb ccc\\0000A0ddd",
+  );
+}
+
 function arrayIncludesWithGlobSmoke(api, equal) {
   const progress = [];
   let completion;
@@ -555,6 +626,7 @@ const IIFE_API_SMOKES = Object.freeze({
   "object-boolean-combinations": objectBooleanCombinationsSmoke,
   "string-convert-indexes": stringConvertIndexesSmoke,
   "string-extract-class-names": stringExtractClassNamesSmoke,
+  "string-remove-widows": stringRemoveWidowsSmoke,
   "string-strip-html": stringStripHtmlSmoke,
   "test-mixer": testMixerSmoke,
 });

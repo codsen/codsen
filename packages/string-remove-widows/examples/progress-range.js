@@ -12,8 +12,8 @@ removeWidows("a".repeat(2100), {
 });
 
 assert.equal(percentages[0], 20);
-assert.equal(percentages.at(-1), 29);
+assert.equal(percentages.at(-1), 30);
 assert.equal(
-  percentages.every((value) => value >= 20 && value < 30),
+  percentages.every((value) => value >= 20 && value <= 30),
   true,
 );

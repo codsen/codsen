@@ -1,6 +1,6 @@
 const rawnbsp = "\u00A0";
 const encodedNbspHtml = "&nbsp;";
-const encodedNbspCss = "\\00A0";
+const encodedNbspCss = "\\0000A0";
 const encodedNbspJs = "\\u00A0";
 
 const rawNdash = "\u2013";
