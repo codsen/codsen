@@ -141,7 +141,7 @@ function dynamicTitleRange(testCall, identifier) {
     padCall.expression.name.text !== "padStart" ||
     padCall.arguments.length !== 2 ||
     !ts.isNumericLiteral(padCall.arguments[0]) ||
-    Number(padCall.arguments[0].text) !== 2 ||
+    ![2, 3].includes(Number(padCall.arguments[0].text)) ||
     !ts.isStringLiteralLike(padCall.arguments[1]) ||
     padCall.arguments[1].text !== "0"
   ) {
@@ -185,7 +185,9 @@ function dynamicTitleRange(testCall, identifier) {
   const count = callback.parent.expression.expression.elements.length;
   return {
     numbers: Array.from({ length: count }, (_, index) => offset + index),
-    width: 2,
+    offsetNode: addition.right,
+    width: Number(padCall.arguments[0].text),
+    widthNode: padCall.arguments[0],
   };
 }
 
@@ -227,18 +229,34 @@ function labelInfo(node) {
   return dynamicPrefix(node, "assertion");
 }
 
-function auditUnitTestNumbering(
-  source,
-  filename = "<source>",
-  { requiredWidth: configuredWidth } = {},
-) {
-  const sourceFile = ts.createSourceFile(
+function sourceFileFrom(source, filename) {
+  return ts.createSourceFile(
     filename,
     source,
     ts.ScriptTarget.Latest,
     true,
     filename.endsWith(".ts") ? ts.ScriptKind.TS : ts.ScriptKind.JS,
   );
+}
+
+function collectTests(sourceFile) {
+  const tests = [];
+  function collect(node) {
+    if (isNamedCall(node, "test")) {
+      tests.push({ call: node, info: titleInfo(node) });
+    }
+    ts.forEachChild(node, collect);
+  }
+  collect(sourceFile);
+  return tests;
+}
+
+function auditUnitTestNumbering(
+  source,
+  filename = "<source>",
+  { requiredWidth: configuredWidth } = {},
+) {
+  const sourceFile = sourceFileFrom(source, filename);
   const problems = sourceFile.parseDiagnostics.map((diagnostic) => {
     const node = {
       getStart: () => diagnostic.start ?? 0,
@@ -253,14 +271,7 @@ function auditUnitTestNumbering(
   };
   const bindings = assertionBindings(sourceFile);
 
-  const tests = [];
-  function collect(node) {
-    if (isNamedCall(node, "test")) {
-      tests.push({ call: node, info: titleInfo(node) });
-    }
-    ts.forEachChild(node, collect);
-  }
-  collect(sourceFile);
+  const tests = collectTests(sourceFile);
 
   const sequence = [];
   for (const item of tests) {
@@ -369,4 +380,270 @@ function auditUnitTestNumbering(
   };
 }
 
-export { auditUnitTestNumbering };
+function applyEdits(source, edits) {
+  const ordered = edits
+    .filter(({ end, start, text }) => source.slice(start, end) !== text)
+    .sort((left, right) => right.start - left.start || right.end - left.end);
+  let previousStart = source.length;
+  let output = source;
+  for (const edit of ordered) {
+    if (edit.end > previousStart) {
+      throw new Error("Overlapping unit-test numbering edits");
+    }
+    output = `${output.slice(0, edit.start)}${edit.text}${output.slice(edit.end)}`;
+    previousStart = edit.start;
+  }
+  return output;
+}
+
+function literalContentStart(sourceFile, node) {
+  return node.getStart(sourceFile) + 1;
+}
+
+function fixStaticTitle(edits, sourceFile, node, renderedNumber) {
+  const start = renderedStart(node);
+  if (start === null) {
+    return false;
+  }
+  const contentStart = literalContentStart(sourceFile, node);
+  const prefix = start.match(/^\d+(?=$| - )/u);
+  if (prefix) {
+    edits.push({
+      end: contentStart + prefix[0].length,
+      start: contentStart,
+      text: renderedNumber,
+    });
+  } else {
+    const hasDescription = start.length > 0 || ts.isTemplateExpression(node);
+    edits.push({
+      end: contentStart,
+      start: contentStart,
+      text: `${renderedNumber}${hasDescription ? " - " : ""}`,
+    });
+  }
+  return true;
+}
+
+function fixStaticLabel(edits, sourceFile, node, renderedLabel) {
+  const start = renderedStart(node);
+  if (start === null) {
+    return false;
+  }
+  const contentStart = literalContentStart(sourceFile, node);
+  const prefix = start.match(/^\d+\.\d+(?=$| - )/u);
+  if (prefix) {
+    edits.push({
+      end: contentStart + prefix[0].length,
+      start: contentStart,
+      text: renderedLabel,
+    });
+    return true;
+  }
+  const partialPrefix = start.match(/^\d+\./u);
+  const hasDescription =
+    start.length > (partialPrefix?.[0].length ?? 0) ||
+    ts.isTemplateExpression(node);
+  edits.push({
+    end: contentStart + (partialPrefix?.[0].length ?? 0),
+    start: contentStart,
+    text: `${renderedLabel}${hasDescription ? " - " : ""}`,
+  });
+  return true;
+}
+
+function escapeTemplateText(value) {
+  return value
+    .replaceAll("\\", "\\\\")
+    .replaceAll("`", "\\`")
+    .replaceAll("${", "\\${");
+}
+
+function fixDynamicLabel(
+  edits,
+  sourceFile,
+  node,
+  identifier,
+  renderedAssertionNumber,
+) {
+  const dynamic = dynamicPrefix(node, "assertion");
+  if (dynamic) {
+    const [firstSpan] = node.templateSpans;
+    const literalStart = firstSpan.literal.getStart(sourceFile);
+    edits.push({
+      end: firstSpan.expression.end,
+      start: firstSpan.expression.getStart(sourceFile),
+      text: identifier,
+    });
+    edits.push({
+      end: literalStart + 2 + dynamic.assertionRendered.length,
+      start: literalStart + 2,
+      text: renderedAssertionNumber,
+    });
+    return true;
+  }
+
+  const renderedLabel = `\${${identifier}}.${renderedAssertionNumber}`;
+  if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) {
+    const existingPrefix = node.text.match(/^\d+\.\d+(?=$| - )/u);
+    const description = existingPrefix
+      ? node.text.slice(existingPrefix[0].length)
+      : node.text
+        ? ` - ${node.text}`
+        : "";
+    edits.push({
+      end: node.end,
+      start: node.getStart(sourceFile),
+      text: `\`${renderedLabel}${escapeTemplateText(description)}\``,
+    });
+    return true;
+  }
+  if (ts.isTemplateExpression(node)) {
+    const contentStart = literalContentStart(sourceFile, node);
+    const start = node.head.text;
+    const prefix = start.match(/^\d+\.\d+(?=$| - )/u);
+    const partialPrefix = prefix ? null : start.match(/^\d+\./u);
+    const consumed = prefix?.[0].length ?? partialPrefix?.[0].length ?? 0;
+    const hasDescription = start.length > consumed || !prefix;
+    edits.push({
+      end: contentStart + consumed,
+      start: contentStart,
+      text: `${renderedLabel}${hasDescription ? " - " : ""}`,
+    });
+    return true;
+  }
+  return false;
+}
+
+function fixUnitTestNumbering(
+  source,
+  filename = "<source>",
+  { requiredWidth: configuredWidth } = {},
+) {
+  const sourceFile = sourceFileFrom(source, filename);
+  if (sourceFile.parseDiagnostics.length) {
+    const audit = auditUnitTestNumbering(source, filename, {
+      requiredWidth: configuredWidth,
+    });
+    return {
+      ...audit,
+      changed: false,
+      requiredWidth: configuredWidth ?? 2,
+      source,
+    };
+  }
+
+  const bindings = assertionBindings(sourceFile);
+  const tests = collectTests(sourceFile);
+  const planned = [];
+  let testCount = 0;
+  for (const item of tests) {
+    const title = item.call.arguments[0];
+    if (item.info?.unsupported) {
+      continue;
+    }
+    if (item.info?.identifier) {
+      planned.push({ ...item, firstNumber: testCount + 1, kind: "dynamic" });
+      testCount += item.info.numbers.length;
+    } else if (title && renderedStart(title) !== null) {
+      planned.push({ ...item, firstNumber: testCount + 1, kind: "static" });
+      testCount += 1;
+    }
+  }
+
+  const requiredWidth =
+    configuredWidth ??
+    (testCount >= 100 || tests.some(({ info }) => info?.width === 3) ? 3 : 2);
+  const edits = [];
+  for (const item of planned) {
+    const renderedTestNumber = String(item.firstNumber).padStart(
+      requiredWidth,
+      "0",
+    );
+    if (item.kind === "dynamic") {
+      edits.push({
+        end: item.info.offsetNode.end,
+        start: item.info.offsetNode.getStart(sourceFile),
+        text: String(item.firstNumber),
+      });
+      edits.push({
+        end: item.info.widthNode.end,
+        start: item.info.widthNode.getStart(sourceFile),
+        text: String(requiredWidth),
+      });
+    } else {
+      fixStaticTitle(
+        edits,
+        sourceFile,
+        item.call.arguments[0],
+        renderedTestNumber,
+      );
+    }
+
+    const callback = item.call.arguments[1];
+    if (!callback) {
+      continue;
+    }
+    let previousAssertionNumber = 0;
+    function fixCallback(node) {
+      if (node !== item.call && isNamedCall(node, "test")) {
+        return;
+      }
+      if (isBoundCall(node, bindings.equal)) {
+        const label = node.arguments[2];
+        const existing = label ? labelInfo(label) : null;
+        const assertionNumber =
+          existing?.assertionNumber > previousAssertionNumber
+            ? existing.assertionNumber
+            : previousAssertionNumber + 1;
+        const renderedAssertionNumber =
+          existing?.assertionNumber === assertionNumber
+            ? existing.assertionRendered
+            : String(assertionNumber).padStart(2, "0");
+        previousAssertionNumber = assertionNumber;
+        if (label) {
+          if (item.kind === "dynamic") {
+            fixDynamicLabel(
+              edits,
+              sourceFile,
+              label,
+              item.info.identifier,
+              renderedAssertionNumber,
+            );
+          } else {
+            fixStaticLabel(
+              edits,
+              sourceFile,
+              label,
+              `${renderedTestNumber}.${renderedAssertionNumber}`,
+            );
+          }
+        } else if (node.arguments.length >= 2) {
+          const renderedLabel =
+            item.kind === "dynamic"
+              ? `\`\${${item.info.identifier}}.${renderedAssertionNumber}\``
+              : `"${renderedTestNumber}.${renderedAssertionNumber}"`;
+          edits.push({
+            end: node.arguments[1].end,
+            start: node.arguments[1].end,
+            text: `, ${renderedLabel}`,
+          });
+        }
+      }
+      ts.forEachChild(node, fixCallback);
+    }
+    fixCallback(callback);
+  }
+
+  const fixedSource = applyEdits(source, edits);
+  const audit = auditUnitTestNumbering(fixedSource, filename, {
+    requiredWidth,
+  });
+  return {
+    ...audit,
+    changed: fixedSource !== source,
+    requiredWidth,
+    source: fixedSource,
+  };
+}
+
+export { auditUnitTestNumbering, fixUnitTestNumbering };

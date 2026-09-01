@@ -451,19 +451,12 @@ test("16 - distinct short plain names remain distinct in either order", () => {
     ["éé", "é"],
     ["😀😀", "😀"],
   ];
-  let assertion = 1;
 
   for (const pair of pairs) {
     for (const input of [pair, [pair[1], pair[0]]]) {
       const result = uglifyArr(input);
-      equal(result, input, `16.${String(assertion).padStart(2, "0")}`);
-      assertion += 1;
-      equal(
-        result.every(isWellFormed),
-        true,
-        `16.${String(assertion).padStart(2, "0")}`,
-      );
-      assertion += 1;
+      equal(result, input, "16.01");
+      equal(result.every(isWellFormed), true, "16.02");
     }
   }
 });

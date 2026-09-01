@@ -8,40 +8,38 @@ import {
   listUnitTestFiles,
   unitTestPackageName,
 } from "../helpers/unitTestFiles.js";
-import { auditUnitTestNumbering } from "../helpers/unitTestNumbering.js";
+import { fixUnitTestNumbering } from "../helpers/unitTestNumbering.js";
+import { writeFileAtomically } from "../helpers/writeFileAtomically.js";
 
 const repositoryRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "../..",
 );
-const testFiles = listUnitTestFiles(repositoryRoot);
-
-const records = testFiles.map((filename) => {
+const records = listUnitTestFiles(repositoryRoot).map((filename) => {
   const relativeFilename = path.relative(repositoryRoot, filename);
   const source = readFileSync(filename, "utf8");
   return {
     filename,
     packageName: unitTestPackageName(relativeFilename),
+    preview: fixUnitTestNumbering(source, relativeFilename),
     relativeFilename,
     source,
-    initial: auditUnitTestNumbering(source, relativeFilename),
   };
 });
 const threeDigitPackages = new Set(
   records
-    .filter(({ initial }) => initial.usesThreeDigitTitles)
+    .filter(({ preview }) => preview.requiredWidth === 3)
     .map(({ packageName }) => packageName),
 );
 
+let changedFileCount = 0;
 let equalCount = 0;
 let testCount = 0;
 const problems = [];
 for (const record of records) {
-  const result = threeDigitPackages.has(record.packageName)
-    ? auditUnitTestNumbering(record.source, record.relativeFilename, {
-        requiredWidth: 3,
-      })
-    : record.initial;
+  const result = fixUnitTestNumbering(record.source, record.relativeFilename, {
+    requiredWidth: threeDigitPackages.has(record.packageName) ? 3 : 2,
+  });
   equalCount += result.equalCount;
   testCount += result.testCount;
   problems.push(
@@ -50,11 +48,15 @@ for (const record of records) {
       filename: record.relativeFilename,
     })),
   );
+  if (result.changed) {
+    await writeFileAtomically(record.filename, result.source);
+    changedFileCount += 1;
+  }
 }
 
 if (problems.length) {
   console.error(
-    `Unit-test numbering verification failed with ${problems.length} problem${problems.length === 1 ? "" : "s"}:\n${problems
+    `Unit-test numbering fix left ${problems.length} problem${problems.length === 1 ? "" : "s"}:\n${problems
       .map(
         ({ column, filename, line, message }) =>
           `- ${filename}:${line}:${column} ${message}`,
@@ -64,6 +66,6 @@ if (problems.length) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Unit-test numbering OK: ${testCount} tests and ${equalCount} equal() assertions across ${testFiles.length} files`,
+    `Unit-test numbering fixed ${changedFileCount} file${changedFileCount === 1 ? "" : "s"}: ${testCount} tests and ${equalCount} equal() assertions checked across ${records.length} files`,
   );
 }

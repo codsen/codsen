@@ -25,7 +25,7 @@ test("01 - prevents concatenation across Unicode letter and number categories", 
         addSingleSpaceToPreventAccidentalConcatenation: true,
       }),
       expectedRanges[index],
-      `01.${String(index + 1).padStart(2, "0")}`,
+      "01.01",
     );
   });
 });

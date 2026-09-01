@@ -92,7 +92,7 @@ test("03 - exact path filters retain similarly named files", async () => {
     equal(
       await readFile(files[index], "utf8"),
       '{\n  "a": 2,\n  "z": 1\n}\n',
-      `03.0${index + 2}`,
+      `03.02 - file ${String(index + 1).padStart(2, "0")}`,
     );
   }
 });

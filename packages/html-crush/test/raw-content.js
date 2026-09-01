@@ -15,7 +15,7 @@ test("01 - protects script contents across HTML name casing", () => {
     equal(
       m(equal, input, { removeLineBreaks: true }).result,
       input,
-      `01.${String(index + 1).padStart(2, "0")}`,
+      `01.01 - case ${String(index + 1).padStart(2, "0")}`,
     );
   }
 });
@@ -31,7 +31,7 @@ test("02 - protects pre, code, and textarea contents across casing", () => {
     equal(
       m(equal, input, { removeLineBreaks: true }).result,
       input,
-      `02.${String(index + 1).padStart(2, "0")}`,
+      `02.01 - case ${String(index + 1).padStart(2, "0")}`,
     );
   }
 });
@@ -48,7 +48,7 @@ test("03 - does not classify prefix-sharing custom tags as built-ins", () => {
     equal(
       m(equal, input, { removeLineBreaks: false }).result,
       input.replace("a   b", "a b"),
-      `03.${String(index + 1).padStart(2, "0")}`,
+      `03.01 - case ${String(index + 1).padStart(2, "0")}`,
     );
   }
 });
@@ -65,7 +65,7 @@ test("04 - protects unclosed raw and preformatted contents", () => {
     equal(
       m(equal, input, { removeLineBreaks: true }).result,
       input,
-      `04.${String(index + 1).padStart(2, "0")}`,
+      `04.01 - case ${String(index + 1).padStart(2, "0")}`,
     );
   }
 });

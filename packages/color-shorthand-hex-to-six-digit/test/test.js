@@ -257,8 +257,8 @@ test("19 - preserves ID selectors across selector grammar", () => {
     "#abc > * + [data-kind] {}",
   ];
 
-  selectors.forEach((selector, index) => {
-    equal(selector, conv(selector), `19.${String(index + 1).padStart(2, "0")}`);
+  selectors.forEach((selector) => {
+    equal(selector, conv(selector), "19.01");
   });
 });
 
@@ -288,12 +288,8 @@ test("21 - preserves complete CSS and HTML resource references", () => {
     'a[href="icons.svg#abc"] {}',
   ];
 
-  references.forEach((reference, index) => {
-    equal(
-      conv(reference),
-      reference,
-      `21.${String(index + 1).padStart(2, "0")}`,
-    );
+  references.forEach((reference) => {
+    equal(conv(reference), reference, "21.01");
   });
 });
 
