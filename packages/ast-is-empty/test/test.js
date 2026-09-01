@@ -332,9 +332,7 @@ test("21 - null and explicitly undefined options use defaults", () => {
     "21.04",
   );
 
-  const inherited = runInNewContext(
-    "Object.prototype.unknown = true; ({})",
-  );
+  const inherited = runInNewContext("Object.prototype.unknown = true; ({})");
   inherited[Symbol("unknown")] = true;
   equal(isEmpty("", inherited), true, "21.05");
 });

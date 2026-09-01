@@ -1,12 +1,12 @@
 import {
-  DELETE,
-  type Finding,
-  type JsonValue,
   arrayFirstOnly,
+  DELETE,
   del,
   drop,
+  type Finding,
   find,
   get,
+  type JsonValue,
   set,
   traverse,
 } from "ast-monkey";

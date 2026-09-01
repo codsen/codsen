@@ -1,7 +1,7 @@
 import { unified } from "unified";
-import { VFile } from "vfile";
 import { test } from "uvu";
 import { equal, ok, throws } from "uvu/assert";
+import { VFile } from "vfile";
 
 import fixTypography from "../dist/remark-typography.esm.js";
 
@@ -193,11 +193,7 @@ test("10 - the final endpoint follows mutations and completion data", () => {
 
   equal(finalSnapshots.length, 1, "10.01");
   equal(finalSnapshots[0].value, "one two three four\u00A0five", "10.02");
-  equal(
-    finalSnapshots[0].completion,
-    file.data.remarkTypography,
-    "10.03",
-  );
+  equal(finalSnapshots[0].completion, file.data.remarkTypography, "10.03");
 });
 
 test.run();

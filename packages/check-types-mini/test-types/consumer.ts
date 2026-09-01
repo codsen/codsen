@@ -1,8 +1,8 @@
 import {
   CheckTypesMiniError,
+  type CompletionStats,
   checkTypesMini,
   defaults,
-  type CompletionStats,
   type Schema,
 } from "check-types-mini";
 

@@ -359,8 +359,7 @@ function prepareMatcher(
     : Array.from(patterns);
   return optionalCreateMatcher
     ? optionalCreateMatcher(preparedPatterns, caseSensitiveMatchOpts)
-    : (input: string) =>
-        match(input, preparedPatterns, caseSensitiveMatchOpts);
+    : (input: string) => match(input, preparedPatterns, caseSensitiveMatchOpts);
 }
 
 function parseSchemaKey(key: string): string[] {
@@ -730,9 +729,7 @@ function checkTypesMini(
   const refObject = ref as Record<string, unknown> | null;
   const schemaObject = schema as Schema & Record<string, unknown>;
   const schemaRootKeys = inputKeys(schemaObject);
-  const schemaRoot = schemaRootKeys.length
-    ? newSchemaNode()
-    : emptySchemaNode;
+  const schemaRoot = schemaRootKeys.length ? newSchemaNode() : emptySchemaNode;
   const invalidSchemaCode: CheckTypesMiniThrowId = "THROW_ID_12";
   const cyclicSchemaCode: CheckTypesMiniThrowId = "THROW_ID_13";
   const activeSchema = schemaRootKeys.length
@@ -1247,11 +1244,7 @@ function referenceMismatch(
   );
 }
 
-function cyclicInput(
-  path: PathNode,
-  opts: ResolvedOpts,
-  msg: string,
-): never {
+function cyclicInput(path: PathNode, opts: ResolvedOpts, msg: string): never {
   return fail(
     "THROW_ID_22",
     `${diagnosticPath(opts.optsVarName, path)} contains a cycle. Cyclic input structures are not supported.`,

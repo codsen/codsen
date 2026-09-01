@@ -1,12 +1,12 @@
 import {
   type CompletionStats,
+  defaults,
+  deleteKey,
   type Obj,
   type ReadonlyTreeArray,
   type ReadonlyTreeObject,
   type TreeArray,
   type TreeObject,
-  defaults,
-  deleteKey,
 } from "object-delete-key";
 
 const readonlyObject: ReadonlyTreeObject = {

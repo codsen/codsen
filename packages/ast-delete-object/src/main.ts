@@ -1,9 +1,6 @@
 import { compare } from "ast-compare";
 import { DELETE, traverse } from "ast-monkey-traverse";
-import {
-  deepClone as clone,
-  isPlainObject as isObj,
-} from "codsen-utils";
+import { deepClone as clone, isPlainObject as isObj } from "codsen-utils";
 
 import { version as v } from "../package.json";
 
@@ -74,31 +71,28 @@ function deleteObj<T extends JsonValue>(
   // traversal
   // traverse() preserves the root container category; this input is already a
   // validated JsonValue and only nested nodes can be removed or replaced.
-  resolvedInput = traverse(
-    resolvedInput,
-    (key, val, innerObj) => {
-      current = innerObj.parentType === "object" ? val : key;
-      if (isObj(current)) {
-        if (
-          isObj(objToDelete) &&
-          isObj(current) &&
-          !Object.keys(objToDelete).length &&
-          !Object.keys(current).length
-        ) {
-          return DELETE;
-        }
-        if (
-          compare(current, objToDelete, {
-            hungryForWhitespace: resolvedOpts.hungryForWhitespace,
-            matchStrictly: resolvedOpts.matchKeysStrictly,
-          })
-        ) {
-          return DELETE;
-        }
+  resolvedInput = traverse(resolvedInput, (key, val, innerObj) => {
+    current = innerObj.parentType === "object" ? val : key;
+    if (isObj(current)) {
+      if (
+        isObj(objToDelete) &&
+        isObj(current) &&
+        !Object.keys(objToDelete).length &&
+        !Object.keys(current).length
+      ) {
+        return DELETE;
       }
-      return current;
-    },
-  ) as JsonValue;
+      if (
+        compare(current, objToDelete, {
+          hungryForWhitespace: resolvedOpts.hungryForWhitespace,
+          matchStrictly: resolvedOpts.matchKeysStrictly,
+        })
+      ) {
+        return DELETE;
+      }
+    }
+    return current;
+  }) as JsonValue;
   return resolvedInput as T;
 }
 

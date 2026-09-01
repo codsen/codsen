@@ -89,7 +89,14 @@ const quantity = /[+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:[A-Za-z°µμ%]+)?/y;
 const quantityCharacter = /[+\-.%0-9A-Z_a-z°µμ]/;
 const quantityContinuation = /[\p{ID_Continue}\p{Sc}\u200C\u200D]/u;
 const htmlBreak = /^<br(?:\s[^<>]*)?\s*\/?>$/i;
-const verticalWhitespace = new Set(["\n", "\v", "\f", "\r", "\u2028", "\u2029"]);
+const verticalWhitespace = new Set([
+  "\n",
+  "\v",
+  "\f",
+  "\r",
+  "\u2028",
+  "\u2029",
+]);
 
 function isParent(node: Nodes): node is Parents {
   return "children" in node;
@@ -332,9 +339,7 @@ function codePointBefore(value: string, index: number): string | undefined {
     return undefined;
   }
   const previousCodeUnit = value.charCodeAt(index - 1);
-  return previousCodeUnit >= 0xdc00 &&
-    previousCodeUnit <= 0xdfff &&
-    index > 1
+  return previousCodeUnit >= 0xdc00 && previousCodeUnit <= 0xdfff && index > 1
     ? value.slice(index - 2, index)
     : value[index - 1];
 }
@@ -477,10 +482,7 @@ function createProgressReporter(
       return;
     }
     const ratio = Math.min(1, absoluteWork / totalWork);
-    const calculated = Math.min(
-      to,
-      Math.floor(from + (to - from) * ratio),
-    );
+    const calculated = Math.min(to, Math.floor(from + (to - from) * ratio));
     const percentage = to > from ? Math.min(to - 1, calculated) : to;
     if (lastReported === undefined || percentage > lastReported) {
       lastReported = percentage;

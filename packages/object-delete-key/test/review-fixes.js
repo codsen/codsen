@@ -1,7 +1,8 @@
 // biome-ignore-all lint/suspicious/noExplicitAny: runtime boundary probes
+
+import { runInNewContext } from "node:vm";
 import { test } from "uvu";
 import { equal, is, ok, throws } from "uvu/assert";
-import { runInNewContext } from "node:vm";
 
 import { defaults, deleteKey, version } from "../dist/object-delete-key.esm.js";
 

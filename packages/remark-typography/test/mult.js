@@ -75,11 +75,7 @@ test("07 - quantity token boundaries are rejected symmetrically", () => {
   equal(processText("3 x 4e\u0301"), "3 x 4e\u0301", "07.11");
   equal(processText("𝔄3 x 4"), "𝔄3 x 4", "07.12");
   equal(processText("3 x 4𝔄"), "3 x 4𝔄", "07.13");
-  equal(
-    processText("\uDC003 x 4"),
-    `\uDC003 ${multiplicationSign} 4`,
-    "07.14",
-  );
+  equal(processText("\uDC003 x 4"), `\uDC003 ${multiplicationSign} 4`, "07.14");
   equal(processText("a\u200C3 x 4"), "a\u200C3 x 4", "07.15");
   equal(processText("3 x 4\u200Dfoo"), "3 x 4\u200Dfoo", "07.16");
   equal(processText("a·3 x 4"), "a·3 x 4", "07.17");

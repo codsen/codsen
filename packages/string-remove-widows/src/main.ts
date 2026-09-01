@@ -144,8 +144,7 @@ export interface Res {
   };
 }
 
-const plainTextFastPathExclusions =
-  /[&\\\u00a0\u2013\u2014\r\n<>/0-9-]/;
+const plainTextFastPathExclusions = /[&\\\u00a0\u2013\u2014\r\n<>/0-9-]/;
 
 function removeWidowsFromPlainTextWithDefaults(
   str: string,
@@ -172,15 +171,11 @@ function removeWidowsFromPlainTextWithDefaults(
       str[i - 1]?.trim() &&
       !(
         str[i - 1]?.toLowerCase() === "r" &&
-        (str[i - 2]?.toLowerCase() === "b" ||
-          str[i - 2]?.toLowerCase() === "h")
+        (str[i - 2]?.toLowerCase() === "b" || str[i - 2]?.toLowerCase() === "h")
       )
     ) {
       let nextNonWhitespace = i + 1;
-      while (
-        nextNonWhitespace < str.length &&
-        !str[nextNonWhitespace].trim()
-      ) {
+      while (nextNonWhitespace < str.length && !str[nextNonWhitespace].trim()) {
         nextNonWhitespace += 1;
       }
       if (nextNonWhitespace < str.length) {
@@ -510,10 +505,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       ) {
         suppressSourceWordBoundaryAt = undefined;
       }
-      if (
-        str[currentTagRange[1]]?.trim() &&
-        semanticWhitespaceBeforeTag
-      ) {
+      if (str[currentTagRange[1]]?.trim() && semanticWhitespaceBeforeTag) {
         semanticWordBoundaryAt = currentTagRange[1];
       }
       i = currentTagRange[1] - 1;
@@ -524,8 +516,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
     if (startsAtSemanticWordBoundary) {
       semanticWordBoundaryAt = undefined;
     }
-    const sourceWordBoundaryIsSuppressed =
-      suppressSourceWordBoundaryAt === i;
+    const sourceWordBoundaryIsSuppressed = suppressSourceWordBoundaryAt === i;
     if (sourceWordBoundaryIsSuppressed) {
       suppressSourceWordBoundaryAt = undefined;
     }
@@ -1227,18 +1218,17 @@ function isPostcodeTokenChar(char: string | undefined): boolean {
 }
 
 const unicodeDecimalDigitRanges = [
-  1632, 1641, 1776, 1785, 1984, 1993, 2406, 2415, 2534, 2543, 2662, 2671,
-  2790, 2799, 2918, 2927, 3046, 3055, 3174, 3183, 3302, 3311, 3430, 3439,
-  3558, 3567, 3664, 3673, 3792, 3801, 3872, 3881, 4160, 4169, 4240, 4249,
-  6112, 6121, 6160, 6169, 6470, 6479, 6608, 6617, 6784, 6793, 6800, 6809,
-  6992, 7001, 7088, 7097, 7232, 7241, 7248, 7257, 42528, 42537, 43216,
-  43225, 43264, 43273, 43472, 43481, 43504, 43513, 43600, 43609, 44016,
-  44025, 65296, 65305, 66720, 66729, 68912, 68921, 68928, 68937, 69734,
-  69743, 69872, 69881, 69942, 69951, 70096, 70105, 70384, 70393, 70736,
-  70745, 70864, 70873, 71248, 71257, 71360, 71369, 71376, 71395, 71472,
-  71481, 71904, 71913, 72016, 72025, 72688, 72697, 72784, 72793, 73040,
-  73049, 73120, 73129, 73184, 73193, 73552, 73561, 90416, 90425, 92768,
-  92777, 92864, 92873, 93008, 93017, 93552, 93561, 118000, 118009,
+  1632, 1641, 1776, 1785, 1984, 1993, 2406, 2415, 2534, 2543, 2662, 2671, 2790,
+  2799, 2918, 2927, 3046, 3055, 3174, 3183, 3302, 3311, 3430, 3439, 3558, 3567,
+  3664, 3673, 3792, 3801, 3872, 3881, 4160, 4169, 4240, 4249, 6112, 6121, 6160,
+  6169, 6470, 6479, 6608, 6617, 6784, 6793, 6800, 6809, 6992, 7001, 7088, 7097,
+  7232, 7241, 7248, 7257, 42528, 42537, 43216, 43225, 43264, 43273, 43472,
+  43481, 43504, 43513, 43600, 43609, 44016, 44025, 65296, 65305, 66720, 66729,
+  68912, 68921, 68928, 68937, 69734, 69743, 69872, 69881, 69942, 69951, 70096,
+  70105, 70384, 70393, 70736, 70745, 70864, 70873, 71248, 71257, 71360, 71369,
+  71376, 71395, 71472, 71481, 71904, 71913, 72016, 72025, 72688, 72697, 72784,
+  72793, 73040, 73049, 73120, 73129, 73184, 73193, 73552, 73561, 90416, 90425,
+  92768, 92777, 92864, 92873, 93008, 93017, 93552, 93561, 118000, 118009,
   120782, 120831, 123200, 123209, 123632, 123641, 124144, 124153, 124401,
   124410, 125264, 125273, 130032, 130041,
 ] as const;
@@ -1253,9 +1243,7 @@ function codePointBefore(str: string, index: number): string | undefined {
     return undefined;
   }
   const previousCodeUnit = str.charCodeAt(index - 1);
-  return previousCodeUnit >= 0xdc00 &&
-    previousCodeUnit <= 0xdfff &&
-    index > 1
+  return previousCodeUnit >= 0xdc00 && previousCodeUnit <= 0xdfff && index > 1
     ? str.slice(index - 2, index)
     : str[index - 1];
 }

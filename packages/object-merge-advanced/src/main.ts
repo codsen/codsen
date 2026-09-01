@@ -1,3 +1,4 @@
+import { includesWithGlob } from "array-includes-with-glob";
 import {
   deepClone as clone,
   compareFn,
@@ -11,7 +12,6 @@ import {
   isPlainObject as isObj,
   isStr,
 } from "codsen-utils";
-import { includesWithGlob } from "array-includes-with-glob";
 import { nonEmpty } from "util-nonempty";
 
 import { version as v } from "../package.json";

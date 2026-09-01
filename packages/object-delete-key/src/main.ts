@@ -102,11 +102,12 @@ export interface Defaults {
 
 type IsAny<T> = 0 extends 1 & T ? true : false;
 
-type TreeCheck<T, Seen = never> = IsAny<T> extends true
-  ? false
-  : T extends unknown
-    ? TreeCheckMember<T, Seen>
-    : never;
+type TreeCheck<T, Seen = never> =
+  IsAny<T> extends true
+    ? false
+    : T extends unknown
+      ? TreeCheckMember<T, Seen>
+      : never;
 
 type TreeCheckMember<T, Seen> = [T] extends [Seen]
   ? true
@@ -502,10 +503,7 @@ function hasIntrinsicPrototype(
     if (constructorSource === OBJECT_CONSTRUCTOR_SOURCE) {
       return parentPrototype === null;
     }
-    return hasIntrinsicPrototype(
-      parentPrototype,
-      OBJECT_CONSTRUCTOR_SOURCE,
-    );
+    return hasIntrinsicPrototype(parentPrototype, OBJECT_CONSTRUCTOR_SOURCE);
   } catch {
     return false;
   }

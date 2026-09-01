@@ -14,7 +14,8 @@ const stripFromJsonStr = (str) => {
       // arrays and "val" will be undefined)
       // also ensure object's value a string, not boolean or number, because we
       // don't strip HTML from booleans or numbers or anything else than strings
-      innerObj.parentType === "object" && typeof val === "string"
+      innerObj.parentType === "object" &&
+      typeof val === "string"
     ) {
       // monkey's callback is like Array.map - whatever you return gets written:
       return stripHtml(val).result;

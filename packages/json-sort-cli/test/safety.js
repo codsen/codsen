@@ -1,7 +1,7 @@
 import {
   mkdir,
-  readFile,
   readdir,
+  readFile,
   realpath,
   rename,
   stat,
@@ -486,7 +486,10 @@ test("19 - an ancestor changed to a symbolic link fails before commit", async ()
   const external = path.join(outside, "target.json");
   const original = Buffer.from('{"z":1,"a":2}');
   const sentinel = '{"outside":true}\n';
-  await Promise.all([writeFile(target, original), writeFile(external, sentinel)]);
+  await Promise.all([
+    writeFile(target, original),
+    writeFile(external, sentinel),
+  ]);
   let receivedError;
 
   try {

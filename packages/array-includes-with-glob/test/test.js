@@ -290,11 +290,7 @@ test("14 - scalar and singleton-array empty values are equivalent", () => {
 });
 
 test("15 - negative patterns exclude values from one cohesive list", () => {
-  equal(
-    includesWithGlob(["only.txt"], ["*.js", "!*.test.js"]),
-    false,
-    "15.01",
-  );
+  equal(includesWithGlob(["only.txt"], ["*.js", "!*.test.js"]), false, "15.01");
   equal(
     includesWithGlob(["only.test.js"], ["*.js", "!*.test.js"]),
     false,
@@ -307,7 +303,11 @@ test("15 - negative patterns exclude values from one cohesive list", () => {
   );
   equal(includesWithGlob(["other"], "!important"), true, "15.04");
   equal(includesWithGlob(["important"], ["!important"]), false, "15.05");
-  equal(includesWithGlob(["!important"], String.raw`\!important`), true, "15.06");
+  equal(
+    includesWithGlob(["!important"], String.raw`\!important`),
+    true,
+    "15.06",
+  );
   equal(
     includesWithGlob(
       ["main.js", "theme.css", "main.test.js"],
@@ -375,9 +375,7 @@ test("16 - validation errors are package-owned and stable", () => {
     "16.06",
   );
   equal(
-    errorMessage(() =>
-      includesWithGlob(["x"], "x", { reportProgressFunc: 1 }),
-    ),
+    errorMessage(() => includesWithGlob(["x"], "x", { reportProgressFunc: 1 })),
     "array-includes-with-glob/includesWithGlob(): [THROW_ID_06] opts.reportProgressFunc must be a function, null, or undefined; received 1.",
     "16.07",
   );

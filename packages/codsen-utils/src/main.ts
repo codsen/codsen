@@ -2216,10 +2216,7 @@ function matchesPreparedMatchPattern(
     );
   } else {
     inputState.tokens ??= tokeniseMatchInput(input, caseSensitiveMatch);
-    matched = matchesTokenCompiledPattern(
-      inputState.tokens,
-      prepared.compiled,
-    );
+    matched = matchesTokenCompiledPattern(inputState.tokens, prepared.compiled);
   }
 
   return prepared.negative ? !matched : matched;

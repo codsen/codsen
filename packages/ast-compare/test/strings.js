@@ -203,10 +203,14 @@ test("07 - two arrays, one empty", () => {
 
 test("08 - opts.matchStrictly", () => {
   type(
-    compare({ a: "a" }, {}, {
-      matchStrictly: true,
-      verboseWhenMismatches: true,
-    }),
+    compare(
+      { a: "a" },
+      {},
+      {
+        matchStrictly: true,
+        verboseWhenMismatches: true,
+      },
+    ),
     "string",
     "08.01",
   );

@@ -131,7 +131,7 @@ test("08 - an inline HTML break bounds widow handling", async () => {
     "08.01",
   );
   equal(
-    await process("alpha beta gamma delta<br class=\"line\" />epsilon zeta"),
+    await process('alpha beta gamma delta<br class="line" />epsilon zeta'),
     `alpha beta gamma${rawNbsp}delta<br class="line" />epsilon zeta`,
     "08.02",
   );

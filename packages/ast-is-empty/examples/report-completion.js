@@ -6,11 +6,14 @@ import { isEmpty } from "../dist/ast-is-empty.esm.js";
 
 let completion;
 assert.equal(
-  isEmpty({ title: "", children: [""] }, {
-    reportCompletionFunc(stats) {
-      completion = stats;
+  isEmpty(
+    { title: "", children: [""] },
+    {
+      reportCompletionFunc(stats) {
+        completion = stats;
+      },
     },
-  }),
+  ),
   true,
 );
 assert.equal(completion.uniqueContainersVisited, 2);

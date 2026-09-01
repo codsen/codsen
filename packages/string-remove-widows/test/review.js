@@ -612,11 +612,9 @@ test("11 - postcode matches require complete token boundaries", () => {
     "{% SW1A 1AA %}",
     "11.04",
   );
-  ["éSW1A 1AA", "SW1A 1AAЖ", "١SW1A 1AA", "SW1A 1AA१"].forEach(
-    (source) => {
-      equal(removeWidows(source, opts).res, source, `11.05 - ${source}`);
-    },
-  );
+  ["éSW1A 1AA", "SW1A 1AAЖ", "١SW1A 1AA", "SW1A 1AA१"].forEach((source) => {
+    equal(removeWidows(source, opts).res, source, `11.05 - ${source}`);
+  });
 });
 
 test("12 - exported defaults cannot alter later calls", () => {

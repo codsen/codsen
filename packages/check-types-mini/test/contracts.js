@@ -477,15 +477,23 @@ test("11 - dotted and unusual property keys stay lossless", () => {
     checkTypesMini({ "": 1, "01": true }, { "": 0, "01": false });
   }, "11.07");
   not.throws(() => {
-    checkTypesMini({ "a.b": "wrong" }, { "a.b": false }, {
-      ignorePaths: "a\\.b",
-    });
+    checkTypesMini(
+      { "a.b": "wrong" },
+      { "a.b": false },
+      {
+        ignorePaths: "a\\.b",
+      },
+    );
   }, "11.08");
   throws(
     () => {
-      checkTypesMini({ "a.b": "wrong" }, { "a.b": false }, {
-        ignorePaths: "a.b",
-      });
+      checkTypesMini(
+        { "a.b": "wrong" },
+        { "a.b": false },
+        {
+          ignorePaths: "a.b",
+        },
+      );
     },
     /THROW_ID_21/,
     "11.09",

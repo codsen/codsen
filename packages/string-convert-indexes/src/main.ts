@@ -44,11 +44,7 @@ function isStringOrNumber(value: unknown): value is string | number {
 }
 
 // inner function, common for both external API's methods that does the job:
-function strConvertIndexes(
-  mode: "n" | "u",
-  str: string,
-  indexes: any,
-): any {
+function strConvertIndexes(mode: "n" | "u", str: string, indexes: any): any {
   const functionName = mode === "n" ? "nativeToUnicode" : "unicodeToNative";
 
   function isItOk(something: any): boolean {

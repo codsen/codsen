@@ -5,9 +5,9 @@ import {
   rightSingleQuote,
 } from "codsen-utils";
 import { unified } from "unified";
-import { VFile } from "vfile";
 import { test } from "uvu";
 import { equal, is } from "uvu/assert";
+import { VFile } from "vfile";
 
 import fixTypography from "../dist/remark-typography.esm.js";
 

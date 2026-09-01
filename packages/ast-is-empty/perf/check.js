@@ -11,11 +11,7 @@ const fixture = Object.freeze([
   Object.freeze({
     a: Object.freeze([""]),
     b: Object.freeze({
-      c: Object.freeze([
-        "",
-        "",
-        Object.freeze({ d: Object.freeze([""]) }),
-      ]),
+      c: Object.freeze(["", "", Object.freeze({ d: Object.freeze([""]) })]),
     }),
   }),
 ]);
