@@ -177,7 +177,7 @@ function cleanBlankLines(str: string, backend: HeadsAndTailsObj[]): string {
           ? ""
           : rawTag === "style"
             ? " "
-            : rawTag || comment || backendTails
+            : rawTag || comment
               ? blankLineMatch[0]
               : blankLineMatch[0].includes("\r\n")
                 ? "\r\n"
@@ -945,8 +945,8 @@ function comb(str: string, opts?: InputOpts | null): Res {
   // A run of blank lines inside tag syntax has to close up completely, which
   // test 02.03 in test/comments.js and 21.03 in test/basic.js both pin. In text
   // content, retain one line break so adjacent words cannot concatenate. Raw
-  // script/style content, HTML comments, and configured backend regions are
-  // byte-preserved by this pre-pass.
+  // script/style content and HTML comments are byte-preserved by this pre-pass;
+  // configured backend regions retain one line break as their separator.
   str = cleanBlankLines(str.trim(), resolvedOpts.backend);
   // restore trailing newline
   if (trailingNewline) {
