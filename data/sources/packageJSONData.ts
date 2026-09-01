@@ -9849,9 +9849,6 @@ export const packageJSONData = {
         ]
       }
     },
-    "dependencies": {
-      "codsen-utils": "^1.9.0"
-    },
     "engines": {
       "node": ">=18.20.8"
     },

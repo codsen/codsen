@@ -1075,6 +1075,56 @@ function arrayIncludesWithGlobSmoke(api, equal) {
   equal(typeof completion.timeTakenInMilliseconds, "number");
 }
 
+function utilNonemptySmoke(api, equal) {
+  equal(Object.keys(api).sort(), ["nonEmpty", "version"]);
+  equal([typeof api.nonEmpty, typeof api.version], ["function", "string"]);
+
+  var sparse = new Array(3);
+  var zeroLengthExpando = [];
+  zeroLengthExpando.own = true;
+
+  var nullPrototypeRecord = Object.create(null);
+  nullPrototypeRecord.own = true;
+
+  var customPrototypeRecord = Object.create({ inherited: true });
+  customPrototypeRecord.own = true;
+
+  equal(
+    [
+      api.nonEmpty(),
+      api.nonEmpty(null),
+      api.nonEmpty(undefined),
+      api.nonEmpty(" \n\t"),
+      api.nonEmpty(sparse),
+      api.nonEmpty(zeroLengthExpando),
+      api.nonEmpty(0),
+      api.nonEmpty(Number.NaN),
+      api.nonEmpty(Number.POSITIVE_INFINITY),
+      api.nonEmpty({ own: true }),
+      api.nonEmpty({}),
+      api.nonEmpty(nullPrototypeRecord),
+      api.nonEmpty(Object.create(null)),
+      api.nonEmpty(customPrototypeRecord),
+    ],
+    [
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      true,
+      true,
+      true,
+      true,
+      false,
+      true,
+      false,
+      false,
+    ],
+  );
+}
+
 const IIFE_API_SMOKES = Object.freeze({
   "array-group-str-omit-num-char": arrayGroupSmoke,
   "array-includes-with-glob": arrayIncludesWithGlobSmoke,
@@ -1100,6 +1150,7 @@ const IIFE_API_SMOKES = Object.freeze({
   "string-remove-widows": stringRemoveWidowsSmoke,
   "string-strip-html": stringStripHtmlSmoke,
   "test-mixer": testMixerSmoke,
+  "util-nonempty": utilNonemptySmoke,
 });
 
 export {

@@ -115,6 +115,7 @@ test("05 - keeps browser smoke functions self-contained and serializable", () =>
       "string-remove-widows",
       "string-strip-html",
       "test-mixer",
+      "util-nonempty",
     ],
     "05.01",
   );

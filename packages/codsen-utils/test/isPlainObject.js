@@ -113,6 +113,43 @@ test("12 - cross-realm records and custom prototypes", () => {
     "12.03",
   );
   equal(isPlainObject(Object.create({ inherited: true })), false, "12.04");
+  equal(isPlainObject(vm.runInNewContext("new Object()")), true, "12.05");
+  equal(
+    isPlainObject(vm.runInNewContext("Object.create(null)")),
+    true,
+    "12.06",
+  );
+});
+
+test("13 - reject custom and spoofed null-rooted prototypes", () => {
+  const nullRoot = Object.create(null);
+  const oneLevelCustom = Object.create(nullRoot);
+  const secondCustomPrototype = Object.create(nullRoot);
+  const twoLevelCustom = Object.create(secondCustomPrototype);
+
+  const spoofedPrototype = Object.create(null);
+  Object.defineProperty(spoofedPrototype, "constructor", {
+    configurable: true,
+    value: Object,
+  });
+  const spoofed = Object.create(spoofedPrototype);
+
+  let getterCalls = 0;
+  const accessorPrototype = Object.create(null);
+  Object.defineProperty(accessorPrototype, "constructor", {
+    configurable: true,
+    get() {
+      getterCalls++;
+      return Object;
+    },
+  });
+
+  equal(isPlainObject(Object.create(Object.prototype)), true, "13.01");
+  equal(isPlainObject(oneLevelCustom), false, "13.02");
+  equal(isPlainObject(twoLevelCustom), false, "13.03");
+  equal(isPlainObject(spoofed), false, "13.04");
+  equal(isPlainObject(Object.create(accessorPrototype)), false, "13.05");
+  equal(getterCalls, 0, "13.06");
 });
 
 test.run();

@@ -146,7 +146,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-utils",
-    "size": 22096,
+    "size": 22314,
     "imports": [
       "codsen-format-diagnostic-value"
     ]
@@ -848,9 +848,7 @@ export const interdeps = [
   },
   {
     "name": "util-nonempty",
-    "size": 450,
-    "imports": [
-      "codsen-utils"
-    ]
+    "size": 777,
+    "imports": []
   }
 ];

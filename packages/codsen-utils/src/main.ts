@@ -67,6 +67,8 @@ const currencySymbols = new Set([
 ]);
 
 const hasOwn = Object.prototype.hasOwnProperty;
+const functionToString = Function.prototype.toString;
+const objectConstructorSource = functionToString.call(Object);
 
 // From "type-fest" by Sindre Sorhus:
 export type JSONValue =
@@ -610,25 +612,36 @@ export const removeTrailingSlash = <T>(value: T) => {
 
 // -----------------------------------------------------------------
 
-/**
- * Tells, is given input a plain object (an object literal,
- * a container object Object.create(null) or created by new Object())
- * @param value unknown
- * @returns boolean
- */
+/** Return whether a value is an object literal, a value created by
+ * `new Object()`, or a direct null-prototype record, including across realms. */
 export function isPlainObject(value: unknown): value is PlainObject {
   if (value == null || typeof value !== "object") {
     return false;
   }
-  let proto: unknown = Object.getPrototypeOf(value);
+  const prototype = Object.getPrototypeOf(value);
+  if (prototype === null || prototype === Object.prototype) {
+    return true;
+  }
+  const constructorDescriptor = Object.getOwnPropertyDescriptor(
+    prototype,
+    "constructor",
+  );
   if (
-    proto !== null &&
-    proto !== Object.prototype &&
-    Object.getPrototypeOf(proto) !== null
+    !constructorDescriptor ||
+    !("value" in constructorDescriptor) ||
+    typeof constructorDescriptor.value !== "function"
   ) {
     return false;
   }
-  return true;
+  const constructorPrototypeDescriptor = Object.getOwnPropertyDescriptor(
+    constructorDescriptor.value,
+    "prototype",
+  );
+  return (
+    constructorPrototypeDescriptor?.value === prototype &&
+    functionToString.call(constructorDescriptor.value) ===
+      objectConstructorSource
+  );
 }
 
 // ----------------------------------------------------------------

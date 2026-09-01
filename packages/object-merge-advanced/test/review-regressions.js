@@ -488,20 +488,24 @@ test("16 - keep wildcard exclusions when a selector contains literal star", () =
   );
 });
 
-test("17 - define incoming keys over inherited setters", () => {
+test("17 - define incoming keys over inherited cross-realm setters", () => {
   let setterCalls = 0;
-  const prototype = Object.create(null, {
-    incoming: {
-      configurable: true,
-      enumerable: true,
-      get: () => "inherited",
-      set: () => {
+  const left = runInNewContext(
+    `
+      Object.defineProperty(Object.prototype, "incoming", {
+        configurable: true,
+        enumerable: true,
+        get: () => "inherited",
+        set: markSetter,
+      });
+      ({ safe: 1 });
+    `,
+    {
+      markSetter() {
         setterCalls++;
       },
     },
-  });
-  const left = Object.create(prototype);
-  left.safe = 1;
+  );
 
   const result = mergeAdvanced(left, { incoming: 2 });
 

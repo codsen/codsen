@@ -1,11 +1,12 @@
-import { test } from "uvu";
-import { equal, is, throws } from "uvu/assert";
+import { runInNewContext } from "node:vm";
 import { compare } from "ast-compare";
 import { DELETE as TRAVERSE_DELETE } from "ast-monkey-traverse";
+import { test } from "uvu";
+import { equal, is, throws } from "uvu/assert";
 
 import {
-  DELETE,
   arrayFirstOnly,
+  DELETE,
   del,
   drop,
   find,
@@ -550,13 +551,18 @@ test("14 - unsupported selectors and tree shapes are rejected", () => {
     /^ast-monkey\/find\(\): \[THROW_ID_05]/,
     "14.18",
   );
+
+  const customPrototypeOptions = Object.create({ key: "a" });
+  customPrototypeOptions.val = 1;
+  throws(
+    () => find({ a: 1 }, customPrototypeOptions),
+    /^ast-monkey\/find\(\): \[THROW_ID_02]/,
+    "14.19",
+  );
 });
 
-test("15 - selector options use own snapshotted values", () => {
-  const inheritedKey = Object.create(null);
-  inheritedKey.key = "a";
-  const valueOpts = Object.create(inheritedKey);
-  valueOpts.val = 1;
+test("15 - plain selector options use own snapshotted values", () => {
+  const valueOpts = runInNewContext('Object.prototype.key = "a"; ({ val: 1 })');
   equal(
     find({ a: 1, b: 1 }, valueOpts),
     [
@@ -567,20 +573,16 @@ test("15 - selector options use own snapshotted values", () => {
   );
   equal(del({ a: 1, b: 1 }, valueOpts), {}, "15.02");
 
-  const inheritedValue = Object.create(null);
-  inheritedValue.val = 999;
-  const keyOpts = Object.create(inheritedValue);
-  keyOpts.key = "a";
+  const keyOpts = runInNewContext('Object.prototype.val = 999; ({ key: "a" })');
   equal(
     find({ a: 1, b: 1 }, keyOpts),
     [{ index: 1, key: "a", val: 1, path: [1] }],
     "15.03",
   );
 
-  const inheritedOnly = Object.create(null);
-  inheritedOnly.only = "array";
-  const filterOpts = Object.create(inheritedOnly);
-  filterOpts.key = "a";
+  const filterOpts = runInNewContext(
+    'Object.prototype.only = "array"; ({ key: "a" })',
+  );
   equal(
     find({ a: 1 }, filterOpts),
     [{ index: 1, key: "a", val: 1, path: [1] }],

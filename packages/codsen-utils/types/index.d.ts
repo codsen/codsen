@@ -67,12 +67,8 @@ declare function isLowercaseLetter(value: unknown): boolean;
 declare function isUppercaseLetter(value: unknown): boolean;
 declare function isWhitespaceChar(value: unknown): boolean;
 declare const removeTrailingSlash: <T>(value: T) => string | T;
-/**
- * Tells, is given input a plain object (an object literal,
- * a container object Object.create(null) or created by new Object())
- * @param value unknown
- * @returns boolean
- */
+/** Return whether a value is an object literal, a value created by
+ * `new Object()`, or a direct null-prototype record, including across realms. */
 declare function isPlainObject(value: unknown): value is PlainObject;
 /**
  * @param str input string
