@@ -85,7 +85,7 @@ const ROOT = path.resolve(
 );
 const NPM = process.platform === "win32" ? "npm.cmd" : "npm";
 const REGISTRY = "https://registry.npmjs.org/";
-const EXPECTED_WORKSPACE_COUNT = 112;
+const EXPECTED_WORKSPACE_COUNT = 113;
 const SCHEMA_VERSION = RELEASE_SCHEMA_VERSION;
 const DEFAULT_CONCURRENCY = 8;
 const MAX_OUTPUT_BYTES = 50 * 1024 * 1024;
