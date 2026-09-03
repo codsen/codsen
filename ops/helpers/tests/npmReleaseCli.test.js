@@ -185,6 +185,10 @@ if (process.argv.includes("--version")) {
   console.log(manifest.version);
 } else if (process.argv.includes("--help")) {
   console.log("Usage: jsonsort [options] file.json");
+} else if (process.argv.length === 2) {
+  const input = JSON.parse(readFileSync(0, "utf8"));
+  const sorted = Object.fromEntries(Object.entries(input).sort(([left], [right]) => left.localeCompare(right)));
+  console.log(JSON.stringify(sorted, null, 2));
 } else {
   const filename = process.argv.at(-1);
   const input = JSON.parse(readFileSync(filename, "utf8"));

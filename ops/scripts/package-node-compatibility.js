@@ -668,7 +668,7 @@ function importInstalledPackages(consumerDirectory, eligiblePackages) {
   });
 }
 
-function runInstalledBinary(consumerDirectory, alias, args, cwd) {
+function runInstalledBinary(consumerDirectory, alias, args, cwd, input) {
   const invocation = installedPackageBinInvocation({
     alias,
     args,
@@ -680,6 +680,7 @@ function runInstalledBinary(consumerDirectory, alias, args, cwd) {
   return runCommand(invocation.command, invocation.args, {
     cwd,
     env: compatibilityEnvironment(),
+    input,
     shell: invocation.shell,
   });
 }
@@ -721,8 +722,8 @@ function runRegisteredFunctionalSmoke(consumerDirectory, cli) {
   runFunctionalCliSmoke({
     cli,
     consumerDirectory,
-    runBinary: ({ alias, args, cwd }) =>
-      runInstalledBinary(consumerDirectory, alias, args, cwd),
+    runBinary: ({ alias, args, cwd, input }) =>
+      runInstalledBinary(consumerDirectory, alias, args, cwd, input),
   });
 }
 

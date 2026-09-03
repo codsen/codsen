@@ -1266,7 +1266,7 @@ async function importReleaseConsumer(consumerDirectory, plan) {
   );
 }
 
-function runInstalledReleaseBinary(consumerDirectory, alias, args, cwd) {
+function runInstalledReleaseBinary(consumerDirectory, alias, args, cwd, input) {
   const invocation = installedPackageBinInvocation({
     alias,
     args,
@@ -1281,6 +1281,7 @@ function runInstalledReleaseBinary(consumerDirectory, alias, args, cwd) {
     env: releaseConsumerEnvironment(
       path.join(consumerDirectory, ".cli-npm-cache"),
     ),
+    input,
     maxBuffer: MAX_OUTPUT_BYTES,
     shell: invocation.shell,
   });
@@ -1327,8 +1328,8 @@ function smokeReleaseConsumerBins(consumerDirectory, plan) {
     runFunctionalCliSmoke({
       cli: plan,
       consumerDirectory,
-      runBinary: ({ alias, args, cwd }) =>
-        runInstalledReleaseBinary(consumerDirectory, alias, args, cwd),
+      runBinary: ({ alias, args, cwd, input }) =>
+        runInstalledReleaseBinary(consumerDirectory, alias, args, cwd, input),
     });
   }
 }

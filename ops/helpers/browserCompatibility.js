@@ -877,9 +877,14 @@ function arrayGroupSmoke(api, equal) {
 function emailCombSmoke(api, equal) {
   const source =
     '<head><style>.unused{x:y}.used{x:z}</style></head><body class="  used  ">z</body>';
+  equal(typeof api.uglify, "function");
   equal(
     api.comb(source).result,
     '<head><style>.used{x:z}</style></head><body class="used">z</body>',
+  );
+  equal(
+    api.uglify(source).result,
+    '<head><style>.l{x:z}</style></head><body class="l">z</body>',
   );
 }
 

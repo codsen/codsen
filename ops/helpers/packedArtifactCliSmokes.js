@@ -105,6 +105,14 @@ old
     if (output.indexOf('"a"') > output.indexOf('"z"')) {
       fail("json-sort-cli did not sort the fixture keys");
     }
+
+    const piped = run([], { input: '{"z":1,"a":2}\n' });
+    if (piped.stdout !== '{\n  "a": 2,\n  "z": 1\n}\n') {
+      fail("json-sort-cli did not print canonical piped JSON to stdout");
+    }
+    if (piped.stderr) {
+      fail("json-sort-cli mixed diagnostics into piped JSON output");
+    }
   },
 
   "lerna-clean-changelogs-cli"({ cwd, run }) {
@@ -219,8 +227,8 @@ function runFunctionalCliSmoke({ consumerDirectory, cli, runBinary } = {}) {
   const alias = Object.keys(cli.bins)[0];
   FUNCTIONAL_CLI_SMOKES[cli.name]({
     cwd,
-    run(args) {
-      return runBinary({ alias, args, cwd });
+    run(args, { input } = {}) {
+      return runBinary({ alias, args, cwd, input });
     },
   });
 }
