@@ -516,6 +516,8 @@ export interface InputOpts {
   reportProgressFuncTo?: number;
 }
 
+export type UglifyOpts = Omit<InputOpts, "uglify">;
+
 type StringifiedLegend = [string, string];
 
 export interface Res {
@@ -4999,6 +5001,24 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
   };
 }
 
+/**
+ * Remove unused CSS and uglify the remaining class and ID selectors.
+ */
+function uglify(str: string, opts?: UglifyOpts | null): Res {
+  if (typeof str !== "string") {
+    throw new TypeError(
+      `email-comb/uglify(): [THROW_ID_01] Input must be string! Currently it's ${typeof str}`,
+    );
+  }
+  if (opts !== null && opts !== undefined && !isObj(opts)) {
+    throw new TypeError(
+      `email-comb/uglify(): [THROW_ID_02] Options, second input argument, must be a plain object! Currently it's ${typeof opts}, equal to: ${formatDiagnosticValue(opts, 4)}`,
+    );
+  }
+
+  return comb(str, { ...opts, uglify: true });
+}
+
 function extractIdsReferencedByForAttributes(str: string): string[] {
   if (!labelOrOutputOpeningTagRegex.test(str)) {
     return [];
@@ -5124,4 +5144,4 @@ function filterMatches(
   return inputs.filter((input) => match(input, patterns));
 }
 
-export { comb, defaults, version };
+export { comb, defaults, uglify, version };

@@ -29,6 +29,7 @@ interface InputOpts {
   reportProgressFuncFrom?: number;
   reportProgressFuncTo?: number;
 }
+type UglifyOpts = Omit<InputOpts, "uglify">;
 type StringifiedLegend = [string, string];
 interface Res {
   /** Best-effort completion statistics for user-facing feedback.
@@ -60,6 +61,10 @@ declare const defaults: Opts;
  * Remove unused CSS from email templates
  */
 declare function comb(str: string, opts?: InputOpts | null): Res;
+/**
+ * Remove unused CSS and uglify the remaining class and ID selectors.
+ */
+declare function uglify(str: string, opts?: UglifyOpts | null): Res;
 
-export { comb, defaults, version };
-export type { HeadsAndTailsObj, InputOpts, Opts, Res };
+export { comb, defaults, uglify, version };
+export type { HeadsAndTailsObj, InputOpts, Opts, Res, UglifyOpts };
