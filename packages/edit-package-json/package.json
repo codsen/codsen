@@ -1,6 +1,6 @@
 {
   "name": "edit-package-json",
-  "version": "0.10.3",
+  "version": "0.10.4",
   "description": "Edit package.json without parsing, as string, to keep the formatting intact",
   "keywords": [
     "changes",
@@ -76,7 +76,7 @@
   },
   "devDependencies": {
     "ast-monkey-traverse": "^4.3.0",
-    "codsen-glob": "^1.1.0",
+    "codsen-glob": "^1.1.1",
     "p-map": "^7.0.7"
   },
   "engines": {
