@@ -39,6 +39,31 @@ not a mistake to point out or correct.
 This also rules out the indirect routes to the same effect: do not push a branch
 and do not open a pull request in order to get CI to run against a change.
 
+## Keep release-bearing commits package-scoped
+
+This repository uses Commitizen-style Conventional Commits for automated
+versioning and changelog generation. Commit boundaries therefore affect the
+published packages; they are not merely a way to organise Git history.
+
+- Keep every release-bearing commit limited to one published package. At a
+  minimum, this applies to `fix`, `feat`, and every breaking change marked with
+  `!` or a `BREAKING CHANGE` footer.
+- When changes affect multiple published packages, stage and commit each
+  package separately with a package-scoped subject, even when the request is to
+  commit all current work.
+- Put repository infrastructure, generated aggregate data, and shared
+  documentation in separate `build`, `chore`, or `docs` commits as appropriate.
+  Do not fold them into a package's release-bearing commit merely because they
+  were produced during the same task.
+- Inspect the complete unstaged and untracked set before committing. Derive the
+  commit groups from their paths and purpose instead of treating `git add -A`
+  followed by one commit as the default.
+
+A release-bearing commit which touches two packages gives both changelogs the
+same entry. It can also apply the highest required SemVer bump to both packages,
+so a minor feature in one package can incorrectly minor-bump another package
+which only received a patch fix. Split such work before committing.
+
 ## Dependency updates are manual
 
 Dependabot is disabled. `.github/dependabot.yml` was deleted on 2026-08-19,
