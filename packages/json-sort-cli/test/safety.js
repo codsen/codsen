@@ -273,6 +273,7 @@ test("11 - invalid option forms share a fail-closed contract", async () => {
         cwd: directory,
         env: quietEnvironment,
         reject: false,
+        stdin: "ignore",
       }),
     );
   }

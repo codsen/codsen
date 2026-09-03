@@ -215,12 +215,15 @@ test("05 - no files found in the given directory", async () => {
   );
 });
 
-test("06 - defaults to JSON files in cwd and accepts primitive JSON", async () => {
+test("06 - defaults to JSON files in cwd when stdin isn't piped", async () => {
   let tempFolder = temporaryDirectory();
   let pathOfTheTestfile = path.join(tempFolder, "package.json");
   await writeFile(pathOfTheTestfile, '"hello"');
 
-  await execa(path.resolve("./cli.js"), [], { cwd: tempFolder });
+  await execa(path.resolve("./cli.js"), [], {
+    cwd: tempFolder,
+    stdin: "ignore",
+  });
 
   equal(await readFile(pathOfTheTestfile, "utf8"), '"hello"\n', "06.01");
 });

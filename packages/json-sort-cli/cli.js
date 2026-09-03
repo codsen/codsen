@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
+import { fstatSync } from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { glob } from "codsen-glob";
 import updateNotifier from "update-notifier";
+import { formatParsedJson } from "./json-formatter.js";
 import { ProcessingError, processFiles } from "./process-files.js";
 
 const require1 = createRequire(import.meta.url);
@@ -31,26 +33,31 @@ const flagDefinitions = {
   nodemodules: { short: "n", type: "boolean" },
   pack: { short: "p", type: "boolean" },
   silent: { short: "s", type: "boolean" },
+  stdout: { type: "boolean" },
   tabs: { short: "t", type: "boolean" },
   version: { short: "v", type: "boolean" },
 };
 const shortToLong = new Map(
-  Object.entries(flagDefinitions).map(([long, definition]) => [
-    definition.short,
-    long,
-  ]),
+  Object.entries(flagDefinitions)
+    .filter(([, definition]) => definition.short)
+    .map(([long, definition]) => [definition.short, long]),
 );
 
 const help = `
 Usage
   $ jsonsort YOURFILE.json
+  $ jsonsort YOURFILE.json --stdout
+  $ jsonsort - < YOURFILE.json
+  $ cat YOURFILE.json | jsonsort
   $ sortjson templatesfolder1 templatesfolder2 package.json
   $ jsonsort
 
-With no arguments, jsonsort recursively sorts JSON files below the current
-directory. Discovered symbolic links are not followed. An explicitly selected
-symbolic-link directory is resolved as the selected root; symbolic-link files
-are rejected before reading.
+With no file arguments, piped input is sorted to stdout. The "-" operand reads
+stdin, and --stdout prints one matched file. These forms don't write files or mix
+status messages into stdout. Otherwise, with no arguments, jsonsort recursively
+sorts JSON files below the current directory. Discovered symbolic links are not
+followed. An explicitly selected symbolic-link directory is resolved as the
+selected root; symbolic-link files are rejected before reading.
 
 Options
   -n, --nodemodules      Include JSON files inside node_modules; lockfiles remain excluded
@@ -64,12 +71,13 @@ Options
   -p, --pack             Exclude package.json files
   -c, --ci               Check without writing; exit 9 when canonical output differs
   -l, --lineEnding       Use "cr", "crlf", or "lf" instead of the detected line ending
+      --stdout           Print one sorted JSON document without writing files
 
 Use -- before a path that begins with a dash. Invalid options exit 1 before
 file discovery. Processing failures exit 1 and don't stop independent files.
 
 Example
-  $ jsonsort "templates/**/*.json" --arrays --lineEnding lf
+  $ cat data.json | jsonsort --arrays | other-command
 `;
 
 function argumentError(message) {
@@ -106,7 +114,7 @@ function requestsSilent(rawArguments) {
   return false;
 }
 
-function parseArguments(rawArguments) {
+function parseArguments(rawArguments, { stdinIsPiped = false } = {}) {
   const expanded = rawArguments.flatMap((argument) => {
     const match = argument.match(/^-(i|l)\s+(.+)$/u);
     return match ? [`-${match[1]}`, match[2]] : [argument];
@@ -228,21 +236,31 @@ function parseArguments(rawArguments) {
   ) {
     argumentError('lineEnding must be "cr", "crlf", or "lf"');
   }
-  if (
-    input.length === 0 &&
-    expanded.length > 0 &&
-    !flags.help &&
-    !flags.version
-  ) {
+
+  const hasInput = input.length > 0;
+  const informational = flags.help || flags.version;
+  const printsJson =
+    flags.stdout || input.includes("-") || (!hasInput && stdinIsPiped);
+  if (!hasInput && expanded.length > 0 && !informational && !stdinIsPiped) {
     argumentError(
       "Provide at least one path, or run jsonsort with no arguments",
     );
   }
+  if (!informational && printsJson) {
+    for (const incompatible of ["ci", "dry", "silent"]) {
+      if (flags[incompatible]) {
+        argumentError(
+          `Option --${incompatible} cannot be used when printing sorted JSON to stdout`,
+        );
+      }
+    }
+  }
 
   return {
     flags,
+    hasInput,
     indentationCount,
-    input: input.length ? input : ["**/*.json"],
+    input: hasInput ? input : ["**/*.json"],
   };
 }
 
@@ -259,6 +277,98 @@ function isCandidate(filePath) {
   );
 }
 
+function standardInputIsPiped() {
+  if (process.stdin.isTTY === true) {
+    return false;
+  }
+  try {
+    return !fstatSync(process.stdin.fd).isCharacterDevice();
+  } catch {
+    // A missing or inaccessible stdin is not a pipeline source.
+    return false;
+  }
+}
+
+async function readStdin() {
+  const chunks = [];
+  for await (const chunk of process.stdin) {
+    chunks.push(chunk);
+  }
+  return Buffer.concat(chunks);
+}
+
+async function discoverPaths(input, flags) {
+  const paths = await glob(
+    [
+      ...input,
+      "!**/package-lock.json",
+      "!**/npm-shrinkwrap.json",
+      "!**/yarn.lock",
+      ...(flags.nodemodules ? [] : ["!**/node_modules/**"]),
+      ...(flags.pack ? ["!**/package.json"] : []),
+    ],
+    {
+      dot: true,
+      expandDirectories: { files: [".*", "*.json", "*.JSON"] },
+      followSymbolicLinks: false,
+    },
+  );
+  return paths.filter(isCandidate);
+}
+
+async function resolveStdoutSource(input, flags) {
+  if (input.includes("-")) {
+    if (input.length !== 1) {
+      argumentError(
+        'The standard-input operand "-" cannot be combined with file paths',
+      );
+    }
+    return "-";
+  }
+
+  const paths = await discoverPaths(input, flags);
+  if (paths.length !== 1) {
+    throw new Error(
+      `Printing sorted JSON to stdout requires exactly one input; found ${paths.length}`,
+    );
+  }
+  return paths[0];
+}
+
+async function formatSource(source, options) {
+  let output;
+  await processFiles([source], {
+    ...options,
+    ci: true,
+    ...(source === "-" ? { read: readStdin } : {}),
+    transform(parsed, formatOptions) {
+      const prepared = formatParsedJson(
+        parsed,
+        formatOptions.contents,
+        formatOptions,
+      );
+      output = prepared.output;
+      return prepared;
+    },
+  });
+  return output;
+}
+
+function errorMessage(error) {
+  if (error instanceof ProcessingError) {
+    return error.failures.map((failure) => failure.message).join("\n");
+  }
+  return error instanceof Error ? error.message : String(error);
+}
+
+function handleStdoutError(error) {
+  if (error?.code === "EPIPE") {
+    return;
+  }
+  console.error(`${prefix}${errorMessage(error)}`);
+  process.exitCode = 1;
+}
+
 function createPrinter() {
   const useColour = Boolean(process.stdout.isTTY && !process.env.NO_COLOR);
   const colours = { green: 32, grey: 90, red: 31, white: 37, yellow: 33 };
@@ -270,9 +380,10 @@ function createPrinter() {
 async function main() {
   const rawArguments = process.argv.slice(2);
   const silentRequested = requestsSilent(rawArguments);
+  const stdinIsPiped = standardInputIsPiped();
   let parsed;
   try {
-    parsed = parseArguments(rawArguments);
+    parsed = parseArguments(rawArguments, { stdinIsPiped });
   } catch (error) {
     if (!silentRequested) {
       console.error(error.message);
@@ -281,7 +392,7 @@ async function main() {
     return;
   }
 
-  const { flags, indentationCount, input } = parsed;
+  const { flags, hasInput, indentationCount, input } = parsed;
   if (flags.version) {
     console.log(pkg.version);
     return;
@@ -291,31 +402,41 @@ async function main() {
     return;
   }
 
-  if (!flags.silent && !flags.ci && process.stdout.isTTY) {
+  const printsJson =
+    flags.stdout || input.includes("-") || (!hasInput && stdinIsPiped);
+
+  if (!flags.silent && !flags.ci && !printsJson && process.stdout.isTTY) {
     try {
       updateNotifier({ pkg }).notify();
     } catch {}
   }
 
+  const options = {
+    arrays: flags.arrays,
+    indentationCount,
+    lineEnding: flags.lineEnding || undefined,
+    pack: flags.pack,
+    tabs: flags.tabs,
+  };
+
+  if (printsJson) {
+    try {
+      const source = await resolveStdoutSource(hasInput ? input : ["-"], flags);
+      process.stdout.on("error", handleStdoutError);
+      process.stdout.write(await formatSource(source, options));
+    } catch (error) {
+      if (!flags.silent) {
+        console.error(`${prefix}${errorMessage(error)}`);
+      }
+      process.exitCode = 1;
+    }
+    return;
+  }
+
   const { colour } = createPrinter();
   let paths;
   try {
-    paths = await glob(
-      [
-        ...input,
-        "!**/package-lock.json",
-        "!**/npm-shrinkwrap.json",
-        "!**/yarn.lock",
-        ...(flags.nodemodules ? [] : ["!**/node_modules/**"]),
-        ...(flags.pack ? ["!**/package.json"] : []),
-      ],
-      {
-        dot: true,
-        expandDirectories: { files: [".*", "*.json", "*.JSON"] },
-        followSymbolicLinks: false,
-      },
-    );
-    paths = paths.filter(isCandidate);
+    paths = await discoverPaths(input, flags);
   } catch (error) {
     if (!flags.silent) {
       console.error(`${prefix}${error}`);
@@ -342,12 +463,8 @@ async function main() {
 
   try {
     const { successful, unsorted } = await processFiles(paths, {
-      arrays: flags.arrays,
+      ...options,
       ci: flags.ci,
-      indentationCount,
-      lineEnding: flags.lineEnding || undefined,
-      pack: flags.pack,
-      tabs: flags.tabs,
       onOutcome(outcome) {
         if (flags.silent) {
           return;

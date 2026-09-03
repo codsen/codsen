@@ -1,6 +1,6 @@
 <h1 align="center">json-sort-cli</h1>
 
-<p align="center">Command line app to deep sort JSON files, retains package.json special key order</p>
+<p align="center">Deep-sort JSON files or standard input; package.json retains its special key order</p>
 
 <p align="center">
   <a href="https://codsen.com/os/json-sort-cli" rel="nofollow noreferrer noopener">

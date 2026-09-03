@@ -29,6 +29,8 @@ test("01 - help output mode", async () => {
   match(reportedVersion2.stdout, /Usage/, "01.04");
   match(reportedVersion2.stdout, /Options/, "01.05");
   match(reportedVersion2.stdout, /Example/, "01.06");
+  match(reportedVersion2.stdout, /--stdout/, "01.07");
+  match(reportedVersion2.stdout, /cat YOURFILE\.json \| jsonsort/, "01.08");
 });
 
 test("02 - help flag trumps silent flag", async () => {
@@ -47,11 +49,11 @@ test("02 - help flag trumps silent flag", async () => {
 
   match(output.stdout, /Usage/, "02.01");
   match(output.stdout, /Options/, "02.02");
-  equal(output.exitCode, 0, "02.01");
+  equal(output.exitCode, 0, "02.03");
   equal(
     readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
-    "02.02",
+    "02.04",
   );
 });
 
