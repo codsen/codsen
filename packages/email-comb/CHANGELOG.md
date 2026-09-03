@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.4.0 (2026-09-03)
+
+### Features
+
+- **email-comb:** add selector uglify convenience API ([b28d47c](https://github.com/codsen/codsen/commit/b28d47c2768079a6d0e43dbc3abbcec94240421e))
+
 ## 7.3.0 (2026-09-01)
 
 ### Bug Fixes

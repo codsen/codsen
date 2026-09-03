@@ -1,6 +1,6 @@
 {
   "name": "json-comb",
-  "version": "0.11.3",
+  "version": "0.11.4",
   "description": "Command line app to manage sets of JSON files",
   "keywords": [
     "app",
@@ -64,9 +64,9 @@
     }
   },
   "dependencies": {
-    "codsen-glob": "^1.1.0",
+    "codsen-glob": "^1.1.1",
     "codsen-utils": "^1.10.0",
-    "json-comb-core": "^8.2.3",
+    "json-comb-core": "^8.2.4",
     "p-map": "^7.0.7",
     "update-notifier": "^7.3.1"
   },

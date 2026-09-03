@@ -1,6 +1,6 @@
 {
   "name": "json-sort-cli",
-  "version": "4.2.3",
+  "version": "4.3.0",
   "description": "Deep-sort JSON files or standard input; package.json retains its special key order",
   "keywords": [
     "app",
@@ -62,7 +62,7 @@
     }
   },
   "dependencies": {
-    "codsen-glob": "^1.1.0",
+    "codsen-glob": "^1.1.1",
     "sort-package-json": "^2.15.1",
     "update-notifier": "^7.3.1"
   },

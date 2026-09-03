@@ -1953,7 +1953,7 @@ export const packageJSONData = {
   },
   "codsen-glob": {
     "name": "codsen-glob",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Fast TypeScript file globbing",
     "keywords": [
       "files",
@@ -2296,7 +2296,7 @@ export const packageJSONData = {
   },
   "csv-sort-cli": {
     "name": "csv-sort-cli",
-    "version": "4.2.3",
+    "version": "4.2.4",
     "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
     "keywords": [
       "accountancy",
@@ -2368,7 +2368,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "@inquirer/prompts": "^7.10.1",
-      "codsen-glob": "^1.1.0",
+      "codsen-glob": "^1.1.1",
       "codsen-utils": "^1.10.0",
       "csv-sort": "^7.2.3",
       "update-notifier": "^7.3.1"
@@ -2639,7 +2639,7 @@ export const packageJSONData = {
   },
   "detergent": {
     "name": "detergent",
-    "version": "9.4.3",
+    "version": "9.4.4",
     "description": "Extract, clean, encode text and fix English style",
     "keywords": [
       "brief",
@@ -2744,7 +2744,7 @@ export const packageJSONData = {
   },
   "edit-package-json": {
     "name": "edit-package-json",
-    "version": "0.10.3",
+    "version": "0.10.4",
     "description": "Edit package.json without parsing, as string, to keep the formatting intact",
     "keywords": [
       "changes",
@@ -2824,7 +2824,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "ast-monkey-traverse": "^4.3.0",
-      "codsen-glob": "^1.1.0",
+      "codsen-glob": "^1.1.1",
       "p-map": "^7.0.7"
     },
     "engines": {
@@ -2918,7 +2918,7 @@ export const packageJSONData = {
   },
   "email-all-chars-within-ascii-cli": {
     "name": "email-all-chars-within-ascii-cli",
-    "version": "4.2.3",
+    "version": "4.2.4",
     "description": "Command line app to scan email templates, are all their characters within ASCII range",
     "keywords": [
       "7bit",
@@ -2987,7 +2987,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "@inquirer/prompts": "^7.10.1",
-      "codsen-glob": "^1.1.0",
+      "codsen-glob": "^1.1.1",
       "codsen-utils": "^1.10.0",
       "email-all-chars-within-ascii": "^5.2.3",
       "string-left-right": "^6.2.2",
@@ -3002,7 +3002,7 @@ export const packageJSONData = {
   },
   "email-comb": {
     "name": "email-comb",
-    "version": "7.3.0",
+    "version": "7.4.0",
     "description": "Remove unused CSS from email templates",
     "keywords": [
       "body",
@@ -3266,7 +3266,7 @@ export const packageJSONData = {
   },
   "generate-atomic-css-cli": {
     "name": "generate-atomic-css-cli",
-    "version": "4.2.3",
+    "version": "4.2.4",
     "description": "Generates and updates all HTML templates’ atomic CSS",
     "keywords": [
       "atomic",
@@ -3337,7 +3337,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "codsen-glob": "^1.1.0",
+      "codsen-glob": "^1.1.1",
       "codsen-utils": "^1.10.0",
       "generate-atomic-css": "^3.2.2",
       "update-notifier": "^7.3.1"
@@ -4407,7 +4407,7 @@ export const packageJSONData = {
   },
   "js-row-num-cli": {
     "name": "js-row-num-cli",
-    "version": "4.2.3",
+    "version": "4.2.4",
     "description": "Update all row numbers in all console.logs in given files",
     "keywords": [
       "automated",
@@ -4479,7 +4479,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "arrayiffy-if-string": "^5.2.2",
-      "codsen-glob": "^1.1.0",
+      "codsen-glob": "^1.1.1",
       "codsen-utils": "^1.10.0",
       "js-row-num": "^7.2.3",
       "update-notifier": "^7.3.1"
@@ -4493,7 +4493,7 @@ export const packageJSONData = {
   },
   "json-comb": {
     "name": "json-comb",
-    "version": "0.11.3",
+    "version": "0.11.4",
     "description": "Command line app to manage sets of JSON files",
     "keywords": [
       "app",
@@ -4561,9 +4561,9 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "codsen-glob": "^1.1.0",
+      "codsen-glob": "^1.1.1",
       "codsen-utils": "^1.10.0",
-      "json-comb-core": "^8.2.3",
+      "json-comb-core": "^8.2.4",
       "p-map": "^7.0.7",
       "update-notifier": "^7.3.1"
     },
@@ -4576,7 +4576,7 @@ export const packageJSONData = {
   },
   "json-comb-core": {
     "name": "json-comb-core",
-    "version": "8.2.3",
+    "version": "8.2.4",
     "description": "The inner core of json-comb",
     "keywords": [
       "comb",
@@ -4672,7 +4672,7 @@ export const packageJSONData = {
   },
   "json-sort-cli": {
     "name": "json-sort-cli",
-    "version": "4.2.3",
+    "version": "4.3.0",
     "description": "Deep-sort JSON files or standard input; package.json retains its special key order",
     "keywords": [
       "app",
@@ -4738,7 +4738,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "codsen-glob": "^1.1.0",
+      "codsen-glob": "^1.1.1",
       "sort-package-json": "^2.15.1",
       "update-notifier": "^7.3.1"
     },
@@ -4939,7 +4939,7 @@ export const packageJSONData = {
   },
   "lerna-clean-changelogs-cli": {
     "name": "lerna-clean-changelogs-cli",
-    "version": "4.2.3",
+    "version": "4.2.4",
     "description": "CLI application to cleanse the lerna/commitizen-generated changelogs",
     "keywords": [
       "changelog",
@@ -5009,7 +5009,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "codsen-glob": "^1.1.0",
+      "codsen-glob": "^1.1.1",
       "codsen-utils": "^1.10.0",
       "lerna-clean-changelogs": "^5.2.3",
       "p-reduce": "^3.0.0",
@@ -7062,7 +7062,7 @@ export const packageJSONData = {
   },
   "rehype-responsive-tables": {
     "name": "rehype-responsive-tables",
-    "version": "2.2.1",
+    "version": "2.2.2",
     "description": "Rehype plugin to stack the first column cells above their rows.",
     "keywords": [
       "unified",
@@ -7148,7 +7148,7 @@ export const packageJSONData = {
   },
   "remark-conventional-commit-changelog-timeline": {
     "name": "remark-conventional-commit-changelog-timeline",
-    "version": "3.3.3",
+    "version": "3.3.4",
     "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
     "keywords": [
       "unified",
@@ -9510,7 +9510,7 @@ export const packageJSONData = {
   },
   "tsd-extract": {
     "name": "tsd-extract",
-    "version": "0.10.3",
+    "version": "0.10.4",
     "description": "Extract any definition from TS definitions file string",
     "keywords": [
       "ts",
@@ -9599,7 +9599,7 @@ export const packageJSONData = {
   },
   "update-versions": {
     "name": "update-versions",
-    "version": "7.2.3",
+    "version": "7.2.4",
     "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
     "keywords": [
       "app",
@@ -9674,9 +9674,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ansi-diff-stream": "^1.2.1",
-      "codsen-glob": "^1.1.0",
+      "codsen-glob": "^1.1.1",
       "codsen-utils": "^1.10.0",
-      "edit-package-json": "^0.10.3",
+      "edit-package-json": "^0.10.4",
       "object-path": "^0.11.8",
       "p-progress": "^1.0.0",
       "p-reduce": "^3.0.0",

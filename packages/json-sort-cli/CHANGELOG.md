@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.3.0 (2026-09-03)
+
+### Features
+
+- **json-sort-cli:** support piped input and stdout output ([6da20a9](https://github.com/codsen/codsen/commit/6da20a97ad629ee4956a59dada40cd05f8ccf6f5))
+
 ## 4.2.3 (2026-09-01)
 
 ### Bug Fixes
