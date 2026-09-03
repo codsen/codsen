@@ -2026,7 +2026,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "picomatch": "^4.0.5"
+      "picomatch": "^4.0.7"
     },
     "devDependencies": {
       "@types/picomatch": "^4.0.3"
@@ -2715,7 +2715,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "all-named-html-entities": "^3.2.0",
-      "ansi-regex": "^6.2.2",
+      "ansi-regex": "^6.3.0",
       "codsen-utils": "^1.10.0",
       "he": "^1.2.0",
       "html-entities-not-email-friendly": "^0.10.0",
@@ -2825,7 +2825,7 @@ export const packageJSONData = {
     "devDependencies": {
       "ast-monkey-traverse": "^4.3.0",
       "codsen-glob": "^1.1.0",
-      "p-map": "^7.0.4"
+      "p-map": "^7.0.7"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -4564,7 +4564,7 @@ export const packageJSONData = {
       "codsen-glob": "^1.1.0",
       "codsen-utils": "^1.10.0",
       "json-comb-core": "^8.2.3",
-      "p-map": "^7.0.4",
+      "p-map": "^7.0.7",
       "update-notifier": "^7.3.1"
     },
     "engines": {
@@ -4661,7 +4661,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/semver-compare": "^1.0.3",
-      "p-map": "^7.0.4"
+      "p-map": "^7.0.7"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -4743,7 +4743,7 @@ export const packageJSONData = {
       "update-notifier": "^7.3.1"
     },
     "devDependencies": {
-      "p-map": "^7.0.4"
+      "p-map": "^7.0.7"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -5016,7 +5016,7 @@ export const packageJSONData = {
       "update-notifier": "^7.3.1"
     },
     "devDependencies": {
-      "p-map": "^7.0.4"
+      "p-map": "^7.0.7"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -7131,7 +7131,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@types/hast": "^3.0.4",
+      "@types/hast": "^3.0.5",
       "unified": "^11.0.5",
       "unist-util-visit": "^5.1.0"
     },
@@ -7219,7 +7219,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@types/hast": "^3.0.4",
+      "@types/hast": "^3.0.5",
       "hast-util-raw": "^9.1.0",
       "object-delete-key": "^4.2.3",
       "semver-regex": "^4.0.5",
@@ -9684,7 +9684,7 @@ export const packageJSONData = {
       "update-notifier": "^7.3.1"
     },
     "devDependencies": {
-      "p-map": "^7.0.4"
+      "p-map": "^7.0.7"
     },
     "engines": {
       "node": ">=18.20.8"

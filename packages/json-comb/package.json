@@ -67,7 +67,7 @@
     "codsen-glob": "^1.1.0",
     "codsen-utils": "^1.10.0",
     "json-comb-core": "^8.2.3",
-    "p-map": "^7.0.4",
+    "p-map": "^7.0.7",
     "update-notifier": "^7.3.1"
   },
   "engines": {

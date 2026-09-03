@@ -67,7 +67,7 @@
     "update-notifier": "^7.3.1"
   },
   "devDependencies": {
-    "p-map": "^7.0.4"
+    "p-map": "^7.0.7"
   },
   "engines": {
     "node": ">=18.20.8"

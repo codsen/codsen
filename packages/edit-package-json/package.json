@@ -77,7 +77,7 @@
   "devDependencies": {
     "ast-monkey-traverse": "^4.3.0",
     "codsen-glob": "^1.1.0",
-    "p-map": "^7.0.4"
+    "p-map": "^7.0.7"
   },
   "engines": {
     "node": ">=18.20.8"
