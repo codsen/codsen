@@ -4673,7 +4673,7 @@ export const packageJSONData = {
   "json-sort-cli": {
     "name": "json-sort-cli",
     "version": "4.2.3",
-    "description": "Command line app to deep sort JSON files, retains package.json special key order",
+    "description": "Deep-sort JSON files or standard input; package.json retains its special key order",
     "keywords": [
       "app",
       "cli",
