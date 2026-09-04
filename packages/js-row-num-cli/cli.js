@@ -4,7 +4,7 @@ import { createRequire } from "node:module";
 import { arrayiffy } from "arrayiffy-if-string";
 import { glob } from "codsen-glob";
 import { codsenCLI } from "codsen-utils";
-import updateNotifier from "update-notifier";
+import { notifyOfCliUpdate } from "./cli-update-notifier.js";
 import { ProcessingError, processFiles } from "./process-files.js";
 
 const require1 = createRequire(import.meta.url);
@@ -61,7 +61,6 @@ const cli = codsenCLI(
     },
   },
 );
-updateNotifier({ pkg }).notify();
 
 function processPaths(paths) {
   let transformOptions = {
@@ -91,6 +90,8 @@ if (cli.flags.v) {
   log(cli.help);
   process.exit(0);
 }
+
+notifyOfCliUpdate({ pkg });
 
 // Step #1. were any paths given or not?
 // -----------------------------------------------------------------------------
