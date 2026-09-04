@@ -15,7 +15,7 @@ import objectPath from "object-path";
 import pProgress, { PProgress } from "p-progress";
 import pReduce from "p-reduce";
 import packageJson from "package-json";
-import updateNotifier from "update-notifier";
+import { notifyOfCliUpdate } from "./cli-update-notifier.js";
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
@@ -864,7 +864,7 @@ async function runCli() {
     moduleMode: Boolean(cli.flags.module),
     reportProgress: true,
   });
-  updateNotifier({ pkg }).notify();
+  notifyOfCliUpdate({ pkg });
 }
 
 function isDirectExecution() {
