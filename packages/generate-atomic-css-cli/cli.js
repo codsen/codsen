@@ -6,7 +6,7 @@ import { createRequire } from "node:module";
 import { glob } from "codsen-glob";
 import { codsenCLI } from "codsen-utils";
 import { version } from "generate-atomic-css";
-import updateNotifier from "update-notifier";
+import { notifyOfCliUpdate } from "./cli-update-notifier.js";
 import { ProcessingError, processFiles } from "./process-files.js";
 
 const require1 = createRequire(import.meta.url);
@@ -34,7 +34,6 @@ const cli = codsenCLI(
     pkg,
   },
 );
-updateNotifier({ pkg }).notify();
 
 async function processPaths(incomingPaths) {
   return glob([...incomingPaths, "!**/node_modules/**"])
@@ -55,6 +54,8 @@ if (cli.flags.v) {
   log(cli.help);
   process.exit(0);
 }
+
+notifyOfCliUpdate({ pkg });
 
 // Step #1. were any paths given or not?
 // -----------------------------------------------------------------------------

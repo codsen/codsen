@@ -57,7 +57,7 @@
   "c8": {
     "all": true,
     "check-coverage": true,
-    "exclude": ["**/test/**/*.*"],
+    "exclude": ["**/test/**/*.*", "cli-update-notifier.js"],
     "lines": 84
   },
   "lect": {
@@ -69,8 +69,7 @@
   "dependencies": {
     "codsen-glob": "^1.1.1",
     "codsen-utils": "^1.10.0",
-    "generate-atomic-css": "^3.2.2",
-    "update-notifier": "^7.3.1"
+    "generate-atomic-css": "^3.2.2"
   },
   "engines": {
     "node": ">=18.20.8"
