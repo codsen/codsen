@@ -11,7 +11,7 @@ import { globSync } from "codsen-glob";
 import { codsenCLI, pullAll } from "codsen-utils";
 import { within } from "email-all-chars-within-ascii";
 import { right } from "string-left-right";
-import updateNotifier from "update-notifier";
+import { notifyOfCliUpdate } from "./cli-update-notifier.js";
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
@@ -53,7 +53,6 @@ const cli = codsenCLI(
     },
   },
 );
-updateNotifier({ pkg }).notify();
 
 function colour(str, colourCode) {
   return `\u001b[${colourCode}m${str}\u001b[39m`;
@@ -96,6 +95,8 @@ if (cli.flags.v || cli.flags.version) {
   log(cli.help);
   process.exit(0);
 }
+
+notifyOfCliUpdate({ pkg });
 
 // Step #1. gather the to-do list of files.
 // -----------------------------------------------------------------------------
