@@ -66,13 +66,6 @@
       "reason": "Subprocess tests cover file, stdin, overwrite, and error behaviour, while interactive picker and failure branches keep current line coverage below the default.",
       "followUp": "Add subprocess cases for the remaining interactive and failure paths, raising this threshold with each improvement until the waiver can be removed."
     },
-    "detergent": {
-      "config": {
-        "lines": 97
-      },
-      "reason": "The generated ESM bundle retains one uncovered minified line and reports 97.61% under full-source discovery, below the repository's 100% default line threshold.",
-      "followUp": "Add a focused regression case for the remaining uncovered path, raise the line threshold to 100%, and remove this waiver."
-    },
     "email-all-chars-within-ascii-cli": {
       "config": {
         "lines": 83

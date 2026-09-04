@@ -60,7 +60,7 @@
     "check-coverage": true,
     "exclude": ["**/test/**/*.*"],
     "include": ["dist/*.esm.js"],
-    "lines": 97
+    "lines": 100
   },
   "lect": {
     "licence": {
