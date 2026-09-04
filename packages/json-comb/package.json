@@ -55,7 +55,7 @@
   "c8": {
     "all": true,
     "check-coverage": true,
-    "exclude": ["**/test/**/*.*"],
+    "exclude": ["**/test/**/*.*", "cli-update-notifier.js"],
     "lines": 94
   },
   "lect": {
@@ -67,8 +67,7 @@
     "codsen-glob": "^1.1.1",
     "codsen-utils": "^1.10.0",
     "json-comb-core": "^8.2.4",
-    "p-map": "^7.0.7",
-    "update-notifier": "^7.3.1"
+    "p-map": "^7.0.7"
   },
   "engines": {
     "node": ">=18.20.8"

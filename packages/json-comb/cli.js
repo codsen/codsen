@@ -8,7 +8,7 @@ import { glob } from "codsen-glob";
 import { codsenCLI } from "codsen-utils";
 import { enforceKeyset, getKeyset } from "json-comb-core";
 import pMap from "p-map";
-import updateNotifier from "update-notifier";
+import { notifyOfCliUpdate } from "./cli-update-notifier.js";
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
@@ -96,7 +96,6 @@ const cli = codsenCLI(
     },
   },
 );
-updateNotifier({ pkg }).notify();
 
 // TODO:
 // -p, --placeholder   What value to set for newly added keys
@@ -117,6 +116,8 @@ if (cli.flags.version) {
   log(cli.help);
   process.exit(0);
 }
+
+notifyOfCliUpdate({ pkg });
 
 // Step #1. Some flags might get put as "flags" values if input string follows the
 // flag. For example, "jsoncomb -n test" would put "test" as value of "n", under
