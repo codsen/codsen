@@ -53,7 +53,7 @@
   "c8": {
     "all": true,
     "check-coverage": true,
-    "exclude": ["**/test/**/*.*"],
+    "exclude": ["**/test/**/*.*", "cli-update-notifier.js"],
     "lines": 97
   },
   "lect": {
@@ -63,8 +63,7 @@
   },
   "dependencies": {
     "codsen-glob": "^1.1.1",
-    "sort-package-json": "^2.15.1",
-    "update-notifier": "^7.3.1"
+    "sort-package-json": "^2.15.1"
   },
   "devDependencies": {
     "p-map": "^7.0.7"

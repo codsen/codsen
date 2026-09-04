@@ -4,7 +4,7 @@ import { fstatSync } from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { glob } from "codsen-glob";
-import updateNotifier from "update-notifier";
+import { notifyOfCliUpdate } from "./cli-update-notifier.js";
 import { formatParsedJson } from "./json-formatter.js";
 import { ProcessingError, processFiles } from "./process-files.js";
 
@@ -405,9 +405,9 @@ async function main() {
   const printsJson =
     flags.stdout || input.includes("-") || (!hasInput && stdinIsPiped);
 
-  if (!flags.silent && !flags.ci && !printsJson && process.stdout.isTTY) {
+  if (!flags.silent && !flags.ci && !printsJson) {
     try {
-      updateNotifier({ pkg }).notify();
+      notifyOfCliUpdate({ pkg });
     } catch {}
   }
 
