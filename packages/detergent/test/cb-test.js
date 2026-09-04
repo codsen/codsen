@@ -147,4 +147,17 @@ test("008 - callback skips every recognized HTML token shape", () => {
   }
 });
 
+test("009 - callback-created trailing whitespace is trimmed before a CRLF", () => {
+  equal(
+    det1("aX\r\nb", {
+      cb: (str) => str.replace("X", "  "),
+      removeLineBreaks: false,
+      replaceLineBreaks: false,
+      eol: "lf",
+    }).res,
+    "a\nb",
+    "009.01",
+  );
+});
+
 test.run();
