@@ -13,7 +13,7 @@ import { confirm, select } from "@inquirer/prompts";
 import { globSync } from "codsen-glob";
 import { codsenCLI, pullAll } from "codsen-utils";
 import { sort } from "csv-sort";
-import updateNotifier from "update-notifier";
+import { notifyOfCliUpdate } from "./cli-update-notifier.js";
 
 const { error: logError, log } = console;
 
@@ -64,7 +64,6 @@ const cli = codsenCLI(
     },
   },
 );
-updateNotifier({ pkg }).notify();
 
 // FUNCTIONS
 // -----------------------------------------------------------------------------
@@ -164,6 +163,8 @@ if (cli.flags.v) {
   log(cli.help);
   process.exit(0);
 }
+
+notifyOfCliUpdate({ pkg });
 
 // Step #1. gather the to-do list of files.
 // -----------------------------------------------------------------------------
