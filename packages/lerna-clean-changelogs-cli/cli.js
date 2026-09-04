@@ -8,7 +8,7 @@ import path from "node:path";
 import { glob } from "codsen-glob";
 import { codsenCLI } from "codsen-utils";
 import pReduce from "p-reduce";
-import updateNotifier from "update-notifier";
+import { notifyOfCliUpdate } from "./cli-update-notifier.js";
 import { ProcessingError, processFiles } from "./process-files.js";
 
 const require1 = createRequire(import.meta.url);
@@ -54,7 +54,6 @@ const cli = codsenCLI(
     },
   },
 );
-updateNotifier({ pkg }).notify();
 const signature = colour("✨ lerna-clean-changelogs-cli: ", colours.grey);
 
 // Step #0. honour help/version even when another argument is also present.
@@ -68,6 +67,8 @@ if (cli.flags.version) {
   log(cli.help);
   process.exit(0);
 }
+
+notifyOfCliUpdate({ pkg });
 
 // -----------------------------------------------------------------------------
 

@@ -55,7 +55,7 @@
   "c8": {
     "all": true,
     "check-coverage": true,
-    "exclude": ["**/test/**/*.*"],
+    "exclude": ["**/test/**/*.*", "cli-update-notifier.js"],
     "lines": 83
   },
   "lect": {
@@ -69,8 +69,7 @@
     "codsen-glob": "^1.1.1",
     "codsen-utils": "^1.10.0",
     "lerna-clean-changelogs": "^5.2.3",
-    "p-reduce": "^3.0.0",
-    "update-notifier": "^7.3.1"
+    "p-reduce": "^3.0.0"
   },
   "devDependencies": {
     "p-map": "^7.0.7"
