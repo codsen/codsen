@@ -9,6 +9,7 @@ import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
 import { readPackageKindResolver } from "../helpers/packageKindsFile.js";
 import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
 import allContrib from "./plugins/allContributors.js";
+import cliUpdateNotifier from "./plugins/cliUpdateNotifier.js";
 import hardDelete from "./plugins/hardDelete.js";
 import hardWrite from "./plugins/hardWrite.js";
 import licence from "./plugins/licence.js";
@@ -24,6 +25,7 @@ const repositoryRootFromFile = path.resolve(
 
 const defaultOperations = {
   allContrib,
+  cliUpdateNotifier,
   hardDelete,
   hardWrite,
   licence,
@@ -61,6 +63,7 @@ async function runLectPhases({
 }) {
   await operations.hardDelete({ lectrc, mode, root: state.root });
   await operations.hardWrite({ lectrc, mode, root: state.root });
+  await operations.cliUpdateNotifier({ mode, state });
   state.pack = await operations.pack({
     coveragePolicy,
     lectrc,

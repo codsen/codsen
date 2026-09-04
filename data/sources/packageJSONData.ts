@@ -1853,7 +1853,8 @@ export const packageJSONData = {
       "all": true,
       "check-coverage": true,
       "exclude": [
-        "**/test/**/*.*"
+        "**/test/**/*.*",
+        "cli-update-notifier.js"
       ],
       "lines": 100
     },
@@ -1865,8 +1866,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "codsen-utils": "^1.10.0",
-      "update-notifier": "^7.3.1"
+      "codsen-utils": "^1.10.0"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -2355,7 +2355,8 @@ export const packageJSONData = {
       "all": true,
       "check-coverage": true,
       "exclude": [
-        "**/test/**/*.*"
+        "**/test/**/*.*",
+        "cli-update-notifier.js"
       ],
       "lines": 76
     },
@@ -2370,8 +2371,7 @@ export const packageJSONData = {
       "@inquirer/prompts": "^7.10.1",
       "codsen-glob": "^1.1.1",
       "codsen-utils": "^1.10.0",
-      "csv-sort": "^7.2.3",
-      "update-notifier": "^7.3.1"
+      "csv-sort": "^7.2.3"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -2972,7 +2972,8 @@ export const packageJSONData = {
       "all": true,
       "check-coverage": true,
       "exclude": [
-        "**/test/**/*.*"
+        "**/test/**/*.*",
+        "cli-update-notifier.js"
       ],
       "lines": 83
     },
@@ -2990,8 +2991,7 @@ export const packageJSONData = {
       "codsen-glob": "^1.1.1",
       "codsen-utils": "^1.10.0",
       "email-all-chars-within-ascii": "^5.2.3",
-      "string-left-right": "^6.2.2",
-      "update-notifier": "^7.3.1"
+      "string-left-right": "^6.2.2"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -3324,7 +3324,8 @@ export const packageJSONData = {
       "all": true,
       "check-coverage": true,
       "exclude": [
-        "**/test/**/*.*"
+        "**/test/**/*.*",
+        "cli-update-notifier.js"
       ],
       "lines": 84
     },
@@ -3339,8 +3340,7 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-glob": "^1.1.1",
       "codsen-utils": "^1.10.0",
-      "generate-atomic-css": "^3.2.2",
-      "update-notifier": "^7.3.1"
+      "generate-atomic-css": "^3.2.2"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -4466,7 +4466,8 @@ export const packageJSONData = {
       "all": true,
       "check-coverage": true,
       "exclude": [
-        "**/test/**/*.*"
+        "**/test/**/*.*",
+        "cli-update-notifier.js"
       ],
       "lines": 87
     },
@@ -4481,8 +4482,7 @@ export const packageJSONData = {
       "arrayiffy-if-string": "^5.2.2",
       "codsen-glob": "^1.1.1",
       "codsen-utils": "^1.10.0",
-      "js-row-num": "^7.2.3",
-      "update-notifier": "^7.3.1"
+      "js-row-num": "^7.2.3"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -4549,7 +4549,8 @@ export const packageJSONData = {
       "all": true,
       "check-coverage": true,
       "exclude": [
-        "**/test/**/*.*"
+        "**/test/**/*.*",
+        "cli-update-notifier.js"
       ],
       "lines": 94
     },
@@ -4564,8 +4565,7 @@ export const packageJSONData = {
       "codsen-glob": "^1.1.1",
       "codsen-utils": "^1.10.0",
       "json-comb-core": "^8.2.4",
-      "p-map": "^7.0.7",
-      "update-notifier": "^7.3.1"
+      "p-map": "^7.0.7"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -4726,7 +4726,8 @@ export const packageJSONData = {
       "all": true,
       "check-coverage": true,
       "exclude": [
-        "**/test/**/*.*"
+        "**/test/**/*.*",
+        "cli-update-notifier.js"
       ],
       "lines": 97
     },
@@ -4739,8 +4740,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-glob": "^1.1.1",
-      "sort-package-json": "^2.15.1",
-      "update-notifier": "^7.3.1"
+      "sort-package-json": "^2.15.1"
     },
     "devDependencies": {
       "p-map": "^7.0.7"
@@ -4995,7 +4995,8 @@ export const packageJSONData = {
       "all": true,
       "check-coverage": true,
       "exclude": [
-        "**/test/**/*.*"
+        "**/test/**/*.*",
+        "cli-update-notifier.js"
       ],
       "lines": 83
     },
@@ -5012,8 +5013,7 @@ export const packageJSONData = {
       "codsen-glob": "^1.1.1",
       "codsen-utils": "^1.10.0",
       "lerna-clean-changelogs": "^5.2.3",
-      "p-reduce": "^3.0.0",
-      "update-notifier": "^7.3.1"
+      "p-reduce": "^3.0.0"
     },
     "devDependencies": {
       "p-map": "^7.0.7"
@@ -9661,7 +9661,8 @@ export const packageJSONData = {
       "all": true,
       "check-coverage": true,
       "exclude": [
-        "**/test/**/*.*"
+        "**/test/**/*.*",
+        "cli-update-notifier.js"
       ],
       "lines": 80
     },
@@ -9680,8 +9681,7 @@ export const packageJSONData = {
       "object-path": "^0.11.8",
       "p-progress": "^1.0.0",
       "p-reduce": "^3.0.0",
-      "package-json": "^10.0.1",
-      "update-notifier": "^7.3.1"
+      "package-json": "^10.0.1"
     },
     "devDependencies": {
       "p-map": "^7.0.7"

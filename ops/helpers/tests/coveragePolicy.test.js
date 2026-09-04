@@ -15,7 +15,10 @@ function policy() {
         exclude: ["**/test/**/*.*"],
         lines: 100,
       },
-      cli: { all: true },
+      cli: {
+        all: true,
+        exclude: ["**/test/**/*.*", "cli-update-notifier.js"],
+      },
       rollup: { all: true, include: ["dist/*.esm.js"] },
       full: { branches: 100, functions: 100, statements: 100 },
     },
@@ -93,7 +96,7 @@ test("01 - resolves default, Rollup, full, override, CLI, and waiver layers", ()
     ),
     {
       "check-coverage": true,
-      exclude: ["**/test/**/*.*"],
+      exclude: ["**/test/**/*.*", "cli-update-notifier.js"],
       lines: 80,
       all: true,
     },
@@ -246,7 +249,7 @@ test("09 - rejects exclusion bypasses and missing family classification", () => 
   currentPolicy.packageOverrides["strict-package"] = {
     exclude: ["**"],
   };
-  currentPolicy.profiles.cli.exclude = ["**"];
+  currentPolicy.profiles.cli.exclude.push("**");
   currentPolicy.waivers["waived-cli"].config.exclude = ["**"];
   const records = [
     record("default-package"),
@@ -259,7 +262,7 @@ test("09 - rejects exclusion bypasses and missing family classification", () => 
     records,
   }).errors.join("\n");
 
-  match(message, /profiles.cli contains unsupported keys: exclude/, "09.01");
+  match(message, /profiles.cli must set all=true and exclude/, "09.01");
   match(message, /packageOverrides.*unsupported keys: exclude/, "09.02");
   match(message, /contains non-threshold keys: exclude/, "09.03");
   match(

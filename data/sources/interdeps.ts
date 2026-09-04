@@ -129,7 +129,7 @@ export const interdeps = [
   },
   {
     "name": "codsen",
-    "size": 888,
+    "size": 899,
     "imports": [
       "codsen-utils"
     ]
@@ -168,7 +168,7 @@ export const interdeps = [
   },
   {
     "name": "csv-sort-cli",
-    "size": 8974,
+    "size": 8985,
     "imports": [
       "codsen-glob",
       "codsen-utils",
@@ -239,7 +239,7 @@ export const interdeps = [
   },
   {
     "name": "email-all-chars-within-ascii-cli",
-    "size": 9132,
+    "size": 9143,
     "imports": [
       "codsen-glob",
       "codsen-utils",
@@ -283,7 +283,7 @@ export const interdeps = [
   },
   {
     "name": "generate-atomic-css-cli",
-    "size": 1899,
+    "size": 1910,
     "imports": [
       "codsen-glob",
       "codsen-utils",
@@ -374,7 +374,7 @@ export const interdeps = [
   },
   {
     "name": "js-row-num-cli",
-    "size": 2717,
+    "size": 2728,
     "imports": [
       "arrayiffy-if-string",
       "codsen-glob",
@@ -384,7 +384,7 @@ export const interdeps = [
   },
   {
     "name": "json-comb",
-    "size": 7207,
+    "size": 7218,
     "imports": [
       "codsen-glob",
       "codsen-utils",
@@ -405,7 +405,7 @@ export const interdeps = [
   },
   {
     "name": "json-sort-cli",
-    "size": 15409,
+    "size": 15395,
     "imports": [
       "codsen-glob"
     ]
@@ -434,7 +434,7 @@ export const interdeps = [
   },
   {
     "name": "lerna-clean-changelogs-cli",
-    "size": 3544,
+    "size": 3555,
     "imports": [
       "codsen-glob",
       "codsen-utils",
@@ -834,7 +834,7 @@ export const interdeps = [
   },
   {
     "name": "update-versions",
-    "size": 27910,
+    "size": 27920,
     "imports": [
       "codsen-glob",
       "codsen-utils",

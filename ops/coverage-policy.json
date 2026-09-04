@@ -6,7 +6,8 @@
       "lines": 100
     },
     "cli": {
-      "all": true
+      "all": true,
+      "exclude": ["**/test/**/*.*", "cli-update-notifier.js"]
     },
     "rollup": {
       "all": true,

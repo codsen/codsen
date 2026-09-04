@@ -129,10 +129,18 @@ function validateCoveragePolicy({
 
   if (!isObject(cliProfile)) {
     errors.push("profiles.cli must be an object");
-  } else if (cliProfile.all !== true) {
-    errors.push("profiles.cli must set all=true");
+  } else if (
+    cliProfile.all !== true ||
+    !Array.isArray(cliProfile.exclude) ||
+    cliProfile.exclude.length !== 2 ||
+    cliProfile.exclude[0] !== "**/test/**/*.*" ||
+    cliProfile.exclude[1] !== "cli-update-notifier.js"
+  ) {
+    errors.push(
+      'profiles.cli must set all=true and exclude ["**/test/**/*.*", "cli-update-notifier.js"]',
+    );
   }
-  validateProfileKeys(cliProfile, ["all"], "profiles.cli", errors);
+  validateProfileKeys(cliProfile, ["all", "exclude"], "profiles.cli", errors);
 
   if (!isObject(rollupProfile)) {
     errors.push("profiles.rollup must be an object");

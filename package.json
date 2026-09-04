@@ -59,6 +59,7 @@
     "prepush": "npm run fix",
     "prettier": "npm run check",
     "prettier:format": "npm run check:fix",
+    "preview:update-notifier": "node ./ops/scripts/preview-cli-update-notifier.js",
     "test": "npm run verify && npm run test:compatibility && npm run test:quality",
     "test:compatibility": "node ./ops/scripts/test-node-compatibility.js",
     "coverage:workspaces": "node ./ops/scripts/coverage-workspaces.js",

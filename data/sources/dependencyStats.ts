@@ -38,7 +38,6 @@ export const dependencyStats: DependencyStats = {
     "unified",
     "unist-builder",
     "unist-util-visit",
-    "update-notifier",
     "vfile"
   ],
   "allOwnDeps": [
@@ -199,7 +198,6 @@ export const dependencyStats: DependencyStats = {
     "unified": 3,
     "unist-builder": 1,
     "unist-util-visit": 2,
-    "update-notifier": 9,
     "util-array-object-or-both": 1,
     "util-nonempty": 1,
     "vfile": 1
@@ -229,9 +227,6 @@ export const dependencyStats: DependencyStats = {
   },
   "top10ExternalDeps": [
     {
-      "update-notifier": 9
-    },
-    {
       "he": 3
     },
     {
@@ -257,6 +252,9 @@ export const dependencyStats: DependencyStats = {
     },
     {
       "unist-util-visit": 2
+    },
+    {
+      "@types/mdast": 1
     }
   ],
   "top10OwnDeps": [

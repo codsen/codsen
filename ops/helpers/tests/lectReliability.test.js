@@ -14,6 +14,7 @@ import { fileURLToPath } from "node:url";
 import { test } from "uvu";
 import { equal, match, ok } from "uvu/assert";
 import allContrib from "../../lect/plugins/allContributors.js";
+import cliUpdateNotifier from "../../lect/plugins/cliUpdateNotifier.js";
 import hardDelete from "../../lect/plugins/hardDelete.js";
 import hardWrite from "../../lect/plugins/hardWrite.js";
 import tsconfig from "../../lect/plugins/tsconfig.js";
@@ -157,6 +158,7 @@ test("05 - phases are ordered and README sees the canonical manifest", async () 
   };
   const operations = {
     allContrib: operation("allContrib"),
+    cliUpdateNotifier: operation("cliUpdateNotifier"),
     hardDelete: operation("hardDelete"),
     hardWrite: operation("hardWrite"),
     licence: operation("licence"),
@@ -184,6 +186,7 @@ test("05 - phases are ordered and README sees the canonical manifest", async () 
     [
       "hardDelete",
       "hardWrite",
+      "cliUpdateNotifier",
       "pack",
       "rollupConfig",
       "tsconfig",
@@ -200,6 +203,7 @@ test("06 - a failed phase prevents every later mutation", async () => {
   const later = (name) => async () => calls.push(name);
   const operations = {
     allContrib: later("allContrib"),
+    cliUpdateNotifier: later("cliUpdateNotifier"),
     hardDelete: async () => {
       calls.push("hardDelete");
       throw new Error("injected failure");
@@ -427,6 +431,74 @@ test("13 - library tsconfig retires stale includes and is idempotent", async () 
 
     await tsconfig({ state });
     equal(readFileSync(filename, "utf8"), firstPass, "13.02");
+  } finally {
+    removeTemporaryRoot(root);
+  }
+});
+
+test("14 - CLI update notifier mirrors its canonical source verbatim", async () => {
+  const root = createTemporaryRoot();
+  const packageRoot = path.join(root, "package");
+  const canonicalRoot = path.join(root, "ops/lect/common");
+  const canonicalContents = "export const marker = `verbatim`;\n\n";
+  const filename = path.join(packageRoot, "cli-update-notifier.js");
+  const state = {
+    packageKind: PACKAGE_KINDS.CLI,
+    repositoryRoot: root,
+    root: packageRoot,
+  };
+  try {
+    mkdirSync(canonicalRoot, { recursive: true });
+    mkdirSync(packageRoot);
+    writeFileSync(
+      path.join(canonicalRoot, "cliUpdateNotifier.js"),
+      canonicalContents,
+    );
+
+    await cliUpdateNotifier({ state });
+    equal(readFileSync(filename, "utf8"), canonicalContents, "14.01");
+
+    writeFileSync(filename, "stale\n");
+    let error;
+    try {
+      await cliUpdateNotifier({ mode: "check", state });
+    } catch (caught) {
+      error = caught;
+    }
+    match(error.message, /cli-update-notifier\.js.*npm run lect/, "14.02");
+    equal(readFileSync(filename, "utf8"), "stale\n", "14.03");
+
+    await cliUpdateNotifier({ state });
+    await cliUpdateNotifier({ mode: "check", state });
+    equal(readFileSync(filename, "utf8"), canonicalContents, "14.04");
+  } finally {
+    removeTemporaryRoot(root);
+  }
+});
+
+test("15 - non-CLI workspaces retire the generated notifier", async () => {
+  const root = createTemporaryRoot();
+  const filename = path.join(root, "cli-update-notifier.js");
+  const state = {
+    packageKind: PACKAGE_KINDS.TYPESCRIPT_LIBRARY,
+    repositoryRoot: "/canonical-source-is-not-needed",
+    root,
+  };
+  try {
+    writeFileSync(filename, "obsolete\n");
+    let error;
+    try {
+      await cliUpdateNotifier({ mode: "check", state });
+    } catch (caught) {
+      error = caught;
+    }
+    match(error.message, /cli-update-notifier\.js.*npm run lect/, "15.01");
+    equal(readFileSync(filename, "utf8"), "obsolete\n", "15.02");
+
+    await cliUpdateNotifier({ state });
+    equal(existsSync(filename), false, "15.03");
+    await cliUpdateNotifier({ mode: "check", state });
+    equal(existsSync(filename), false, "15.04");
   } finally {
     removeTemporaryRoot(root);
   }
