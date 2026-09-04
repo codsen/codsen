@@ -2,7 +2,7 @@
 
 import { createRequire } from "node:module";
 import { codsenCLI } from "codsen-utils";
-import updateNotifier from "update-notifier";
+import { notifyOfCliUpdate } from "./cli-update-notifier.js";
 
 const { log } = console;
 
@@ -23,7 +23,6 @@ const cli = codsenCLI(
     flags: {},
   },
 );
-updateNotifier({ pkg }).notify();
 
 // FUNCTIONS
 // -----------------------------------------------------------------------------
@@ -38,5 +37,7 @@ if (cli.flags.v) {
   log(cli.help);
   process.exit(0);
 }
+
+notifyOfCliUpdate({ pkg });
 
 console.log("C O D S E N");
