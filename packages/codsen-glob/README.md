@@ -1,6 +1,6 @@
 <h1 align="center">codsen-glob</h1>
 
-<p align="center">Fast TypeScript file globbing</p>
+<p align="center">Fast file globbing</p>
 
 <p align="center">
   <a href="https://codsen.com/os/codsen-glob" rel="nofollow noreferrer noopener">
@@ -20,6 +20,8 @@
   </a>
   <img src="https://img.shields.io/badge/licence-MIT-brightgreen.svg?style=flat-square" alt="MIT Licence">
 </p>
+
+**Powered by picomatch.** No other dependencies.
 
 ## Install
 

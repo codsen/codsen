@@ -1,8 +1,8 @@
 {
   "name": "codsen-glob",
   "version": "1.1.1",
-  "description": "Fast TypeScript file globbing",
-  "keywords": ["files", "filesystem", "glob", "globbing", "typescript"],
+  "description": "Fast file globbing",
+  "keywords": ["files", "filesystem", "glob", "globbing"],
   "homepage": "https://codsen.com/os/codsen-glob",
   "repository": {
     "type": "git",
