@@ -52,6 +52,70 @@ function spawnWithInput(tempFolder, input, ...args) {
   );
 }
 
+function spawnInteractive(tempFolder, answers, ...args) {
+  return new Promise((resolve, reject) => {
+    // Exercise the actual prompts with pipes, while selecting the TTY-only mode.
+    const child = spawnChild(
+      process.execPath,
+      [
+        "--input-type=module",
+        "--eval",
+        `import { pathToFileURL } from "node:url";
+process.stdin.isTTY = true;
+await import(pathToFileURL(process.argv[1]).href);`,
+        path.resolve(__dirname2, "../cli.js"),
+        ...args,
+      ],
+      {
+        cwd: tempFolder,
+        env: childEnvironment(),
+        stdio: ["pipe", "pipe", "pipe"],
+      },
+    );
+    let stdout = "";
+    let stderr = "";
+    let answersSent = 0;
+    let timedOut = false;
+    const timeout = setTimeout(() => {
+      timedOut = true;
+      child.kill("SIGKILL");
+    }, 10000);
+    child.stdout.setEncoding("utf8");
+    child.stderr.setEncoding("utf8");
+    child.stdout.on("data", (chunk) => {
+      stdout += chunk;
+      const answer = answers[answersSent];
+      if (answer && stdout.includes(answer.prompt)) {
+        answersSent += 1;
+        child.stdin.write(answer.input);
+      }
+    });
+    child.stderr.on("data", (chunk) => {
+      stderr += chunk;
+    });
+    child.once("error", (error) => {
+      clearTimeout(timeout);
+      reject(error);
+    });
+    child.stdin.once("error", (error) => {
+      child.kill("SIGKILL");
+      clearTimeout(timeout);
+      reject(error);
+    });
+    child.once("close", (status, signal) => {
+      clearTimeout(timeout);
+      resolve({ status, signal, stdout, stderr, answersSent, timedOut });
+    });
+  });
+}
+
+const selectFirstCsv = {
+  prompt: "Which CSV would you like to check?",
+  input: "\r",
+};
+const overwritePrompt =
+  "Do you want to overwrite this file with a sorted result?";
+
 //                                  *
 //                                  *
 //                                  *
@@ -392,5 +456,242 @@ test("15 - --overwrite keeps same-basename relative and absolute paths separate"
 //                                  *
 //                                  *
 //                                  *
+
+test("16 - short and long help flags print usage without processing input", async () => {
+  await temporaryDirectoryTask((tempFolder) => {
+    for (const flag of ["-h", "--help"]) {
+      const result = spawnWithInput(tempFolder, "not a sortable CSV", flag);
+
+      equal(result.status, 0, "16.01");
+      match(result.stdout, /Usage/, "16.02");
+      match(result.stdout, /csvsort YOURFILE\.csv/, "16.03");
+      equal(result.stderr, "", "16.04");
+      equal(fs.readdirSync(tempFolder), [], "16.05");
+    }
+  });
+});
+
+test("17 - short and long version flags print the package version", async () => {
+  await temporaryDirectoryTask((tempFolder) => {
+    const { version } = JSON.parse(
+      fs.readFileSync(path.resolve(__dirname2, "../package.json"), "utf8"),
+    );
+    for (const flag of ["-v", "--version"]) {
+      const result = spawnWithInput(tempFolder, "not a sortable CSV", flag);
+
+      equal(result.status, 0, "17.01");
+      equal(result.stdout, `${version}\n`, "17.02");
+      equal(result.stderr, "", "17.03");
+      equal(fs.readdirSync(tempFolder), [], "17.04");
+    }
+  });
+});
+
+test("18 - interactive selection can keep the original file", async () => {
+  await temporaryDirectoryTask(async (tempFolder) => {
+    const inputPath = path.join(tempFolder, "input.csv");
+    fs.writeFileSync(inputPath, pipelineInput);
+    const result = await spawnInteractive(tempFolder, [
+      selectFirstCsv,
+      { prompt: overwritePrompt, input: "n\r" },
+    ]);
+
+    equal(result.timedOut, false, "18.01");
+    equal(result.signal, null, "18.02");
+    equal(result.status, 0, "18.03");
+    equal(result.answersSent, 2, "18.04");
+    match(result.stderr, /A new file, input-1\.csv has been created/, "18.05");
+    equal(fs.readFileSync(inputPath, "utf8"), pipelineInput, "18.06");
+    equal(
+      fs.readFileSync(path.join(tempFolder, "input-1.csv"), "utf8"),
+      pipelineOutput,
+      "18.07",
+    );
+    equal(fs.readdirSync(tempFolder), ["input-1.csv", "input.csv"], "18.08");
+  });
+});
+
+test("19 - interactive selection can confirm overwriting the original", async () => {
+  await temporaryDirectoryTask(async (tempFolder) => {
+    const inputPath = path.join(tempFolder, "input.csv");
+    fs.writeFileSync(inputPath, pipelineInput);
+    const result = await spawnInteractive(tempFolder, [
+      selectFirstCsv,
+      { prompt: overwritePrompt, input: "y\r" },
+    ]);
+
+    equal(result.timedOut, false, "19.01");
+    equal(result.signal, null, "19.02");
+    equal(result.status, 0, "19.03");
+    equal(result.answersSent, 2, "19.04");
+    match(result.stderr, /input\.csv has been fixed and overwritten/, "19.05");
+    equal(fs.readFileSync(inputPath, "utf8"), pipelineOutput, "19.06");
+    equal(fs.readdirSync(tempFolder), ["input.csv"], "19.07");
+  });
+});
+
+test("20 - interactive mode reports an empty directory without prompting", async () => {
+  await temporaryDirectoryTask(async (tempFolder) => {
+    const result = await spawnInteractive(tempFolder, []);
+
+    equal(result.timedOut, false, "20.01");
+    equal(result.signal, null, "20.02");
+    equal(result.status, 1, "20.03");
+    equal(result.stdout, "", "20.04");
+    match(result.stderr, /couldn't find any CSV files in this folder/, "20.05");
+    equal(fs.readdirSync(tempFolder), [], "20.06");
+  });
+});
+
+test("21 - missing operands fall back to selection and preserve -o", async () => {
+  await temporaryDirectoryTask(async (tempFolder) => {
+    const inputPath = path.join(tempFolder, "input.csv");
+    fs.writeFileSync(inputPath, pipelineInput);
+    const result = await spawnInteractive(
+      tempFolder,
+      [selectFirstCsv],
+      "missing.csv",
+      "-o",
+    );
+
+    equal(result.timedOut, false, "21.01");
+    equal(result.signal, null, "21.02");
+    equal(result.status, 0, "21.03");
+    equal(result.answersSent, 1, "21.04");
+    equal(result.stdout.includes(overwritePrompt), false, "21.05");
+    match(
+      result.stderr,
+      /didn't recognise any CSV files in your input/,
+      "21.06",
+    );
+    match(result.stderr, /But it recognised your "-o" flag/, "21.07");
+    match(result.stderr, /input\.csv has been fixed and overwritten/, "21.08");
+    equal(fs.readFileSync(inputPath, "utf8"), pipelineOutput, "21.09");
+    equal(fs.readdirSync(tempFolder), ["input.csv"], "21.10");
+  });
+});
+
+test("22 - missing operands fail when no fallback CSV is available", async () => {
+  await temporaryDirectoryTask((tempFolder) => {
+    const result = spawnWithInput(tempFolder, undefined, "missing.csv");
+
+    equal(result.status, 1, "22.01");
+    equal(result.stdout, "", "22.02");
+    match(
+      result.stderr,
+      /didn't recognise any CSV files in your input/,
+      "22.03",
+    );
+    match(result.stderr, /couldn't find any CSV files in this folder/, "22.04");
+    equal(result.stderr.includes('recognised your "-o" flag'), false, "22.05");
+    equal(fs.readdirSync(tempFolder), [], "22.06");
+  });
+});
+
+test("23 - valid operands are sorted while missing files are reported", async () => {
+  for (const missing of [["missing.csv"], ["missing.csv", "absent.csv"]]) {
+    await temporaryDirectoryTask((tempFolder) => {
+      const inputPath = path.join(tempFolder, "input.csv");
+      fs.writeFileSync(inputPath, pipelineInput);
+      const result = spawnWithInput(
+        tempFolder,
+        undefined,
+        "input.csv",
+        ...missing,
+      );
+      const expectedWarning =
+        missing.length === 1
+          ? 'the following file doesn\'t exist: "missing.csv"'
+          : 'the following files don\'t exist: "missing.csv", "absent.csv"';
+
+      equal(result.status, 0, "23.01");
+      equal(result.stdout, "", "23.02");
+      match(result.stderr, expectedWarning, "23.03");
+      match(
+        result.stderr,
+        /A new file, input-1\.csv has been created/,
+        "23.04",
+      );
+      equal(fs.readFileSync(inputPath, "utf8"), pipelineInput, "23.05");
+      equal(
+        fs.readFileSync(path.join(tempFolder, "input-1.csv"), "utf8"),
+        pipelineOutput,
+        "23.06",
+      );
+      equal(fs.readdirSync(tempFolder), ["input-1.csv", "input.csv"], "23.07");
+    });
+  }
+});
+
+test("24 - skips occupied output names and processes duplicate operands once", async () => {
+  await temporaryDirectoryTask((tempFolder) => {
+    const inputPath = path.join(tempFolder, "input.csv");
+    const existingPath = path.join(tempFolder, "input-1.csv");
+    fs.writeFileSync(inputPath, pipelineInput);
+    fs.writeFileSync(existingPath, "existing output");
+    const result = spawnWithInput(
+      tempFolder,
+      undefined,
+      "input.csv",
+      "input.csv",
+    );
+
+    equal(result.status, 0, "24.01");
+    equal(result.stdout, "", "24.02");
+    match(result.stderr, /A new file, input-2\.csv has been created/, "24.03");
+    equal(result.stderr.match(/has been created/g)?.length, 1, "24.04");
+    equal(fs.readFileSync(inputPath, "utf8"), pipelineInput, "24.05");
+    equal(fs.readFileSync(existingPath, "utf8"), "existing output", "24.06");
+    equal(
+      fs.readFileSync(path.join(tempFolder, "input-2.csv"), "utf8"),
+      pipelineOutput,
+      "24.07",
+    );
+    equal(
+      fs.readdirSync(tempFolder),
+      ["input-1.csv", "input-2.csv", "input.csv"],
+      "24.08",
+    );
+  });
+});
+
+test("25 - output-name exhaustion reports an error and preserves every file", async () => {
+  await temporaryDirectoryTask((tempFolder) => {
+    const inputPath = path.join(tempFolder, "input.csv");
+    fs.writeFileSync(inputPath, pipelineInput);
+    const occupiedPaths = Array.from({ length: 1000 }, (_, index) =>
+      path.join(tempFolder, `input-${index + 1}.csv`),
+    );
+    for (const occupiedPath of occupiedPaths) {
+      fs.writeFileSync(occupiedPath, "existing output");
+    }
+    const originalNames = fs.readdirSync(tempFolder);
+    const result = spawnWithInput(tempFolder, undefined, "input.csv");
+
+    equal(result.status, 1, "25.01");
+    equal(result.stdout, "", "25.02");
+    match(
+      result.stderr,
+      /csv-sort-cli: Alas, we encountered an error/,
+      "25.03",
+    );
+    match(
+      result.stderr,
+      /Could not create an output file for "input\.csv" because names 1–1000 are already taken/,
+      "25.04",
+    );
+    equal(result.stderr.includes("Yay!"), false, "25.05");
+    equal(fs.readFileSync(inputPath, "utf8"), pipelineInput, "25.06");
+    equal(fs.readdirSync(tempFolder), originalNames, "25.07");
+    equal(
+      occupiedPaths.every(
+        (occupiedPath) =>
+          fs.readFileSync(occupiedPath, "utf8") === "existing output",
+      ),
+      true,
+      "25.08",
+    );
+  });
+});
 
 test.run();
