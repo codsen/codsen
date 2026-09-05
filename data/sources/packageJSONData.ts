@@ -1796,8 +1796,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "codsen-utils": "^1.10.0",
-      "type-detect": "^4.1.0"
+      "codsen-utils": "^1.10.0"
     },
     "engines": {
       "node": ">=18.20.8"

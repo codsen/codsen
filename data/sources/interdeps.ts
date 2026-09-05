@@ -105,8 +105,8 @@ export const interdeps = [
   },
   {
     "name": "ast-monkey",
-    "tarballSizeBytes": 36456,
-    "unpackedSizeBytes": 112550,
+    "tarballSizeBytes": 36058,
+    "unpackedSizeBytes": 111011,
     "imports": [
       "ast-compare",
       "ast-monkey-traverse",
@@ -139,8 +139,8 @@ export const interdeps = [
   },
   {
     "name": "check-types-mini",
-    "tarballSizeBytes": 28929,
-    "unpackedSizeBytes": 80214,
+    "tarballSizeBytes": 28895,
+    "unpackedSizeBytes": 79938,
     "imports": [
       "codsen-utils"
     ]
@@ -352,8 +352,8 @@ export const interdeps = [
   },
   {
     "name": "html-img-alt",
-    "tarballSizeBytes": 58879,
-    "unpackedSizeBytes": 167411,
+    "tarballSizeBytes": 58552,
+    "unpackedSizeBytes": 166094,
     "imports": [
       "check-types-mini",
       "codsen-utils",
