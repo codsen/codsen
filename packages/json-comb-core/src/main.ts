@@ -12,7 +12,6 @@ import { flattenAllArrays } from "object-flatten-all-arrays";
 import { mergeAdvanced } from "object-merge-advanced";
 import { noNewKeys } from "object-no-new-keys";
 import { setAllValuesTo } from "object-set-all-values-to";
-import pReduce from "p-reduce";
 import semverCompare from "semver-compare";
 import sortKeys from "sort-keys";
 
@@ -151,10 +150,14 @@ function getKeyset(
         4,
       )}`,
     );
-  let schemaMayNeedFlattening = false;
-  return pReduce(
-    arrOfPromises,
-    (previousValue, currentValue, index) => {
+  return (async (): Promise<Obj> => {
+    let schemaObj: Obj = {};
+    let schemaMayNeedFlattening = false;
+    let index = 0;
+    // Advance explicitly so failures do not close caller-owned iterators.
+    const iterator = arrOfPromises[Symbol.iterator]();
+    for (let step = iterator.next(); !step.done; step = iterator.next()) {
+      const currentValue = await step.value;
       if (!isObj(currentValue)) {
         throw new Error(
           `json-comb-core/getKeyset(): [THROW_ID_04] Oops! ${index}th element resolved not to a plain object but to a ${typeof currentValue}\n${JSON.stringify(
@@ -167,18 +170,19 @@ function getKeyset(
       const flattenedCurrentValue = flattenAllArrays(currentValue, flattenOpts);
       const result = mergeAdvanced(
         schemaMayNeedFlattening
-          ? flattenAllArrays(previousValue, reuseFlattenOpts)
-          : previousValue,
+          ? flattenAllArrays(schemaObj, reuseFlattenOpts)
+          : schemaObj,
         flattenedCurrentValue,
         reuseMergeOpts,
       );
       if (!schemaMayNeedFlattening && containsArray(flattenedCurrentValue)) {
         schemaMayNeedFlattening = true;
       }
-      return result;
-    },
-    {},
-  ).then((result) => setAllValuesTo(result, resolvedOpts.placeholder));
+      schemaObj = result;
+      index += 1;
+    }
+    return setAllValuesTo(schemaObj, resolvedOpts.placeholder);
+  })();
 }
 
 // -----------------------------------------------------------------------------
