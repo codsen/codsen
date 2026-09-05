@@ -21,6 +21,8 @@
   <img src="https://img.shields.io/badge/licence-MIT-brightgreen.svg?style=flat-square" alt="MIT Licence">
 </p>
 
+**Powered by type-detect.** No other dependencies.
+
 ## Install
 
 This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). If you're not ready yet, install an older version of this program, 7.15.0 (`npm i ast-monkey@7.15.0`).
