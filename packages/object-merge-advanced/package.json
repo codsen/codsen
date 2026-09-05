@@ -73,9 +73,6 @@
     "codsen-utils": "^1.10.0",
     "util-nonempty": "^5.2.2"
   },
-  "devDependencies": {
-    "deep-equal": "^2.2.3"
-  },
   "engines": {
     "node": ">=18.20.8"
   },

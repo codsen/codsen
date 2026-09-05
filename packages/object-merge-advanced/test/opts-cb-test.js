@@ -1,7 +1,7 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 /* eslint max-len:0 */
 
-import deepEqual from "deep-equal";
+import { isDeepStrictEqual } from "node:util";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
@@ -475,7 +475,7 @@ test("11 - \u001b[33mOPTS\u001b[39m - opts.cb - pin the 4th arg values", () => {
           );
         }
 
-        if (deepEqual(inputArg1, null)) {
+        if (isDeepStrictEqual(inputArg1, null)) {
           equal(
             infoObj,
             {
@@ -488,7 +488,7 @@ test("11 - \u001b[33mOPTS\u001b[39m - opts.cb - pin the 4th arg values", () => {
           );
         }
 
-        if (deepEqual(inputArg1, ["x"])) {
+        if (isDeepStrictEqual(inputArg1, ["x"])) {
           equal(
             infoObj,
             {

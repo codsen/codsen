@@ -21,6 +21,8 @@
   <img src="https://img.shields.io/badge/licence-MIT-brightgreen.svg?style=flat-square" alt="MIT Licence">
 </p>
 
+**No 3rd party dependencies.** All dependencies and devDependencies, checked recursively, are Codsen packages.
+
 ## Install
 
 This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). If you're not ready yet, install an older version of this program, 12.1.0 (`npm i object-merge-advanced@12.1.0`).
