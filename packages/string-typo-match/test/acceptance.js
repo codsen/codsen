@@ -58,7 +58,7 @@ test("02 - basic omission insertion repetition and swap families", () => {
   );
 });
 
-test("03 - swapped characters do not qualify as retained neighbors", () => {
+test("03 - swapped characters do not qualify as retained neighbours", () => {
   equal(
     summary("baa", ["ab"], { maxEvents: 2 }).matches,
     [

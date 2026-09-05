@@ -326,7 +326,7 @@ console.log(
         shared:
           "Exact-match bypass, minimum input length, maximum cost, and minimum gap follow each corpus case.",
         differences:
-          "Comparators have no maxEvents, omission length/ratio limits, retained-neighbor repetition weighting, or configured keyboard weighting. Their string units and alignments are their own APIs. Scalar comparator results omit operation explanations. Throughput is not an equivalent-result speedup claim.",
+          "Comparators have no maxEvents, omission length/ratio limits, retained-neighbour repetition weighting, or configured keyboard weighting. Their string units and alignments are their own APIs. Scalar comparator results omit operation explanations. Throughput is not an equivalent-result speedup claim.",
       },
       qualityLimitations: corpus.limitations,
       comparatorVersions: Object.fromEntries(

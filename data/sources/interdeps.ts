@@ -230,8 +230,8 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "tarballSizeBytes": 158676,
-    "unpackedSizeBytes": 511796,
+    "tarballSizeBytes": 158675,
+    "unpackedSizeBytes": 511798,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -402,8 +402,8 @@ export const interdeps = [
   },
   {
     "name": "is-media-descriptor",
-    "tarballSizeBytes": 16148,
-    "unpackedSizeBytes": 45441,
+    "tarballSizeBytes": 16150,
+    "unpackedSizeBytes": 45443,
     "imports": [
       "string-process-comma-separated",
       "string-typo-match"
@@ -804,8 +804,8 @@ export const interdeps = [
   },
   {
     "name": "string-fix-broken-named-entities",
-    "tarballSizeBytes": 55069,
-    "unpackedSizeBytes": 201942,
+    "tarballSizeBytes": 55071,
+    "unpackedSizeBytes": 201944,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -909,8 +909,8 @@ export const interdeps = [
   },
   {
     "name": "string-typo-match",
-    "tarballSizeBytes": 10204,
-    "unpackedSizeBytes": 33709,
+    "tarballSizeBytes": 10206,
+    "unpackedSizeBytes": 33713,
     "imports": []
   },
   {

@@ -22,9 +22,8 @@ validates the lockfile. Every relative form fails one side or the other:
 
 A root `devDependency` has no such split: both code paths resolve it from the
 root, the lockfile gets a real `name`/`version` entry, and `npm ci` is happy.
-Making the stub a workspace would also work, but `ops/scripts/` enumerates
-`workspaces` for the compatibility and release checks — including an exact
-workspace count — so a stub workspace would break them.
+Keep stubs outside `workspaces`, which `ops/scripts/` enumerates for package
+compatibility and release checks.
 
 ## `octokit-plugin-enterprise-rest`
 

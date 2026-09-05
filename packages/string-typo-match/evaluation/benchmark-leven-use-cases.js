@@ -243,7 +243,7 @@ const report = {
     leven:
       "leven@4.1.0, unit cost scaled by 100; maxDistance 3 keeps the saturation sentinel above the acceptance limit 2. Wrapper builds suggestions and resolves ambiguity but has no operation explanations or completion statistics.",
     semantics:
-      "Unequal algorithms and outputs. Leven does not model an adjacent swap or omitted block as one event, does not weight retained-neighbor repetition, and has no event count/omission constraints. These are throughput comparisons of actual APIs, not equivalent-result speedup claims.",
+      "Unequal algorithms and outputs. Leven does not model an adjacent swap or omitted block as one event, does not weight retained-neighbour repetition, and has no event count/omission constraints. These are throughput comparisons of actual APIs, not equivalent-result speedup claims.",
     consumers:
       "Saved pre-migration public consumers versus current public consumers, including their actual domain policy. Exact/case handling and parsing included. Their outputs intentionally differ for some typos. Current consumers use prepared one-event matchers and conservative abstentions; media permits two-code-point inputs.",
     interpretation:

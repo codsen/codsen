@@ -331,16 +331,16 @@ test("12 - keyboard entries contain exactly one literal code point", () => {
       "12.02",
     );
   }
-  for (const neighbors of [null, false, "a", {}, new Set(["a"])]) {
+  for (const neighbours of [null, false, "a", {}, new Set(["a"])]) {
     throws(
-      () => createMatcher([], { keyboard: { a: neighbors } }),
+      () => createMatcher([], { keyboard: { a: neighbours } }),
       /THROW_ID_16/,
       "12.03",
     );
   }
-  for (const neighbor of ["", "ab", "😀a", "e\u0301", null, 1]) {
+  for (const neighbour of ["", "ab", "😀a", "e\u0301", null, 1]) {
     throws(
-      () => createMatcher([], { keyboard: { a: [neighbor] } }),
+      () => createMatcher([], { keyboard: { a: [neighbour] } }),
       /THROW_ID_17/,
       "12.04",
     );

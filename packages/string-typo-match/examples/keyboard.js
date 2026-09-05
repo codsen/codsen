@@ -1,4 +1,4 @@
-// Supply directional keyboard neighbors
+// Supply directional keyboard neighbours
 import assert from "node:assert/strict";
 import { matchTypos } from "../dist/string-typo-match.esm.js";
 

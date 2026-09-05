@@ -301,20 +301,23 @@ function validateOptions(
           `string-typo-match/${name}(): [THROW_ID_15] each keyboard key must contain exactly one code point.`,
         );
       }
-      const neighbors = map[key];
-      if (!Array.isArray(neighbors)) {
+      const neighbours = map[key];
+      if (!Array.isArray(neighbours)) {
         throw new TypeError(
-          `string-typo-match/${name}(): [THROW_ID_16] keyboard neighbors must be arrays.`,
+          `string-typo-match/${name}(): [THROW_ID_16] keyboard neighbours must be arrays.`,
         );
       }
       const copy = new Set<string>();
-      for (const neighbor of neighbors) {
-        if (typeof neighbor !== "string" || Array.from(neighbor).length !== 1) {
+      for (const neighbour of neighbours) {
+        if (
+          typeof neighbour !== "string" ||
+          Array.from(neighbour).length !== 1
+        ) {
           throw new TypeError(
-            `string-typo-match/${name}(): [THROW_ID_17] each keyboard neighbor must contain exactly one code point.`,
+            `string-typo-match/${name}(): [THROW_ID_17] each keyboard neighbour must contain exactly one code point.`,
           );
         }
-        copy.add(neighbor);
+        copy.add(neighbour);
       }
       keyboard.set(key, copy);
     }
@@ -665,7 +668,7 @@ function score(
           false,
         );
       }
-      // The right neighbor qualifies only when the alignment actually retains
+      // The right neighbour qualifies only when the alignment actually retains
       // it. Consume that unchanged match before considering another event.
       if (
         !leftRepeated &&

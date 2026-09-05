@@ -30,7 +30,7 @@ does not imply the same decisions in an unrestricted dictionary.
 
 The paired `pwned` experiment independently compares ordinary substitution,
 binary adjacency, graded key distance, and binary adjacency plus an initial
-position discount. The latter two favor `owned`. That helps when `owned` is
+position discount. The latter two favour `owned`. That helps when `owned` is
 intended and hurts when `paned` is intended. Device and actual layout data are
 unavailable. The runtime API therefore retains explicit binary adjacency and
 does not expose a positional modifier or graded-distance policy.
@@ -92,7 +92,7 @@ Comparison wrappers scan the same candidates, preserve exact matches, sort
 eligible results, and use the same default cost gap. The full quality corpus
 is also run through them, with differences listed. They do not construct
 operation explanations or implement every policy override. Their throughput
-is therefore not an equivalent-result speedup claim.
+is therefore not an equivalent-result speed-up claim.
 
 Retained heap is estimated from 30 simultaneously retained matchers with
 explicit garbage collection; it is approximate and excludes temporary lookup
@@ -133,7 +133,7 @@ noise band. The explicit entity-typo batch scored 295 before and 547 after
 (+85%). The media-typo batch scored 49,986 before and 57,364 after (+15%), with
 9.8% sampling error on the latter; the broader repeat measured +40%. Treat the
 media improvement's size as uncertain. These compare the applications' final
-behavior, including conservative abstentions, rather than identical outputs.
+behaviour, including conservative abstentions, rather than identical outputs.
 
 ## Focused comparison with leven
 
@@ -200,7 +200,7 @@ limits, so the measurements do not compare equivalent results.
 
 Both consumers use prepared matchers and accept only a sole eligible suggestion.
 The media descriptor explicitly permits fuzzy inputs from two code points, so
-its existing `al → all` behavior remains supported. Competing suggestions are
+its existing `al → all` behaviour remains supported. Competing suggestions are
 reported as unrecognised with `fix: null`.
 
 The entity fixer considers omission competitors up to the configured block
@@ -212,7 +212,7 @@ outside the acceptance ratio. The established `rsqo → rsquo` correction remain
 an explicit entity-specific exception.
 
 Exact/case handling, curated broken names, parsing, decoding, document offsets,
-diagnostic names, and callback behavior stay in the entity fixer. An ambiguous
+diagnostic names, and callback behaviour stay in the entity fixer. An ambiguous
 or unmatched entity retains its existing unrecognised diagnostic and deletion
 range convention. The general matcher never instructs a caller to delete text.
 

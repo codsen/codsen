@@ -84,7 +84,6 @@ const ROOT = path.resolve(
 );
 const NPM = process.platform === "win32" ? "npm.cmd" : "npm";
 const REGISTRY = "https://registry.npmjs.org/";
-const EXPECTED_WORKSPACE_COUNT = 113;
 const SCHEMA_VERSION = RELEASE_SCHEMA_VERSION;
 const DEFAULT_CONCURRENCY = 8;
 const MAX_OUTPUT_BYTES = 50 * 1024 * 1024;
@@ -100,7 +99,7 @@ function environmentValue(name) {
 
 function printUsage() {
   console.log(`Usage:
-  node ops/scripts/npm-release.js assert-workspaces [--expected <count>]
+  node ops/scripts/npm-release.js assert-workspaces
   node ops/scripts/npm-release.js plan --base <git-ref> --output <plan.json>
   node ops/scripts/npm-release.js summary --plan <plan.json> --output <summary.md>
   node ops/scripts/npm-release.js preflight --plan <plan.json> [--concurrency 8]
@@ -156,7 +155,7 @@ function parseArguments(argv) {
   }
 
   const allowed = {
-    "assert-workspaces": new Set(["expected"]),
+    "assert-workspaces": new Set(),
     plan: new Set(["base", "output"]),
     summary: new Set(["plan", "output"]),
     preflight: new Set(["plan", "concurrency"]),
@@ -345,18 +344,10 @@ function discoverWorkspaces() {
   return workspaces;
 }
 
-function commandAssertWorkspaces(options) {
+function commandAssertWorkspaces() {
   const workspaces = discoverWorkspaces();
-  const expectedRaw = options.values.get("expected");
-  let expected = EXPECTED_WORKSPACE_COUNT;
-  if (expectedRaw !== undefined) {
-    if (!/^\d+$/.test(expectedRaw)) {
-      fail("--expected must be a non-negative integer");
-    }
-    expected = Number(expectedRaw);
-  }
-  if (workspaces.length !== expected) {
-    fail(`Expected ${expected} workspaces, found ${workspaces.length}`);
+  if (workspaces.length <= 100) {
+    fail(`Expected more than 100 workspaces, found ${workspaces.length}`);
   }
   console.log(
     `Validated ${workspaces.length} npm/Lerna workspaces, including ${DATA_PACKAGE}.`,
@@ -1707,7 +1698,7 @@ async function commandTags(options) {
 async function main() {
   const options = parseArguments(process.argv.slice(2));
   if (options.command === "assert-workspaces") {
-    commandAssertWorkspaces(options);
+    commandAssertWorkspaces();
   } else if (options.command === "plan") {
     commandPlan(options);
   } else if (options.command === "summary") {

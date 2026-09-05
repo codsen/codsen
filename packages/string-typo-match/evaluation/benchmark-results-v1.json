@@ -6,7 +6,7 @@
     "cspellWeighted": "Symmetric ASCII letters/digits map: insertion/deletion 100, substitution 150, adjacent swap 100; fallback edit cost 150.",
     "affineGap": "Global Gotoh score negated: match 0, substitution 150, either insertion or omission run 100+(length-1)*20.",
     "shared": "Exact-match bypass, minimum input length, maximum cost, and minimum gap follow each corpus case.",
-    "differences": "Comparators have no maxEvents, omission length/ratio limits, retained-neighbor repetition weighting, or configured keyboard weighting. Their string units and alignments are their own APIs. Scalar comparator results omit operation explanations. Throughput is not an equivalent-result speedup claim."
+    "differences": "Comparators have no maxEvents, omission length/ratio limits, retained-neighbour repetition weighting, or configured keyboard weighting. Their string units and alignments are their own APIs. Scalar comparator results omit operation explanations. Throughput is not an equivalent-result speedup claim."
   },
   "qualityLimitations": "Selected flags are not a random sample. Some repository inputs are deliberate fixtures. Intended corrections are inferred, not logged keystrokes. Unselected flags include valid identifiers and names.",
   "comparatorVersions": {

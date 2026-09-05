@@ -1,5 +1,5 @@
 // Frozen US-QWERTY letter adjacency. Rows have x offsets 0, 0.25 and 0.75,
-// y coordinates 0, 1 and 2; centers at Euclidean distance <= 1.3 are neighbors.
+// y coordinates 0, 1 and 2; centers at Euclidean distance <= 1.3 are neighbours.
 // Edges are listed explicitly in both directions. Uppercase has the same
 // adjacency within its own case; there are no cross-case edges. Digits,
 // punctuation and other layouts are deliberately absent and use general costs.
@@ -36,7 +36,7 @@ const qwerty: Record<string, readonly string[]> = Object.create(null);
 for (const key of Object.keys(lower)) {
   qwerty[key] = lower[key];
   qwerty[key.toUpperCase()] = Object.freeze(
-    lower[key].map((neighbor) => neighbor.toUpperCase()),
+    lower[key].map((neighbour) => neighbour.toUpperCase()),
   );
 }
 

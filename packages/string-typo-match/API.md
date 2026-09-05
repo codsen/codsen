@@ -51,8 +51,8 @@ Later changes to caller-owned arrays or maps do not affect them.
 | Option | Default | Allowed values |
 | --- | --- | --- |
 | `maxEvents` | `1` | `1` or `2` |
-| `maxCost` | `200` | Nonnegative safe integer |
-| `minCostGap` | `25` | Nonnegative safe integer |
+| `maxCost` | `200` | Non-negative safe integer |
+| `minCostGap` | `25` | Non-negative safe integer |
 | `minInputLength` | `3` | Positive safe integer, measured in code points |
 | `maxOmissionLength` | `4` | Positive safe integer, per omission run |
 | `maxOmissionRatio` | `0.5` | Finite number from `0` to `1`, inclusive |
@@ -65,9 +65,9 @@ Later changes to caller-owned arrays or maps do not affect them.
 | `omissionOpen` | `100` | Initial component of a block omission |
 | `omissionExtend` | `20` | Each further omitted code point |
 | `extraCharacter` | `100` | One extra input code point |
-| `repeatedCharacter` | `75` | Extra copy beside an unchanged retained neighbor |
+| `repeatedCharacter` | `75` | Extra copy beside an unchanged retained neighbour |
 | `adjacentSwap` | `100` | Two adjacent distinct code points exchange positions |
-| `keyboardSubstitution` | `75` | A declared keyboard-neighbor substitution |
+| `keyboardSubstitution` | `75` | A declared keyboard-neighbour substitution |
 | `substitution` | `150` | A general single-character substitution |
 
 Event costs must be positive safe integers, except `omissionExtend`, which may
@@ -102,7 +102,7 @@ Operation costs sum to `cost`, and their count equals `eventCount`.
 This is a local, non-overlapping event model. A swap cannot edit material used
 by another event. `CA → ABC`, for example, is excluded even at two events.
 A character used in a swap or substitution cannot qualify as the unchanged
-neighbor for repetition weighting. A more expensive keyboard or repetition
+neighbour for repetition weighting. A more expensive keyboard or repetition
 specialization loses to its cheaper general rule.
 
 For equal-cost explanations of one candidate, prefer fewer events, then compare
@@ -116,16 +116,16 @@ later alignment. Multiple explanations of one candidate do not cause ambiguity.
 
 The default `keyboard: null` applies no keyboard weighting. A map such as
 `{ t: ["r"] }` permits the intended `t` to be observed as `r`. It does not infer
-the reverse edge. Each key and neighbor must be exactly one code point.
+the reverse edge. Each key and neighbour must be exactly one code point.
 
 The `"qwerty"` preset is a fixed US-QWERTY **letter** adjacency table. Letter
 rows use x offsets `0`, `0.25`, and `0.75`, with y coordinates `0`, `1`, and
-`2`. Distances of at most `1.3` key spacings are neighbors. Uppercase letters
+`2`. Distances of at most `1.3` key spacings are neighbours. Uppercase letters
 have the same adjacency within uppercase; cross-case edges, digits, punctuation,
 and other layouts are excluded and receive general substitution costs.
 The exact table is checked in at [src/qwerty.ts](src/qwerty.ts).
 
-Binary adjacency does not distinguish distances among neighbors. With
+Binary adjacency does not distinguish distances among neighbours. With
 `{ o: ["p"], a: ["w"] }`, observed `pwned` ties between `owned` and `paned`.
 There is no hidden frequency dictionary, initial-letter preference, graded
 distance option, or positional modifier in this API.
@@ -147,7 +147,7 @@ do not corrupt a prepared matcher for its next call.
 `evaluatedCandidateCount`, `prunedCandidateCount`, `eligibleCandidateCount`, and
 `timeTakenInMilliseconds`. Evaluated candidates entered approximate scoring;
 pruned candidates failed a sound bound. Deduplication and exact-lookup bypasses
-count as neither evaluated nor pruned. Timing is nonnegative best-effort elapsed
+count as neither evaluated nor pruned. Timing is non-negative best-effort elapsed
 milliseconds and never affects matching decisions.
 
 Results contain plain JSON-compatible data and can cross `postMessage()`.
