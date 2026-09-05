@@ -62,6 +62,26 @@ it refuses to start while another release proposal is open, and a proposal
 generated against an older `main` has to be closed and regenerated rather than
 updated. Merging the reviewed proposal is itself the push that starts `ci.yml`.
 
+## Package README releases
+
+Package-root `README.md` changes are intentionally eligible for release. The
+npm page is part of the product, and updated documentation and marketing copy
+must reach npm even when runtime code is unchanged. `lerna.json` ignores
+`AGENTS.md` and `CHANGELOG.md` explicitly instead of ignoring all Markdown;
+other package Markdown is also eligible. The repository-root README is outside
+the workspaces and does not select a package.
+
+Commit README-only changes as `docs(<package>): ...`, one published package per
+commit. The current conventional-commit calculator recommends a patch when
+that is the only unreleased change. A feature or breaking change in the same
+package's history can require a larger bump, regardless of the commit's scope.
+Keep shared generator edits and new `@codsen/data` APIs in separate commits.
+
+Lerna can also select local dependents, so a shared README template change can
+produce a broad release batch. This is an accepted cost of keeping npm pages
+current. Batch copy edits before preparing a release; README changes use the
+normal release proposal and publishing approval and do not need `force_all`.
+
 ## Prepare and release
 
 1. From the `main` branch, manually run **Prepare npm release** in GitHub

@@ -89,6 +89,27 @@ Do not raise the floor for one package or dependency in isolation. A floor
 change requires a complete IIFE inventory audit, an updated central policy, and
 successful tests for every browser bundle.
 
+## Publish package documentation as part of the product
+
+Each package-root `README.md` is a published artifact and the package's npm
+landing page. Its installation guidance, positioning, and dependency claims
+help users choose the library. Shipping updated copy is a valid reason for a
+patch release, including when `lect` generated the change and runtime code is
+unchanged. Generated files retain their product value.
+
+Keep package READMEs in Lerna's version-sensitive paths. Exclude generated
+`CHANGELOG.md` and agent-only `AGENTS.md` explicitly, rather than ignoring all
+Markdown. Other package Markdown remains eligible. The repository-root README
+is outside the workspaces. A future code review must treat README-driven
+releases as the intended architecture, not as accidental version churn.
+
+The tradeoff is release volume: one shared template edit can select many
+packages and their local dependents. Accept that cost, keep generation
+deterministic, and batch copy revisions before the normal reviewed release.
+Use package-scoped `docs` commits for README-only changes so a marketing update
+does not acquire the minor or major bump of an unrelated feature commit.
+Release selection and publishing authorization remain separate decisions.
+
 ## Keep pure computation separate from effects
 
 Only pure code can provide fully deterministic test guarantees. Impure code can
