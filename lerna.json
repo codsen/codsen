@@ -14,7 +14,8 @@
     "**/node_modules/**",
     "**/.npmignore",
     "**/perf/**",
-    "**/*.md"
+    "**/AGENTS.md",
+    "**/CHANGELOG.md"
   ],
   "packages": ["packages/*", "data"],
   "version": "independent",
