@@ -2,6 +2,10 @@ interface UnknownValueObj {
   [key: string]: number;
 }
 
+interface StringValueObj {
+  [key: string]: string;
+}
+
 interface DependencyStats {
   dependencies: UnknownValueObj;
   devDependencies: UnknownValueObj;
@@ -17,6 +21,9 @@ interface DependencyStats {
   /** External or unaudited dependencies/devDependencies at any depth.
    * The complement of noThirdPartyDependencies among current public packages. */
   thirdPartyDependencies: string[];
+  /** Package name -> the one third-party library its whole recursive footprint
+   * amounts to. Typings are folded into the library they describe. */
+  singleThirdPartyDependency: StringValueObj;
 }
 
 export const dependencyStats: DependencyStats = {
@@ -337,6 +344,22 @@ export const dependencyStats: DependencyStats = {
     "util-array-object-or-both",
     "util-nonempty"
   ],
+  "singleThirdPartyDependency": {
+    "ast-deep-contains": "object-path",
+    "ast-monkey": "type-detect",
+    "check-types-mini": "type-detect",
+    "codsen-glob": "picomatch",
+    "csv-sort": "currency.js",
+    "email-comb": "html-entities",
+    "generate-atomic-css-cli": "picomatch",
+    "is-media-descriptor": "leven",
+    "js-row-num-cli": "picomatch",
+    "json-variables": "object-path",
+    "ranges-ent-decode": "he",
+    "string-convert-indexes": "unicode-segmenter",
+    "string-fix-broken-named-entities": "leven",
+    "string-unfancy": "he"
+  },
   "thirdPartyDependencies": [
     "ast-deep-contains",
     "ast-monkey",

@@ -1954,13 +1954,12 @@ export const packageJSONData = {
   "codsen-glob": {
     "name": "codsen-glob",
     "version": "1.1.1",
-    "description": "Fast TypeScript file globbing",
+    "description": "Fast file globbing",
     "keywords": [
       "files",
       "filesystem",
       "glob",
-      "globbing",
-      "typescript"
+      "globbing"
     ],
     "homepage": "https://codsen.com/os/codsen-glob",
     "repository": {

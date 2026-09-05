@@ -52,8 +52,8 @@ export const interdeps = [
   },
   {
     "name": "ast-deep-contains",
-    "tarballSizeBytes": 10249,
-    "unpackedSizeBytes": 27005,
+    "tarballSizeBytes": 10270,
+    "unpackedSizeBytes": 27057,
     "imports": [
       "ast-monkey-traverse"
     ]
@@ -105,8 +105,8 @@ export const interdeps = [
   },
   {
     "name": "ast-monkey",
-    "tarballSizeBytes": 36430,
-    "unpackedSizeBytes": 112498,
+    "tarballSizeBytes": 36456,
+    "unpackedSizeBytes": 112550,
     "imports": [
       "ast-compare",
       "ast-monkey-traverse",
@@ -139,8 +139,8 @@ export const interdeps = [
   },
   {
     "name": "check-types-mini",
-    "tarballSizeBytes": 28908,
-    "unpackedSizeBytes": 80162,
+    "tarballSizeBytes": 28929,
+    "unpackedSizeBytes": 80214,
     "imports": [
       "codsen-utils"
     ]
@@ -161,8 +161,8 @@ export const interdeps = [
   },
   {
     "name": "codsen-glob",
-    "tarballSizeBytes": 7617,
-    "unpackedSizeBytes": 20729,
+    "tarballSizeBytes": 7624,
+    "unpackedSizeBytes": 20732,
     "imports": []
   },
   {
@@ -183,8 +183,8 @@ export const interdeps = [
   },
   {
     "name": "csv-sort",
-    "tarballSizeBytes": 20391,
-    "unpackedSizeBytes": 57436,
+    "tarballSizeBytes": 20412,
+    "unpackedSizeBytes": 57488,
     "imports": [
       "codsen-utils",
       "csv-split-easy"
@@ -230,8 +230,8 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "tarballSizeBytes": 155579,
-    "unpackedSizeBytes": 502058,
+    "tarballSizeBytes": 155419,
+    "unpackedSizeBytes": 501420,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -252,8 +252,8 @@ export const interdeps = [
   },
   {
     "name": "edit-package-json",
-    "tarballSizeBytes": 20004,
-    "unpackedSizeBytes": 59894,
+    "tarballSizeBytes": 19068,
+    "unpackedSizeBytes": 58345,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -281,8 +281,8 @@ export const interdeps = [
   },
   {
     "name": "email-comb",
-    "tarballSizeBytes": 64092,
-    "unpackedSizeBytes": 194651,
+    "tarballSizeBytes": 64187,
+    "unpackedSizeBytes": 194761,
     "imports": [
       "array-pull-all-with-glob",
       "codsen-utils",
@@ -299,8 +299,8 @@ export const interdeps = [
   },
   {
     "name": "extract-search-index",
-    "tarballSizeBytes": 68192,
-    "unpackedSizeBytes": 192248,
+    "tarballSizeBytes": 68217,
+    "unpackedSizeBytes": 192397,
     "imports": [
       "codsen-utils",
       "string-strip-html",
@@ -309,8 +309,8 @@ export const interdeps = [
   },
   {
     "name": "generate-atomic-css",
-    "tarballSizeBytes": 14652,
-    "unpackedSizeBytes": 40959,
+    "tarballSizeBytes": 14703,
+    "unpackedSizeBytes": 41257,
     "imports": [
       "codsen-utils",
       "string-left-right"
@@ -318,8 +318,8 @@ export const interdeps = [
   },
   {
     "name": "generate-atomic-css-cli",
-    "tarballSizeBytes": 10786,
-    "unpackedSizeBytes": 34736,
+    "tarballSizeBytes": 10814,
+    "unpackedSizeBytes": 34786,
     "imports": [
       "codsen-glob",
       "codsen-utils",
@@ -334,8 +334,8 @@ export const interdeps = [
   },
   {
     "name": "html-crush",
-    "tarballSizeBytes": 30282,
-    "unpackedSizeBytes": 92515,
+    "tarballSizeBytes": 30258,
+    "unpackedSizeBytes": 92571,
     "imports": [
       "codsen-utils",
       "ranges-push",
@@ -364,8 +364,8 @@ export const interdeps = [
   },
   {
     "name": "html-table-patcher",
-    "tarballSizeBytes": 41212,
-    "unpackedSizeBytes": 141626,
+    "tarballSizeBytes": 41205,
+    "unpackedSizeBytes": 141682,
     "imports": [
       "ast-monkey-traverse-with-lookahead",
       "codsen-parser",
@@ -381,8 +381,8 @@ export const interdeps = [
   },
   {
     "name": "is-html-attribute-closing",
-    "tarballSizeBytes": 18655,
-    "unpackedSizeBytes": 51913,
+    "tarballSizeBytes": 18638,
+    "unpackedSizeBytes": 51969,
     "imports": [
       "html-all-known-attributes",
       "is-char-suitable-for-html-attr-name",
@@ -392,7 +392,7 @@ export const interdeps = [
   },
   {
     "name": "is-html-tag-opening",
-    "tarballSizeBytes": 13805,
+    "tarballSizeBytes": 13807,
     "unpackedSizeBytes": 37627,
     "imports": [
       "codsen-utils",
@@ -402,8 +402,8 @@ export const interdeps = [
   },
   {
     "name": "is-media-descriptor",
-    "tarballSizeBytes": 12733,
-    "unpackedSizeBytes": 34590,
+    "tarballSizeBytes": 12755,
+    "unpackedSizeBytes": 34636,
     "imports": [
       "string-process-comma-separated"
     ]
@@ -420,8 +420,8 @@ export const interdeps = [
   },
   {
     "name": "js-row-num-cli",
-    "tarballSizeBytes": 11850,
-    "unpackedSizeBytes": 37446,
+    "tarballSizeBytes": 11873,
+    "unpackedSizeBytes": 37496,
     "imports": [
       "arrayiffy-if-string",
       "codsen-glob",
@@ -462,8 +462,8 @@ export const interdeps = [
   },
   {
     "name": "json-variables",
-    "tarballSizeBytes": 33444,
-    "unpackedSizeBytes": 105468,
+    "tarballSizeBytes": 33468,
+    "unpackedSizeBytes": 105520,
     "imports": [
       "arrayiffy-if-string",
       "ast-get-values-by-key",
@@ -594,8 +594,8 @@ export const interdeps = [
   },
   {
     "name": "ranges-ent-decode",
-    "tarballSizeBytes": 43226,
-    "unpackedSizeBytes": 116091,
+    "tarballSizeBytes": 43247,
+    "unpackedSizeBytes": 116134,
     "imports": [
       "codsen-utils",
       "ranges-merge"
@@ -737,8 +737,8 @@ export const interdeps = [
   },
   {
     "name": "string-collapse-white-space",
-    "tarballSizeBytes": 19118,
-    "unpackedSizeBytes": 54542,
+    "tarballSizeBytes": 19215,
+    "unpackedSizeBytes": 54691,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -748,8 +748,8 @@ export const interdeps = [
   },
   {
     "name": "string-convert-indexes",
-    "tarballSizeBytes": 14966,
-    "unpackedSizeBytes": 39613,
+    "tarballSizeBytes": 14985,
+    "unpackedSizeBytes": 39671,
     "imports": [
       "ast-monkey-traverse",
       "codsen-utils"
@@ -757,8 +757,8 @@ export const interdeps = [
   },
   {
     "name": "string-dashes",
-    "tarballSizeBytes": 12374,
-    "unpackedSizeBytes": 34520,
+    "tarballSizeBytes": 12354,
+    "unpackedSizeBytes": 34576,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -767,8 +767,8 @@ export const interdeps = [
   },
   {
     "name": "string-extract-class-names",
-    "tarballSizeBytes": 13919,
-    "unpackedSizeBytes": 37289,
+    "tarballSizeBytes": 13881,
+    "unpackedSizeBytes": 37344,
     "imports": [
       "codsen-utils",
       "string-left-right"
@@ -794,8 +794,8 @@ export const interdeps = [
   },
   {
     "name": "string-find-malformed",
-    "tarballSizeBytes": 8885,
-    "unpackedSizeBytes": 22970,
+    "tarballSizeBytes": 8950,
+    "unpackedSizeBytes": 23117,
     "imports": [
       "codsen-utils",
       "string-left-right"
@@ -803,8 +803,8 @@ export const interdeps = [
   },
   {
     "name": "string-fix-broken-named-entities",
-    "tarballSizeBytes": 51923,
-    "unpackedSizeBytes": 191319,
+    "tarballSizeBytes": 52026,
+    "unpackedSizeBytes": 191661,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -813,8 +813,8 @@ export const interdeps = [
   },
   {
     "name": "string-left-right",
-    "tarballSizeBytes": 11845,
-    "unpackedSizeBytes": 34390,
+    "tarballSizeBytes": 11290,
+    "unpackedSizeBytes": 32574,
     "imports": [
       "codsen-utils"
     ]
@@ -870,7 +870,7 @@ export const interdeps = [
   {
     "name": "string-remove-widows",
     "tarballSizeBytes": 27701,
-    "unpackedSizeBytes": 79717,
+    "unpackedSizeBytes": 79773,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -888,8 +888,8 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "tarballSizeBytes": 53057,
-    "unpackedSizeBytes": 155073,
+    "tarballSizeBytes": 53090,
+    "unpackedSizeBytes": 155222,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -913,8 +913,8 @@ export const interdeps = [
   },
   {
     "name": "string-unfancy",
-    "tarballSizeBytes": 39580,
-    "unpackedSizeBytes": 105459,
+    "tarballSizeBytes": 39601,
+    "unpackedSizeBytes": 105502,
     "imports": [
       "codsen-utils"
     ]
@@ -929,8 +929,8 @@ export const interdeps = [
   },
   {
     "name": "tsd-extract",
-    "tarballSizeBytes": 12941,
-    "unpackedSizeBytes": 36393,
+    "tarballSizeBytes": 12922,
+    "unpackedSizeBytes": 36449,
     "imports": [
       "codsen-utils",
       "string-left-right"
