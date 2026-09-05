@@ -32,11 +32,14 @@ async function readme({ mode, state, quickTakeExample }) {
     ),
     state.pack,
   ]);
+  const soleDependency = statuses.singleThirdPartyDependency[packageName];
   const dependencyNotice = statuses.noDependencies.includes(packageName)
     ? "**No dependencies whatsoever.** This package declares no dependencies or devDependencies."
     : statuses.noThirdPartyDependencies.includes(packageName)
       ? "**No 3rd party dependencies.** All dependencies and devDependencies, checked recursively, are Codsen packages."
-      : "";
+      : soleDependency
+        ? `**Powered by ${soleDependency}.** No other dependencies.`
+        : "";
   let badge1 = `<img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center">`;
 
   let badge2 = `<img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center">`;

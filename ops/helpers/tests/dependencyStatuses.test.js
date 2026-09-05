@@ -16,6 +16,7 @@ test("01 - absent and empty dependency sets qualify for both markers", () => {
     {
       noDependencies: ["absent", "zero"],
       noThirdPartyDependencies: ["absent", "zero"],
+      singleThirdPartyDependency: {},
       thirdPartyDependencies: [],
     },
     "01.01",
@@ -40,6 +41,12 @@ test("02 - both dependency sets are checked at every depth", () => {
     {
       noDependencies: ["leaf"],
       noThirdPartyDependencies: ["leaf", "own", "own-dev"],
+      singleThirdPartyDependency: {
+        deep: "third",
+        external: "third",
+        "external-dev": "third",
+        indirect: "third",
+      },
       thirdPartyDependencies: ["deep", "external", "external-dev", "indirect"],
     },
     "02.01",
@@ -58,6 +65,7 @@ test("03 - internal cycles qualify until any member reaches an external dependen
     {
       noDependencies: ["c"],
       noThirdPartyDependencies: ["a", "b", "c", "consumer"],
+      singleThirdPartyDependency: {},
       thirdPartyDependencies: [],
     },
     "03.01",
@@ -68,6 +76,12 @@ test("03 - internal cycles qualify until any member reaches an external dependen
     {
       noDependencies: [],
       noThirdPartyDependencies: [],
+      singleThirdPartyDependency: {
+        a: "third",
+        b: "third",
+        c: "third",
+        consumer: "third",
+      },
       thirdPartyDependencies: ["a", "b", "c", "consumer"],
     },
     "03.02",
@@ -77,6 +91,12 @@ test("03 - internal cycles qualify until any member reaches an external dependen
     {
       noDependencies: [],
       noThirdPartyDependencies: [],
+      singleThirdPartyDependency: {
+        a: "third",
+        b: "third",
+        c: "third",
+        consumer: "third",
+      },
       thirdPartyDependencies: ["a", "b", "c", "consumer"],
     },
     "03.03",
@@ -98,6 +118,7 @@ test("04 - shared dependency paths and duplicate edges retain every consumer", (
     {
       noDependencies: ["leaf"],
       noThirdPartyDependencies: ["leaf", "left", "right", "top"],
+      singleThirdPartyDependency: {},
       thirdPartyDependencies: [],
     },
     "04.01",
@@ -115,6 +136,10 @@ test("05 - private packages are scanned but never advertised", () => {
     {
       noDependencies: [],
       noThirdPartyDependencies: [],
+      singleThirdPartyDependency: {
+        consumer: "third",
+        "unknown-codsen": "codsen-missing",
+      },
       thirdPartyDependencies: ["consumer", "unknown-codsen"],
     },
     "05.01",
@@ -138,6 +163,7 @@ test("06 - aliases and redirected sources do not inherit a local package's marke
     {
       noDependencies: ["leaf"],
       noThirdPartyDependencies: ["leaf"],
+      singleThirdPartyDependency: {},
       thirdPartyDependencies: [
         "alias",
         "duplicate",
@@ -166,6 +192,7 @@ test("07 - lect projects dev-dependency cleanup without mutating manifests", () 
     {
       noDependencies: ["leaf"],
       noThirdPartyDependencies: ["consumer", "leaf"],
+      singleThirdPartyDependency: {},
       thirdPartyDependencies: [],
     },
     "07.01",
@@ -217,10 +244,109 @@ test("08 - generated READMEs show the strongest marker and remove stale claims",
       false,
       "08.05",
     );
+    equal(
+      readFileSync(filename, "utf8").includes(
+        "**Powered by third.** No other dependencies.",
+      ),
+      true,
+      "08.06",
+    );
+    state.packageManifests[0].devDependencies.fourth = "*";
+    await readme({ state });
+    equal(
+      readFileSync(filename, "utf8").includes("**Powered by"),
+      false,
+      "08.07",
+    );
     await readme({ state, mode: "check" });
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
+});
+
+test("09 - typings fold into the library they describe", () => {
+  equal(
+    dependencyStatuses([
+      { name: "leaf" },
+      {
+        name: "sole",
+        dependencies: { picomatch: "^4.0.7" },
+        devDependencies: { "@types/picomatch": "^4.0.3" },
+      },
+      {
+        name: "scoped",
+        devDependencies: { "@babel/core": "*", "@types/babel__core": "*" },
+      },
+      { name: "consumer", dependencies: { sole: "*" } },
+      { name: "pair", dependencies: { leven: "*", picomatch: "*" } },
+    ]),
+    {
+      noDependencies: ["leaf"],
+      noThirdPartyDependencies: ["leaf"],
+      singleThirdPartyDependency: {
+        consumer: "picomatch",
+        scoped: "@babel/core",
+        sole: "picomatch",
+      },
+      thirdPartyDependencies: ["consumer", "pair", "scoped", "sole"],
+    },
+    "09.01",
+  );
+});
+
+test("10 - typings alone never name a library the package does not install", () => {
+  equal(
+    dependencyStatuses([
+      { name: "typed", devDependencies: { "@types/mdast": "^4.0.0" } },
+      { name: "consumer", dependencies: { typed: "*" } },
+    ]),
+    {
+      noDependencies: [],
+      noThirdPartyDependencies: [],
+      singleThirdPartyDependency: {},
+      thirdPartyDependencies: ["consumer", "typed"],
+    },
+    "10.01",
+  );
+});
+
+test("11 - redirected sources count as external but are never nameable", () => {
+  equal(
+    dependencyStatuses([
+      { name: "leaf" },
+      { name: "alias", dependencies: { leaf: "npm:third@1" } },
+      {
+        name: "mixed",
+        dependencies: { leaf: "file:../third", picomatch: "*" },
+      },
+      { name: "consumer", dependencies: { alias: "*" } },
+    ]),
+    {
+      noDependencies: ["leaf"],
+      noThirdPartyDependencies: ["leaf"],
+      singleThirdPartyDependency: {},
+      thirdPartyDependencies: ["alias", "consumer", "mixed"],
+    },
+    "11.01",
+  );
+});
+
+test("12 - Codsen packages outside the workspace block both markers", () => {
+  equal(
+    dependencyStatuses([
+      { name: "leaf" },
+      { name: "outside", dependencies: { "codsen-parser": "^0.14.25" } },
+      { name: "consumer", dependencies: { outside: "*" } },
+      { name: "mixed", dependencies: { "codsen-parser": "*", picomatch: "*" } },
+    ]),
+    {
+      noDependencies: ["leaf"],
+      noThirdPartyDependencies: ["leaf"],
+      singleThirdPartyDependency: {},
+      thirdPartyDependencies: ["consumer", "mixed", "outside"],
+    },
+    "12.01",
+  );
 });
 
 test.run();

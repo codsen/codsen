@@ -170,13 +170,25 @@ async function verifyData() {
     }
   }
 
-  for (const [marker, expected] of Object.entries(
-    dependencyStatuses(manifests),
-  )) {
+  const { singleThirdPartyDependency, ...markerLists } =
+    dependencyStatuses(manifests);
+  for (const [marker, expected] of Object.entries(markerLists)) {
     assertSameList(
       data.dependencyStats[marker],
       expected,
       `dependencyStats.${marker}`,
+    );
+  }
+  if (
+    !isDeepStrictEqual(
+      data.dependencyStats.singleThirdPartyDependency,
+      singleThirdPartyDependency,
+    )
+  ) {
+    fail(
+      `dependencyStats.singleThirdPartyDependency mismatch (expected ${JSON.stringify(
+        singleThirdPartyDependency,
+      )})`,
     );
   }
 
