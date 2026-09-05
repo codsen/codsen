@@ -106,6 +106,11 @@ function normalisePackageJson({
 
   // 6. remove dev deps from this package.json which are already present
   // in root package.json dev deps
+  return format(normaliseDevDependencies(content, rootPackageJSON));
+}
+
+function normaliseDevDependencies(manifest, rootPackageJSON) {
+  const content = { ...manifest };
   if (Object.keys(content.devDependencies || {}).length) {
     const rootDevDependencies = new Set(
       Object.keys(rootPackageJSON.devDependencies || {}),
@@ -120,7 +125,7 @@ function normalisePackageJson({
   if (!Object.keys(content.devDependencies || {}).length) {
     objectPath.del(content, "devDependencies");
   }
-  return format(content);
+  return content;
 }
 
 // writes package.json
@@ -162,5 +167,5 @@ async function packageJson({
   }
 }
 
-export { normalisePackageJson };
+export { normaliseDevDependencies, normalisePackageJson };
 export default packageJson;

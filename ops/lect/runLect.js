@@ -8,12 +8,13 @@ import { GENERATION_MODES } from "../helpers/generatedFiles.js";
 import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
 import { readPackageKindResolver } from "../helpers/packageKindsFile.js";
 import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
+import { readWorkspaceRecords } from "../helpers/workspaceInventoryFile.js";
 import allContrib from "./plugins/allContributors.js";
 import cliUpdateNotifier from "./plugins/cliUpdateNotifier.js";
 import hardDelete from "./plugins/hardDelete.js";
 import hardWrite from "./plugins/hardWrite.js";
 import licence from "./plugins/licence.js";
-import pack from "./plugins/pack.js";
+import pack, { normaliseDevDependencies } from "./plugins/pack.js";
 import readme from "./plugins/readme.js";
 import rollupConfig from "./plugins/rollupConfig.js";
 import tsconfig from "./plugins/tsconfig.js";
@@ -106,6 +107,16 @@ async function runLect({
     isBin: objectPath.has(packageJson, "bin"),
     packageKind,
     pack: packageJson,
+    // Project the same dev-dependency cleanup for every package before other
+    // parallel lect tasks write their manifests, so one pass is deterministic.
+    packageManifests: readWorkspaceRecords(repositoryRoot)
+      .filter(
+        ({ manifest }) =>
+          packageKinds.kindFor(manifest.name) !== PACKAGE_KINDS.GENERATED_DATA,
+      )
+      .map(({ manifest }) =>
+        normaliseDevDependencies(manifest, rootPackageJSON),
+      ),
     repositoryRoot,
     root: absolutePackageRoot,
   };

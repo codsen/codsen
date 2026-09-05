@@ -4,6 +4,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { isDeepStrictEqual } from "node:util";
+import { dependencyStatuses } from "../helpers/dependencyStatuses.js";
 import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
 import { readPackageKindResolver } from "../helpers/packageKindsFile.js";
 
@@ -123,11 +124,13 @@ async function verifyData() {
   const programNames = [];
   const scriptNames = [];
   const specialNames = [];
+  const manifests = [];
   for (const directory of directories) {
     const packageDirectory = path.join(ROOT, "packages", directory);
     const manifest = JSON.parse(
       readFileSync(path.join(packageDirectory, "package.json"), "utf8"),
     );
+    manifests.push(manifest);
     if (manifest.name !== directory) {
       fail(
         `${directory}/package.json name is ${manifest.name}; generated data requires package names to match their directories`,
@@ -165,6 +168,16 @@ async function verifyData() {
     } else if (!manifest.bin) {
       specialNames.push(manifest.name);
     }
+  }
+
+  for (const [marker, expected] of Object.entries(
+    dependencyStatuses(manifests),
+  )) {
+    assertSameList(
+      data.dependencyStats[marker],
+      expected,
+      `dependencyStats.${marker}`,
+    );
   }
 
   cliNames.sort();

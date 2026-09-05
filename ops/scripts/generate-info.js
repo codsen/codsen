@@ -3,6 +3,7 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import git from "simple-git";
 import { programClassification } from "../../data/sources/programClassification.ts";
+import { dependencyStatuses } from "../helpers/dependencyStatuses.js";
 import { writeGeneratedFile } from "../helpers/generatedFiles.js";
 import { npmPackageSizes } from "../helpers/npmPackageSizes.js";
 import { missingPackageBuildArtifacts } from "../helpers/packageBuildArtifacts.js";
@@ -387,10 +388,22 @@ interface DependencyStats {
   top10OwnDeps: UnknownValueObj[];
   allExternalDeps: string[];
   allOwnDeps: string[];
+  /** No package-level dependencies or devDependencies; excludes root tooling. */
+  noDependencies: string[];
+  /** Only current Codsen packages throughout dependencies and devDependencies.
+   * Includes noDependencies. Packages with unaudited dependencies are omitted. */
+  noThirdPartyDependencies: string[];
+  /** External or unaudited dependencies/devDependencies at any depth.
+   * The complement of noThirdPartyDependencies among current public packages. */
+  thirdPartyDependencies: string[];
 }
 `;
 
-const dependencyStats = { dependencies: {}, devDependencies: {} };
+const dependencyStats = {
+  dependencies: {},
+  devDependencies: {},
+  ...dependencyStatuses(packageNames.map((name) => packageJSONData[name])),
+};
 
 for (let i = 0, len = allPackages.length; i < len; i++) {
   let packageName = allPackages[i];

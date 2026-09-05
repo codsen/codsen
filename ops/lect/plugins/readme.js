@@ -2,6 +2,7 @@ import path from "node:path";
 import objectPath from "object-path";
 import { esmBump } from "../../../data/sources/esmBump.ts";
 import arrayiffy from "../../helpers/arrayiffy.js";
+import { dependencyStatuses } from "../../helpers/dependencyStatuses.js";
 import { writeGeneratedFile } from "../../helpers/generatedFiles.js";
 import { PACKAGE_KINDS } from "../../helpers/packageKinds.js";
 import { getLicenceShortVersion } from "../common/getLicenceContents.js";
@@ -25,6 +26,17 @@ function hasPlayground(name) {
 
 async function readme({ mode, state, quickTakeExample }) {
   const packageName = state.pack.name;
+  const statuses = dependencyStatuses([
+    ...state.packageManifests.filter(
+      (manifest) => manifest.name !== packageName,
+    ),
+    state.pack,
+  ]);
+  const dependencyNotice = statuses.noDependencies.includes(packageName)
+    ? "**No dependencies whatsoever.** This package declares no dependencies or devDependencies."
+    : statuses.noThirdPartyDependencies.includes(packageName)
+      ? "**No 3rd party dependencies.** All dependencies and devDependencies, checked recursively, are Codsen packages."
+      : "";
   let badge1 = `<img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center">`;
 
   let badge2 = `<img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center">`;
@@ -75,7 +87,7 @@ async function readme({ mode, state, quickTakeExample }) {
       ? `\n  <a href="https://codsen.com/os/${packageName}/play"><img src="https://img.shields.io/badge/playground-here-brightgreen?style=flat-square" alt="playground"></a>`
       : ""
   }
-</p>
+</p>${dependencyNotice ? `\n\n${dependencyNotice}` : ""}
 
 ## Install${state.pack?.exports ? `\n\n${esmNotice}` : ""}
 
