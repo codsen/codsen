@@ -22,6 +22,8 @@
   <a href="https://codsen.com/os/html-crush/play"><img src="https://img.shields.io/badge/playground-here-brightgreen?style=flat-square" alt="playground"></a>
 </p>
 
+**No 3rd party dependencies.** All dependencies and devDependencies, checked recursively, are Codsen packages.
+
 ## Install
 
 This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). If you're not ready yet, install an older version of this program, 4.2.0 (`npm i html-crush@4.2.0`).
