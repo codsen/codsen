@@ -11,12 +11,12 @@
     "fix",
     "fixer",
     "html",
-    "levenshtein",
     "named",
     "range",
     "ranges",
     "return",
-    "string"
+    "string",
+    "typo"
   ],
   "homepage": "https://codsen.com/os/string-fix-broken-named-entities",
   "repository": {
@@ -73,8 +73,8 @@
   "dependencies": {
     "all-named-html-entities": "^3.2.0",
     "codsen-utils": "^1.10.0",
-    "leven": "^4.1.0",
-    "string-left-right": "^6.2.2"
+    "string-left-right": "^6.2.2",
+    "string-typo-match": "^1.0.0"
   },
   "engines": {
     "node": ">=18.20.8"

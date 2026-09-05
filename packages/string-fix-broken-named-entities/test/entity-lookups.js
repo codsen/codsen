@@ -20,7 +20,7 @@ test("01 - casing repair preserves ambiguous names and their decoded values", ()
   );
 });
 
-test("02 - typo matching preserves ties, distance two, and length boundaries", () => {
+test("02 - typo matching preserves ties, block omissions, and length boundaries", () => {
   for (const [input, expected] of [
     ["&rsqo;", "&rsquo;"],
     ["&CounterClockwiseContourIntegra;", "&CounterClockwiseContourIntegral;"],

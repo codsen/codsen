@@ -14,8 +14,8 @@ import {
   isNumberChar,
   isPlainObject as isObj,
 } from "codsen-utils";
-import leven from "leven";
 import { left, leftSeq, right, rightSeq } from "string-left-right";
+import { createMatcher, defaults as typoDefaults } from "string-typo-match";
 import type { Ranges } from "../../../ops/typedefs/common";
 import { version as v } from "../package.json";
 import {
@@ -29,6 +29,13 @@ const version: string = v;
 declare let DEV: boolean;
 
 const entityNames = [...allNamedEntitiesSetOnly];
+// Longer omissions can expose a competing interpretation even when they are
+// too lossy to apply. Require one suggestion across this wider ambiguity check,
+// then retain the normal omission-ratio limit for the actual replacement.
+const entityTypoMatcher = createMatcher(entityNames, {
+  minCostGap: typoDefaults.maxCost + 1,
+  maxOmissionRatio: 1,
+});
 const entitiesByLowercase = new Map<string, string[]>();
 for (const name of entityNames) {
   const lower = name.toLowerCase();
@@ -38,6 +45,31 @@ for (const name of entityNames) {
   } else {
     entitiesByLowercase.set(lower, [name]);
   }
+}
+
+function matchEntityTypo(input: string): string | null {
+  // This established repair is explicit entity policy, outside general scoring.
+  if (input === "rsqo") {
+    return "rsquo";
+  }
+  const result = entityTypoMatcher.match(input);
+  if (result.bestMatch === null) {
+    return null;
+  }
+  const match = result.matches[0];
+  let omitted = 0;
+  for (const operation of match.operations) {
+    if (
+      operation.kind === "missing-character" ||
+      operation.kind === "omitted-block"
+    ) {
+      // HTML entity names are ASCII, so these offsets also count code points.
+      omitted += operation.candidateTo - operation.candidateFrom;
+    }
+  }
+  return omitted / match.candidate.length <= typoDefaults.maxOmissionRatio
+    ? result.bestMatch
+    : null;
 }
 
 function decodeName(name: string): string | null {
@@ -1086,7 +1118,6 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                 );
               }
               let tempEnt = "";
-              let temp: string[];
 
               DEV &&
                 console.log(
@@ -1134,43 +1165,16 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                   rangeValDecoded: decodedEntity,
                 });
                 pingAmps(whatIsOnTheLeft as number, i);
-              } else if (
-                // idea being, if length of suspected chunk is less or equal to
-                // the length of the longest entity (add 1 for Levenshtein distance)
-                // we still consider that whole chunk (from ampersand to semi)
-                // might be a value of an entity
-                potentialEntity.length < maxLength + 2 &&
-                // biome-ignore lint/suspicious/noAssignInExpressions: retain the first non-empty Levenshtein candidate set for the branch body
-                (((temp = entityNames.filter(
-                  (curr) =>
-                    Math.abs(curr.length - potentialEntity.length) <= 1 &&
-                    leven(curr, potentialEntity) === 1,
-                )) &&
-                  temp.length) ||
-                  //
-                  // OR
-                  //
-                  (potentialEntity.length > 3 &&
-                    // biome-ignore lint/suspicious/noAssignInExpressions: retain distance-two candidates when distance one found none
-                    (temp = entityNames.filter(
-                      (curr) =>
-                        Math.abs(curr.length - potentialEntity.length) <= 2 &&
-                        leven(curr, potentialEntity) === 2,
-                    )) &&
-                    temp.length))
-              ) {
-                DEV &&
-                  console.log(
-                    `${`\u001b[${32}m${`LEVENSHTEIN DIFFERENCE CAUGHT malformed "${temp}"`}\u001b[${39}m`}`,
-                  );
-
-                // now the problem: what if there were multiple entities matched?
-
-                /* c8 ignore next */
-                if (temp.length === 1) {
-                  [tempEnt] = temp;
+              } else {
+                // Match only the isolated name; surrounding prose must not
+                // influence which candidate wins. Curated repairs above remain
+                // domain policy, independent of the general typo model.
+                tempEnt = matchEntityTypo(potentialEntity) ?? "";
+                if (tempEnt) {
                   DEV &&
-                    console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+                    console.log(
+                      `${`\u001b[${32}m${`TYPO MATCH`}\u001b[${39}m`} ${tempEnt}`,
+                    );
                   rangesArr2.push({
                     ruleName: `bad-html-entity-malformed-${tempEnt}`,
                     entityName: tempEnt,
@@ -1180,83 +1184,9 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                     rangeValDecoded: decodeName(tempEnt),
                   });
                   pingAmps(whatIsOnTheLeft as number, i);
-                } else if (temp) {
-                  // For example, &rsqo; could be suspected as
-                  // Lenshtein's distance &rsqb; and &rsquo;
-                  // The last chance, count how many letters are
-                  // absent in this malformed entity.
-                  let missingLettersCount = temp.map((ent) => {
-                    let splitStr = str.split("");
-                    return ent.split("").reduce((acc, curr) => {
-                      if (splitStr.includes(curr)) {
-                        // remove that character from splitStr
-                        // so that we count only once, repetitions need to
-                        // be matched equally
-                        splitStr.splice(splitStr.indexOf(curr), 1);
-                        return acc + 1;
-                      }
-                      return acc;
-                    }, 0);
-                  });
-                  DEV &&
-                    console.log(
-                      `███████████████████████████████████████ ${`\u001b[${33}m${`missingLettersCount`}\u001b[${39}m`} = ${JSON.stringify(
-                        missingLettersCount,
-                        null,
-                        4,
-                      )}`,
-                    );
-                  let maxVal = Math.max(...missingLettersCount);
-                  DEV &&
-                    console.log(
-                      `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`maxVal`}\u001b[${39}m`} = ${JSON.stringify(
-                        maxVal,
-                        null,
-                        4,
-                      )}`,
-                    );
-                  // if there's only one value with more characters matched
-                  // than others, &rsqb; vs &rsquo; - latter would win matching
-                  // against messed up &rsqo; - we pick that winning-one
-                  if (
-                    maxVal &&
-                    missingLettersCount.filter((v2) => v2 === maxVal).length ===
-                      1
-                  ) {
-                    for (
-                      let z = 0, len2 = missingLettersCount.length;
-                      z < len2;
-                      z++
-                    ) {
-                      if (missingLettersCount[z] === maxVal) {
-                        tempEnt = temp[z];
-                        DEV &&
-                          console.log(
-                            `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`tempEnt`}\u001b[${39}m`} = ${JSON.stringify(
-                              tempEnt,
-                              null,
-                              4,
-                            )}`,
-                          );
-                        DEV &&
-                          console.log(
-                            `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`,
-                          );
-                        rangesArr2.push({
-                          ruleName: `bad-html-entity-malformed-${tempEnt}`,
-                          entityName: tempEnt,
-                          rangeFrom: whatIsOnTheLeft as number,
-                          rangeTo: i + 1,
-                          rangeValEncoded: `&${tempEnt};`,
-                          rangeValDecoded: decodeName(tempEnt),
-                        });
-
-                        pingAmps(whatIsOnTheLeft as number, i);
-                        break;
-                      }
-                    }
-                  }
                 }
+                // An ambiguous or absent match reaches the existing
+                // unrecognised diagnostic and deletion-range convention below.
               }
 
               // if "tempEnt" was not set by now, it is not a known HTML entity
