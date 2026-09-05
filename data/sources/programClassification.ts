@@ -35,6 +35,7 @@ export const programClassification = {
     "js-row-num",
     "line-column-mini",
     "arrayiffy-if-string",
+    "string-typo-match",
   ],
   cliAppsList: [
     "json-comb",

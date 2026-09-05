@@ -230,8 +230,8 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "tarballSizeBytes": 155419,
-    "unpackedSizeBytes": 501420,
+    "tarballSizeBytes": 158676,
+    "unpackedSizeBytes": 511796,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -402,10 +402,11 @@ export const interdeps = [
   },
   {
     "name": "is-media-descriptor",
-    "tarballSizeBytes": 12755,
-    "unpackedSizeBytes": 34636,
+    "tarballSizeBytes": 16148,
+    "unpackedSizeBytes": 45441,
     "imports": [
-      "string-process-comma-separated"
+      "string-process-comma-separated",
+      "string-typo-match"
     ]
   },
   {
@@ -803,12 +804,13 @@ export const interdeps = [
   },
   {
     "name": "string-fix-broken-named-entities",
-    "tarballSizeBytes": 52026,
-    "unpackedSizeBytes": 191661,
+    "tarballSizeBytes": 55069,
+    "unpackedSizeBytes": 201942,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
-      "string-left-right"
+      "string-left-right",
+      "string-typo-match"
     ]
   },
   {
@@ -904,6 +906,12 @@ export const interdeps = [
     "imports": [
       "codsen-format-diagnostic-value"
     ]
+  },
+  {
+    "name": "string-typo-match",
+    "tarballSizeBytes": 10204,
+    "unpackedSizeBytes": 33709,
+    "imports": []
   },
   {
     "name": "string-uglify",

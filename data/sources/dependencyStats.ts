@@ -37,7 +37,6 @@ export const dependencyStats: DependencyStats = {
     "hast-util-raw",
     "he",
     "html-entities",
-    "leven",
     "object-path",
     "p-map",
     "p-progress",
@@ -115,6 +114,7 @@ export const dependencyStats: DependencyStats = {
     "string-remove-widows",
     "string-strip-html",
     "string-trim-spaces-only",
+    "string-typo-match",
     "string-uglify",
     "string-unfancy",
     "util-array-object-or-both",
@@ -156,7 +156,6 @@ export const dependencyStats: DependencyStats = {
     "js-row-num": 1,
     "json-comb-core": 1,
     "lerna-clean-changelogs": 1,
-    "leven": 2,
     "object-all-values-equal-to": 1,
     "object-delete-key": 1,
     "object-fill-missing-keys": 1,
@@ -201,6 +200,7 @@ export const dependencyStats: DependencyStats = {
     "string-remove-widows": 2,
     "string-strip-html": 2,
     "string-trim-spaces-only": 1,
+    "string-typo-match": 2,
     "string-uglify": 1,
     "string-unfancy": 2,
     "unicode-segmenter": 1,
@@ -253,6 +253,7 @@ export const dependencyStats: DependencyStats = {
     "str-indexes-of-plus",
     "string-character-is-astral-surrogate",
     "string-collapse-leading-whitespace",
+    "string-typo-match",
     "string-uglify",
     "util-array-object-or-both",
     "util-nonempty"
@@ -292,6 +293,7 @@ export const dependencyStats: DependencyStats = {
     "is-html-attribute-closing",
     "is-html-tag-opening",
     "is-language-code",
+    "is-media-descriptor",
     "is-relative-uri",
     "js-row-num",
     "lerna-clean-changelogs",
@@ -328,6 +330,7 @@ export const dependencyStats: DependencyStats = {
     "string-extract-sass-vars",
     "string-find-heads-tails",
     "string-find-malformed",
+    "string-fix-broken-named-entities",
     "string-left-right",
     "string-match-left-right",
     "string-process-comma-separated",
@@ -336,6 +339,7 @@ export const dependencyStats: DependencyStats = {
     "string-remove-thousand-separators",
     "string-split-by-whitespace",
     "string-trim-spaces-only",
+    "string-typo-match",
     "string-uglify",
     "test-mixer",
     "tsd-extract",
@@ -349,12 +353,10 @@ export const dependencyStats: DependencyStats = {
     "email-comb": "html-entities",
     "generate-atomic-css-cli": "picomatch",
     "html-img-alt": "he",
-    "is-media-descriptor": "leven",
     "js-row-num-cli": "picomatch",
     "json-variables": "object-path",
     "ranges-ent-decode": "he",
     "string-convert-indexes": "unicode-segmenter",
-    "string-fix-broken-named-entities": "leven",
     "string-unfancy": "he"
   },
   "thirdPartyDependencies": [
@@ -370,7 +372,6 @@ export const dependencyStats: DependencyStats = {
     "generate-atomic-css-cli",
     "html-img-alt",
     "html-table-patcher",
-    "is-media-descriptor",
     "js-row-num-cli",
     "json-comb",
     "json-comb-core",
@@ -382,7 +383,6 @@ export const dependencyStats: DependencyStats = {
     "remark-conventional-commit-changelog-timeline",
     "remark-typography",
     "string-convert-indexes",
-    "string-fix-broken-named-entities",
     "string-remove-widows",
     "string-strip-html",
     "string-unfancy",
@@ -408,9 +408,6 @@ export const dependencyStats: DependencyStats = {
       "html-entities": 2
     },
     {
-      "leven": 2
-    },
-    {
       "unist-util-visit": 2
     },
     {
@@ -418,6 +415,9 @@ export const dependencyStats: DependencyStats = {
     },
     {
       "ansi-diff-stream": 1
+    },
+    {
+      "ansi-regex": 1
     }
   ],
   "top10OwnDeps": [
