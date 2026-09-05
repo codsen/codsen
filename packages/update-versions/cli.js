@@ -13,7 +13,6 @@ import { codsenCLI, isPlainObject } from "codsen-utils";
 import { del, set } from "edit-package-json";
 import objectPath from "object-path";
 import pProgress, { PProgress } from "p-progress";
-import pReduce from "p-reduce";
 import packageJson from "package-json";
 import { notifyOfCliUpdate } from "./cli-update-notifier.js";
 import {
@@ -325,52 +324,46 @@ export async function updateVersions({
   }
 
   let inventoryFailures = [];
-  let pathsPromise = await pReduce(
-    packagePaths,
-    async (mapReceived, currentPath) => {
-      let packagePath = path.join(cwd, currentPath);
-      let packContentsStr;
-      try {
-        packContentsStr = await readTextFile(packagePath, "utf8");
-      } catch (error) {
-        inventoryFailures.push(makeFailure("package read", currentPath, error));
-        return mapReceived;
-      }
+  let inventory = {
+    namesList: [],
+    pathsList: [],
+    pathsByName: {},
+    contentsObj: {},
+    contentsStr: {},
+  };
+  for (const currentPath of packagePaths) {
+    let packagePath = path.join(cwd, currentPath);
+    let packContentsStr;
+    try {
+      packContentsStr = await readTextFile(packagePath, "utf8");
+    } catch (error) {
+      inventoryFailures.push(makeFailure("package read", currentPath, error));
+      continue;
+    }
 
-      let parsedContents;
-      try {
-        parsedContents = JSON.parse(packContentsStr);
-        if (!isPlainObject(parsedContents)) {
-          throw new TypeError(
-            "update-versions/updateVersions(): [THROW_ID_08] package.json must contain a JSON object.",
-          );
-        }
-      } catch (error) {
-        inventoryFailures.push(
-          makeFailure("package parse", currentPath, error),
+    let parsedContents;
+    try {
+      parsedContents = JSON.parse(packContentsStr);
+      if (!isPlainObject(parsedContents)) {
+        throw new TypeError(
+          "update-versions/updateVersions(): [THROW_ID_08] package.json must contain a JSON object.",
         );
-        return mapReceived;
       }
+    } catch (error) {
+      inventoryFailures.push(makeFailure("package parse", currentPath, error));
+      continue;
+    }
 
-      mapReceived.namesList.push(parsedContents.name);
-      mapReceived.pathsList.push(currentPath);
-      mapReceived.pathsByName[parsedContents.name] = currentPath;
-      mapReceived.contentsStr[currentPath] = packContentsStr;
-      mapReceived.contentsObj[currentPath] = parsedContents;
-      return mapReceived;
-    },
-    {
-      namesList: [],
-      pathsList: [],
-      pathsByName: {},
-      contentsObj: {},
-      contentsStr: {},
-    },
-  );
+    inventory.namesList.push(parsedContents.name);
+    inventory.pathsList.push(currentPath);
+    inventory.pathsByName[parsedContents.name] = currentPath;
+    inventory.contentsStr[currentPath] = packContentsStr;
+    inventory.contentsObj[currentPath] = parsedContents;
+  }
 
   if (inventoryFailures.length > 0) {
     throw new UpdateVersionsError(inventoryFailures, {
-      unchangedFiles: pathsPromise.pathsList,
+      unchangedFiles: inventory.pathsList,
     });
   }
 
@@ -378,8 +371,8 @@ export async function updateVersions({
   // makes a failed registry run atomic from the caller's point of view and also
   // deduplicates lookups shared by packages in a monorepo.
   let externalNames = new Set();
-  for (let oneOfPaths of pathsPromise.pathsList) {
-    let parsedContents = pathsPromise.contentsObj[oneOfPaths];
+  for (let oneOfPaths of inventory.pathsList) {
+    let parsedContents = inventory.contentsObj[oneOfPaths];
     for (let dependencyKey of ["dependencies", "devDependencies"]) {
       if (isPlainObject(parsedContents[dependencyKey])) {
         for (let [name, spec] of Object.entries(
@@ -393,7 +386,7 @@ export async function updateVersions({
             let parsedSpec = parseDependencySpec(name, spec);
             if (
               parsedSpec.targetName &&
-              !pathsPromise.namesList.includes(parsedSpec.targetName)
+              !inventory.namesList.includes(parsedSpec.targetName)
             ) {
               externalNames.add(parsedSpec.targetName);
             }
@@ -434,7 +427,7 @@ export async function updateVersions({
 
   if (registryFailures.length > 0) {
     throw new UpdateVersionsError(registryFailures, {
-      unchangedFiles: pathsPromise.pathsList,
+      unchangedFiles: inventory.pathsList,
     });
   }
 
@@ -450,13 +443,13 @@ export async function updateVersions({
   }
 
   let allProgressPromise = PProgress.all(
-    pathsPromise.pathsList.map((oneOfPaths) =>
+    inventory.pathsList.map((oneOfPaths) =>
       pProgress(async (progress) => {
         // call progress() like progress(0.14);
 
         let amended = false;
-        let finalContents = pathsPromise.contentsStr[oneOfPaths];
-        let parsedContents = pathsPromise.contentsObj[oneOfPaths];
+        let finalContents = inventory.contentsStr[oneOfPaths];
+        let parsedContents = inventory.contentsObj[oneOfPaths];
         let fileUpdates = {};
 
         try {
@@ -497,10 +490,10 @@ export async function updateVersions({
               ? parsedContents.dependencies[singleDepName]
               : parsedContents.devDependencies[singleDepName];
             let parsedSpec = parseDependencySpec(singleDepName, singleDepValue);
-            if (pathsPromise.namesList.includes(parsedSpec.targetName)) {
+            if (inventory.namesList.includes(parsedSpec.targetName)) {
               let localVersion =
-                pathsPromise.contentsObj[
-                  pathsPromise.pathsByName[parsedSpec.targetName]
+                inventory.contentsObj[
+                  inventory.pathsByName[parsedSpec.targetName]
                 ].version;
               compiledDepNameVersionPairs[singleDepName] =
                 typeof localVersion === "string" && localVersion.length > 0

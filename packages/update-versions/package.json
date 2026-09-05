@@ -79,7 +79,6 @@
     "edit-package-json": "^0.10.4",
     "object-path": "^0.11.8",
     "p-progress": "^1.0.0",
-    "p-reduce": "^3.0.0",
     "package-json": "^10.0.1"
   },
   "devDependencies": {
