@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { constants } from "node:fs";
-import { lstat, open, realpath, rename, unlink } from "node:fs/promises";
+import * as filesystem from "node:fs/promises";
 import path from "node:path";
 import { decodeJson, formatParsedJson, parseJson } from "./json-formatter.js";
 
@@ -18,128 +18,140 @@ function asError(error) {
   return new Error(description, { cause: error });
 }
 
-async function openWithoutFollowing(filePath) {
-  const noFollow = constants.O_NOFOLLOW ?? 0;
-  return open(filePath, constants.O_RDONLY | noFollow);
-}
+export function createFileOperations({
+  fs = filesystem,
+  noFollow = constants.O_NOFOLLOW,
+} = {}) {
+  const { lstat, open, realpath, rename, unlink } = fs;
 
-async function readFileSnapshot(filePath) {
-  const realPath = await realpath(filePath);
-  const pathStat = await lstat(filePath, { bigint: true });
-  if (pathStat.isSymbolicLink()) {
-    throw new Error(`Refusing to process symbolic link: ${filePath}`);
+  async function openWithoutFollowing(filePath) {
+    return open(filePath, constants.O_RDONLY | (noFollow ?? 0));
   }
 
-  const handle = await openWithoutFollowing(filePath);
-  try {
-    const stat = await handle.stat({ bigint: true });
-    if (!stat.isFile()) {
-      throw new Error(`Refusing to process a non-file: ${filePath}`);
-    }
-    if (!sameIdentity(pathStat, stat)) {
-      throw new Error(
-        `The file changed while it was being opened: ${filePath}`,
-      );
-    }
-    if ((await realpath(filePath)) !== realPath) {
-      throw new Error(`The file route changed while opening: ${filePath}`);
-    }
-    return { contents: await handle.readFile(), realPath, stat };
-  } finally {
-    await handle.close();
-  }
-}
-
-function sameIdentity(left, right) {
-  return (
-    left.dev === right.dev &&
-    left.ino === right.ino &&
-    left.size === right.size &&
-    left.mtimeNs === right.mtimeNs &&
-    left.ctimeNs === right.ctimeNs
-  );
-}
-
-async function commitFile(filePath, output, snapshot) {
-  if (
-    !snapshot?.stat ||
-    !Buffer.isBuffer(snapshot.contents) ||
-    typeof snapshot.realPath !== "string"
-  ) {
-    throw new Error("Cannot safely commit without the original file snapshot");
-  }
-
-  const commitPath = snapshot.realPath;
-  const directory = path.dirname(commitPath);
-  const temporaryPath = path.join(
-    directory,
-    `.${path.basename(commitPath)}.${process.pid}.${randomUUID()}.tmp`,
-  );
-  let temporaryHandle;
-
-  try {
-    if ((await realpath(filePath)) !== snapshot.realPath) {
-      throw new Error(
-        "The file route changed after it was read; refusing to overwrite it",
-      );
-    }
-    temporaryHandle = await open(
-      temporaryPath,
-      "wx",
-      Number(snapshot.stat.mode & 0o7777n),
-    );
-    await temporaryHandle.writeFile(output, "utf8");
-    await temporaryHandle.chmod(Number(snapshot.stat.mode & 0o7777n));
-
-    const temporaryStat = await temporaryHandle.stat({ bigint: true });
-    if (
-      temporaryStat.uid !== snapshot.stat.uid ||
-      temporaryStat.gid !== snapshot.stat.gid
-    ) {
-      await temporaryHandle.chown(
-        Number(snapshot.stat.uid),
-        Number(snapshot.stat.gid),
-      );
-    }
-    await temporaryHandle.sync();
-    await temporaryHandle.close();
-    temporaryHandle = undefined;
-
-    const current = await readFileSnapshot(filePath);
-    if (
-      !sameIdentity(snapshot.stat, current.stat) ||
-      !snapshot.contents.equals(current.contents)
-    ) {
-      throw new Error(
-        "The file changed after it was read; refusing to overwrite it",
-      );
+  async function readFileSnapshot(filePath) {
+    const realPath = await realpath(filePath);
+    const pathStat = await lstat(filePath, { bigint: true });
+    if (pathStat.isSymbolicLink()) {
+      throw new Error(`Refusing to process symbolic link: ${filePath}`);
     }
 
-    if ((await realpath(filePath)) !== snapshot.realPath) {
-      throw new Error(
-        "The file route changed before commit; refusing to overwrite it",
-      );
-    }
-    await rename(temporaryPath, commitPath);
-
-    // Directory syncing is not supported by every platform. The file is
-    // already durable and atomically visible when this best-effort step runs.
+    const handle = await openWithoutFollowing(filePath);
     try {
-      const directoryHandle = await open(directory, "r");
-      try {
-        await directoryHandle.sync();
-      } finally {
-        await directoryHandle.close();
+      const stat = await handle.stat({ bigint: true });
+      if (!stat.isFile()) {
+        throw new Error(`Refusing to process a non-file: ${filePath}`);
       }
-    } catch {}
-  } catch (error) {
-    if (temporaryHandle) {
-      await temporaryHandle.close().catch(() => {});
+      if (!sameIdentity(pathStat, stat)) {
+        throw new Error(
+          `The file changed while it was being opened: ${filePath}`,
+        );
+      }
+      if ((await realpath(filePath)) !== realPath) {
+        throw new Error(`The file route changed while opening: ${filePath}`);
+      }
+      return { contents: await handle.readFile(), realPath, stat };
+    } finally {
+      await handle.close();
     }
-    await unlink(temporaryPath).catch(() => {});
-    throw error;
   }
+
+  function sameIdentity(left, right) {
+    return (
+      left.dev === right.dev &&
+      left.ino === right.ino &&
+      left.size === right.size &&
+      left.mtimeNs === right.mtimeNs &&
+      left.ctimeNs === right.ctimeNs
+    );
+  }
+
+  async function commitFile(filePath, output, snapshot) {
+    if (
+      !snapshot?.stat ||
+      !Buffer.isBuffer(snapshot.contents) ||
+      typeof snapshot.realPath !== "string"
+    ) {
+      throw new Error(
+        "Cannot safely commit without the original file snapshot",
+      );
+    }
+
+    const commitPath = snapshot.realPath;
+    const directory = path.dirname(commitPath);
+    const temporaryPath = path.join(
+      directory,
+      `.${path.basename(commitPath)}.${process.pid}.${randomUUID()}.tmp`,
+    );
+    let temporaryHandle;
+
+    try {
+      if ((await realpath(filePath)) !== snapshot.realPath) {
+        throw new Error(
+          "The file route changed after it was read; refusing to overwrite it",
+        );
+      }
+      temporaryHandle = await open(
+        temporaryPath,
+        "wx",
+        Number(snapshot.stat.mode & 0o7777n),
+      );
+      await temporaryHandle.writeFile(output, "utf8");
+      await temporaryHandle.chmod(Number(snapshot.stat.mode & 0o7777n));
+
+      const temporaryStat = await temporaryHandle.stat({ bigint: true });
+      if (
+        temporaryStat.uid !== snapshot.stat.uid ||
+        temporaryStat.gid !== snapshot.stat.gid
+      ) {
+        await temporaryHandle.chown(
+          Number(snapshot.stat.uid),
+          Number(snapshot.stat.gid),
+        );
+      }
+      await temporaryHandle.sync();
+      await temporaryHandle.close();
+      temporaryHandle = undefined;
+
+      const current = await readFileSnapshot(filePath);
+      if (
+        !sameIdentity(snapshot.stat, current.stat) ||
+        !snapshot.contents.equals(current.contents)
+      ) {
+        throw new Error(
+          "The file changed after it was read; refusing to overwrite it",
+        );
+      }
+
+      if ((await realpath(filePath)) !== snapshot.realPath) {
+        throw new Error(
+          "The file route changed before commit; refusing to overwrite it",
+        );
+      }
+      await rename(temporaryPath, commitPath);
+
+      // Directory syncing is not supported by every platform. The file is
+      // already durable and atomically visible when this best-effort step runs.
+      try {
+        const directoryHandle = await open(directory, "r");
+        try {
+          await directoryHandle.sync();
+        } finally {
+          await directoryHandle.close();
+        }
+      } catch {}
+    } catch (error) {
+      if (temporaryHandle) {
+        await temporaryHandle.close().catch(() => {});
+      }
+      await unlink(temporaryPath).catch(() => {});
+      throw error;
+    }
+  }
+
+  return { read: readFileSnapshot, write: commitFile };
 }
+
+const { read: readFileSnapshot, write: commitFile } = createFileOperations();
 
 export class FileProcessingError extends Error {
   constructor(filePath, stage, error) {

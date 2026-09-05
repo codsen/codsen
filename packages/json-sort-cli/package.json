@@ -52,9 +52,12 @@
   },
   "c8": {
     "all": true,
+    "branches": 100,
     "check-coverage": true,
     "exclude": ["**/test/**/*.*", "cli-update-notifier.js"],
-    "lines": 97
+    "functions": 100,
+    "lines": 100,
+    "statements": 100
   },
   "lect": {
     "licence": {

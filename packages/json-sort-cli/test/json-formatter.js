@@ -195,4 +195,25 @@ test("17 - rejects more than one leading BOM", () => {
   );
 });
 
+test("18 - retains repeated strings when sorting arrays", () => {
+  equal(
+    formatJson('["z","a","a"]', { arrays: true }).output,
+    '[\n  "a",\n  "a",\n  "z"\n]\n',
+    "18.01",
+  );
+});
+
+test("19 - moves private package keys after public keys regardless of input order", () => {
+  equal(
+    formatJson('{"zzz":2,"_private":1}', { filePath: "package.json" }).output,
+    '{\n  "zzz": 2,\n  "_private": 1\n}\n',
+    "19.01",
+  );
+});
+
+test("20 - reports truncated Unicode and short escape sequences", () => {
+  throws(() => formatJson('"\\u1'), /Invalid Unicode escape/, "20.01");
+  throws(() => formatJson('"\\'), /Unterminated string/, "20.02");
+});
+
 test.run();
