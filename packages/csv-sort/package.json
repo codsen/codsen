@@ -68,7 +68,6 @@
   "lect": {
     "licence": {
       "extras": [
-        "",
         "List of [currency signs](https://github.com/bengourley/currency-symbol-map) - Copyright © 2017 Ben Gourley - see its [BSD-2-Clause disclaimer](https://opensource.org/licenses/BSD-2-Clause)"
       ]
     }
