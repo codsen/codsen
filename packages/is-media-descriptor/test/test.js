@@ -528,10 +528,10 @@ test(`22 - bad whitespace - trailing space`, () => {
   equal(applyFixes(str, res), fixed, "22.02");
 });
 
-// 03. levenshtein distance 1 on single-string values
+// 03. typo matching on single-string values
 // -----------------------------------------------------------------------------
 
-test(`23 - levenshtein - minimal case`, () => {
+test(`23 - typo matching - minimal case`, () => {
   let str = "screeen";
   let fixed = "screen";
   writeSample({
@@ -558,7 +558,7 @@ test(`23 - levenshtein - minimal case`, () => {
   );
 });
 
-test(`24 - levenshtein - leading and trailing`, () => {
+test(`24 - typo matching - leading and trailing`, () => {
   let str = "\t\t\tal\t\n";
   let fixed = "all";
   writeSample({

@@ -1,5 +1,5 @@
-import leven from "leven";
 import { processCommaSep } from "string-process-comma-separated";
+import { createMatcher, defaults as typoDefaults } from "string-typo-match";
 import type { Ranges } from "../../../ops/typedefs/common";
 import { version as v } from "../package.json";
 import {
@@ -11,6 +11,14 @@ import {
 } from "./util";
 
 const version: string = v;
+
+// Two-character descriptors and the established "al" → "all" repair
+// need fuzzy matching below the general matcher's three-character default.
+const mediaTypoMatcher = createMatcher(recognisedMediaTypes, {
+  minInputLength: 2,
+  // A suggested replacement must be the only eligible interpretation.
+  minCostGap: typoDefaults.maxCost + 1,
+});
 
 declare let DEV: boolean;
 
@@ -190,60 +198,32 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
     //
     DEV && console.log(`isMediaD(): mostly-letters clauses`);
 
-    for (let i = 0, len = recognisedMediaTypes.length; i < len; i++) {
+    const typo = mediaTypoMatcher.match(resolvedStr);
+    if (typo.bestMatch !== null) {
       DEV &&
-        console.log(
-          `isMediaD(): leven ${recognisedMediaTypes[i]} = ${leven(
-            recognisedMediaTypes[i],
-            resolvedStr,
-          )}`,
-        );
-      if (leven(recognisedMediaTypes[i], resolvedStr) === 1) {
-        DEV &&
-          console.log(`isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
-        res.push({
-          idxFrom: nonWhitespaceStart + resolvedOpts.offset,
-          idxTo: nonWhitespaceEnd + resolvedOpts.offset,
-          message: `Did you mean "${recognisedMediaTypes[i]}"?`,
-          fix: {
-            ranges: [
-              [
-                nonWhitespaceStart + resolvedOpts.offset,
-                nonWhitespaceEnd + resolvedOpts.offset,
-                recognisedMediaTypes[i],
-              ],
+        console.log(`isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+      res.push({
+        idxFrom: nonWhitespaceStart + resolvedOpts.offset,
+        idxTo: nonWhitespaceEnd + resolvedOpts.offset,
+        message: `Did you mean "${typo.bestMatch}"?`,
+        fix: {
+          ranges: [
+            [
+              nonWhitespaceStart + resolvedOpts.offset,
+              nonWhitespaceEnd + resolvedOpts.offset,
+              typo.bestMatch,
             ],
-          },
-        });
-        break;
-      }
-
-      if (i === len - 1) {
-        // it means nothing was matched
-        DEV && console.log(`isMediaD(): end reached`);
-        DEV &&
-          console.log(
-            `isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${`\u001b[${33}m${
-              nonWhitespaceStart + resolvedOpts.offset
-            }\u001b[${39}m`}, ${`\u001b[${33}m${
-              nonWhitespaceEnd + resolvedOpts.offset
-            }\u001b[${39}m`}] (not offset [${`\u001b[${33}m${nonWhitespaceStart}\u001b[${39}m`}, ${`\u001b[${33}m${nonWhitespaceEnd}\u001b[${39}m`}])`,
-          );
-        res.push({
-          idxFrom: nonWhitespaceStart + resolvedOpts.offset,
-          idxTo: nonWhitespaceEnd + resolvedOpts.offset,
-          message: `Unrecognised media type "${resolvedStr}".`,
-          fix: null,
-        });
-        DEV &&
-          console.log(
-            `isMediaD(): ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
-              res,
-              null,
-              4,
-            )}`,
-          );
-      }
+          ],
+        },
+      });
+    } else {
+      // Ambiguous suggestions carry no automatic fix, like an absent match.
+      res.push({
+        idxFrom: nonWhitespaceStart + resolvedOpts.offset,
+        idxTo: nonWhitespaceEnd + resolvedOpts.offset,
+        message: `Unrecognised media type "${resolvedStr}".`,
+        fix: null,
+      });
     }
   } else {
     //

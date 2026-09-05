@@ -70,8 +70,8 @@
     }
   },
   "dependencies": {
-    "leven": "^4.1.0",
-    "string-process-comma-separated": "^4.3.2"
+    "string-process-comma-separated": "^4.3.2",
+    "string-typo-match": "^1.0.0"
   },
   "devDependencies": {
     "ranges-apply": "^7.2.3"
