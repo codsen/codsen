@@ -1,8 +1,8 @@
 export const interdeps = [
   {
     "name": "all-named-html-entities",
-    "tarballSizeBytes": 80693,
-    "unpackedSizeBytes": 365574,
+    "tarballSizeBytes": 82678,
+    "unpackedSizeBytes": 370959,
     "imports": []
   },
   {
@@ -32,8 +32,8 @@ export const interdeps = [
   },
   {
     "name": "arrayiffy-if-string",
-    "tarballSizeBytes": 5372,
-    "unpackedSizeBytes": 12636,
+    "tarballSizeBytes": 5369,
+    "unpackedSizeBytes": 12624,
     "imports": []
   },
   {
@@ -183,8 +183,8 @@ export const interdeps = [
   },
   {
     "name": "csv-sort",
-    "tarballSizeBytes": 20412,
-    "unpackedSizeBytes": 57488,
+    "tarballSizeBytes": 20411,
+    "unpackedSizeBytes": 57476,
     "imports": [
       "codsen-utils",
       "csv-split-easy"
@@ -230,12 +230,13 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "tarballSizeBytes": 158802,
-    "unpackedSizeBytes": 511828,
+    "tarballSizeBytes": 130489,
+    "unpackedSizeBytes": 442877,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
       "html-entities-not-email-friendly",
+      "html-entity-codec",
       "ranges-apply",
       "ranges-invert",
       "ranges-process-outside",
@@ -252,8 +253,8 @@ export const interdeps = [
   },
   {
     "name": "edit-package-json",
-    "tarballSizeBytes": 19068,
-    "unpackedSizeBytes": 58345,
+    "tarballSizeBytes": 19065,
+    "unpackedSizeBytes": 58333,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -281,12 +282,13 @@ export const interdeps = [
   },
   {
     "name": "email-comb",
-    "tarballSizeBytes": 64187,
-    "unpackedSizeBytes": 194761,
+    "tarballSizeBytes": 67744,
+    "unpackedSizeBytes": 212316,
     "imports": [
       "array-pull-all-with-glob",
       "codsen-utils",
       "html-crush",
+      "html-entity-codec",
       "ranges-apply",
       "ranges-push",
       "regex-empty-conditional-comments",
@@ -299,8 +301,8 @@ export const interdeps = [
   },
   {
     "name": "extract-search-index",
-    "tarballSizeBytes": 68217,
-    "unpackedSizeBytes": 192397,
+    "tarballSizeBytes": 40634,
+    "unpackedSizeBytes": 122475,
     "imports": [
       "codsen-utils",
       "string-strip-html",
@@ -346,14 +348,20 @@ export const interdeps = [
   },
   {
     "name": "html-entities-not-email-friendly",
-    "tarballSizeBytes": 40120,
-    "unpackedSizeBytes": 141680,
+    "tarballSizeBytes": 42628,
+    "unpackedSizeBytes": 147266,
+    "imports": []
+  },
+  {
+    "name": "html-entity-codec",
+    "tarballSizeBytes": 40507,
+    "unpackedSizeBytes": 120334,
     "imports": []
   },
   {
     "name": "html-img-alt",
-    "tarballSizeBytes": 58552,
-    "unpackedSizeBytes": 166094,
+    "tarballSizeBytes": 44779,
+    "unpackedSizeBytes": 131908,
     "imports": [
       "check-types-mini",
       "codsen-utils",
@@ -595,10 +603,11 @@ export const interdeps = [
   },
   {
     "name": "ranges-ent-decode",
-    "tarballSizeBytes": 43247,
-    "unpackedSizeBytes": 116134,
+    "tarballSizeBytes": 29107,
+    "unpackedSizeBytes": 82058,
     "imports": [
       "codsen-utils",
+      "html-entity-codec",
       "ranges-merge"
     ]
   },
@@ -698,9 +707,10 @@ export const interdeps = [
   },
   {
     "name": "remark-conventional-commit-changelog-timeline",
-    "tarballSizeBytes": 5565,
-    "unpackedSizeBytes": 14234,
+    "tarballSizeBytes": 27495,
+    "unpackedSizeBytes": 117639,
     "imports": [
+      "html-entity-codec",
       "object-delete-key"
     ]
   },
@@ -804,8 +814,8 @@ export const interdeps = [
   },
   {
     "name": "string-fix-broken-named-entities",
-    "tarballSizeBytes": 55384,
-    "unpackedSizeBytes": 202091,
+    "tarballSizeBytes": 56392,
+    "unpackedSizeBytes": 203886,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -871,8 +881,8 @@ export const interdeps = [
   },
   {
     "name": "string-remove-widows",
-    "tarballSizeBytes": 27701,
-    "unpackedSizeBytes": 79773,
+    "tarballSizeBytes": 27722,
+    "unpackedSizeBytes": 79819,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -890,10 +900,11 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "tarballSizeBytes": 53090,
-    "unpackedSizeBytes": 155222,
+    "tarballSizeBytes": 56635,
+    "unpackedSizeBytes": 172768,
     "imports": [
       "codsen-utils",
+      "html-entity-codec",
       "ranges-apply",
       "ranges-push",
       "string-left-right"
@@ -921,10 +932,11 @@ export const interdeps = [
   },
   {
     "name": "string-unfancy",
-    "tarballSizeBytes": 39601,
-    "unpackedSizeBytes": 105502,
+    "tarballSizeBytes": 25682,
+    "unpackedSizeBytes": 71121,
     "imports": [
-      "codsen-utils"
+      "codsen-utils",
+      "html-entity-codec"
     ]
   },
   {

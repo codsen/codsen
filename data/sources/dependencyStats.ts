@@ -34,9 +34,7 @@ export const dependencyStats: DependencyStats = {
     "ansi-diff-stream",
     "ansi-regex",
     "currency.js",
-    "hast-util-raw",
-    "he",
-    "html-entities",
+    "hast-util-from-parse5",
     "object-path",
     "p-map",
     "p-progress",
@@ -47,7 +45,6 @@ export const dependencyStats: DependencyStats = {
     "sort-package-json",
     "unicode-segmenter",
     "unified",
-    "unist-builder",
     "unist-util-visit",
     "vfile"
   ],
@@ -74,6 +71,7 @@ export const dependencyStats: DependencyStats = {
     "html-all-known-attributes",
     "html-crush",
     "html-entities-not-email-friendly",
+    "html-entity-codec",
     "is-char-suitable-for-html-attr-name",
     "js-row-num",
     "json-comb-core",
@@ -146,12 +144,11 @@ export const dependencyStats: DependencyStats = {
     "edit-package-json": 1,
     "email-all-chars-within-ascii": 1,
     "generate-atomic-css": 1,
-    "hast-util-raw": 1,
-    "he": 3,
+    "hast-util-from-parse5": 1,
     "html-all-known-attributes": 1,
     "html-crush": 1,
-    "html-entities": 2,
     "html-entities-not-email-friendly": 1,
+    "html-entity-codec": 6,
     "is-char-suitable-for-html-attr-name": 1,
     "js-row-num": 1,
     "json-comb-core": 1,
@@ -205,14 +202,12 @@ export const dependencyStats: DependencyStats = {
     "string-unfancy": 2,
     "unicode-segmenter": 1,
     "unified": 3,
-    "unist-builder": 1,
     "unist-util-visit": 2,
     "util-array-object-or-both": 1,
     "util-nonempty": 1,
     "vfile": 1
   },
   "devDependencies": {
-    "@types/he": 2,
     "@types/picomatch": 1,
     "@types/semver-compare": 1,
     "ast-monkey-traverse": 2,
@@ -223,6 +218,7 @@ export const dependencyStats: DependencyStats = {
     "is-html-tag-opening": 1,
     "mdast-util-to-hast": 1,
     "p-map": 5,
+    "parse5": 1,
     "ranges-apply": 3,
     "ranges-invert": 1,
     "rehype": 1,
@@ -242,6 +238,7 @@ export const dependencyStats: DependencyStats = {
     "codsen-format-diagnostic-value",
     "html-all-known-attributes",
     "html-entities-not-email-friendly",
+    "html-entity-codec",
     "is-char-suitable-for-html-attr-name",
     "is-language-code",
     "is-relative-uri",
@@ -285,10 +282,12 @@ export const dependencyStats: DependencyStats = {
     "detect-is-it-html-or-xhtml",
     "detect-templating-language",
     "email-all-chars-within-ascii",
+    "email-comb",
     "generate-atomic-css",
     "html-all-known-attributes",
     "html-crush",
     "html-entities-not-email-friendly",
+    "html-entity-codec",
     "is-char-suitable-for-html-attr-name",
     "is-html-attribute-closing",
     "is-html-tag-opening",
@@ -308,6 +307,7 @@ export const dependencyStats: DependencyStats = {
     "object-set-all-values-to",
     "ranges-apply",
     "ranges-crop",
+    "ranges-ent-decode",
     "ranges-invert",
     "ranges-is-index-within",
     "ranges-iterate",
@@ -341,6 +341,7 @@ export const dependencyStats: DependencyStats = {
     "string-trim-spaces-only",
     "string-typo-match",
     "string-uglify",
+    "string-unfancy",
     "test-mixer",
     "tsd-extract",
     "util-array-object-or-both",
@@ -350,14 +351,14 @@ export const dependencyStats: DependencyStats = {
     "ast-deep-contains": "object-path",
     "codsen-glob": "picomatch",
     "csv-sort": "currency.js",
-    "email-comb": "html-entities",
+    "extract-search-index": "title",
     "generate-atomic-css-cli": "picomatch",
-    "html-img-alt": "he",
+    "html-img-alt": "parse5",
     "js-row-num-cli": "picomatch",
     "json-variables": "object-path",
-    "ranges-ent-decode": "he",
     "string-convert-indexes": "unicode-segmenter",
-    "string-unfancy": "he"
+    "string-remove-widows": "title",
+    "string-strip-html": "title"
   },
   "thirdPartyDependencies": [
     "ast-deep-contains",
@@ -367,7 +368,6 @@ export const dependencyStats: DependencyStats = {
     "detergent",
     "edit-package-json",
     "email-all-chars-within-ascii-cli",
-    "email-comb",
     "extract-search-index",
     "generate-atomic-css-cli",
     "html-img-alt",
@@ -378,20 +378,15 @@ export const dependencyStats: DependencyStats = {
     "json-sort-cli",
     "json-variables",
     "lerna-clean-changelogs-cli",
-    "ranges-ent-decode",
     "rehype-responsive-tables",
     "remark-conventional-commit-changelog-timeline",
     "remark-typography",
     "string-convert-indexes",
     "string-remove-widows",
     "string-strip-html",
-    "string-unfancy",
     "update-versions"
   ],
   "top10ExternalDeps": [
-    {
-      "he": 3
-    },
     {
       "object-path": 3
     },
@@ -405,9 +400,6 @@ export const dependencyStats: DependencyStats = {
       "@types/hast": 2
     },
     {
-      "html-entities": 2
-    },
-    {
       "unist-util-visit": 2
     },
     {
@@ -418,6 +410,12 @@ export const dependencyStats: DependencyStats = {
     },
     {
       "ansi-regex": 1
+    },
+    {
+      "currency.js": 1
+    },
+    {
+      "hast-util-from-parse5": 1
     }
   ],
   "top10OwnDeps": [
@@ -446,10 +444,10 @@ export const dependencyStats: DependencyStats = {
       "ast-monkey-traverse": 6
     },
     {
-      "ranges-merge": 5
+      "html-entity-codec": 6
     },
     {
-      "ast-compare": 4
+      "ranges-merge": 5
     }
   ]
 };

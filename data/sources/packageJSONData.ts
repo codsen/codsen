@@ -488,7 +488,6 @@ export const packageJSONData = {
     "lect": {
       "licence": {
         "extras": [
-          "",
           "Thanks to KRyan for types https://stackoverflow.com/a/71834598/3943954"
         ]
       }
@@ -2275,7 +2274,6 @@ export const packageJSONData = {
     "lect": {
       "licence": {
         "extras": [
-          "",
           "List of [currency signs](https://github.com/bengourley/currency-symbol-map) - Copyright © 2017 Ben Gourley - see its [BSD-2-Clause disclaimer](https://opensource.org/licenses/BSD-2-Clause)"
         ]
       }
@@ -2709,7 +2707,6 @@ export const packageJSONData = {
     "lect": {
       "licence": {
         "extras": [
-          "",
           "Passes unit tests from https://github.com/kemitchell/straight-to-curly-quotes.json, licenced under CC0-1.0"
         ]
       }
@@ -2718,8 +2715,8 @@ export const packageJSONData = {
       "all-named-html-entities": "^3.2.0",
       "ansi-regex": "^6.3.0",
       "codsen-utils": "^1.10.0",
-      "he": "^1.2.0",
       "html-entities-not-email-friendly": "^0.10.0",
+      "html-entity-codec": "^1.0.0",
       "ranges-apply": "^7.2.3",
       "ranges-invert": "^6.2.3",
       "ranges-process-outside": "^6.2.3",
@@ -2813,7 +2810,6 @@ export const packageJSONData = {
     "lect": {
       "licence": {
         "extras": [
-          "",
           "Passes adapted .set() unit tests from https://github.com/mariocasciaro/object-path/blob/master/test.js, MIT Licence Copyright (c) 2015 Mario Casciaro"
         ]
       }
@@ -3078,7 +3074,7 @@ export const packageJSONData = {
       "array-pull-all-with-glob": "^7.2.2",
       "codsen-utils": "^1.10.0",
       "html-crush": "^6.3.0",
-      "html-entities": "^2.6.0",
+      "html-entity-codec": "^1.0.0",
       "ranges-apply": "^7.2.3",
       "ranges-push": "^7.3.0",
       "regex-empty-conditional-comments": "^3.2.2",
@@ -3571,8 +3567,10 @@ export const packageJSONData = {
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js'",
-      "lect:check": "node '../../ops/lect/lect.js' --check",
+      "generate": "node scripts/generate.js",
+      "generate:check": "node scripts/generate.js --check",
+      "lect": "node '../../ops/lect/lect.js' && npm run generate",
+      "lect:check": "node '../../ops/lect/lect.js' --check && npm run generate:check",
       "lint": "biome lint --error-on-warnings . && npm run typecheck",
       "lint:fix": "biome lint --write --error-on-warnings . && npm run typecheck",
       "perf": "node perf/check.js",
@@ -3600,6 +3598,92 @@ export const packageJSONData = {
         "extras": [
           ""
         ]
+      }
+    },
+    "engines": {
+      "node": ">=18.20.8"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
+    }
+  },
+  "html-entity-codec": {
+    "name": "html-entity-codec",
+    "version": "1.0.0",
+    "description": "Decode, encode, and escape HTML character references",
+    "keywords": [
+      "decode",
+      "encode",
+      "entities",
+      "escape",
+      "html"
+    ],
+    "homepage": "https://codsen.com/os/html-entity-codec",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/codsen/codsen.git",
+      "directory": "packages/html-entity-codec"
+    },
+    "license": "MIT",
+    "author": {
+      "name": "Roy Revelt",
+      "email": "roy@codsen.com",
+      "url": "https://codsen.com"
+    },
+    "type": "module",
+    "exports": {
+      "types": "./types/index.d.ts",
+      "script": "./dist/html-entity-codec.umd.js",
+      "default": "./dist/html-entity-codec.esm.js"
+    },
+    "types": "types/index.d.ts",
+    "scripts": {
+      "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
+      "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
+      "devtest": "c8 npm run unit && npm run examples && npm run lint",
+      "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
+      "examples": "node '../../ops/scripts/run-examples.js'",
+      "lect": "node '../../ops/lect/lect.js'",
+      "lect:check": "node '../../ops/lect/lect.js' --check",
+      "lint": "biome lint --error-on-warnings . && npm run typecheck",
+      "lint:fix": "biome lint --write --error-on-warnings . && npm run typecheck",
+      "perf": "node perf/check.js",
+      "prep": "echo 'ready'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
+      "pretest": "npm run lect:check && npm run build",
+      "test": "npm run devtest",
+      "typecheck": "tsc --noEmit --pretty false --project tsconfig.json",
+      "unit": "uvu test"
+    },
+    "c8": {
+      "all": true,
+      "check-coverage": true,
+      "exclude": [
+        "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
+      ],
+      "lines": 100
+    },
+    "lect": {
+      "licence": {
+        "extras": [
+          "HTML [named character references](https://html.spec.whatwg.org/entities.json) - Copyright © WHATWG (Apple, Google, Mozilla, Microsoft) - see its [BSD-3-Clause disclaimer](https://opensource.org/licenses/BSD-3-Clause)"
+        ]
+      },
+      "readme": {
+        "features": {
+          "summary": "HTML character-reference transformations from pinned WHATWG data.",
+          "items": [
+            "Decode in one pass with text or attribute context and explicit semicolon and parse-error policies.",
+            "Encode with stable named aliases or uppercase hexadecimal references; the dedicated numeric encoder lets bundlers omit named data.",
+            "Escape quoted attributes and ordinary HTML text, with optional progress and completion callbacks.",
+            "Keep source offsets through the reference scanner."
+          ]
+        }
       }
     },
     "engines": {
@@ -3694,6 +3778,9 @@ export const packageJSONData = {
       "ranges-apply": "^7.2.3",
       "ranges-push": "^7.3.0",
       "string-unfancy": "^6.2.2"
+    },
+    "devDependencies": {
+      "parse5": "^7.3.0"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -6055,18 +6142,14 @@ export const packageJSONData = {
     "lect": {
       "licence": {
         "extras": [
-          "",
           "Some tests and some regexes adapted from he.js\nMIT Licence - Copyright © 2013-2018 Mathias Bynens <https://mathiasbynens.be/>\nhttps://github.com/mathiasbynens/he"
         ]
       }
     },
     "dependencies": {
       "codsen-utils": "^1.10.0",
-      "he": "^1.2.0",
+      "html-entity-codec": "^1.0.0",
       "ranges-merge": "^9.2.3"
-    },
-    "devDependencies": {
-      "@types/he": "^1.2.3"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -7191,13 +7274,14 @@ export const packageJSONData = {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
       "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
+      "devtest": "c8 npm run unit && npm run examples && npm run lint && npm run parser:check",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
       "examples": "node '../../ops/scripts/run-examples.js'",
       "lect": "node '../../ops/lect/lect.js'",
       "lect:check": "node '../../ops/lect/lect.js' --check",
       "lint": "biome lint --error-on-warnings . && npm run typecheck",
       "lint:fix": "biome lint --write --error-on-warnings . && npm run typecheck",
+      "parser:check": "node scripts/check-parser.js",
       "perf": "echo 'skip perf'",
       "prep": "echo 'ready'",
       "prettier": "biome format",
@@ -7228,10 +7312,10 @@ export const packageJSONData = {
     },
     "dependencies": {
       "@types/hast": "^3.0.5",
-      "hast-util-raw": "^9.1.0",
+      "hast-util-from-parse5": "^8.0.3",
+      "html-entity-codec": "^1.0.0",
       "object-delete-key": "^4.2.3",
       "unified": "^11.0.5",
-      "unist-builder": "^4.0.0",
       "unist-util-visit": "^5.1.0"
     },
     "devDependencies": {
@@ -9150,7 +9234,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.10.0",
-      "html-entities": "^2.6.0",
+      "html-entity-codec": "^1.0.0",
       "ranges-apply": "^7.2.3",
       "ranges-push": "^7.3.0",
       "string-left-right": "^6.2.2"
@@ -9505,10 +9589,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.10.0",
-      "he": "^1.2.0"
-    },
-    "devDependencies": {
-      "@types/he": "^1.2.3"
+      "html-entity-codec": "^1.0.0"
     },
     "engines": {
       "node": ">=18.20.8"

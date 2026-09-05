@@ -50,6 +50,7 @@ export const programClassification = {
     "update-versions",
   ],
   htmlLibsList: [
+    "html-entity-codec",
     "emlint",
     "html-crush",
     "stristri",
