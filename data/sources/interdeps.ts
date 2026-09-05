@@ -230,8 +230,8 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "tarballSizeBytes": 158675,
-    "unpackedSizeBytes": 511798,
+    "tarballSizeBytes": 158802,
+    "unpackedSizeBytes": 511828,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -804,8 +804,8 @@ export const interdeps = [
   },
   {
     "name": "string-fix-broken-named-entities",
-    "tarballSizeBytes": 55071,
-    "unpackedSizeBytes": 201944,
+    "tarballSizeBytes": 55384,
+    "unpackedSizeBytes": 202091,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
