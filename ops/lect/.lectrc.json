@@ -220,6 +220,12 @@
   "scripts_extras": {
     "emlint": {
       "build": "node './bin/helper.js'"
+    },
+    "all-named-html-entities": {
+      "generate": "node scripts/generate.js",
+      "generate:check": "node scripts/generate.js --check",
+      "lect": "npm run generate",
+      "lect:check": "npm run generate:check"
     }
   }
 }

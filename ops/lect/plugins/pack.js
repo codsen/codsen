@@ -61,10 +61,10 @@ function normalisePackageJson({
     const extras = objectPath.get(lectrc, `scripts_extras.${state.pack.name}`);
     if (extras) {
       Object.keys(extras).forEach((key) => {
-        // append the extra script
-        content.scripts[key] = `${objectPath.get(content.scripts, key)} && ${
-          extras[key]
-        }`;
+        const existing = content.scripts[key];
+        content.scripts[key] = existing
+          ? `${existing} && ${extras[key]}`
+          : extras[key];
       });
     }
   }
