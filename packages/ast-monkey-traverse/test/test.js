@@ -1,5 +1,5 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
-import isEqual from "deep-equal";
+import { isDeepStrictEqual } from "node:util";
 import objectPath from "object-path";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
@@ -32,7 +32,7 @@ test(`01 - traverse - use traverse to delete one key from an array`, () => {
   ];
   let actual01 = traverse(input, (key1, val1) => {
     let current = val1 !== undefined ? val1 : key1;
-    if (isEqual(current, { a: "b" })) {
+    if (isDeepStrictEqual(current, { a: "b" })) {
       return DELETE;
     }
     return current;
@@ -49,7 +49,7 @@ test(`01 - traverse - use traverse to delete one key from an array`, () => {
 
   let actual02 = traverse(input, (key1, val1) => {
     let current = val1 !== undefined ? val1 : key1;
-    if (isEqual(current, { c: "d" })) {
+    if (isDeepStrictEqual(current, { c: "d" })) {
       return DELETE;
     }
     return current;
@@ -66,7 +66,7 @@ test(`01 - traverse - use traverse to delete one key from an array`, () => {
 
   let actual03 = traverse(input, (key1, val1) => {
     let current = val1 !== undefined ? val1 : key1;
-    if (isEqual(current, { e: "f" })) {
+    if (isDeepStrictEqual(current, { e: "f" })) {
       return DELETE;
     }
     return current;
@@ -97,7 +97,7 @@ test(`02 - traverse - more deletion from arrays`, () => {
 
   let actual01 = traverse(input, (key1, val1) => {
     let current = val1 !== undefined ? val1 : key1;
-    if (isEqual(current, { a: "b" })) {
+    if (isDeepStrictEqual(current, { a: "b" })) {
       return DELETE;
     }
     return current;
@@ -1319,7 +1319,10 @@ test("24 - sparse holes and explicit undefined entries are preserved", () => {
         visited.push([value, innerObj.path]);
         return value;
       });
-      if (!isEqual(actual, expected) || !isEqual(visited, expectedVisits)) {
+      if (
+        !isDeepStrictEqual(actual, expected) ||
+        !isDeepStrictEqual(visited, expectedVisits)
+      ) {
         failures.push({
           actual,
           expected,

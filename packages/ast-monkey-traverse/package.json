@@ -79,9 +79,6 @@
       "extras": [""]
     }
   },
-  "devDependencies": {
-    "deep-equal": "^2.2.3"
-  },
   "engines": {
     "node": ">=18.20.8"
   },
