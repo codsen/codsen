@@ -1,4 +1,4 @@
-import { allNamedEntities } from "all-named-html-entities";
+import { entStartsWith } from "all-named-html-entities";
 import {
   type EolChar,
   ellipsis,
@@ -725,7 +725,7 @@ function processCharacter(
           DEV && console.log(`processCharacter.js - ampersand clauses`);
           if (isLetter(codePointAtIndex(str, i + 1))) {
             // it can be a named entity
-            let temp = Object.keys(allNamedEntities).find(
+            let temp = entStartsWith[str[i + 1]]?.[str[i + 2]]?.find(
               (entName) =>
                 str.startsWith(entName, i + 1) &&
                 str[i + entName.length + 1] === ";",
