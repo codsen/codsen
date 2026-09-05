@@ -71,3 +71,23 @@ chompRight("abc", -1, { mode: 4 }, "a");
 chompLeft("abc", 3, null, 1);
 // @ts-expect-error -- null is only supported as the options placeholder.
 chompRight("abc", -1, "a", null);
+
+// Named option and result types remain available to strict consumers.
+const sequenceOptions: import("string-left-right").Opts = { i: true };
+const chompOptions: import("string-left-right").ChompOpts = { mode: "2" };
+const sequence: import("string-left-right").SeqOutput | null = rightSeq(
+  "ab",
+  0,
+  sequenceOptions,
+  "b",
+);
+const boundary: number | null = chompLeft("ba", 1, chompOptions, "b");
+void sequence;
+void boundary;
+
+// @ts-expect-error -- regular expressions are not string matchers.
+rightSeq("ab", 0, /b/, "b");
+// @ts-expect-error -- booleans cannot select a chomp mode.
+chompLeft("ba", 1, { mode: false }, "b");
+// @ts-expect-error -- bigint modes are unsupported.
+chompRight("ab", 0, { mode: 0n }, "b");

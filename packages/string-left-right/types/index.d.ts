@@ -70,4 +70,4 @@ export {
   rightStopAtRawNbsp,
   version,
 };
-export type { Opts };
+export type { ChompOpts, Opts, SeqOutput };
