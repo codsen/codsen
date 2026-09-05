@@ -697,8 +697,8 @@ export const interdeps = [
   },
   {
     "name": "remark-conventional-commit-changelog-timeline",
-    "tarballSizeBytes": 5589,
-    "unpackedSizeBytes": 14371,
+    "tarballSizeBytes": 5565,
+    "unpackedSizeBytes": 14234,
     "imports": [
       "object-delete-key"
     ]
