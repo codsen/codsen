@@ -621,6 +621,14 @@ erase.
     concise feature bullets. Put API details and sourced competitor comparisons
     on the package's codsen.com page. Describe optional capabilities as optional
     and advertise only implemented, verified behavior.
+  - Document third-party licences for copied, bundled, or generated code and
+    data in `package.json#lect.licence.extras`, so `lect` includes them in the
+    package-root README's `Licence` section. Name and link to the material,
+    preserve its copyright attribution, and link to its licence. Verify these
+    details against the source notice; follow `packages/csv-sort/package.json`
+    and `packages/html-entity-codec/package.json` as examples. Regenerate with
+    the package's `npm run lect` and verify with `npm run lect:check`. Keep the
+    accompanying source notices and licence files too.
 - `package.json` is rewritten and sorted. For current packages, its whole
   `scripts` object is replaced from `scripts.cli` or `scripts.rollup` in
   `.lectrc.json`, based on the declared kind.
