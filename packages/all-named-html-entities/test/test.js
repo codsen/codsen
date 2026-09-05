@@ -1,4 +1,5 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { createHash } from "node:crypto";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
@@ -23,7 +24,7 @@ test("01 - entStartsWith is set", () => {
 });
 
 test("02 - entStartsWithCaseInsensitive is set", () => {
-  // it's not a real entity:
+  // Case-insensitive indexes store the lowercased spelling.
   equal(entStartsWithCaseInsensitive.a.e[0], "aelig", "02.01");
   equal(entStartsWithCaseInsensitive.a.e[1], undefined, "02.02");
 });
@@ -59,23 +60,10 @@ test("08 - decode numeric", () => {
 test("09 - brokenNamedEntities.json is OK", () => {
   type(brokenNamedEntities, "object", "09.01");
   ok(Object.keys(brokenNamedEntities).length, "09.02");
-  Object.keys(brokenNamedEntities).forEach((oneOfEntities, i) => {
-    // 1. ensure all are keys unique:
-    Object.keys(brokenNamedEntities).forEach((entity, y) => {
-      ok(
-        !(entity === oneOfEntities && i !== y),
-        `key "${oneOfEntities}" is not unique`,
-      );
-    });
-
-    // 2. ensure "oneOfEntities" is not used by any keys:
-    Object.keys(brokenNamedEntities).forEach((entity) => {
-      ok(
-        entity !== brokenNamedEntities[oneOfEntities],
-        `value "${brokenNamedEntities[oneOfEntities]}" is used among key names`,
-      );
-    });
-  });
+  for (const [broken, replacement] of Object.entries(brokenNamedEntities)) {
+    ok(!Object.hasOwn(allNamedEntities, broken), `09.03 - ${broken}`);
+    ok(Object.hasOwn(allNamedEntities, replacement), `09.04 - ${replacement}`);
+  }
 });
 
 test("10 - minLength is numeric", () => {
@@ -102,12 +90,109 @@ test("13 - uncertain list is set", () => {
 
 test("14 - allNamedEntitiesSetOnly is exported and is a set", () => {
   type(allNamedEntitiesSetOnly, "object", "14.01");
-  equal(allNamedEntitiesSetOnly.size, 2125, "14.01");
+  equal(allNamedEntitiesSetOnly.size, 2125, "14.02");
 });
 
 test("15 - allNamedEntitiesSetOnlyCaseInsensitive is exported and is a set", () => {
   type(allNamedEntitiesSetOnlyCaseInsensitive, "object", "15.01");
-  equal(allNamedEntitiesSetOnlyCaseInsensitive.size, 1722, "15.01");
+  equal(allNamedEntitiesSetOnlyCaseInsensitive.size, 1722, "15.02");
+});
+
+test("16 - every canonical name and value matches the audited WHATWG data", () => {
+  // Audited 2026-09-05 against WHATWG entities.json, SHA-256
+  // d741d877ac77c4194c4ad526b5b4a19aef8dfe411ab840a466891cdbb9f362e6.
+  // Hash sorted name/value pairs: independent of the source JSON formatting.
+  const entries = Object.entries(allNamedEntities).sort(([a], [b]) =>
+    a < b ? -1 : a > b ? 1 : 0,
+  );
+  equal(entries.length, 2125, "16.01");
+  equal(
+    createHash("sha256").update(JSON.stringify(entries)).digest("hex"),
+    "083dc02ec806d6d630ad69cdcd3ebf4b3f04509f8ad00ad8772f8905d285beb4",
+    "16.02",
+  );
+  for (const [name, value] of entries) {
+    equal(decode(`&${name};`), value, `16.03 - ${name}`);
+  }
+});
+
+test("17 - Sets preserve the canonical membership and insertion order", () => {
+  const names = Object.keys(allNamedEntities);
+  equal([...allNamedEntitiesSetOnly], names, "17.01");
+  equal(
+    [...allNamedEntitiesSetOnlyCaseInsensitive],
+    [...new Set(names.map((name) => name.toLowerCase()))],
+    "17.02",
+  );
+  equal(minLength, Math.min(...names.map((name) => name.length)), "17.03");
+  equal(maxLength, Math.max(...names.map((name) => name.length)), "17.04");
+});
+
+test("18 - all four affix indexes contain exactly the expected ordered buckets", () => {
+  const names = Object.keys(allNamedEntities);
+  const lower = [...new Set(names.map((name) => name.toLowerCase()))];
+  for (const [index, expected, end] of [
+    [entStartsWith, names, false],
+    [entEndsWith, names, true],
+    [entStartsWithCaseInsensitive, lower, false],
+    [entEndsWithCaseInsensitive, lower, true],
+  ]) {
+    const seen = [];
+    for (const [first, buckets] of Object.entries(index)) {
+      for (const [second, bucket] of Object.entries(buckets)) {
+        equal(
+          bucket,
+          expected.filter((name) =>
+            end
+              ? name.endsWith(second + first)
+              : name.startsWith(first + second),
+          ),
+          "18.01",
+        );
+        ok(bucket.length, "18.02");
+        seen.push(...bucket);
+      }
+    }
+    equal(seen.sort(), [...expected].sort(), "18.02");
+  }
+});
+
+test("19 - uncertainty policies refer to canonical names and supported values", () => {
+  const values = new Set([true, false, "edge only"]);
+  for (const [name, policy] of Object.entries(uncertain)) {
+    ok(Object.hasOwn(allNamedEntities, name), `19.01 - ${name}`);
+    equal(
+      Object.keys(policy).sort(),
+      ["addAmpIfSemiPresent", "addSemiIfAmpPresent"],
+      "19.01",
+    );
+    ok(
+      Object.values(policy).every((value) => values.has(value)),
+      "19.02",
+    );
+  }
+});
+
+test("20 - inherited names never decode", () => {
+  for (const name of [
+    "__proto__",
+    "constructor",
+    "toString",
+    "hasOwnProperty",
+  ]) {
+    equal(decode(`&${name};`), null, "20.01");
+  }
+});
+
+test("21 - malformed wrappers retain the validation error", () => {
+  for (const value of ["", "amp", "&amp", "amp;", null, undefined, 1, {}]) {
+    throws(
+      () => decode(value),
+      /all-named-html-entities\/decode\(\): \[THROW_ID_01\]/,
+      "21.01",
+    );
+  }
+  equal(decode("&;"), null, "21.01");
 });
 
 test.run();

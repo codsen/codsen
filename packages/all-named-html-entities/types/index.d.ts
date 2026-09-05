@@ -1,3 +1,8 @@
+declare const allNamedEntitiesSetOnly: Set<string>;
+declare const allNamedEntitiesSetOnlyCaseInsensitive: Set<string>;
+declare const minLength = 2;
+declare const maxLength = 31;
+
 type EntityLookup = Record<string, string>;
 type EntityAffixLookup = Record<string, Record<string, string[]>>;
 type UncertainEntityLookup = Record<
@@ -15,11 +20,7 @@ declare const entEndsWith: EntityAffixLookup;
 declare const entStartsWithCaseInsensitive: EntityAffixLookup;
 declare const entEndsWithCaseInsensitive: EntityAffixLookup;
 declare const uncertain: UncertainEntityLookup;
-declare const allNamedEntitiesSetOnly: Set<string>;
-declare const allNamedEntitiesSetOnlyCaseInsensitive: Set<string>;
 declare function decode(ent: string): string | null;
-declare const minLength = 2;
-declare const maxLength = 31;
 
 export {
   allNamedEntities,
