@@ -93,6 +93,7 @@ export const packageJSONData = {
       "email": "roy@codsen.com",
       "url": "https://codsen.com"
     },
+    "sideEffects": false,
     "type": "module",
     "exports": {
       "types": "./types/index.d.ts",
@@ -107,8 +108,10 @@ export const packageJSONData = {
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js'",
-      "lect:check": "node '../../ops/lect/lect.js' --check",
+      "generate": "node scripts/generate.js",
+      "generate:check": "node scripts/generate.js --check",
+      "lect": "node '../../ops/lect/lect.js' && npm run generate",
+      "lect:check": "node '../../ops/lect/lect.js' --check && npm run generate:check",
       "lint": "biome lint --error-on-warnings . && npm run typecheck",
       "lint:fix": "biome lint --write --error-on-warnings . && npm run typecheck",
       "perf": "node perf/check.js",
@@ -1436,9 +1439,6 @@ export const packageJSONData = {
           ""
         ]
       }
-    },
-    "devDependencies": {
-      "deep-equal": "^2.2.3"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -5637,9 +5637,6 @@ export const packageJSONData = {
       "array-includes-with-glob": "^5.2.2",
       "codsen-utils": "^1.10.0",
       "util-nonempty": "^5.2.2"
-    },
-    "devDependencies": {
-      "deep-equal": "^2.2.3"
     },
     "engines": {
       "node": ">=18.20.8"

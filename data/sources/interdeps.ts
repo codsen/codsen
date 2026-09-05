@@ -1,8 +1,8 @@
 export const interdeps = [
   {
     "name": "all-named-html-entities",
-    "tarballSizeBytes": 86610,
-    "unpackedSizeBytes": 365423,
+    "tarballSizeBytes": 80693,
+    "unpackedSizeBytes": 365574,
     "imports": []
   },
   {
@@ -60,8 +60,8 @@ export const interdeps = [
   },
   {
     "name": "ast-delete-object",
-    "tarballSizeBytes": 17928,
-    "unpackedSizeBytes": 50283,
+    "tarballSizeBytes": 17979,
+    "unpackedSizeBytes": 50395,
     "imports": [
       "ast-compare",
       "ast-monkey-traverse",
@@ -79,8 +79,8 @@ export const interdeps = [
   },
   {
     "name": "ast-get-values-by-key",
-    "tarballSizeBytes": 12930,
-    "unpackedSizeBytes": 32844,
+    "tarballSizeBytes": 12981,
+    "unpackedSizeBytes": 32956,
     "imports": [
       "ast-monkey-traverse",
       "codsen-utils"
@@ -117,8 +117,8 @@ export const interdeps = [
   },
   {
     "name": "ast-monkey-traverse",
-    "tarballSizeBytes": 9629,
-    "unpackedSizeBytes": 27201,
+    "tarballSizeBytes": 9678,
+    "unpackedSizeBytes": 27237,
     "imports": []
   },
   {
@@ -230,8 +230,8 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "tarballSizeBytes": 159081,
-    "unpackedSizeBytes": 502316,
+    "tarballSizeBytes": 155579,
+    "unpackedSizeBytes": 502058,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -521,8 +521,8 @@ export const interdeps = [
   },
   {
     "name": "object-fill-missing-keys",
-    "tarballSizeBytes": 18495,
-    "unpackedSizeBytes": 54269,
+    "tarballSizeBytes": 18545,
+    "unpackedSizeBytes": 54381,
     "imports": [
       "arrayiffy-if-string",
       "codsen-utils",
@@ -550,8 +550,8 @@ export const interdeps = [
   },
   {
     "name": "object-merge-advanced",
-    "tarballSizeBytes": 20655,
-    "unpackedSizeBytes": 62548,
+    "tarballSizeBytes": 20675,
+    "unpackedSizeBytes": 62605,
     "imports": [
       "array-includes-with-glob",
       "codsen-utils",
@@ -803,8 +803,8 @@ export const interdeps = [
   },
   {
     "name": "string-fix-broken-named-entities",
-    "tarballSizeBytes": 55232,
-    "unpackedSizeBytes": 191505,
+    "tarballSizeBytes": 51923,
+    "unpackedSizeBytes": 191319,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
