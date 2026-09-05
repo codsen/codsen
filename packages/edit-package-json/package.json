@@ -64,7 +64,6 @@
   "lect": {
     "licence": {
       "extras": [
-        "",
         "Passes adapted .set() unit tests from https://github.com/mariocasciaro/object-path/blob/master/test.js, MIT Licence Copyright (c) 2015 Mario Casciaro"
       ]
     }
