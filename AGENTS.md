@@ -610,9 +610,17 @@ erase.
   data includes npm pack sizes.
 - `README.md` is fully regenerated. It is assembled from the package name and
   description, package type, standard badges and links, optional playground and
-  ESM notices, `examples/_quickTake.js`, and optional
+  ESM notices, optional `package.json#lect.readme.features`,
+  `examples/_quickTake.js`, and optional
   `package.json#lect.licence.extras`. Edit those inputs or
   `ops/lect/plugins/readme.js`, not the generated README.
+  - `lect.readme.features` opts a package into a `## Features` section before
+    installation. Supply a nonempty `summary` string and an `items` array of
+    nonempty Markdown strings. Omit the field when no section is wanted.
+  - Keep that section a short adoption pitch: one sentence and a handful of
+    concise feature bullets. Put API details and sourced competitor comparisons
+    on the package's codsen.com page. Describe optional capabilities as optional
+    and advertise only implemented, verified behavior.
 - `package.json` is rewritten and sorted. For current packages, its whole
   `scripts` object is replaced from `scripts.cli` or `scripts.rollup` in
   `.lectrc.json`, based on the declared kind.

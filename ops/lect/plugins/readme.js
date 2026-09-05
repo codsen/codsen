@@ -26,6 +26,25 @@ function hasPlayground(name) {
 
 async function readme({ mode, state, quickTakeExample }) {
   const packageName = state.pack.name;
+  const features = state.pack.lect?.readme?.features;
+  let featuresSection = "";
+  if (features !== undefined) {
+    if (
+      !features ||
+      typeof features.summary !== "string" ||
+      !features.summary.trim() ||
+      !Array.isArray(features.items) ||
+      !features.items.length ||
+      features.items.some((item) => typeof item !== "string" || !item.trim())
+    ) {
+      throw new Error(
+        `lect/readme: ${packageName} lect.readme.features needs a nonempty summary and a nonempty array of nonempty string items`,
+      );
+    }
+    featuresSection = `\n\n## Features\n\n${features.summary.trim()}\n\n${features.items
+      .map((item) => `- ${item.trim()}`)
+      .join("\n")}`;
+  }
   const statuses = dependencyStatuses([
     ...state.packageManifests.filter(
       (manifest) => manifest.name !== packageName,
@@ -90,7 +109,7 @@ async function readme({ mode, state, quickTakeExample }) {
       ? `\n  <a href="https://codsen.com/os/${packageName}/play"><img src="https://img.shields.io/badge/playground-here-brightgreen?style=flat-square" alt="playground"></a>`
       : ""
   }
-</p>${dependencyNotice ? `\n\n${dependencyNotice}` : ""}
+</p>${dependencyNotice ? `\n\n${dependencyNotice}` : ""}${featuresSection}
 
 ## Install${state.pack?.exports ? `\n\n${esmNotice}` : ""}
 
