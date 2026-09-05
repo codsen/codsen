@@ -124,26 +124,26 @@ export const runPerf = async (cb, callerDir) => {
           process.exitCode = 1;
         }
         console.log(
-          `${heads}🐌 ${`[${31}m${`current code is slower by ${Math.abs(
+          `${heads}🐌 ${`${`current code is slower by ${Math.abs(
             changePercent,
           )}%, beyond the ${
             resolvedPolicy.regressionThresholdPercent
-          }% regression threshold`}[${39}m`} ${`[${90}m${`(was ${round(
+          }% regression threshold`}`} ${`${`(was ${round(
             baseline,
           )} — now ${round(
             normalisedBenchmarkedOpsPerSec,
-          )} ops/sec; the baseline is kept)`}[${39}m`}`,
+          )} ops/sec; the baseline is kept)`}`}`,
         );
         if (resolvedPolicy.waiverReason) {
           console.log(
-            `${heads}📝 ${`[${90}m${`waived: ${resolvedPolicy.waiverReason}`}[${39}m`}`,
+            `${heads}📝 ${`${`waived: ${resolvedPolicy.waiverReason}`}`}`,
           );
         }
       } else if (verdict === "baseline") {
         console.log(
-          `${heads}🆕 ${`\u001b[${33}m${`no previous record, this run becomes the baseline`}\u001b[${39}m`} ${`\u001b[${90}m${`(${round(
+          `${heads}🆕 no previous record, this run becomes the baseline (${round(
             normalisedBenchmarkedOpsPerSec,
-          )} ops/sec)`}\u001b[${39}m`}`,
+          )} ops/sec)`,
         );
       } else if (verdict === "unchanged") {
         console.log(
@@ -167,7 +167,7 @@ export const runPerf = async (cb, callerDir) => {
 
       if (verdict === "slower" || verdict === "regression") {
         console.log(
-          `${heads}📌 ${`[${90}m${`the baseline is kept; this run is recorded as lastSlowerRun, and the perf analyser reports it as a pending regression`}[${39}m`}`,
+          `${heads}📌 ${`the baseline is kept; this run is recorded as lastSlowerRun, and the perf analyser reports it as a pending regression`}`,
         );
       }
 
