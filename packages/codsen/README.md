@@ -21,6 +21,8 @@
   <img src="https://img.shields.io/badge/licence-MIT-brightgreen.svg?style=flat-square" alt="MIT Licence">
 </p>
 
+**No 3rd party dependencies.** All dependencies and devDependencies, checked recursively, are Codsen packages.
+
 ## Install
 
 ```bash
