@@ -1,7 +1,7 @@
 import * as codsenUtils from "codsen-utils";
-import typ from "type-detect";
 
 import { version as v } from "../package.json";
+import { typeLabel } from "./typeLabel";
 
 const version: string = v;
 
@@ -24,7 +24,7 @@ const optionalCreateMatcher = Object.getOwnPropertyDescriptor(
 // plain object.
 export type Obj = object;
 
-// A case-insensitive type-detect label, true/false, or a blanket label. Null
+// A case-insensitive type label, true/false, or a blanket label. Null
 // and undefined are shorthand for their corresponding labels.
 export type SchemaTypeName = string | null | undefined;
 
@@ -391,7 +391,7 @@ function schemaAllows(value: unknown, descriptors: readonly string[]): boolean {
   if (value === false) {
     return descriptors.includes("false") || descriptors.includes("boolean");
   }
-  const valueType = typ(value).toLowerCase();
+  const valueType = typeLabel(value).toLowerCase();
   if (valueType === "object" && descriptors.includes("object")) {
     return isPlainObject(value);
   }
@@ -553,7 +553,7 @@ function checkTypesMini(
     fail(
       "THROW_ID_01",
       `The first argument must be a plain object; received ${formatDiagnosticValue(obj, 4)}.`,
-      { actualType: typ(obj).toLowerCase() },
+      { actualType: typeLabel(obj).toLowerCase() },
     );
   }
 
@@ -561,7 +561,7 @@ function checkTypesMini(
     fail(
       "THROW_ID_02",
       `The second argument must be a plain object or null; received ${formatDiagnosticValue(ref, 4)}. Pass null explicitly when validating against only a schema.`,
-      { actualType: typ(ref).toLowerCase() },
+      { actualType: typeLabel(ref).toLowerCase() },
     );
   }
 
@@ -569,7 +569,7 @@ function checkTypesMini(
     fail(
       "THROW_ID_03",
       `The third argument must be a plain options object, null, or undefined; received ${formatDiagnosticValue(opts, 4)}.`,
-      { actualType: typ(opts).toLowerCase() },
+      { actualType: typeLabel(opts).toLowerCase() },
     );
   }
 
@@ -620,8 +620,8 @@ function checkTypesMini(
   if (!isPlainObject(schema)) {
     fail(
       "THROW_ID_07",
-      `opts.schema was customised to ${formatDiagnosticValue(schema)} which is not a plain object but ${typ(schema).toLowerCase()}.`,
-      { actualType: typ(schema).toLowerCase(), path: ["schema"] },
+      `opts.schema was customised to ${formatDiagnosticValue(schema)} which is not a plain object but ${typeLabel(schema).toLowerCase()}.`,
+      { actualType: typeLabel(schema).toLowerCase(), path: ["schema"] },
     );
   }
 
@@ -833,7 +833,7 @@ function checkTypesMini(
         invalidSchemaCode,
         `${diagnosticPath("schema", currentPath as PathNode)} must be a non-empty type name, null, undefined, or a dense array of those values; received ${formatDiagnosticValue(rawValue, 4)}.`,
         currentPath,
-        typ(rawValue).toLowerCase(),
+        typeLabel(rawValue).toLowerCase(),
         msg,
       );
     }
@@ -843,7 +843,7 @@ function checkTypesMini(
         invalidSchemaCode,
         `${diagnosticPath("schema", currentPath as PathNode)} is declared more than once.`,
         currentPath,
-        typ(rawValue).toLowerCase(),
+        typeLabel(rawValue).toLowerCase(),
         msg,
       );
     }
@@ -855,7 +855,7 @@ function checkTypesMini(
         invalidSchemaCode,
         `${diagnosticPath("schema", currentPath as PathNode)} cannot have both a terminal descriptor and nested schema paths.`,
         currentPath,
-        typ(rawValue).toLowerCase(),
+        typeLabel(rawValue).toLowerCase(),
         msg,
       );
     }
@@ -1056,7 +1056,7 @@ function checkTypesMini(
         !Array.isArray(referenceValue) &&
         !acceptArraysIgnoreMatcher?.(key)
       ) {
-        const expectedType = typ(referenceValue).toLowerCase();
+        const expectedType = typeLabel(referenceValue).toLowerCase();
         const elementKeys = inputKeys(value);
         for (const elementKey of elementKeys) {
           const element = readProperty(value, elementKey);
@@ -1066,7 +1066,7 @@ function checkTypesMini(
             if (path.depth + 1 > maxDepth) maxDepth = path.depth + 1;
             recordWork?.();
           }
-          const elementType = typ(element).toLowerCase();
+          const elementType = typeLabel(element).toLowerCase();
           if (elementType !== expectedType) {
             acceptedReferenceArrayMismatch(
               elementType,
@@ -1085,7 +1085,7 @@ function checkTypesMini(
         valuesValidated++;
         recordWork?.();
       }
-      if (typ(value) !== typ(referenceValue)) {
+      if (typeLabel(value) !== typeLabel(referenceValue)) {
         referenceMismatch(value, referenceValue, path, resolvedOpts, msg);
       }
       if (Array.isArray(value) && Array.isArray(referenceValue)) {
@@ -1158,7 +1158,7 @@ function schemaMismatch(
   opts: ResolvedOpts,
   msg: string,
 ): never {
-  const currentType = typ(value).toLowerCase();
+  const currentType = typeLabel(value).toLowerCase();
   const quote = currentType === "string" ? "" : '"';
   return fail(
     "THROW_ID_18",
@@ -1182,9 +1182,9 @@ function acceptedSchemaArrayMismatch(
 ): never {
   return fail(
     "THROW_ID_19",
-    `${diagnosticPath(opts.optsVarName, path)}.${index}, the ${index}th element (equal to ${formatDiagnosticValue(value)}) is of a type ${typ(value).toLowerCase()}, but only the following are allowed by the ${opts.optsVarName}.schema: ${descriptors.join(", ")}`,
+    `${diagnosticPath(opts.optsVarName, path)}.${index}, the ${index}th element (equal to ${formatDiagnosticValue(value)}) is of a type ${typeLabel(value).toLowerCase()}, but only the following are allowed by the ${opts.optsVarName}.schema: ${descriptors.join(", ")}`,
     {
-      actualType: typ(value).toLowerCase(),
+      actualType: typeLabel(value).toLowerCase(),
       context: msg,
       expectedTypes: descriptors,
       path: pathSegments({
@@ -1229,8 +1229,8 @@ function referenceMismatch(
   opts: ResolvedOpts,
   msg: string,
 ): never {
-  const currentType = typ(value).toLowerCase();
-  const compareType = typ(referenceValue).toLowerCase();
+  const currentType = typeLabel(value).toLowerCase();
+  const compareType = typeLabel(referenceValue).toLowerCase();
   const quote = currentType === "string" ? "" : '"';
   return fail(
     "THROW_ID_21",
