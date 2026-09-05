@@ -1,5 +1,6 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
@@ -193,6 +194,66 @@ test("21 - malformed wrappers retain the validation error", () => {
     );
   }
   equal(decode("&;"), null, "21.01");
+});
+
+test("22 - the pinned official snapshot retains every scalar and legacy spelling", () => {
+  const snapshot = readFileSync(
+    new URL("../upstream/entities.json", import.meta.url),
+    "utf8",
+  );
+  const provenance = JSON.parse(
+    readFileSync(
+      new URL("../upstream/provenance.json", import.meta.url),
+      "utf8",
+    ),
+  );
+  const rows = JSON.parse(snapshot);
+  equal(
+    createHash("sha256").update(snapshot).digest("hex"),
+    provenance.sha256,
+    "22.01",
+  );
+  equal(Object.keys(rows).length, 2231, "22.02");
+  equal(
+    Object.keys(rows).filter((name) => !name.endsWith(";")).length,
+    106,
+    "22.03",
+  );
+  for (const [name, row] of Object.entries(rows)) {
+    equal(Object.keys(row).sort(), ["characters", "codepoints"], "22.04");
+    equal(
+      [...row.characters].map((char) => char.codePointAt(0)),
+      row.codepoints,
+      "22.05",
+    );
+    equal(
+      allNamedEntities[name.slice(1).replace(/;$/, "")],
+      row.characters,
+      "22.06",
+    );
+    if (!name.endsWith(";")) {
+      equal(rows[`${name};`], row, "22.07");
+      throws(() => decode(name), /THROW_ID_01/, "22.08");
+    }
+  }
+});
+
+test("23 - the pinned source license and original public order are retained", () => {
+  const read = (name) =>
+    readFileSync(new URL(`../upstream/${name}`, import.meta.url), "utf8");
+  const provenance = JSON.parse(read("provenance.json"));
+  equal(
+    createHash("sha256").update(read("WHATWG-LICENSE")).digest("hex"),
+    provenance.licenseSha256,
+    "23.01",
+  );
+  equal(
+    Object.keys(allNamedEntities),
+    JSON.parse(read("public-name-order.json")),
+    "23.02",
+  );
+  equal(Object.keys(brokenNamedEntities).length, 34, "23.03");
+  equal(Object.keys(uncertain).length, 348, "23.04");
 });
 
 test.run();

@@ -1,0 +1,10 @@
+{
+  "source": "https://html.spec.whatwg.org/entities.json",
+  "retrieved": "2026-09-05",
+  "sha256": "d741d877ac77c4194c4ad526b5b4a19aef8dfe411ab840a466891cdbb9f362e6",
+  "licenseSource": "https://raw.githubusercontent.com/whatwg/html/main/LICENSE",
+  "licenseSha256": "85dc6f5ccb57a6fe8c33d158f9fc8fc7ee5655a5d3db2cdd131c6a3d0f48a864",
+  "entries": 2231,
+  "canonicalNames": 2125,
+  "legacyNames": 106
+}
