@@ -2353,12 +2353,15 @@ export const packageJSONData = {
     },
     "c8": {
       "all": true,
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*",
         "cli-update-notifier.js"
       ],
-      "lines": 76
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -2703,7 +2706,7 @@ export const packageJSONData = {
       "include": [
         "dist/*.esm.js"
       ],
-      "lines": 97
+      "lines": 100
     },
     "lect": {
       "licence": {
@@ -2975,7 +2978,7 @@ export const packageJSONData = {
         "**/test/**/*.*",
         "cli-update-notifier.js"
       ],
-      "lines": 83
+      "lines": 100
     },
     "lect": {
       "cliSpecialKeyword": "tinaturner",
@@ -3322,12 +3325,15 @@ export const packageJSONData = {
     },
     "c8": {
       "all": true,
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*",
         "cli-update-notifier.js"
       ],
-      "lines": 84
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -4464,12 +4470,15 @@ export const packageJSONData = {
     },
     "c8": {
       "all": true,
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*",
         "cli-update-notifier.js"
       ],
-      "lines": 87
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -4552,7 +4561,7 @@ export const packageJSONData = {
         "**/test/**/*.*",
         "cli-update-notifier.js"
       ],
-      "lines": 94
+      "lines": 100
     },
     "lect": {
       "licence": {
@@ -4724,12 +4733,15 @@ export const packageJSONData = {
     },
     "c8": {
       "all": true,
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*",
         "cli-update-notifier.js"
       ],
-      "lines": 97
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -4993,12 +5005,15 @@ export const packageJSONData = {
     },
     "c8": {
       "all": true,
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*",
         "cli-update-notifier.js"
       ],
-      "lines": 83
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "cliSpecialKeyword": "",
@@ -9659,12 +9674,15 @@ export const packageJSONData = {
     },
     "c8": {
       "all": true,
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*",
         "cli-update-notifier.js"
       ],
-      "lines": 80
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {

@@ -384,7 +384,7 @@ export const interdeps = [
   },
   {
     "name": "json-comb",
-    "size": 7218,
+    "size": 6525,
     "imports": [
       "codsen-glob",
       "codsen-utils",
@@ -405,7 +405,7 @@ export const interdeps = [
   },
   {
     "name": "json-sort-cli",
-    "size": 15395,
+    "size": 74,
     "imports": [
       "codsen-glob"
     ]
@@ -434,7 +434,7 @@ export const interdeps = [
   },
   {
     "name": "lerna-clean-changelogs-cli",
-    "size": 3555,
+    "size": 2464,
     "imports": [
       "codsen-glob",
       "codsen-utils",
@@ -834,7 +834,7 @@ export const interdeps = [
   },
   {
     "name": "update-versions",
-    "size": 27920,
+    "size": 27072,
     "imports": [
       "codsen-glob",
       "codsen-utils",
