@@ -22,6 +22,8 @@
   <a href="https://codsen.com/os/string-strip-html/play"><img src="https://img.shields.io/badge/playground-here-brightgreen?style=flat-square" alt="playground"></a>
 </p>
 
+**Powered by title.** No other dependencies.
+
 ## Install
 
 This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). If you're not ready yet, install an older version of this program, 8.5.0 (`npm i string-strip-html@8.5.0`).

@@ -72,7 +72,7 @@
   },
   "dependencies": {
     "codsen-utils": "^1.10.0",
-    "html-entities": "^2.6.0",
+    "html-entity-codec": "^1.0.0",
     "ranges-apply": "^7.2.3",
     "ranges-push": "^7.3.0",
     "string-left-right": "^6.2.2"

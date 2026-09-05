@@ -5,7 +5,7 @@ import {
   pullAll,
   trimChars,
 } from "codsen-utils";
-import { decode } from "html-entities";
+import { decode } from "html-entity-codec";
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
 import { right } from "string-left-right";
@@ -1640,8 +1640,8 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         if (attrObj.valueStarts === undefined) {
           // reset:
           resetAttrObj();
-          // delete the quotes marker
-          delete tag.quotes;
+          // clear the quotes marker while preserving the tag object's shape
+          tag.quotes = undefined;
         }
         // Otherwise, build the attrObj
         else {
@@ -1659,8 +1659,8 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           tag.attributes.push(attrObj);
           // reset:
           resetAttrObj();
-          // 2. finally, delete the quotes marker, we don't need it any more
-          delete tag.quotes;
+          // 2. clear the quotes marker while preserving the tag object's shape
+          tag.quotes = undefined;
           // 3. if resolvedOpts.dumpLinkHrefsNearby?.enabled is on, catch href
           let hrefVal: string | undefined;
           if (
@@ -3584,11 +3584,11 @@ function collectEntityDecodeRanges(str: string): RangesType {
 
   for (match = entityRegex.exec(str); match; match = entityRegex.exec(str)) {
     let decoded = match[0];
-    let next = decode(decoded, { scope: "strict" });
+    let next = decode(decoded, { requireSemicolon: true });
 
     while (decoded !== next) {
       decoded = next;
-      next = decode(decoded, { scope: "strict" });
+      next = decode(decoded, { requireSemicolon: true });
     }
 
     if (decoded !== match[0]) {
