@@ -3,7 +3,6 @@
 import type { Root } from "hast";
 import { raw } from "hast-util-raw";
 import type { Raw } from "mdast-util-to-hast";
-import semverRegex from "semver-regex";
 import type { Plugin } from "unified";
 import { u } from "unist-builder";
 import {
@@ -156,16 +155,12 @@ const changelogTimeline: UnifiedPlugin<[options?: Partial<Opts>]> = (opts) => {
             )}`,
           );
 
-        if (
-          typeof node.children[0]?.value === "string" &&
-          semverRegex().test(node.children[0]?.value)
-        ) {
+        if (typeof node.children[0]?.value === "string") {
           versionStr = extractStartingVersionString(node.children[0]?.value);
           dateStr = extractDateString(node.children[0]?.value);
         } else if (
-          node.children[0].tagName === "a" &&
-          node.children[0]?.children[0]?.type === "text" &&
-          semverRegex().test(node.children[0].children[0].value)
+          node.children[0]?.tagName === "a" &&
+          node.children[0].children[0]?.type === "text"
         ) {
           // extract version from within anchor tag
           versionStr = extractStartingVersionString(

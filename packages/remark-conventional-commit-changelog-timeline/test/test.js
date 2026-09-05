@@ -163,4 +163,44 @@ test("04 - typographic date separators remain parseable", () => {
   equal(render(input), expected, "04.01");
 });
 
+test("05 - stable releases support linked and plain headings with any digit count", () => {
+  for (let version of ["0.0.0", "1.2.3", "12.34.567"]) {
+    for (let heading of ["#", "##"]) {
+      for (let label of [
+        version,
+        `[${version}](https://example.com/release)`,
+      ]) {
+        for (let gap of ["", " "]) {
+          equal(
+            render(`${heading} ${label}${gap}(2022-08-12)`),
+            `\n<h2>${version}</h2>\n<div class="release-date">Aug 12, <span>2022</span></div>\n`,
+            "05.01",
+          );
+        }
+      }
+    }
+  }
+});
+
+test("06 - other headings never become partial stable releases", () => {
+  for (let label of [
+    "1.2",
+    "1.2.3.4",
+    "1.2.3-beta.1",
+    "1.2.3+build.4",
+    "Changes for 1.2.3",
+  ]) {
+    equal(
+      render(`## ${label} (2022-08-12)`),
+      `\n<h2>${label} (2022-08-12)</h2>\n`,
+      "06.01",
+    );
+    equal(
+      render(`# [${label}](https://example.com/release) (2022-08-12)`),
+      `\n<h1><a href="https://example.com/release">${label}</a> (2022-08-12)</h1>\n`,
+      "06.02",
+    );
+  }
+});
+
 test.run();

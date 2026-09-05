@@ -1,5 +1,4 @@
 import { deleteKey, type ReadonlyTreeObject } from "object-delete-key";
-import semverRegex from "semver-regex";
 
 export interface Obj extends ReadonlyTreeObject {}
 
@@ -20,9 +19,10 @@ export const stringify = (obj: Obj) => {
 
 /**
  * Extracts "3.1.0" from:
- * "# 3.1.0 (2022-08-12)"
+ * "3.1.0 (2022-08-12)"
  * or
- * "# [3.1.0](https://github.com/...) (2022-08-12)"
+ * "3.1.0" (a linked heading's text).
+ * Changelogs use stable major.minor.patch releases only.
  * @param str
  * @returns string
  */
@@ -30,7 +30,7 @@ export const extractStartingVersionString = (str: unknown) => {
   if (typeof str !== "string") {
     return "";
   }
-  let res = semverRegex().exec(str);
+  let res = /^\d+\.\d+\.\d+(?=\s|\(|$)/.exec(str);
   return res ? res[0] : "";
 };
 
