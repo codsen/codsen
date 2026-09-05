@@ -64,18 +64,14 @@
   "lect": {
     "licence": {
       "extras": [
-        "",
         "Some tests and some regexes adapted from he.js\nMIT Licence - Copyright © 2013-2018 Mathias Bynens <https://mathiasbynens.be/>\nhttps://github.com/mathiasbynens/he"
       ]
     }
   },
   "dependencies": {
     "codsen-utils": "^1.10.0",
-    "he": "^1.2.0",
+    "html-entity-codec": "^1.0.0",
     "ranges-merge": "^9.2.3"
-  },
-  "devDependencies": {
-    "@types/he": "^1.2.3"
   },
   "engines": {
     "node": ">=18.20.8"

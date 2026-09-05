@@ -1,5 +1,5 @@
 import { formatDiagnosticValue, isPlainObject as isObj } from "codsen-utils";
-import he from "he";
+import { decode, scanReference } from "html-entity-codec";
 import type { Ranges } from "ranges-merge";
 import { rMerge } from "ranges-merge";
 
@@ -70,22 +70,10 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
   // vars
   // ---------------------------------------------------------------------------
 
-  // single, non-recursively encoded entity:
-  // /&(#?[^;\W]+;?)/g;
-
-  // recursively encoded (one or more times over and over) HTML entity:
-  // /&(#?[^;\W]+;?)+/g;
-
-  // regex adapted taken from he.js v1.1.1
-  // the difference is recursively encoded entity catch in front which is sensitive to semicolons
-  let entityRegex =
-    /&(#?[^;\W]+;)+|&#([0-9]+)(;?)|&#[xX]([a-fA-F0-9]+)(;?)|&([0-9a-zA-Z]+);|&(Aacute|Agrave|Atilde|Ccedil|Eacute|Egrave|Iacute|Igrave|Ntilde|Oacute|Ograve|Oslash|Otilde|Uacute|Ugrave|Yacute|aacute|agrave|atilde|brvbar|ccedil|curren|divide|eacute|egrave|frac12|frac14|frac34|iacute|igrave|iquest|middot|ntilde|oacute|ograve|oslash|otilde|plusmn|uacute|ugrave|yacute|AElig|Acirc|Aring|Ecirc|Icirc|Ocirc|THORN|Ucirc|acirc|acute|aelig|aring|cedil|ecirc|icirc|iexcl|laquo|micro|ocirc|pound|raquo|szlig|thorn|times|ucirc|Auml|COPY|Euml|Iuml|Ouml|QUOT|Uuml|auml|cent|copy|euml|iuml|macr|nbsp|ordf|ordm|ouml|para|quot|sect|sup1|sup2|sup3|uuml|yuml|AMP|ETH|REG|amp|deg|eth|not|reg|shy|uml|yen|GT|LT|gt|lt)([=a-zA-Z0-9])?/g;
-
-  // final ranges array:
+  // Candidate spans are a public wrapper contract: semicolon-delimited
+  // encoded layers belong to one range, and a legacy name includes one
+  // lookahead character. The core scanner handles only reference recognition.
   let rangesArr = [];
-
-  // temporary array container
-  let array1;
 
   let regexInvalidEntity = /&#(?:[xX][^a-fA-F0-9]|[^0-9xX])/;
 
@@ -101,48 +89,84 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
   // action
   // ---------------------------------------------------------------------------
 
-  for (array1 = entityRegex.exec(str); array1; array1 = entityRegex.exec(str)) {
-    DEV &&
-      console.log(
-        `--------\nFound ${`\u001b[${33}m${array1[0]}\u001b[${39}m`} Range: [${
-          entityRegex.lastIndex - array1[0].length
-        }, ${entityRegex.lastIndex}]`,
-      );
-    let chomped = chomp(array1[0]);
-    if (chomped === "&") {
-      DEV && console.log('chomped === "&"');
-      rangesArr.push([
-        entityRegex.lastIndex - array1[0].length,
-        entityRegex.lastIndex,
-        "&",
-      ]);
-    } else {
-      let decoded = he.decode(chomped, resolvedOpts);
-      DEV &&
-        console.log(`${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`);
-      if (decoded !== chomped) {
-        DEV &&
-          console.log(
-            `will push "${`\u001b[${33}m${JSON.stringify(
-              [
-                entityRegex.lastIndex - array1[0].length,
-                entityRegex.lastIndex,
-                decoded,
-              ],
-              null,
-              4,
-            )}\u001b[${39}m`}"`,
-          );
-        rangesArr.push([
-          entityRegex.lastIndex - array1[0].length,
-          entityRegex.lastIndex,
-          decoded,
-        ]);
+  for (let start = str.indexOf("&"); start !== -1; ) {
+    const end = candidateEnd(str, start);
+    if (end === start) {
+      start = str.indexOf("&", start + 1);
+      continue;
+    }
+    const chomped = chomp(str.slice(start, end));
+    if (resolvedOpts.strict && resolvedOpts.isAttributeValue) {
+      const reference = scanReference(chomped, 0);
+      if (
+        reference &&
+        chomped[1] !== "#" &&
+        chomped[reference.end - 1] !== ";" &&
+        chomped[reference.end] === "="
+      ) {
+        // Preserve the wrapper's historical strict attribute error policy.
+        throw new Error(
+          "ranges-ent-decode/rEntDecode(): [THROW_ID_04] Parse error: `&` did not start a character reference",
+        );
       }
     }
+    if (
+      resolvedOpts.strict &&
+      /[a-zA-Z]/.test(chomped[1] || "") &&
+      !scanReference(chomped, 0)
+    ) {
+      // Chomping can remove the semicolon from an unknown name. The old
+      // wrapper still rejected that selected candidate in strict mode.
+      throw new Error(
+        "ranges-ent-decode/rEntDecode(): [THROW_ID_05] Parse error: named character reference was not terminated by a semicolon",
+      );
+    }
+    const decoded =
+      chomped === "&"
+        ? "&"
+        : chomped === "&#" || chomped === "&#x" || chomped === "&#X"
+          ? chomped
+          : decode(chomped, {
+              context: resolvedOpts.isAttributeValue ? "attribute" : "text",
+              strict: resolvedOpts.strict,
+            });
+    if (chomped === "&" || decoded !== chomped) {
+      rangesArr.push([start, end, decoded]);
+    }
+    start = str.indexOf("&", end);
   }
 
   return rMerge(rangesArr as Ranges);
+}
+
+function isWord(code: number): boolean {
+  return (
+    (code >= 48 && code <= 57) ||
+    (code >= 65 && code <= 90) ||
+    (code >= 97 && code <= 122) ||
+    code === 95
+  );
+}
+
+const repeatedCandidate = /&(?:#?[A-Za-z0-9_]+;)+/y;
+
+function candidateEnd(str: string, start: number): number {
+  // This is the wrapper's recursive-layer grammar, independent of the
+  // codec's canonical names. Sticky matching preserves the requested offset.
+  repeatedCandidate.lastIndex = start;
+  const candidate = repeatedCandidate.exec(str);
+  if (candidate) return repeatedCandidate.lastIndex;
+  const reference = scanReference(str, start);
+  if (!reference) return start;
+  let end = reference.end;
+  const next = str.charCodeAt(end);
+  if (
+    str[start + 1] !== "#" &&
+    str[end - 1] !== ";" &&
+    (next === 61 || (isWord(next) && next !== 95))
+  )
+    end += 1;
+  return end;
 }
 
 export { defaults, type Ranges, rEntDecode, version };
