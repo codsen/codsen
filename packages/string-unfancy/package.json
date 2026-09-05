@@ -71,10 +71,7 @@
   },
   "dependencies": {
     "codsen-utils": "^1.10.0",
-    "he": "^1.2.0"
-  },
-  "devDependencies": {
-    "@types/he": "^1.2.3"
+    "html-entity-codec": "^1.0.0"
   },
   "engines": {
     "node": ">=18.20.8"
