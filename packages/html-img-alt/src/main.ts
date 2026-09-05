@@ -159,7 +159,7 @@ function alts(str: string, opts?: Partial<Opts>): string {
     // catch equal character after alt:
     // ================
     if (str[i] === "=") {
-      if (altBegins) {
+      if (altBegins && (!withinQuotes || str[i + 1] === '"')) {
         // turn off the equal character search flag
         thereShouldBeEqualCharacterHere = 0;
         thereShouldBeTheFirstDoubleQuoteHere = i + 1;
@@ -390,8 +390,16 @@ function alts(str: string, opts?: Partial<Opts>): string {
 
         if (altContentsStart && resolvedOpts.unfancyTheAltContents) {
           let altContents = str.slice(altContentsStart, i);
-          if (unfancy(altContents).trim() !== altContents) {
-            rangesArr.add(altContentsStart, i, unfancy(altContents).trim());
+          // Repeated decoding can reveal delimiters. Serialize the final value
+          // for this double-quoted attribute, including literal ampersands.
+          let replacement = unfancy(altContents)
+            .trim()
+            .replace(/&/g, "&amp;")
+            .replace(/"/g, "&quot;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+          if (replacement !== altContents) {
+            rangesArr.add(altContentsStart, i, replacement);
           }
         }
         altContentsStart = 0;

@@ -21,7 +21,7 @@
   <img src="https://img.shields.io/badge/licence-MIT-brightgreen.svg?style=flat-square" alt="MIT Licence">
 </p>
 
-**Powered by he.** No other dependencies.
+**Powered by parse5.** No other dependencies.
 
 ## Install
 

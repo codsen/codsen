@@ -78,6 +78,9 @@
     "ranges-push": "^7.3.0",
     "string-unfancy": "^6.2.2"
   },
+  "devDependencies": {
+    "parse5": "^7.3.0"
+  },
   "engines": {
     "node": ">=18.20.8"
   },
