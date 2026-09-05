@@ -114,6 +114,7 @@ test("05 - keeps browser smoke functions self-contained and serializable", () =>
       "string-extract-class-names",
       "string-remove-widows",
       "string-strip-html",
+      "string-typo-match",
       "test-mixer",
       "util-nonempty",
     ],

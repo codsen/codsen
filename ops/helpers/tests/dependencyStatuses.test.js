@@ -278,7 +278,7 @@ test("09 - typings fold into the library they describe", () => {
         devDependencies: { "@babel/core": "*", "@types/babel__core": "*" },
       },
       { name: "consumer", dependencies: { sole: "*" } },
-      { name: "pair", dependencies: { leven: "*", picomatch: "*" } },
+      { name: "pair", dependencies: { dequal: "*", picomatch: "*" } },
     ]),
     {
       noDependencies: ["leaf"],

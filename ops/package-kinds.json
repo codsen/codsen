@@ -97,6 +97,7 @@
     "string-split-by-whitespace",
     "string-strip-html",
     "string-trim-spaces-only",
+    "string-typo-match",
     "string-uglify",
     "string-unfancy",
     "test-mixer",

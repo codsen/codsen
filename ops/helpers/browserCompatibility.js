@@ -1130,6 +1130,41 @@ function utilNonemptySmoke(api, equal) {
   );
 }
 
+function stringTypoMatchSmoke(api, equal) {
+  const preparation = [];
+  const progress = [];
+  const matcher = api.createMatcher(["Levenstein", "Einstein"], {
+    progressFn: (value) => preparation.push(value),
+  });
+  const result = matcher.match("Lenstein", {
+    progressFn: (value) => progress.push(value),
+  });
+  equal(result.status, "matched");
+  equal(result.bestMatch, "Levenstein");
+  equal(result.matches[0].operations[0], {
+    kind: "omitted-block",
+    candidateFrom: 1,
+    candidateTo: 3,
+    inputFrom: 1,
+    inputTo: 1,
+    cost: 120,
+  });
+  equal([preparation[0], preparation[preparation.length - 1]], [0, 100]);
+  equal([progress[0], progress[progress.length - 1]], [0, 100]);
+  equal(api.matchTypos("nsp", ["ensp", "nbsp", "nsup"]).status, "ambiguous");
+  equal(
+    api.matchTypos("ab", ["a😀b"], { minInputLength: 1 }).matches[0]
+      .operations[0].candidateTo,
+    3,
+  );
+  equal(
+    api.matchTypos("rest", ["test"], { keyboard: "qwerty" }).matches[0].cost,
+    75,
+  );
+  equal(typeof result.log.timeTakenInMilliseconds, "number");
+  equal(JSON.parse(JSON.stringify(result)), result);
+}
+
 const IIFE_API_SMOKES = Object.freeze({
   "array-group-str-omit-num-char": arrayGroupSmoke,
   "array-includes-with-glob": arrayIncludesWithGlobSmoke,
@@ -1154,6 +1189,7 @@ const IIFE_API_SMOKES = Object.freeze({
   "string-extract-class-names": stringExtractClassNamesSmoke,
   "string-remove-widows": stringRemoveWidowsSmoke,
   "string-strip-html": stringStripHtmlSmoke,
+  "string-typo-match": stringTypoMatchSmoke,
   "test-mixer": testMixerSmoke,
   "util-nonempty": utilNonemptySmoke,
 });
