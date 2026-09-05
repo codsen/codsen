@@ -16,6 +16,11 @@ import pProgress, { PProgress } from "p-progress";
 import pReduce from "p-reduce";
 import packageJson from "package-json";
 import { notifyOfCliUpdate } from "./cli-update-notifier.js";
+import {
+  major,
+  updatedDependencySpec,
+  workspaceSpecPrefix,
+} from "./dependency-spec.js";
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
@@ -202,12 +207,6 @@ function parseDependencySpec(dependencyName, currentSpec) {
   };
 }
 
-function workspaceSpecPrefix(parsedSpec) {
-  return parsedSpec.kind === "workspace-alias"
-    ? `workspace:${parsedSpec.targetName}@`
-    : "workspace:";
-}
-
 function pinnedDependencySpec(parsedSpec, currentSpec, pinnedSpec) {
   if (parsedSpec.kind === "registry") {
     return pinnedSpec;
@@ -221,26 +220,6 @@ function pinnedDependencySpec(parsedSpec, currentSpec, pinnedSpec) {
     selector = parsedPin.selector ?? parsedSpec.selector;
   }
   return `${workspaceSpecPrefix(parsedSpec)}${selector}`;
-}
-
-function updatedDependencySpec(parsedSpec, currentSpec, version) {
-  if (parsedSpec.kind === "registry") {
-    return `^${version}`;
-  }
-  if (parsedSpec.kind === "workspace-path") {
-    return currentSpec;
-  }
-
-  let workspaceRange = parsedSpec.selector;
-  if (["*", "^", "~"].includes(workspaceRange)) {
-    return currentSpec;
-  }
-  let firstVersionDigit = workspaceRange.search(/\d/);
-  if (firstVersionDigit === -1) {
-    return currentSpec;
-  }
-  let rangePrefix = workspaceRange.slice(0, firstVersionDigit);
-  return `${workspaceSpecPrefix(parsedSpec)}${rangePrefix}${version}`;
 }
 
 const helpText = `
@@ -325,15 +304,6 @@ export async function updateVersions({
       .map((n) => `${n} ${updatedPackages[n]}`)
       .join("\n");
   }
-  function major(versNum) {
-    if (typeof versNum === "string") {
-      return (
-        versNum.match(/^(?:workspace:)?[^\d]*(\d+)(?:\.|$)/)?.[1] ?? versNum
-      );
-    }
-    return versNum;
-  }
-
   let configPath = path.join(cwd, "upd.config.json");
   let newConfig;
   try {
