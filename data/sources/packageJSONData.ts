@@ -4664,7 +4664,6 @@ export const packageJSONData = {
       "object-merge-advanced": "^14.2.2",
       "object-no-new-keys": "^5.3.2",
       "object-set-all-values-to": "^6.2.3",
-      "p-reduce": "^3.0.0",
       "semver-compare": "^1.0.0",
       "sort-keys": "^5.1.0"
     },
@@ -5027,8 +5026,7 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-glob": "^1.1.1",
       "codsen-utils": "^1.10.0",
-      "lerna-clean-changelogs": "^5.2.3",
-      "p-reduce": "^3.0.0"
+      "lerna-clean-changelogs": "^5.2.3"
     },
     "devDependencies": {
       "p-map": "^7.0.7"
@@ -9698,7 +9696,6 @@ export const packageJSONData = {
       "edit-package-json": "^0.10.4",
       "object-path": "^0.11.8",
       "p-progress": "^1.0.0",
-      "p-reduce": "^3.0.0",
       "package-json": "^10.0.1"
     },
     "devDependencies": {

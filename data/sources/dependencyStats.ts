@@ -26,7 +26,6 @@ export const dependencyStats: DependencyStats = {
     "object-path",
     "p-map",
     "p-progress",
-    "p-reduce",
     "package-json",
     "picomatch",
     "semver-compare",
@@ -155,7 +154,6 @@ export const dependencyStats: DependencyStats = {
     "object-set-all-values-to": 1,
     "p-map": 1,
     "p-progress": 1,
-    "p-reduce": 3,
     "package-json": 1,
     "picomatch": 1,
     "ranges-apply": 15,
@@ -233,9 +231,6 @@ export const dependencyStats: DependencyStats = {
       "object-path": 3
     },
     {
-      "p-reduce": 3
-    },
-    {
       "unified": 3
     },
     {
@@ -255,6 +250,9 @@ export const dependencyStats: DependencyStats = {
     },
     {
       "@types/mdast": 1
+    },
+    {
+      "ansi-diff-stream": 1
     }
   ],
   "top10OwnDeps": [

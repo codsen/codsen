@@ -441,8 +441,8 @@ export const interdeps = [
   },
   {
     "name": "json-comb-core",
-    "tarballSizeBytes": 22528,
-    "unpackedSizeBytes": 70781,
+    "tarballSizeBytes": 22477,
+    "unpackedSizeBytes": 70690,
     "imports": [
       "codsen-utils",
       "object-fill-missing-keys",
@@ -486,8 +486,8 @@ export const interdeps = [
   },
   {
     "name": "lerna-clean-changelogs-cli",
-    "tarballSizeBytes": 11714,
-    "unpackedSizeBytes": 37686,
+    "tarballSizeBytes": 11681,
+    "unpackedSizeBytes": 37550,
     "imports": [
       "codsen-glob",
       "codsen-utils",
@@ -938,8 +938,8 @@ export const interdeps = [
   },
   {
     "name": "update-versions",
-    "tarballSizeBytes": 16447,
-    "unpackedSizeBytes": 60370,
+    "tarballSizeBytes": 16387,
+    "unpackedSizeBytes": 60094,
     "imports": [
       "codsen-glob",
       "codsen-utils",
