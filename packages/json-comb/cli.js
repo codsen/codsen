@@ -2,48 +2,18 @@
 
 /* eslint no-console:0 */
 
-import { readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { glob } from "codsen-glob";
 import { codsenCLI } from "codsen-utils";
 import { enforceKeyset, getKeyset } from "json-comb-core";
 import pMap from "p-map";
 import { notifyOfCliUpdate } from "./cli-update-notifier.js";
+import { readJson, writeJson } from "./json-file.js";
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
 
 const filesystemConcurrency = 32;
-
-async function readJson(file) {
-  const contents = (await readFile(file, "utf8")).replace(/^\uFEFF/, "");
-
-  try {
-    return JSON.parse(contents);
-  } catch (error) {
-    error.message = `${file}: ${error.message}`;
-    throw error;
-  }
-}
-
-async function writeJson(
-  file,
-  value,
-  { EOL = "\n", finalEOL = true, replacer = null, spaces } = {},
-) {
-  const stringified = JSON.stringify(value, replacer, spaces);
-
-  if (stringified === undefined) {
-    throw new TypeError(
-      `json-comb/writeJson(): [THROW_ID_01] Converting ${typeof value} value to JSON is not supported`,
-    );
-  }
-
-  await writeFile(
-    file,
-    stringified.replace(/\n/g, EOL) + (finalEOL ? EOL : ""),
-  );
-}
 
 const messagePrefix = `\u001b[${90}m${"✨ JSON Comb: "}\u001b[${39}m`;
 const { log } = console;

@@ -261,6 +261,19 @@ test("07 - absolute negative patterns exclude matched files", async () => {
   );
 });
 
+test("08 - local information modes and legacy input recovery", async () => {
+  let reportedVersion = await execa("./cli.js", ["-v", "ignored"]);
+  equal(reportedVersion.stdout, pack.version, "08.01");
+
+  let reportedHelp = await execa("./cli.js", ["-h", "ignored"]);
+  match(reportedHelp.stdout, /Usage/g, "08.02");
+  match(reportedHelp.stdout, /Options/g, "08.03");
+
+  let tempFolder = temporaryDirectory();
+  let recoveredInput = await execa("./cli.js", ["--legacy", tempFolder]);
+  match(recoveredInput.stdout, /ID_1/g, "08.04");
+});
+
 // tap.todo("01.05 - sort, there's a broken JSON among files");
 
 test.run();

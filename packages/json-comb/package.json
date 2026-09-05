@@ -56,7 +56,7 @@
     "all": true,
     "check-coverage": true,
     "exclude": ["**/test/**/*.*", "cli-update-notifier.js"],
-    "lines": 94
+    "lines": 100
   },
   "lect": {
     "licence": {
