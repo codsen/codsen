@@ -13,7 +13,7 @@ import {
 } from "codsen-utils";
 import type { Opts as HtmlCrushOpts } from "html-crush";
 import { crush } from "html-crush";
-import { decode as decodeHtmlEntities } from "html-entities";
+import { decode as decodeHtmlEntities } from "html-entity-codec";
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
 import { emptyCondCommentRegex } from "regex-empty-conditional-comments";
@@ -3137,7 +3137,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
           // normal operations can continue
           let carvedClass = `${str.slice(bodyClass.valueStart, i)}`;
           const canonicalClass = decodeHtmlEntities(carvedClass, {
-            scope: "attribute",
+            context: "attribute",
           });
           DEV &&
             console.log(
@@ -3276,7 +3276,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
         DEV && console.log();
         let carvedId = str.slice(bodyId.valueStart, i);
         const canonicalId = decodeHtmlEntities(carvedId, {
-          scope: "attribute",
+          context: "attribute",
         });
         DEV &&
           console.log(
@@ -4256,7 +4256,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
       allClassesAndIdsWithinBody = uniq(bodyClassesArr.concat(bodyIdsArr));
       bodyIdsReferencedByForAttributes = bodyIdsArr.filter((id) =>
         idsReferencedByForAttributesSet.has(
-          decodeHtmlEntities(id.slice(1), { scope: "attribute" }),
+          decodeHtmlEntities(id.slice(1), { context: "attribute" }),
         ),
       );
       bodyIdsReferencedByForAttributesSet = new Set(
@@ -5123,7 +5123,7 @@ function extractIdsReferencedByForAttributes(str: string): string[] {
         forAttributeSeen = true;
         if (value) {
           result.push(
-            ...decodeHtmlEntities(value, { scope: "attribute" })
+            ...decodeHtmlEntities(value, { context: "attribute" })
               .split(/[\t\n\f\r ]+/u)
               .filter(Boolean),
           );

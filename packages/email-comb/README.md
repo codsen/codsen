@@ -22,7 +22,7 @@
   <a href="https://codsen.com/os/email-comb/play"><img src="https://img.shields.io/badge/playground-here-brightgreen?style=flat-square" alt="playground"></a>
 </p>
 
-**Powered by html-entities.** No other dependencies.
+**No 3rd party dependencies.** All dependencies and devDependencies, checked recursively, are Codsen packages.
 
 ## Install
 
