@@ -12,7 +12,7 @@ import {
   rightSingleQuote,
   voidTags,
 } from "codsen-utils";
-import he from "he";
+import * as htmlEntities from "html-entity-codec";
 import { rApply } from "ranges-apply";
 import { rInvert } from "ranges-invert";
 import { Ranges } from "ranges-push";
@@ -230,7 +230,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
     let lastVal;
     do {
       lastVal = temp;
-      temp = he.decode(temp);
+      temp = htmlEntities.decode(temp);
     } while (temp !== str && lastVal !== temp);
 
     if (str !== temp) {

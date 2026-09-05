@@ -1,7 +1,7 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import type { EolSetting } from "codsen-utils";
-import he from "he";
+import * as htmlEntities from "html-entity-codec";
 
 interface Opts {
   fixBrokenEntities: boolean;
@@ -455,7 +455,7 @@ function doConvertEntities(
             (rangeArr) => code > rangeArr[0] && code < rangeArr[1],
           )
         ) {
-          return he.encode(char, {
+          return htmlEntities.encode(char, {
             useNamedReferences: true,
           });
         }
@@ -464,7 +464,7 @@ function doConvertEntities(
       .join("");
   }
   // else, if dontEncodeNonLatin if off, just encode everything:
-  return he.encode(inputString, {
+  return htmlEntities.encode(inputString, {
     useNamedReferences: true,
   });
 }

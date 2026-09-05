@@ -11,7 +11,6 @@ import {
   // ellipsis,
   rightSingleQuote,
 } from "codsen-utils";
-import he from "he";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import { det as det1 } from "../dist/detergent.esm.js";
@@ -1872,7 +1871,7 @@ test(`127 - erroneous entities - potentially clashing incomplete named entities`
     det(ok, not, 0, "aaa&theta&thetasym&theta&thetasymaaa", {
       convertEntities: false,
     }).res,
-    he.decode("aaa&theta;&thetasym;&theta;&thetasym;aaa"),
+    "aaaθϑθϑaaa",
     "127.01",
   );
 });

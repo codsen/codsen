@@ -15,8 +15,8 @@ import {
   rightDoubleQuote,
   rightSingleQuote,
 } from "codsen-utils";
-import he from "he";
 import { notEmailFriendly } from "html-entities-not-email-friendly";
+import * as htmlEntities from "html-entity-codec";
 import type { Ranges } from "ranges-push";
 import { convertOne as convertOneApostrophe } from "string-apostrophes";
 import { convertOne as convertOneDash } from "string-dashes";
@@ -837,7 +837,7 @@ function processCharacter(
                       str.slice(i, i + temp.length + 2),
                       null,
                       4,
-                    )} (charCodeAt = ${he
+                    )} (charCodeAt = ${htmlEntities
                       .decode(`${str.slice(i, i + temp.length + 2)}`)
                       .charCodeAt(0)})`,
                   );
@@ -847,7 +847,9 @@ function processCharacter(
                     `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} decoded [${i}, ${
                       i + temp.length + 2
                     }, ${JSON.stringify(
-                      he.decode(`${str.slice(i, i + temp.length + 2)}`),
+                      htmlEntities.decode(
+                        `${str.slice(i, i + temp.length + 2)}`,
+                      ),
                       null,
                       4,
                     )}]`,
@@ -855,7 +857,7 @@ function processCharacter(
                 rangesArr.push(
                   i,
                   i + temp.length + 2,
-                  he.decode(`${str.slice(i, i + temp.length + 2)}`),
+                  htmlEntities.decode(`${str.slice(i, i + temp.length + 2)}`),
                 );
                 offsetBy(temp.length + 1);
                 DEV && console.log(`offset by ${temp.length + 1}`);
@@ -884,9 +886,12 @@ function processCharacter(
                 if (str[z] === ";") {
                   // it's numeric entity
                   DEV && console.log(`carved out "${str.slice(i, z + 1)}"`);
-                  let tempRes = he.encode(he.decode(str.slice(i, z + 1)), {
-                    useNamedReferences: true,
-                  });
+                  let tempRes = htmlEntities.encode(
+                    htmlEntities.decode(str.slice(i, z + 1)),
+                    {
+                      useNamedReferences: true,
+                    },
+                  );
 
                   DEV &&
                     console.log(

@@ -65,7 +65,6 @@
   "lect": {
     "licence": {
       "extras": [
-        "",
         "Passes unit tests from https://github.com/kemitchell/straight-to-curly-quotes.json, licenced under CC0-1.0"
       ]
     }
@@ -74,8 +73,8 @@
     "all-named-html-entities": "^3.2.0",
     "ansi-regex": "^6.3.0",
     "codsen-utils": "^1.10.0",
-    "he": "^1.2.0",
     "html-entities-not-email-friendly": "^0.10.0",
+    "html-entity-codec": "^1.0.0",
     "ranges-apply": "^7.2.3",
     "ranges-invert": "^6.2.3",
     "ranges-process-outside": "^6.2.3",
