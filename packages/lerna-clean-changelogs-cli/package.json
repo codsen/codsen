@@ -71,8 +71,7 @@
   "dependencies": {
     "codsen-glob": "^1.1.1",
     "codsen-utils": "^1.10.0",
-    "lerna-clean-changelogs": "^5.2.3",
-    "p-reduce": "^3.0.0"
+    "lerna-clean-changelogs": "^5.2.3"
   },
   "devDependencies": {
     "p-map": "^7.0.7"
