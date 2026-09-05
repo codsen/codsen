@@ -17,18 +17,19 @@ dist/
 
 # misc
 .cache
-.eslintcache
 .DS_Store
-*.pem
-ideas.md
-deps-graph.png
+.eslintcache
 .nyc_output
-testStats.md
+.perf-scratch
+*.pem
+deps-graph.png
+ideas.md
+logs
 package_bak.json
 package.json.lerna_backup
 packages/csv-sort-cli/temp
-logs
-.perf-scratch
+secret-plans
+testStats.md
 
 # debug
 npm-debug.log*
