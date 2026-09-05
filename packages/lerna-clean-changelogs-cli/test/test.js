@@ -1,9 +1,9 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { mkdirSync } from "node:fs";
-import { chmod, readFile, writeFile } from "node:fs/promises";
+import { chmod, readFile, rm, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
-import { execa, execaCommand } from "execa";
+import { execa } from "execa";
 import pMap from "p-map";
 import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
@@ -95,8 +95,6 @@ test(`03 - general parts - no files found in the given directory`, async () => {
   let stdOutContents = await execa("./cli.js", [tempFolder]);
   // CLI will complain no files could be found
   match(stdOutContents.stdout, /no changelogs found/, "03.01");
-
-  await execaCommand(`rm -rf ${path.resolve(path.resolve(), "../temp")}`);
 });
 
 // Main unit tests
@@ -126,9 +124,7 @@ test(`04 - functionality - pointed directly at a file`, async () => {
       return readFile(path.join(tempFolder, "changelog.md"), "utf8");
     })
     .then((received) =>
-      execaCommand(`rm -rf ${tempFolder}`, {
-        shell: true,
-      }).then(() => received),
+      rm(tempFolder, { recursive: true, force: true }).then(() => received),
     );
 
   equal(await processedFileContents, changelog1Fixed, "04.02");
@@ -180,8 +176,7 @@ test(`05 - functionality - globs, multiple written multiple skipped`, async () =
     .then((execasMsg) => {
       match(execasMsg.stdout, /5 updated, 1 skipped/, "05.01");
     })
-    // .then(() => execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`))
-    .then(() => execaCommand(`rm -rf ${tempFolder}`))
+    .then(() => rm(tempFolder, { recursive: true, force: true }))
     .catch((err) => {
       throw new Error(err);
     });

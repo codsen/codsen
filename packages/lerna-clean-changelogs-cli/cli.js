@@ -4,11 +4,9 @@
 // -----------------------------------------------------------------------------
 
 import { createRequire } from "node:module";
-import path from "node:path";
-import { glob } from "codsen-glob";
 import { codsenCLI } from "codsen-utils";
-import pReduce from "p-reduce";
 import { notifyOfCliUpdate } from "./cli-update-notifier.js";
+import { discoverFiles } from "./discover-files.js";
 import { ProcessingError, processFiles } from "./process-files.js";
 
 const require1 = createRequire(import.meta.url);
@@ -27,9 +25,6 @@ function colour(str, colourCode) {
   return `\u001b[${colourCode}m${str}\u001b[39m`;
 }
 
-function isStr(something) {
-  return typeof something === "string";
-}
 const cli = codsenCLI(
   `
   Usage
@@ -72,45 +67,8 @@ notifyOfCliUpdate({ pkg });
 
 // -----------------------------------------------------------------------------
 
-// Create a promise variable and assign it to one of the promises,
-// depending on was was passed via input arguments.
-let thePromise;
-
-// SYNCHRONOUS PART:
-if (isArr(cli.input) && cli.input.length) {
-  // expand each path under the globber:
-  thePromise = pReduce(
-    cli.input,
-    (total, curr) => {
-      return glob([curr, "!**/node_modules/**"]).then((res) => {
-        if (res) {
-          // add only unique paths:
-          return total.concat(res.filter((p) => !total.includes(p)));
-        }
-        return total;
-      });
-    },
-    [],
-  ).then((preppedPathsArr) => {
-    if (!preppedPathsArr.length) {
-      log(`${signature}${colour("no changelogs found", colours.red)}`);
-      process.exit(0);
-    }
-
-    return preppedPathsArr.filter(
-      (p) =>
-        isStr(path.basename(p)) &&
-        path.basename(p).toLowerCase() === "changelog.md",
-    );
-  });
-} else {
-  thePromise = glob(["**/changelog.md", "!**/node_modules/**"], {
-    caseSensitiveMatch: false,
-  });
-}
-
 // ASYNCHRONOUS PART:
-thePromise
+discoverFiles(cli.input)
   .then((received) => {
     if (!isArr(received) || !received.length) {
       // spinner.warn("no changelogs found");

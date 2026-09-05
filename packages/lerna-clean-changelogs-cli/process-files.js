@@ -22,7 +22,7 @@ function colour(str, colourCode) {
   return `\u001b[${colourCode}m${str}\u001b[39m`;
 }
 
-function formatTime(ms) {
+export function formatTime(ms) {
   if (ms < 1000) {
     return `${ms}ms`;
   }
