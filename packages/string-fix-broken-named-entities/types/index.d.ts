@@ -21,6 +21,7 @@ interface Opts {
   cb: null | ((obj: cbObj) => void);
   entityCatcherCb: null | ((from: number, to: number) => void);
   textAmpersandCatcherCb: null | ((idx: number) => void);
+  /** Reports increasing integer percentages, ending at 100 after result callbacks. */
   progressFn: null | ((percDone: number) => void);
 }
 declare function fixEnt(str: string, opts?: Partial<Opts>): Ranges;

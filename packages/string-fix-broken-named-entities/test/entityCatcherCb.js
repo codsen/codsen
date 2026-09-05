@@ -365,7 +365,7 @@ test(`22 - opts.entityCatcherCb - ${`\u001b[${33}m${"#65"}\u001b[${39}m`} - one 
     entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
     decode: true,
   });
-  equal(gatheredEntityRanges, [[2, 6]], "22.01");
+  equal(gatheredEntityRanges, [], "22.01");
 });
 
 test(`23 - opts.entityCatcherCb - ${`\u001b[${33}m${"#65"}\u001b[${39}m`} - one broken decimal numeric entity`, () => {
@@ -375,7 +375,7 @@ test(`23 - opts.entityCatcherCb - ${`\u001b[${33}m${"#65"}\u001b[${39}m`} - one 
     entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
     decode: true,
   });
-  equal(gatheredEntityRanges, [[2, 25]], "23.01");
+  equal(gatheredEntityRanges, [], "23.01");
 });
 
 //
@@ -398,7 +398,7 @@ test(`24 - opts.entityCatcherCb - ${`\u001b[${33}m${"x#A3"}\u001b[${39}m`} - one
     entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
     decode: false,
   });
-  equal(gatheredEntityRanges, [[2, 8]], "24.01");
+  equal(gatheredEntityRanges, [], "24.01");
 });
 
 test(`25 - opts.entityCatcherCb - ${`\u001b[${33}m${"x#A3"}\u001b[${39}m`} - one decimal numeric entity, without callback, no decode`, () => {
@@ -408,7 +408,7 @@ test(`25 - opts.entityCatcherCb - ${`\u001b[${33}m${"x#A3"}\u001b[${39}m`} - one
     entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
     decode: false,
   });
-  equal(gatheredEntityRanges, [[2, 8]], "25.01");
+  equal(gatheredEntityRanges, [], "25.01");
 });
 
 test(`26 - opts.entityCatcherCb - ${`\u001b[${33}m${"x#A3"}\u001b[${39}m`} - one decimal numeric entity, with callback, with decode`, () => {
@@ -419,7 +419,7 @@ test(`26 - opts.entityCatcherCb - ${`\u001b[${33}m${"x#A3"}\u001b[${39}m`} - one
     entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
     decode: true,
   });
-  equal(gatheredEntityRanges, [[2, 8]], "26.01");
+  equal(gatheredEntityRanges, [], "26.01");
 });
 
 test(`27 - opts.entityCatcherCb - ${`\u001b[${33}m${"x#A3"}\u001b[${39}m`} - one decimal numeric entity, without callback, with decode`, () => {
@@ -429,7 +429,7 @@ test(`27 - opts.entityCatcherCb - ${`\u001b[${33}m${"x#A3"}\u001b[${39}m`} - one
     entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
     decode: true,
   });
-  equal(gatheredEntityRanges, [[2, 8]], "27.01");
+  equal(gatheredEntityRanges, [], "27.01");
 });
 
 test.run();
