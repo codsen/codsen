@@ -590,13 +590,24 @@ erase.
   hand. `noDependencies` means both `dependencies` and `devDependencies` are
   absent or empty. `noThirdPartyDependencies` includes those packages and every
   package whose recursive dependency and dev-dependency graph contains only
-  current Codsen packages. The root's shared development tools are excluded.
-  Missing or redirected dependency manifests cannot establish a marker.
+  current Codsen packages. `singleThirdPartyDependency` names the one outside
+  library a package's whole recursive graph amounts to: `@types/x` counts as
+  `x` rather than as a second library, and typings on their own never name a
+  marker, because the library they describe is not installed. The root's shared
+  development tools are excluded. Missing or redirected dependency manifests
+  cannot establish a marker, and neither a redirected source nor a Codsen
+  package published outside this checkout can ever be named: the first is not
+  the library it claims to be, the second is not third party at all. Codsen
+  names outside the workspace are listed in `ops/helpers/codsenPackages.js`,
+  which `generate-info.js` shares so its own/external split cannot drift from
+  the markers.
   Private packages are checked when traversing dependencies but not advertised.
   `lect` shows the strongest qualifying marker in the generated README;
-  `generate-info.js` emits sorted arrays on the existing `dependencyStats`
-  export in `data/sources/dependencyStats.ts` for the website's shared package
-  page UI. Regenerate READMEs before data, because data includes npm pack sizes.
+  `generate-info.js` emits sorted arrays, plus the
+  `singleThirdPartyDependency` package-to-library object, on the existing
+  `dependencyStats` export in `data/sources/dependencyStats.ts` for the
+  website's shared package page UI. Regenerate READMEs before data, because
+  data includes npm pack sizes.
 - `README.md` is fully regenerated. It is assembled from the package name and
   description, package type, standard badges and links, optional playground and
   ESM notices, `examples/_quickTake.js`, and optional
