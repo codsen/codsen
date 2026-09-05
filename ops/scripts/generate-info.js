@@ -4,6 +4,7 @@ import { pathToFileURL } from "node:url";
 import git from "simple-git";
 import { programClassification } from "../../data/sources/programClassification.ts";
 import { writeGeneratedFile } from "../helpers/generatedFiles.js";
+import { npmPackageSizes } from "../helpers/npmPackageSizes.js";
 import { missingPackageBuildArtifacts } from "../helpers/packageBuildArtifacts.js";
 import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
 import { readPackageKindResolver } from "../helpers/packageKindsFile.js";
@@ -364,17 +365,16 @@ for (let packageName of packageNames) {
 // -----------------------------------------------------------------------------
 
 const interdep = [];
+const packageSizes = npmPackageSizes(
+  packageNames.map((name) => ({
+    directory: `packages/${name}`,
+    manifest: packageJSONData[name],
+  })),
+  path.resolve("."),
+);
 
 // 1. Assemble a JSON of all packages and their deps
 // -----------------------------------------------------------------------------
-
-// {
-//   "name": "detergent",
-//   "size": 3938,
-//   "imports": [
-//     "all-named-html-entities"
-//   ]
-// },
 
 const dependencyStatsTypings = `interface UnknownValueObj {
   [key: string]: number;
@@ -408,34 +408,9 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
     readFileSync(path.join("packages", packageName, "package.json")),
   );
 
-  let size = 0;
-  if (packageKinds.kindFor(packageName) === PACKAGE_KINDS.CLI) {
-    // cli's
-    size = readFileSync(path.join("packages", packageName, "cli.js")).length;
-  } else {
-    try {
-      // normal libs
-      statSync(
-        path.join("packages", packageName, "dist", `${packageName}.esm.js`),
-      );
-      size = readFileSync(
-        path.join("packages", packageName, "dist", `${packageName}.esm.js`),
-      ).length;
-    } catch (_e) {
-      try {
-        // gulp plugins etc. don't have "dist/*"
-        size = readFileSync(
-          path.join("packages", packageName, "index.js"),
-        ).length;
-      } catch (_error) {
-        // let's ignore all other unique ad-hoc packages like perf-ref
-      }
-    }
-  }
-
   interdep.push({
     name: packageName,
-    size,
+    ...packageSizes.get(packageName),
     imports: pack.dependencies
       ? Object.keys(pack.dependencies).filter((n) => allPackages.includes(n))
       : [],
@@ -499,18 +474,16 @@ dependencyStats.allExternalDeps = [...allExternalDeps].sort();
 // -----------------------------------------------------------------------------
 
 await writeGeneratedFile({
-  contents:
-    // JSON.stringify(interdep, null, 2),
-    `export const interdeps = ${JSON.stringify(
-      interdep.filter((obj1) => {
-        return !(
-          !obj1.imports.length &&
-          !interdep.some((obj2) => obj2.imports.includes(obj1.name))
-        );
-      }),
-      null,
-      2,
-    )};\n`,
+  contents: `export const interdeps = ${JSON.stringify(
+    interdep.filter((obj1) => {
+      return !(
+        !obj1.imports.length &&
+        !interdep.some((obj2) => obj2.imports.includes(obj1.name))
+      );
+    }),
+    null,
+    2,
+  )};\n`,
   filename: path.resolve("./data/sources/interdeps.ts"),
   fixCommand: "npm run ci:generate:info",
   mode,

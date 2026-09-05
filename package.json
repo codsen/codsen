@@ -44,7 +44,7 @@
     "format:check": "biome format .",
     "graph": "turbo run build --graph=deps-graph.html",
     "fix": "npm run ci:fix:test-numbering && npm run check:fix && npm run generate",
-    "generate": "npm run lect && npm run ci:generate:info && npm run ci:generate:changelogs && npm run ci:build:root-readme",
+    "generate": "npm run lect && npm run ci:generate:changelogs && npm run ci:generate:info && npm run ci:build:root-readme",
     "house": "npm run fix",
     "lect": "npm run ci:generate:package-kind-config && node ./ops/lect/root.js && turbo run lect",
     "lect:check": "npm run ci:verify:package-kinds && node ./ops/lect/root.js --check && turbo run lect:check",

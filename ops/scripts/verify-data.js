@@ -95,6 +95,18 @@ async function verifyData() {
   }
 
   const directories = packageDirectories();
+  for (const entry of data.interdeps) {
+    if (Object.hasOwn(entry, "size")) {
+      fail(
+        `interdeps still contains the obsolete size field for ${entry.name}`,
+      );
+    }
+    for (const field of ["tarballSizeBytes", "unpackedSizeBytes"]) {
+      if (!Number.isSafeInteger(entry[field]) || entry[field] <= 0) {
+        fail(`interdeps has an invalid ${field} for ${entry.name}`);
+      }
+    }
+  }
   const changelogNames = sortedKeys(data.changelogs);
   assertSameList(
     changelogNames,

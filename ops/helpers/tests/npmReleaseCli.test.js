@@ -13,7 +13,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { test } from "uvu";
-import { equal, match, ok } from "uvu/assert";
+import { equal, match, ok, throws } from "uvu/assert";
+import { npmPackageSizes } from "../npmPackageSizes.js";
 
 const repositoryRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -29,6 +30,7 @@ const helperFiles = [
   "nodeEngine.js",
   "nodeProcessInvocation.js",
   "npmPackagePayload.js",
+  "npmPackageStaging.js",
   "npmReleasePlan.js",
   "npmReleaseRegistry.js",
   "npmReleaseConsumer.js",
@@ -349,8 +351,86 @@ if (process.argv.includes("--version")) {
       /Verified 2 exact publish-shaped tarball consumer\(s\), including 2 strict declaration compilation\(s\)/,
       "01.12",
     );
+
+    const sizes = npmPackageSizes(
+      firstManifest.packages.map(({ directory }) => ({
+        directory,
+        manifest: JSON.parse(
+          readFileSync(
+            path.join(fixtureRoot, directory, "package.json"),
+            "utf8",
+          ),
+        ),
+      })),
+      fixtureRoot,
+    );
+    for (const { name, tarball } of firstManifest.packages) {
+      equal(sizes.get(name).tarballSizeBytes, tarball.size, "01.13");
+      const unpacked = run(
+        "tar",
+        [
+          "--extract",
+          "--gzip",
+          "--to-stdout",
+          "--file",
+          path.join(firstArtifacts, tarball.file),
+        ],
+        { encoding: null },
+      ).stdout;
+      equal(sizes.get(name).unpackedSizeBytes, unpacked.length, "01.14");
+    }
   } finally {
     rmSync(temporaryRoot, { force: true, recursive: true });
+  }
+});
+
+test("02 - measures CLI implementation changes and excludes unrelated files", () => {
+  const root = mkdtempSync(path.join(tmpdir(), "npm-package-sizes-"));
+  const directory = "packages/example";
+  const packageDirectory = path.join(root, directory);
+  const manifest = {
+    name: "size-fixture",
+    version: "1.0.0",
+    type: "module",
+    bin: { example: "cli.js" },
+    dependencies: { "uninstalled-fixture-dependency": "1.0.0" },
+    scripts: { prepack: "exit 1", prepare: "exit 1", postpack: "exit 1" },
+  };
+  try {
+    writeJson(path.join(packageDirectory, "package.json"), manifest);
+    writeFileSync(path.join(root, "LICENSE"), "Fixture license\n");
+    writeFileSync(path.join(packageDirectory, "README.md"), "# Fixture\n");
+    writeFileSync(
+      path.join(packageDirectory, "cli.js"),
+      '#!/usr/bin/env node\nimport "./cli-main.js";\n',
+    );
+    const implementation = path.join(packageDirectory, "cli-main.js");
+    const source = 'import "uninstalled-fixture-dependency";\n';
+    writeFileSync(implementation, source);
+    const packages = [{ directory, manifest }];
+    const before = npmPackageSizes(packages, root).get(manifest.name);
+    writeFileSync(
+      path.join(packageDirectory, "unrelated.js"),
+      "x".repeat(10000),
+    );
+    equal(npmPackageSizes(packages, root).get(manifest.name), before, "02.01");
+    const extra = 'console.log("implementation grew");\n';
+    writeFileSync(implementation, source + extra);
+    const after = npmPackageSizes(packages, root).get(manifest.name);
+    equal(
+      after.unpackedSizeBytes,
+      before.unpackedSizeBytes + Buffer.byteLength(extra),
+      "02.02",
+    );
+    ok(after.tarballSizeBytes > before.tarballSizeBytes, "02.03");
+    rmSync(implementation);
+    throws(
+      () => npmPackageSizes(packages, root),
+      /imports missing local file/,
+      "02.04",
+    );
+  } finally {
+    rmSync(root, { force: true, recursive: true });
   }
 });
 
