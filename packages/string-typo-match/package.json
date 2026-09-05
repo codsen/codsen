@@ -1,0 +1,75 @@
+{
+  "name": "string-typo-match",
+  "version": "1.0.0",
+  "description": "Match typing errors against candidate strings with weighted omissions, swaps, and explainable ambiguity",
+  "keywords": ["ambiguity", "fuzzy", "match", "omission", "string", "typo"],
+  "homepage": "https://codsen.com/os/string-typo-match",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codsen/codsen.git",
+    "directory": "packages/string-typo-match"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "https://codsen.com"
+  },
+  "type": "module",
+  "exports": {
+    "types": "./types/index.d.ts",
+    "script": "./dist/string-typo-match.umd.js",
+    "default": "./dist/string-typo-match.esm.js"
+  },
+  "types": "types/index.d.ts",
+  "scripts": {
+    "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+    "coverage": "c8 uvu test",
+    "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
+    "devtest": "c8 npm run unit && npm run examples && npm run lint",
+    "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
+    "examples": "node '../../ops/scripts/run-examples.js'",
+    "lect": "node '../../ops/lect/lect.js'",
+    "lect:check": "node '../../ops/lect/lect.js' --check",
+    "lint": "biome lint --error-on-warnings . && npm run typecheck",
+    "lint:fix": "biome lint --write --error-on-warnings . && npm run typecheck",
+    "perf": "node perf/check.js",
+    "prep": "echo 'ready'",
+    "prettier": "biome format",
+    "prettier:format": "biome format --write .",
+    "pretest": "npm run lect:check && npm run build",
+    "test": "npm run devtest",
+    "typecheck": "tsc --noEmit --pretty false --project tsconfig.json",
+    "unit": "uvu test"
+  },
+  "c8": {
+    "all": true,
+    "check-coverage": true,
+    "exclude": ["**/test/**/*.*"],
+    "include": ["dist/*.esm.js"],
+    "lines": 100
+  },
+  "lect": {
+    "readme": {
+      "features": {
+        "summary": "A `leven` alternative for matching human typing errors against your own dictionary, with optional keyboard awareness and explained suggestions.",
+        "items": [
+          "Treat a missing chunk as one typo, with limits on how much can disappear.",
+          "Recognise missed keys, extra characters, repeats, substitutions, and adjacent swaps.",
+          "Enable QWERTY weighting or supply your own keyboard map.",
+          "Tune error costs and allow one or two typo events.",
+          "Keep exact matches, rank fuzzy suggestions, and flag ambiguity.",
+          "Match Unicode code points; explain edits with original-string offsets.",
+          "Prepare dictionaries once; track progress and completion statistics.",
+          "Get TypeScript types, ESM, and a standalone browser script without dependencies."
+        ]
+      }
+    }
+  },
+  "engines": {
+    "node": ">=18.20.8"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

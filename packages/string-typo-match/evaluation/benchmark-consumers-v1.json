@@ -1,0 +1,175 @@
+{
+  "node": "v26.8.1",
+  "comparisonPolicy": {
+    "direction": "intended candidate to observed input",
+    "cappedDistance": "Unit-cost Levenshtein scaled by 100; saturation cap is floor(maxCost/100)+1 (3 for the default budget).",
+    "cspellWeighted": "Symmetric ASCII letters/digits map: insertion/deletion 100, substitution 150, adjacent swap 100; fallback edit cost 150.",
+    "affineGap": "Global Gotoh score negated: match 0, substitution 150, either insertion or omission run 100+(length-1)*20.",
+    "shared": "Exact-match bypass, minimum input length, maximum cost, and minimum gap follow each corpus case.",
+    "differences": "Comparators have no maxEvents, omission length/ratio limits, retained-neighbor repetition weighting, or configured keyboard weighting. Their string units and alignments are their own APIs. Scalar comparator results omit operation explanations. Throughput is not an equivalent-result speedup claim."
+  },
+  "qualityLimitations": "Selected flags are not a random sample. Some repository inputs are deliberate fixtures. Intended corrections are inferred, not logged keystrokes. Unselected flags include valid identifiers and names.",
+  "comparatorVersions": {
+    "leven": "4.1.0",
+    "cspell-trie-lib": "10.2.1",
+    "@nlptools/distance": "0.0.8"
+  },
+  "workloadPolicy": {
+    "preparation": "One createMatcher call per iteration; candidate snapshots, code-point arrays, exact lookup, and preparation statistics included.",
+    "lookups": "HTML batch has 7 probes; identifier batch has 6. One-shot includes a fresh preparation per probe; prepared excludes preparation. Explanation and completion-statistics creation included; progress callbacks disabled.",
+    "sizeAndRepetition": "One prepared lookup per iteration; vocabulary and immutable input construction excluded. Long-omission workload explicitly allows 9 omitted code points and cost 300.",
+    "consumers": "Existing perf fixtures are separate from explicit typo workloads: six entities in one document, and five media calls per iteration. Before/after outputs intentionally differ under conservative ambiguity policy.",
+    "preparationLatency": "Milliseconds per preparation are derived from measured mean seconds per iteration; normalized scores remain the throughput comparison evidence.",
+    "memory": "Heap differences over 30 retained matchers after explicit garbage collection; approximate retained heap only, not peak allocation or process RSS."
+  },
+  "entityInventory": {
+    "version": "3.2.0",
+    "candidateCount": 2125,
+    "sha256": "67d41dabfdcbdba42faa09302d764585207e3fdd44a40ee2754cdc1640337082"
+  },
+  "bundleBytes": {
+    "raw": 12257,
+    "gzip": 4364,
+    "brotli": 3942
+  },
+  "referenceCanonicalScore": 183,
+  "measurements": [
+    {
+      "workload": "perf-ref",
+      "relativeMarginOfError": 3.926277679320389,
+      "samples": 128,
+      "normalizedScore": 183
+    },
+    {
+      "workload": "entity-fixer:before",
+      "relativeMarginOfError": 2.11769764597681,
+      "samples": 131,
+      "normalizedScore": 122104.14193931164
+    },
+    {
+      "workload": "entity-fixer:after",
+      "relativeMarginOfError": 2.393822077590241,
+      "samples": 133,
+      "normalizedScore": 122641.61072600402
+    },
+    {
+      "workload": "media-descriptor:before",
+      "relativeMarginOfError": 0.8843196513950189,
+      "samples": 135,
+      "normalizedScore": 919919.9577548376
+    },
+    {
+      "workload": "media-descriptor:after",
+      "relativeMarginOfError": 1.6556116302110073,
+      "samples": 134,
+      "normalizedScore": 913768.4870619322
+    },
+    {
+      "workload": "entity-typos:before",
+      "relativeMarginOfError": 1.9402196521438768,
+      "samples": 131,
+      "normalizedScore": 294.9653255836657
+    },
+    {
+      "workload": "entity-typos:after",
+      "relativeMarginOfError": 3.4673530557397867,
+      "samples": 128,
+      "normalizedScore": 546.6183748040019
+    },
+    {
+      "workload": "media-typos:before",
+      "relativeMarginOfError": 0.6307854637072089,
+      "samples": 135,
+      "normalizedScore": 49986.148343133995
+    },
+    {
+      "workload": "media-typos:after",
+      "relativeMarginOfError": 9.772025441145193,
+      "samples": 110,
+      "normalizedScore": 57363.712523636466
+    }
+  ],
+  "memory": [
+    {
+      "vocabulary": "html-entities",
+      "candidateCount": 2125,
+      "estimatedHeapBytesPerMatcher": 768095.7333333333
+    },
+    {
+      "vocabulary": "identifiers",
+      "candidateCount": 41,
+      "estimatedHeapBytesPerMatcher": 15961.066666666668
+    }
+  ],
+  "quality": {
+    "string-typo-match": {
+      "correctUnique": 40,
+      "incorrectUnique": 0,
+      "exact": 36,
+      "ambiguous": 3,
+      "noMatch": 5,
+      "intendedEligible": 79,
+      "differences": []
+    },
+    "capped-distance": {
+      "correctUnique": 38,
+      "incorrectUnique": 1,
+      "exact": 36,
+      "ambiguous": 4,
+      "noMatch": 5,
+      "intendedEligible": 78,
+      "differences": [
+        {
+          "id": "conversation-omission",
+          "status": "ambiguous",
+          "bestMatch": null
+        },
+        {
+          "id": "negative-local-events",
+          "status": "matched",
+          "bestMatch": "CA"
+        },
+        {
+          "id": "long-omission",
+          "status": "no-match",
+          "bestMatch": null
+        }
+      ]
+    },
+    "cspell-weighted": {
+      "correctUnique": 39,
+      "incorrectUnique": 1,
+      "exact": 36,
+      "ambiguous": 3,
+      "noMatch": 5,
+      "intendedEligible": 78,
+      "differences": [
+        {
+          "id": "negative-local-events",
+          "status": "matched",
+          "bestMatch": "CA"
+        },
+        {
+          "id": "long-omission",
+          "status": "no-match",
+          "bestMatch": null
+        }
+      ]
+    },
+    "affine-gap": {
+      "correctUnique": 40,
+      "incorrectUnique": 1,
+      "exact": 36,
+      "ambiguous": 3,
+      "noMatch": 4,
+      "intendedEligible": 79,
+      "differences": [
+        {
+          "id": "negative-local-events",
+          "status": "matched",
+          "bestMatch": "CA"
+        }
+      ]
+    }
+  }
+}

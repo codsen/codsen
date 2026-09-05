@@ -1,0 +1,291 @@
+{
+  "node": "v26.8.1",
+  "comparisonPolicy": {
+    "direction": "intended candidate to observed input",
+    "cappedDistance": "Unit-cost Levenshtein scaled by 100; saturation cap is floor(maxCost/100)+1 (3 for the default budget).",
+    "cspellWeighted": "Symmetric ASCII letters/digits map: insertion/deletion 100, substitution 150, adjacent swap 100; fallback edit cost 150.",
+    "affineGap": "Global Gotoh score negated: match 0, substitution 150, either insertion or omission run 100+(length-1)*20.",
+    "shared": "Exact-match bypass, minimum input length, maximum cost, and minimum gap follow each corpus case.",
+    "differences": "Comparators have no maxEvents, omission length/ratio limits, retained-neighbor repetition weighting, or configured keyboard weighting. Their string units and alignments are their own APIs. Scalar comparator results omit operation explanations. Throughput is not an equivalent-result speedup claim."
+  },
+  "qualityLimitations": "Selected flags are not a random sample. Some repository inputs are deliberate fixtures. Intended corrections are inferred, not logged keystrokes. Unselected flags include valid identifiers and names.",
+  "comparatorVersions": {
+    "leven": "4.1.0",
+    "cspell-trie-lib": "10.2.1",
+    "@nlptools/distance": "0.0.8"
+  },
+  "workloadPolicy": {
+    "preparation": "One createMatcher call per iteration; candidate snapshots, code-point arrays, exact lookup, and preparation statistics included.",
+    "lookups": "HTML batch has 7 probes; identifier batch has 6. One-shot includes a fresh preparation per probe; prepared excludes preparation. Explanation and completion-statistics creation included; progress callbacks disabled.",
+    "sizeAndRepetition": "One prepared lookup per iteration; vocabulary and immutable input construction excluded. Long-omission workload explicitly allows 9 omitted code points and cost 300.",
+    "consumers": "Existing perf fixtures are separate from explicit typo workloads: six entities in one document, and five media calls per iteration. Before/after outputs intentionally differ under conservative ambiguity policy.",
+    "preparationLatency": "Milliseconds per preparation are derived from measured mean seconds per iteration; normalized scores remain the throughput comparison evidence.",
+    "memory": "Heap differences over 30 retained matchers after explicit garbage collection; approximate retained heap only, not peak allocation or process RSS."
+  },
+  "entityInventory": {
+    "version": "3.2.0",
+    "candidateCount": 2125,
+    "sha256": "67d41dabfdcbdba42faa09302d764585207e3fdd44a40ee2754cdc1640337082"
+  },
+  "bundleBytes": {
+    "raw": 12257,
+    "gzip": 4364,
+    "brotli": 3942
+  },
+  "referenceCanonicalScore": 183,
+  "measurements": [
+    {
+      "workload": "perf-ref",
+      "relativeMarginOfError": 4.6574230025222345,
+      "samples": 48,
+      "normalizedScore": 183
+    },
+    {
+      "workload": "html-entities:prepare",
+      "relativeMarginOfError": 1.519576098727238,
+      "samples": 51,
+      "normalizedScore": 1192.2940046473673,
+      "meanMillisecondsPerPreparation": 0.3099718059422131
+    },
+    {
+      "workload": "html-entities:one-shot",
+      "relativeMarginOfError": 8.719194200172891,
+      "samples": 46,
+      "normalizedScore": 96.40788659322554
+    },
+    {
+      "workload": "html-entities:prepared",
+      "relativeMarginOfError": 1.1388555155210554,
+      "samples": 51,
+      "normalizedScore": 279.0402237474088
+    },
+    {
+      "workload": "html-entities:capped-distance",
+      "relativeMarginOfError": 1.7872928464031435,
+      "samples": 52,
+      "normalizedScore": 391.03986323745664
+    },
+    {
+      "workload": "html-entities:cspell-weighted",
+      "relativeMarginOfError": 3.8353213190779396,
+      "samples": 15,
+      "normalizedScore": 0.2431556881426944
+    },
+    {
+      "workload": "html-entities:affine-gap",
+      "relativeMarginOfError": 2.5551443893653634,
+      "samples": 40,
+      "normalizedScore": 22.761200225597655
+    },
+    {
+      "workload": "identifiers:prepare",
+      "relativeMarginOfError": 3.76294426201636,
+      "samples": 50,
+      "normalizedScore": 60669.98691650329,
+      "meanMillisecondsPerPreparation": 0.006091603849251637
+    },
+    {
+      "workload": "identifiers:one-shot",
+      "relativeMarginOfError": 7.481142326087495,
+      "samples": 51,
+      "normalizedScore": 4520.419951427379
+    },
+    {
+      "workload": "identifiers:prepared",
+      "relativeMarginOfError": 3.624781197331137,
+      "samples": 49,
+      "normalizedScore": 8386.942850799203
+    },
+    {
+      "workload": "identifiers:capped-distance",
+      "relativeMarginOfError": 9.788720603524414,
+      "samples": 44,
+      "normalizedScore": 11777.961115975811
+    },
+    {
+      "workload": "identifiers:cspell-weighted",
+      "relativeMarginOfError": 2.619572024801953,
+      "samples": 33,
+      "normalizedScore": 14.031389086395277
+    },
+    {
+      "workload": "identifiers:affine-gap",
+      "relativeMarginOfError": 3.8285110800252418,
+      "samples": 48,
+      "normalizedScore": 1329.4435607052148
+    },
+    {
+      "workload": "vocabulary-100:prepared",
+      "relativeMarginOfError": 4.914062813169632,
+      "samples": 52,
+      "normalizedScore": 37300.75683249368
+    },
+    {
+      "workload": "vocabulary-1000:prepared",
+      "relativeMarginOfError": 9.808800261402526,
+      "samples": 46,
+      "normalizedScore": 3716.6434618894104
+    },
+    {
+      "workload": "vocabulary-10000:prepared",
+      "relativeMarginOfError": 4.461655207592468,
+      "samples": 50,
+      "normalizedScore": 364.8748105203046
+    },
+    {
+      "workload": "repetitive-32:prepared",
+      "relativeMarginOfError": 8.026360767415303,
+      "samples": 48,
+      "normalizedScore": 42226.14863982733
+    },
+    {
+      "workload": "repetitive-256:prepared",
+      "relativeMarginOfError": 10.84279070300159,
+      "samples": 46,
+      "normalizedScore": 8032.466806711422
+    },
+    {
+      "workload": "repetitive-2048:prepared",
+      "relativeMarginOfError": 2.001864748564517,
+      "samples": 50,
+      "normalizedScore": 1128.3223165262355
+    },
+    {
+      "workload": "long-omission:prepared",
+      "relativeMarginOfError": 5.655531840702345,
+      "samples": 46,
+      "normalizedScore": 683874.2469502544
+    },
+    {
+      "workload": "entity-fixer:before",
+      "relativeMarginOfError": 1.4328521935521303,
+      "samples": 52,
+      "normalizedScore": 126485.64714613726
+    },
+    {
+      "workload": "entity-fixer:after",
+      "relativeMarginOfError": 7.21190617647729,
+      "samples": 49,
+      "normalizedScore": 116432.88466749649
+    },
+    {
+      "workload": "media-descriptor:before",
+      "relativeMarginOfError": 2.7467385525416272,
+      "samples": 49,
+      "normalizedScore": 906398.1108860135
+    },
+    {
+      "workload": "media-descriptor:after",
+      "relativeMarginOfError": 0.6207066541430047,
+      "samples": 52,
+      "normalizedScore": 943896.712610719
+    },
+    {
+      "workload": "entity-typos:before",
+      "relativeMarginOfError": 3.7539621269890433,
+      "samples": 51,
+      "normalizedScore": 306.3723869779172
+    },
+    {
+      "workload": "entity-typos:after",
+      "relativeMarginOfError": 2.1838278806296842,
+      "samples": 50,
+      "normalizedScore": 564.4887324705693
+    },
+    {
+      "workload": "media-typos:before",
+      "relativeMarginOfError": 3.681370008919232,
+      "samples": 53,
+      "normalizedScore": 50846.52670332606
+    },
+    {
+      "workload": "media-typos:after",
+      "relativeMarginOfError": 4.510421599867787,
+      "samples": 50,
+      "normalizedScore": 71284.12498520326
+    }
+  ],
+  "memory": [
+    {
+      "vocabulary": "html-entities",
+      "candidateCount": 2125,
+      "estimatedHeapBytesPerMatcher": 768728.8
+    },
+    {
+      "vocabulary": "identifiers",
+      "candidateCount": 41,
+      "estimatedHeapBytesPerMatcher": 15795.2
+    }
+  ],
+  "quality": {
+    "string-typo-match": {
+      "correctUnique": 40,
+      "incorrectUnique": 0,
+      "exact": 36,
+      "ambiguous": 3,
+      "noMatch": 5,
+      "intendedEligible": 79,
+      "differences": []
+    },
+    "capped-distance": {
+      "correctUnique": 38,
+      "incorrectUnique": 1,
+      "exact": 36,
+      "ambiguous": 4,
+      "noMatch": 5,
+      "intendedEligible": 78,
+      "differences": [
+        {
+          "id": "conversation-omission",
+          "status": "ambiguous",
+          "bestMatch": null
+        },
+        {
+          "id": "negative-local-events",
+          "status": "matched",
+          "bestMatch": "CA"
+        },
+        {
+          "id": "long-omission",
+          "status": "no-match",
+          "bestMatch": null
+        }
+      ]
+    },
+    "cspell-weighted": {
+      "correctUnique": 39,
+      "incorrectUnique": 1,
+      "exact": 36,
+      "ambiguous": 3,
+      "noMatch": 5,
+      "intendedEligible": 78,
+      "differences": [
+        {
+          "id": "negative-local-events",
+          "status": "matched",
+          "bestMatch": "CA"
+        },
+        {
+          "id": "long-omission",
+          "status": "no-match",
+          "bestMatch": null
+        }
+      ]
+    },
+    "affine-gap": {
+      "correctUnique": 40,
+      "incorrectUnique": 1,
+      "exact": 36,
+      "ambiguous": 3,
+      "noMatch": 4,
+      "intendedEligible": 79,
+      "differences": [
+        {
+          "id": "negative-local-events",
+          "status": "matched",
+          "bestMatch": "CA"
+        }
+      ]
+    }
+  }
+}

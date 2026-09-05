@@ -1,0 +1,200 @@
+{
+  "rootNode": "v26.8.1",
+  "rootNpm": "11.19.0",
+  "closure": [
+    "all-named-html-entities",
+    "codsen-format-diagnostic-value",
+    "codsen-utils",
+    "is-media-descriptor",
+    "string-fix-broken-named-entities",
+    "string-left-right",
+    "string-process-comma-separated",
+    "string-typo-match"
+  ],
+  "artifacts": [
+    {
+      "name": "all-named-html-entities",
+      "version": "3.2.0",
+      "file": "all-named-html-entities-3.2.0.tgz",
+      "sha256": "c43ddd05667f7812ffe355706c3b7b0ed15b9ae0858004aa5f7497a7134aefb4",
+      "size": 81562
+    },
+    {
+      "name": "codsen-format-diagnostic-value",
+      "version": "1.1.0",
+      "file": "codsen-format-diagnostic-value-1.1.0.tgz",
+      "sha256": "d5e4fc8c873cb5cfd780e64e6df3ec84e22174cd5f686bce776eeaaccfb74c77",
+      "size": 5041
+    },
+    {
+      "name": "codsen-utils",
+      "version": "1.10.0",
+      "file": "codsen-utils-1.10.0.tgz",
+      "sha256": "c2657210153e9e37e2495989d6ac3e934f7f2fefd6730b7ce4853d8adca1a18c",
+      "size": 22217
+    },
+    {
+      "name": "is-media-descriptor",
+      "version": "5.2.3",
+      "file": "is-media-descriptor-5.2.3.tgz",
+      "sha256": "1214e9d97afdeac6c4c0edbecff01d68dd9e31356815741feba5fd084b4c65d7",
+      "size": 16127
+    },
+    {
+      "name": "string-fix-broken-named-entities",
+      "version": "7.2.2",
+      "file": "string-fix-broken-named-entities-7.2.2.tgz",
+      "sha256": "3e386dad795f98613fe697851c9a210c093d60543a41f8b7bbc36a7a03b28286",
+      "size": 55070
+    },
+    {
+      "name": "string-left-right",
+      "version": "6.2.2",
+      "file": "string-left-right-6.2.2.tgz",
+      "sha256": "8bc0e87869ece0ed314866ab11c0bd6c5253460fb9f21cfadd69d059c77aa164",
+      "size": 13161
+    },
+    {
+      "name": "string-process-comma-separated",
+      "version": "4.3.2",
+      "file": "string-process-comma-separated-4.3.2.tgz",
+      "sha256": "1f78b39935c5247168a1273f13e6c74cc0f27b3023156eab1b9d550c8923a1d3",
+      "size": 9955
+    },
+    {
+      "name": "string-typo-match",
+      "version": "1.0.0",
+      "file": "string-typo-match-1.0.0.tgz",
+      "sha256": "57e4810f473c0dc9d58ba56707e31a387109ff866f3061edf10262ad89898d17",
+      "size": 19834
+    }
+  ],
+  "lanes": [
+    {
+      "major": 18,
+      "node": "18.20.8",
+      "npm": "10.8.2",
+      "units": [
+        {
+          "name": "string-typo-match",
+          "total": 53,
+          "passed": 53
+        },
+        {
+          "name": "string-fix-broken-named-entities",
+          "total": 236,
+          "passed": 236
+        },
+        {
+          "name": "is-media-descriptor",
+          "total": 60,
+          "passed": 60
+        }
+      ],
+      "install": true,
+      "smoke": true,
+      "typescript": true
+    },
+    {
+      "major": 20,
+      "node": "20.19.4",
+      "npm": "10.8.2",
+      "units": [
+        {
+          "name": "string-typo-match",
+          "total": 53,
+          "passed": 53
+        },
+        {
+          "name": "string-fix-broken-named-entities",
+          "total": 236,
+          "passed": 236
+        },
+        {
+          "name": "is-media-descriptor",
+          "total": 60,
+          "passed": 60
+        }
+      ],
+      "install": true,
+      "smoke": true,
+      "typescript": true
+    },
+    {
+      "major": 22,
+      "node": "22.21.1",
+      "npm": "10.9.4",
+      "units": [
+        {
+          "name": "string-typo-match",
+          "total": 53,
+          "passed": 53
+        },
+        {
+          "name": "string-fix-broken-named-entities",
+          "total": 236,
+          "passed": 236
+        },
+        {
+          "name": "is-media-descriptor",
+          "total": 60,
+          "passed": 60
+        }
+      ],
+      "install": true,
+      "smoke": true,
+      "typescript": true
+    },
+    {
+      "major": 24,
+      "node": "24.19.0",
+      "npm": "11.17.0",
+      "units": [
+        {
+          "name": "string-typo-match",
+          "total": 53,
+          "passed": 53
+        },
+        {
+          "name": "string-fix-broken-named-entities",
+          "total": 236,
+          "passed": 236
+        },
+        {
+          "name": "is-media-descriptor",
+          "total": 60,
+          "passed": 60
+        }
+      ],
+      "install": true,
+      "smoke": true,
+      "typescript": true
+    },
+    {
+      "major": 26,
+      "node": "26.7.0",
+      "npm": "11.19.0",
+      "units": [
+        {
+          "name": "string-typo-match",
+          "total": 53,
+          "passed": 53
+        },
+        {
+          "name": "string-fix-broken-named-entities",
+          "total": 236,
+          "passed": 236
+        },
+        {
+          "name": "is-media-descriptor",
+          "total": 60,
+          "passed": 60
+        }
+      ],
+      "install": true,
+      "smoke": true,
+      "typescript": true
+    }
+  ],
+  "note": "Runtime and declarations verified from packed source at implementation completion. Later evaluation/documentation-only additions do not change runtime semantics."
+}

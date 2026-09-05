@@ -1,0 +1,1256 @@
+{
+  "generatedAt": "2026-09-05T16:27:43.938Z",
+  "node": "v26.8.1",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "processor": "Apple M1",
+  "levenVersion": "4.1.0",
+  "referenceCanonicalScore": 183,
+  "artifactSha256": {
+    "matcher": "9e3f68c5a0cfd9b04f4dce0e66f1b14cee04d4264f60dc416cd08078ffb15f78",
+    "currentEntity": "cc40796dff6a685d93ac8abba373a2181a260a81d47afae3eff4ba5f705ac7a7",
+    "currentMedia": "09b6d1463500e43a19cae5ab48041349d72baefe4b343bc34c4196018bd5d847",
+    "previousEntity": "94298d9d339b7fed98a1af84ab476ed13b26015b7e94ad05152b7b824543d218",
+    "previousMedia": "023a8885a58f06c54ee114b81eae85c1182dc2c5f243723543c0fa3f95b304ba",
+    "leven": "5ac05fb8f8cefd0dba12c21863ff917e93af8dc2a8f781d57bee15bb84b8d2f1",
+    "corpus": "8d097a74e0dac8bdb06ab036f09328ebc10819a29663ec8ab326453770512db0",
+    "htmlInventory": "67d41dabfdcbdba42faa09302d764585207e3fdd44a40ee2754cdc1640337082"
+  },
+  "policy": {
+    "normalization": "Each round measures perf-ref afresh; score = targetRate * opsPerSec / referenceRate. Higher is better; compare only the same batch.",
+    "sampling": "Focused repeat of noisy comparisons, minSamples 50 and maxTime 3 seconds per workload. Relative margin of error is Benchmark.js's 95% statistic, not a guarantee against system noise.",
+    "commonLookup": "Identical full vocabulary and probe batch per method. Exact bypass, minimum input 3 code points, cost limit 200, minimum cost gap 25. No callbacks. Each call returns its complete eligible list, sorted by cost then candidate.",
+    "prepared": "Candidate preparation outside timing; each query includes scoring, operation explanations, result ordering, and completion statistics. No cross-query caching.",
+    "oneShot": "A fresh matchTypos call, including candidate preparation, for every probe in every timed batch.",
+    "leven": "leven@4.1.0, unit cost scaled by 100; maxDistance 3 keeps the saturation sentinel above the acceptance limit 2. Wrapper builds suggestions and resolves ambiguity but has no operation explanations or completion statistics.",
+    "semantics": "Unequal algorithms and outputs. Leven does not model an adjacent swap or omitted block as one event, does not weight retained-neighbor repetition, and has no event count/omission constraints. These are throughput comparisons of actual APIs, not equivalent-result speedup claims.",
+    "consumers": "Saved pre-migration public consumers versus current public consumers, including their actual domain policy. Exact/case handling and parsing included. Their outputs intentionally differ for some typos. Current consumers use prepared one-event matchers and conservative abstentions; media permits two-code-point inputs.",
+    "interpretation": "Two percent or less is noise. This selected engineering corpus is not a representative distribution of all real spelling errors. No package perf history is read or written."
+  },
+  "datasets": [
+    {
+      "name": "html-entities",
+      "candidateCount": 2125,
+      "inputs": [
+        "nbsp",
+        "nbps",
+        "nsp",
+        "nbsxp",
+        "CountContourIntegral",
+        "zzzzzzzz",
+        "ConterContourIntegral"
+      ]
+    },
+    {
+      "name": "media-names",
+      "candidateCount": 11,
+      "inputs": [
+        "screen",
+        "screeen",
+        "prnit",
+        "hanheld",
+        "ttv",
+        "notamedia",
+        "al"
+      ]
+    },
+    {
+      "name": "repository-typos",
+      "candidateCount": 41,
+      "inputs": [
+        "astrisk",
+        "algotithm",
+        "alphabettical",
+        "altenative",
+        "arguement",
+        "commments",
+        "curency",
+        "delimeter",
+        "depdendent",
+        "enountered",
+        "escessive",
+        "happend",
+        "impotant",
+        "inclues",
+        "insurace",
+        "librarires",
+        "lowecase",
+        "miliseconds",
+        "mulitple",
+        "orginal",
+        "paht",
+        "referencs",
+        "sandwitched",
+        "seperators",
+        "siwtched",
+        "specificly",
+        "stremline",
+        "stricly",
+        "temporaroly",
+        "unouched",
+        "utilty",
+        "validtion",
+        "wildard",
+        "witholding",
+        "writen"
+      ]
+    }
+  ],
+  "consumerFixtures": {
+    "entityFixture": "&&NbSpzzz&&NbSpzzz\ny &isindot; z\n&nsp;\n&pound",
+    "mediaFixture": "screen and (color), projection and ((color)",
+    "entityTypos": "&nrrow; &rsqo; &intx; &boxplu; &notarealentity; &bus;",
+    "mediaTypos": ["screeen", "prnit", "hanheld", "ttv", "notamedia"]
+  },
+  "observedQuality": {
+    "events-1": {
+      "correctUnique": 35,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0
+    },
+    "events-2": {
+      "correctUnique": 35,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0
+    },
+    "leven": {
+      "correctUnique": 35,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0
+    }
+  },
+  "outcomes": {
+    "html-entities": {
+      "events-1": [
+        {
+          "input": "nbsp",
+          "status": "exact",
+          "bestMatch": "nbsp",
+          "eligibleCount": 1
+        },
+        {
+          "input": "nbps",
+          "status": "matched",
+          "bestMatch": "nbsp",
+          "eligibleCount": 1
+        },
+        {
+          "input": "nsp",
+          "status": "ambiguous",
+          "bestMatch": null,
+          "eligibleCount": 8
+        },
+        {
+          "input": "nbsxp",
+          "status": "matched",
+          "bestMatch": "nbsp",
+          "eligibleCount": 1
+        },
+        {
+          "input": "CountContourIntegral",
+          "status": "no-match",
+          "bestMatch": null,
+          "eligibleCount": 0
+        },
+        {
+          "input": "zzzzzzzz",
+          "status": "no-match",
+          "bestMatch": null,
+          "eligibleCount": 0
+        },
+        {
+          "input": "ConterContourIntegral",
+          "status": "no-match",
+          "bestMatch": null,
+          "eligibleCount": 0
+        }
+      ],
+      "events-2": [
+        {
+          "input": "nbsp",
+          "status": "exact",
+          "bestMatch": "nbsp",
+          "eligibleCount": 1
+        },
+        {
+          "input": "nbps",
+          "status": "matched",
+          "bestMatch": "nbsp",
+          "eligibleCount": 1
+        },
+        {
+          "input": "nsp",
+          "status": "ambiguous",
+          "bestMatch": null,
+          "eligibleCount": 14
+        },
+        {
+          "input": "nbsxp",
+          "status": "matched",
+          "bestMatch": "nbsp",
+          "eligibleCount": 1
+        },
+        {
+          "input": "CountContourIntegral",
+          "status": "no-match",
+          "bestMatch": null,
+          "eligibleCount": 0
+        },
+        {
+          "input": "zzzzzzzz",
+          "status": "no-match",
+          "bestMatch": null,
+          "eligibleCount": 0
+        },
+        {
+          "input": "ConterContourIntegral",
+          "status": "no-match",
+          "bestMatch": null,
+          "eligibleCount": 0
+        }
+      ],
+      "leven": [
+        {
+          "input": "nbsp",
+          "status": "exact",
+          "bestMatch": "nbsp",
+          "eligibleCount": 1
+        },
+        {
+          "input": "nbps",
+          "status": "ambiguous",
+          "bestMatch": null,
+          "eligibleCount": 11
+        },
+        {
+          "input": "nsp",
+          "status": "ambiguous",
+          "bestMatch": null,
+          "eligibleCount": 67
+        },
+        {
+          "input": "nbsxp",
+          "status": "matched",
+          "bestMatch": "nbsp",
+          "eligibleCount": 3
+        },
+        {
+          "input": "CountContourIntegral",
+          "status": "no-match",
+          "bestMatch": null,
+          "eligibleCount": 0
+        },
+        {
+          "input": "zzzzzzzz",
+          "status": "no-match",
+          "bestMatch": null,
+          "eligibleCount": 0
+        },
+        {
+          "input": "ConterContourIntegral",
+          "status": "no-match",
+          "bestMatch": null,
+          "eligibleCount": 0
+        }
+      ]
+    },
+    "media-names": {
+      "events-1": [
+        {
+          "input": "screen",
+          "status": "exact",
+          "bestMatch": "screen",
+          "eligibleCount": 1
+        },
+        {
+          "input": "screeen",
+          "status": "matched",
+          "bestMatch": "screen",
+          "eligibleCount": 1
+        },
+        {
+          "input": "prnit",
+          "status": "matched",
+          "bestMatch": "print",
+          "eligibleCount": 1
+        },
+        {
+          "input": "hanheld",
+          "status": "matched",
+          "bestMatch": "handheld",
+          "eligibleCount": 1
+        },
+        {
+          "input": "ttv",
+          "status": "matched",
+          "bestMatch": "tv",
+          "eligibleCount": 2
+        },
+        {
+          "input": "notamedia",
+          "status": "no-match",
+          "bestMatch": null,
+          "eligibleCount": 0
+        },
+        {
+          "input": "al",
+          "status": "no-match",
+          "bestMatch": null,
+          "eligibleCount": 0
+        }
+      ],
+      "events-2": [
+        {
+          "input": "screen",
+          "status": "exact",
+          "bestMatch": "screen",
+          "eligibleCount": 1
+        },
+        {
+          "input": "screeen",
+          "status": "matched",
+          "bestMatch": "screen",
+          "eligibleCount": 1
+        },
+        {
+          "input": "prnit",
+          "status": "matched",
+          "bestMatch": "print",
+          "eligibleCount": 1
+        },
+        {
+          "input": "hanheld",
+          "status": "matched",
+          "bestMatch": "handheld",
+          "eligibleCount": 1
+        },
+        {
+          "input": "ttv",
+          "status": "matched",
+          "bestMatch": "tv",
+          "eligibleCount": 2
+        },
+        {
+          "input": "notamedia",
+          "status": "no-match",
+          "bestMatch": null,
+          "eligibleCount": 0
+        },
+        {
+          "input": "al",
+          "status": "no-match",
+          "bestMatch": null,
+          "eligibleCount": 0
+        }
+      ],
+      "leven": [
+        {
+          "input": "screen",
+          "status": "exact",
+          "bestMatch": "screen",
+          "eligibleCount": 1
+        },
+        {
+          "input": "screeen",
+          "status": "matched",
+          "bestMatch": "screen",
+          "eligibleCount": 1
+        },
+        {
+          "input": "prnit",
+          "status": "matched",
+          "bestMatch": "print",
+          "eligibleCount": 1
+        },
+        {
+          "input": "hanheld",
+          "status": "matched",
+          "bestMatch": "handheld",
+          "eligibleCount": 1
+        },
+        {
+          "input": "ttv",
+          "status": "ambiguous",
+          "bestMatch": null,
+          "eligibleCount": 2
+        },
+        {
+          "input": "notamedia",
+          "status": "no-match",
+          "bestMatch": null,
+          "eligibleCount": 0
+        },
+        {
+          "input": "al",
+          "status": "no-match",
+          "bestMatch": null,
+          "eligibleCount": 0
+        }
+      ]
+    },
+    "repository-typos": {
+      "events-1": [
+        {
+          "input": "astrisk",
+          "status": "matched",
+          "bestMatch": "asterisk",
+          "eligibleCount": 1
+        },
+        {
+          "input": "algotithm",
+          "status": "matched",
+          "bestMatch": "algorithm",
+          "eligibleCount": 1
+        },
+        {
+          "input": "alphabettical",
+          "status": "matched",
+          "bestMatch": "alphabetical",
+          "eligibleCount": 1
+        },
+        {
+          "input": "altenative",
+          "status": "matched",
+          "bestMatch": "alternative",
+          "eligibleCount": 1
+        },
+        {
+          "input": "arguement",
+          "status": "matched",
+          "bestMatch": "argument",
+          "eligibleCount": 1
+        },
+        {
+          "input": "commments",
+          "status": "matched",
+          "bestMatch": "comments",
+          "eligibleCount": 1
+        },
+        {
+          "input": "curency",
+          "status": "matched",
+          "bestMatch": "currency",
+          "eligibleCount": 1
+        },
+        {
+          "input": "delimeter",
+          "status": "matched",
+          "bestMatch": "delimiter",
+          "eligibleCount": 1
+        },
+        {
+          "input": "depdendent",
+          "status": "matched",
+          "bestMatch": "dependent",
+          "eligibleCount": 1
+        },
+        {
+          "input": "enountered",
+          "status": "matched",
+          "bestMatch": "encountered",
+          "eligibleCount": 1
+        },
+        {
+          "input": "escessive",
+          "status": "matched",
+          "bestMatch": "excessive",
+          "eligibleCount": 1
+        },
+        {
+          "input": "happend",
+          "status": "matched",
+          "bestMatch": "happened",
+          "eligibleCount": 1
+        },
+        {
+          "input": "impotant",
+          "status": "matched",
+          "bestMatch": "important",
+          "eligibleCount": 1
+        },
+        {
+          "input": "inclues",
+          "status": "matched",
+          "bestMatch": "includes",
+          "eligibleCount": 1
+        },
+        {
+          "input": "insurace",
+          "status": "matched",
+          "bestMatch": "insurance",
+          "eligibleCount": 1
+        },
+        {
+          "input": "librarires",
+          "status": "matched",
+          "bestMatch": "libraries",
+          "eligibleCount": 1
+        },
+        {
+          "input": "lowecase",
+          "status": "matched",
+          "bestMatch": "lowercase",
+          "eligibleCount": 1
+        },
+        {
+          "input": "miliseconds",
+          "status": "matched",
+          "bestMatch": "milliseconds",
+          "eligibleCount": 1
+        },
+        {
+          "input": "mulitple",
+          "status": "matched",
+          "bestMatch": "multiple",
+          "eligibleCount": 1
+        },
+        {
+          "input": "orginal",
+          "status": "matched",
+          "bestMatch": "original",
+          "eligibleCount": 1
+        },
+        {
+          "input": "paht",
+          "status": "matched",
+          "bestMatch": "path",
+          "eligibleCount": 1
+        },
+        {
+          "input": "referencs",
+          "status": "matched",
+          "bestMatch": "references",
+          "eligibleCount": 1
+        },
+        {
+          "input": "sandwitched",
+          "status": "matched",
+          "bestMatch": "sandwiched",
+          "eligibleCount": 1
+        },
+        {
+          "input": "seperators",
+          "status": "matched",
+          "bestMatch": "separators",
+          "eligibleCount": 1
+        },
+        {
+          "input": "siwtched",
+          "status": "matched",
+          "bestMatch": "switched",
+          "eligibleCount": 1
+        },
+        {
+          "input": "specificly",
+          "status": "matched",
+          "bestMatch": "specifically",
+          "eligibleCount": 1
+        },
+        {
+          "input": "stremline",
+          "status": "matched",
+          "bestMatch": "streamline",
+          "eligibleCount": 1
+        },
+        {
+          "input": "stricly",
+          "status": "matched",
+          "bestMatch": "strictly",
+          "eligibleCount": 1
+        },
+        {
+          "input": "temporaroly",
+          "status": "matched",
+          "bestMatch": "temporarily",
+          "eligibleCount": 1
+        },
+        {
+          "input": "unouched",
+          "status": "matched",
+          "bestMatch": "untouched",
+          "eligibleCount": 1
+        },
+        {
+          "input": "utilty",
+          "status": "matched",
+          "bestMatch": "utility",
+          "eligibleCount": 1
+        },
+        {
+          "input": "validtion",
+          "status": "matched",
+          "bestMatch": "validation",
+          "eligibleCount": 1
+        },
+        {
+          "input": "wildard",
+          "status": "matched",
+          "bestMatch": "wildcard",
+          "eligibleCount": 1
+        },
+        {
+          "input": "witholding",
+          "status": "matched",
+          "bestMatch": "withholding",
+          "eligibleCount": 1
+        },
+        {
+          "input": "writen",
+          "status": "matched",
+          "bestMatch": "written",
+          "eligibleCount": 1
+        }
+      ],
+      "events-2": [
+        {
+          "input": "astrisk",
+          "status": "matched",
+          "bestMatch": "asterisk",
+          "eligibleCount": 1
+        },
+        {
+          "input": "algotithm",
+          "status": "matched",
+          "bestMatch": "algorithm",
+          "eligibleCount": 1
+        },
+        {
+          "input": "alphabettical",
+          "status": "matched",
+          "bestMatch": "alphabetical",
+          "eligibleCount": 1
+        },
+        {
+          "input": "altenative",
+          "status": "matched",
+          "bestMatch": "alternative",
+          "eligibleCount": 1
+        },
+        {
+          "input": "arguement",
+          "status": "matched",
+          "bestMatch": "argument",
+          "eligibleCount": 1
+        },
+        {
+          "input": "commments",
+          "status": "matched",
+          "bestMatch": "comments",
+          "eligibleCount": 1
+        },
+        {
+          "input": "curency",
+          "status": "matched",
+          "bestMatch": "currency",
+          "eligibleCount": 1
+        },
+        {
+          "input": "delimeter",
+          "status": "matched",
+          "bestMatch": "delimiter",
+          "eligibleCount": 1
+        },
+        {
+          "input": "depdendent",
+          "status": "matched",
+          "bestMatch": "dependent",
+          "eligibleCount": 1
+        },
+        {
+          "input": "enountered",
+          "status": "matched",
+          "bestMatch": "encountered",
+          "eligibleCount": 1
+        },
+        {
+          "input": "escessive",
+          "status": "matched",
+          "bestMatch": "excessive",
+          "eligibleCount": 1
+        },
+        {
+          "input": "happend",
+          "status": "matched",
+          "bestMatch": "happened",
+          "eligibleCount": 1
+        },
+        {
+          "input": "impotant",
+          "status": "matched",
+          "bestMatch": "important",
+          "eligibleCount": 1
+        },
+        {
+          "input": "inclues",
+          "status": "matched",
+          "bestMatch": "includes",
+          "eligibleCount": 1
+        },
+        {
+          "input": "insurace",
+          "status": "matched",
+          "bestMatch": "insurance",
+          "eligibleCount": 1
+        },
+        {
+          "input": "librarires",
+          "status": "matched",
+          "bestMatch": "libraries",
+          "eligibleCount": 1
+        },
+        {
+          "input": "lowecase",
+          "status": "matched",
+          "bestMatch": "lowercase",
+          "eligibleCount": 1
+        },
+        {
+          "input": "miliseconds",
+          "status": "matched",
+          "bestMatch": "milliseconds",
+          "eligibleCount": 1
+        },
+        {
+          "input": "mulitple",
+          "status": "matched",
+          "bestMatch": "multiple",
+          "eligibleCount": 1
+        },
+        {
+          "input": "orginal",
+          "status": "matched",
+          "bestMatch": "original",
+          "eligibleCount": 1
+        },
+        {
+          "input": "paht",
+          "status": "matched",
+          "bestMatch": "path",
+          "eligibleCount": 1
+        },
+        {
+          "input": "referencs",
+          "status": "matched",
+          "bestMatch": "references",
+          "eligibleCount": 1
+        },
+        {
+          "input": "sandwitched",
+          "status": "matched",
+          "bestMatch": "sandwiched",
+          "eligibleCount": 1
+        },
+        {
+          "input": "seperators",
+          "status": "matched",
+          "bestMatch": "separators",
+          "eligibleCount": 1
+        },
+        {
+          "input": "siwtched",
+          "status": "matched",
+          "bestMatch": "switched",
+          "eligibleCount": 1
+        },
+        {
+          "input": "specificly",
+          "status": "matched",
+          "bestMatch": "specifically",
+          "eligibleCount": 1
+        },
+        {
+          "input": "stremline",
+          "status": "matched",
+          "bestMatch": "streamline",
+          "eligibleCount": 1
+        },
+        {
+          "input": "stricly",
+          "status": "matched",
+          "bestMatch": "strictly",
+          "eligibleCount": 1
+        },
+        {
+          "input": "temporaroly",
+          "status": "matched",
+          "bestMatch": "temporarily",
+          "eligibleCount": 1
+        },
+        {
+          "input": "unouched",
+          "status": "matched",
+          "bestMatch": "untouched",
+          "eligibleCount": 1
+        },
+        {
+          "input": "utilty",
+          "status": "matched",
+          "bestMatch": "utility",
+          "eligibleCount": 1
+        },
+        {
+          "input": "validtion",
+          "status": "matched",
+          "bestMatch": "validation",
+          "eligibleCount": 1
+        },
+        {
+          "input": "wildard",
+          "status": "matched",
+          "bestMatch": "wildcard",
+          "eligibleCount": 1
+        },
+        {
+          "input": "witholding",
+          "status": "matched",
+          "bestMatch": "withholding",
+          "eligibleCount": 1
+        },
+        {
+          "input": "writen",
+          "status": "matched",
+          "bestMatch": "written",
+          "eligibleCount": 1
+        }
+      ],
+      "leven": [
+        {
+          "input": "astrisk",
+          "status": "matched",
+          "bestMatch": "asterisk",
+          "eligibleCount": 1
+        },
+        {
+          "input": "algotithm",
+          "status": "matched",
+          "bestMatch": "algorithm",
+          "eligibleCount": 1
+        },
+        {
+          "input": "alphabettical",
+          "status": "matched",
+          "bestMatch": "alphabetical",
+          "eligibleCount": 1
+        },
+        {
+          "input": "altenative",
+          "status": "matched",
+          "bestMatch": "alternative",
+          "eligibleCount": 1
+        },
+        {
+          "input": "arguement",
+          "status": "matched",
+          "bestMatch": "argument",
+          "eligibleCount": 1
+        },
+        {
+          "input": "commments",
+          "status": "matched",
+          "bestMatch": "comments",
+          "eligibleCount": 1
+        },
+        {
+          "input": "curency",
+          "status": "matched",
+          "bestMatch": "currency",
+          "eligibleCount": 1
+        },
+        {
+          "input": "delimeter",
+          "status": "matched",
+          "bestMatch": "delimiter",
+          "eligibleCount": 1
+        },
+        {
+          "input": "depdendent",
+          "status": "matched",
+          "bestMatch": "dependent",
+          "eligibleCount": 1
+        },
+        {
+          "input": "enountered",
+          "status": "matched",
+          "bestMatch": "encountered",
+          "eligibleCount": 1
+        },
+        {
+          "input": "escessive",
+          "status": "matched",
+          "bestMatch": "excessive",
+          "eligibleCount": 1
+        },
+        {
+          "input": "happend",
+          "status": "matched",
+          "bestMatch": "happened",
+          "eligibleCount": 1
+        },
+        {
+          "input": "impotant",
+          "status": "matched",
+          "bestMatch": "important",
+          "eligibleCount": 1
+        },
+        {
+          "input": "inclues",
+          "status": "matched",
+          "bestMatch": "includes",
+          "eligibleCount": 1
+        },
+        {
+          "input": "insurace",
+          "status": "matched",
+          "bestMatch": "insurance",
+          "eligibleCount": 1
+        },
+        {
+          "input": "librarires",
+          "status": "matched",
+          "bestMatch": "libraries",
+          "eligibleCount": 1
+        },
+        {
+          "input": "lowecase",
+          "status": "matched",
+          "bestMatch": "lowercase",
+          "eligibleCount": 1
+        },
+        {
+          "input": "miliseconds",
+          "status": "matched",
+          "bestMatch": "milliseconds",
+          "eligibleCount": 1
+        },
+        {
+          "input": "mulitple",
+          "status": "matched",
+          "bestMatch": "multiple",
+          "eligibleCount": 1
+        },
+        {
+          "input": "orginal",
+          "status": "matched",
+          "bestMatch": "original",
+          "eligibleCount": 1
+        },
+        {
+          "input": "paht",
+          "status": "matched",
+          "bestMatch": "path",
+          "eligibleCount": 1
+        },
+        {
+          "input": "referencs",
+          "status": "matched",
+          "bestMatch": "references",
+          "eligibleCount": 1
+        },
+        {
+          "input": "sandwitched",
+          "status": "matched",
+          "bestMatch": "sandwiched",
+          "eligibleCount": 1
+        },
+        {
+          "input": "seperators",
+          "status": "matched",
+          "bestMatch": "separators",
+          "eligibleCount": 1
+        },
+        {
+          "input": "siwtched",
+          "status": "matched",
+          "bestMatch": "switched",
+          "eligibleCount": 1
+        },
+        {
+          "input": "specificly",
+          "status": "matched",
+          "bestMatch": "specifically",
+          "eligibleCount": 1
+        },
+        {
+          "input": "stremline",
+          "status": "matched",
+          "bestMatch": "streamline",
+          "eligibleCount": 1
+        },
+        {
+          "input": "stricly",
+          "status": "matched",
+          "bestMatch": "strictly",
+          "eligibleCount": 1
+        },
+        {
+          "input": "temporaroly",
+          "status": "matched",
+          "bestMatch": "temporarily",
+          "eligibleCount": 1
+        },
+        {
+          "input": "unouched",
+          "status": "matched",
+          "bestMatch": "untouched",
+          "eligibleCount": 1
+        },
+        {
+          "input": "utilty",
+          "status": "matched",
+          "bestMatch": "utility",
+          "eligibleCount": 1
+        },
+        {
+          "input": "validtion",
+          "status": "matched",
+          "bestMatch": "validation",
+          "eligibleCount": 1
+        },
+        {
+          "input": "wildard",
+          "status": "matched",
+          "bestMatch": "wildcard",
+          "eligibleCount": 1
+        },
+        {
+          "input": "witholding",
+          "status": "matched",
+          "bestMatch": "withholding",
+          "eligibleCount": 1
+        },
+        {
+          "input": "writen",
+          "status": "matched",
+          "bestMatch": "written",
+          "eligibleCount": 1
+        }
+      ]
+    }
+  },
+  "consumerOutcomes": {
+    "entity-fixture:leven": [[33, 38, "&nbsp;"], [39, 45, "&pound;"]],
+    "entity-fixture:current": [[33, 38, "&nbsp;"], [39, 45, "&pound;"]],
+    "media-fixture:leven": [
+      {
+        "idxFrom": 0,
+        "idxTo": 43,
+        "message": "More opening brackets than closing.",
+        "fix": null
+      }
+    ],
+    "media-fixture:current": [
+      {
+        "idxFrom": 0,
+        "idxTo": 43,
+        "message": "More opening brackets than closing.",
+        "fix": null
+      }
+    ],
+    "entity-typos:leven": [
+      [0, 7, "&nearrow;"],
+      [8, 14, "&rsquo;"],
+      [15, 21, "&int;"],
+      [22, 30, "&boxplus;"],
+      [31, 47],
+      [48, 53]
+    ],
+    "entity-typos:current": [
+      [0, 7],
+      [8, 14, "&rsquo;"],
+      [15, 21, "&int;"],
+      [22, 30, "&boxplus;"],
+      [31, 47],
+      [48, 53]
+    ],
+    "media-typos:leven": [
+      [
+        {
+          "idxFrom": 0,
+          "idxTo": 7,
+          "message": "Did you mean \"screen\"?",
+          "fix": {
+            "ranges": [[0, 7, "screen"]]
+          }
+        }
+      ],
+      [
+        {
+          "idxFrom": 0,
+          "idxTo": 5,
+          "message": "Unrecognised media type \"prnit\".",
+          "fix": null
+        }
+      ],
+      [
+        {
+          "idxFrom": 0,
+          "idxTo": 7,
+          "message": "Did you mean \"handheld\"?",
+          "fix": {
+            "ranges": [[0, 7, "handheld"]]
+          }
+        }
+      ],
+      [
+        {
+          "idxFrom": 0,
+          "idxTo": 3,
+          "message": "Did you mean \"tty\"?",
+          "fix": {
+            "ranges": [[0, 3, "tty"]]
+          }
+        }
+      ],
+      [
+        {
+          "idxFrom": 0,
+          "idxTo": 9,
+          "message": "Unrecognised media type \"notamedia\".",
+          "fix": null
+        }
+      ]
+    ],
+    "media-typos:current": [
+      [
+        {
+          "idxFrom": 0,
+          "idxTo": 7,
+          "message": "Did you mean \"screen\"?",
+          "fix": {
+            "ranges": [[0, 7, "screen"]]
+          }
+        }
+      ],
+      [
+        {
+          "idxFrom": 0,
+          "idxTo": 5,
+          "message": "Did you mean \"print\"?",
+          "fix": {
+            "ranges": [[0, 5, "print"]]
+          }
+        }
+      ],
+      [
+        {
+          "idxFrom": 0,
+          "idxTo": 7,
+          "message": "Did you mean \"handheld\"?",
+          "fix": {
+            "ranges": [[0, 7, "handheld"]]
+          }
+        }
+      ],
+      [
+        {
+          "idxFrom": 0,
+          "idxTo": 3,
+          "message": "Unrecognised media type \"ttv\".",
+          "fix": null
+        }
+      ],
+      [
+        {
+          "idxFrom": 0,
+          "idxTo": 9,
+          "message": "Unrecognised media type \"notamedia\".",
+          "fix": null
+        }
+      ]
+    ]
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "measurements": [
+        {
+          "workload": "perf-ref",
+          "relativeMarginOfError": 9.069264524944467,
+          "samples": 100,
+          "normalizedScore": 183
+        },
+        {
+          "workload": "html-entities:events-1:prepared",
+          "relativeMarginOfError": 0.947702340215914,
+          "samples": 103,
+          "normalizedScore": 733.5441714142764
+        },
+        {
+          "workload": "html-entities:leven",
+          "relativeMarginOfError": 2.216937079543488,
+          "samples": 105,
+          "normalizedScore": 600.4068585559651
+        },
+        {
+          "workload": "media-names:events-1:prepared",
+          "relativeMarginOfError": 3.769319515460178,
+          "samples": 103,
+          "normalizedScore": 88601.27502505246
+        },
+        {
+          "workload": "media-names:leven",
+          "relativeMarginOfError": 0.2127171336459316,
+          "samples": 106,
+          "normalizedScore": 94495.06650264439
+        },
+        {
+          "workload": "repository-typos:events-1:prepared",
+          "relativeMarginOfError": 3.1654415872567405,
+          "samples": 104,
+          "normalizedScore": 3712.329670347749
+        },
+        {
+          "workload": "repository-typos:events-1:one-shot",
+          "relativeMarginOfError": 4.271579471774178,
+          "samples": 102,
+          "normalizedScore": 1212.941117474936
+        },
+        {
+          "workload": "repository-typos:events-2:prepared",
+          "relativeMarginOfError": 0.7490957657415368,
+          "samples": 107,
+          "normalizedScore": 1619.3760855958287
+        },
+        {
+          "workload": "repository-typos:events-2:one-shot",
+          "relativeMarginOfError": 0.24926921432839694,
+          "samples": 103,
+          "normalizedScore": 926.1353908556316
+        },
+        {
+          "workload": "repository-typos:leven",
+          "relativeMarginOfError": 0.7981343644324365,
+          "samples": 103,
+          "normalizedScore": 2094.1464205023876
+        },
+        {
+          "workload": "entity-fixture:leven",
+          "relativeMarginOfError": 0.5462228329500396,
+          "samples": 102,
+          "normalizedScore": 152205.6830029126
+        },
+        {
+          "workload": "entity-fixture:current",
+          "relativeMarginOfError": 3.962552229075124,
+          "samples": 103,
+          "normalizedScore": 142481.34084934634
+        },
+        {
+          "workload": "media-fixture:leven",
+          "relativeMarginOfError": 4.137233805531095,
+          "samples": 101,
+          "normalizedScore": 1018717.388618535
+        },
+        {
+          "workload": "media-fixture:current",
+          "relativeMarginOfError": 6.057974547654562,
+          "samples": 94,
+          "normalizedScore": 921420.1202462978
+        }
+      ]
+    }
+  ]
+}

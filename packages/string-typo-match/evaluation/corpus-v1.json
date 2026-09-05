@@ -1,0 +1,1243 @@
+{
+  "version": 1,
+  "defaultPolicy": "Initial specification weights, frozen unchanged before held-out evaluation. No positional modifier in runtime API.",
+  "inventorySha256": "2e58ba042268f6a741430c348ad7351fb87c5bd3bf009cf3d5eae9db335aa68c",
+  "limitations": "Selected flags are not a random sample. Some repository inputs are deliberate fixtures. Intended corrections are inferred, not logged keystrokes. Unselected flags include valid identifiers and names.",
+  "vocabularies": {
+    "repository-words": [
+      "algorithm",
+      "alphabetical",
+      "alternative",
+      "argument",
+      "asterisk",
+      "comments",
+      "constructor",
+      "currency",
+      "delimiter",
+      "dependent",
+      "encountered",
+      "excessive",
+      "happened",
+      "important",
+      "includes",
+      "insurance",
+      "libraries",
+      "lowercase",
+      "milliseconds",
+      "multiple",
+      "original",
+      "parameter",
+      "path",
+      "print",
+      "prototype",
+      "references",
+      "sandwiched",
+      "screen",
+      "separators",
+      "specifically",
+      "speech",
+      "streamline",
+      "strictly",
+      "switched",
+      "temporarily",
+      "untouched",
+      "utility",
+      "validation",
+      "wildcard",
+      "withholding",
+      "written"
+    ]
+  },
+  "cases": [
+    {
+      "id": "repo-01",
+      "split": "development",
+      "input": "astrisk",
+      "intended": "asterisk",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 144,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown.",
+        "sourceExample": "packages/string-strip-html/test/pairs.js:158"
+      }
+    },
+    {
+      "id": "identity-01",
+      "split": "development",
+      "input": "asterisk",
+      "intended": "asterisk",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-02",
+      "split": "held-out",
+      "input": "algotithm",
+      "intended": "algorithm",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "substitution",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 116,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-02",
+      "split": "held-out",
+      "input": "algorithm",
+      "intended": "algorithm",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-03",
+      "split": "development",
+      "input": "alphabettical",
+      "intended": "alphabetical",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "repeated-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 121,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-03",
+      "split": "development",
+      "input": "alphabetical",
+      "intended": "alphabetical",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-04",
+      "split": "held-out",
+      "input": "altenative",
+      "intended": "alternative",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 124,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown.",
+        "sourceExample": "packages/detergent/test/adhoc.js:75"
+      }
+    },
+    {
+      "id": "identity-04",
+      "split": "held-out",
+      "input": "alternative",
+      "intended": "alternative",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-05",
+      "split": "development",
+      "input": "arguement",
+      "intended": "argument",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "extra-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 137,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-05",
+      "split": "development",
+      "input": "argument",
+      "intended": "argument",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-06",
+      "split": "held-out",
+      "input": "commments",
+      "intended": "comments",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "repeated-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 209,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown.",
+        "sourceExample": "packages/string-extract-sass-vars/test/fixtures/02.scss:18"
+      }
+    },
+    {
+      "id": "identity-06",
+      "split": "held-out",
+      "input": "comments",
+      "intended": "comments",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-07",
+      "split": "development",
+      "input": "curency",
+      "intended": "currency",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 228,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-07",
+      "split": "development",
+      "input": "currency",
+      "intended": "currency",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-08",
+      "split": "held-out",
+      "input": "delimeter",
+      "intended": "delimiter",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "substitution",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 246,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown.",
+        "sourceExample": "packages/string-strip-html/test/dirty.js:7"
+      }
+    },
+    {
+      "id": "identity-08",
+      "split": "held-out",
+      "input": "delimiter",
+      "intended": "delimiter",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-09",
+      "split": "development",
+      "input": "depdendent",
+      "intended": "dependent",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "extra-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 247,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown.",
+        "sourceExample": "packages/is-html-attribute-closing/src/main.ts:1544"
+      }
+    },
+    {
+      "id": "identity-09",
+      "split": "development",
+      "input": "dependent",
+      "intended": "dependent",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-10",
+      "split": "held-out",
+      "input": "enountered",
+      "intended": "encountered",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 295,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-10",
+      "split": "held-out",
+      "input": "encountered",
+      "intended": "encountered",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-11",
+      "split": "development",
+      "input": "escessive",
+      "intended": "excessive",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "substitution",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 299,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown.",
+        "sourceExample": "packages/html-crush/test/inline-tags.js:424"
+      }
+    },
+    {
+      "id": "identity-11",
+      "split": "development",
+      "input": "excessive",
+      "intended": "excessive",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-12",
+      "split": "held-out",
+      "input": "happend",
+      "intended": "happened",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 371,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown.",
+        "sourceExample": "packages/object-merge-advanced/test/opts-useNullAsExplicitFalse-test.js:587"
+      }
+    },
+    {
+      "id": "identity-12",
+      "split": "held-out",
+      "input": "happened",
+      "intended": "happened",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-13",
+      "split": "development",
+      "input": "impotant",
+      "intended": "important",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 399,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown.",
+        "sourceExample": "packages/string-match-left-right/test/adhoc.js:193"
+      }
+    },
+    {
+      "id": "identity-13",
+      "split": "development",
+      "input": "important",
+      "intended": "important",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-14",
+      "split": "held-out",
+      "input": "inclues",
+      "intended": "includes",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 402,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown.",
+        "sourceExample": "packages/array-includes-with-glob/package.json:15"
+      }
+    },
+    {
+      "id": "identity-14",
+      "split": "held-out",
+      "input": "includes",
+      "intended": "includes",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-15",
+      "split": "development",
+      "input": "insurace",
+      "intended": "insurance",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 406,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-15",
+      "split": "development",
+      "input": "insurance",
+      "intended": "insurance",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-16",
+      "split": "held-out",
+      "input": "librarires",
+      "intended": "libraries",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "extra-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 494,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-16",
+      "split": "held-out",
+      "input": "libraries",
+      "intended": "libraries",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-17",
+      "split": "development",
+      "input": "lowecase",
+      "intended": "lowercase",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 522,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-17",
+      "split": "development",
+      "input": "lowercase",
+      "intended": "lowercase",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-18",
+      "split": "held-out",
+      "input": "miliseconds",
+      "intended": "milliseconds",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 541,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-18",
+      "split": "held-out",
+      "input": "milliseconds",
+      "intended": "milliseconds",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-19",
+      "split": "development",
+      "input": "mulitple",
+      "intended": "multiple",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "adjacent-swap",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 559,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown.",
+        "sourceExample": "packages/string-collapse-leading-whitespace/test/nbsp.js:73"
+      }
+    },
+    {
+      "id": "identity-19",
+      "split": "development",
+      "input": "multiple",
+      "intended": "multiple",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-20",
+      "split": "held-out",
+      "input": "orginal",
+      "intended": "original",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 632,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-20",
+      "split": "held-out",
+      "input": "original",
+      "intended": "original",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-21",
+      "split": "development",
+      "input": "paht",
+      "intended": "path",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "adjacent-swap",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 639,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown.",
+        "sourceExample": "packages/ast-get-values-by-key/test/other.js:24"
+      }
+    },
+    {
+      "id": "identity-21",
+      "split": "development",
+      "input": "path",
+      "intended": "path",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-22",
+      "split": "held-out",
+      "input": "referencs",
+      "intended": "references",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 689,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown.",
+        "sourceExample": "packages/ranges-ent-decode/test/he.js:388"
+      }
+    },
+    {
+      "id": "identity-22",
+      "split": "held-out",
+      "input": "references",
+      "intended": "references",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-23",
+      "split": "development",
+      "input": "sandwitched",
+      "intended": "sandwiched",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "extra-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 719,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown.",
+        "sourceExample": "packages/string-fix-broken-named-entities/test/textAmpersandCatcherCb.js:35"
+      }
+    },
+    {
+      "id": "identity-23",
+      "split": "development",
+      "input": "sandwiched",
+      "intended": "sandwiched",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-24",
+      "split": "held-out",
+      "input": "seperators",
+      "intended": "separators",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "substitution",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 733,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown.",
+        "sourceExample": "packages/csv-split-easy/src/main.ts:118"
+      }
+    },
+    {
+      "id": "identity-24",
+      "split": "held-out",
+      "input": "separators",
+      "intended": "separators",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-25",
+      "split": "development",
+      "input": "siwtched",
+      "intended": "switched",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "adjacent-swap",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 749,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown.",
+        "sourceExample": "packages/detergent/test/ellipsis.js:96"
+      }
+    },
+    {
+      "id": "identity-25",
+      "split": "development",
+      "input": "switched",
+      "intended": "switched",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-26",
+      "split": "held-out",
+      "input": "specificly",
+      "intended": "specifically",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "omitted-block",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 777,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-26",
+      "split": "held-out",
+      "input": "specifically",
+      "intended": "specifically",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-27",
+      "split": "development",
+      "input": "stremline",
+      "intended": "streamline",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 784,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-27",
+      "split": "development",
+      "input": "streamline",
+      "intended": "streamline",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-28",
+      "split": "held-out",
+      "input": "stricly",
+      "intended": "strictly",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 785,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-28",
+      "split": "held-out",
+      "input": "strictly",
+      "intended": "strictly",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-29",
+      "split": "development",
+      "input": "temporaroly",
+      "intended": "temporarily",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "substitution",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 806,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-29",
+      "split": "development",
+      "input": "temporarily",
+      "intended": "temporarily",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-30",
+      "split": "held-out",
+      "input": "unouched",
+      "intended": "untouched",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 853,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-30",
+      "split": "held-out",
+      "input": "untouched",
+      "intended": "untouched",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-31",
+      "split": "development",
+      "input": "utilty",
+      "intended": "utility",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 860,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-31",
+      "split": "development",
+      "input": "utility",
+      "intended": "utility",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-32",
+      "split": "held-out",
+      "input": "validtion",
+      "intended": "validation",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 862,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-32",
+      "split": "held-out",
+      "input": "validation",
+      "intended": "validation",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-33",
+      "split": "development",
+      "input": "wildard",
+      "intended": "wildcard",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 879,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-33",
+      "split": "development",
+      "input": "wildcard",
+      "intended": "wildcard",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-34",
+      "split": "held-out",
+      "input": "witholding",
+      "intended": "withholding",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 882,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-34",
+      "split": "held-out",
+      "input": "withholding",
+      "intended": "withholding",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "repo-35",
+      "split": "development",
+      "input": "writen",
+      "intended": "written",
+      "vocabulary": "repository-words",
+      "expectedStatus": "matched",
+      "family": "missing-character",
+      "provenance": {
+        "kind": "repository-observed",
+        "inventory": "cspell-flagged-words-20260905-161938.txt",
+        "inventoryLine": 888,
+        "intent": "Human-readable correction inferred for this evaluation; input is attested by the inventory. Device and layout unknown."
+      }
+    },
+    {
+      "id": "identity-35",
+      "split": "development",
+      "input": "written",
+      "intended": "written",
+      "vocabulary": "repository-words",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "provenance": {
+        "kind": "generated-control"
+      }
+    },
+    {
+      "id": "conversation-omission",
+      "split": "regression",
+      "input": "Lenstein",
+      "candidates": ["Levenstein", "Einstein"],
+      "intended": "Levenstein",
+      "expectedStatus": "matched",
+      "family": "omitted-block",
+      "options": {},
+      "provenance": {
+        "kind": "conversation-example",
+        "device": "unknown",
+        "layout": "unknown"
+      }
+    },
+    {
+      "id": "entity-ambiguity",
+      "split": "regression",
+      "input": "nsp",
+      "candidates": ["ensp", "nbsp", "nsup"],
+      "intended": "nbsp",
+      "expectedStatus": "ambiguous",
+      "family": "missing-character",
+      "options": {},
+      "provenance": {
+        "kind": "conversation-example",
+        "device": "unknown",
+        "layout": "unknown"
+      }
+    },
+    {
+      "id": "position-tie-initial",
+      "split": "regression",
+      "input": "pwned",
+      "candidates": ["owned", "awned", "paned", "pined"],
+      "intended": "owned",
+      "expectedStatus": "ambiguous",
+      "family": "substitution",
+      "options": {
+        "keyboard": {
+          "o": ["p"],
+          "a": ["w"]
+        }
+      },
+      "provenance": {
+        "kind": "conversation-example",
+        "device": "unknown",
+        "layout": "explicit adjacency"
+      }
+    },
+    {
+      "id": "position-tie-later",
+      "split": "regression",
+      "input": "pwned",
+      "candidates": ["owned", "awned", "paned", "pined"],
+      "intended": "paned",
+      "expectedStatus": "ambiguous",
+      "family": "substitution",
+      "options": {
+        "keyboard": {
+          "o": ["p"],
+          "a": ["w"]
+        }
+      },
+      "provenance": {
+        "kind": "conversation-example",
+        "device": "unknown",
+        "layout": "explicit adjacency"
+      }
+    },
+    {
+      "id": "literal-valid-collision",
+      "split": "regression",
+      "input": "not",
+      "candidates": ["not", "notin"],
+      "intended": "not",
+      "expectedStatus": "exact",
+      "family": "identity",
+      "options": {},
+      "provenance": {
+        "kind": "generated-control",
+        "device": "unknown",
+        "layout": "unknown"
+      }
+    },
+    {
+      "id": "negative-distant",
+      "split": "regression",
+      "input": "zzzzzz",
+      "candidates": ["screen", "print", "speech"],
+      "intended": null,
+      "expectedStatus": "no-match",
+      "family": "negative",
+      "options": {},
+      "provenance": {
+        "kind": "generated-control",
+        "device": "unknown",
+        "layout": "unknown"
+      }
+    },
+    {
+      "id": "negative-short",
+      "split": "regression",
+      "input": "ab",
+      "candidates": ["abc"],
+      "intended": null,
+      "expectedStatus": "no-match",
+      "family": "negative",
+      "options": {},
+      "provenance": {
+        "kind": "generated-control",
+        "device": "unknown",
+        "layout": "unknown"
+      }
+    },
+    {
+      "id": "negative-empty",
+      "split": "regression",
+      "input": "",
+      "candidates": ["screen"],
+      "intended": null,
+      "expectedStatus": "no-match",
+      "family": "negative",
+      "options": {},
+      "provenance": {
+        "kind": "generated-control",
+        "device": "unknown",
+        "layout": "unknown"
+      }
+    },
+    {
+      "id": "negative-local-events",
+      "split": "regression",
+      "input": "ABC",
+      "candidates": ["CA"],
+      "intended": null,
+      "expectedStatus": "no-match",
+      "family": "negative",
+      "options": {
+        "maxEvents": 2,
+        "minInputLength": 1,
+        "maxCost": 500,
+        "maxOmissionRatio": 1
+      },
+      "provenance": {
+        "kind": "generated-control",
+        "device": "unknown",
+        "layout": "unknown"
+      }
+    },
+    {
+      "id": "two-events",
+      "split": "regression",
+      "input": "acef",
+      "candidates": ["abcdef"],
+      "intended": "abcdef",
+      "expectedStatus": "matched",
+      "family": "two-omissions",
+      "options": {
+        "maxEvents": 2
+      },
+      "provenance": {
+        "kind": "generated-control",
+        "device": "unknown",
+        "layout": "unknown"
+      }
+    },
+    {
+      "id": "long-omission",
+      "split": "regression",
+      "input": "CounterContourIntegral",
+      "candidates": ["CounterClockwiseContourIntegral"],
+      "intended": "CounterClockwiseContourIntegral",
+      "expectedStatus": "matched",
+      "family": "omitted-block",
+      "options": {
+        "maxOmissionLength": 9,
+        "maxCost": 300
+      },
+      "provenance": {
+        "kind": "generated-control",
+        "device": "unknown",
+        "layout": "unknown"
+      }
+    },
+    {
+      "id": "negative-long-omission",
+      "split": "regression",
+      "input": "CounterContourIntegral",
+      "candidates": ["CounterClockwiseContourIntegral"],
+      "intended": null,
+      "expectedStatus": "no-match",
+      "family": "negative",
+      "options": {},
+      "provenance": {
+        "kind": "generated-control",
+        "device": "unknown",
+        "layout": "unknown"
+      }
+    },
+    {
+      "id": "swap",
+      "split": "regression",
+      "input": "prnit",
+      "candidates": ["print", "screen"],
+      "intended": "print",
+      "expectedStatus": "matched",
+      "family": "adjacent-swap",
+      "options": {},
+      "provenance": {
+        "kind": "generated-control",
+        "device": "unknown",
+        "layout": "unknown"
+      }
+    },
+    {
+      "id": "repeat",
+      "split": "regression",
+      "input": "screeen",
+      "candidates": ["screen", "print"],
+      "intended": "screen",
+      "expectedStatus": "matched",
+      "family": "repeated-character",
+      "options": {},
+      "provenance": {
+        "kind": "generated-control",
+        "device": "unknown",
+        "layout": "unknown"
+      }
+    }
+  ]
+}

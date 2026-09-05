@@ -1,0 +1,1150 @@
+{
+  "corpusVersion": 1,
+  "defaultPolicy": "Initial specification weights, frozen unchanged before held-out evaluation. No positional modifier in runtime API.",
+  "limitations": "Selected flags are not a random sample. Some repository inputs are deliberate fixtures. Intended corrections are inferred, not logged keystrokes. Unselected flags include valid identifiers and names.",
+  "omissionLengthBasis": "Accepted intended-candidate explanation; unavailable alignments are marked not-eligible or not-applicable rather than counted as zero omissions.",
+  "summary": {
+    "development": {
+      "cases": 36,
+      "exact": 18,
+      "correctUnique": 18,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 36
+    },
+    "held-out": {
+      "cases": 34,
+      "exact": 17,
+      "correctUnique": 17,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 34
+    },
+    "regression": {
+      "cases": 14,
+      "exact": 1,
+      "correctUnique": 5,
+      "incorrectUnique": 0,
+      "ambiguous": 3,
+      "noMatch": 5,
+      "intendedEligible": 9
+    }
+  },
+  "strata": {
+    "family:missing-character": {
+      "cases": 21,
+      "exact": 0,
+      "correctUnique": 20,
+      "incorrectUnique": 0,
+      "ambiguous": 1,
+      "noMatch": 0,
+      "intendedEligible": 21
+    },
+    "inputLength:7": {
+      "cases": 10,
+      "exact": 2,
+      "correctUnique": 8,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 10
+    },
+    "omissionLength:1": {
+      "cases": 21,
+      "exact": 0,
+      "correctUnique": 20,
+      "incorrectUnique": 0,
+      "ambiguous": 1,
+      "noMatch": 0,
+      "intendedEligible": 21
+    },
+    "vocabularySize:41": {
+      "cases": 70,
+      "exact": 35,
+      "correctUnique": 35,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 70
+    },
+    "provenance:repository-observed": {
+      "cases": 35,
+      "exact": 0,
+      "correctUnique": 35,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 35
+    },
+    "family:identity": {
+      "cases": 36,
+      "exact": 36,
+      "correctUnique": 0,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 36
+    },
+    "inputLength:8": {
+      "cases": 18,
+      "exact": 11,
+      "correctUnique": 7,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 18
+    },
+    "omissionLength:0": {
+      "cases": 54,
+      "exact": 36,
+      "correctUnique": 16,
+      "incorrectUnique": 0,
+      "ambiguous": 2,
+      "noMatch": 0,
+      "intendedEligible": 54
+    },
+    "provenance:generated-control": {
+      "cases": 45,
+      "exact": 36,
+      "correctUnique": 4,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 5,
+      "intendedEligible": 40
+    },
+    "family:substitution": {
+      "cases": 7,
+      "exact": 0,
+      "correctUnique": 5,
+      "incorrectUnique": 0,
+      "ambiguous": 2,
+      "noMatch": 0,
+      "intendedEligible": 7
+    },
+    "inputLength:9": {
+      "cases": 17,
+      "exact": 9,
+      "correctUnique": 8,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 17
+    },
+    "family:repeated-character": {
+      "cases": 3,
+      "exact": 0,
+      "correctUnique": 3,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 3
+    },
+    "inputLength:13": {
+      "cases": 1,
+      "exact": 0,
+      "correctUnique": 1,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 1
+    },
+    "inputLength:12": {
+      "cases": 3,
+      "exact": 3,
+      "correctUnique": 0,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 3
+    },
+    "inputLength:10": {
+      "cases": 12,
+      "exact": 5,
+      "correctUnique": 7,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 12
+    },
+    "inputLength:11": {
+      "cases": 7,
+      "exact": 4,
+      "correctUnique": 3,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 7
+    },
+    "family:extra-character": {
+      "cases": 4,
+      "exact": 0,
+      "correctUnique": 4,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 4
+    },
+    "family:adjacent-swap": {
+      "cases": 4,
+      "exact": 0,
+      "correctUnique": 4,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 4
+    },
+    "inputLength:4": {
+      "cases": 3,
+      "exact": 1,
+      "correctUnique": 2,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 3
+    },
+    "family:omitted-block": {
+      "cases": 3,
+      "exact": 0,
+      "correctUnique": 3,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 3
+    },
+    "omissionLength:2": {
+      "cases": 3,
+      "exact": 0,
+      "correctUnique": 3,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 3
+    },
+    "inputLength:6": {
+      "cases": 3,
+      "exact": 0,
+      "correctUnique": 2,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 1,
+      "intendedEligible": 2
+    },
+    "vocabularySize:2": {
+      "cases": 4,
+      "exact": 1,
+      "correctUnique": 3,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 4
+    },
+    "provenance:conversation-example": {
+      "cases": 4,
+      "exact": 0,
+      "correctUnique": 1,
+      "incorrectUnique": 0,
+      "ambiguous": 3,
+      "noMatch": 0,
+      "intendedEligible": 4
+    },
+    "inputLength:3": {
+      "cases": 3,
+      "exact": 1,
+      "correctUnique": 0,
+      "incorrectUnique": 0,
+      "ambiguous": 1,
+      "noMatch": 1,
+      "intendedEligible": 2
+    },
+    "vocabularySize:3": {
+      "cases": 2,
+      "exact": 0,
+      "correctUnique": 0,
+      "incorrectUnique": 0,
+      "ambiguous": 1,
+      "noMatch": 1,
+      "intendedEligible": 1
+    },
+    "inputLength:5": {
+      "cases": 3,
+      "exact": 0,
+      "correctUnique": 1,
+      "incorrectUnique": 0,
+      "ambiguous": 2,
+      "noMatch": 0,
+      "intendedEligible": 3
+    },
+    "vocabularySize:4": {
+      "cases": 2,
+      "exact": 0,
+      "correctUnique": 0,
+      "incorrectUnique": 0,
+      "ambiguous": 2,
+      "noMatch": 0,
+      "intendedEligible": 2
+    },
+    "family:negative": {
+      "cases": 5,
+      "exact": 0,
+      "correctUnique": 0,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 5,
+      "intendedEligible": 0
+    },
+    "omissionLength:not-applicable": {
+      "cases": 5,
+      "exact": 0,
+      "correctUnique": 0,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 5,
+      "intendedEligible": 0
+    },
+    "inputLength:2": {
+      "cases": 1,
+      "exact": 0,
+      "correctUnique": 0,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 1,
+      "intendedEligible": 0
+    },
+    "vocabularySize:1": {
+      "cases": 6,
+      "exact": 0,
+      "correctUnique": 2,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 4,
+      "intendedEligible": 2
+    },
+    "inputLength:0": {
+      "cases": 1,
+      "exact": 0,
+      "correctUnique": 0,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 1,
+      "intendedEligible": 0
+    },
+    "family:two-omissions": {
+      "cases": 1,
+      "exact": 0,
+      "correctUnique": 1,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 1
+    },
+    "inputLength:22": {
+      "cases": 2,
+      "exact": 0,
+      "correctUnique": 1,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 1,
+      "intendedEligible": 1
+    },
+    "omissionLength:9": {
+      "cases": 1,
+      "exact": 0,
+      "correctUnique": 1,
+      "incorrectUnique": 0,
+      "ambiguous": 0,
+      "noMatch": 0,
+      "intendedEligible": 1
+    }
+  },
+  "failures": [],
+  "positionExperiment": [
+    {
+      "id": "position-tie-initial",
+      "intended": "owned",
+      "device": "unknown",
+      "layout": "explicit US-QWERTY coordinates",
+      "mode": "ordinary",
+      "bestMatch": null,
+      "incorrectUnique": false,
+      "matches": [
+        {
+          "candidate": "awned",
+          "cost": 150,
+          "position": "initial",
+          "keyDistance": 8.806957476904268
+        },
+        {
+          "candidate": "owned",
+          "cost": 150,
+          "position": "initial",
+          "keyDistance": 1
+        },
+        {
+          "candidate": "paned",
+          "cost": 150,
+          "position": "later",
+          "keyDistance": 1.25
+        },
+        {
+          "candidate": "pined",
+          "cost": 150,
+          "position": "later",
+          "keyDistance": 6
+        }
+      ]
+    },
+    {
+      "id": "position-tie-initial",
+      "intended": "owned",
+      "device": "unknown",
+      "layout": "explicit US-QWERTY coordinates",
+      "mode": "binary",
+      "bestMatch": null,
+      "incorrectUnique": false,
+      "matches": [
+        {
+          "candidate": "owned",
+          "cost": 75,
+          "position": "initial",
+          "keyDistance": 1
+        },
+        {
+          "candidate": "paned",
+          "cost": 75,
+          "position": "later",
+          "keyDistance": 1.25
+        },
+        {
+          "candidate": "awned",
+          "cost": 150,
+          "position": "initial",
+          "keyDistance": 8.806957476904268
+        },
+        {
+          "candidate": "pined",
+          "cost": 150,
+          "position": "later",
+          "keyDistance": 6
+        }
+      ]
+    },
+    {
+      "id": "position-tie-initial",
+      "intended": "owned",
+      "device": "unknown",
+      "layout": "explicit US-QWERTY coordinates",
+      "mode": "graded",
+      "bestMatch": "owned",
+      "incorrectUnique": false,
+      "matches": [
+        {
+          "candidate": "owned",
+          "cost": 75,
+          "position": "initial",
+          "keyDistance": 1
+        },
+        {
+          "candidate": "paned",
+          "cost": 100,
+          "position": "later",
+          "keyDistance": 1.25
+        },
+        {
+          "candidate": "awned",
+          "cost": 150,
+          "position": "initial",
+          "keyDistance": 8.806957476904268
+        },
+        {
+          "candidate": "pined",
+          "cost": 150,
+          "position": "later",
+          "keyDistance": 6
+        }
+      ]
+    },
+    {
+      "id": "position-tie-initial",
+      "intended": "owned",
+      "device": "unknown",
+      "layout": "explicit US-QWERTY coordinates",
+      "mode": "binary-initial-discount",
+      "bestMatch": "owned",
+      "incorrectUnique": false,
+      "matches": [
+        {
+          "candidate": "owned",
+          "cost": 50,
+          "position": "initial",
+          "keyDistance": 1
+        },
+        {
+          "candidate": "paned",
+          "cost": 75,
+          "position": "later",
+          "keyDistance": 1.25
+        },
+        {
+          "candidate": "awned",
+          "cost": 125,
+          "position": "initial",
+          "keyDistance": 8.806957476904268
+        },
+        {
+          "candidate": "pined",
+          "cost": 150,
+          "position": "later",
+          "keyDistance": 6
+        }
+      ]
+    },
+    {
+      "id": "position-tie-later",
+      "intended": "paned",
+      "device": "unknown",
+      "layout": "explicit US-QWERTY coordinates",
+      "mode": "ordinary",
+      "bestMatch": null,
+      "incorrectUnique": false,
+      "matches": [
+        {
+          "candidate": "awned",
+          "cost": 150,
+          "position": "initial",
+          "keyDistance": 8.806957476904268
+        },
+        {
+          "candidate": "owned",
+          "cost": 150,
+          "position": "initial",
+          "keyDistance": 1
+        },
+        {
+          "candidate": "paned",
+          "cost": 150,
+          "position": "later",
+          "keyDistance": 1.25
+        },
+        {
+          "candidate": "pined",
+          "cost": 150,
+          "position": "later",
+          "keyDistance": 6
+        }
+      ]
+    },
+    {
+      "id": "position-tie-later",
+      "intended": "paned",
+      "device": "unknown",
+      "layout": "explicit US-QWERTY coordinates",
+      "mode": "binary",
+      "bestMatch": null,
+      "incorrectUnique": false,
+      "matches": [
+        {
+          "candidate": "owned",
+          "cost": 75,
+          "position": "initial",
+          "keyDistance": 1
+        },
+        {
+          "candidate": "paned",
+          "cost": 75,
+          "position": "later",
+          "keyDistance": 1.25
+        },
+        {
+          "candidate": "awned",
+          "cost": 150,
+          "position": "initial",
+          "keyDistance": 8.806957476904268
+        },
+        {
+          "candidate": "pined",
+          "cost": 150,
+          "position": "later",
+          "keyDistance": 6
+        }
+      ]
+    },
+    {
+      "id": "position-tie-later",
+      "intended": "paned",
+      "device": "unknown",
+      "layout": "explicit US-QWERTY coordinates",
+      "mode": "graded",
+      "bestMatch": "owned",
+      "incorrectUnique": true,
+      "matches": [
+        {
+          "candidate": "owned",
+          "cost": 75,
+          "position": "initial",
+          "keyDistance": 1
+        },
+        {
+          "candidate": "paned",
+          "cost": 100,
+          "position": "later",
+          "keyDistance": 1.25
+        },
+        {
+          "candidate": "awned",
+          "cost": 150,
+          "position": "initial",
+          "keyDistance": 8.806957476904268
+        },
+        {
+          "candidate": "pined",
+          "cost": 150,
+          "position": "later",
+          "keyDistance": 6
+        }
+      ]
+    },
+    {
+      "id": "position-tie-later",
+      "intended": "paned",
+      "device": "unknown",
+      "layout": "explicit US-QWERTY coordinates",
+      "mode": "binary-initial-discount",
+      "bestMatch": "owned",
+      "incorrectUnique": true,
+      "matches": [
+        {
+          "candidate": "owned",
+          "cost": 50,
+          "position": "initial",
+          "keyDistance": 1
+        },
+        {
+          "candidate": "paned",
+          "cost": 75,
+          "position": "later",
+          "keyDistance": 1.25
+        },
+        {
+          "candidate": "awned",
+          "cost": 125,
+          "position": "initial",
+          "keyDistance": 8.806957476904268
+        },
+        {
+          "candidate": "pined",
+          "cost": 150,
+          "position": "later",
+          "keyDistance": 6
+        }
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "repo-01",
+      "status": "matched",
+      "bestMatch": "asterisk",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-01",
+      "status": "exact",
+      "bestMatch": "asterisk",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-02",
+      "status": "matched",
+      "bestMatch": "algorithm",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-02",
+      "status": "exact",
+      "bestMatch": "algorithm",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-03",
+      "status": "matched",
+      "bestMatch": "alphabetical",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-03",
+      "status": "exact",
+      "bestMatch": "alphabetical",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-04",
+      "status": "matched",
+      "bestMatch": "alternative",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-04",
+      "status": "exact",
+      "bestMatch": "alternative",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-05",
+      "status": "matched",
+      "bestMatch": "argument",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-05",
+      "status": "exact",
+      "bestMatch": "argument",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-06",
+      "status": "matched",
+      "bestMatch": "comments",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-06",
+      "status": "exact",
+      "bestMatch": "comments",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-07",
+      "status": "matched",
+      "bestMatch": "currency",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-07",
+      "status": "exact",
+      "bestMatch": "currency",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-08",
+      "status": "matched",
+      "bestMatch": "delimiter",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-08",
+      "status": "exact",
+      "bestMatch": "delimiter",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-09",
+      "status": "matched",
+      "bestMatch": "dependent",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-09",
+      "status": "exact",
+      "bestMatch": "dependent",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-10",
+      "status": "matched",
+      "bestMatch": "encountered",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-10",
+      "status": "exact",
+      "bestMatch": "encountered",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-11",
+      "status": "matched",
+      "bestMatch": "excessive",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-11",
+      "status": "exact",
+      "bestMatch": "excessive",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-12",
+      "status": "matched",
+      "bestMatch": "happened",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-12",
+      "status": "exact",
+      "bestMatch": "happened",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-13",
+      "status": "matched",
+      "bestMatch": "important",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-13",
+      "status": "exact",
+      "bestMatch": "important",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-14",
+      "status": "matched",
+      "bestMatch": "includes",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-14",
+      "status": "exact",
+      "bestMatch": "includes",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-15",
+      "status": "matched",
+      "bestMatch": "insurance",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-15",
+      "status": "exact",
+      "bestMatch": "insurance",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-16",
+      "status": "matched",
+      "bestMatch": "libraries",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-16",
+      "status": "exact",
+      "bestMatch": "libraries",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-17",
+      "status": "matched",
+      "bestMatch": "lowercase",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-17",
+      "status": "exact",
+      "bestMatch": "lowercase",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-18",
+      "status": "matched",
+      "bestMatch": "milliseconds",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-18",
+      "status": "exact",
+      "bestMatch": "milliseconds",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-19",
+      "status": "matched",
+      "bestMatch": "multiple",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-19",
+      "status": "exact",
+      "bestMatch": "multiple",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-20",
+      "status": "matched",
+      "bestMatch": "original",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-20",
+      "status": "exact",
+      "bestMatch": "original",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-21",
+      "status": "matched",
+      "bestMatch": "path",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-21",
+      "status": "exact",
+      "bestMatch": "path",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-22",
+      "status": "matched",
+      "bestMatch": "references",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-22",
+      "status": "exact",
+      "bestMatch": "references",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-23",
+      "status": "matched",
+      "bestMatch": "sandwiched",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-23",
+      "status": "exact",
+      "bestMatch": "sandwiched",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-24",
+      "status": "matched",
+      "bestMatch": "separators",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-24",
+      "status": "exact",
+      "bestMatch": "separators",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-25",
+      "status": "matched",
+      "bestMatch": "switched",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-25",
+      "status": "exact",
+      "bestMatch": "switched",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-26",
+      "status": "matched",
+      "bestMatch": "specifically",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-26",
+      "status": "exact",
+      "bestMatch": "specifically",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-27",
+      "status": "matched",
+      "bestMatch": "streamline",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-27",
+      "status": "exact",
+      "bestMatch": "streamline",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-28",
+      "status": "matched",
+      "bestMatch": "strictly",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-28",
+      "status": "exact",
+      "bestMatch": "strictly",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-29",
+      "status": "matched",
+      "bestMatch": "temporarily",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-29",
+      "status": "exact",
+      "bestMatch": "temporarily",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-30",
+      "status": "matched",
+      "bestMatch": "untouched",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-30",
+      "status": "exact",
+      "bestMatch": "untouched",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-31",
+      "status": "matched",
+      "bestMatch": "utility",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-31",
+      "status": "exact",
+      "bestMatch": "utility",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-32",
+      "status": "matched",
+      "bestMatch": "validation",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-32",
+      "status": "exact",
+      "bestMatch": "validation",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-33",
+      "status": "matched",
+      "bestMatch": "wildcard",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-33",
+      "status": "exact",
+      "bestMatch": "wildcard",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-34",
+      "status": "matched",
+      "bestMatch": "withholding",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-34",
+      "status": "exact",
+      "bestMatch": "withholding",
+      "intendedEligible": true
+    },
+    {
+      "id": "repo-35",
+      "status": "matched",
+      "bestMatch": "written",
+      "intendedEligible": true
+    },
+    {
+      "id": "identity-35",
+      "status": "exact",
+      "bestMatch": "written",
+      "intendedEligible": true
+    },
+    {
+      "id": "conversation-omission",
+      "status": "matched",
+      "bestMatch": "Levenstein",
+      "intendedEligible": true
+    },
+    {
+      "id": "entity-ambiguity",
+      "status": "ambiguous",
+      "bestMatch": null,
+      "intendedEligible": true
+    },
+    {
+      "id": "position-tie-initial",
+      "status": "ambiguous",
+      "bestMatch": null,
+      "intendedEligible": true
+    },
+    {
+      "id": "position-tie-later",
+      "status": "ambiguous",
+      "bestMatch": null,
+      "intendedEligible": true
+    },
+    {
+      "id": "literal-valid-collision",
+      "status": "exact",
+      "bestMatch": "not",
+      "intendedEligible": true
+    },
+    {
+      "id": "negative-distant",
+      "status": "no-match",
+      "bestMatch": null,
+      "intendedEligible": false
+    },
+    {
+      "id": "negative-short",
+      "status": "no-match",
+      "bestMatch": null,
+      "intendedEligible": false
+    },
+    {
+      "id": "negative-empty",
+      "status": "no-match",
+      "bestMatch": null,
+      "intendedEligible": false
+    },
+    {
+      "id": "negative-local-events",
+      "status": "no-match",
+      "bestMatch": null,
+      "intendedEligible": false
+    },
+    {
+      "id": "two-events",
+      "status": "matched",
+      "bestMatch": "abcdef",
+      "intendedEligible": true
+    },
+    {
+      "id": "long-omission",
+      "status": "matched",
+      "bestMatch": "CounterClockwiseContourIntegral",
+      "intendedEligible": true
+    },
+    {
+      "id": "negative-long-omission",
+      "status": "no-match",
+      "bestMatch": null,
+      "intendedEligible": false
+    },
+    {
+      "id": "swap",
+      "status": "matched",
+      "bestMatch": "print",
+      "intendedEligible": true
+    },
+    {
+      "id": "repeat",
+      "status": "matched",
+      "bestMatch": "screen",
+      "intendedEligible": true
+    }
+  ]
+}
