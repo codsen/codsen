@@ -1,8 +1,8 @@
 import {
+  allNamedEntities,
   allNamedEntitiesSetOnly,
   allNamedEntitiesSetOnlyCaseInsensitive,
   brokenNamedEntities,
-  decode,
   entEndsWith,
   entStartsWith,
   maxLength,
@@ -28,13 +28,26 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-const allRules = [...allNamedEntitiesSetOnly]
+const entityNames = [...allNamedEntitiesSetOnly];
+const entitiesByLowercase = new Map<string, string[]>();
+for (const name of entityNames) {
+  const lower = name.toLowerCase();
+  const group = entitiesByLowercase.get(lower);
+  if (group) {
+    group.push(name);
+  } else {
+    entitiesByLowercase.set(lower, [name]);
+  }
+}
+
+function decodeName(name: string): string | null {
+  const value = allNamedEntities[name];
+  return typeof value === "string" ? value : null;
+}
+
+const allRules = entityNames
   .map((ruleName) => `bad-html-entity-malformed-${ruleName}`)
-  .concat(
-    [...allNamedEntitiesSetOnly].map(
-      (ruleName) => `bad-html-entity-encoded-${ruleName}`,
-    ),
-  )
+  .concat(entityNames.map((ruleName) => `bad-html-entity-encoded-${ruleName}`))
   .concat([
     "bad-html-entity-unrecognised",
     "bad-html-entity-multiple-encoding",
@@ -485,7 +498,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                   )}`}\u001b[${39}m`}`,
                 );
 
-              let decodedEntity = decode(`&${tempEnt};`);
+              let decodedEntity = decodeName(tempEnt);
 
               DEV && console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
               rangesArr2.push({
@@ -638,7 +651,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                   )}`}\u001b[${39}m`}`,
                 );
 
-              let decodedEntity = decode(`&${tempEnt};`);
+              let decodedEntity = decodeName(tempEnt);
 
               DEV && console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
               rangesArr2.push({
@@ -918,13 +931,10 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                     console.log(
                       `${`\u001b[${31}m${`a problem with letter case!`}\u001b[${39}m`}`,
                     );
-                  let matchingEntitiesOfCorrectCaseArr = [
-                    ...allNamedEntitiesSetOnly,
-                  ].filter(
-                    (ent) =>
-                      ent.toLowerCase() ===
+                  let matchingEntitiesOfCorrectCaseArr =
+                    entitiesByLowercase.get(
                       potentialEntityOnlyNonWhitespaceChars.toLowerCase(),
-                  );
+                    ) || [];
 
                   DEV &&
                     console.log(
@@ -944,8 +954,8 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                       rangeFrom: whatIsOnTheLeft as number,
                       rangeTo: i + 1,
                       rangeValEncoded: `&${matchingEntitiesOfCorrectCaseArr[0]};`,
-                      rangeValDecoded: decode(
-                        `&${matchingEntitiesOfCorrectCaseArr[0]};`,
+                      rangeValDecoded: decodeName(
+                        matchingEntitiesOfCorrectCaseArr[0],
                       ),
                     });
                     pingAmps(whatIsOnTheLeft as number, i);
@@ -1003,8 +1013,8 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                     rangeFrom: rangeFrom as number,
                     rangeTo: i + 1,
                     rangeValEncoded: `&${potentialEntityOnlyNonWhitespaceChars};`,
-                    rangeValDecoded: decode(
-                      `&${potentialEntityOnlyNonWhitespaceChars};`,
+                    rangeValDecoded: decodeName(
+                      potentialEntityOnlyNonWhitespaceChars,
                     ),
                   });
                   pingAmps(rangeFrom as number, i);
@@ -1023,8 +1033,8 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                     rangeFrom: whatIsOnTheLeft as number,
                     rangeTo: i + 1,
                     rangeValEncoded: `&${potentialEntityOnlyNonWhitespaceChars};`,
-                    rangeValDecoded: decode(
-                      `&${potentialEntityOnlyNonWhitespaceChars};`,
+                    rangeValDecoded: decodeName(
+                      potentialEntityOnlyNonWhitespaceChars,
                     ),
                   });
                   pingAmps(whatIsOnTheLeft as number, i);
@@ -1104,10 +1114,8 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                   );
                 tempEnt = situation.charTrimmed;
 
-                let decodedEntity = decode(
-                  `&${
-                    brokenNamedEntities[situation.charTrimmed.toLowerCase()]
-                  };`,
+                let decodedEntity = decodeName(
+                  brokenNamedEntities[situation.charTrimmed.toLowerCase()],
                 );
 
                 DEV && console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
@@ -1133,20 +1141,22 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                 // might be a value of an entity
                 potentialEntity.length < maxLength + 2 &&
                 // biome-ignore lint/suspicious/noAssignInExpressions: retain the first non-empty Levenshtein candidate set for the branch body
-                (((temp = [...allNamedEntitiesSetOnly].filter(
-                  (curr) => leven(curr, potentialEntity) === 1,
+                (((temp = entityNames.filter(
+                  (curr) =>
+                    Math.abs(curr.length - potentialEntity.length) <= 1 &&
+                    leven(curr, potentialEntity) === 1,
                 )) &&
                   temp.length) ||
                   //
                   // OR
                   //
-                  // biome-ignore lint/suspicious/noAssignInExpressions: retain distance-two candidates when distance one found none
-                  ((temp = [...allNamedEntitiesSetOnly].filter(
-                    (curr) =>
-                      /* c8 ignore next */
-                      leven(curr, potentialEntity) === 2 &&
-                      potentialEntity.length > 3,
-                  )) &&
+                  (potentialEntity.length > 3 &&
+                    // biome-ignore lint/suspicious/noAssignInExpressions: retain distance-two candidates when distance one found none
+                    (temp = entityNames.filter(
+                      (curr) =>
+                        Math.abs(curr.length - potentialEntity.length) <= 2 &&
+                        leven(curr, potentialEntity) === 2,
+                    )) &&
                     temp.length))
               ) {
                 DEV &&
@@ -1167,7 +1177,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                     rangeFrom: whatIsOnTheLeft as number,
                     rangeTo: i + 1,
                     rangeValEncoded: `&${tempEnt};`,
-                    rangeValDecoded: decode(`&${tempEnt};`),
+                    rangeValDecoded: decodeName(tempEnt),
                   });
                   pingAmps(whatIsOnTheLeft as number, i);
                 } else if (temp) {
@@ -1238,7 +1248,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                           rangeFrom: whatIsOnTheLeft as number,
                           rangeTo: i + 1,
                           rangeValEncoded: `&${tempEnt};`,
-                          rangeValDecoded: decode(`&${tempEnt};`),
+                          rangeValDecoded: decodeName(tempEnt),
                         });
 
                         pingAmps(whatIsOnTheLeft as number, i);
@@ -1544,7 +1554,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
               rangeFrom: whatsOnTheLeft,
               rangeTo: doNothingUntil,
               rangeValEncoded: `&${matchedTemp};`,
-              rangeValDecoded: decode(`&${matchedTemp};`),
+              rangeValDecoded: decodeName(matchedTemp),
             });
             pingAmps(whatsOnTheLeft, i);
           } else if (whatsOnTheLeft) {
@@ -1571,9 +1581,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                 rangeFrom,
                 rangeTo: doNothingUntil,
                 rangeValEncoded: `${spaceReplacement}&${matchedTemp};`,
-                rangeValDecoded: `${spaceReplacement}${decode(
-                  `&${matchedTemp};`,
-                )}`,
+                rangeValDecoded: `${spaceReplacement}${decodeName(matchedTemp)}`,
               });
               pingAmps(rangeFrom, i);
             }
