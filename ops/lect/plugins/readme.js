@@ -1,7 +1,5 @@
 import path from "node:path";
-import objectPath from "object-path";
 import { esmBump } from "../../../data/sources/esmBump.ts";
-import arrayiffy from "../../helpers/arrayiffy.js";
 import { dependencyStatuses } from "../../helpers/dependencyStatuses.js";
 import { writeGeneratedFile } from "../../helpers/generatedFiles.js";
 import { PACKAGE_KINDS } from "../../helpers/packageKinds.js";
@@ -154,17 +152,14 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 ${getLicenceShortVersion(state.currentYear)}`;
 
   // licence module
-  let licenceExtras = objectPath.get(state.pack, "lect.licence.extras");
-
-  if (
-    licenceExtras &&
-    Array.isArray(licenceExtras) &&
-    (licenceExtras.length > 1 ||
-      (typeof licenceExtras[0] === "string" && licenceExtras[0].trim().length))
-  ) {
-    content += `\n\n${arrayiffy(licenceExtras)
-      .filter((singleExtra) => singleExtra.length > 0)
-      .join("\n")}`;
+  const licenceExtras = state.pack.lect?.licence?.extras;
+  if (Array.isArray(licenceExtras)) {
+    const paragraphs = licenceExtras
+      .filter((extra) => typeof extra === "string" && extra.trim())
+      .join("\n\n");
+    if (paragraphs) {
+      content += `\n\n${paragraphs}`;
+    }
   }
 
   // content = content.replace(/%YEAR%/, String(new Date().getFullYear()));

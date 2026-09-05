@@ -36,6 +36,7 @@
     "html-all-known-attributes",
     "html-crush",
     "html-entities-not-email-friendly",
+    "html-entity-codec",
     "html-img-alt",
     "html-table-patcher",
     "is-char-suitable-for-html-attr-name",

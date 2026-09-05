@@ -1165,6 +1165,24 @@ function stringTypoMatchSmoke(api, equal) {
   equal(JSON.parse(JSON.stringify(result)), result);
 }
 
+function htmlEntityCodecSmoke(api, equal) {
+  equal(
+    api.decode("&amp;lt; &notit; &#128; &#xD800; &#x10FFFF;"),
+    "&lt; ¬it; € � \uDBFF\uDFFF",
+  );
+  equal(
+    api.decode("&notit; &copy=1", { context: "attribute" }),
+    "&notit; &copy=1",
+  );
+  equal(api.decode("&notit; &copy;", { requireSemicolon: true }), "&notit; ©");
+  equal(
+    api.encode("≈`𝌆", { useNamedReferences: true }),
+    "&ap;&grave;&#x1D306;",
+  );
+  equal(api.escapeAttribute('"a&b"'), "&quot;a&amp;b&quot;");
+  equal(api.scanReference("x&NotEqualTilde;y", 1), { end: 16, value: "≂̸" });
+}
+
 const IIFE_API_SMOKES = Object.freeze({
   "array-group-str-omit-num-char": arrayGroupSmoke,
   "array-includes-with-glob": arrayIncludesWithGlobSmoke,
@@ -1180,6 +1198,7 @@ const IIFE_API_SMOKES = Object.freeze({
   "email-comb": emailCombSmoke,
   "generate-atomic-css": generateAtomicCssSmoke,
   "html-crush": htmlCrushSmoke,
+  "html-entity-codec": htmlEntityCodecSmoke,
   "html-img-alt": htmlImgAltSmoke,
   "is-language-code": languageCodeSmoke,
   "object-boolean-combinations": objectBooleanCombinationsSmoke,

@@ -105,6 +105,7 @@ test("05 - keeps browser smoke functions self-contained and serializable", () =>
       "email-comb",
       "generate-atomic-css",
       "html-crush",
+      "html-entity-codec",
       "html-img-alt",
       "is-language-code",
       "object-boolean-combinations",

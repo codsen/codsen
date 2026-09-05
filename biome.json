@@ -25,7 +25,8 @@
       "!!packages/email-comb/perf/dummy_file.html",
       "!!packages/html-crush/perf/dummy_file.html",
       "!!packages/*/test/fixtures",
-      "!!packages/*/perf/historical.json"
+      "!!packages/*/perf/historical.json",
+      "!!packages/all-named-html-entities/upstream/entities.json"
     ]
   },
   "formatter": {

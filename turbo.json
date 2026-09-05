@@ -20,7 +20,9 @@
         "packages/*/*.js",
         "packages/*/dist/**",
         "packages/*/package.json",
-        "packages/*/test/**"
+        "packages/*/test/**",
+        "packages/all-named-html-entities/upstream/**",
+        "packages/html-entities-not-email-friendly/policy/**"
       ],
       "outputs": [],
       "outputLogs": "new-only"
@@ -383,6 +385,107 @@
     },
     "prep": {
       "dependsOn": ["unit", "examples", "lint"]
+    },
+    "all-named-html-entities#unit": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/common.js",
+        "$TURBO_ROOT$/ops/helpers/shallow-compare.js",
+        "$TURBO_ROOT$/packages/all-named-html-entities/upstream/**"
+      ],
+      "outputs": []
+    },
+    "all-named-html-entities#coverage": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/common.js",
+        "$TURBO_ROOT$/ops/helpers/shallow-compare.js",
+        "$TURBO_ROOT$/packages/all-named-html-entities/upstream/**"
+      ],
+      "outputs": []
+    },
+    "html-entities-not-email-friendly#unit": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/common.js",
+        "$TURBO_ROOT$/ops/helpers/shallow-compare.js",
+        "$TURBO_ROOT$/packages/all-named-html-entities/upstream/**",
+        "policy/**"
+      ],
+      "outputs": []
+    },
+    "html-entities-not-email-friendly#coverage": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/common.js",
+        "$TURBO_ROOT$/ops/helpers/shallow-compare.js",
+        "$TURBO_ROOT$/packages/all-named-html-entities/upstream/**",
+        "policy/**"
+      ],
+      "outputs": []
+    },
+    "html-entity-codec#unit": {
+      "dependsOn": ["build", "all-named-html-entities#build"],
+      "inputs": [
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/common.js",
+        "$TURBO_ROOT$/ops/helpers/shallow-compare.js",
+        "$TURBO_ROOT$/packages/all-named-html-entities/upstream/**"
+      ],
+      "outputs": []
+    },
+    "html-entity-codec#coverage": {
+      "dependsOn": ["build", "all-named-html-entities#build"],
+      "inputs": [
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/common.js",
+        "$TURBO_ROOT$/ops/helpers/shallow-compare.js",
+        "$TURBO_ROOT$/packages/all-named-html-entities/upstream/**"
+      ],
+      "outputs": []
+    },
+    "all-named-html-entities#lect:check": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/biome.json",
+        "$TURBO_ROOT$/data/sources/esmBump.ts",
+        "$TURBO_ROOT$/ops/biome/**",
+        "$TURBO_ROOT$/ops/coverage-policy.json",
+        "$TURBO_ROOT$/ops/helpers/*.js",
+        "$TURBO_ROOT$/ops/lect/**",
+        "$TURBO_ROOT$/ops/package-kinds.json",
+        "$TURBO_ROOT$/package-lock.json",
+        "$TURBO_ROOT$/package.json",
+        "$TURBO_ROOT$/packages/html-entity-codec/src/generated.ts"
+      ],
+      "outputs": []
+    },
+    "html-entities-not-email-friendly#lect:check": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/biome.json",
+        "$TURBO_ROOT$/data/sources/esmBump.ts",
+        "$TURBO_ROOT$/ops/biome/**",
+        "$TURBO_ROOT$/ops/coverage-policy.json",
+        "$TURBO_ROOT$/ops/helpers/*.js",
+        "$TURBO_ROOT$/ops/lect/**",
+        "$TURBO_ROOT$/ops/package-kinds.json",
+        "$TURBO_ROOT$/package-lock.json",
+        "$TURBO_ROOT$/package.json",
+        "$TURBO_ROOT$/packages/all-named-html-entities/upstream/**",
+        "$TURBO_ROOT$/packages/all-named-html-entities/scripts/**"
+      ],
+      "outputs": []
     }
   }
 }
