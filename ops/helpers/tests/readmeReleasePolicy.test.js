@@ -101,7 +101,7 @@ test("01 - Lerna selects package READMEs while preserving explicit exclusions", 
       equal(
         hasDiff(graph.get("example")),
         expected,
-        `01.${String(i + 1).padStart(2, "0")}`,
+        `01.01 - ${String(i + 1).padStart(2, "0")}`,
       );
       writeFileSync(filename, original);
     }
