@@ -1,4 +1,5 @@
 import rehypeStringify from "rehype-stringify";
+import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
@@ -9,7 +10,7 @@ import { equal } from "uvu/assert";
 import changelogTimeline from "../../remark-conventional-commit-changelog-timeline/dist/remark-conventional-commit-changelog-timeline.esm.js";
 import fixTypography from "../dist/remark-typography.esm.js";
 
-test("01 - production plugin order preserves MDAST boundary semantics", async () => {
+test("01 - HTML rendering preserves MDAST boundary semantics", async () => {
   const source =
     "The `deno`'s and [project](https://example.com/a-b?x=1)'s \"results\"... measure 3 x 4 - today.";
   const file = await unified()
@@ -17,7 +18,6 @@ test("01 - production plugin order preserves MDAST boundary semantics", async ()
     .use(remarkGfm)
     .use(fixTypography)
     .use(remarkRehype)
-    .use(changelogTimeline)
     .use(rehypeStringify)
     .process(source);
 
@@ -29,19 +29,16 @@ test("01 - production plugin order preserves MDAST boundary semantics", async ()
 });
 
 test("02 - timeline headings survive typographic date separators", async () => {
-  const file = await unified()
-    .use(remarkParse)
+  const file = await remark()
     .use(remarkGfm)
     .use(fixTypography)
-    .use(remarkRehype)
-    .use(changelogTimeline)
-    .use(rehypeStringify)
     .process("## 1.2.3 (2022-08-12)");
 
+  equal(file.toString(), "## 1.2.3 (2022–08–12)\n", "02.01");
   equal(
-    file.toString(),
-    '<h2>1.2.3</h2><div class="release-date">Aug 12, <span>2022</span></div>',
-    "02.01",
+    changelogTimeline(file.toString()),
+    '\n<h2>1.2.3</h2>\n<div class="release-date">12 Aug <span>2022</span></div>\n',
+    "02.02",
   );
 });
 
