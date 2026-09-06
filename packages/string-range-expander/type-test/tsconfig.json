@@ -7,5 +7,5 @@
     "strict": true,
     "target": "esnext"
   },
-  "include": ["types.ts"]
+  "include": ["consumer.ts"]
 }

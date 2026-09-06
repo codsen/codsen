@@ -187,9 +187,9 @@ function expander(opts: Opts): Range {
     opts.extendToOneSide !== "right"
   ) {
     throw new Error(
-      `string-range-expander/expander(): [THROW_ID_09] The options value "extendToOneSide" is not recognisable! It's set to: "${
-        opts.extendToOneSide
-      }" (${typeof opts.extendToOneSide}). It has to be either Boolean "false" or one of strings: "left" or "right"`,
+      `string-range-expander/expander(): [THROW_ID_09] The options value "extendToOneSide" is not recognisable! It's set to: ${formatDiagnosticValue(
+        opts.extendToOneSide,
+      )} (${typeof opts.extendToOneSide}). It has to be either Boolean "false" or one of strings: "left" or "right"`,
     );
   }
   if (
@@ -350,6 +350,8 @@ function expander(opts: Opts): Range {
             );
           break;
         }
+      } else if (i === 0) {
+        from = 0;
       }
     }
   }
@@ -415,6 +417,8 @@ function expander(opts: Opts): Range {
             console.log(`SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`);
           break;
         }
+      } else if (i === len - 1) {
+        to = len;
       }
     }
   }
@@ -424,7 +428,7 @@ function expander(opts: Opts): Range {
     (resolvedOpts.extendToOneSide !== "right" &&
       isStr(resolvedOpts.ifLeftSideIncludesThisThenCropTightly) &&
       resolvedOpts.ifLeftSideIncludesThisThenCropTightly &&
-      ((str[from - 2] &&
+      ((isWhitespace(str[from - 1]) &&
         markerIncludesCodePointAt(
           resolvedOpts.ifLeftSideIncludesThisThenCropTightly,
           str,
@@ -439,7 +443,7 @@ function expander(opts: Opts): Range {
     (resolvedOpts.extendToOneSide !== "left" &&
       isStr(resolvedOpts.ifRightSideIncludesThisThenCropTightly) &&
       resolvedOpts.ifRightSideIncludesThisThenCropTightly &&
-      ((str[to + 1] &&
+      ((isWhitespace(str[to]) &&
         markerIncludesCodePointAt(
           resolvedOpts.ifRightSideIncludesThisThenCropTightly,
           str,
@@ -474,6 +478,7 @@ function expander(opts: Opts): Range {
 
   if (
     resolvedOpts.addSingleSpaceToPreventAccidentalConcatenation &&
+    from < to &&
     str[from - 1]?.trim() &&
     str[to]?.trim() &&
     ((!resolvedOpts.ifLeftSideIncludesThisThenCropTightly &&
