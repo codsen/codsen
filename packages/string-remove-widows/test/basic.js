@@ -595,7 +595,7 @@ test("18 - multiparagraph combo with jinja", () => {
       },
     ],
   });
-  equal(res.res, source, "18.01");
+  equal(res.res, source.replace("unescaped {{", "unescaped&nbsp;{{"), "18.01");
 });
 
 test("19 - multiparagraph combo with jinja", () => {

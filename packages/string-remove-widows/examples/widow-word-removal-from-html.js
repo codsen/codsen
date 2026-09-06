@@ -1,24 +1,18 @@
 // Widow word removal from text within HTML
 
 import { strict as assert } from "node:assert";
-import { stripHtml } from "string-strip-html";
 
 import { removeWidows } from "../dist/string-remove-widows.esm.js";
 
-const someHtml = 'The quick brown fox jumps of the lazy dog.<div class="a">';
+const someHtml = `<p>
+  <a href="https://example.com" class="underline font-bold">
+    Foo Bar
+  </a>
+</p>`;
 
-// default widow word removal libs are not aware of HTML:
-// -----------------------------------------------------------------------------
-
+// Element tags and their attributes are preserved automatically.
+// Lower the default four-word minimum to protect this two-word phrase.
 assert.equal(
-  removeWidows(someHtml).res,
-  'The quick brown fox jumps of the lazy dog.<div&nbsp;class="a">', // 😱
-);
-
-// luckily, removeWidows() consumes optional HTML tag locations
-assert.equal(
-  removeWidows(someHtml, {
-    tagRanges: stripHtml(someHtml).allTagLocations,
-  }).res,
-  'The quick brown fox jumps of the lazy&nbsp;dog.<div class="a">', // ✅
+  removeWidows(someHtml, { minWordCount: 2 }).res,
+  someHtml.replace("Foo Bar", "Foo&nbsp;Bar"),
 );

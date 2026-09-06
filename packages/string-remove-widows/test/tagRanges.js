@@ -36,7 +36,7 @@ test(`02 - opts.tagRanges - widow space between tags`, () => {
     removeWidows(
       'something in front here <a style="display: block;">x</a> <b style="display: block;">y</b>',
     ).res,
-    `something in front here <a style="display: block;">x</a> <b style="display:${encodedNbspHtml}block;">y</b>`,
+    `something in front here <a style="display: block;">x</a>${encodedNbspHtml}<b style="display: block;">y</b>`,
     "02.01",
   );
   equal(

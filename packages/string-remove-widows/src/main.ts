@@ -12,6 +12,7 @@ import { left, right } from "string-left-right";
 import type { Ranges as RangesType } from "../../../ops/typedefs/common";
 
 import { version as v } from "../package.json";
+import { matchHtmlRegion, matchTemplateBlockEnd } from "./html";
 import {
   encodedMdashHtml,
   encodedMdashJs,
@@ -23,7 +24,6 @@ import {
   headsAndTailsHexo,
   headsAndTailsHugo,
   headsAndTailsJinja,
-  knownHTMLTags,
 } from "./util";
 
 const version: string = v;
@@ -57,6 +57,7 @@ export type TagRange =
     ];
 
 interface ResolvedMarker {
+  nestedBlock?: boolean;
   heads: string | string[];
   tails: string | string[];
 }
@@ -167,13 +168,7 @@ function removeWidowsFromPlainTextWithDefaults(
         lastWhitespaceEndedAt = i;
         openWhitespaceStartedAt = undefined;
       }
-    } else if (
-      str[i - 1]?.trim() &&
-      !(
-        str[i - 1]?.toLowerCase() === "r" &&
-        (str[i - 2]?.toLowerCase() === "b" || str[i - 2]?.toLowerCase() === "h")
-      )
-    ) {
+    } else if (str[i - 1]?.trim()) {
       let nextNonWhitespace = i + 1;
       while (nextNonWhitespace < str.length && !str[nextNonWhitespace].trim()) {
         nextNonWhitespace += 1;
@@ -255,7 +250,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
 
   let isArr = Array.isArray;
   let len = str.length;
-  let rangesArr = new Ranges<string | null | undefined>({ mergeType: 2 });
+  const replacements = new Map<string, [number, number, string]>();
   let punctuationCharsToConsiderWidowIssue = ["."];
 
   const leavePercForLastStage = 0.06; // in range of [0, 1]
@@ -264,20 +259,26 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
 
   let currentPercentageDone: number;
   let lastPercentage: number | undefined;
+  let paragraphStart = 0;
   let wordCount = 0; // counted per-chunk (paragraph)
   let charCount = 0; // counted per-character, per chunk (paragraph)
 
-  let secondToLastWhitespaceStartedAt; // necessary to support whitespace at line ends
-  let secondToLastWhitespaceEndedAt; // necessary to support whitespace at line ends
-  let lastWhitespaceStartedAt;
-  let lastWhitespaceEndedAt;
-  let openWhitespaceStartedAt;
-  let lastEncodedNbspStartedAt;
-  let lastEncodedNbspEndedAt;
-  let lastEncodedNbspHasFollowingWord = false;
+  let secondToLastWhitespaceStartedAt: number | undefined; // necessary to support whitespace at line ends
+  let secondToLastWhitespaceEndedAt: number | undefined; // necessary to support whitespace at line ends
+  let lastWhitespaceStartedAt: number | undefined;
+  let lastWhitespaceEndedAt: number | undefined;
+  let openWhitespaceStartedAt: number | undefined;
+  let openWhitespaceEndedAt: number | undefined;
+  let pendingWhitespaceSegments: [number, number][] = [];
+  let lastWhitespaceSegments: [number, number][] = [];
+  let confirmedNbspStart: number | undefined;
+  let confirmedNbspEnd: number | undefined;
+  let lastEncodedNbspStartedAt: number | undefined;
+  let lastEncodedNbspEndedAt: number | undefined;
   // let lineBreakCount;
   let doNothingUntil: string | string[] | undefined;
   let tagRangeCursor = 0;
+  const detectedTagRanges: [number, number][] = [];
 
   // requests to bump word count in the future:
   let bumpWordCountAt: number | undefined;
@@ -307,22 +308,31 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
     return `${from}:${to}`;
   }
 
-  function overlapsTagRange(from: number, to: number): boolean {
-    if (!resolvedOpts.tagRanges.length || from >= to) {
+  function overlapsRanges(
+    ranges: [number, number][],
+    from: number,
+    to: number,
+  ): boolean {
+    if (!ranges.length || from >= to) {
       return false;
     }
     let low = 0;
-    let high = resolvedOpts.tagRanges.length;
+    let high = ranges.length;
     while (low < high) {
       const middle = Math.floor((low + high) / 2);
-      if (resolvedOpts.tagRanges[middle][1] <= from) {
+      if (ranges[middle][1] <= from) {
         low = middle + 1;
       } else {
         high = middle;
       }
     }
-    return Boolean(
-      resolvedOpts.tagRanges[low] && resolvedOpts.tagRanges[low][0] < to,
+    return Boolean(ranges[low] && ranges[low][0] < to);
+  }
+
+  function overlapsTagRange(from: number, to: number): boolean {
+    return (
+      overlapsRanges(resolvedOpts.tagRanges, from, to) ||
+      overlapsRanges(detectedTagRanges, from, to)
     );
   }
 
@@ -330,6 +340,18 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
     return (
       str.startsWith(token, index) &&
       !overlapsTagRange(index, index + token.length)
+    );
+  }
+
+  function matchesIgnoreHead(marker: ResolvedMarker, index: number): boolean {
+    const matchesHead =
+      typeof marker.heads === "string"
+        ? startsWithOutsideTagRange(marker.heads, index)
+        : marker.heads.some((head) => startsWithOutsideTagRange(head, index));
+    return (
+      matchesHead &&
+      (!marker.nestedBlock ||
+        /^\{%-?\s*(if|for)(?=[\s%-]|$)/.test(str.slice(index, index + 12)))
     );
   }
 
@@ -382,7 +404,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       }
     }
     if (str.slice(finalStart, finalEnd) !== finalWhatToInsert) {
-      rangesArr.push(finalStart, finalEnd, finalWhatToInsert);
+      replacements.set(key, [finalStart, finalEnd, finalWhatToInsert]);
       effectiveOperations.set(
         key,
         sourceIsNbsp && finalWhatToInsert !== " "
@@ -395,6 +417,8 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         );
       return true;
     }
+    replacements.delete(key);
+    effectiveOperations.delete(key);
     return false;
   }
 
@@ -406,10 +430,108 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
     lastWhitespaceStartedAt = undefined;
     lastWhitespaceEndedAt = undefined;
     openWhitespaceStartedAt = undefined;
+    openWhitespaceEndedAt = undefined;
+    pendingWhitespaceSegments = [];
+    lastWhitespaceSegments = [];
+    confirmedNbspStart = undefined;
+    confirmedNbspEnd = undefined;
     lastEncodedNbspStartedAt = undefined;
     lastEncodedNbspEndedAt = undefined;
-    lastEncodedNbspHasFollowingWord = false;
     // lineBreakCount = undefined;
+  }
+
+  function finishParagraph(): void {
+    let finalStart;
+    let finalEnd;
+
+    // calculate start and end values
+    if (
+      lastWhitespaceStartedAt !== undefined &&
+      lastWhitespaceEndedAt !== undefined &&
+      confirmedNbspStart !== undefined &&
+      confirmedNbspEnd !== undefined
+    ) {
+      DEV && console.log();
+      if (lastWhitespaceStartedAt > confirmedNbspStart) {
+        finalStart = lastWhitespaceStartedAt;
+        finalEnd = lastWhitespaceEndedAt;
+      } else {
+        finalStart = confirmedNbspStart;
+        finalEnd = confirmedNbspEnd;
+      }
+    } else if (
+      lastWhitespaceStartedAt !== undefined &&
+      lastWhitespaceEndedAt !== undefined
+    ) {
+      DEV && console.log();
+      finalStart = lastWhitespaceStartedAt;
+      finalEnd = lastWhitespaceEndedAt;
+    } else if (
+      confirmedNbspStart !== undefined &&
+      confirmedNbspEnd !== undefined
+    ) {
+      DEV && console.log();
+      finalStart = confirmedNbspStart;
+      finalEnd = confirmedNbspEnd;
+    }
+
+    // if by now the point to insert non-breaking space was not found,
+    // give last chance to secondToLastWhitespaceStartedAt and
+    // secondToLastWhitespaceEndedAt:
+    if (
+      (finalStart === undefined || finalEnd === undefined) &&
+      secondToLastWhitespaceStartedAt !== undefined &&
+      secondToLastWhitespaceEndedAt !== undefined
+    ) {
+      DEV && console.log();
+      finalStart = secondToLastWhitespaceStartedAt;
+      finalEnd = secondToLastWhitespaceEndedAt;
+    }
+
+    DEV && console.log(`finalStart = ${finalStart}; finalEnd = ${finalEnd}`);
+
+    if (finalStart !== undefined && finalEnd !== undefined) {
+      if (
+        (!resolvedOpts.minWordCount ||
+          wordCount >= resolvedOpts.minWordCount) &&
+        (!resolvedOpts.minCharCount || charCount >= resolvedOpts.minCharCount)
+      ) {
+        if (!overlapsTagRange(finalStart, finalEnd)) {
+          applicableOpts.removeWidows = true;
+          DEV &&
+            console.log(
+              `${`\u001b[${32}m${`passed min length requirements`}\u001b[${39}m`}`,
+            );
+          if (
+            finalStart === lastWhitespaceStartedAt &&
+            finalEnd === lastWhitespaceEndedAt
+          ) {
+            for (const [from, to] of lastWhitespaceSegments) push(from, to);
+          } else {
+            push(finalStart, finalEnd);
+          }
+        }
+      }
+    }
+
+    resetAll();
+  }
+
+  function completeWhitespace(index: number): void {
+    if (openWhitespaceStartedAt !== undefined) {
+      secondToLastWhitespaceStartedAt = lastWhitespaceStartedAt;
+      secondToLastWhitespaceEndedAt = lastWhitespaceEndedAt;
+      lastWhitespaceStartedAt = openWhitespaceStartedAt;
+      lastWhitespaceEndedAt = openWhitespaceEndedAt ?? index;
+      lastWhitespaceSegments = pendingWhitespaceSegments;
+      lastWhitespaceSegments.push([
+        lastWhitespaceStartedAt,
+        lastWhitespaceEndedAt,
+      ]);
+      pendingWhitespaceSegments = [];
+      openWhitespaceStartedAt = undefined;
+      openWhitespaceEndedAt = undefined;
+    }
   }
 
   resetAll();
@@ -462,50 +584,54 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
     ) {
       tagRangeCursor += 1;
     }
-    const currentTagRange = resolvedOpts.tagRanges[tagRangeCursor];
+    const explicitTagRange = resolvedOpts.tagRanges[tagRangeCursor];
+    let currentTagRange = explicitTagRange;
+    let isBlockBoundary = false;
+    if (
+      !doNothingUntil &&
+      str[i] === "<" &&
+      (!currentTagRange || i <= currentTagRange[0]) &&
+      !resolvedOpts.ignore.some((marker) => matchesIgnoreHead(marker, i))
+    ) {
+      const region = matchHtmlRegion(str, i);
+      if (region) {
+        currentTagRange = [i, region.end];
+        isBlockBoundary = region.boundary;
+      }
+    }
     if (currentTagRange && i >= currentTagRange[0] && i < currentTagRange[1]) {
+      currentTagRange = [currentTagRange[0], currentTagRange[1]];
+      while (
+        resolvedOpts.tagRanges[tagRangeCursor] &&
+        resolvedOpts.tagRanges[tagRangeCursor][0] < currentTagRange[1]
+      ) {
+        currentTagRange[1] = Math.max(
+          currentTagRange[1],
+          resolvedOpts.tagRanges[tagRangeCursor][1],
+        );
+        tagRangeCursor += 1;
+      }
+      detectedTagRanges.push(currentTagRange);
       const semanticWhitespaceBeforeTag =
-        bumpWordCountAt === currentTagRange[0] ||
-        semanticWordBoundaryAt === currentTagRange[0] ||
-        (semanticWhitespaceStartAt !== currentTagRange[0] &&
-          suppressSourceWordBoundaryAt !== currentTagRange[0] &&
-          !str[currentTagRange[0] - 1]?.trim());
-      if (
+        bumpWordCountAt === i ||
+        semanticWordBoundaryAt === i ||
+        (semanticWhitespaceStartAt !== i &&
+          suppressSourceWordBoundaryAt !== i &&
+          !str[i - 1]?.trim());
+      if (isBlockBoundary) {
+        finishParagraph();
+        paragraphStart = currentTagRange[1];
+      } else if (
         openWhitespaceStartedAt !== undefined &&
-        i === currentTagRange[0] &&
-        str[currentTagRange[1]]?.trim()
+        openWhitespaceEndedAt === undefined
       ) {
-        secondToLastWhitespaceStartedAt = lastWhitespaceStartedAt;
-        secondToLastWhitespaceEndedAt = lastWhitespaceEndedAt;
-        lastWhitespaceStartedAt = openWhitespaceStartedAt;
-        lastWhitespaceEndedAt = i;
+        openWhitespaceEndedAt = i;
       }
-      openWhitespaceStartedAt = undefined;
-      if (
-        bumpWordCountAt !== undefined &&
-        bumpWordCountAt < currentTagRange[1]
-      ) {
-        bumpWordCountAt = undefined;
-      }
-      if (
-        semanticWhitespaceStartAt !== undefined &&
-        semanticWhitespaceStartAt < currentTagRange[1]
-      ) {
-        semanticWhitespaceStartAt = undefined;
-      }
-      if (
-        semanticWordBoundaryAt !== undefined &&
-        semanticWordBoundaryAt < currentTagRange[1]
-      ) {
-        semanticWordBoundaryAt = undefined;
-      }
-      if (
-        suppressSourceWordBoundaryAt !== undefined &&
-        suppressSourceWordBoundaryAt < currentTagRange[1]
-      ) {
-        suppressSourceWordBoundaryAt = undefined;
-      }
-      if (str[currentTagRange[1]]?.trim() && semanticWhitespaceBeforeTag) {
+      bumpWordCountAt = undefined;
+      semanticWhitespaceStartAt = undefined;
+      semanticWordBoundaryAt = undefined;
+      suppressSourceWordBoundaryAt = undefined;
+      if (isBlockBoundary || semanticWhitespaceBeforeTag) {
         semanticWordBoundaryAt = currentTagRange[1];
       }
       i = currentTagRange[1] - 1;
@@ -531,19 +657,30 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       isArr(resolvedOpts.ignore) &&
       resolvedOpts.ignore.length
     ) {
+      let skippedBlock = false;
       resolvedOpts.ignore.some((valObj, y) => {
-        if (
-          (isArr(valObj.heads) &&
-            valObj.heads.some((oneOfHeads) =>
-              startsWithOutsideTagRange(oneOfHeads, i),
-            )) ||
-          (typeof valObj.heads === "string" &&
-            startsWithOutsideTagRange(valObj.heads, i))
-        ) {
+        if (matchesIgnoreHead(valObj, i)) {
           DEV &&
             console.log(`${`\u001b[${31}m${`heads detected!`}\u001b[${39}m`}`);
-          openWhitespaceStartedAt = undefined;
+          completeWhitespace(i);
           wordCount += 1;
+          if (lastEncodedNbspEndedAt !== undefined) {
+            confirmedNbspStart = lastEncodedNbspStartedAt;
+            confirmedNbspEnd = lastEncodedNbspEndedAt;
+          }
+          if (valObj.nestedBlock) {
+            const end = matchTemplateBlockEnd(str, i, overlapsTagRange);
+            if (end === undefined) {
+              resetAll();
+              i = len - 1;
+              skippedBlock = true;
+              return true;
+            }
+            if (str[end]?.trim()) bumpWordCountAt = end;
+            i = end - 1;
+            skippedBlock = true;
+            return true;
+          }
           doNothingUntil = resolvedOpts.ignore[y].tails;
           DEV &&
             console.log(
@@ -553,6 +690,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         }
         return false;
       });
+      if (skippedBlock) continue;
     }
 
     // if there was word count bump request issued in the past for current
@@ -574,32 +712,14 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
 
       wordCount += 1;
       if (lastEncodedNbspEndedAt !== undefined) {
-        lastEncodedNbspHasFollowingWord = true;
+        confirmedNbspStart = lastEncodedNbspStartedAt;
+        confirmedNbspEnd = lastEncodedNbspEndedAt;
       }
       bumpWordCountAt = undefined;
       wordCountBumpedAtCurrentIndex = true;
       DEV &&
         console.log(
           `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`wordCount`}\u001b[${39}m`} = ${wordCount}; ${`\u001b[${33}m${`bumpWordCountAt`}\u001b[${39}m`} = ${bumpWordCountAt}`,
-        );
-    }
-
-    // catch the end of whitespace (must be at the top)
-    if (
-      !doNothingUntil &&
-      i &&
-      str[i]?.trim() &&
-      !str[i - 1]?.trim() &&
-      openWhitespaceStartedAt !== undefined
-    ) {
-      secondToLastWhitespaceStartedAt = lastWhitespaceStartedAt;
-      secondToLastWhitespaceEndedAt = lastWhitespaceEndedAt;
-      lastWhitespaceStartedAt = openWhitespaceStartedAt;
-      lastWhitespaceEndedAt = i;
-      openWhitespaceStartedAt = undefined;
-      DEV &&
-        console.log(
-          `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastWhitespace`}\u001b[${39}m`} = [${lastWhitespaceStartedAt}, ${lastWhitespaceEndedAt}]`,
         );
     }
 
@@ -613,10 +733,16 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       !overlapsTagRange(i, matchedEncodedNbspEnd)
         ? matchedEncodedNbspEnd
         : undefined;
+    if (!doNothingUntil && str[i]?.trim() && encodedNbspEndedAt === undefined) {
+      completeWhitespace(i);
+    }
+
     if (encodedNbspEndedAt !== undefined) {
+      openWhitespaceStartedAt = undefined;
+      openWhitespaceEndedAt = undefined;
+      pendingWhitespaceSegments = [];
       lastEncodedNbspStartedAt = i;
       lastEncodedNbspEndedAt = encodedNbspEndedAt;
-      lastEncodedNbspHasFollowingWord = false;
       const key = rangeKey(i, encodedNbspEndedAt);
       convertEntitySensitiveRanges.add(key);
 
@@ -630,7 +756,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
             : encodedNbspHtml
         : rawNbsp;
       if (str.slice(i, encodedNbspEndedAt) !== entityReplacement) {
-        rangesArr.push(i, encodedNbspEndedAt, entityReplacement);
+        replacements.set(key, [i, encodedNbspEndedAt, entityReplacement]);
         effectiveOperations.set(key, "convertEntities");
         DEV &&
           console.log(
@@ -701,7 +827,8 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       ) {
         wordCount += 1;
         if (lastEncodedNbspEndedAt !== undefined) {
-          lastEncodedNbspHasFollowingWord = true;
+          confirmedNbspStart = lastEncodedNbspStartedAt;
+          confirmedNbspEnd = lastEncodedNbspEndedAt;
         }
       }
       const dashPrecededByNbsp =
@@ -716,6 +843,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
             : precedingNonWhitespace + 1;
       const dashHasSameParagraphPredecessor =
         precedingNonWhitespace !== null &&
+        precedingNonWhitespace >= paragraphStart &&
         !str
           .slice(precedingNonWhitespace + 1, i)
           .split("")
@@ -762,7 +890,8 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       // 1. bump the word counter
       wordCount += 1;
       if (lastEncodedNbspEndedAt !== undefined) {
-        lastEncodedNbspHasFollowingWord = true;
+        confirmedNbspStart = lastEncodedNbspStartedAt;
+        confirmedNbspEnd = lastEncodedNbspEndedAt;
       }
       DEV &&
         console.log(
@@ -786,75 +915,8 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       DEV &&
         console.log(`${`\u001b[${32}m${`██`}\u001b[${39}m`} PARAGRAPH ENDING!`);
 
-      let finalStart;
-      let finalEnd;
-
-      // calculate start and end values
-      if (
-        lastWhitespaceStartedAt !== undefined &&
-        lastWhitespaceEndedAt !== undefined &&
-        lastEncodedNbspStartedAt !== undefined &&
-        lastEncodedNbspEndedAt !== undefined &&
-        lastEncodedNbspHasFollowingWord
-      ) {
-        DEV && console.log();
-        if (lastWhitespaceStartedAt > lastEncodedNbspStartedAt) {
-          finalStart = lastWhitespaceStartedAt;
-          finalEnd = lastWhitespaceEndedAt;
-        } else {
-          finalStart = lastEncodedNbspStartedAt;
-          finalEnd = lastEncodedNbspEndedAt;
-        }
-      } else if (
-        lastWhitespaceStartedAt !== undefined &&
-        lastWhitespaceEndedAt !== undefined
-      ) {
-        DEV && console.log();
-        finalStart = lastWhitespaceStartedAt;
-        finalEnd = lastWhitespaceEndedAt;
-      } else if (
-        lastEncodedNbspStartedAt !== undefined &&
-        lastEncodedNbspEndedAt !== undefined &&
-        lastEncodedNbspHasFollowingWord
-      ) {
-        DEV && console.log();
-        finalStart = lastEncodedNbspStartedAt;
-        finalEnd = lastEncodedNbspEndedAt;
-      }
-
-      // if by now the point to insert non-breaking space was not found,
-      // give last chance to secondToLastWhitespaceStartedAt and
-      // secondToLastWhitespaceEndedAt:
-      if (
-        (finalStart === undefined || finalEnd === undefined) &&
-        secondToLastWhitespaceStartedAt !== undefined &&
-        secondToLastWhitespaceEndedAt !== undefined
-      ) {
-        DEV && console.log();
-        finalStart = secondToLastWhitespaceStartedAt;
-        finalEnd = secondToLastWhitespaceEndedAt;
-      }
-
-      DEV && console.log(`finalStart = ${finalStart}; finalEnd = ${finalEnd}`);
-
-      if (finalStart !== undefined && finalEnd !== undefined) {
-        if (
-          (!resolvedOpts.minWordCount ||
-            wordCount >= resolvedOpts.minWordCount) &&
-          (!resolvedOpts.minCharCount || charCount >= resolvedOpts.minCharCount)
-        ) {
-          if (!overlapsTagRange(finalStart, finalEnd)) {
-            applicableOpts.removeWidows = true;
-            DEV &&
-              console.log(
-                `${`\u001b[${32}m${`passed min length requirements`}\u001b[${39}m`}`,
-              );
-            push(finalStart, finalEnd);
-          }
-        }
-      }
-
-      resetAll();
+      finishParagraph();
+      paragraphStart = i + 1;
       DEV && console.log(`${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
     }
 
@@ -909,6 +971,21 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
     //
     // either it's first whitespace character ever met, or we're overwriting an
     // old whitespace record and it's the first character of new whitespace chunk
+    if (
+      !doNothingUntil &&
+      str[i] &&
+      !str[i].trim() &&
+      !`\r\n`.includes(str[i]) &&
+      openWhitespaceStartedAt !== undefined &&
+      openWhitespaceEndedAt !== undefined
+    ) {
+      pendingWhitespaceSegments.push([
+        openWhitespaceStartedAt,
+        openWhitespaceEndedAt,
+      ]);
+      openWhitespaceStartedAt = i;
+      openWhitespaceEndedAt = undefined;
+    }
     const whitespaceStartsHere =
       !doNothingUntil &&
       str[i] &&
@@ -917,44 +994,9 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       (startsAtSemanticWhitespace || str[i - 1]?.trim()) &&
       openWhitespaceStartedAt === undefined;
     const nextNonWhitespace = whitespaceStartsHere ? right(str, i) : null;
-    const previousEndsWithBreakName =
-      whitespaceStartsHere &&
-      str[i - 1]?.toLowerCase() === "r" &&
-      ["b", "h"].includes(str[i - 2]?.toLowerCase());
-    const beforeKnownTag =
-      whitespaceStartsHere &&
-      str[i - 1] === "<" &&
-      nextNonWhitespace !== null &&
-      knownHTMLTags.some((tag) => str.startsWith(tag, nextNonWhitespace));
-
-    if (
-      whitespaceStartsHere &&
-      nextNonWhitespace !== null &&
-      !"/>".includes(str[nextNonWhitespace]) &&
-      !previousEndsWithBreakName &&
-      !beforeKnownTag
-    ) {
-      DEV && console.log();
+    if (whitespaceStartsHere && nextNonWhitespace !== null) {
       openWhitespaceStartedAt = i;
-
-      DEV &&
-        console.log(
-          `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`openWhitespaceStartedAt`}\u001b[${39}m`} = ${openWhitespaceStartedAt}`,
-        );
-
-      // 3. wipe the records of the last nbsp because they are not relevant
-      if (
-        lastEncodedNbspStartedAt !== undefined ||
-        lastEncodedNbspEndedAt !== undefined
-      ) {
-        lastEncodedNbspStartedAt = undefined;
-        lastEncodedNbspEndedAt = undefined;
-        lastEncodedNbspHasFollowingWord = false;
-        DEV &&
-          console.log(
-            `${`\u001b[${90}m${`RESET`}\u001b[${39}m`} lastEncodedNbspStartedAt, lastEncodedNbspEndedAt`,
-          );
-      }
+      openWhitespaceEndedAt = undefined;
     }
 
     // look for templating tails
@@ -1048,7 +1090,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
     DEV &&
       console.log(
         `${`\u001b[${90}m${`rangesArr: ${JSON.stringify(
-          rangesArr.current(),
+          Array.from(replacements.values()),
           null,
           0,
         )}`}\u001b[${39}m`}${
@@ -1072,6 +1114,8 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
     console.log(
       `string-remove-widows: ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}:`,
     );
+  const rangesArr = new Ranges<string | null | undefined>({ mergeType: 2 });
+  for (const range of replacements.values()) rangesArr.push(range);
   const ranges = rangesArr.current();
   const result = rApply(
     str,
@@ -1368,6 +1412,8 @@ const optionNames: (keyof Opts)[] = [
 
 function cloneMarker(marker: HeadsAndTailsObj): ResolvedMarker {
   return {
+    nestedBlock:
+      marker === headsAndTailsJinja[1] || marker === headsAndTailsJinja[2],
     heads: typeof marker.heads === "string" ? marker.heads : [...marker.heads],
     tails: typeof marker.tails === "string" ? marker.tails : [...marker.tails],
   };
