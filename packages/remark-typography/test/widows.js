@@ -137,4 +137,97 @@ test("08 - an inline HTML break bounds widow handling", async () => {
   );
 });
 
+test("09 - literal tags in code count as visible text without changing code", async () => {
+  equal(
+    await process('Use `<a title="one two">` now.'),
+    `Use \`<a title="one two">\`${rawNbsp}now.`,
+    "09.01",
+  );
+  equal(
+    await process('Use `😀<a title="one two">` now.'),
+    `Use \`😀<a title="one two">\`${rawNbsp}now.`,
+    "09.02",
+  );
+});
+
+test("10 - literal markup in final code remains one immutable unit", async () => {
+  equal(
+    await process('one two three four `<a title="five six">`'),
+    `one two three four${rawNbsp}\`<a title="five six">\``,
+    "10.01",
+  );
+  equal(
+    await process('one two three four `😀<a title="five six">seven</a>`'),
+    `one two three four${rawNbsp}\`😀<a title="five six">seven</a>\``,
+    "10.02",
+  );
+});
+
+test("11 - escaped tags in text participate in widow removal", async () => {
+  equal(
+    await process("one two three \\<span>four five\\</span>"),
+    `one two three \\<span>four${rawNbsp}five\\</span>`,
+    "11.01",
+  );
+  equal(
+    await process("one two three \\<span>"),
+    `one two three${rawNbsp}\\<span>`,
+    "11.02",
+  );
+});
+
+test("12 - final code fallback retains escaped markup as visible text", async () => {
+  equal(
+    await process("one \\<span title=three> `four five`"),
+    `one \\<span title=three>${rawNbsp}\`four five\``,
+    "12.01",
+  );
+});
+
+test("13 - final code fallback follows accepted edits in preceding lines", () => {
+  for (const boundary of [{ type: "html", value: "<br>" }, { type: "break" }]) {
+    for (const codeValue of [
+      '<a title="eight nine">',
+      '😀<a title="eight nine">',
+    ]) {
+      const first = { type: "text", value: "one two three four" };
+      const last = { type: "text", value: "five six seven " };
+      const code = { type: "inlineCode", value: codeValue };
+      const file = { data: {} };
+      const progress = [];
+      const tree = {
+        type: "root",
+        children: [
+          { type: "paragraph", children: [first, boundary, last, code] },
+        ],
+      };
+      unified()
+        .use(fixTypography, {
+          reportProgressFunc: (value) => progress.push(value),
+        })
+        .runSync(tree, file);
+      equal(first.value, `one two three${rawNbsp}four`, "13.01");
+      equal(last.value, `five six seven${rawNbsp}`, "13.02");
+      equal(code.value, codeValue, "13.03");
+      equal(file.data.remarkTypography.widowMeasuresAdded, 2, "13.04");
+      equal(file.data.remarkTypography.replacementsApplied, 2, "13.05");
+      equal([progress[0], progress[progress.length - 1]], [0, 100], "13.06");
+    }
+  }
+});
+
+test("14 - final code fallback follows a successful hyphen edit", () => {
+  const first = { type: "text", value: "one - two three " };
+  const code = { type: "inlineCode", value: '<a title="four five">' };
+  const file = { data: {} };
+  const tree = {
+    type: "root",
+    children: [{ type: "paragraph", children: [first, code] }],
+  };
+  unified().use(fixTypography).runSync(tree, file);
+  equal(first.value, `one${rawNbsp}— two three${rawNbsp}`, "14.01");
+  equal(code.value, '<a title="four five">', "14.02");
+  equal(file.data.remarkTypography.widowMeasuresAdded, 2, "14.03");
+});
+
 test.run();

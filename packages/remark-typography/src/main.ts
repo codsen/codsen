@@ -591,7 +591,9 @@ const fixTypography: Plugin<[options?: Opts], Root> = (
 
       map = buildPhrasingMap(block.node);
       const workBeforeWidows = completedWork;
-      const widowResult = removeWidows(map.value, {
+      // The map contains visible text, including literal markup in code or
+      // escaped Markdown. Shield tag openers without shifting source indices.
+      const widowResult = removeWidows(map.value.replace(/</g, "\uFF1C"), {
         convertEntities: false,
         reportProgressFunc:
           options.reportProgressFunc && block.initialLength
@@ -604,22 +606,37 @@ const fixTypography: Plugin<[options?: Opts], Root> = (
         reportProgressFuncFrom: 0,
         reportProgressFuncTo: 100,
       });
-      let blockWidows = processRanges(
-        map,
+      const primaryRanges = selectMutableRanges(
         widowResult.ranges as readonly SourceRange[] | null,
+        map,
       );
-      if (!blockWidows && widowResult.ranges?.length) {
-        const fallbackResult = removeWidows(widowContextValue(map), {
-          convertEntities: false,
-          reportProgressFunc: null,
-          reportProgressFuncFrom: 0,
-          reportProgressFuncTo: 100,
-        });
-        blockWidows = processRanges(
-          map,
+      let selectedRanges = primaryRanges;
+      if (primaryRanges.length < (widowResult.ranges?.length ?? 0)) {
+        const fallbackResult = removeWidows(
+          widowContextValue(map).replace(/</g, "\uFF1C"),
+          {
+            convertEntities: false,
+            reportProgressFunc: null,
+            reportProgressFuncFrom: 0,
+            reportProgressFuncTo: 100,
+          },
+        );
+        const additionalRanges = selectMutableRanges(
           fallbackResult.ranges as readonly SourceRange[] | null,
+          map,
+        ).filter(
+          ({ from, to }) =>
+            !primaryRanges.some(
+              ({ from: primaryFrom, to: primaryTo }) =>
+                from < primaryTo && to > primaryFrom,
+            ),
+        );
+        selectedRanges = [...primaryRanges, ...additionalRanges].sort(
+          (a, b) => a.from - b.from,
         );
       }
+      applyRanges(map, selectedRanges);
+      const blockWidows = selectedRanges.length;
       widowMeasuresAdded += blockWidows;
       replacementsApplied += blockWidows;
       completedWork += block.initialLength;
