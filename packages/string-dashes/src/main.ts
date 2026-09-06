@@ -46,7 +46,7 @@ function convertOne(str: string, opts: Opts): Ranges {
     );
   }
 
-  if (typeof opts !== "object" || Array.isArray(opts)) {
+  if (!opts || typeof opts !== "object" || Array.isArray(opts)) {
     throw new Error(
       `string-dashes/convertOne(): [THROW_ID_02] options object should be a plain object. It has was passed as ${formatDiagnosticValue(opts, 4)} (its typeof is ${typeof opts})`,
     );
@@ -70,8 +70,8 @@ function convertOne(str: string, opts: Opts): Ranges {
     from = 0, // needed to trick TS; this zero default is not possible, see the checks above
     to,
     value,
-    convertEntities,
-    convertDashes,
+    convertEntities = defaults.convertEntities,
+    convertDashes = defaults.convertDashes,
     offsetBy,
   } = {
     ...defaults,
@@ -80,6 +80,12 @@ function convertOne(str: string, opts: Opts): Ranges {
 
   if (!Number.isInteger(to)) {
     to = from + 1;
+  }
+
+  if (to < from || to > str.length) {
+    throw new Error(
+      `string-dashes/convertOne(): [THROW_ID_05] opts.to must be between opts.from (${from}) and str.length (${str.length}), inclusive. It was passed as ${to}`,
+    );
   }
 
   // consts
@@ -196,7 +202,9 @@ function convertOne(str: string, opts: Opts): Ranges {
   if (
     value === "-" ||
     value === rawNDash ||
-    (to === from + 1 && (str[from] === "-" || str[from] === rawNDash))
+    value === rawMDash ||
+    (to === from + 1 &&
+      (str[from] === "-" || str[from] === rawNDash || str[from] === rawMDash))
   ) {
     DEV && console.log(`m-dash clauses`);
 
@@ -250,7 +258,7 @@ function convertOne(str: string, opts: Opts): Ranges {
             );
         } else {
           // a more "expensive" calculation
-          idxOnTheRight = right(str, from);
+          idxOnTheRight = right(str, to - 1);
           DEV &&
             console.log(
               `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxOnTheRight`}\u001b[${39}m`} = ${JSON.stringify(
@@ -288,7 +296,7 @@ function convertOne(str: string, opts: Opts): Ranges {
 
       // 2.2.2
       // else, use m-dash
-      else {
+      else if (value !== rawMDash && str.slice(from, to) !== rawMDash) {
         rangesArr.push([from, to, convertEntities ? "&mdash;" : rawMDash]);
         DEV &&
           console.log(
@@ -299,6 +307,8 @@ function convertOne(str: string, opts: Opts): Ranges {
       }
     } else if (
       // 2.2. letter-hyphen-single quote — cut-off speech quote
+      value !== rawMDash &&
+      str.slice(from, to) !== rawMDash &&
       characterBefore &&
       isLetter(characterBefore) &&
       str[to] &&
@@ -337,13 +347,13 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
 
   if (typeof str !== "string") {
     throw new Error(
-      `string-dashes/convertAll(): [THROW_ID_05] first input argument should be string! It's been passed as ${str} (its typeof ${typeof str})`,
+      `string-dashes/convertAll(): [THROW_ID_06] first input argument should be string! It's been passed as ${str} (its typeof ${typeof str})`,
     );
   }
 
   if (opts && (typeof opts !== "object" || Array.isArray(opts))) {
     throw new Error(
-      `string-dashes/convertAll(): [THROW_ID_06] options object should be a plain object! It was passed as ${formatDiagnosticValue(opts, 4)} (its typeof is ${typeof opts})`,
+      `string-dashes/convertAll(): [THROW_ID_07] options object should be a plain object! It was passed as ${formatDiagnosticValue(opts, 4)} (its typeof is ${typeof opts})`,
     );
   }
 

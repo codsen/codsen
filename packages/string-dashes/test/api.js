@@ -154,7 +154,7 @@ test("11 - 1st input arg is wrong", () => {
     () => {
       convertAll();
     },
-    /THROW_ID_05/,
+    /THROW_ID_06/,
     "11.01",
   );
 });
@@ -164,7 +164,7 @@ test("12 - 1st input arg is wrong", () => {
     () => {
       convertAll(true);
     },
-    /THROW_ID_05/,
+    /THROW_ID_06/,
     "12.01",
   );
 });
@@ -174,7 +174,7 @@ test("13 - 2nd input arg is wrong", () => {
     () => {
       convertAll("abc", true);
     },
-    /THROW_ID_06/,
+    /THROW_ID_07/,
     "13.01",
   );
 });
@@ -184,7 +184,7 @@ test("14 - 2nd input arg is wrong", () => {
     () => {
       convertAll("abc", []);
     },
-    /THROW_ID_06/,
+    /THROW_ID_07/,
     "14.01",
   );
 });
