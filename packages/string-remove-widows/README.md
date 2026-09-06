@@ -49,7 +49,7 @@ assert.equal(res, "Some text with many words on one&nbsp;line.");
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/string-remove-widows/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/string-remove-widows/CHANGELOG.md).
+Please [visit codsen.com](https://codsen.com/os/string-remove-widows/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/string-remove-widows/CHANGELOG.md) or [the website](https://codsen.com/os/string-remove-widows/changelog).
 
 ## Contributing
 

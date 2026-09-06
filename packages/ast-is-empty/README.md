@@ -49,7 +49,7 @@ assert.equal(
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/ast-is-empty/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/ast-is-empty/CHANGELOG.md).
+Please [visit codsen.com](https://codsen.com/os/ast-is-empty/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/ast-is-empty/CHANGELOG.md) or [the website](https://codsen.com/os/ast-is-empty/changelog).
 
 ## Contributing
 

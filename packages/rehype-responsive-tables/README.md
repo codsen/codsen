@@ -82,7 +82,7 @@ assert.equal(
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/rehype-responsive-tables/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/rehype-responsive-tables/CHANGELOG.md). Also, try the [GUI playground](https://codsen.com/os/rehype-responsive-tables/play).
+Please [visit codsen.com](https://codsen.com/os/rehype-responsive-tables/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/rehype-responsive-tables/CHANGELOG.md) or [the website](https://codsen.com/os/rehype-responsive-tables/changelog). Also, try the [GUI playground](https://codsen.com/os/rehype-responsive-tables/play).
 
 ## Contributing
 

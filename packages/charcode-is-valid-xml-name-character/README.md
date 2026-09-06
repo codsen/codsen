@@ -47,7 +47,7 @@ assert.equal(validFirstChar("1"), false);
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/charcode-is-valid-xml-name-character/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/charcode-is-valid-xml-name-character/CHANGELOG.md).
+Please [visit codsen.com](https://codsen.com/os/charcode-is-valid-xml-name-character/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/charcode-is-valid-xml-name-character/CHANGELOG.md) or [the website](https://codsen.com/os/charcode-is-valid-xml-name-character/changelog).
 
 ## Contributing
 

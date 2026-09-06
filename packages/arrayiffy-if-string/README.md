@@ -44,7 +44,7 @@ assert.deepEqual(arrayiffy("aaa"), ["aaa"]);
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/arrayiffy-if-string/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/arrayiffy-if-string/CHANGELOG.md).
+Please [visit codsen.com](https://codsen.com/os/arrayiffy-if-string/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/arrayiffy-if-string/CHANGELOG.md) or [the website](https://codsen.com/os/arrayiffy-if-string/changelog).
 
 ## Contributing
 

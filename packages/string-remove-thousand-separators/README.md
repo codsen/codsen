@@ -44,7 +44,7 @@ assert.equal(remSep("1,000,000.00"), "1000000.00");
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/string-remove-thousand-separators/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/string-remove-thousand-separators/CHANGELOG.md).
+Please [visit codsen.com](https://codsen.com/os/string-remove-thousand-separators/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/string-remove-thousand-separators/CHANGELOG.md) or [the website](https://codsen.com/os/string-remove-thousand-separators/changelog).
 
 ## Contributing
 

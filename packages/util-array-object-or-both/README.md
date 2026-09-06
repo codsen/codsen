@@ -44,7 +44,7 @@ assert.equal(arrObjOrBoth("arrays"), "array");
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/util-array-object-or-both/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/util-array-object-or-both/CHANGELOG.md).
+Please [visit codsen.com](https://codsen.com/os/util-array-object-or-both/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/util-array-object-or-both/CHANGELOG.md) or [the website](https://codsen.com/os/util-array-object-or-both/changelog).
 
 ## Contributing
 

@@ -58,7 +58,7 @@ assert.equal(result.matches[0].operations[0].kind, "omitted-block");
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/string-typo-match/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/string-typo-match/CHANGELOG.md).
+Please [visit codsen.com](https://codsen.com/os/string-typo-match/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/string-typo-match/CHANGELOG.md) or [the website](https://codsen.com/os/string-typo-match/changelog).
 
 ## Contributing
 

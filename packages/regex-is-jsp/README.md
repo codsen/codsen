@@ -45,7 +45,7 @@ assert.equal(isJSP().test('<div><% out.println("Hi!"); %></div>'), true);
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/regex-is-jsp/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/regex-is-jsp/CHANGELOG.md).
+Please [visit codsen.com](https://codsen.com/os/regex-is-jsp/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/regex-is-jsp/CHANGELOG.md) or [the website](https://codsen.com/os/regex-is-jsp/changelog).
 
 ## Contributing
 

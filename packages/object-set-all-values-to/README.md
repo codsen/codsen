@@ -57,7 +57,7 @@ assert.deepEqual(
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/object-set-all-values-to/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/object-set-all-values-to/CHANGELOG.md).
+Please [visit codsen.com](https://codsen.com/os/object-set-all-values-to/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/object-set-all-values-to/CHANGELOG.md) or [the website](https://codsen.com/os/object-set-all-values-to/changelog).
 
 ## Contributing
 

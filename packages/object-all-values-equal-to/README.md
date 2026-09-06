@@ -44,7 +44,7 @@ assert.equal(allEq({ a: null, c: null }, null), true);
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/object-all-values-equal-to/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/object-all-values-equal-to/CHANGELOG.md).
+Please [visit codsen.com](https://codsen.com/os/object-all-values-equal-to/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/object-all-values-equal-to/CHANGELOG.md) or [the website](https://codsen.com/os/object-all-values-equal-to/changelog).
 
 ## Contributing
 

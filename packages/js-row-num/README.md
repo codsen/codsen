@@ -48,7 +48,7 @@ assert.equal(result, 'const foo = "bar";\n console.log(`002 foo = ${foo}`)');
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/js-row-num/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/js-row-num/CHANGELOG.md).
+Please [visit codsen.com](https://codsen.com/os/js-row-num/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/js-row-num/CHANGELOG.md) or [the website](https://codsen.com/os/js-row-num/changelog).
 
 ## Contributing
 

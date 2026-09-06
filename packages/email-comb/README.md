@@ -63,7 +63,7 @@ assert.equal(comb(source).result, intended);
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/email-comb/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/email-comb/CHANGELOG.md). Also, try the [GUI playground](https://codsen.com/os/email-comb/play).
+Please [visit codsen.com](https://codsen.com/os/email-comb/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/email-comb/CHANGELOG.md) or [the website](https://codsen.com/os/email-comb/changelog). Also, try the [GUI playground](https://codsen.com/os/email-comb/play).
 
 ## Contributing
 

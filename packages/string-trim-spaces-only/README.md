@@ -50,7 +50,7 @@ assert.deepEqual(trimSpaces("  aaa   "), {
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/string-trim-spaces-only/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/string-trim-spaces-only/CHANGELOG.md).
+Please [visit codsen.com](https://codsen.com/os/string-trim-spaces-only/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/string-trim-spaces-only/CHANGELOG.md) or [the website](https://codsen.com/os/string-trim-spaces-only/changelog).
 
 ## Contributing
 

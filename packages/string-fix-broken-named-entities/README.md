@@ -51,7 +51,7 @@ assert.deepEqual(fixEnt(source), [
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/string-fix-broken-named-entities/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/string-fix-broken-named-entities/CHANGELOG.md).
+Please [visit codsen.com](https://codsen.com/os/string-fix-broken-named-entities/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/string-fix-broken-named-entities/CHANGELOG.md) or [the website](https://codsen.com/os/string-fix-broken-named-entities/changelog).
 
 ## Contributing
 

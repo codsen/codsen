@@ -47,7 +47,7 @@ assert.deepEqual(isRel(".../resource.txt"), {
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/is-relative-uri/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/is-relative-uri/CHANGELOG.md).
+Please [visit codsen.com](https://codsen.com/os/is-relative-uri/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/is-relative-uri/CHANGELOG.md) or [the website](https://codsen.com/os/is-relative-uri/changelog).
 
 ## Contributing
 

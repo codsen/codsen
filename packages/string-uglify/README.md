@@ -53,7 +53,7 @@ assert.deepEqual(uglifyArr(names), [".o", ".s", ".z", "#l"]);
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/string-uglify/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/string-uglify/CHANGELOG.md).
+Please [visit codsen.com](https://codsen.com/os/string-uglify/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/string-uglify/CHANGELOG.md) or [the website](https://codsen.com/os/string-uglify/changelog).
 
 ## Contributing
 

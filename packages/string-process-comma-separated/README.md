@@ -56,7 +56,7 @@ assert.deepEqual(gatheredChunks, [
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/string-process-comma-separated/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/string-process-comma-separated/CHANGELOG.md).
+Please [visit codsen.com](https://codsen.com/os/string-process-comma-separated/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/string-process-comma-separated/CHANGELOG.md) or [the website](https://codsen.com/os/string-process-comma-separated/changelog).
 
 ## Contributing
 

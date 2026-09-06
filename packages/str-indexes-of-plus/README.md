@@ -45,7 +45,7 @@ assert.deepEqual(strIndexesOfPlus("abc-abc-abc-abc", "abc"), [0, 4, 8, 12]);
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/str-indexes-of-plus/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/str-indexes-of-plus/CHANGELOG.md).
+Please [visit codsen.com](https://codsen.com/os/str-indexes-of-plus/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/str-indexes-of-plus/CHANGELOG.md) or [the website](https://codsen.com/os/str-indexes-of-plus/changelog).
 
 ## Contributing
 

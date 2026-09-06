@@ -76,7 +76,7 @@ assert.equal(changelogTimeline(input), expected);
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/remark-conventional-commit-changelog-timeline/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/remark-conventional-commit-changelog-timeline/CHANGELOG.md).
+Please [visit codsen.com](https://codsen.com/os/remark-conventional-commit-changelog-timeline/) for a full description of the API. For **Changelog**, see [raw md on GitHub](https://github.com/codsen/codsen/blob/main/packages/remark-conventional-commit-changelog-timeline/CHANGELOG.md) or [the website](https://codsen.com/os/remark-conventional-commit-changelog-timeline/changelog).
 
 ## Contributing
 
