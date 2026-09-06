@@ -7828,8 +7828,7 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.10.1",
       "ranges-apply": "^7.2.4",
-      "ranges-push": "^7.3.1",
-      "string-left-right": "^6.2.3"
+      "ranges-push": "^7.3.1"
     },
     "devDependencies": {
       "test-mixer": "^4.4.1"
@@ -9135,9 +9134,6 @@ export const packageJSONData = {
           ""
         ]
       }
-    },
-    "dependencies": {
-      "ranges-is-index-within": "^4.2.1"
     },
     "devDependencies": {
       "string-find-heads-tails": "^6.2.4"

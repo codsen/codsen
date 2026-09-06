@@ -186,7 +186,7 @@ export const dependencyStats: DependencyStats = {
     "ranges-apply": 15,
     "ranges-crop": 2,
     "ranges-invert": 2,
-    "ranges-is-index-within": 2,
+    "ranges-is-index-within": 1,
     "ranges-merge": 5,
     "ranges-process-outside": 1,
     "ranges-push": 12,
@@ -206,7 +206,7 @@ export const dependencyStats: DependencyStats = {
     "string-extract-class-names": 1,
     "string-find-heads-tails": 1,
     "string-fix-broken-named-entities": 1,
-    "string-left-right": 16,
+    "string-left-right": 15,
     "string-match-left-right": 7,
     "string-process-comma-separated": 1,
     "string-range-expander": 3,
@@ -416,10 +416,10 @@ export const dependencyStats: DependencyStats = {
       "codsen-utils": 78
     },
     {
-      "string-left-right": 16
+      "ranges-apply": 15
     },
     {
-      "ranges-apply": 15
+      "string-left-right": 15
     },
     {
       "ranges-push": 12
