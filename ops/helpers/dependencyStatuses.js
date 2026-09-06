@@ -116,7 +116,7 @@ function dependencyStatuses(manifests) {
         .map((name) => [name, soleThirdParty(external.get(name) || [])])
         .filter(([, sole]) => sole),
     ),
-    thirdPartyDependencies: advertised.filter(
+    consumesThirdPartyDependencies: advertised.filter(
       (name) => external.get(name)?.size,
     ),
   };

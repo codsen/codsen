@@ -230,8 +230,8 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "tarballSizeBytes": 130489,
-    "unpackedSizeBytes": 442877,
+    "tarballSizeBytes": 130512,
+    "unpackedSizeBytes": 442928,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -301,8 +301,8 @@ export const interdeps = [
   },
   {
     "name": "extract-search-index",
-    "tarballSizeBytes": 40634,
-    "unpackedSizeBytes": 122475,
+    "tarballSizeBytes": 40658,
+    "unpackedSizeBytes": 122541,
     "imports": [
       "codsen-utils",
       "string-strip-html",
@@ -872,8 +872,8 @@ export const interdeps = [
   },
   {
     "name": "string-remove-widows",
-    "tarballSizeBytes": 27722,
-    "unpackedSizeBytes": 79819,
+    "tarballSizeBytes": 27747,
+    "unpackedSizeBytes": 79885,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -891,8 +891,8 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "tarballSizeBytes": 56635,
-    "unpackedSizeBytes": 172768,
+    "tarballSizeBytes": 56648,
+    "unpackedSizeBytes": 172811,
     "imports": [
       "codsen-utils",
       "html-entity-codec",

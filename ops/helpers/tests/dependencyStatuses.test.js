@@ -17,7 +17,7 @@ test("01 - absent and empty dependency sets qualify for both markers", () => {
       noDependencies: ["absent", "zero"],
       noThirdPartyDependencies: ["absent", "zero"],
       singleThirdPartyDependency: {},
-      thirdPartyDependencies: [],
+      consumesThirdPartyDependencies: [],
     },
     "01.01",
   );
@@ -47,7 +47,12 @@ test("02 - both dependency sets are checked at every depth", () => {
         "external-dev": "third",
         indirect: "third",
       },
-      thirdPartyDependencies: ["deep", "external", "external-dev", "indirect"],
+      consumesThirdPartyDependencies: [
+        "deep",
+        "external",
+        "external-dev",
+        "indirect",
+      ],
     },
     "02.01",
   );
@@ -66,7 +71,7 @@ test("03 - internal cycles qualify until any member reaches an external dependen
       noDependencies: ["c"],
       noThirdPartyDependencies: ["a", "b", "c", "consumer"],
       singleThirdPartyDependency: {},
-      thirdPartyDependencies: [],
+      consumesThirdPartyDependencies: [],
     },
     "03.01",
   );
@@ -82,7 +87,7 @@ test("03 - internal cycles qualify until any member reaches an external dependen
         c: "third",
         consumer: "third",
       },
-      thirdPartyDependencies: ["a", "b", "c", "consumer"],
+      consumesThirdPartyDependencies: ["a", "b", "c", "consumer"],
     },
     "03.02",
   );
@@ -97,7 +102,7 @@ test("03 - internal cycles qualify until any member reaches an external dependen
         c: "third",
         consumer: "third",
       },
-      thirdPartyDependencies: ["a", "b", "c", "consumer"],
+      consumesThirdPartyDependencies: ["a", "b", "c", "consumer"],
     },
     "03.03",
   );
@@ -119,7 +124,7 @@ test("04 - shared dependency paths and duplicate edges retain every consumer", (
       noDependencies: ["leaf"],
       noThirdPartyDependencies: ["leaf", "left", "right", "top"],
       singleThirdPartyDependency: {},
-      thirdPartyDependencies: [],
+      consumesThirdPartyDependencies: [],
     },
     "04.01",
   );
@@ -140,7 +145,7 @@ test("05 - private packages are scanned but never advertised", () => {
         consumer: "third",
         "unknown-codsen": "codsen-missing",
       },
-      thirdPartyDependencies: ["consumer", "unknown-codsen"],
+      consumesThirdPartyDependencies: ["consumer", "unknown-codsen"],
     },
     "05.01",
   );
@@ -164,7 +169,7 @@ test("06 - aliases and redirected sources do not inherit a local package's marke
       noDependencies: ["leaf"],
       noThirdPartyDependencies: ["leaf"],
       singleThirdPartyDependency: {},
-      thirdPartyDependencies: [
+      consumesThirdPartyDependencies: [
         "alias",
         "duplicate",
         "file",
@@ -193,7 +198,7 @@ test("07 - lect projects dev-dependency cleanup without mutating manifests", () 
       noDependencies: ["leaf"],
       noThirdPartyDependencies: ["consumer", "leaf"],
       singleThirdPartyDependency: {},
-      thirdPartyDependencies: [],
+      consumesThirdPartyDependencies: [],
     },
     "07.01",
   );
@@ -288,7 +293,7 @@ test("09 - typings fold into the library they describe", () => {
         scoped: "@babel/core",
         sole: "picomatch",
       },
-      thirdPartyDependencies: ["consumer", "pair", "scoped", "sole"],
+      consumesThirdPartyDependencies: ["consumer", "pair", "scoped", "sole"],
     },
     "09.01",
   );
@@ -304,7 +309,7 @@ test("10 - typings alone never name a library the package does not install", () 
       noDependencies: [],
       noThirdPartyDependencies: [],
       singleThirdPartyDependency: {},
-      thirdPartyDependencies: ["consumer", "typed"],
+      consumesThirdPartyDependencies: ["consumer", "typed"],
     },
     "10.01",
   );
@@ -325,7 +330,7 @@ test("11 - redirected sources count as external but are never nameable", () => {
       noDependencies: ["leaf"],
       noThirdPartyDependencies: ["leaf"],
       singleThirdPartyDependency: {},
-      thirdPartyDependencies: ["alias", "consumer", "mixed"],
+      consumesThirdPartyDependencies: ["alias", "consumer", "mixed"],
     },
     "11.01",
   );
@@ -343,7 +348,7 @@ test("12 - Codsen packages outside the workspace block both markers", () => {
       noDependencies: ["leaf"],
       noThirdPartyDependencies: ["leaf"],
       singleThirdPartyDependency: {},
-      thirdPartyDependencies: ["consumer", "mixed", "outside"],
+      consumesThirdPartyDependencies: ["consumer", "mixed", "outside"],
     },
     "12.01",
   );

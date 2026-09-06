@@ -20,7 +20,7 @@ interface DependencyStats {
   noThirdPartyDependencies: string[];
   /** External or unaudited dependencies/devDependencies at any depth.
    * The complement of noThirdPartyDependencies among current public packages. */
-  thirdPartyDependencies: string[];
+  consumesThirdPartyDependencies: string[];
   /** Package name -> the one third-party library its whole recursive footprint
    * amounts to. Typings are folded into the library they describe. */
   singleThirdPartyDependency: StringValueObj;
@@ -115,6 +115,28 @@ export const dependencyStats: DependencyStats = {
     "string-unfancy",
     "util-array-object-or-both",
     "util-nonempty"
+  ],
+  "consumesThirdPartyDependencies": [
+    "ast-deep-contains",
+    "codsen-glob",
+    "csv-sort",
+    "csv-sort-cli",
+    "detergent",
+    "edit-package-json",
+    "email-all-chars-within-ascii-cli",
+    "generate-atomic-css-cli",
+    "html-img-alt",
+    "html-table-patcher",
+    "js-row-num-cli",
+    "json-comb",
+    "json-comb-core",
+    "json-sort-cli",
+    "json-variables",
+    "lerna-clean-changelogs-cli",
+    "rehype-responsive-tables",
+    "remark-typography",
+    "string-convert-indexes",
+    "update-versions"
   ],
   "dependencies": {
     "@inquirer/prompts": 2,
@@ -221,8 +243,7 @@ export const dependencyStats: DependencyStats = {
     "string-find-heads-tails": 1,
     "string-find-malformed": 1,
     "string-strip-html": 1,
-    "test-mixer": 5,
-    "title": 1
+    "test-mixer": 5
   },
   "noDependencies": [
     "all-named-html-entities",
@@ -279,6 +300,7 @@ export const dependencyStats: DependencyStats = {
     "detect-templating-language",
     "email-all-chars-within-ascii",
     "email-comb",
+    "extract-search-index",
     "generate-atomic-css",
     "html-all-known-attributes",
     "html-crush",
@@ -334,7 +356,9 @@ export const dependencyStats: DependencyStats = {
     "string-range-expander",
     "string-remove-duplicate-heads-tails",
     "string-remove-thousand-separators",
+    "string-remove-widows",
     "string-split-by-whitespace",
+    "string-strip-html",
     "string-trim-spaces-only",
     "string-typo-match",
     "string-uglify",
@@ -348,40 +372,13 @@ export const dependencyStats: DependencyStats = {
     "ast-deep-contains": "object-path",
     "codsen-glob": "picomatch",
     "csv-sort": "currency.js",
-    "extract-search-index": "title",
+    "detergent": "ansi-regex",
     "generate-atomic-css-cli": "picomatch",
     "html-img-alt": "parse5",
     "js-row-num-cli": "picomatch",
     "json-variables": "object-path",
-    "string-convert-indexes": "unicode-segmenter",
-    "string-remove-widows": "title",
-    "string-strip-html": "title"
+    "string-convert-indexes": "unicode-segmenter"
   },
-  "thirdPartyDependencies": [
-    "ast-deep-contains",
-    "codsen-glob",
-    "csv-sort",
-    "csv-sort-cli",
-    "detergent",
-    "edit-package-json",
-    "email-all-chars-within-ascii-cli",
-    "extract-search-index",
-    "generate-atomic-css-cli",
-    "html-img-alt",
-    "html-table-patcher",
-    "js-row-num-cli",
-    "json-comb",
-    "json-comb-core",
-    "json-sort-cli",
-    "json-variables",
-    "lerna-clean-changelogs-cli",
-    "rehype-responsive-tables",
-    "remark-typography",
-    "string-convert-indexes",
-    "string-remove-widows",
-    "string-strip-html",
-    "update-versions"
-  ],
   "top10ExternalDeps": [
     {
       "object-path": 3

@@ -9236,8 +9236,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "ast-monkey-traverse": "^4.3.0",
-      "ranges-invert": "^6.2.3",
-      "title": "^4.0.1"
+      "ranges-invert": "^6.2.3"
     },
     "engines": {
       "node": ">=18.20.8"

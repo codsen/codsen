@@ -315,7 +315,7 @@ interface DependencyStats {
   noThirdPartyDependencies: string[];
   /** External or unaudited dependencies/devDependencies at any depth.
    * The complement of noThirdPartyDependencies among current public packages. */
-  thirdPartyDependencies: string[];
+  consumesThirdPartyDependencies: string[];
   /** Package name -> the one third-party library its whole recursive footprint
    * amounts to. Typings are folded into the library they describe. */
   singleThirdPartyDependency: StringValueObj;
@@ -423,7 +423,7 @@ import type { Package } from "./packages.js";
 
 /** Earliest observed npm version publication, in milliseconds since the Unix
  * epoch, for every packages.all entry. Null means no publication date is known.
- * Consumers choose their own recency cutoff or number of newest packages. */
+ * Consumers choose their own recency cut-off or number of newest packages. */
 export const firstPublishedAt: Record<Package, number | null> = ${JSON.stringify(publicationDates, null, 2)};
 `,
   filename: publicationDatesFilename,
