@@ -33,6 +33,65 @@ const defaults = {
   convertApostrophes: true,
 };
 
+function isClosingBoundary(character: string | undefined): boolean {
+  return !character?.trim() || punctuationChars.includes(character);
+}
+
+function isElision(str: string, from: number): boolean {
+  const first = str[from]?.toLowerCase();
+  if (first !== "t" && first !== "e" && first !== "c") {
+    return false;
+  }
+  const candidates =
+    first === "t"
+      ? ["t", "tis", "twas", "twere", "twill", "twould", "twon't", "twon’t"]
+      : first === "e"
+        ? ["em"]
+        : ["cause"];
+  const tail = str.slice(from, from + 9).toLowerCase();
+  return candidates.some((word) => {
+    if (!tail.startsWith(word)) {
+      return false;
+    }
+    let end = from + word.length;
+    if (
+      str[end]?.toLowerCase() === "n" &&
+      (str[end + 1] === "'" || str[end + 1] === rightSingleQuote) &&
+      str[end + 2]?.toLowerCase() === "t"
+    ) {
+      end += 3;
+    }
+    const after = codePointAtIndex(str, end);
+    return !isLetter(after) && !isNumberChar(after);
+  });
+}
+
+// Inspect the nearest quote of the same kind. Scanning stops at that quote,
+// so convertAll does not repeatedly scan the whole prefix for measurements.
+function closesQuotation(str: string, from: number, double: boolean): boolean {
+  const straight = double ? '"' : "'";
+  const left = double ? leftDoubleQuote : leftSingleQuote;
+  const right = double ? rightDoubleQuote : rightSingleQuote;
+  for (let i = from - 1; i >= 0; i--) {
+    const character = str[i];
+    if (character === straight || character === left || character === right) {
+      const before = codePointBeforeIndex(str, i);
+      const after = codePointAtIndex(str, i + 1);
+      return (
+        character !== right &&
+        !!after?.trim() &&
+        !isLetter(before) &&
+        !isNumberChar(before) &&
+        (double || !isElision(str, i + 1))
+      );
+    }
+    if (character === "\n" || character === "\r") {
+      break;
+    }
+  }
+  return false;
+}
+
 function convertOne(str: string, opts: Opts): Ranges {
   // opts.from is obligatory because we need to know which character(s) to fix
 
@@ -45,7 +104,7 @@ function convertOne(str: string, opts: Opts): Ranges {
     );
   }
 
-  if (typeof opts !== "object" || Array.isArray(opts)) {
+  if (!opts || typeof opts !== "object" || Array.isArray(opts)) {
     throw new Error(
       `string-apostrophes/convertOne(): [THROW_ID_02] options object should be a plain object. It has was passed as ${formatDiagnosticValue(opts, 4)} (its typeof is ${typeof opts})`,
     );
@@ -69,16 +128,19 @@ function convertOne(str: string, opts: Opts): Ranges {
     from = 0, // needed to trick TS; this zero default is not possible, see the checks above
     to,
     value,
-    convertEntities,
-    convertApostrophes,
+    convertEntities = defaults.convertEntities,
+    convertApostrophes = defaults.convertApostrophes,
     offsetBy,
-  } = {
-    ...defaults,
-    ...opts,
-  };
+  } = opts;
 
   if (!Number.isInteger(to)) {
     to = from + 1;
+  }
+
+  if ((to as number) < from || (to as number) > str.length) {
+    throw new Error(
+      `string-apostrophes/convertOne(): [THROW_ID_05] opts.to must be between opts.from (${from}) and str.length (${str.length}), inclusive. It was passed as ${to}`,
+    );
   }
 
   // consts
@@ -158,10 +220,11 @@ function convertOne(str: string, opts: Opts): Ranges {
     // IF SINGLE QUOTE OR APOSTROPHE, the '
     // OR LEFT/RIGHT SINGLE QUOTES OR SINGLE PRIME
     if (
-      str[from - 1] &&
-      str[to as number] &&
-      isNumberChar(str[from - 1]) &&
-      !isLetter(characterAfter)
+      value === singlePrime ||
+      (to === from + 1 && str[from] === singlePrime) ||
+      (isNumberChar(characterBefore) &&
+        !isLetter(characterAfter) &&
+        !closesQuotation(str, from, false))
     ) {
       DEV && console.log(`prime cases`);
       if (
@@ -192,6 +255,7 @@ function convertOne(str: string, opts: Opts): Ranges {
           );
       }
     } else if (
+      (to as number) > from &&
       str[to as number] &&
       str[(to as number) + 1] &&
       str[to as number] === "n" &&
@@ -202,10 +266,11 @@ function convertOne(str: string, opts: Opts): Ranges {
         ) // ensure quotes/apostrophes match
     ) {
       DEV && console.log(`rock 'n' roll case`);
+      const pairEnd = (to as number) + 1 + ((to as number) - from);
       // specifically take care of 'n' as in "rock ’n’ roll"
       if (
         convertApostrophes &&
-        str.slice(from, (to as number) + 2) !==
+        str.slice(from, pairEnd) !==
           (convertEntities
             ? "&rsquo;n&rsquo;"
             : `${rightSingleQuote}n${rightSingleQuote}`) &&
@@ -216,7 +281,7 @@ function convertOne(str: string, opts: Opts): Ranges {
       ) {
         rangesArr.push([
           from,
-          (to as number) + 2,
+          pairEnd,
           convertEntities
             ? "&rsquo;n&rsquo;"
             : `${rightSingleQuote}n${rightSingleQuote}`,
@@ -224,7 +289,7 @@ function convertOne(str: string, opts: Opts): Ranges {
         DEV &&
           console.log(
             `string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${
-              (to as number) + 2
+              pairEnd
             }, ${
               convertEntities
                 ? "&rsquo;n&rsquo;"
@@ -233,50 +298,29 @@ function convertOne(str: string, opts: Opts): Ranges {
           );
         /* c8 ignore next */
         if (typeof offsetBy === "function") {
-          offsetBy(2);
+          offsetBy(pairEnd - (to as number));
         }
       } else if (
         !convertApostrophes &&
-        str.slice(from, (to as number) + 2) !== "'n'" &&
+        str.slice(from, pairEnd) !== "'n'" &&
         value !== "'n'"
       ) {
-        rangesArr.push([from, (to as number) + 2, "'n'"]);
+        rangesArr.push([from, pairEnd, "'n'"]);
         DEV &&
           console.log(
             `string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${
-              (to as number) + 2
+              pairEnd
             }, "'n'"]`,
           );
         /* c8 ignore next */
         if (typeof offsetBy === "function") {
-          offsetBy(2);
+          offsetBy(pairEnd - (to as number));
         }
       }
 
       DEV && console.log(`end reached`);
     } else if (
-      (str[to as number]?.toLowerCase() === "t" &&
-        (!str[(to as number) + 1]?.trim() ||
-          str[(to as number) + 1].toLowerCase() === "i")) ||
-      (str[to as number] &&
-        str[(to as number) + 2] &&
-        str[to as number].toLowerCase() === "t" &&
-        str[(to as number) + 1].toLowerCase() === "w" &&
-        (str[(to as number) + 2].toLowerCase() === "a" ||
-          str[(to as number) + 2].toLowerCase() === "e" ||
-          str[(to as number) + 2].toLowerCase() === "i" ||
-          str[(to as number) + 2].toLowerCase() === "o")) ||
-      (str[to as number] &&
-        str[(to as number) + 1] &&
-        str[to as number].toLowerCase() === "e" &&
-        str[(to as number) + 1].toLowerCase() === "m") ||
-      (str[to as number] &&
-        str[(to as number) + 4] &&
-        str[to as number].toLowerCase() === "c" &&
-        str[(to as number) + 1].toLowerCase() === "a" &&
-        str[(to as number) + 2].toLowerCase() === "u" &&
-        str[(to as number) + 3].toLowerCase() === "s" &&
-        str[(to as number) + 4].toLowerCase() === "e") ||
+      isElision(str, to as number) ||
       (str[to as number] && isNumberChar(str[to as number]))
     ) {
       DEV && console.log(`'tis, 'twas, 'twere clauses`);
@@ -312,14 +356,22 @@ function convertOne(str: string, opts: Opts): Ranges {
     } else if (
       str[from - 1] &&
       str[to as number] &&
-      punctuationChars.includes(str[from - 1])
+      punctuationChars.includes(str[from - 1]) &&
+      (!str[to as number].trim() ||
+        punctuationChars.includes(str[to as number]) ||
+        ((str[to as number] === '"' ||
+          str[to as number] === rightDoubleQuote) &&
+          isClosingBoundary(str[(to as number) + 1])))
     ) {
       // if there's punctuation on the left and something on the right:
       DEV &&
         console.log(
           `there's punctuation on the left and something on the right`,
         );
-      if (!str[to as number].trim()) {
+      if (
+        !str[to as number].trim() ||
+        punctuationChars.includes(str[to as number])
+      ) {
         if (
           convertApostrophes &&
           str.slice(from, to) !==
@@ -349,9 +401,8 @@ function convertOne(str: string, opts: Opts): Ranges {
             );
         }
       } else if (
-        str[to as number] === `"` && // double quote follows
-        str[(to as number) + 1] &&
-        !str[(to as number) + 1].trim() // and whitespace after
+        (str[to as number] === `"` || str[to as number] === rightDoubleQuote) &&
+        isClosingBoundary(str[(to as number) + 1])
       ) {
         if (
           convertApostrophes &&
@@ -480,34 +531,37 @@ function convertOne(str: string, opts: Opts): Ranges {
         DEV && console.log();
         // exception for a few Hawaiian words:
         if (
-          ((str[to as number] &&
+          (str[to as number] &&
             str[from - 5]?.toLowerCase() === "h" &&
             str[from - 4].toLowerCase() === "a" &&
             str[from - 3].toLowerCase() === "w" &&
             str[from - 2].toLowerCase() === "a" &&
             str[from - 1].toLowerCase() === "i" &&
             str[to as number].toLowerCase() === "i") ||
-            (str[from - 1]?.toLowerCase() === "o" &&
-              str[(to as number) + 2] &&
-              str[to as number].toLowerCase() === "a" &&
-              str[(to as number) + 1].toLowerCase() === "h" &&
-              str[(to as number) + 2].toLowerCase() === "u")) &&
-          str.slice(from, to) !==
-            (convertEntities ? "&lsquo;" : leftSingleQuote) &&
-          value !== (convertEntities ? "&lsquo;" : leftSingleQuote)
+          (str[from - 1]?.toLowerCase() === "o" &&
+            str[(to as number) + 2] &&
+            str[to as number].toLowerCase() === "a" &&
+            str[(to as number) + 1].toLowerCase() === "h" &&
+            str[(to as number) + 2].toLowerCase() === "u")
         ) {
-          DEV && console.log(`Hawaiian exceptions`);
-          rangesArr.push([
-            from,
-            to as number,
-            convertEntities ? "&lsquo;" : leftSingleQuote,
-          ]);
-          DEV &&
-            console.log(
-              `string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
-                convertEntities ? "&lsquo;" : leftSingleQuote
-              }]`,
-            );
+          if (
+            str.slice(from, to) !==
+              (convertEntities ? "&lsquo;" : leftSingleQuote) &&
+            value !== (convertEntities ? "&lsquo;" : leftSingleQuote)
+          ) {
+            DEV && console.log(`Hawaiian exceptions`);
+            rangesArr.push([
+              from,
+              to as number,
+              convertEntities ? "&lsquo;" : leftSingleQuote,
+            ]);
+            DEV &&
+              console.log(
+                `string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${from}, ${to}, ${
+                  convertEntities ? "&lsquo;" : leftSingleQuote
+                }]`,
+              );
+          }
         } else if (
           str.slice(from, to) !==
             (convertEntities ? "&rsquo;" : rightSingleQuote) &&
@@ -679,15 +733,11 @@ function convertOne(str: string, opts: Opts): Ranges {
       );
 
     if (
-      str[from - 1] &&
-      isNumberChar(str[from - 1]) &&
-      str[to as number] &&
-      str[to as number] !== "'" &&
-      str[to as number] !== '"' &&
-      str[to as number] !== rightSingleQuote &&
-      str[to as number] !== rightDoubleQuote &&
-      str[to as number] !== leftSingleQuote &&
-      str[to as number] !== leftDoubleQuote
+      value === doublePrime ||
+      (to === from + 1 && str[from] === doublePrime) ||
+      (isNumberChar(characterBefore) &&
+        !isLetter(characterAfter) &&
+        !closesQuotation(str, from, true))
     ) {
       // 0.
       DEV && console.log(`primes clauses`);
@@ -722,14 +772,22 @@ function convertOne(str: string, opts: Opts): Ranges {
     } else if (
       str[from - 1] &&
       str[to as number] &&
-      punctuationChars.includes(str[from - 1])
+      punctuationChars.includes(str[from - 1]) &&
+      (!str[to as number].trim() ||
+        punctuationChars.includes(str[to as number]) ||
+        ((str[to as number] === "'" ||
+          str[to as number] === rightSingleQuote) &&
+          isClosingBoundary(str[(to as number) + 1])))
     ) {
       // 1.
       DEV &&
         console.log(
           `there's punctuation on the left and space/quote on the right`,
         );
-      if (!str[to as number].trim()) {
+      if (
+        !str[to as number].trim() ||
+        punctuationChars.includes(str[to as number])
+      ) {
         if (
           convertApostrophes &&
           str.slice(from, to) !==
@@ -759,9 +817,8 @@ function convertOne(str: string, opts: Opts): Ranges {
             );
         }
       } else if (
-        str[to as number] === `'` && // single quote follows
-        str[(to as number) + 1] &&
-        !str[(to as number) + 1].trim()
+        (str[to as number] === `'` || str[to as number] === rightSingleQuote) &&
+        isClosingBoundary(str[(to as number) + 1])
       ) {
         if (
           convertApostrophes &&
@@ -1033,13 +1090,13 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
 
   if (typeof str !== "string") {
     throw new Error(
-      `string-apostrophes/convertAll(): [THROW_ID_05] first input argument should be string! It's been passed as ${str} (its typeof ${typeof str})`,
+      `string-apostrophes/convertAll(): [THROW_ID_06] first input argument should be string! It's been passed as ${str} (its typeof ${typeof str})`,
     );
   }
 
   if (opts && (typeof opts !== "object" || Array.isArray(opts))) {
     throw new Error(
-      `string-apostrophes/convertAll(): [THROW_ID_06] options object should be a plain object! It was passed as ${formatDiagnosticValue(opts, 4)} (its typeof is ${typeof opts})`,
+      `string-apostrophes/convertAll(): [THROW_ID_07] options object should be a plain object! It was passed as ${formatDiagnosticValue(opts, 4)} (its typeof is ${typeof opts})`,
     );
   }
 
