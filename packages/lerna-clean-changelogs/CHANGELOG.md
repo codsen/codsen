@@ -22,11 +22,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
-### Reverts
-
-- Revert "Merge pull request #128 from codsen/release/npm-32198404552-1" ([5baeeaa](https://github.com/codsen/codsen/commit/5baeeaaa677b86f1eaa6396cadf3aea32b06416e)), closes [#128](https://github.com/codsen/codsen/issues/128)
-- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
-
 ## 5.0.8 (2023-04-16)
 
 ### Bug Fixes
@@ -58,11 +53,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - tweak types ([97ea400](https://github.com/codsen/codsen/commit/97ea4001c1bb6bf1a9a09d36fa2d1694f2c4d974))
 
+### Performance Improvements
+
+- Recorded a 2.62% higher normalized benchmark score than v4.1.0.
+
 ## 4.1.0 (2022-04-10)
 
 ### Features
 
 - export defaults ([4bc7c0f](https://github.com/codsen/codsen/commit/4bc7c0fd98f3c2e768df04a8e34b6465d04835d9))
+
+### Performance Improvements
+
+- Recorded a 29.38% higher normalized benchmark score than v4.0.0.
 
 ## 4.0.0 (2022-01-22)
 
@@ -73,6 +76,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### BREAKING CHANGES
 
 - from now, the options should be set as a plain object, ie. { extras: true }
+
+### Performance Improvements
+
+- Recorded a 6.96% higher normalized benchmark score than v3.0.11.
 
 ## 3.0.0 (2021-09-09)
 

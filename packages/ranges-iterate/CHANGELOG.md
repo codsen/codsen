@@ -24,12 +24,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
+- Recorded a 16.86% higher normalized benchmark score than v4.1.3.
 - iterate ranges without cloning input ([9199fc9](https://github.com/codsen/codsen/commit/9199fc9fe233563b710f4f8afcf9732a85827bbc))
-
-### Reverts
-
-- Revert "Merge pull request #128 from codsen/release/npm-32198404552-1" ([5baeeaa](https://github.com/codsen/codsen/commit/5baeeaaa677b86f1eaa6396cadf3aea32b06416e)), closes [#128](https://github.com/codsen/codsen/issues/128)
-- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
 
 ## 4.0.0 (2022-12-01)
 

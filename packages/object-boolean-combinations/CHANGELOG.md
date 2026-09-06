@@ -37,12 +37,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
+- Recorded a 6.19% higher normalized benchmark score than v6.2.3.
 - build boolean combinations without an intermediate matrix ([87defb1](https://github.com/codsen/codsen/commit/87defb187b407b0ed0bd509eb0e13d3c6cf35714))
-
-### Reverts
-
-- Revert "Merge pull request #128 from codsen/release/npm-32198404552-1" ([5baeeaa](https://github.com/codsen/codsen/commit/5baeeaaa677b86f1eaa6396cadf3aea32b06416e)), closes [#128](https://github.com/codsen/codsen/issues/128)
-- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
 
 ## 6.1.0 (2023-05-13)
 

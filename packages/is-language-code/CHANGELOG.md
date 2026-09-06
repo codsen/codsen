@@ -29,11 +29,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - fix memory leak, rebase and update all data ([2ffb629](https://github.com/codsen/codsen/commit/2ffb6298ec337ec13c270e8d6e00afde161548a3))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
-### Reverts
-
-- Revert "Merge pull request #128 from codsen/release/npm-32198404552-1" ([5baeeaa](https://github.com/codsen/codsen/commit/5baeeaaa677b86f1eaa6396cadf3aea32b06416e)), closes [#128](https://github.com/codsen/codsen/issues/128)
-- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
-
 ## 5.2.0 (2026-08-05)
 
 ### Features

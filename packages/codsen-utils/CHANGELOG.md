@@ -48,11 +48,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - expand the shared utilty toolkit ([2d9a125](https://github.com/codsen/codsen/commit/2d9a125b16f01abf925be258329931f093dbbbe3))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
-### Reverts
-
-- Revert "Merge pull request #128 from codsen/release/npm-32198404552-1" ([5baeeaa](https://github.com/codsen/codsen/commit/5baeeaaa677b86f1eaa6396cadf3aea32b06416e)), closes [#128](https://github.com/codsen/codsen/issues/128)
-- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
-
 ## 1.6.0 (2023-05-21)
 
 ### Features

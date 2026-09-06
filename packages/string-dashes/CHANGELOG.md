@@ -32,11 +32,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - skip non-dash characters during conversion ([ed7dad4](https://github.com/codsen/codsen/commit/ed7dad4de14cc57241ac2cf237283af57fb77830))
 
-### Reverts
-
-- Revert "Merge pull request #128 from codsen/release/npm-32198404552-1" ([5baeeaa](https://github.com/codsen/codsen/commit/5baeeaaa677b86f1eaa6396cadf3aea32b06416e)), closes [#128](https://github.com/codsen/codsen/issues/128)
-- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
-
 ## 1.2.0 (2023-01-06)
 
 ### Bug Fixes

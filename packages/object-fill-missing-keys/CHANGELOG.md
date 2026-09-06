@@ -26,11 +26,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - clone the input once and cache skipped paths ([35327d9](https://github.com/codsen/codsen/commit/35327d909473a2e3327eef291a521b26303722c9))
 
-### Reverts
-
-- Revert "Merge pull request #128 from codsen/release/npm-32198404552-1" ([5baeeaa](https://github.com/codsen/codsen/commit/5baeeaaa677b86f1eaa6396cadf3aea32b06416e)), closes [#128](https://github.com/codsen/codsen/issues/128)
-- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
-
 ## 11.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -60,6 +55,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Fixed
 
 - tweak types ([050580c](https://github.com/codsen/codsen/commit/050580c1c7935383d499a7f46acb1e6cb44a0ae4))
+
+### Performance Improvements
+
+- Recorded a 25.56% higher normalized benchmark score than v9.1.1.
 
 ## 9.1.0 (2022-04-10)
 

@@ -16,6 +16,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - align range input and output types ([1a13db6](https://github.com/codsen/codsen/commit/1a13db665fe2f9e77c6b5fd509980c87e5a57baf))
 - **check-types-mini:** harden validation contracts ([ee91068](https://github.com/codsen/codsen/commit/ee910686461b2fcc531a37710917ae6cd58118f2))
 
+### Performance Improvements
+
+- Recorded a 13.27% higher normalized benchmark score than v4.2.1.
+
 ## 4.2.2 (2026-08-22)
 
 ### Performance Improvements
@@ -38,11 +42,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 - stop shipping debug-only work in published bundles ([6fe5fee](https://github.com/codsen/codsen/commit/6fe5feebdf726b553ae3034690634166b461fca5))
-
-### Reverts
-
-- Revert "Merge pull request #128 from codsen/release/npm-32198404552-1" ([5baeeaa](https://github.com/codsen/codsen/commit/5baeeaaa677b86f1eaa6396cadf3aea32b06416e)), closes [#128](https://github.com/codsen/codsen/issues/128)
-- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
 
 ## 4.0.0 (2022-12-01)
 
@@ -67,6 +66,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 - export defaults ([1374d22](https://github.com/codsen/codsen/commit/1374d228706a112720b6e0080e308f500b6ae48d))
+
+### Performance Improvements
+
+- Recorded a 5.27% higher normalized benchmark score than v3.0.12.
 
 ## 3.0.0 (2021-09-09)
 

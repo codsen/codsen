@@ -24,11 +24,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 - support custom CSV delimiters ([b5a4e57](https://github.com/codsen/codsen/commit/b5a4e57a94f8179b69cc56b2d50fdecfedc0d908))
 
-### Reverts
-
-- Revert "Merge pull request #128 from codsen/release/npm-32198404552-1" ([5baeeaa](https://github.com/codsen/codsen/commit/5baeeaaa677b86f1eaa6396cadf3aea32b06416e)), closes [#128](https://github.com/codsen/codsen/issues/128)
-- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
-
 ## 7.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

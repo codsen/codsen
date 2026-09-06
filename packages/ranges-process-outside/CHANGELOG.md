@@ -26,11 +26,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - precompute rune lengths before iterating ranges ([31f4f3f](https://github.com/codsen/codsen/commit/31f4f3f43b2a74e7169c4ac3d35f39867af20304))
 
-### Reverts
-
-- Revert "Merge pull request #128 from codsen/release/npm-32198404552-1" ([5baeeaa](https://github.com/codsen/codsen/commit/5baeeaaa677b86f1eaa6396cadf3aea32b06416e)), closes [#128](https://github.com/codsen/codsen/issues/128)
-- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
-
 ## 6.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

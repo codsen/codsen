@@ -25,11 +25,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
-### Reverts
-
-- Revert "Merge pull request #128 from codsen/release/npm-32198404552-1" ([5baeeaa](https://github.com/codsen/codsen/commit/5baeeaaa677b86f1eaa6396cadf3aea32b06416e)), closes [#128](https://github.com/codsen/codsen/issues/128)
-- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
-
 ## 0.8.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -70,6 +65,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - add a new function, extract() ([5619589](https://github.com/codsen/codsen/commit/5619589b7f84cddc58694f370df66235b54b7ada))
 
+### Performance Improvements
+
+- Recorded a 99.25% higher normalized benchmark score than v0.3.1.
+
 ## 0.4.0 (2022-04-24)
 
 ### Features
@@ -81,6 +80,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 - `opts.stripAs` ([e4e1ca6](https://github.com/codsen/codsen/commit/e4e1ca6792045068f80ac40684eac9b7758aae7f))
+
+### Performance Improvements
+
+- Recorded a 15.3% higher normalized benchmark score than v0.2.0.
 
 ## 0.2.0 (2022-04-10)
 
@@ -94,6 +97,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - `opts.mustInclude` ([c4d5616](https://github.com/codsen/codsen/commit/c4d56169f82ae430680b06a5a15e4045031e8edd))
 - `opts.semi` ([569080b](https://github.com/codsen/codsen/commit/569080b8bcdc18b58a4ba46cddc505559671b130))
 - tackle the case of type def re-export ([7635e9e](https://github.com/codsen/codsen/commit/7635e9ecf33a3c1192df66fd05180ae0133665a7))
+
+### Performance Improvements
+
+- Recorded a 7.29% higher normalized benchmark score than v0.1.0.
 
 ## 0.1.0 (2022-03-21)
 

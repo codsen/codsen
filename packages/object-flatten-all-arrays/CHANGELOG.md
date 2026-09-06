@@ -27,11 +27,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - flatten arrays from a single cloned input ([e1cbcd8](https://github.com/codsen/codsen/commit/e1cbcd81e72719374b2357a4847ed8edd2274ea0))
 
-### Reverts
-
-- Revert "Merge pull request #128 from codsen/release/npm-32198404552-1" ([5baeeaa](https://github.com/codsen/codsen/commit/5baeeaaa677b86f1eaa6396cadf3aea32b06416e)), closes [#128](https://github.com/codsen/codsen/issues/128)
-- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
-
 ## 7.0.19 (2024-03-30)
 
 ### Bug Fixes

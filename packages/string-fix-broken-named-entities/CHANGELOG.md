@@ -45,11 +45,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - reduce allocations while matching broken entities ([6d05cc9](https://github.com/codsen/codsen/commit/6d05cc9aa2081459b29a536259640c129b7ce496))
 - stop shipping a debug-only scan in string-fix-broken-named-entities ([47996ea](https://github.com/codsen/codsen/commit/47996ea45423bc34e61f37822387c6308259dc62))
 
-### Reverts
-
-- Revert "Merge pull request #128 from codsen/release/npm-32198404552-1" ([5baeeaa](https://github.com/codsen/codsen/commit/5baeeaaa677b86f1eaa6396cadf3aea32b06416e)), closes [#128](https://github.com/codsen/codsen/issues/128)
-- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
-
 ## 7.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

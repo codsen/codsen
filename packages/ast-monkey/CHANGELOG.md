@@ -31,11 +31,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
-### Reverts
-
-- Revert "Merge pull request #128 from codsen/release/npm-32198404552-1" ([5baeeaa](https://github.com/codsen/codsen/commit/5baeeaaa677b86f1eaa6396cadf3aea32b06416e)), closes [#128](https://github.com/codsen/codsen/issues/128)
-- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
-
 ## 9.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -55,6 +50,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - correct the types ([3ad3026](https://github.com/codsen/codsen/commit/3ad30268e4eca204d9b99edf14c20ac6cf34693e))
 - remove unused opts key and tweak regexes ([3cf7a4c](https://github.com/codsen/codsen/commit/3cf7a4c9619ce723a57abc81aa7d6daf22f42c12))
 - tweak types ([a890de1](https://github.com/codsen/codsen/commit/a890de158d734c7fe247cfcc5d96c555372fe9b7))
+
+### Performance Improvements
+
+- Recorded a 82.04% higher normalized benchmark score than v8.0.15.
 
 ## 8.0.0 (2021-09-09)
 

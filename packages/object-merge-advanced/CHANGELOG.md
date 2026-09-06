@@ -21,6 +21,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
+- Recorded a 66.13% higher normalized benchmark score than v14.2.0.
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
 - record lodash-es removal benchmarks ([0f69b6f](https://github.com/codsen/codsen/commit/0f69b6fdb8c3be04eaa02f82de107390b5263ce9))
 
@@ -40,12 +41,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
+- Recorded a 9.16% higher normalized benchmark score than v14.1.3.
 - stremline subset key checks ([a6b6014](https://github.com/codsen/codsen/commit/a6b601443be8921351f41ca44bac0e9fbb3f540a))
-
-### Reverts
-
-- Revert "Merge pull request #128 from codsen/release/npm-32198404552-1" ([5baeeaa](https://github.com/codsen/codsen/commit/5baeeaaa677b86f1eaa6396cadf3aea32b06416e)), closes [#128](https://github.com/codsen/codsen/issues/128)
-- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
 
 ## 14.0.0 (2022-12-01)
 
@@ -64,6 +61,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Fixed
 
 - tweak types ([4791f68](https://github.com/codsen/codsen/commit/4791f688bf47dd2d11b4f12db4e9d8c3dbd88158))
+
+### Performance Improvements
+
+- Recorded a 81.19% higher normalized benchmark score than v13.1.0.
 
 ## 13.1.0 (2022-04-11)
 

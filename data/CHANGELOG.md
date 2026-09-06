@@ -90,11 +90,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - stop shipping a debug-only scan in string-fix-broken-named-entities ([47996ea](https://github.com/codsen/codsen/commit/47996ea45423bc34e61f37822387c6308259dc62))
 - stop shipping debug-only work in published bundles ([6fe5fee](https://github.com/codsen/codsen/commit/6fe5feebdf726b553ae3034690634166b461fca5))
 
-### Reverts
-
-- Revert "Merge pull request #128 from codsen/release/npm-32198404552-1" ([5baeeaa](https://github.com/codsen/codsen/commit/5baeeaaa677b86f1eaa6396cadf3aea32b06416e)), closes [#128](https://github.com/codsen/codsen/issues/128)
-- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
-
 ## 0.2.51 (2022-12-23)
 
 ### Bug Fixes

@@ -30,11 +30,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
-### Reverts
-
-- Revert "Merge pull request #128 from codsen/release/npm-32198404552-1" ([5baeeaa](https://github.com/codsen/codsen/commit/5baeeaaa677b86f1eaa6396cadf3aea32b06416e)), closes [#128](https://github.com/codsen/codsen/issues/128)
-- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
-
 ## 12.1.0 (2025-10-15)
 
 ### Features
@@ -81,6 +76,10 @@ assert.deepEqual(data, target);
 ### Fixed
 
 - tweak types ([5da8102](https://github.com/codsen/codsen/commit/5da8102fa04b52c63b5a7a32733aaf8eace13569))
+
+### Performance Improvements
+
+- Recorded a 16.19% higher normalized benchmark score than v11.0.15.
 
 ## 11.0.0 (2021-09-09)
 
