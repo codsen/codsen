@@ -50,10 +50,13 @@ async function readme({ mode, state, quickTakeExample }) {
     state.pack,
   ]);
   const soleDependency = statuses.singleThirdPartyDependency[packageName];
+  const dependencyGroups = ["dependencies", "devDependencies"]
+    .filter((key) => Object.keys(state.pack[key] || {}).length)
+    .join(" and ");
   const dependencyNotice = statuses.noDependencies.includes(packageName)
     ? "**No dependencies whatsoever.** This package declares no dependencies or devDependencies."
     : statuses.noThirdPartyDependencies.includes(packageName)
-      ? "**No 3rd party dependencies.** All dependencies and devDependencies, checked recursively, are Codsen packages."
+      ? `**No 3rd party dependencies.** All ${dependencyGroups}, checked recursively, are Codsen packages.`
       : soleDependency
         ? `**Powered by ${soleDependency}.** No other dependencies.`
         : "";
