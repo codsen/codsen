@@ -10,7 +10,7 @@ interface Extras {
   str: string;
 }
 interface CbObj extends Extras {
-  suggested: Range;
+  suggested: Range | null;
 }
 type Callback = (cbObj: CbObj) => any;
 interface Opts {

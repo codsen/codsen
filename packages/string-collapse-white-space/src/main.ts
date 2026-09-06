@@ -3,7 +3,6 @@ import { formatDiagnosticValue } from "codsen-utils";
 
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
-import { right } from "string-left-right";
 
 import type { Range, Ranges as RangesType } from "../../../ops/typedefs/common";
 
@@ -20,7 +19,7 @@ export interface Extras {
 }
 
 export interface CbObj extends Extras {
-  suggested: Range;
+  suggested: Range | null;
 }
 
 export type Callback = (cbObj: CbObj) => any;
@@ -109,7 +108,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       )}`,
     );
 
-  function push(something?: any, extras?: Extras): void {
+  function push(something: Range | null, extras: Extras): void {
     DEV && console.log(`---- push() ----`);
     DEV &&
       console.log(
@@ -123,7 +122,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
     if (typeof resolvedOpts.cb === "function") {
       let final: Range | null = resolvedOpts.cb({
         suggested: something,
-        ...(extras as any),
+        ...extras,
       });
       DEV &&
         console.log(
@@ -153,6 +152,8 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
   let linebreaksStartAt = null;
   let linebreaksEndAt = null;
   let nbspPresent = false;
+  let firstNbspAt = -1;
+  let lastNbspAt = -1;
 
   // Logic clauses for spaces, per-line whitespace and general whitespace
   // overlap somewhat and are not aware of each other. For example, mixed chunk
@@ -168,8 +169,8 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
   // adjust the logic depending what's in staging.
   // Alternatively we could dig in already staged ranges, but that's slower.
 
-  type Staged = [Range, Extras];
-  let staging: Staged[] = [];
+  let staging: Range[] = [];
+  let lineStaging: Range[] = [];
 
   let consecutiveLineBreakCount = 0;
 
@@ -226,7 +227,11 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
     }
 
     // catch raw non-breaking spaces
-    if (!resolvedOpts.trimnbsp && str[i] === NBSP && !nbspPresent) {
+    if (!resolvedOpts.trimnbsp && str[i] === NBSP) {
+      if (!nbspPresent) {
+        firstNbspAt = i;
+      }
+      lastNbspAt = i;
       nbspPresent = true;
       DEV &&
         console.log(
@@ -389,15 +394,10 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
         // Notice we could push ranges to final, using standalone push()
         // but here we stage because general whitespace clauses need to be
         // aware what was "booked" so far.
-        staging.push([
+        staging.push(
           /* c8 ignore next */
           whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx],
-          {
-            whiteSpaceStartsAt,
-            whiteSpaceEndsAt: right(str, i - 1) || i,
-            str,
-          },
-        ]);
+        );
       }
 
       // resets are at the bottom
@@ -456,27 +456,37 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
         (!(resolvedOpts.trimnbsp || resolvedOpts.enforceSpacesOnly) &&
           // and we do care and it's not a non-breaking space
           str[i] === NBSP)) &&
-      // also, mind the trim-able whitespace at the edges...
-      //
-      // it's not beginning of the string (more general whitespace clauses
-      // will take care of trimming, taking into account resolvedOpts.trimStart etc)
+      // Whole-string trimming handles ordinary edge segments directly.
+      // Keep protected-NBSP segments available for partial edge trimming.
       (lineWhiteSpaceStartsAt ||
         !resolvedOpts.trimStart ||
-        (resolvedOpts.enforceSpacesOnly && nbspPresent)) &&
-      // it's not the ending of the string - we traverse upto and including
-      // str.length, which means last str[i] is undefined
+        (str[i] === NBSP &&
+          !resolvedOpts.trimnbsp &&
+          !resolvedOpts.enforceSpacesOnly)) &&
       (str[i] ||
         !resolvedOpts.trimEnd ||
-        (resolvedOpts.enforceSpacesOnly && nbspPresent))
+        (nbspPresent && !resolvedOpts.enforceSpacesOnly))
     ) {
       DEV && console.log(`.`);
       DEV && console.log(`line whitespace clauses`);
+
+      // A protected NBSP ends the segment, so trimming another segment
+      // must not depend on NBSPs elsewhere in the enclosing whitespace run.
+      let trimLineSegment =
+        (resolvedOpts.trimLines &&
+          (!lineWhiteSpaceStartsAt ||
+            `\r\n`.includes(str[lineWhiteSpaceStartsAt - 1]) ||
+            !str[i] ||
+            `\r\n`.includes(str[i]))) ||
+        (!lineWhiteSpaceStartsAt && resolvedOpts.trimStart) ||
+        (!str[i] && resolvedOpts.trimEnd);
 
       // tend resolvedOpts.enforceSpacesOnly
       // ---------------------------
       if (
         // setting is on
         resolvedOpts.enforceSpacesOnly &&
+        !trimLineSegment &&
         // either chunk's longer than 1
         (i > lineWhiteSpaceStartsAt + 1 ||
           // or it's single character but not a space (yet still whitespace)
@@ -497,59 +507,23 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
           whatToAdd = null;
         }
 
-        // make sure it's not on the edge of string with trim options enabled,
-        // in that case don't add the space!
-        if (
-          ((resolvedOpts.trimStart || resolvedOpts.trimLines) &&
-            !lineWhiteSpaceStartsAt) ||
-          ((resolvedOpts.trimEnd || resolvedOpts.trimLines) && !str[i])
-        ) {
-          whatToAdd = null;
-          DEV &&
-            console.log(
-              `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToAdd`}\u001b[${39}m`} = ${JSON.stringify(
-                whatToAdd,
-                null,
-                4,
-              )}`,
-            );
-        }
-
         DEV &&
           console.log(
             `suggested range: ${`\u001b[${35}m${`[${lineWhiteSpaceStartsAt}, ${i}, " "]`}\u001b[${39}m`}`,
           );
-        push(whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx], {
-          whiteSpaceStartsAt: whiteSpaceStartsAt as number,
-          whiteSpaceEndsAt: i,
-          str,
-        });
+        lineStaging.push(
+          whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx],
+        );
       }
 
       // tend resolvedOpts.trimLines
       // -------------------
-      if (
-        // setting is on
-        resolvedOpts.trimLines &&
-        // it is on the edge of a line
-        (!lineWhiteSpaceStartsAt ||
-          `\r\n`.includes(str[lineWhiteSpaceStartsAt - 1]) ||
-          !str[i] ||
-          `\r\n`.includes(str[i])) &&
-        // and we don't care about non-breaking spaces
-        (resolvedOpts.trimnbsp ||
-          // this chunk doesn't contain any
-          !nbspPresent)
-      ) {
+      if (trimLineSegment) {
         DEV &&
           console.log(
             `suggested range: ${`\u001b[${35}m${`[${lineWhiteSpaceStartsAt}, ${i}, " "]`}\u001b[${39}m`}`,
           );
-        push([lineWhiteSpaceStartsAt, i], {
-          whiteSpaceStartsAt: whiteSpaceStartsAt as number,
-          whiteSpaceEndsAt: right(str, i - 1) || i,
-          str,
-        });
+        lineStaging.push([lineWhiteSpaceStartsAt, i]);
       }
 
       lineWhiteSpaceStartsAt = null;
@@ -666,6 +640,19 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       } else {
         DEV && console.log(`- neither frontal nor rear`);
         let somethingPushed = false;
+        let enclosing: Range[] = [];
+        if (nbspPresent && !resolvedOpts.enforceSpacesOnly) {
+          if (
+            !whiteSpaceStartsAt &&
+            resolvedOpts.trimStart &&
+            firstNbspAt > 0
+          ) {
+            enclosing.push([0, firstNbspAt]);
+          }
+          if (!str[i] && resolvedOpts.trimEnd && lastNbspAt + 1 < i) {
+            enclosing.push([lastNbspAt + 1, i]);
+          }
+        }
 
         // tackle the line breaks
         // ----------------------
@@ -677,7 +664,6 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
           consecutiveLineBreakCount >
             (resolvedOpts.limitConsecutiveEmptyLinesTo || 0) + 1
         ) {
-          somethingPushed = true;
           DEV && console.log(`remove the linebreak sequence`);
 
           // try to salvage some of the existing linebreaks - don't replace the
@@ -720,23 +706,48 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
               )}]`}\u001b[${39}m`}`,
             );
           /* c8 ignore next */
-          push(whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx], {
-            whiteSpaceStartsAt,
-            whiteSpaceEndsAt: i,
-            str,
-          });
+          enclosing.push(
+            whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx],
+          );
         }
 
-        // push the staging if it exists
-        // -----------------------------
-        if (staging.length) {
-          DEV && console.log(`push all staged ranges into final`);
-          while (staging.length) {
-            // FIFO - first in, first out
-            // @tsx-ignore
-            push(...(staging.shift() as Staged));
+        // The complete run endpoint is now known. Resolve enclosing trims
+        // before callbacks so a deleted segment cannot insert a stray space.
+        // There are at most three enclosing ranges, regardless of input size.
+        let extras = { whiteSpaceStartsAt, whiteSpaceEndsAt: i, str };
+        for (let range of lineStaging) {
+          if (
+            !enclosing.some(([from, to]) => from <= range[0] && to >= range[1])
+          ) {
+            push(range, extras);
+            somethingPushed = true;
           }
+        }
+        for (let range of enclosing) {
+          push(range, extras);
           somethingPushed = true;
+        }
+        let lineIndex = 0;
+        for (let range of staging) {
+          while (
+            lineIndex < lineStaging.length &&
+            lineStaging[lineIndex][1] <= range[0]
+          ) {
+            lineIndex += 1;
+          }
+          if (
+            !enclosing.some(
+              ([from, to]) => from <= range[0] && to >= range[1],
+            ) &&
+            !(
+              lineIndex < lineStaging.length &&
+              lineStaging[lineIndex][0] <= range[0] &&
+              lineStaging[lineIndex][1] >= range[1]
+            )
+          ) {
+            push(range, extras);
+            somethingPushed = true;
+          }
         }
 
         // if nothing has been pushed so far, push nothing to cb()
@@ -754,6 +765,10 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
         }
       }
 
+      staging.length = 0;
+      lineStaging.length = 0;
+      firstNbspAt = -1;
+      lastNbspAt = -1;
       whiteSpaceStartsAt = null;
       lineWhiteSpaceStartsAt = null;
       DEV &&
