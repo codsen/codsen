@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 13.7.1 (2026-09-06)
+
+### Bug Fixes
+
+- remove title the npm devdependency and the single example consumer of it ([b48ee05](https://github.com/codsen/codsen/commit/b48ee059d87e2a72ea53e084e1ff1f5b40d386f3))
+- **string-strip-html:** use canonical HTML entity decoding and preserve attribute state ([5e1f8d3](https://github.com/codsen/codsen/commit/5e1f8d3874388fd8e91eabf19a26b8966f7a401e))
+
 ## 13.7.0 (2026-09-01)
 
 ### Bug Fixes

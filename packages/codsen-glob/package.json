@@ -1,6 +1,6 @@
 {
   "name": "codsen-glob",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Fast file globbing",
   "keywords": ["files", "filesystem", "glob", "globbing"],
   "homepage": "https://codsen.com/os/codsen-glob",

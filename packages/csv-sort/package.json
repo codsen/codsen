@@ -1,6 +1,6 @@
 {
   "name": "csv-sort",
-  "version": "7.2.3",
+  "version": "7.2.4",
   "description": "Sort double-entry bookkeeping CSV from internet banking",
   "keywords": [
     "accountancy",
@@ -73,8 +73,8 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.10.0",
-    "csv-split-easy": "^7.2.3",
+    "codsen-utils": "^1.10.1",
+    "csv-split-easy": "^7.2.4",
     "currency.js": "^2.0.4"
   },
   "engines": {

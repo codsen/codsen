@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.2.4 (2026-09-06)
+
+### Bug Fixes
+
+- **is-media-descriptor:** replace leven with bounded typo matching ([6b47a49](https://github.com/codsen/codsen/commit/6b47a49f00bf0c74239411c91550b2fd30ba1462))
+
 ## 5.2.2 (2026-08-22)
 
 ### Performance Improvements

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.5 (2026-09-06)
+
+### Bug Fixes
+
+- **generate-atomic-css-cli:** replace external update notifier ([3c7227b](https://github.com/codsen/codsen/commit/3c7227b5e44c0f72eb29d3edb04e191a5f386263))
+
 ## 4.2.0 (2026-08-19)
 
 ### Bug Fixes

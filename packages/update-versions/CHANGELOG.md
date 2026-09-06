@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.2.5 (2026-09-06)
+
+### Bug Fixes
+
+- **update-versions:** remove p-reduce from package inventory ([22fbf9a](https://github.com/codsen/codsen/commit/22fbf9afe447a3b33c8c6aaee47a28769b7f5f6c))
+- **update-versions:** replace external update notifier ([aee67ab](https://github.com/codsen/codsen/commit/aee67abd0b123e73a89003af55a4ffea04f46881))
+
 ## 7.2.0 (2026-08-19)
 
 ### Bug Fixes

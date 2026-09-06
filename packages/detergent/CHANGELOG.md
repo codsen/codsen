@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 9.4.5 (2026-09-06)
+
+### Bug Fixes
+
+- **detergent:** use the shared HTML entity codec ([b92241b](https://github.com/codsen/codsen/commit/b92241b6440f49ef8e0ba5db0b140dda61cc908c))
+
+### Performance Improvements
+
+- **detergent:** use prefix indexes for named entity lookups ([47fc030](https://github.com/codsen/codsen/commit/47fc030c46fab405281bbd012305d86786069204))
+
 ## 9.4.3 (2026-09-01)
 
 ### Bug Fixes

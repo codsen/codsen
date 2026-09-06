@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 8.2.3 (2026-09-06)
+
+### Bug Fixes
+
+- **check-types-mini:** replace type-detect with an internal TypeScript helper ([06d7446](https://github.com/codsen/codsen/commit/06d74468c3f28f432a8c4c4fd72d4f9807f34115))
+
 ## 8.2.2 (2026-09-01)
 
 ### Bug Fixes
