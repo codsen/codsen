@@ -232,10 +232,6 @@
       "generate:check": "node scripts/generate.js --check",
       "lect": "npm run generate",
       "lect:check": "npm run generate:check"
-    },
-    "remark-conventional-commit-changelog-timeline": {
-      "parser:check": "node scripts/check-parser.js",
-      "devtest": "npm run parser:check"
     }
   }
 }

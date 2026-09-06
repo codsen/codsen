@@ -16,6 +16,7 @@
       "!!data/sources/dependencyStats.ts",
       "!!data/sources/examples.ts",
       "!!data/sources/exportedDefaults.ts",
+      "!!data/sources/firstPublishedAt.ts",
       "!!data/sources/gitStats.ts",
       "!!data/sources/interdeps.ts",
       "!!data/sources/packageJSONData.ts",

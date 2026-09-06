@@ -5,6 +5,7 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import { dependencyStatuses } from "../helpers/dependencyStatuses.js";
+import { projectFirstPublishedAt } from "../helpers/firstPublishedAt.js";
 import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
 import { readPackageKindResolver } from "../helpers/packageKindsFile.js";
 
@@ -81,6 +82,7 @@ async function verifyData() {
     "dependencyStats",
     "examples",
     "exportedDefaults",
+    "firstPublishedAt",
     "gitStats",
     "interdeps",
     "packageJSONData",
@@ -96,6 +98,12 @@ async function verifyData() {
   }
 
   const directories = packageDirectories();
+  assertSameList(
+    sortedKeys(data.firstPublishedAt),
+    [...data.packages.all].sort(),
+    "firstPublishedAt keys",
+  );
+  projectFirstPublishedAt(data.packages.all, data.firstPublishedAt);
   for (const entry of data.interdeps) {
     if (Object.hasOwn(entry, "size")) {
       fail(

@@ -706,15 +706,6 @@ export const interdeps = [
     "imports": []
   },
   {
-    "name": "remark-conventional-commit-changelog-timeline",
-    "tarballSizeBytes": 27495,
-    "unpackedSizeBytes": 117639,
-    "imports": [
-      "html-entity-codec",
-      "object-delete-key"
-    ]
-  },
-  {
     "name": "remark-typography",
     "tarballSizeBytes": 7026,
     "unpackedSizeBytes": 17172,
@@ -759,8 +750,8 @@ export const interdeps = [
   },
   {
     "name": "string-convert-indexes",
-    "tarballSizeBytes": 14985,
-    "unpackedSizeBytes": 39671,
+    "tarballSizeBytes": 14806,
+    "unpackedSizeBytes": 37323,
     "imports": [
       "ast-monkey-traverse",
       "codsen-utils"

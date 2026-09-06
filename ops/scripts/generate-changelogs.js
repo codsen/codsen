@@ -1,11 +1,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
-// import rehypeFormat from "rehype-format";
-import rehypeStringify from "rehype-stringify";
+import { remark } from "remark";
 import remarkGfm from "remark-gfm";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import { unified } from "unified";
 import { cleanChangelogs } from "../../packages/lerna-clean-changelogs/dist/lerna-clean-changelogs.esm.js";
 import changelogTimeline from "../../packages/remark-conventional-commit-changelog-timeline/dist/remark-conventional-commit-changelog-timeline.esm.js";
 import remarkTypography from "../../packages/remark-typography/dist/remark-typography.esm.js";
@@ -28,6 +24,9 @@ const packageNames = readdirSync(path.resolve("packages"))
   .sort();
 
 const gatheredChangelogs = {};
+// Typography remains a separate editorial step. The timeline renderer itself
+// reads Markdown directly and has no Unified or HTML-parser dependency.
+const typography = remark().use(remarkGfm).use(remarkTypography);
 
 async function cleanSourceChangelog(filename, label) {
   try {
@@ -64,24 +63,9 @@ for (let packageName of packageNames) {
       packageName,
     );
 
-    const { value } = unified()
-      .data("settings", { fragment: true })
-      .use(remarkParse)
-      .use(remarkGfm)
-      // Typography maps MDAST phrasing nodes; keep it before MDAST becomes HAST.
-      .use(remarkTypography)
-      .use(remarkRehype)
-      // The timeline plugin intentionally receives HAST.
-      .use(changelogTimeline, {
-        dateDivLocale: "en-UK",
-        dateDivMarkup: ({ year, month, day }) =>
-          `${day} ${month} <span>${year}</span>`,
-      })
-      // .use(rehypeFormat)
-      .use(rehypeStringify)
-      .processSync(changelogContents);
-
-    changelogContents = String(value);
+    changelogContents = changelogTimeline(
+      String(typography.processSync(changelogContents)),
+    );
     if (!changelogContents.trim()) {
       throw new Error("rendered changelog is empty");
     }

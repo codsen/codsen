@@ -65,7 +65,7 @@ jobs:
       - name: Build package inputs and regenerate repository data
         run: |
           npm run ci:generate:changelogs
-          npm run ci:generate:info -- --git-stats
+          npm run ci:generate:info -- --git-stats --npm-dates
           npm run ci:build:root-readme
 
       - name: Build @codsen/data from regenerated sources

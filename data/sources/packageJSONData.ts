@@ -7240,17 +7240,14 @@ export const packageJSONData = {
   "remark-conventional-commit-changelog-timeline": {
     "name": "remark-conventional-commit-changelog-timeline",
     "version": "3.3.4",
-    "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
+    "description": "Render Codsen Conventional Commits changelogs as timeline HTML.",
     "keywords": [
-      "unified",
-      "remark",
-      "remark-plugin",
-      "plugin",
-      "mdast",
       "markdown",
       "changelog",
       "conventional",
-      "commits"
+      "commits",
+      "timeline",
+      "html"
     ],
     "homepage": "https://codsen.com/os/remark-conventional-commit-changelog-timeline",
     "repository": {
@@ -7274,14 +7271,13 @@ export const packageJSONData = {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
       "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint && npm run parser:check",
+      "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
       "examples": "node '../../ops/scripts/run-examples.js'",
       "lect": "node '../../ops/lect/lect.js'",
       "lect:check": "node '../../ops/lect/lect.js' --check",
       "lint": "biome lint --error-on-warnings . && npm run typecheck",
       "lint:fix": "biome lint --write --error-on-warnings . && npm run typecheck",
-      "parser:check": "node scripts/check-parser.js",
       "perf": "echo 'skip perf'",
       "prep": "echo 'ready'",
       "prettier": "biome format",
@@ -7308,18 +7304,17 @@ export const packageJSONData = {
           ""
         ]
       },
-      "various": {}
-    },
-    "dependencies": {
-      "@types/hast": "^3.0.5",
-      "hast-util-from-parse5": "^8.0.3",
-      "html-entity-codec": "^1.0.0",
-      "object-delete-key": "^4.2.3",
-      "unified": "^11.0.5",
-      "unist-util-visit": "^5.1.0"
-    },
-    "devDependencies": {
-      "mdast-util-to-hast": "^13.2.1"
+      "various": {},
+      "readme": {
+        "features": {
+          "summary": "Render Codsen release notes with one function call.",
+          "items": [
+            "No dependencies or parser setup.",
+            "Fixed release dates and section emojis matching codsen.com.",
+            "Preserves links, inline formatting, lists and fenced code in historical Codsen changelogs."
+          ]
+        }
+      }
     },
     "engines": {
       "node": ">=18.20.8"

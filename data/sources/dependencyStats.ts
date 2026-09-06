@@ -34,7 +34,6 @@ export const dependencyStats: DependencyStats = {
     "ansi-diff-stream",
     "ansi-regex",
     "currency.js",
-    "hast-util-from-parse5",
     "object-path",
     "p-map",
     "p-progress",
@@ -77,7 +76,6 @@ export const dependencyStats: DependencyStats = {
     "json-comb-core",
     "lerna-clean-changelogs",
     "object-all-values-equal-to",
-    "object-delete-key",
     "object-fill-missing-keys",
     "object-flatten-all-arrays",
     "object-merge-advanced",
@@ -120,7 +118,7 @@ export const dependencyStats: DependencyStats = {
   ],
   "dependencies": {
     "@inquirer/prompts": 2,
-    "@types/hast": 2,
+    "@types/hast": 1,
     "@types/mdast": 1,
     "all-named-html-entities": 2,
     "ansi-diff-stream": 1,
@@ -144,17 +142,15 @@ export const dependencyStats: DependencyStats = {
     "edit-package-json": 1,
     "email-all-chars-within-ascii": 1,
     "generate-atomic-css": 1,
-    "hast-util-from-parse5": 1,
     "html-all-known-attributes": 1,
     "html-crush": 1,
     "html-entities-not-email-friendly": 1,
-    "html-entity-codec": 6,
+    "html-entity-codec": 5,
     "is-char-suitable-for-html-attr-name": 1,
     "js-row-num": 1,
     "json-comb-core": 1,
     "lerna-clean-changelogs": 1,
     "object-all-values-equal-to": 1,
-    "object-delete-key": 1,
     "object-fill-missing-keys": 1,
     "object-flatten-all-arrays": 1,
     "object-merge-advanced": 2,
@@ -201,8 +197,8 @@ export const dependencyStats: DependencyStats = {
     "string-uglify": 1,
     "string-unfancy": 2,
     "unicode-segmenter": 1,
-    "unified": 3,
-    "unist-util-visit": 2,
+    "unified": 2,
+    "unist-util-visit": 1,
     "util-array-object-or-both": 1,
     "util-nonempty": 1,
     "vfile": 1
@@ -216,7 +212,6 @@ export const dependencyStats: DependencyStats = {
     "color-shorthand-hex-to-six-digit": 1,
     "is-html-attribute-closing": 1,
     "is-html-tag-opening": 1,
-    "mdast-util-to-hast": 1,
     "p-map": 5,
     "parse5": 1,
     "ranges-apply": 3,
@@ -247,6 +242,7 @@ export const dependencyStats: DependencyStats = {
     "regex-is-jinja-nunjucks",
     "regex-is-jsp",
     "regex-jinja-specific",
+    "remark-conventional-commit-changelog-timeline",
     "str-indexes-of-plus",
     "string-character-is-astral-surrogate",
     "string-collapse-leading-whitespace",
@@ -320,6 +316,7 @@ export const dependencyStats: DependencyStats = {
     "regex-is-jinja-nunjucks",
     "regex-is-jsp",
     "regex-jinja-specific",
+    "remark-conventional-commit-changelog-timeline",
     "str-indexes-of-plus",
     "string-apostrophes",
     "string-character-is-astral-surrogate",
@@ -379,7 +376,6 @@ export const dependencyStats: DependencyStats = {
     "json-variables",
     "lerna-clean-changelogs-cli",
     "rehype-responsive-tables",
-    "remark-conventional-commit-changelog-timeline",
     "remark-typography",
     "string-convert-indexes",
     "string-remove-widows",
@@ -391,16 +387,13 @@ export const dependencyStats: DependencyStats = {
       "object-path": 3
     },
     {
-      "unified": 3
-    },
-    {
       "@inquirer/prompts": 2
     },
     {
-      "@types/hast": 2
+      "unified": 2
     },
     {
-      "unist-util-visit": 2
+      "@types/hast": 1
     },
     {
       "@types/mdast": 1
@@ -415,7 +408,10 @@ export const dependencyStats: DependencyStats = {
       "currency.js": 1
     },
     {
-      "hast-util-from-parse5": 1
+      "p-map": 1
+    },
+    {
+      "p-progress": 1
     }
   ],
   "top10OwnDeps": [
@@ -444,7 +440,7 @@ export const dependencyStats: DependencyStats = {
       "ast-monkey-traverse": 6
     },
     {
-      "html-entity-codec": 6
+      "html-entity-codec": 5
     },
     {
       "ranges-merge": 5
