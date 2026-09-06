@@ -1,6 +1,6 @@
 {
   "name": "ranges-regex",
-  "version": "6.2.3",
+  "version": "6.2.4",
   "description": "Integrate regex operations into Ranges workflow",
   "keywords": [
     "array",
@@ -68,11 +68,11 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.10.0",
-    "ranges-merge": "^9.2.3"
+    "codsen-utils": "^1.10.1",
+    "ranges-merge": "^9.2.4"
   },
   "devDependencies": {
-    "ranges-apply": "^7.2.3"
+    "ranges-apply": "^7.2.4"
   },
   "engines": {
     "node": ">=18.20.8"

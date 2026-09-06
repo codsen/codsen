@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.5 (2026-09-06)
+
+### Bug Fixes
+
+- **email-all-chars-within-ascii-cli:** replace external update notifier ([998bcab](https://github.com/codsen/codsen/commit/998bcab920e7cb817f0df6ad8388eb46a0fb5743))
+
 ## 4.2.0 (2026-08-19)
 
 ### Bug Fixes

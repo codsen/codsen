@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.2.4 (2026-09-06)
+
+### Bug Fixes
+
+- **ranges-ent-decode:** scan references with the shared HTML entity codec ([e8da950](https://github.com/codsen/codsen/commit/e8da9509fc5e770ad84d64ca850857dc631b9882))
+
 ## 6.2.2 (2026-08-22)
 
 ### Performance Improvements

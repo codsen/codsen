@@ -1,6 +1,6 @@
 {
   "name": "html-entity-codec",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Decode, encode, and escape HTML character references",
   "keywords": ["decode", "encode", "entities", "escape", "html"],
   "homepage": "https://codsen.com/os/html-entity-codec",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.2.1 (2026-09-06)
+
+### Bug Fixes
+
+- **all-named-html-entities:** generate and verify entity indexes ([64db7e7](https://github.com/codsen/codsen/commit/64db7e715a04c57af3ecbd884d4bdfdb79cbac5d))
+- **all-named-html-entities:** generate canonical data from a pinned WHATWG snapshot ([799db7c](https://github.com/codsen/codsen/commit/799db7c0412fbe5e1e3326b59c6ad5bf29af6b91))
+
+### Performance Improvements
+
+- optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+
 ## 3.2.0 (2026-08-19)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.6.0 (2026-09-06)
+
+### Features
+
+- **data:** expose package dependency status lists ([25f5220](https://github.com/codsen/codsen/commit/25f5220219ef5e7658224212ebff807143789fed))
+
 ## 0.5.0 (2026-09-01)
 
 ### Bug Fixes

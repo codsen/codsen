@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.4.1 (2026-09-06)
+
+### Bug Fixes
+
+- **email-comb:** use canonical HTML attribute reference decoding ([42987b9](https://github.com/codsen/codsen/commit/42987b92cd9e3202bb427c3c7af9260389e619ff))
+
 ## 7.4.0 (2026-09-03)
 
 ### Features

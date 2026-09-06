@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.4 (2026-09-06)
+
+### Bug Fixes
+
+- **html-img-alt:** escape decoded alt attribute contents ([fdae896](https://github.com/codsen/codsen/commit/fdae896c8f598f1b79b80ca94df31e4d69a468f9))
+
 ## 4.2.3 (2026-09-01)
 
 ### Bug Fixes

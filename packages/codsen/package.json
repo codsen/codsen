@@ -1,6 +1,6 @@
 {
   "name": "codsen",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Codsen CLI",
   "keywords": ["codsen", "cli"],
   "homepage": "https://codsen.com/os/codsen",
@@ -50,7 +50,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.10.0"
+    "codsen-utils": "^1.10.1"
   },
   "engines": {
     "node": ">=18.20.8"

@@ -1,6 +1,6 @@
 {
   "name": "remark-conventional-commit-changelog-timeline",
-  "version": "3.3.4",
+  "version": "4.0.0",
   "description": "Render Codsen Conventional Commits changelogs as timeline HTML.",
   "keywords": [
     "markdown",

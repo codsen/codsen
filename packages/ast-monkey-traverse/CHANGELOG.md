@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.3.1 (2026-09-06)
+
+### Bug Fixes
+
+- **ast-monkey-traverse:** remove unnecessary test dependency ([013b228](https://github.com/codsen/codsen/commit/013b2283e7b554debb27e135726cb4241e2139cd))
+
 ## 4.3.0 (2026-09-01)
 
 ### Bug Fixes

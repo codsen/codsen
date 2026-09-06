@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.5.3 (2026-09-06)
+
+### Bug Fixes
+
+- **codsen:** replace external update notifier ([7ebd467](https://github.com/codsen/codsen/commit/7ebd467ab51a4e0f8e918252767b0a758f729f91))
+
 ## 0.5.0 (2026-08-19)
 
 ### Bug Fixes

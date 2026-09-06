@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.0.0 (2026-09-06)
+
+### Bug Fixes
+
+- **remark-conventional-commit-changelog-timeline:** replace semver-regex ([2d60ca5](https://github.com/codsen/codsen/commit/2d60ca5d829b2f12e507cfe003fe708792de142b))
+
+### Features
+
+- **remark-conventional-commit-changelog-timeline:** render changelogs directly ([2de0031](https://github.com/codsen/codsen/commit/2de003104a18fcfe9059bf5d4f8228c58a34a1b2))
+
+### BREAKING CHANGES
+
+- **remark-conventional-commit-changelog-timeline:** The default export now accepts a Markdown string and returns HTML instead of a Unified plugin. Remove dateDivLocale, dateDivMarkup, defaults, Opts, and DateParamsObj. Dates use the fixed codsen.com format.
+
 ## 4.0.0 (2026-09-05)
 
 ### Features

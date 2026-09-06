@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.5 (2026-09-06)
+
+### Bug Fixes
+
+- **js-row-num-cli:** replace external update notifier ([30cdbdd](https://github.com/codsen/codsen/commit/30cdbdd684d99690566c92d5287fbb600ce3cecc))
+
 ## 4.2.0 (2026-08-19)
 
 ### Bug Fixes
