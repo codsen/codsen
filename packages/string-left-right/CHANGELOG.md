@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.2.3 (2026-09-06)
+
+### Bug Fixes
+
+- **string-left-right:** validate inputs and preserve required sequence matches ([276f9ea](https://github.com/codsen/codsen/commit/276f9ea3694190a2a8ac3b1b6d601785ac42e2da))
+
 ## 6.2.2 (2026-09-01)
 
 ### Bug Fixes

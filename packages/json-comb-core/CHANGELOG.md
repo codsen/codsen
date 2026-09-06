@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 8.2.5 (2026-09-06)
+
+### Bug Fixes
+
+- **json-comb-core:** replace p-reduce with native iteration ([6c5b00a](https://github.com/codsen/codsen/commit/6c5b00aaf4d52ae2fdb84c43437eef5b3aa8f912))
+
 ## 8.2.2 (2026-08-22)
 
 ### Performance Improvements

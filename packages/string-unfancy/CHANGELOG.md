@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.2.3 (2026-09-06)
+
+### Bug Fixes
+
+- **string-unfancy:** streamline recursive decoding with the shared HTML entity codec ([81584b3](https://github.com/codsen/codsen/commit/81584b3ac4a553a5840cdb8ee08eb8b11181a2ec))
+
 ## 6.2.1 (2026-08-22)
 
 ### Performance Improvements

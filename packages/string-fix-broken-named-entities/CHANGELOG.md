@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.2.3 (2026-09-06)
+
+### Bug Fixes
+
+- **string-fix-broken-named-entities:** correct entity repairs and progress reporting ([feff4be](https://github.com/codsen/codsen/commit/feff4be0355b0861230e410f8cbf1ade1edc2cb8))
+- **string-fix-broken-named-entities:** replace leven with bounded typo matching ([8a1b57d](https://github.com/codsen/codsen/commit/8a1b57d374b83c76a9c4bc4f1b5222db344cd9e0))
+
+### Performance Improvements
+
+- **string-fix-broken-named-entities:** cache lookups and filter typo candidates ([3e4ab67](https://github.com/codsen/codsen/commit/3e4ab67df48a2e0db5fad59c115e70206bdb2e51))
+
 ## 7.2.2 (2026-09-01)
 
 ### Bug Fixes

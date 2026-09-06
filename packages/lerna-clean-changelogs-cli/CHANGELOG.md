@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.5 (2026-09-06)
+
+### Bug Fixes
+
+- **lerna-clean-changelogs-cli:** remove p-reduce from discovery ([43ccc60](https://github.com/codsen/codsen/commit/43ccc606862707dd0c4eb399377e2106afc3f2f4))
+- **lerna-clean-changelogs-cli:** replace external update notifier ([60a38bb](https://github.com/codsen/codsen/commit/60a38bb2d816ee0d1d78d9abbf4d1c467a24a3e9))
+
 ## 4.2.0 (2026-08-19)
 
 ### Bug Fixes

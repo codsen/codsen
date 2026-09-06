@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.3.1 (2026-09-06)
+
+### Bug Fixes
+
+- **json-sort-cli:** replace external update notifier ([ee5b24c](https://github.com/codsen/codsen/commit/ee5b24cc3fd7e640c9a5a4a2c5a805ef4647fb9b))
+
 ## 4.3.0 (2026-09-03)
 
 ### Features

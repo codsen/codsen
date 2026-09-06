@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 14.2.3 (2026-09-06)
+
+### Bug Fixes
+
+- **object-merge-advanced:** remove unnecessary test dependency ([6b163e0](https://github.com/codsen/codsen/commit/6b163e0a1004b145e9bb79854ad026aea0ff4009))
+
 ## 14.2.2 (2026-09-01)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.5 (2026-09-06)
+
+### Bug Fixes
+
+- **csv-sort-cli:** replace external update notifier ([95d0d04](https://github.com/codsen/codsen/commit/95d0d0477bcc5ea2952e1db93cadf5dc0075fbf9))
+
 ## 4.2.0 (2026-08-19)
 
 ### Bug Fixes
