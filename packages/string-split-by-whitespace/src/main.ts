@@ -1,4 +1,3 @@
-import { isIndexWithin } from "ranges-is-index-within";
 import type { Range } from "../../../ops/typedefs/common";
 import { version as v } from "../package.json";
 
@@ -20,55 +19,57 @@ function splitByW(str: string, opts?: Partial<Opts>): string[] {
   if (typeof str !== "string") {
     return str;
   }
-  // early ending:
-  if (str.trim() === "") {
+  let trimmed = str.trim();
+  if (!trimmed) {
     return [];
   }
-  let resolvedOpts: Opts = { ...defaults, ...opts };
-  if (
-    resolvedOpts.ignoreRanges.length &&
-    !resolvedOpts.ignoreRanges.every((arr) => Array.isArray(arr))
-  ) {
+  let ignoreRanges = opts?.ignoreRanges;
+  if (ignoreRanges === undefined) {
+    ignoreRanges = defaults.ignoreRanges;
+  }
+  if (ignoreRanges.length && !ignoreRanges.every((arr) => Array.isArray(arr))) {
     throw new Error(
       "string-split-by-whitespace/splitByW(): [THROW_ID_02] The resolvedOpts.ignoreRanges contains elements which are not arrays!",
     );
   }
+  if (!ignoreRanges.length) {
+    return trimmed.split(/\s+/);
+  }
 
-  // if reached this far, traverse and slice accordingly
-  let nonWhitespaceSubStringStartsAt = null;
-  let res = [];
-  for (let i = 0, len = str.length; i < len; i++) {
-    // catch the first non-whitespace character
-    if (
-      nonWhitespaceSubStringStartsAt === null &&
-      str[i].trim() &&
-      (!resolvedOpts?.ignoreRanges?.length ||
-        (resolvedOpts.ignoreRanges.length &&
-          !isIndexWithin(
-            i,
-            resolvedOpts.ignoreRanges.map((arr) => [arr[0], arr[1] - 1]),
-            {
-              inclusiveRangeEnds: true,
-            },
-          )))
-    ) {
-      nonWhitespaceSubStringStartsAt = i;
+  // Sort a local list; callers keep ownership of both the list and its tuples.
+  // Empty/reversed spans cover no index. Overlapping spans are consumed by
+  // the same forward cursor without revisiting earlier ranges.
+  let ranges = ignoreRanges
+    .filter(([from, to]) => from < to)
+    .sort((a, b) => a[0] - b[0]);
+  let rangeIndex = 0;
+  let tokenStart: number | null = null;
+  let res: string[] = [];
+  for (let i = 0; i < str.length; ) {
+    while (rangeIndex < ranges.length && ranges[rangeIndex][1] <= i) {
+      rangeIndex += 1;
     }
-    // catch the first whitespace char when recording substring
-    if (nonWhitespaceSubStringStartsAt !== null) {
-      if (!str[i].trim()) {
-        res.push(str.slice(nonWhitespaceSubStringStartsAt, i));
-        nonWhitespaceSubStringStartsAt = null;
-      } else if (
-        resolvedOpts.ignoreRanges.length &&
-        isIndexWithin(i, resolvedOpts.ignoreRanges)
-      ) {
-        res.push(str.slice(nonWhitespaceSubStringStartsAt, i - 1));
-        nonWhitespaceSubStringStartsAt = null;
-      } else if (str[i + 1] === undefined) {
-        res.push(str.slice(nonWhitespaceSubStringStartsAt, i + 1));
+    if (rangeIndex < ranges.length && ranges[rangeIndex][0] <= i) {
+      if (tokenStart !== null) {
+        res.push(str.slice(tokenStart, i));
+        tokenStart = null;
       }
+      i = Math.min(str.length, ranges[rangeIndex][1]);
+      rangeIndex += 1;
+      continue;
     }
+    if (str[i].trim()) {
+      if (tokenStart === null) {
+        tokenStart = i;
+      }
+    } else if (tokenStart !== null) {
+      res.push(str.slice(tokenStart, i));
+      tokenStart = null;
+    }
+    i += 1;
+  }
+  if (tokenStart !== null) {
+    res.push(str.slice(tokenStart));
   }
   return res;
 }

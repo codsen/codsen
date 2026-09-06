@@ -69,9 +69,6 @@
       "extras": [""]
     }
   },
-  "dependencies": {
-    "ranges-is-index-within": "^4.2.1"
-  },
   "devDependencies": {
     "string-find-heads-tails": "^6.2.4"
   },
