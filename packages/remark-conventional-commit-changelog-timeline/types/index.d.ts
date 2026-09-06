@@ -1,19 +1,8 @@
-import { Root } from "hast";
-import { Plugin } from "unified";
+/**
+ * Render Codsen Conventional Commits Markdown as fixed timeline HTML.
+ * Supports release/section headings, paragraphs, lists, fenced code, quotes,
+ * links, inline code and emphasis. This is not a general Markdown processor.
+ */
+declare function changelogTimeline(markdown: string): string;
 
-interface DateParamsObj {
-  date: Date;
-  year: string;
-  month: string;
-  day: string;
-}
-interface Opts {
-  dateDivLocale: string;
-  dateDivMarkup: (dateParamsObj: DateParamsObj) => string;
-}
-declare const defaults: Opts;
-type UnifiedPlugin<T extends unknown[]> = Plugin<T, Root>;
-declare const changelogTimeline: UnifiedPlugin<[options?: Partial<Opts>]>;
-
-export { changelogTimeline as default, defaults };
-export type { DateParamsObj, Opts };
+export { changelogTimeline as default };

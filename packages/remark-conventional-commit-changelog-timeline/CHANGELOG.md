@@ -3,11 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.0.0 (2026-09-05)
+
+### Features
+
+- Render Codsen changelog Markdown directly as timeline HTML with no dependencies.
+
+### BREAKING CHANGES
+
+- Replace the Unified plugin with `changelogTimeline(markdown)`, returning an HTML string. Remove locale and markup callbacks, the `defaults` export, and option types. Dates now use the fixed codsen.com format. See [the migration guide](https://codsen.com/os/remark-conventional-commit-changelog-timeline#migrate-to-version4).
+
+### Migration instructions to version 4
+
+Version 4 renders Codsen changelog Markdown directly to an HTML string:
+
+```js
+import changelogTimeline from "remark-conventional-commit-changelog-timeline";
+
+const html = changelogTimeline(markdown);
+```
+
+Replace the Unified pipeline previously used to render the changelog with this
+call. Remove `.value` access: the result is already a string. Remove the
+`dateDivLocale` and `dateDivMarkup` options and imports of `defaults`, `Opts`,
+and `DateParamsObj`.
+
+Dates now match codsen.com: `2022-08-12` becomes
+`12 Aug <span>2022</span>` inside `.release-date`. September is `Sept`. Dates
+are independent of the machine's locale and time zone. Existing timeline CSS
+classes and section emojis remain available.
+
+The supported format is the one used by Codsen's historical changelogs:
+
+- Plain or linked stable release headings with a date, under `#`, `##`, or
+  `###`.
+- Change sections, paragraphs, unordered and ordered lists, nested lists,
+  fenced code, blockquotes, and horizontal rules.
+- Inline code, `**strong**`, `*emphasis*` or `_emphasis_`, inline links, and
+  HTTP or HTTPS autolinks.
+- Numeric character references and the named references `amp`, `lt`, `gt`,
+  `quot`, `apos`, `nbsp`, and `hellip` used by this format.
+
+This is a focused changelog renderer. Tables, images, reference links, raw HTML,
+and the full CommonMark grammar are outside its contract. Raw HTML is escaped.
+Use a general Markdown renderer for other document formats. Empty input returns
+an empty string. Nonempty output has a leading and trailing newline.
+
+Typography is a separate editorial step. The website's data generator still
+applies `remark-typography` before calling the renderer. The package itself
+does not alter quotes, dashes, or word spacing.
+
+The function is synchronous and returns only the HTML. The small release-note
+documents it targets do not need callback-driven formatting or progress APIs.
+
 ## 3.3.3 (2026-09-01)
 
 ### Bug Fixes
 
-- **object-delete-key:** make deletion linear and safe ([6d2623f](https://github.com/codsen/codsen/commit/6d2623fc25bc0a67f9f291c2e530d5f7584e7d27))
 - **remark-typography:** preserve phrasing context ([371dd5e](https://github.com/codsen/codsen/commit/371dd5e98481277017d90182e33125a96f179abd))
 
 ## 3.3.0 (2026-08-19)

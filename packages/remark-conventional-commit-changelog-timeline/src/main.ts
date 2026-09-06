@@ -1,374 +1,275 @@
-// Note for self: don't add "hast" itself as a dependency
-// This type comes from "@types/hast"
-import type { Root } from "hast";
-import { raw } from "hast-util-raw";
-import type { Raw } from "mdast-util-to-hast";
-import type { Plugin } from "unified";
-import { u } from "unist-builder";
-import {
-  visit,
-  // SKIP
-} from "unist-util-visit";
-import {
-  extractDateString,
-  extractStartingVersionString,
-  stringify,
-} from "./util";
+const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+const sections = new Map([
+  ["Features", "✨"],
+  ["BREAKING CHANGES", "💥"],
+  ["Reverts", "⏪"],
+  ["Changes", "✈️"],
+  ["Improvements", "🏗️"],
+  ["Fixed", "🔧"],
+]);
 
-declare let DEV: boolean;
-
-export interface DateParamsObj {
-  date: Date;
-  year: string;
-  month: string;
-  day: string;
-}
-export interface Opts {
-  dateDivLocale: string;
-  dateDivMarkup: (dateParamsObj: DateParamsObj) => string;
+function escapeHtml(str: string): string {
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-export const defaults: Opts = {
-  dateDivLocale: "en-US",
-  dateDivMarkup: ({ year, month, day }) =>
-    `${month} ${day}, <span>${year}</span>`,
-};
+const entities = new Map([
+  ["amp", "&"],
+  ["lt", "<"],
+  ["gt", ">"],
+  ["quot", '"'],
+  ["apos", "'"],
+  ["nbsp", "\u00a0"],
+  ["hellip", "…"],
+]);
 
-type UnifiedPlugin<T extends unknown[]> = Plugin<T, Root>;
-// declare let DEV: boolean;
-
-const changelogTimeline: UnifiedPlugin<[options?: Partial<Opts>]> = (opts) => {
-  let resolvedOpts: Opts = { ...defaults, ...opts };
-  DEV &&
-    console.log(
-      `final ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
-        resolvedOpts,
-        null,
-        4,
-      )}`,
+function decode(str: string): string {
+  return str.replace(/&(#x[\da-f]+|#\d+|[a-z]+);/gi, (entity, name: string) => {
+    if (name[0] !== "#") return entities.get(name) || entity;
+    const hex = name[1].toLowerCase() === "x";
+    const point = Number.parseInt(name.slice(hex ? 2 : 1), hex ? 16 : 10);
+    return String.fromCodePoint(
+      point > 0 && point <= 0x10ffff && !(point >= 0xd800 && point <= 0xdfff)
+        ? point
+        : 0xfffd,
     );
+  });
+}
 
-  return (tree: any) => {
-    // ██████████████████ 1. █████████████████████
+function link(label: string, url: string): string {
+  url = decode(url);
+  // Relative links and the schemes used in release notes are allowed.
+  // biome-ignore lint/suspicious/noControlCharactersInRegex: browsers ignore C0 controls when resolving URL schemes.
+  const scheme = url.replace(/[\u0000-\u0020]/g, "");
+  if (/^[\w+.-]+:/.test(scheme) && !/^(?:https?:|mailto:)/i.test(scheme)) {
+    return label;
+  }
+  return `<a href="${escapeHtml(url).replace(/"/g, "&quot;")}">${label}</a>`;
+}
 
-    // delete the h1, "# Change Log"
-
-    visit(tree, "element", (node, index, parent) => {
-      // DEV &&
-      //   console.log(
-      //     `025 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${stringify(node)}`
-      //   );
-
-      if (
-        typeof index === "number" &&
-        node?.tagName === "h1" &&
-        Array.isArray(node.children) &&
-        node.children.length
+function inline(str: string, depth = 0): string {
+  if (depth === 16) return escapeHtml(str);
+  // Code and escaped punctuation are consumed before any formatting inside them.
+  const tokens =
+    /(`+)|\\([!"#$%&'()*+,\-./:;<=>?@[\]\\^_`{|}~])|\[([^[\]\n]+)\]\(([^\s()]*(?:\([^\s()]*\)[^\s()]*)*)\)|\*\*([\s\S]+?)\*\*|\*([^*\n]+)\*|_([^_\n]+)_|<(https?:\/\/[^\s<>]+)>|https?:\/\/[^\s<>]+/g;
+  let result = "";
+  let end = 0;
+  for (let match = tokens.exec(str); match; match = tokens.exec(str)) {
+    result += escapeHtml(decode(str.slice(end, match.index)));
+    if (match[1]) {
+      const start = tokens.lastIndex;
+      let close = str.indexOf(match[1], start);
+      while (
+        close !== -1 &&
+        (str[close - 1] === "`" || str[close + match[1].length] === "`")
       ) {
-        if (node.children[0].value === "Change Log") {
-          // 1. delete this h1
-          parent.children.splice(index, 1);
-          // console.log(`045 ${`\u001b[${32}m${`deleted`}\u001b[${39}m`} h1`);
-
-          // 2. tackle the line break that normally follows
-          if (
-            parent.children[index]?.type === "text" &&
-            parent.children[index]?.value === "\n"
-          ) {
-            parent.children.splice(index, 1);
-            // console.log(
-            //   `054 ${`\u001b[${32}m${`deleted`}\u001b[${39}m`} line break`
-            // );
-          }
-
-          // 3. Remove "All notable changes to this project" if present
-          if (
-            parent.children[index]?.tagName === "p" &&
-            parent.children[index]?.children?.length &&
-            typeof parent.children[index].children[0]?.value === "string" &&
-            parent.children[index].children[0].value.startsWith(
-              "All notable changes to this project",
-            )
-          ) {
-            parent.children.splice(index, 1);
-            // console.log(
-            //   `070 ${`\u001b[${32}m${`deleted`}\u001b[${39}m`} "All notable changes..."`
-            // );
-          }
-        } else if (
-          // normal, not linked heading, for example
-          // ## 1.0.0 (2022-09-25)
-          (typeof node.children[0].value === "string" &&
-            extractStartingVersionString(node.children[0].value)) ||
-          (Array.isArray(node.children[0]?.children) &&
-            node.children[0].children[0]?.value &&
-            extractStartingVersionString(node.children[0].children[0]?.value))
-        ) {
-          // it's something like:
-          // # 3.1.0(2022 - 08 - 12)
-          // turn it into h2
-          node.tagName = "h2";
-        }
+        close = str.indexOf(match[1], close + match[1].length);
       }
-    });
+      if (close === -1) {
+        result += match[1];
+        end = tokens.lastIndex;
+        continue;
+      }
+      tokens.lastIndex = close + match[1].length;
+      let code = str.slice(start, close).replace(/\n/g, " ");
+      if (code.startsWith(" ") && code.endsWith(" ") && code.trim()) {
+        code = code.slice(1, -1);
+      }
+      result += `<code>${escapeHtml(code)}</code>`;
+    } else if (match[2]) {
+      result += escapeHtml(match[2]);
+    } else if (match[3]) {
+      result += link(inline(match[3], depth + 1), match[4]);
+    } else if (match[5]) {
+      result += `<strong>${inline(match[5], depth + 1)}</strong>`;
+    } else if (match[6] || match[7]) {
+      // Underscores inside identifiers are literal, as in option_name_here.
+      if (match[7] && /\w/.test(str[match.index - 1] || "")) {
+        result += escapeHtml(match[0]);
+      } else {
+        result += `<em>${inline(match[6] || match[7], depth + 1)}</em>`;
+      }
+    } else if (match[8]) {
+      result += link(escapeHtml(decode(match[8])), match[8]);
+    } else {
+      const url = match[0].replace(/[.,;:!?]+$/, "").replace(/\)+$/, "");
+      result +=
+        link(escapeHtml(decode(url)), url) +
+        escapeHtml(match[0].slice(url.length));
+    }
+    end = tokens.lastIndex;
+  }
+  return result + escapeHtml(decode(str.slice(end)));
+}
 
-    // ███████████████████ 2. ████████████████████
+function heading(level: number, text: string): string {
+  const release =
+    /^(?:\[(\d+\.\d+\.\d+)\]\([^\s]+\)|(\d+\.\d+\.\d+))\s*\((\d{4})[-–](\d{2})[-–](\d{2})\)$/.exec(
+      text,
+    );
+  if (level <= 3 && release) {
+    const [, linked, plain, year, month, day] = release;
+    const date = new Date(`${year}-${month}-${day}T00:00:00Z`);
+    if (
+      date.getUTCFullYear() === Number(year) &&
+      date.getUTCMonth() === Number(month) - 1 &&
+      date.getUTCDate() === Number(day)
+    ) {
+      return `<h2>${linked || plain}</h2>\n<div class="release-date">${Number(day)} ${months[Number(month) - 1]} <span>${year}</span></div>`;
+    }
+  }
+  const label = level === 3 && text === "Bug Fixes" ? "Fixed" : text;
+  const emoji = level === 3 ? sections.get(label) : undefined;
+  return `<h${level}>${emoji ? `<span class="emoji">${emoji}</span> ` : ""}${inline(label)}</h${level}>`;
+}
 
-    // turn all h2 version headings from:
+const listItem = /^( *)([-+*]|\d+[.)]) +(.*)$/;
+const fence = /^ {0,3}(`{3,}|~{3,})(\S*)\s*$/;
+const blockStart =
+  /^(?:#{1,6} | {0,3}(?:`{3,}|~{3,})|>|(?:[-+*]|\d+[.)]) |(?:---+|\*\*\*+)\s*$)/;
 
-    // # 3.1.0 (2022-08-12)
-    // or
-    // # [0.4.0](https://github.com/blablabla) (2022-10-13)
-    //
-    // into:
-    // <h2>3.1.0</h2>
-    // <div className="release-date">
-    //   12 Aug
-    //   <br />
-    //   2022
-    // </div>
-
-    DEV &&
-      console.log(
-        `${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${stringify(tree)}`,
+function blocks(lines: string[], tight = false, depth = 0): string {
+  if (depth === 64) return escapeHtml(lines.join("\n"));
+  const result: string[] = [];
+  for (let i = 0; i < lines.length; ) {
+    const line = lines[i];
+    if (!line.trim()) {
+      i += 1;
+      continue;
+    }
+    const codeFence = fence.exec(line);
+    const title = /^(#{1,6}) +(.*)$/.exec(line);
+    const item = listItem.exec(line);
+    if (codeFence) {
+      const code: string[] = [];
+      const close = new RegExp(
+        `^ {0,3}${codeFence[1][0]}{${codeFence[1].length},}\\s*$`,
       );
-
-    visit(tree, "element", (node, index, parent) => {
-      // version can be unlinked:
-      // ## 1.0.0(2022 - 09 - 25)
-      // or it can be linked:
-      // # [0.4.0](https://github.com/blablabla) (2022-10-13)
-      // this means, to retrieve it, we have to check either
-      // node.value or its first children's value
-      let versionStr = "";
-      let dateStr = "";
-
-      if (
-        typeof index === "number" &&
-        node?.tagName === "h2" &&
-        Array.isArray(node.children)
-      ) {
-        DEV &&
-          console.log(
-            `processing: ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${stringify(
-              node,
-            )}`,
-          );
-
-        if (typeof node.children[0]?.value === "string") {
-          versionStr = extractStartingVersionString(node.children[0]?.value);
-          dateStr = extractDateString(node.children[0]?.value);
-        } else if (
-          node.children[0]?.tagName === "a" &&
-          node.children[0].children[0]?.type === "text"
-        ) {
-          // extract version from within anchor tag
-          versionStr = extractStartingVersionString(
-            node.children[0].children[0].value,
-          );
-
-          // date text node will be following anchor tag
-          if (
-            node.children[1]?.type === "text" &&
-            extractDateString(node.children[1]?.value)
-          ) {
-            dateStr = extractDateString(node.children[1]?.value);
+      i += 1;
+      while (i < lines.length && !close.test(lines[i])) code.push(lines[i++]);
+      i += 1;
+      const language = codeFence[2]
+        ? ` class="language-${escapeHtml(codeFence[2]).replace(/"/g, "&quot;")}"`
+        : "";
+      result.push(
+        `<pre><code${language}>${escapeHtml(code.join("\n"))}${code.length ? "\n" : ""}</code></pre>`,
+      );
+    } else if (title) {
+      result.push(heading(title[1].length, title[2]));
+      i += 1;
+    } else if (/^(?:---+|\*\*\*+)\s*$/.test(line)) {
+      result.push("<hr>");
+      i += 1;
+    } else if (line.startsWith(">")) {
+      const quoted: string[] = [];
+      while (i < lines.length && lines[i].startsWith(">")) {
+        quoted.push(lines[i++].replace(/^> ?/, ""));
+      }
+      result.push(
+        `<blockquote>\n${blocks(quoted, false, depth + 1)}\n</blockquote>`,
+      );
+    } else if (item && !item[1]) {
+      const ordered = /^\d/.test(item[2]);
+      const items: string[][] = [];
+      let loose = false;
+      while (i < lines.length) {
+        const next = listItem.exec(lines[i]);
+        if (!next || next[1] || /^\d/.test(next[2]) !== ordered) break;
+        const width = lines[i].length - next[3].length;
+        const contents = [next[3]];
+        i += 1;
+        while (i < lines.length) {
+          if (!lines[i].trim()) {
+            let after = i + 1;
+            while (after < lines.length && !lines[after].trim()) after += 1;
+            if (after === lines.length) {
+              i = after;
+              break;
+            }
+            if (lines[after].startsWith(" ".repeat(width))) {
+              contents.push("");
+              loose = true;
+              i = after;
+              continue;
+            }
+            const sibling = listItem.exec(lines[after]);
+            if (sibling && !sibling[1] && /^\d/.test(sibling[2]) === ordered) {
+              loose = true;
+              i = after;
+            }
+            break;
+          }
+          if (lines[i].startsWith(" ".repeat(width))) {
+            contents.push(lines[i++].slice(width));
+          } else if (blockStart.test(lines[i])) {
+            break;
+          } else {
+            contents.push(lines[i++]);
           }
         }
+        items.push(contents);
       }
-
-      if (versionStr && dateStr) {
-        DEV && console.log(`versionStr: ${versionStr}; dateStr: ${dateStr}`);
-
-        DEV &&
-          console.log(
-            ` ███████████████████████████████████████ ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
-              node,
-              null,
-              4,
-            )}`,
-          );
-
-        node.children = [
-          {
-            type: "text",
-            value: versionStr,
-          },
-        ];
-
-        DEV && console.log(`set the h2 to ${versionStr}`);
-
-        if (dateStr && typeof index === "number") {
-          DEV && console.log(`add the .release-date div`);
-          let date = new Date(dateStr);
-          let formatDay = new Intl.DateTimeFormat(resolvedOpts.dateDivLocale, {
-            day: "numeric",
-          }).format;
-          let formatMonth = new Intl.DateTimeFormat(
-            resolvedOpts.dateDivLocale,
-            {
-              month: "short",
-            },
-          ).format;
-          let formatYear = new Intl.DateTimeFormat(resolvedOpts.dateDivLocale, {
-            year: "numeric",
-          }).format;
-
-          let month = formatMonth(date); // "Jan"
-          let day = formatDay(date); // "1"
-          let year = formatYear(date); // "2020"
-
-          let dateParamsObj: DateParamsObj = {
-            date,
-            year,
-            month,
-            day,
-          };
-          DEV &&
-            console.log(
-              `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`dateParamsObj`}\u001b[${39}m`} = ${JSON.stringify(
-                dateParamsObj,
-                null,
-                4,
-              )}`,
-            );
-
-          let rawNode: Raw = u(
-            "raw",
-            resolvedOpts.dateDivMarkup(dateParamsObj),
-          );
-          let newMarkup = raw(rawNode);
-
-          DEV &&
-            console.log(
-              `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`newMarkup`}\u001b[${39}m`} = ${JSON.stringify(
-                newMarkup,
-                null,
-                4,
-              )}`,
-            );
-
-          // it depends, on what newMarkup, the generated AST ended up -
-          // - if it was a static string, it ended up as:
-          //
-          // {
-          //     "type": "text",
-          //     "value": "foo"
-          // }
-          //
-          // - if user actually used those date strings and nested
-          // some tags, it will be like:
-          //   {
-          //     "type": "root",
-          //     "children": [
-          //         {
-          //             "type": "text",
-          //             "value": "2 Sept"
-          //         },
-          //         {
-          //             "type": "element",
-          //             "tagName": "br",
-          //             ...
-          //         },
-          //     ],
-          //     "data": {
-          //         "quirksMode": false
-          //     }
-          // }
-
-          if (newMarkup.type === "root") {
-            parent?.children.splice(index + 1, 0, {
-              type: "element",
-              tagName: "div",
-              properties: {
-                className: "release-date",
-              },
-              children: Array.from((newMarkup as any)?.children || []),
-            });
-          } else if (newMarkup.type === "text") {
-            parent?.children.splice(index + 1, 0, {
-              type: "element",
-              tagName: "div",
-              properties: {
-                className: "release-date",
-              },
-              children: Array.from([newMarkup]),
-            });
-          }
-        }
-      }
-
-      // add emoji to h3
-      // from:
-      // ### Bug Fixes
-      // to:
-      // ### 🔧 Bug Fixes
-      if (
-        typeof index === "number" &&
-        node?.tagName === "h3" &&
-        node?.children &&
-        node?.children[0]?.type === "text"
+      const tag = ordered ? "ol" : "ul";
+      const start =
+        ordered && Number.parseInt(item[2], 10) !== 1
+          ? ` start="${Number.parseInt(item[2], 10)}"`
+          : "";
+      const rendered = items.map((contents) => {
+        const body = blocks(contents, !loose, depth + 1);
+        // Indent HTML, leaving the bytes inside code blocks untouched.
+        return `  <li>${body.replace(/(<pre><code[^>]*>[\s\S]*?<\/code><\/pre>)|\n/g, (value, code) => code || `${value}    `)}${body.includes("\n") ? "\n  " : ""}</li>`;
+      });
+      result.push(`<${tag}${start}>\n${rendered.join("\n")}\n</${tag}>`);
+    } else {
+      const paragraph = [line];
+      i += 1;
+      while (
+        i < lines.length &&
+        lines[i].trim() &&
+        !blockStart.test(lines[i])
       ) {
-        DEV &&
-          console.log(
-            `${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
-              node,
-              null,
-              4,
-            )}`,
-          );
-
-        let emoji = "";
-
-        switch (node?.children[0].value) {
-          case "Features":
-            emoji = "✨";
-            break;
-          case "BREAKING CHANGES":
-            emoji = "💥";
-            break;
-          case "Reverts":
-            emoji = "⏪";
-            break;
-          case "Changes":
-            emoji = "✈️";
-            break;
-          case "Improvements":
-            emoji = "🏗️";
-            break;
-          case "Bug Fixes":
-          case "Fixed":
-            // don't mention "bugs"
-            node.children[0].value = "Fixed";
-            emoji = "🔧";
-            break;
-          default:
-            break;
-        }
-
-        if (emoji) {
-          // 1. add a space in between emoji and existing label
-          node.children[0].value = ` ${node?.children[0].value}`;
-          // 2. insert span with emoji in front:
-          node.children.unshift({
-            type: "element",
-            tagName: "span",
-            properties: {
-              className: "emoji",
-            },
-            children: [
-              {
-                type: "text",
-                value: `${emoji}`,
-              },
-            ],
-          });
-        }
+        paragraph.push(lines[i++]);
       }
-    });
+      const content = inline(paragraph.join("\n"));
+      result.push(tight ? content : `<p>${content}</p>`);
+    }
+  }
+  return result.join("\n");
+}
 
-    // ███████████████████ fin. ████████████████████
-  };
-};
-
-export default changelogTimeline;
+/**
+ * Render Codsen Conventional Commits Markdown as fixed timeline HTML.
+ * Supports release/section headings, paragraphs, lists, fenced code, quotes,
+ * links, inline code and emphasis. This is not a general Markdown processor.
+ */
+export default function changelogTimeline(markdown: string): string {
+  if (typeof markdown !== "string") {
+    throw new TypeError(
+      "remark-conventional-commit-changelog-timeline/changelogTimeline(): [THROW_ID_01] Expected a Markdown string.",
+    );
+  }
+  const lines = markdown
+    .replace(/\r\n?/g, "\n")
+    .replace(/^\uFEFF/, "")
+    .split("\n");
+  const first = lines.findIndex((line) => line.trim());
+  if (first !== -1 && /^# Change ?Log\s*$/i.test(lines[first])) {
+    let start = first + 1;
+    while (start < lines.length && !/^#{1,6} /.test(lines[start])) start += 1;
+    lines.splice(0, start);
+  }
+  const html = blocks(lines);
+  return html ? `\n${html}\n` : "";
+}

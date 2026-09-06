@@ -1,17 +1,14 @@
 {
   "name": "remark-conventional-commit-changelog-timeline",
   "version": "3.3.4",
-  "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
+  "description": "Render Codsen Conventional Commits changelogs as timeline HTML.",
   "keywords": [
-    "unified",
-    "remark",
-    "remark-plugin",
-    "plugin",
-    "mdast",
     "markdown",
     "changelog",
     "conventional",
-    "commits"
+    "commits",
+    "timeline",
+    "html"
   ],
   "homepage": "https://codsen.com/os/remark-conventional-commit-changelog-timeline",
   "repository": {
@@ -62,18 +59,17 @@
     "licence": {
       "extras": [""]
     },
-    "various": {}
-  },
-  "dependencies": {
-    "@types/hast": "^3.0.5",
-    "hast-util-raw": "^9.1.0",
-    "object-delete-key": "^4.2.3",
-    "unified": "^11.0.5",
-    "unist-builder": "^4.0.0",
-    "unist-util-visit": "^5.1.0"
-  },
-  "devDependencies": {
-    "mdast-util-to-hast": "^13.2.1"
+    "various": {},
+    "readme": {
+      "features": {
+        "summary": "Render Codsen release notes with one function call.",
+        "items": [
+          "No dependencies or parser setup.",
+          "Fixed release dates and section emojis matching codsen.com.",
+          "Preserves links, inline formatting, lists and fenced code in historical Codsen changelogs."
+        ]
+      }
+    }
   },
   "engines": {
     "node": ">=18.20.8"

@@ -1,25 +1,19 @@
-import type { Root } from "hast";
-import changelogTimeline, {
-  type Opts,
-} from "remark-conventional-commit-changelog-timeline";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import type { Plugin } from "unified";
-import { unified } from "unified";
+import changelogTimeline from "remark-conventional-commit-changelog-timeline";
 
-const processor = () => unified().use(remarkParse).use(remarkRehype);
-const hastPlugin: Plugin<[options?: Partial<Opts>], Root> = changelogTimeline;
+const render: (markdown: string) => string = changelogTimeline;
+const html: string = render("## 1.0.0 (2026-08-12)\n\n- First release");
 
-processor().use(hastPlugin);
-processor().use(changelogTimeline);
-processor().use(changelogTimeline, {});
-processor().use(changelogTimeline, { dateDivLocale: "en-GB" });
-processor().use(changelogTimeline, {
-  dateDivMarkup: ({ day, month, year }) => `${day} ${month} ${year}`,
-});
+changelogTimeline("");
+changelogTimeline(html);
 
-// @ts-expect-error -- unknown options must remain rejected.
-processor().use(changelogTimeline, { unknownOption: true });
+// @ts-expect-error -- the Markdown input is required.
+changelogTimeline();
 
-// @ts-expect-error -- known options must retain their declared types.
-processor().use(changelogTimeline, { dateDivLocale: 1 });
+// @ts-expect-error -- the input must be a string.
+changelogTimeline(123);
+
+// @ts-expect-error -- the formatter no longer accepts a syntax tree.
+changelogTimeline({ type: "root", children: [] });
+
+// @ts-expect-error -- formatting options were removed.
+changelogTimeline("# 1.0.0 (2026-08-12)", { dateDivLocale: "en-GB" });

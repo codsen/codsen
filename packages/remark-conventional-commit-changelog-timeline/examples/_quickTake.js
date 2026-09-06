@@ -1,28 +1,8 @@
 // Quick Take
 
 import { strict as assert } from "node:assert";
-import rehypeFormat from "rehype-format";
-import rehypeStringify from "rehype-stringify";
-import remarkGfm from "remark-gfm";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import { unified } from "unified";
 
-import c from "../dist/remark-conventional-commit-changelog-timeline.esm.js";
-
-function render(str, opts) {
-  let res = unified()
-    .data("settings", { fragment: true })
-    .use(remarkParse)
-    .use(remarkGfm)
-    .use(remarkRehype)
-    .use(c, opts)
-    .use(rehypeFormat)
-    .use(rehypeStringify)
-    .processSync(str);
-
-  return res.value;
-}
+import changelogTimeline from "../dist/remark-conventional-commit-changelog-timeline.esm.js";
 
 let input = `
 # Change Log
@@ -40,7 +20,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 let expected = `
 <h2>3.1.0</h2>
-<div class="release-date">Aug 12, <span>2022</span></div>
+<div class="release-date">12 Aug <span>2022</span></div>
 <h3><span class="emoji">✨</span> Features</h3>
 <ul>
   <li>abc</li>
@@ -48,13 +28,4 @@ let expected = `
 </ul>
 `;
 
-assert.equal(
-  render(input, {
-    // defaults:
-    dateDivLocale: "en-US",
-
-    dateDivMarkup: ({ date, year, month, day }) =>
-      `${month} ${day}, <span>${year}</span>`,
-  }),
-  expected,
-);
+assert.equal(changelogTimeline(input), expected);
