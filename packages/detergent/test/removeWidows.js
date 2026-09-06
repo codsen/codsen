@@ -382,8 +382,8 @@ test("014 - opts.removeWidows - glues UK postcodes - removeWidows off", () => {
   });
 });
 
-test("015 - opts.removeWidows - nbsp's not added within hidden HTML tags", () => {
-  mixer().forEach((opt, n) => {
+test("015 - opts.removeWidows - placeholder text does not masquerade as HTML", () => {
+  mixer({ removeWidows: true }).forEach((opt, n) => {
     equal(
       det(
         ok,
@@ -392,14 +392,14 @@ test("015 - opts.removeWidows - nbsp's not added within hidden HTML tags", () =>
         "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         opt,
       ).res,
-      "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br${opt.convertEntities ? "&nbsp;" : rawNbsp}/@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
       "015.01",
     );
   });
 });
 
-test("016 - opts.removeWidows - nbsp's not added within hidden HTML tags", () => {
-  mixer().forEach((opt, n) => {
+test("016 - opts.removeWidows - placeholder text does not masquerade as HTML", () => {
+  mixer({ removeWidows: true }).forEach((opt, n) => {
     equal(
       det(
         ok,
@@ -408,14 +408,14 @@ test("016 - opts.removeWidows - nbsp's not added within hidden HTML tags", () =>
         "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         opt,
       ).res,
-      "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br${opt.convertEntities ? "&nbsp;" : rawNbsp}@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
       "016.01",
     );
   });
 });
 
-test("017 - opts.removeWidows - nbsp's not added within hidden HTML tags", () => {
-  mixer().forEach((opt, n) => {
+test("017 - opts.removeWidows - placeholder text does not masquerade as HTML", () => {
+  mixer({ removeWidows: true }).forEach((opt, n) => {
     equal(
       det(
         ok,
@@ -424,14 +424,14 @@ test("017 - opts.removeWidows - nbsp's not added within hidden HTML tags", () =>
         "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         opt,
       ).res,
-      "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr${opt.convertEntities ? "&nbsp;" : rawNbsp}/@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
       "017.01",
     );
   });
 });
 
-test("018 - opts.removeWidows - nbsp's not added within hidden HTML tags", () => {
-  mixer().forEach((opt, n) => {
+test("018 - opts.removeWidows - placeholder text does not masquerade as HTML", () => {
+  mixer({ removeWidows: true }).forEach((opt, n) => {
     equal(
       det(
         ok,
@@ -440,7 +440,7 @@ test("018 - opts.removeWidows - nbsp's not added within hidden HTML tags", () =>
         "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         opt,
       ).res,
-      "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr${opt.convertEntities ? "&nbsp;" : rawNbsp}@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
       "018.01",
     );
   });

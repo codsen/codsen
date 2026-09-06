@@ -783,8 +783,9 @@ function processCharacter(
                         0,
                       )}`,
                     );
-                  DEV && console.log(`offset by ${temp.length + 2}`);
-                  offsetBy(temp.length + 2);
+                  DEV && console.log(`offset by ${temp.length + 1}`);
+                  // The outer iterator also advances past the initial ampersand.
+                  offsetBy(temp.length + 1);
                 } else {
                   rangesArr.push([i, i + temp.length + 2, `'`]);
 
@@ -796,8 +797,9 @@ function processCharacter(
                         0,
                       )}`,
                     );
-                  DEV && console.log(`offset by ${temp.length + 2}`);
-                  offsetBy(temp.length + 2);
+                  DEV && console.log(`offset by ${temp.length + 1}`);
+                  // The outer iterator also advances past the initial ampersand.
+                  offsetBy(temp.length + 1);
                 }
               } else if (
                 opts.convertEntities &&

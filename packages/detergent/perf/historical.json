@@ -22,8 +22,8 @@
   "9.4.1": 6_315,
   "lastSlowerRun": {
     "against": 6_315,
-    "score": 5_523,
-    "version": "9.4.4",
+    "score": 5_517,
+    "version": "9.4.5",
     "worst": 4_630
   },
   "lastVersion": 6_315
