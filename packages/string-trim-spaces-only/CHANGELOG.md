@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 5.66% higher normalized benchmark score than v5.2.1 (6320824 → 6678753).
+- Recorded a 5.66% higher normalized benchmark score than v5.2.1 (6,320,824 → 6,678,753).
 
 ## 5.3.0 (2026-09-01)
 
@@ -27,7 +27,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 16.95% higher normalized benchmark score than v5.1.3 (5404861 → 6320824).
+- Recorded a 16.95% higher normalized benchmark score than v5.1.3 (5,404,861 → 6,320,824).
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
 
 ## 5.2.0 (2026-08-19)
@@ -48,7 +48,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 18.38% higher normalized benchmark score than v5.0.23 (4565544 → 5404861).
+- Recorded a 18.38% higher normalized benchmark score than v5.0.23 (4,565,544 → 5,404,861).
 
 ## 5.0.0 (2022-12-01)
 
@@ -66,7 +66,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 41.85% higher normalized benchmark score than v4.0.13 (4987287 → 7074301).
+- Recorded a 41.85% higher normalized benchmark score than v4.0.13 (4,987,287 → 7,074,301).
 
 ## 4.0.13 (2022-04-18)
 
@@ -76,25 +76,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 3.48% higher normalized benchmark score than v4.0.12 (4819370 → 4987287).
+- Recorded a 3.48% higher normalized benchmark score than v4.0.12 (4,819,370 → 4,987,287).
 
 ## 4.0.10 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 22.81% higher normalized benchmark score than v4.0.9 (7161338 → 8794968).
+- Recorded a 22.81% higher normalized benchmark score than v4.0.9 (7,161,338 → 8,794,968).
 
 ## 4.0.9 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 76.99% higher normalized benchmark score than v4.0.8 (4046196 → 7161338).
+- Recorded a 76.99% higher normalized benchmark score than v4.0.8 (4,046,196 → 7,161,338).
 
 ## 4.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 65.33% higher normalized benchmark score than v4.0.5 (4734852 → 7828222).
+- Recorded a 65.33% higher normalized benchmark score than v4.0.5 (4,734,852 → 7,828,222).
 
 ## 4.0.0 (2021-09-09)
 

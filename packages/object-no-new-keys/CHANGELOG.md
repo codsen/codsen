@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 5.1% higher normalized benchmark score than v5.3.0 (423576 → 445188).
+- Recorded a 5.1% higher normalized benchmark score than v5.3.0 (423,576 → 445,188).
 
 ## 5.3.1 (2026-08-22)
 
@@ -35,7 +35,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 72.24% higher normalized benchmark score than v5.1.19 (243963 → 420198).
+- Recorded a 72.24% higher normalized benchmark score than v5.1.19 (243,963 → 420,198).
 
 ## 5.1.0 (2023-05-13)
 
@@ -60,7 +60,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 32.91% higher normalized benchmark score than v4.1.2 (819881 → 1089675).
+- Recorded a 32.91% higher normalized benchmark score than v4.1.2 (819,881 → 1,089,675).
 
 ## 4.1.3 (2022-04-25)
 
@@ -76,7 +76,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 2.87% higher normalized benchmark score than v4.1.1 (797017 → 819881).
+- Recorded a 2.87% higher normalized benchmark score than v4.1.1 (797,017 → 819,881).
 
 ## 4.1.0 (2022-04-10)
 
@@ -88,19 +88,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 23.81% higher normalized benchmark score than v4.0.11 (803452 → 994736).
+- Recorded a 23.81% higher normalized benchmark score than v4.0.11 (803,452 → 994,736).
 
 ## 4.0.10 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 13.11% higher normalized benchmark score than v4.0.9 (828808 → 937459).
+- Recorded a 13.11% higher normalized benchmark score than v4.0.9 (828,808 → 937,459).
 
 ## 4.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 78.65% higher normalized benchmark score than v4.0.5 (1009397 → 1803262).
+- Recorded a 78.65% higher normalized benchmark score than v4.0.5 (1,009,397 → 1,803,262).
 
 ## 4.0.0 (2021-09-09)
 

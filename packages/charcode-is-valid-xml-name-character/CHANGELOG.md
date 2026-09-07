@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 2.84% higher normalized benchmark score than v3.1.3 (6421043 → 6603360).
+- Recorded a 2.84% higher normalized benchmark score than v3.1.3 (6,421,043 → 6,603,360).
 
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
 
@@ -27,13 +27,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 218.9% higher normalized benchmark score than v3.0.23 (2013508 → 6421043).
+- Recorded a 218.9% higher normalized benchmark score than v3.0.23 (2,013,508 → 6,421,043).
 
 ## 3.0.23 (2025-10-08)
 
 ### Performance Improvements
 
-- Recorded a 117.93% higher normalized benchmark score than v2.1.2 (923908 → 2013508).
+- Recorded a 117.93% higher normalized benchmark score than v2.1.2 (923,908 → 2,013,508).
 
 ## 3.0.0 (2022-12-01)
 
@@ -51,7 +51,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 107.18% higher normalized benchmark score than v2.1.1 (445938 → 923908).
+- Recorded a 107.18% higher normalized benchmark score than v2.1.1 (445,938 → 923,908).
 
 ## 2.1.0 (2022-04-11)
 
@@ -61,19 +61,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 35.29% higher normalized benchmark score than v2.0.12 (417347 → 564639).
+- Recorded a 35.29% higher normalized benchmark score than v2.0.12 (417,347 → 564,639).
 
 ## 2.0.9 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 10.57% higher normalized benchmark score than v2.0.8 (521303 → 576414).
+- Recorded a 10.57% higher normalized benchmark score than v2.0.8 (521,303 → 576,414).
 
 ## 2.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 19.85% higher normalized benchmark score than v2.0.5 (672384 → 805864).
+- Recorded a 19.85% higher normalized benchmark score than v2.0.5 (672,384 → 805,864).
 
 ## 2.0.0 (2021-09-09)
 

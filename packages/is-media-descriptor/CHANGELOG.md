@@ -19,7 +19,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 2.7% higher normalized benchmark score than v5.1.3 (911068 → 935698).
+- Recorded a 2.7% higher normalized benchmark score than v5.1.3 (911,068 → 935,698).
 
 ## 5.2.0 (2026-08-19)
 
@@ -50,13 +50,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 38.34% higher normalized benchmark score than v4.1.5 (837279 → 1158330).
+- Recorded a 38.34% higher normalized benchmark score than v4.1.5 (837,279 → 1,158,330).
 
 ## 4.1.5 (2022-05-04)
 
 ### Performance Improvements
 
-- Recorded a 16.27% higher normalized benchmark score than v4.1.2 (720147 → 837279).
+- Recorded a 16.27% higher normalized benchmark score than v4.1.2 (720,147 → 837,279).
 
 ## 4.1.2 (2022-04-18)
 
@@ -66,7 +66,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 21.89% higher normalized benchmark score than v4.1.1 (590815 → 720147).
+- Recorded a 21.89% higher normalized benchmark score than v4.1.1 (590,815 → 720,147).
 
 ## 4.1.0 (2022-04-11)
 
@@ -76,25 +76,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 4.47% higher normalized benchmark score than v4.0.12 (897639 → 937802).
+- Recorded a 4.47% higher normalized benchmark score than v4.0.12 (897,639 → 937,802).
 
 ## 4.0.12 (2022-01-22)
 
 ### Performance Improvements
 
-- Recorded a 33.04% higher normalized benchmark score than v4.0.11 (674720 → 897639).
+- Recorded a 33.04% higher normalized benchmark score than v4.0.11 (674,720 → 897,639).
 
 ## 4.0.8 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 3.18% higher normalized benchmark score than v4.0.7 (964191 → 994883).
+- Recorded a 3.18% higher normalized benchmark score than v4.0.7 (964,191 → 994,883).
 
 ## 4.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 38.35% higher normalized benchmark score than v4.0.5 (696906 → 964191).
+- Recorded a 38.35% higher normalized benchmark score than v4.0.5 (696,906 → 964,191).
 
 ## 4.0.0 (2021-09-09)
 

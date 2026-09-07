@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 57.97% higher normalized benchmark score than v1.8.0 (18614753 → 29406483).
+- Recorded a 57.97% higher normalized benchmark score than v1.8.0 (18,614,753 → 29,406,483).
 
 ## 1.10.0 (2026-09-01)
 

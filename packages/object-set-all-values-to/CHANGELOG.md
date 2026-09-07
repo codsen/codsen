@@ -13,7 +13,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 41.48% higher normalized benchmark score than v6.1.3 (307893 → 435605).
+- Recorded a 41.48% higher normalized benchmark score than v6.1.3 (307,893 → 435,605).
 
 ## 6.2.0 (2026-08-19)
 
@@ -35,13 +35,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 18.16% higher normalized benchmark score than v6.0.30 (260566 → 307893).
+- Recorded a 18.16% higher normalized benchmark score than v6.0.30 (260,566 → 307,893).
 
 ## 6.0.30 (2025-10-08)
 
 ### Performance Improvements
 
-- Recorded a 119.08% higher normalized benchmark score than v5.0.15 (118935 → 260566).
+- Recorded a 119.08% higher normalized benchmark score than v5.0.15 (118,935 → 260,566).
 
 ## 6.0.16 (2024-03-30)
 
@@ -66,31 +66,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 2.52% higher normalized benchmark score than v5.0.14 (116012 → 118935).
+- Recorded a 2.52% higher normalized benchmark score than v5.0.14 (116,012 → 118,935).
 
 ## 5.0.14 (2022-04-28)
 
 ### Performance Improvements
 
-- Recorded a 32.42% higher normalized benchmark score than v5.0.13 (87611 → 116012).
+- Recorded a 32.42% higher normalized benchmark score than v5.0.13 (87,611 → 116,012).
 
 ## 5.0.12 (2022-01-22)
 
 ### Performance Improvements
 
-- Recorded a 23.89% higher normalized benchmark score than v5.0.11 (70999 → 87962).
+- Recorded a 23.89% higher normalized benchmark score than v5.0.11 (70,999 → 87,962).
 
 ## 5.0.10 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 10.23% higher normalized benchmark score than v5.0.9 (101435 → 111810).
+- Recorded a 10.23% higher normalized benchmark score than v5.0.9 (101,435 → 111,810).
 
 ## 5.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 45.08% higher normalized benchmark score than v5.0.5 (93965 → 136322).
+- Recorded a 45.08% higher normalized benchmark score than v5.0.5 (93,965 → 136,322).
 
 ## 5.0.0 (2021-09-09)
 

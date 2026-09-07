@@ -31,13 +31,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 41.41% higher normalized benchmark score than v4.0.40 (295390 → 417718).
+- Recorded a 41.41% higher normalized benchmark score than v4.0.40 (295,390 → 417,718).
 
 ## 4.0.40 (2025-10-08)
 
 ### Performance Improvements
 
-- Recorded a 135.33% higher normalized benchmark score than v3.0.20 (125523 → 295390).
+- Recorded a 135.33% higher normalized benchmark score than v3.0.20 (125,523 → 295,390).
 
 ## 4.0.0 (2022-12-01)
 
@@ -55,37 +55,37 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 5.77% higher normalized benchmark score than v3.0.18 (139029 → 147047).
+- Recorded a 5.77% higher normalized benchmark score than v3.0.18 (139,029 → 147,047).
 
 ## 3.0.18 (2022-07-05)
 
 ### Performance Improvements
 
-- Recorded a 42.75% higher normalized benchmark score than v3.0.17 (97396 → 139029).
+- Recorded a 42.75% higher normalized benchmark score than v3.0.17 (97,396 → 139,029).
 
 ## 3.0.16 (2022-04-18)
 
 ### Performance Improvements
 
-- Recorded a 17.58% higher normalized benchmark score than v3.0.15 (92007 → 108179).
+- Recorded a 17.58% higher normalized benchmark score than v3.0.15 (92,007 → 108,179).
 
 ## 3.0.13 (2022-04-10)
 
 ### Performance Improvements
 
-- Recorded a 14.7% higher normalized benchmark score than v3.0.12 (91602 → 105071).
+- Recorded a 14.7% higher normalized benchmark score than v3.0.12 (91,602 → 105,071).
 
 ## 3.0.9 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 28.69% higher normalized benchmark score than v3.0.8 (111514 → 143507).
+- Recorded a 28.69% higher normalized benchmark score than v3.0.8 (111,514 → 143,507).
 
 ## 3.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 19.02% higher normalized benchmark score than v3.0.5 (147176 → 175163).
+- Recorded a 19.02% higher normalized benchmark score than v3.0.5 (147,176 → 175,163).
 
 ## 3.0.0 (2021-09-09)
 

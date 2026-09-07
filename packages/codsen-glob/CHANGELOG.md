@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 5.99% higher normalized benchmark score than v1.0.0 (7464 → 7911).
+- Recorded a 5.99% higher normalized benchmark score than v1.0.0 (7,464 → 7,911).
 
 ## 1.1.1 (2026-09-03)
 

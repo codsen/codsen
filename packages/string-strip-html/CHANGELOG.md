@@ -492,7 +492,7 @@ This makes it easier for us to contain all new `opts.dumpLinkHrefsNearby` settin
 - Improved algorithm to understand HTML code that has been abruptly chopped off. If you select bunch of HTML where beginning is valid, but ending is somewhere in the middle of the tags, styles or whatnot, now that tag will be removed.
 - Improved algorithm to detect and clean tags without closing bracket, if a new tag follows, with or without whitespace in between.
 
-64 unit tests, 451 assertions, 2226 lines of unit tests at 90% line coverage.
+64 unit tests, 451 assertions, 2,226 lines of unit tests at 90% line coverage.
 
 ## 2.1.0 (2018-05-31)
 

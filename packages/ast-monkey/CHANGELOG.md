@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 61.07% higher normalized benchmark score than v9.2.1 (111801 → 180078).
+- Recorded a 61.07% higher normalized benchmark score than v9.2.1 (111,801 → 180,078).
 
 ## 9.2.3 (2026-09-01)
 
@@ -28,7 +28,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 67.73% higher normalized benchmark score than v9.1.3 (66657 → 111801).
+- Recorded a 67.73% higher normalized benchmark score than v9.1.3 (66,657 → 111,801).
 
 ## 9.2.0 (2026-08-19)
 
@@ -47,13 +47,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 17.46% higher normalized benchmark score than v9.0.40 (56751 → 66657).
+- Recorded a 17.46% higher normalized benchmark score than v9.0.40 (56,751 → 66,657).
 
 ## 9.0.40 (2025-10-08)
 
 ### Performance Improvements
 
-- Recorded a 14% higher normalized benchmark score than v8.0.21 (49781 → 56751).
+- Recorded a 14% higher normalized benchmark score than v8.0.21 (49,781 → 56,751).
 
 ## 9.0.0 (2022-12-01)
 
@@ -71,13 +71,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 47.32% higher normalized benchmark score than v8.0.20 (33791 → 49781).
+- Recorded a 47.32% higher normalized benchmark score than v8.0.20 (33,791 → 49,781).
 
 ## 8.0.18 (2022-05-04)
 
 ### Performance Improvements
 
-- Recorded a 235.62% higher normalized benchmark score than v8.0.17 (14771 → 49574).
+- Recorded a 235.62% higher normalized benchmark score than v8.0.17 (14,771 → 49,574).
 
 ## 8.0.16 (2022-04-18)
 
@@ -89,31 +89,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 82.04% higher normalized benchmark score than v8.0.15 (13689 → 24920).
+- Recorded a 82.04% higher normalized benchmark score than v8.0.15 (13,689 → 24,920).
 
 ## 8.0.13 (2022-04-10)
 
 ### Performance Improvements
 
-- Recorded a 27% higher normalized benchmark score than v8.0.12 (21637 → 27479).
+- Recorded a 27% higher normalized benchmark score than v8.0.12 (21,637 → 27,479).
 
 ## 8.0.12 (2022-01-22)
 
 ### Performance Improvements
 
-- Recorded a 4.99% higher normalized benchmark score than v8.0.11 (20609 → 21637).
+- Recorded a 4.99% higher normalized benchmark score than v8.0.11 (20,609 → 21,637).
 
 ## 8.0.9 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 45.5% higher normalized benchmark score than v8.0.8 (18017 → 26215).
+- Recorded a 45.5% higher normalized benchmark score than v8.0.8 (18,017 → 26,215).
 
 ## 8.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 3.4% higher normalized benchmark score than v8.0.5 (26983 → 27901).
+- Recorded a 3.4% higher normalized benchmark score than v8.0.5 (26,983 → 27,901).
 
 ## 8.0.0 (2021-09-09)
 

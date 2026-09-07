@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 9.08% higher normalized benchmark score than v3.2.0 (122164 → 133257).
+- Recorded a 9.08% higher normalized benchmark score than v3.2.0 (122,164 → 133,257).
 
 ## 3.2.1 (2026-09-01)
 

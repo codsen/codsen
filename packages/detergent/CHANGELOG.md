@@ -34,7 +34,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 22.29% higher normalized benchmark score than v9.3.3 (5164 → 6315).
+- Recorded a 22.29% higher normalized benchmark score than v9.3.3 (5,164 → 6,315).
 
 ## 9.4.0 (2026-08-19)
 
@@ -56,7 +56,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 579.47% higher normalized benchmark score than v9.2.25 (760 → 5164).
+- Recorded a 579.47% higher normalized benchmark score than v9.2.25 (760 → 5,164).
 
 ## 9.2.0 (2023-04-16)
 
@@ -86,19 +86,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 37.28% higher normalized benchmark score than v8.0.24 (1792 → 2460).
+- Recorded a 37.28% higher normalized benchmark score than v8.0.24 (1,792 → 2,460).
 
 ## 8.0.23 (2022-07-16)
 
 ### Performance Improvements
 
-- Recorded a 36.59% higher normalized benchmark score than v8.0.22 (1484 → 2027).
+- Recorded a 36.59% higher normalized benchmark score than v8.0.22 (1,484 → 2,027).
 
 ## 8.0.20 (2022-07-05)
 
 ### Performance Improvements
 
-- Recorded a 62.18% higher normalized benchmark score than v8.0.19 (981 → 1591).
+- Recorded a 62.18% higher normalized benchmark score than v8.0.19 (981 → 1,591).
 
 ## 8.0.19 (2022-05-04)
 
@@ -116,7 +116,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 63.24% higher normalized benchmark score than v8.0.15 (778 → 1270).
+- Recorded a 63.24% higher normalized benchmark score than v8.0.15 (778 → 1,270).
 
 ## 8.0.12 (2022-01-22)
 

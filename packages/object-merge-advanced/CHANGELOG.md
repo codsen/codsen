@@ -21,7 +21,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 66.13% higher normalized benchmark score than v14.2.0 (67485 → 112116).
+- Recorded a 66.13% higher normalized benchmark score than v14.2.0 (67,485 → 112,116).
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
 - record lodash-es removal benchmarks ([0f69b6f](https://github.com/codsen/codsen/commit/0f69b6fdb8c3be04eaa02f82de107390b5263ce9))
 
@@ -41,14 +41,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 9.16% higher normalized benchmark score than v14.1.3 (61822 → 67485).
+- Recorded a 9.16% higher normalized benchmark score than v14.1.3 (61,822 → 67,485).
 - stremline subset key checks ([a6b6014](https://github.com/codsen/codsen/commit/a6b601443be8921351f41ca44bac0e9fbb3f540a))
 
 ## 14.1.3 (2026-01-15)
 
 ### Performance Improvements
 
-- Recorded a 64.23% higher normalized benchmark score than v14.0.32 (37644 → 61822).
+- Recorded a 64.23% higher normalized benchmark score than v14.0.32 (37,644 → 61,822).
 
 ## 14.0.0 (2022-12-01)
 
@@ -66,13 +66,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 3.15% higher normalized benchmark score than v13.1.2 (37391 → 38570).
+- Recorded a 3.15% higher normalized benchmark score than v13.1.2 (37,391 → 38,570).
 
 ## 13.1.2 (2022-04-28)
 
 ### Performance Improvements
 
-- Recorded a 49.94% higher normalized benchmark score than v13.1.1 (24937 → 37391).
+- Recorded a 49.94% higher normalized benchmark score than v13.1.1 (24,937 → 37,391).
 
 ## 13.1.1 (2022-04-18)
 
@@ -82,7 +82,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 81.19% higher normalized benchmark score than v13.1.0 (13763 → 24937).
+- Recorded a 81.19% higher normalized benchmark score than v13.1.0 (13,763 → 24,937).
 
 ## 13.1.0 (2022-04-11)
 
@@ -94,19 +94,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 14.7% higher normalized benchmark score than v13.0.11 (15580 → 17871).
+- Recorded a 14.7% higher normalized benchmark score than v13.0.11 (15,580 → 17,871).
 
 ## 13.0.9 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 44.83% higher normalized benchmark score than v13.0.8 (17655 → 25570).
+- Recorded a 44.83% higher normalized benchmark score than v13.0.8 (17,655 → 25,570).
 
 ## 13.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 34.2% higher normalized benchmark score than v13.0.5 (24703 → 33152).
+- Recorded a 34.2% higher normalized benchmark score than v13.0.5 (24,703 → 33,152).
 
 ## 13.0.0 (2021-09-09)
 

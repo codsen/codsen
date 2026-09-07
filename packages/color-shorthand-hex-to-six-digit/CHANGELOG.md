@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 24.02% higher normalized benchmark score than v5.2.1 (878026 → 1088908).
+- Recorded a 24.02% higher normalized benchmark score than v5.2.1 (878,026 → 1,088,908).
 
 ## 5.2.2 (2026-09-01)
 
@@ -27,7 +27,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 8.6% higher normalized benchmark score than v5.1.3 (808501 → 878026).
+- Recorded a 8.6% higher normalized benchmark score than v5.1.3 (808,501 → 878,026).
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
 
 ## 5.2.0 (2026-08-19)
@@ -59,31 +59,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 46.67% higher normalized benchmark score than v4.0.13 (947138 → 1389213).
+- Recorded a 46.67% higher normalized benchmark score than v4.0.13 (947,138 → 1,389,213).
 
 ## 4.0.13 (2022-04-18)
 
 ### Performance Improvements
 
-- Recorded a 17.94% higher normalized benchmark score than v4.0.12 (803091 → 947138).
+- Recorded a 17.94% higher normalized benchmark score than v4.0.12 (803,091 → 947,138).
 
 ## 4.0.12 (2022-01-22)
 
 ### Performance Improvements
 
-- Recorded a 13.26% higher normalized benchmark score than v4.0.11 (709052 → 803091).
+- Recorded a 13.26% higher normalized benchmark score than v4.0.11 (709,052 → 803,091).
 
 ## 4.0.9 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 24.93% higher normalized benchmark score than v4.0.8 (1036072 → 1294319).
+- Recorded a 24.93% higher normalized benchmark score than v4.0.8 (1,036,072 → 1,294,319).
 
 ## 4.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 41.06% higher normalized benchmark score than v4.0.5 (958188 → 1351626).
+- Recorded a 41.06% higher normalized benchmark score than v4.0.5 (958,188 → 1,351,626).
 
 ## 4.0.0 (2021-09-09)
 

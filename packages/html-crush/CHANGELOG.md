@@ -38,7 +38,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 3440.01% higher normalized benchmark score than v6.1.3 (4.209022369707907 → 149).
+- Recorded a 3,440.01% higher normalized benchmark score than v6.1.3 (4.209022369707907 → 149).
 
 ## 6.2.0 (2026-08-19)
 

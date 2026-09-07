@@ -13,7 +13,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 15.04% higher normalized benchmark score than v6.1.3 (1074135 → 1235710).
+- Recorded a 15.04% higher normalized benchmark score than v6.1.3 (1,074,135 → 1,235,710).
 
 ## 6.2.0 (2026-08-19)
 
@@ -33,7 +33,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 6.73% higher normalized benchmark score than v6.0.30 (1006359 → 1074135).
+- Recorded a 6.73% higher normalized benchmark score than v6.0.30 (1,006,359 → 1,074,135).
 
 ## 6.0.0 (2022-12-01)
 
@@ -51,7 +51,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 17.28% higher normalized benchmark score than v5.1.2 (1074477 → 1260107).
+- Recorded a 17.28% higher normalized benchmark score than v5.1.2 (1,074,477 → 1,260,107).
 
 ## 5.1.0 (2022-04-11)
 
@@ -61,19 +61,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 38.25% higher normalized benchmark score than v5.0.12 (892465 → 1233857).
+- Recorded a 38.25% higher normalized benchmark score than v5.0.12 (892,465 → 1,233,857).
 
 ## 5.0.10 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 5.56% higher normalized benchmark score than v5.0.9 (1027090 → 1084177).
+- Recorded a 5.56% higher normalized benchmark score than v5.0.9 (1,027,090 → 1,084,177).
 
 ## 5.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 106.61% higher normalized benchmark score than v5.0.5 (851305 → 1758916).
+- Recorded a 106.61% higher normalized benchmark score than v5.0.5 (851,305 → 1,758,916).
 
 ## 5.0.0 (2021-09-09)
 

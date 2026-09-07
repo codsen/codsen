@@ -27,7 +27,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 15.44% higher normalized benchmark score than v5.0.30 (1007906 → 1163536).
+- Recorded a 15.44% higher normalized benchmark score than v5.0.30 (1,007,906 → 1,163,536).
 
 ## 5.0.0 (2022-12-01)
 
@@ -46,19 +46,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 11.04% higher normalized benchmark score than v4.1.6 (1516840 → 1684365).
+- Recorded a 11.04% higher normalized benchmark score than v4.1.6 (1,516,840 → 1,684,365).
 
 ## 4.1.6 (2022-07-05)
 
 ### Performance Improvements
 
-- Recorded a 7.17% higher normalized benchmark score than v4.1.5 (1415379 → 1516840).
+- Recorded a 7.17% higher normalized benchmark score than v4.1.5 (1,415,379 → 1,516,840).
 
 ## 4.1.5 (2022-05-04)
 
 ### Performance Improvements
 
-- Recorded a 14.97% higher normalized benchmark score than v4.1.3 (1231069 → 1415379).
+- Recorded a 14.97% higher normalized benchmark score than v4.1.3 (1,231,069 → 1,415,379).
 
 ## 4.1.4 (2022-04-24)
 
@@ -74,7 +74,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 35.16% higher normalized benchmark score than v4.1.2 (910834 → 1231069).
+- Recorded a 35.16% higher normalized benchmark score than v4.1.2 (910,834 → 1,231,069).
 
 ## 4.1.0 (2022-04-10)
 
@@ -84,13 +84,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 22.85% higher normalized benchmark score than v4.0.12 (1072432 → 1317431).
+- Recorded a 22.85% higher normalized benchmark score than v4.0.12 (1,072,432 → 1,317,431).
 
 ## 4.0.9 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 20.17% higher normalized benchmark score than v4.0.8 (1364931 → 1640171).
+- Recorded a 20.17% higher normalized benchmark score than v4.0.8 (1,364,931 → 1,640,171).
 
 ## 4.0.0 (2021-09-09)
 

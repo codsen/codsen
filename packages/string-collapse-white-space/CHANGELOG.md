@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 8.66% higher normalized benchmark score than v11.2.1 (236744 → 257257).
+- Recorded a 8.66% higher normalized benchmark score than v11.2.1 (236,744 → 257,257).
 
 ## 11.2.3 (2026-09-01)
 
@@ -25,7 +25,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 21.87% higher normalized benchmark score than v11.1.3 (194262 → 236744).
+- Recorded a 21.87% higher normalized benchmark score than v11.1.3 (194,262 → 236,744).
 
 ## 11.2.0 (2026-08-19)
 
@@ -44,7 +44,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 8.2% higher normalized benchmark score than v11.0.33 (179536 → 194262).
+- Recorded a 8.2% higher normalized benchmark score than v11.0.33 (179,536 → 194,262).
 
 ## 11.0.0 (2022-12-01)
 
@@ -63,19 +63,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 3.66% higher normalized benchmark score than v10.1.5 (257060 → 266476).
+- Recorded a 3.66% higher normalized benchmark score than v10.1.5 (257,060 → 266,476).
 
 ## 10.1.4 (2022-05-04)
 
 ### Performance Improvements
 
-- Recorded a 56.28% higher normalized benchmark score than v10.1.2 (167800 → 262246).
+- Recorded a 56.28% higher normalized benchmark score than v10.1.2 (167,800 → 262,246).
 
 ## 10.1.1 (2022-04-17)
 
 ### Performance Improvements
 
-- Recorded a 47.8% higher normalized benchmark score than v10.1.0 (151508 → 223935).
+- Recorded a 47.8% higher normalized benchmark score than v10.1.0 (151,508 → 223,935).
 
 ## 10.1.0 (2022-04-11)
 
@@ -85,19 +85,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 8.59% higher normalized benchmark score than v10.0.12 (139524 → 151508).
+- Recorded a 8.59% higher normalized benchmark score than v10.0.12 (139,524 → 151,508).
 
 ## 10.0.9 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 27.1% higher normalized benchmark score than v10.0.8 (182685 → 232193).
+- Recorded a 27.1% higher normalized benchmark score than v10.0.8 (182,685 → 232,193).
 
 ## 10.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 27.31% higher normalized benchmark score than v10.0.5 (246169 → 313408).
+- Recorded a 27.31% higher normalized benchmark score than v10.0.5 (246,169 → 313,408).
 
 ## 10.0.0 (2021-09-09)
 
@@ -231,7 +231,7 @@ Also, properly tested and fixed `opts.enforceSpacesOnly`. It now works as intend
 
 ## 4.3.0 (2018-12-26)
 
-- Add dynamically generated tests - 10000 random strings are checked to catch any false-positives ([43d7dc4](https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space/commits/43d7dc4))
+- Add dynamically generated tests - 10,000 random strings are checked to catch any false-positives ([43d7dc4](https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space/commits/43d7dc4))
 - Add `opts.removeEmptyLines` ([75e0671](https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space/commits/75e0671))
 
 ## 4.2.0 (2018-10-25)

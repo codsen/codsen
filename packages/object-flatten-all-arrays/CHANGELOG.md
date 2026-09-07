@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 8.44% higher normalized benchmark score than v7.2.0 (396885 → 430381).
+- Recorded a 8.44% higher normalized benchmark score than v7.2.0 (396,885 → 430,381).
 
 ## 7.2.1 (2026-08-22)
 
@@ -31,7 +31,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 12.88% higher normalized benchmark score than v7.1.3 (351603 → 396885).
+- Recorded a 12.88% higher normalized benchmark score than v7.1.3 (351,603 → 396,885).
 
 - flatten arrays from a single cloned input ([e1cbcd8](https://github.com/codsen/codsen/commit/e1cbcd81e72719374b2357a4847ed8edd2274ea0))
 
@@ -39,13 +39,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 26.42% higher normalized benchmark score than v7.0.33 (278126 → 351603).
+- Recorded a 26.42% higher normalized benchmark score than v7.0.33 (278,126 → 351,603).
 
 ## 7.0.33 (2025-10-08)
 
 ### Performance Improvements
 
-- Recorded a 91.75% higher normalized benchmark score than v6.1.3 (145048 → 278126).
+- Recorded a 91.75% higher normalized benchmark score than v6.1.3 (145,048 → 278,126).
 
 ## 7.0.19 (2024-03-30)
 
@@ -70,13 +70,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 46.57% higher normalized benchmark score than v6.1.1 (105773 → 155029).
+- Recorded a 46.57% higher normalized benchmark score than v6.1.1 (105,773 → 155,029).
 
 ## 6.1.1 (2022-04-18)
 
 ### Performance Improvements
 
-- Recorded a 9.76% higher normalized benchmark score than v6.1.0 (96371 → 105773).
+- Recorded a 9.76% higher normalized benchmark score than v6.1.0 (96,371 → 105,773).
 
 ## 6.1.0 (2022-04-10)
 
@@ -88,13 +88,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 6.79% higher normalized benchmark score than v6.0.9 (127827 → 136512).
+- Recorded a 6.79% higher normalized benchmark score than v6.0.9 (127,827 → 136,512).
 
 ## 6.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 40.18% higher normalized benchmark score than v6.0.5 (124950 → 175156).
+- Recorded a 40.18% higher normalized benchmark score than v6.0.5 (124,950 → 175,156).
 
 ## 6.0.0 (2021-09-09)
 

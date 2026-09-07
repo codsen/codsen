@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 21.93% higher normalized benchmark score than v4.2.1 (349506 → 426159).
+- Recorded a 21.93% higher normalized benchmark score than v4.2.1 (349,506 → 426,159).
 
 ## 4.2.2 (2026-08-22)
 
@@ -32,7 +32,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 16.45% higher normalized benchmark score than v4.0.33 (300012 → 349355).
+- Recorded a 16.45% higher normalized benchmark score than v4.0.33 (300,012 → 349,355).
 
 ## 4.0.0 (2022-12-01)
 
@@ -50,31 +50,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 241.56% higher normalized benchmark score than v3.0.15 (118069 → 403276).
+- Recorded a 241.56% higher normalized benchmark score than v3.0.15 (118,069 → 403,276).
 
 ## 3.0.13 (2022-04-10)
 
 ### Performance Improvements
 
-- Recorded a 8.75% higher normalized benchmark score than v3.0.12 (164252 → 178631).
+- Recorded a 8.75% higher normalized benchmark score than v3.0.12 (164,252 → 178,631).
 
 ## 3.0.10 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 14.81% higher normalized benchmark score than v3.0.9 (213337 → 244925).
+- Recorded a 14.81% higher normalized benchmark score than v3.0.9 (213,337 → 244,925).
 
 ## 3.0.9 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 10.16% higher normalized benchmark score than v3.0.8 (193662 → 213337).
+- Recorded a 10.16% higher normalized benchmark score than v3.0.8 (193,662 → 213,337).
 
 ## 3.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 4.64% higher normalized benchmark score than v3.0.5 (316753 → 331452).
+- Recorded a 4.64% higher normalized benchmark score than v3.0.5 (316,753 → 331,452).
 
 ## 3.0.0 (2021-09-09)
 

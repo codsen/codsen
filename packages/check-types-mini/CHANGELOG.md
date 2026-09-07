@@ -17,7 +17,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 6.2% higher normalized benchmark score than v8.2.1 (306214 → 325188).
+- Recorded a 6.2% higher normalized benchmark score than v8.2.1 (306,214 → 325,188).
 
 ## 8.2.1 (2026-08-22)
 
@@ -43,13 +43,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 263.45% higher normalized benchmark score than v8.0.33 (84263 → 306252).
+- Recorded a 263.45% higher normalized benchmark score than v8.0.33 (84,263 → 306,252).
 
 ## 8.0.33 (2025-10-08)
 
 ### Performance Improvements
 
-- Recorded a 75.44% higher normalized benchmark score than v7.1.5 (48030 → 84263).
+- Recorded a 75.44% higher normalized benchmark score than v7.1.5 (48,030 → 84,263).
 
 ## 8.0.0 (2022-12-01)
 
@@ -67,7 +67,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 22.77% higher normalized benchmark score than v7.1.3 (48869 → 59997).
+- Recorded a 22.77% higher normalized benchmark score than v7.1.3 (48,869 → 59,997).
 
 ## 7.1.3 (2022-04-18)
 
@@ -78,13 +78,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 26.24% higher normalized benchmark score than v7.1.2 (38712 → 48869).
+- Recorded a 26.24% higher normalized benchmark score than v7.1.2 (38,712 → 48,869).
 
 ## 7.1.1 (2022-04-11)
 
 ### Performance Improvements
 
-- Recorded a 30.68% higher normalized benchmark score than v7.1.0 (31353 → 40973).
+- Recorded a 30.68% higher normalized benchmark score than v7.1.0 (31,353 → 40,973).
 
 ## 7.1.0 (2022-04-10)
 
@@ -96,19 +96,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 46.58% higher normalized benchmark score than v7.0.11 (29323 → 42983).
+- Recorded a 46.58% higher normalized benchmark score than v7.0.11 (29,323 → 42,983).
 
 ## 7.0.9 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 26.63% higher normalized benchmark score than v7.0.8 (43496 → 55081).
+- Recorded a 26.63% higher normalized benchmark score than v7.0.8 (43,496 → 55,081).
 
 ## 7.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 31.72% higher normalized benchmark score than v7.0.5 (49375 → 65038).
+- Recorded a 31.72% higher normalized benchmark score than v7.0.5 (49,375 → 65,038).
 
 ## 7.0.0 (2021-09-09)
 

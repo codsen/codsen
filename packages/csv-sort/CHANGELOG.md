@@ -14,7 +14,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 36.04% higher normalized benchmark score than v7.2.0 (1365 → 1857).
+- Recorded a 36.04% higher normalized benchmark score than v7.2.0 (1,365 → 1,857).
 
 ## 7.2.0 (2026-08-19)
 
@@ -35,7 +35,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 47.04% higher normalized benchmark score than v7.0.30 (929 → 1366).
+- Recorded a 47.04% higher normalized benchmark score than v7.0.30 (929 → 1,366).
 
 ## 7.0.0 (2022-12-01)
 
@@ -53,7 +53,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 139.79% higher normalized benchmark score than v6.0.17 (583 → 1398).
+- Recorded a 139.79% higher normalized benchmark score than v6.0.17 (583 → 1,398).
 
 ## 6.0.17 (2022-04-18)
 

@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 44.94% higher normalized benchmark score than v12.1.3 (20171 → 29236).
+- Recorded a 44.94% higher normalized benchmark score than v12.1.3 (20,171 → 29,236).
 
 ## 12.2.3 (2026-09-01)
 
@@ -40,7 +40,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 13.8% higher normalized benchmark score than v12.0.33 (17725 → 20171).
+- Recorded a 13.8% higher normalized benchmark score than v12.0.33 (17,725 → 20,171).
 
 ## 12.1.0 (2025-10-15)
 
@@ -87,13 +87,13 @@ assert.deepEqual(data, target);
 
 ### Performance Improvements
 
-- Recorded a 49.52% higher normalized benchmark score than v11.0.17 (14098 → 21080).
+- Recorded a 49.52% higher normalized benchmark score than v11.0.17 (14,098 → 21,080).
 
 ## 11.0.17 (2022-05-04)
 
 ### Performance Improvements
 
-- Recorded a 17.98% higher normalized benchmark score than v11.0.16 (11949 → 14098).
+- Recorded a 17.98% higher normalized benchmark score than v11.0.16 (11,949 → 14,098).
 
 ## 11.0.16 (2022-04-18)
 
@@ -103,37 +103,37 @@ assert.deepEqual(data, target);
 
 ### Performance Improvements
 
-- Recorded a 16.19% higher normalized benchmark score than v11.0.15 (10284 → 11949).
+- Recorded a 16.19% higher normalized benchmark score than v11.0.15 (10,284 → 11,949).
 
 ## 11.0.14 (2022-04-11)
 
 ### Performance Improvements
 
-- Recorded a 12.27% higher normalized benchmark score than v11.0.13 (16444 → 18461).
+- Recorded a 12.27% higher normalized benchmark score than v11.0.13 (16,444 → 18,461).
 
 ## 11.0.13 (2022-04-10)
 
 ### Performance Improvements
 
-- Recorded a 43.19% higher normalized benchmark score than v11.0.12 (11484 → 16444).
+- Recorded a 43.19% higher normalized benchmark score than v11.0.12 (11,484 → 16,444).
 
 ## 11.0.11 (2022-01-11)
 
 ### Performance Improvements
 
-- Recorded a 24.23% higher normalized benchmark score than v11.0.10 (12791 → 15890).
+- Recorded a 24.23% higher normalized benchmark score than v11.0.10 (12,791 → 15,890).
 
 ## 11.0.9 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 25.49% higher normalized benchmark score than v11.0.8 (11090 → 13917).
+- Recorded a 25.49% higher normalized benchmark score than v11.0.8 (11,090 → 13,917).
 
 ## 11.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 47.8% higher normalized benchmark score than v11.0.5 (14775 → 21838).
+- Recorded a 47.8% higher normalized benchmark score than v11.0.5 (14,775 → 21,838).
 
 ## 11.0.0 (2021-09-09)
 

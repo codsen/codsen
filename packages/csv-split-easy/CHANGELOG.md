@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 22.14% higher normalized benchmark score than v7.1.3 (141101 → 172335).
+- Recorded a 22.14% higher normalized benchmark score than v7.1.3 (141,101 → 172,335).
 
 ## 7.2.2 (2026-08-22)
 
@@ -46,13 +46,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 5.62% higher normalized benchmark score than v6.0.19 (182858 → 193132).
+- Recorded a 5.62% higher normalized benchmark score than v6.0.19 (182,858 → 193,132).
 
 ## 6.0.18 (2022-05-04)
 
 ### Performance Improvements
 
-- Recorded a 102.77% higher normalized benchmark score than v6.0.17 (108101 → 219199).
+- Recorded a 102.77% higher normalized benchmark score than v6.0.17 (108,101 → 219,199).
 
 ## 6.0.17 (2022-04-18)
 
@@ -64,37 +64,37 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 22.68% higher normalized benchmark score than v6.0.15 (101680 → 124743).
+- Recorded a 22.68% higher normalized benchmark score than v6.0.15 (101,680 → 124,743).
 
 ## 6.0.15 (2022-04-11)
 
 ### Performance Improvements
 
-- Recorded a 6.28% higher normalized benchmark score than v6.0.14 (95669 → 101680).
+- Recorded a 6.28% higher normalized benchmark score than v6.0.14 (95,669 → 101,680).
 
 ## 6.0.13 (2022-03-21)
 
 ### Performance Improvements
 
-- Recorded a 17.58% higher normalized benchmark score than v6.0.12 (122854 → 144452).
+- Recorded a 17.58% higher normalized benchmark score than v6.0.12 (122,854 → 144,452).
 
 ## 6.0.10 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 5.28% higher normalized benchmark score than v6.0.9 (153358 → 161454).
+- Recorded a 5.28% higher normalized benchmark score than v6.0.9 (153,358 → 161,454).
 
 ## 6.0.9 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 47.17% higher normalized benchmark score than v6.0.8 (104204 → 153358).
+- Recorded a 47.17% higher normalized benchmark score than v6.0.8 (104,204 → 153,358).
 
 ## 6.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 16.72% higher normalized benchmark score than v6.0.5 (184478 → 215323).
+- Recorded a 16.72% higher normalized benchmark score than v6.0.5 (184,478 → 215,323).
 
 ## 6.0.0 (2021-09-09)
 

@@ -37,14 +37,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 6.19% higher normalized benchmark score than v6.2.3 (25406 → 26979).
+- Recorded a 6.19% higher normalized benchmark score than v6.2.3 (25,406 → 26,979).
 - build boolean combinations without an intermediate matrix ([87defb1](https://github.com/codsen/codsen/commit/87defb187b407b0ed0bd509eb0e13d3c6cf35714))
 
 ## 6.2.3 (2026-01-15)
 
 ### Performance Improvements
 
-- Recorded a 53.37% higher normalized benchmark score than v6.1.19 (16565 → 25406).
+- Recorded a 53.37% higher normalized benchmark score than v6.1.19 (16,565 → 25,406).
 
 ## 6.1.0 (2023-05-13)
 
@@ -69,31 +69,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 7.87% higher normalized benchmark score than v5.0.14 (29425 → 31742).
+- Recorded a 7.87% higher normalized benchmark score than v5.0.14 (29,425 → 31,742).
 
 ## 5.0.14 (2022-04-28)
 
 ### Performance Improvements
 
-- Recorded a 64.49% higher normalized benchmark score than v5.0.13 (17889 → 29425).
+- Recorded a 64.49% higher normalized benchmark score than v5.0.13 (17,889 → 29,425).
 
 ## 5.0.12 (2022-01-22)
 
 ### Performance Improvements
 
-- Recorded a 8.15% higher normalized benchmark score than v5.0.11 (16875 → 18250).
+- Recorded a 8.15% higher normalized benchmark score than v5.0.11 (16,875 → 18,250).
 
 ## 5.0.9 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 31.27% higher normalized benchmark score than v5.0.8 (18977 → 24912).
+- Recorded a 31.27% higher normalized benchmark score than v5.0.8 (18,977 → 24,912).
 
 ## 5.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 41.05% higher normalized benchmark score than v5.0.5 (25917 → 36556).
+- Recorded a 41.05% higher normalized benchmark score than v5.0.5 (25,917 → 36,556).
 
 ## 5.0.0 (2021-09-09)
 

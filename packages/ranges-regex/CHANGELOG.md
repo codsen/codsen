@@ -14,7 +14,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 2.7% higher normalized benchmark score than v6.2.0 (1189475 → 1221560).
+- Recorded a 2.7% higher normalized benchmark score than v6.2.0 (1,189,475 → 1,221,560).
 
 ## 6.2.0 (2026-08-19)
 
@@ -34,7 +34,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 8.95% higher normalized benchmark score than v6.1.3 (1091775 → 1189475).
+- Recorded a 8.95% higher normalized benchmark score than v6.1.3 (1,091,775 → 1,189,475).
 
 ## 6.0.0 (2022-12-01)
 
@@ -52,25 +52,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 19.53% higher normalized benchmark score than v5.1.4 (1167965 → 1396063).
+- Recorded a 19.53% higher normalized benchmark score than v5.1.4 (1,167,965 → 1,396,063).
 
 ## 5.1.4 (2022-07-05)
 
 ### Performance Improvements
 
-- Recorded a 33.12% higher normalized benchmark score than v5.1.3 (877390 → 1167965).
+- Recorded a 33.12% higher normalized benchmark score than v5.1.3 (877,390 → 1,167,965).
 
 ## 5.1.2 (2022-04-18)
 
 ### Performance Improvements
 
-- Recorded a 13.71% higher normalized benchmark score than v5.1.1 (961434 → 1093208).
+- Recorded a 13.71% higher normalized benchmark score than v5.1.1 (961,434 → 1,093,208).
 
 ## 5.1.1 (2022-04-17)
 
 ### Performance Improvements
 
-- Recorded a 9.21% higher normalized benchmark score than v5.1.0 (880354 → 961434).
+- Recorded a 9.21% higher normalized benchmark score than v5.1.0 (880,354 → 961,434).
 
 ## 5.1.0 (2022-04-11)
 
@@ -82,7 +82,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 49.96% higher normalized benchmark score than v5.0.5 (1333180 → 1999217).
+- Recorded a 49.96% higher normalized benchmark score than v5.0.5 (1,333,180 → 1,999,217).
 
 ## 5.0.0 (2021-09-09)
 

@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 11.56% higher normalized benchmark score than v2.2.1 (47846 → 53375).
+- Recorded a 11.56% higher normalized benchmark score than v2.2.1 (47,846 → 53,375).
 
 ## 2.2.2 (2026-08-22)
 
@@ -19,7 +19,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 67.89% higher normalized benchmark score than v2.1.3 (28498 → 47846).
+- Recorded a 67.89% higher normalized benchmark score than v2.1.3 (28,498 → 47,846).
 
 ## 2.2.0 (2026-08-19)
 
@@ -38,7 +38,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 10.56% higher normalized benchmark score than v2.0.37 (25777 → 28498).
+- Recorded a 10.56% higher normalized benchmark score than v2.0.37 (25,777 → 28,498).
 
 ## 2.0.0 (2022-12-01)
 
@@ -56,19 +56,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 4.19% higher normalized benchmark score than v1.0.6 (47696 → 49694).
+- Recorded a 4.19% higher normalized benchmark score than v1.0.6 (47,696 → 49,694).
 
 ## 1.0.6 (2022-07-16)
 
 ### Performance Improvements
 
-- Recorded a 12.43% higher normalized benchmark score than v1.0.5 (42423 → 47696).
+- Recorded a 12.43% higher normalized benchmark score than v1.0.5 (42,423 → 47,696).
 
 ## 1.0.5 (2022-07-13)
 
 ### Performance Improvements
 
-- Recorded a 29.91% higher normalized benchmark score than v1.0.3 (32656 → 42423).
+- Recorded a 29.91% higher normalized benchmark score than v1.0.3 (32,656 → 42,423).
 
 ## 1.0.1 (2022-05-17)
 

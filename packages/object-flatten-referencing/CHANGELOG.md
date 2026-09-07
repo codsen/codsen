@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 15.4% higher normalized benchmark score than v7.1.3 (130567 → 150669).
+- Recorded a 15.4% higher normalized benchmark score than v7.1.3 (130,567 → 150,669).
 
 ## 7.2.3 (2026-09-01)
 
@@ -43,7 +43,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 115.29% higher normalized benchmark score than v7.0.32 (60648 → 130567).
+- Recorded a 115.29% higher normalized benchmark score than v7.0.32 (60,648 → 130,567).
 
 ## 7.0.0 (2022-12-01)
 
@@ -62,7 +62,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 14.17% higher normalized benchmark score than v6.1.2 (67395 → 76944).
+- Recorded a 14.17% higher normalized benchmark score than v6.1.2 (67,395 → 76,944).
 
 ## 6.1.2 (2022-04-18)
 
@@ -74,7 +74,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 41.14% higher normalized benchmark score than v6.1.0 (60231 → 85013).
+- Recorded a 41.14% higher normalized benchmark score than v6.1.0 (60,231 → 85,013).
 
 ## 6.1.0 (2022-04-11)
 
@@ -86,19 +86,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 4.98% higher normalized benchmark score than v6.0.11 (63106 → 66251).
+- Recorded a 4.98% higher normalized benchmark score than v6.0.11 (63,106 → 66,251).
 
 ## 6.0.10 (2021-12-24)
 
 ### Performance Improvements
 
-- Recorded a 42.82% higher normalized benchmark score than v6.0.9 (65644 → 93750).
+- Recorded a 42.82% higher normalized benchmark score than v6.0.9 (65,644 → 93,750).
 
 ## 6.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 50.88% higher normalized benchmark score than v6.0.5 (79528 → 119992).
+- Recorded a 50.88% higher normalized benchmark score than v6.0.5 (79,528 → 119,992).
 
 ## 6.0.0 (2021-09-09)
 

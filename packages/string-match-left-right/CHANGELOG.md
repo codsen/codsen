@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 6.13% higher normalized benchmark score than v9.2.2 (3289440 → 3491053).
+- Recorded a 6.13% higher normalized benchmark score than v9.2.2 (3,289,440 → 3,491,053).
 
 ## 9.2.3 (2026-09-01)
 
@@ -29,14 +29,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 600.65% higher normalized benchmark score than v9.2.1 (469484 → 3289440).
+- Recorded a 600.65% higher normalized benchmark score than v9.2.1 (469,484 → 3,289,440).
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
 
 ## 9.2.1 (2026-08-19)
 
 ### Performance Improvements
 
-- Recorded a 2.74% higher normalized benchmark score than v9.1.3 (456971 → 469484).
+- Recorded a 2.74% higher normalized benchmark score than v9.1.3 (456,971 → 469,484).
 
 ## 9.2.0 (2026-08-19)
 
@@ -57,7 +57,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 4.22% higher normalized benchmark score than v9.0.33 (438454 → 456971).
+- Recorded a 4.22% higher normalized benchmark score than v9.0.33 (438,454 → 456,971).
 
 ## 9.0.19 (2024-03-30)
 
@@ -81,19 +81,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 13.39% higher normalized benchmark score than v8.1.3 (690758 → 783280).
+- Recorded a 13.39% higher normalized benchmark score than v8.1.3 (690,758 → 783,280).
 
 ## 8.1.3 (2022-05-04)
 
 ### Performance Improvements
 
-- Recorded a 33.99% higher normalized benchmark score than v8.1.2 (515526 → 690758).
+- Recorded a 33.99% higher normalized benchmark score than v8.1.2 (515,526 → 690,758).
 
 ## 8.1.2 (2022-04-18)
 
 ### Performance Improvements
 
-- Recorded a 3.33% higher normalized benchmark score than v8.1.1 (498896 → 515526).
+- Recorded a 3.33% higher normalized benchmark score than v8.1.1 (498,896 → 515,526).
 
 ## 8.1.0 (2022-04-10)
 
@@ -105,13 +105,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 46.81% higher normalized benchmark score than v8.0.11 (434774 → 638278).
+- Recorded a 46.81% higher normalized benchmark score than v8.0.11 (434,774 → 638,278).
 
 ## 8.0.7 (2021-11-30)
 
 ### Performance Improvements
 
-- Recorded a 19.28% higher normalized benchmark score than v8.0.5 (813577 → 970426).
+- Recorded a 19.28% higher normalized benchmark score than v8.0.5 (813,577 → 970,426).
 
 ## 8.0.0 (2021-09-09)
 
