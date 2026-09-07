@@ -21,10 +21,10 @@ inputs:
     default: "true"
   cache:
     description: >-
-      Restore the installed dependencies and the Turborepo cache, and write
-      them back on main. Set to "save-only" on the release lane so published
-      artifacts are built cold but a successful release can seed later runs.
-      Set to "false" to disable both restore and save.
+      Enable npm's download cache, restore the installed dependencies and the
+      Turborepo cache, and write the latter two back on main. Set to "save-only"
+      on the release lane to skip all restores and seed installed-dependency
+      and Turbo caches after validation. Set to "false" to disable all caching.
     required: false
     default: "true"
   phase:
@@ -47,6 +47,8 @@ runs:
   steps:
     - name: Set up Node and npm
       uses: ./.github/actions/setup-node
+      with:
+        cache: ${{ inputs.cache == 'true' && 'true' || 'false' }}
 
     - name: Initialize verification telemetry
       id: telemetry

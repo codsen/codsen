@@ -217,4 +217,24 @@ test("09 - publishing and tagging consume the pack job's immutable artifact ID",
   ok(tags.includes("      - publish\n"), "09.09");
 });
 
+test("10 - cold verification modes disable the nested npm download cache", () => {
+  const action = readRepositoryFile(sharedAction);
+  const release = jobSection(readRepositoryFile(releaseWorkflow), "pack");
+  const rehearsal = readRepositoryFile(
+    ".github/workflows/release_rehearsal.yml",
+  );
+
+  // setup-node defaults to caching when its input is missing. Both cold modes
+  // must therefore forward an explicit false, even when cache saving is allowed.
+  ok(
+    action.includes(
+      "uses: ./.github/actions/setup-node\n      with:\n" +
+        `        cache: \${{ inputs.cache == 'true' && 'true' || 'false' }}`,
+    ),
+    "10.01",
+  );
+  ok(release.includes('cache: "save-only"'), "10.02");
+  ok(rehearsal.includes('cache: "false"'), "10.03");
+});
+
 test.run();
