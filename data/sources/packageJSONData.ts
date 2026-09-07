@@ -2638,7 +2638,7 @@ export const packageJSONData = {
   },
   "detergent": {
     "name": "detergent",
-    "version": "9.4.5",
+    "version": "9.4.6",
     "description": "Extract, clean, encode text and fix English style",
     "keywords": [
       "brief",
@@ -2721,14 +2721,14 @@ export const packageJSONData = {
       "ranges-invert": "^6.2.4",
       "ranges-process-outside": "^6.2.4",
       "ranges-push": "^7.3.1",
-      "string-apostrophes": "^4.2.4",
-      "string-collapse-white-space": "^11.2.4",
-      "string-dashes": "^1.4.4",
-      "string-fix-broken-named-entities": "^7.2.3",
+      "string-apostrophes": "^4.2.5",
+      "string-collapse-white-space": "^11.2.5",
+      "string-dashes": "^1.4.5",
+      "string-fix-broken-named-entities": "^7.2.4",
       "string-left-right": "^6.2.3",
-      "string-range-expander": "^4.2.3",
-      "string-remove-widows": "^4.2.4",
-      "string-strip-html": "^13.7.1"
+      "string-range-expander": "^4.2.4",
+      "string-remove-widows": "^4.2.5",
+      "string-strip-html": "^13.7.2"
     },
     "devDependencies": {
       "test-mixer": "^4.4.1"
@@ -2999,7 +2999,7 @@ export const packageJSONData = {
   },
   "email-comb": {
     "name": "email-comb",
-    "version": "7.4.1",
+    "version": "7.4.2",
     "description": "Remove unused CSS from email templates",
     "keywords": [
       "body",
@@ -3073,7 +3073,7 @@ export const packageJSONData = {
     "dependencies": {
       "array-pull-all-with-glob": "^7.2.3",
       "codsen-utils": "^1.10.1",
-      "html-crush": "^6.3.1",
+      "html-crush": "^6.3.2",
       "html-entity-codec": "^1.1.0",
       "ranges-apply": "^7.2.4",
       "ranges-push": "^7.3.1",
@@ -3081,7 +3081,7 @@ export const packageJSONData = {
       "string-extract-class-names": "^8.3.1",
       "string-left-right": "^6.2.3",
       "string-match-left-right": "^9.2.4",
-      "string-range-expander": "^4.2.3",
+      "string-range-expander": "^4.2.4",
       "string-uglify": "^3.2.2"
     },
     "engines": {
@@ -3093,7 +3093,7 @@ export const packageJSONData = {
   },
   "extract-search-index": {
     "name": "extract-search-index",
-    "version": "2.2.4",
+    "version": "2.2.5",
     "description": "Extract unique keyword input list string for search",
     "keywords": [
       "string",
@@ -3167,7 +3167,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.10.1",
-      "string-strip-html": "^13.7.1",
+      "string-strip-html": "^13.7.2",
       "string-unfancy": "^6.2.3"
     },
     "engines": {
@@ -3429,7 +3429,7 @@ export const packageJSONData = {
   },
   "html-crush": {
     "name": "html-crush",
-    "version": "6.3.1",
+    "version": "6.3.2",
     "description": "Minify email templates",
     "keywords": [
       "breaks",
@@ -3515,7 +3515,7 @@ export const packageJSONData = {
       "ranges-push": "^7.3.1",
       "string-left-right": "^6.2.3",
       "string-match-left-right": "^9.2.4",
-      "string-range-expander": "^4.2.3"
+      "string-range-expander": "^4.2.4"
     },
     "devDependencies": {
       "test-mixer": "^4.4.1"
@@ -7325,7 +7325,7 @@ export const packageJSONData = {
   },
   "remark-typography": {
     "name": "remark-typography",
-    "version": "0.8.4",
+    "version": "0.8.5",
     "description": "Remark plugin to fix typography: quotes, dashes and so on.",
     "keywords": [
       "unified",
@@ -7403,9 +7403,9 @@ export const packageJSONData = {
     "dependencies": {
       "@types/mdast": "^4.0.4",
       "codsen-utils": "^1.10.1",
-      "string-apostrophes": "^4.2.4",
-      "string-dashes": "^1.4.4",
-      "string-remove-widows": "^4.2.4",
+      "string-apostrophes": "^4.2.5",
+      "string-dashes": "^1.4.5",
+      "string-remove-widows": "^4.2.5",
       "unified": "^11.0.5",
       "vfile": "^6.0.3"
     },
@@ -7498,7 +7498,7 @@ export const packageJSONData = {
   },
   "string-apostrophes": {
     "name": "string-apostrophes",
-    "version": "4.2.4",
+    "version": "4.2.5",
     "description": "Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes",
     "keywords": [
       "apostrophe",
@@ -7755,7 +7755,7 @@ export const packageJSONData = {
   },
   "string-collapse-white-space": {
     "name": "string-collapse-white-space",
-    "version": "11.2.4",
+    "version": "11.2.5",
     "description": "Replace chunks of whitespace with a single spaces",
     "keywords": [
       "chunk",
@@ -7927,7 +7927,7 @@ export const packageJSONData = {
   },
   "string-dashes": {
     "name": "string-dashes",
-    "version": "1.4.4",
+    "version": "1.4.5",
     "description": "Comprehensive, HTML-entities-aware tool to typographically-correct the dashes and hyphens",
     "keywords": [
       "dash",
@@ -8361,7 +8361,7 @@ export const packageJSONData = {
   },
   "string-fix-broken-named-entities": {
     "name": "string-fix-broken-named-entities",
-    "version": "7.2.3",
+    "version": "7.2.4",
     "description": "Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes",
     "keywords": [
       "broken",
@@ -8703,7 +8703,7 @@ export const packageJSONData = {
   },
   "string-range-expander": {
     "name": "string-range-expander",
-    "version": "4.2.3",
+    "version": "4.2.4",
     "description": "Expands string index ranges within whitespace boundaries until letters are met",
     "keywords": [
       "expand",
@@ -8966,7 +8966,7 @@ export const packageJSONData = {
   },
   "string-remove-widows": {
     "name": "string-remove-widows",
-    "version": "4.2.4",
+    "version": "4.2.5",
     "description": "Helps to prevent widow words in a text",
     "keywords": [
       "against",
@@ -9049,7 +9049,7 @@ export const packageJSONData = {
       "string-left-right": "^6.2.3"
     },
     "devDependencies": {
-      "string-strip-html": "^13.7.1"
+      "string-strip-html": "^13.7.2"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -9060,7 +9060,7 @@ export const packageJSONData = {
   },
   "string-split-by-whitespace": {
     "name": "string-split-by-whitespace",
-    "version": "4.2.4",
+    "version": "4.2.5",
     "description": "Split string into array by chunks of whitespace",
     "keywords": [
       "alt",
@@ -9147,7 +9147,7 @@ export const packageJSONData = {
   },
   "string-strip-html": {
     "name": "string-strip-html",
-    "version": "13.7.1",
+    "version": "13.7.2",
     "description": "Strip HTML tags from strings. No parser, accepts mixed sources.",
     "keywords": [
       "code",

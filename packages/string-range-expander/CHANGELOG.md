@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.4 (2026-09-07)
+
+### Bug Fixes
+
+- **string-range-expander:** honor edge markers and empty ranges ([967d703](https://github.com/codsen/codsen/commit/967d703f5672be8f10240dc7464685909a9b74bc))
+
 ## 4.2.2 (2026-09-01)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.5 (2026-09-07)
+
+### Bug Fixes
+
+- **string-apostrophes:** correct quote context and consumed spans ([8d555d4](https://github.com/codsen/codsen/commit/8d555d4705d2aba5ba65a04dfd25a039eba61269))
+
 ## 4.2.3 (2026-09-01)
 
 ### Bug Fixes

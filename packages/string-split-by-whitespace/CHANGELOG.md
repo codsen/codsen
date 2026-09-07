@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.5 (2026-09-07)
+
+### Bug Fixes
+
+- **string-split-by-whitespace:** respect ignored range boundaries ([215cbfe](https://github.com/codsen/codsen/commit/215cbfe5ff3d99deee9bf7a3a8ce76892458629c))
+
 ## 4.2.4 (2026-09-06)
 
 ### Performance Improvements

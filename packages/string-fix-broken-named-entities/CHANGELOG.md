@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.2.4 (2026-09-07)
+
+### Bug Fixes
+
+- **string-fix-broken-named-entities:** preserve repair boundaries and callback types ([c5d1e55](https://github.com/codsen/codsen/commit/c5d1e5548747668caca9426d17f343caaf431b5a))
+
 ## 7.2.3 (2026-09-06)
 
 ### Bug Fixes
