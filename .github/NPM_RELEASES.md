@@ -63,6 +63,19 @@ run records its base commit and aborts if `origin/main` moved while it worked,
 it refuses to start while another release proposal is open, and a proposal
 generated against an older `main` has to be closed and regenerated rather than
 updated. Merging the reviewed proposal is itself the push that starts `ci.yml`.
+Only same-repository release PRs count as existing proposals; a fork's branch
+name cannot reserve the release lane.
+
+Preparation generates versions and data in a job with read permissions and no
+persisted checkout credentials. A separate job checks out trusted tooling at
+the same base SHA, downloads the generation job's changes by artifact ID, and
+validates the complete changeset before applying it. The handoff permits
+release files in existing workspaces, root release documentation and the
+lockfile, and the single release-plan file. It rejects changes to privileged
+tooling, workflows, Git configuration, symbolic links, and file modes. The
+privileged job installs no repository dependencies and executes no generated
+code; it renders the summary from the validated plan, commits the proposal with
+Git hooks disabled, and rechecks `main` and open proposals before pushing.
 
 ## Package README releases
 
@@ -115,6 +128,8 @@ normal release proposal and publishing approval and do not need `force_all`.
    which is expected here and does not block the merge.
 4. Merging the release plan starts `ci.yml`. Its unprivileged job repeats
    the exact-commit build and verification before creating the tarballs.
+   Publishing and tagging download the artifact ID returned by that pack job;
+   replacing an artifact with another of the same name makes the download fail.
    Approve the protected `npm-production` deployment when ready. The workflow
    publishes only registry-pending versions, verifies them on npm, and then
    pushes their Git tags.
