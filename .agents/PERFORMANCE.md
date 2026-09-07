@@ -37,6 +37,34 @@ thermal changes, runtime warm-up, and reference/target run order can still
 affect a result. Treat movements of 2% or less as roughly unchanged and rerun
 surprising results.
 
+## Correctness can require more work
+
+A fixed program can be slower because it finally does the work that its buggy
+predecessor skipped. Recovering the old speed might require a major algorithm
+redesign. Investigate avoidable overhead, measure the cost, then accept a justified
+regression when correct behavior requires it. Record the behavior fixed, regression
+tests, measured loss and why further optimization is beyond the current change.
+Do not restore the bug or leave a completed fix open indefinitely to match an
+incorrect implementation's speed.
+
+For an unchanged benchmark workload, preserve earlier scores and record the loss
+in `lastSlowerRun`. A reasoned waiver can accept the cost in the optional strict
+check. A change to the workload itself still requires the reset below. Before a
+reset, reconcile and preserve its valid historical changelog gains; those describe
+the previous workload and must not be compared with the new one.
+
+## Measure one package at a time
+
+Root `npm run perf` completes its package build phase before measuring with
+`--concurrency=1`. Do not run other substantial CPU work alongside a measurement
+sweep. Independent concurrent benchmarks or builds can change the load between
+reference and target samples; reference normalization cannot cancel that effect.
+
+The runner reports reference and target sample counts and relative margins of
+error. Preserve unexpected measurements and repeat affected cases under controlled
+conditions. Do not select only the best retry or treat a retained high score as
+proof that its measurement was noise-free.
+
 ## The `testme()` contract
 
 Each `testme()` defines the workload whose normalized history is being tracked.
@@ -129,9 +157,9 @@ an empty history becomes the new workload's baseline.
 
 ## Interpreting history
 
-Treat `lastVersion` as the latest normalized score and compare it only with the
-preceding score produced by the same workload. Compare percentage changes, not
-raw score magnitudes across packages, because each package deliberately does a
+Treat `lastVersion` as the latest accepted normalized baseline and compare it
+only with the preceding score produced by the same workload. Compare percentage
+changes, not raw score magnitudes across packages, because each package does a
 different amount of work. For monorepo summaries, prefer the median percentage
 and geometric-mean ratio; large outliers can distort an arithmetic mean.
 
@@ -146,9 +174,9 @@ four fields:
 - `score` — the latest slower measurement.
 - `worst` — the lowest score seen while this baseline has stood, so a partial
   recovery cannot hide how far the package fell.
-- `version` — the package version that measured slower. That version has no
-  version key of its own, deliberately: adopting one would make the regressed
-  score the next baseline.
+- `version` — the package version that measured slower. The rejected score
+  neither adds nor overwrites its version-keyed baseline. An earlier accepted
+  score for that same version can remain in the history.
 
 The analyser reads this record and reports the package as `pendingRegression`
 with its percentage. Do not judge a package by `lastVersion` alone; a retained
@@ -172,28 +200,64 @@ The verdicts, and what each one records:
 | `slower` | slower by more than the tolerance, within the threshold | `lastSlowerRun` only |
 | `regression` | slower by more than the threshold | `lastSlowerRun` only |
 
-A `regression` also sets a non-zero exit code, so it is distinguishable from a
-pass by something other than reading the output. The root `perf` script passes
-`--continue=dependencies-successful` for that reason: a benchmark sweep is the
-one place you most want every result, and without it Turbo's default would let
-the first regressing package cancel the rest. The aggregate exit code still
-reflects the regression.
+A valid measurement, including a `regression`, completes `npm run perf`
+successfully and leaves the slowdown visible in output and history. Exceptions,
+aborted suites, invalid rates and history-write failures still fail the command.
+The root sweep keeps `--continue=dependencies-successful` so one broken workload
+does not discard measurements from independent packages.
+
+`npm run perf:check` is the optional strict gate. It reads the latest recorded
+measurements, applies the same thresholds and waivers, and exits non-zero for
+unwaived regressions, missing measurements or malformed records. It neither
+reruns benchmarks nor changes history. Use `npm run perf && npm run perf:check`
+for fresh measurements followed by strict validation. A strict failure identifies
+a cost to investigate or explain; it does not require reverting a correctness fix.
 
 `ops/perf-policy.json` holds both percentages:
 
 - `unchangedTolerancePercent` is the noise band, `2` by default, matching the
   2% guidance above.
-- `regressionThresholdPercent` is the point at which a slowdown fails the run,
-  `10` by default. It must not sit inside the tolerance.
+- `regressionThresholdPercent` is the point at which a slowdown fails the strict
+  check, `10` by default. It must not sit inside the tolerance.
 - `packageOverrides` sets either percentage for one package.
-- `waivers` opts a package out of failing, for a workload which is inherently
-  noisy. A waiver needs a substantive reason; the run still reports the
-  regression and still keeps the baseline.
+- `waivers` opts a package out of strict failure for a documented reason, such
+  as an inherently noisy workload or a necessary correctness-related cost.
+  Measurements still report the regression and retain its baseline.
 
-An intentional, accepted slowdown is a deliberate decision, not something the
-harness should absorb silently. Record it by resetting that package's history,
-exactly as a workload change requires, and say in the change why the slower
-score is being accepted.
+Accepting a justified slowdown is an explicit engineering decision. Explain it
+and retain the evidence; do not erase an unchanged workload's history to make its
+next run look unchanged. Reset only when the workload changes and the scores
+would no longer be comparable.
+
+## Reflect every historical gain in the changelog
+
+Performance improvements are a product selling point. Reconcile every package's
+retained version-keyed scores with its `CHANGELOG.md`, comparing consecutive
+recorded versions in semantic version order. Gaps in release numbers are normal:
+a release without a benchmark is not the comparison baseline. Gains above the
+configured unchanged tolerance belong under `### Performance Improvements`, with
+the percentage, normalized scores and preceding measured version made explicit.
+
+Create the release section when `lerna-clean-changelogs` previously removed it,
+using a verified release date from the exact tag or historical changelog. Do not
+attach a historical gain to an unrelated version or invent a date. When local
+release evidence and npm publication metadata provide no date, use an undated
+version heading explicitly identifying the historical benchmark and unverified
+release date. Put added performance content before a bump-only note, and verify
+the complete result
+survives cleaning and remains unchanged when reconciliation runs again.
+
+Do not claim gains from the first score, `lastVersion` housekeeping duplicates,
+`lastSlowerRun`, or histories that used different workloads. Keep existing
+handwritten release notes. Update or deduplicate generated gain notes rather than
+appending another copy each time the same version is measured.
+
+Run `npm run perf:changelogs` and `npm run perf:changelogs:check` after benchmarking
+and during release preparation. Normal changelog generation and verification
+also run these commands. Use `npm run perf:changelogs -- --registry` to consult
+public npm publication metadata when local release evidence is missing. Checking
+a current release alone is insufficient: every retained historical gain must have
+a corresponding changelog entry.
 
 ## Why `perf` is not a hosted job
 
@@ -212,6 +276,6 @@ Two reasons, the second decisive:
   every run. Making perf hosted therefore means separating recording from
   measuring first; it is not a matter of adding a step.
 
-Revisit this if the recording split is built. Until then, the exit code exists
-for the maintainer running `npm run perf` and for any future job which measures
-without recording.
+Revisit this if the recording split is built. Until then, the optional strict
+check remains a local maintainer tool. Do not add it to a hosted lane merely
+because it does not write history.

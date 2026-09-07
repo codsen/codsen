@@ -7,8 +7,8 @@ import { fileURLToPath } from "node:url";
 // Two rules matter here. A run which is materially slower than the baseline
 // must not become the next baseline, or one regression is reported once and
 // then reported as "just as fast as before" forever. And a regression past the
-// configured threshold must be distinguishable from a pass by exit code,
-// because a message nobody reads is not a gate.
+// configured threshold must remain visible to the optional recorded-results
+// strict check. Measurement itself reports valid slowdowns without failing.
 
 const repositoryRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),

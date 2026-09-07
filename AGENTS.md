@@ -423,6 +423,15 @@ solely to improve readability or conformity. At the same time, complexity must
 earn its place through measurements on representative public-API workloads;
 avoid speculative cleverness, bloat, and over-engineering.
 
+Correctness comes first. A bug fix can legitimately make a program slower because
+it now processes content, validates input, or produces results that the old code
+missed. The old speed may be impossible to recover without restoring the bug or
+undertaking substantial algorithm work. Check for avoidable overhead and measure
+the cost, then accept a justified regression when the correct implementation
+requires it. Do not hold a completed correctness fix hostage to an open-ended
+optimization project. Record the corrected behavior, regression tests, measured
+cost and reason for accepting it. A faster incorrect path is not the target.
+
 Use normalised historical scores, not raw operations per second from one
 computer, as performance evidence. In the same benchmark run, measure
 `perf-ref` at rate `R` and the target at rate `T`. Let `C` be the canonical score
@@ -448,12 +457,34 @@ interpreting `packages/*/perf/check.js` benchmarks.
   alone do not require a reset.
 - Interpret only normalized scores produced through `perf-ref`; raw operations
   per second from different computers are not comparable.
-- A run which is materially slower than the baseline does not become the next
-  baseline; it is recorded as `lastSlowerRun` instead, and a slowdown beyond
-  `ops/perf-policy.json#regressionThresholdPercent` sets a non-zero exit code.
-  Change that policy, including a per-package override or a reasoned waiver for
-  an inherently noisy workload, rather than working around the failure. Accept
-  an intentional slowdown by resetting that package's history and saying why.
+- Root `npm run perf` builds every package first, then measures one package at a
+  time. Do not benchmark concurrently with other benchmarks, builds, tests or
+  other substantial CPU work; reference normalization cannot cancel changing
+  load between measurement phases.
+- A materially slower run retains its baseline and records `lastSlowerRun`.
+  `npm run perf` reports slowdowns as warnings; only execution or measurement
+  failures make that command fail. `npm run perf:check` checks the latest records
+  against the strict thresholds without running benchmarks or changing history.
+  Use `npm run perf && npm run perf:check` when a fresh strict check is wanted.
+- A correctness-related regression can be legitimate. Preserve its measurements
+  and explain the required extra work. A documented policy waiver can accept it
+  in the optional strict check. Do not reset an unchanged workload's history just
+  to hide a slowdown or discard earlier gains; a changed workload still requires
+  the reset described above.
+- Every retained, versioned gain above the noise tolerance belongs in that
+  package's `CHANGELOG.md`, under `### Performance Improvements`. Compare each
+  score with its preceding recorded version and state the normalized gain and
+  both scores. Add the release section if cleaning removed it; recover its date
+  from release evidence rather than inventing one. If no date can be verified,
+  use an undated version heading labelled as a historical benchmark record with
+  an unverified release date. Preserve these sections through
+  `lerna-clean-changelogs` and deduplicate repeated generation.
+- When checking performance or preparing a release, run the changelog gain
+  reconciliation (`npm run perf:changelogs`) and its read-only check
+  (`npm run perf:changelogs:check`) to verify that every historical gain is
+  represented. Never advertise `lastSlowerRun`, a first baseline, or scores from
+  different workloads
+  as a performance improvement.
 - `perf` deliberately runs in no workflow. `.agents/PERFORMANCE.md` records the
   reasoning; do not add it to a hosted lane without reading that first.
 
