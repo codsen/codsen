@@ -1,7 +1,8 @@
 # @codsen/data
 
 Metadata for Codsen packages, including package lists, declarations, examples,
-changelogs, dependency statistics, and first-publication dates.
+changelogs, dependency statistics, first-publication dates, and the coverage and
+performance gates each package is held to.
 
 ## First-publication dates
 
@@ -45,6 +46,41 @@ const newest = packages.all
   .sort((a, b) => b.timestamp - a.timestamp || a.name.localeCompare(b.name))
   .slice(0, 3);
 ```
+
+## Quality gates
+
+`coverageStats` and `perfStats` report the gates a released package has already
+passed, not targets it aims at. Both are generated from the repository, so a
+package which stops meeting a gate leaves these figures rather than sitting in
+them misreported.
+
+```js
+import { coverageStats, perfStats } from "@codsen/data";
+
+// "114 packages, every one gated at 100% line coverage, 32 of them also at
+//  100% branches, functions and statements"
+const { checked, fullyCovered, lowestLineThreshold } = coverageStats;
+
+// "103 benchmarked packages, 1011 recorded runs; a release more than 10%
+//  slower than its baseline fails the build"
+const { benchmarked, recordedRuns, regressionThresholdPercent } = perfStats;
+```
+
+`coverageStats` reads the `c8` block `lect` generates into every package
+manifest from `ops/coverage-policy.json`. Each of those blocks sets
+`check-coverage`, so a threshold is enforced rather than advisory.
+`lowestLineThreshold` is the weakest line threshold in force across `checked`;
+every checked package is gated at that percentage or above.
+
+`perfStats.baselines` maps a package to the score its next benchmark run is
+compared against, taken from `packages/<name>/perf/historical.json`. Scores are
+ops/sec normalised against the `perf-ref` reference program, which makes them
+comparable between packages and between machines but not equal to raw ops/sec
+on any one machine. A package which has a benchmark but has never completed a
+run appears in `benchmarked` without an entry in `baselines`. A run more than
+`regressionThresholdPercent` slower than its baseline fails the build and does
+not replace the baseline it lost against; a run within
+`unchangedTolerancePercent` counts as unchanged.
 
 ## Refreshing the snapshot
 

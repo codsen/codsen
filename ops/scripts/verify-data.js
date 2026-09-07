@@ -79,6 +79,7 @@ async function verifyData() {
   const generatedJsonExports = [
     "allDTS",
     "changelogs",
+    "coverageStats",
     "dependencyStats",
     "examples",
     "exportedDefaults",
@@ -86,6 +87,7 @@ async function verifyData() {
     "gitStats",
     "interdeps",
     "packageJSONData",
+    "perfStats",
   ];
 
   for (const exportName of generatedJsonExports) {

@@ -147,15 +147,24 @@ title and natural sections, and follow an existing `logs/` document as the
 style reference. Do not use all-caps filenames; the directory and document
 title already identify the file's purpose.
 
-Name the file `YYYYMMDD-HHMMSS-<agent>.md`, where `<agent>` is the lowercase
-agent name, for example `logs/20260904-213320-codex.md`. When the document
-concerns a single library, prefix it with that library's name, for example
-`logs/email-comb-20260826-083906-codex.md`. When the document ranges beyond one
-library, use no prefix and leave the timestamp at the front of the name.
+For a library review, always prefix the filename with the reviewed library's
+name: `<library>-YYYYMMDD-HHMMSS-<agent>.md`, for example
+`logs/string-remove-widows-20260906-205021-codex.md`. Keep that prefix when the
+review also covers the library's dependencies, consumers, integrations, or
+generated data. Those related checks do not make it a monorepo-wide review.
+Use the same library prefix for investigations and implementation plans
+focused on a library.
 
-Never add a leading underscore to a filename you create. The underscore marks a
-document as done, and Roy applies it by hand once the work it describes has
-landed. A document an agent has just written is by definition not yet done.
+Use `YYYYMMDD-HHMMSS-<agent>.md` without a library prefix only for monorepo-wide
+or cross-library work with no primary library under review, for example
+`logs/20260904-213320-codex.md`. In both forms, `<agent>` is the lowercase agent
+name.
+
+Human manually adds a leading underscore to a document's filename when the work
+it describes is finished. This is his visual marker for seeing what has been
+done. Leave that marking step to Roy: agents must not add the underscore or
+rename a file to mark it complete unless he explicitly asks. Keep existing
+underscore prefixes intact.
 
 ## Monorepo package kinds
 

@@ -20,6 +20,12 @@ import { missingPackageBuildArtifacts } from "../helpers/packageBuildArtifacts.j
 import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
 import { readPackageKindResolver } from "../helpers/packageKindsFile.js";
 import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
+import {
+  COVERAGE_STATS_TYPINGS,
+  coverageStatsFrom,
+  PERF_STATS_TYPINGS,
+  perfStatsFrom,
+} from "../helpers/qualityStats.js";
 import { topDependencies } from "../helpers/topDependencies.js";
 
 const arguments_ = process.argv.slice(2);
@@ -546,6 +552,41 @@ await writeGeneratedFile({
     2,
   )};\n`,
   filename: path.resolve("./data/sources/dependencyStats.ts"),
+  fixCommand: "npm run ci:generate:info",
+  mode,
+});
+
+// Coverage thresholds reach the manifests through lect, and every one of them
+// runs with c8's check-coverage on, so these are gates a release has already
+// passed rather than targets. Perf figures come from the per-package benchmark
+// histories and ops/perf-policy.json.
+const coverageStats = coverageStatsFrom(
+  packageNames.map((name) => packageJSONData[name]),
+);
+const perfStats = perfStatsFrom(
+  packageNames,
+  path.resolve("."),
+  JSON.parse(readFileSync(path.resolve("ops/perf-policy.json"), "utf8")),
+);
+
+await writeGeneratedFile({
+  contents: `${COVERAGE_STATS_TYPINGS}\nexport const coverageStats: CoverageStats = ${JSON.stringify(
+    coverageStats,
+    null,
+    2,
+  )};\n`,
+  filename: path.resolve("./data/sources/coverageStats.ts"),
+  fixCommand: "npm run ci:generate:info",
+  mode,
+});
+
+await writeGeneratedFile({
+  contents: `${PERF_STATS_TYPINGS}\nexport const perfStats: PerfStats = ${JSON.stringify(
+    sortAllObjectsSync(perfStats),
+    null,
+    2,
+  )};\n`,
+  filename: path.resolve("./data/sources/perfStats.ts"),
   fixCommand: "npm run ci:generate:info",
   mode,
 });

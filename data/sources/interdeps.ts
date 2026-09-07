@@ -883,7 +883,7 @@ export const interdeps = [
   {
     "name": "string-strip-html",
     "tarballSizeBytes": 56704,
-    "unpackedSizeBytes": 172923,
+    "unpackedSizeBytes": 172924,
     "imports": [
       "codsen-utils",
       "html-entity-codec",
