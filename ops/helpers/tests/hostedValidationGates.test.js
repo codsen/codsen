@@ -181,4 +181,40 @@ test("08 - the pre-push command only applies housekeeping", () => {
   equal(manifest.scripts.prepush, "npm run fix", "08.01");
 });
 
+test("09 - publishing and tagging consume the pack job's immutable artifact ID", () => {
+  const workflow = readRepositoryFile(releaseWorkflow);
+  const pack = jobSection(workflow, "pack");
+  const publish = jobSection(workflow, "publish");
+  const tags = jobSection(workflow, "tags");
+  const output = pack.match(
+    /release_artifact_id: \$\{\{ steps\.([\w_]+)\.outputs\.artifact-id \}\}/u,
+  );
+
+  ok(output, "09.01");
+  ok(
+    pack.includes(
+      `name: Upload immutable npm artifacts\n        id: ${output[1]}\n`,
+    ),
+    "09.02",
+  );
+  for (const [index, section] of [publish, tags].entries()) {
+    ok(
+      section.includes("      - pack\n"),
+      `09.${String(index * 3 + 3).padStart(2, "0")}`,
+    );
+    // An empty selector downloads all artifacts, so require a failing fallback.
+    ok(
+      section.includes(
+        `artifact-ids: \${{ needs.pack.outputs.release_artifact_id || 'missing-artifact-id' }}`,
+      ),
+      `09.${String(index * 3 + 4).padStart(2, "0")}`,
+    );
+    ok(
+      !section.includes("name: npm-release-artifacts"),
+      `09.${String(index * 3 + 5).padStart(2, "0")}`,
+    );
+  }
+  ok(tags.includes("      - publish\n"), "09.09");
+});
+
 test.run();

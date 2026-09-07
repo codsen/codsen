@@ -42,6 +42,7 @@ jobs:
     timeout-minutes: 90
     outputs:
       package_node_matrix: ${{ steps.verify.outputs.package-node-matrix }}
+      release_artifact_id: ${{ steps.release_artifacts.outputs.artifact-id }}
     steps:
       - name: Require main
         run: test "$GITHUB_REF" = refs/heads/main
@@ -119,6 +120,7 @@ jobs:
           retention-days: 1
 
       - name: Upload immutable npm artifacts
+        id: release_artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: npm-release-artifacts
@@ -346,7 +348,9 @@ jobs:
       - name: Download immutable npm artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: npm-release-artifacts
+          # A replaced artifact has a different ID. An absent output must also
+          # fail instead of selecting every artifact in this run.
+          artifact-ids: ${{ needs.pack.outputs.release_artifact_id || 'missing-artifact-id' }}
           path: npm-release-artifacts
 
       - name: Publish and verify every planned package
@@ -359,7 +363,9 @@ jobs:
 
   tags:
     name: Push package tags
-    needs: publish
+    needs:
+      - pack
+      - publish
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -379,7 +385,7 @@ jobs:
       - name: Download the published manifest
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: npm-release-artifacts
+          artifact-ids: ${{ needs.pack.outputs.release_artifact_id || 'missing-artifact-id' }}
           path: npm-release-artifacts
 
       - name: Configure the tag author
