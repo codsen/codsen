@@ -292,7 +292,7 @@ test("09 - requires a substantive reason and same-repository issue", () => {
   match(message, /exact codsen\/codsen GitHub issue URL/, "09.02");
 });
 
-test("10 - constructs the exact no-fix npm audit invocation", () => {
+test("10 - explicitly includes every dependency kind in the no-fix audit", () => {
   const invocation = npmAuditInvocation("/runtime/bin/node", "/runtime/npm.js");
   const posixCandidates = pairedNpmCliCandidates("/runtime/bin/node", "linux");
   const windowsCandidates = pairedNpmCliCandidates(
@@ -310,7 +310,9 @@ test("10 - constructs the exact no-fix npm audit invocation", () => {
       "--package-lock-only",
       "--workspaces",
       "--include-workspace-root",
-      "--omit=dev",
+      "--include=dev",
+      "--include=optional",
+      "--include=peer",
       "--audit-level=none",
       "--ignore-scripts",
     ],
@@ -483,9 +485,7 @@ test("14 - runs the normal CLI boundary with an injected npm process", () => {
   equal(spawnCall.options.shell, false, "14.06");
   equal(
     messages,
-    [
-      "log:Production dependency audit passed: 0 waived high/critical, 0 informational.",
-    ],
+    ["log:Dependency audit passed: 0 waived high/critical, 0 informational."],
     "14.07",
   );
 });
@@ -540,7 +540,7 @@ test("15 - parses finding exits and distinguishes malformed JSON", () => {
   });
 
   equal(findingStatus, 1, "15.01");
-  match(findingMessages.join("\n"), /Unwaived production/, "15.02");
+  match(findingMessages.join("\n"), /Unwaived dependency/, "15.02");
   equal(
     findingMessages.some((message) => /exited with code/.test(message)),
     false,
@@ -585,7 +585,7 @@ test("16 - distinguishes structured npm transport errors", () => {
   equal(
     messages,
     [
-      "Production dependency audit npm request failed [ENEEDAUTH]: Authentication is required by the audit endpoint.",
+      "Dependency audit npm request failed [ENEEDAUTH]: Authentication is required by the audit endpoint.",
     ],
     "16.02",
   );

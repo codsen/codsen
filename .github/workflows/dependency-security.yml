@@ -30,7 +30,7 @@ concurrency:
 
 jobs:
   audit-production:
-    name: Audit production dependencies
+    name: Audit runtime and development dependencies
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -44,5 +44,5 @@ jobs:
         with:
           cache: "false"
 
-      - name: Audit the complete production lockfile
+      - name: Audit the complete dependency lockfile
         run: npm run --ignore-scripts ci:audit:production

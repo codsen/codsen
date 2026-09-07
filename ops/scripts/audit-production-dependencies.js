@@ -102,7 +102,7 @@ function runDependencyAudit({
   try {
     waiverPolicy = loadPolicy();
   } catch (error) {
-    logger.error(`Production dependency audit setup failed: ${error.message}`);
+    logger.error(`Dependency audit setup failed: ${error.message}`);
     return 1;
   }
 
@@ -126,7 +126,7 @@ function runDependencyAudit({
   try {
     npmCli = locateNpm(nodeExecutable);
   } catch (error) {
-    logger.error(`Production dependency audit setup failed: ${error.message}`);
+    logger.error(`Dependency audit setup failed: ${error.message}`);
     return 1;
   }
 
@@ -139,13 +139,13 @@ function runDependencyAudit({
   });
   if (result.error) {
     logger.error(
-      `Production dependency audit could not start npm: ${result.error.message}`,
+      `Dependency audit could not start npm: ${result.error.message}`,
     );
     return 1;
   }
   if (result.status === null) {
     logger.error(
-      `Production dependency audit npm process ended without an exit code${
+      `Dependency audit npm process ended without an exit code${
         result.signal ? ` (signal ${result.signal})` : ""
       }.`,
     );
@@ -158,7 +158,7 @@ function runDependencyAudit({
   } catch (error) {
     const detail = result.stderr?.trim();
     logger.error(
-      `Production dependency audit could not parse npm JSON: ${error.message}${
+      `Dependency audit could not parse npm JSON: ${error.message}${
         detail ? `; npm stderr: ${detail}` : ""
       }`,
     );
@@ -166,7 +166,7 @@ function runDependencyAudit({
   }
   const npmError = npmErrorSummary(auditReport);
   if (npmError) {
-    logger.error(`Production dependency audit npm request failed${npmError}`);
+    logger.error(`Dependency audit npm request failed${npmError}`);
     return 1;
   }
 
@@ -181,12 +181,12 @@ function runDependencyAudit({
   }
   if (evaluation.errors.length > 0) {
     logger.error(
-      `Production dependency audit policy failed:\n- ${evaluation.errors.join("\n- ")}`,
+      `Dependency audit policy failed:\n- ${evaluation.errors.join("\n- ")}`,
     );
   }
   if (evaluation.blockers.length > 0) {
     logger.error(
-      `Unwaived production dependency advisories:\n- ${evaluation.blockers
+      `Unwaived dependency advisories:\n- ${evaluation.blockers
         .map(formatFinding)
         .join("\n- ")}`,
     );
@@ -197,7 +197,7 @@ function runDependencyAudit({
   if (result.status !== 0) {
     const detail = result.stderr?.trim();
     logger.error(
-      `Production dependency audit npm process exited with code ${result.status}${
+      `Dependency audit npm process exited with code ${result.status}${
         detail ? `: ${detail}` : ""
       }`,
     );
@@ -205,7 +205,7 @@ function runDependencyAudit({
   }
 
   logger.log(
-    `Production dependency audit passed: ${evaluation.waived.length} waived high/critical, ${evaluation.informational.length} informational.`,
+    `Dependency audit passed: ${evaluation.waived.length} waived high/critical, ${evaluation.informational.length} informational.`,
   );
   return 0;
 }

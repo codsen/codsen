@@ -18,7 +18,10 @@ const NPM_AUDIT_ARGUMENTS = Object.freeze([
   "--package-lock-only",
   "--workspaces",
   "--include-workspace-root",
-  "--omit=dev",
+  // Explicit inclusion overrides NODE_ENV=production and configured omit lists.
+  "--include=dev",
+  "--include=optional",
+  "--include=peer",
   "--audit-level=none",
   "--ignore-scripts",
 ]);
