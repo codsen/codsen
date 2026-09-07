@@ -238,6 +238,12 @@ a release without a benchmark is not the comparison baseline. Gains above the
 configured unchanged tolerance belong under `### Performance Improvements`, with
 the percentage, normalized scores and preceding measured version made explicit.
 
+Format human-readable quantities with comma thousands separators, including
+scores and percentages: `1,234,567` and `12,345.67`. Preserve fractional digits
+and the underlying measurement. Grouping digits helps readers recognize the
+magnitude without counting digit triplets. Keep version numbers, dates and other
+identifiers unchanged, and verify that generators and cleaning retain the format.
+
 Create the release section when `lerna-clean-changelogs` previously removed it,
 using a verified release date from the exact tag or historical changelog. Do not
 attach a historical gain to an unrelated version or invent a date. When local

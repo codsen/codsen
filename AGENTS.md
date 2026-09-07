@@ -488,6 +488,19 @@ interpreting `packages/*/perf/check.js` benchmarks.
 - `perf` deliberately runs in no workflow. `.agents/PERFORMANCE.md` records the
   reasoning; do not add it to a hosted lane without reading that first.
 
+## Numbers in changelogs
+
+Use comma thousands separators in every human-readable quantity of 1,000 or
+more in changelogs, including benchmark scores, counts, sizes and percentages.
+Write `1,234,567` and `12,345.67`, preserving the decimal value and precision.
+Grouping digits makes magnitudes easier to scan and compare; readers should not
+have to count groups of three digits themselves.
+
+Keep dates, years, version numbers, commit hashes, issue and standard identifiers,
+Unicode code points, URLs and exact code examples unchanged. Apply the same
+formatting in generators, then check that reconciliation and changelog cleaning
+preserve it without duplicating entries or changing the underlying measurements.
+
 ## Unit-test title numbering
 
 - Prefix every unit-test title with its sequential order number within the test

@@ -3,6 +3,7 @@ import { equal, ok, throws } from "uvu/assert";
 
 import {
   changelogReleases,
+  perfGainBullet,
   perfVersionComparisons,
   syncPerfChangelog,
   validReleaseDate,
@@ -291,6 +292,59 @@ test("16 - reconciles wrapped standard notes and configured tolerance", () => {
   );
   throws(() =>
     perfVersionComparisons(history, { unchangedTolerancePercent: -1 }),
+  );
+});
+
+test("17 - groups large scores without changing decimals or version identifiers", () => {
+  const [comparison] = perfVersionComparisons({
+    "1000.2000.3000": 1234567.89012345,
+    "1000.2000.3001": 2469135.7802469,
+  });
+  equal(
+    perfGainBullet(comparison),
+    "- Recorded a 100% higher normalized benchmark score than v1000.2000.3000 (1,234,567.89012345 → 2,469,135.7802469).",
+    "17.01",
+  );
+});
+
+test("18 - groups large percentages after their existing rounding", () => {
+  const [comparison] = perfVersionComparisons({
+    "1.0.0": 1,
+    "1.0.1": 12346.6789,
+  });
+  equal(
+    perfGainBullet(comparison),
+    "- Recorded a 1,234,567.89% higher normalized benchmark score than v1.0.0 (1 → 12,346.6789).",
+    "18.01",
+  );
+});
+
+test("19 - migrates and deduplicates grouped and ungrouped gain claims", () => {
+  const changelog =
+    "## 1.0.1 (2026-08-19)\n\n### Performance Improvements\n\n- Recorded a 1200% higher normalized benchmark score than v1.0.0 (1000.125 → 13001.625).\n- Recorded a 1,200% higher normalized benchmark score than v1.0.0 (1,000.125 → 13,001.625).\n- The 1,000-row sample now finishes faster.\n";
+  const history = { "1.0.0": 1000.125, "1.0.1": 14001.75 };
+  const { result } = syncPerfChangelog({ changelog, history });
+  equal(result.match(/Recorded a/g).length, 1, "19.01");
+  ok(
+    result.includes(
+      "- Recorded a 1,300% higher normalized benchmark score than v1.0.0 (1,000.125 → 14,001.75).",
+    ),
+    "19.02",
+  );
+  ok(result.includes("- The 1,000-row sample now finishes faster."), "19.03");
+  equal(
+    syncPerfChangelog({ changelog: result, history }).result,
+    result,
+    "19.04",
+  );
+  const stale = syncPerfChangelog({
+    changelog: result,
+    history: { "1.0.0": 1000.125, "1.0.1": 1001 },
+  });
+  ok(!stale.result.includes("Recorded a"), "19.05");
+  ok(
+    stale.result.includes("- The 1,000-row sample now finishes faster."),
+    "19.06",
   );
 });
 

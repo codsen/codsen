@@ -109,6 +109,13 @@ function percentage(value, tolerance) {
   return String(value);
 }
 
+function groupQuantity(value) {
+  // Group only the integer portion; retain the existing decimal precision.
+  return String(value).replace(/^\d+/, (integer) =>
+    integer.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+  );
+}
+
 function perfGainBullet(comparison) {
   const {
     changePercent,
@@ -117,7 +124,7 @@ function perfGainBullet(comparison) {
     score,
     unchangedTolerancePercent = 2,
   } = comparison;
-  return `- Recorded a ${percentage(changePercent, unchangedTolerancePercent)}% higher normalized benchmark score than v${baselineVersion} (${baselineScore} → ${score}).`;
+  return `- Recorded a ${groupQuantity(percentage(changePercent, unchangedTolerancePercent))}% higher normalized benchmark score than v${baselineVersion} (${groupQuantity(baselineScore)} → ${groupQuantity(score)}).`;
 }
 
 function isManagedItem(node) {
@@ -128,7 +135,7 @@ function isManagedItem(node) {
     .replace(/\s+/g, " ")
     .trim()
     .match(
-      /^Recorded a [\d.e+-]+% higher normalized benchmark score than v(\S+?)(?: \([\d.e+-]+ → [\d.e+-]+\))?\.$/,
+      /^Recorded a [\d,.e+-]+% higher normalized benchmark score than v(\S+?)(?: \([\d,.e+-]+ → [\d,.e+-]+\))?\.$/,
     );
   return !!match && !!parseSemver(match[1]);
 }

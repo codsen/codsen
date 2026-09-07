@@ -140,7 +140,7 @@ test("02 - write reconciles once and subsequent check passes", () => {
       "utf8",
     );
     ok(contents.includes("## 1.0.1 (2026-08-20)"), "02.03");
-    ok(contents.includes("(1000 → 1200)"), "02.04");
+    ok(contents.includes("(1,000 → 1,200)"), "02.04");
     const second = run(root, ["--check"]);
     equal(second.status, 0, "02.05");
     equal(second.report.changes, [], "02.06");
