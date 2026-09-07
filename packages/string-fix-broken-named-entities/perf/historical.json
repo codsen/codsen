@@ -1,4 +1,10 @@
 {
   "7.2.3": 423,
+  "lastSlowerRun": {
+    "against": 423,
+    "score": 404,
+    "version": "7.2.3",
+    "worst": 276
+  },
   "lastVersion": 423
 }

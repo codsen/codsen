@@ -1,10 +1,5 @@
 {
   "4.2.2": 26_312,
-  "lastSlowerRun": {
-    "against": 26_312,
-    "score": 25_496,
-    "version": "4.2.2",
-    "worst": 25_496
-  },
-  "lastVersion": 26_312
+  "4.3.1": 30_404,
+  "lastVersion": 30_404
 }

@@ -3,11 +3,6 @@
   "13.6.1": 262,
   "13.6.2": 274,
   "13.7.0": 315,
-  "lastSlowerRun": {
-    "against": 315,
-    "score": 307,
-    "version": "13.7.0",
-    "worst": 263
-  },
-  "lastVersion": 315
+  "13.7.1": 354,
+  "lastVersion": 354
 }

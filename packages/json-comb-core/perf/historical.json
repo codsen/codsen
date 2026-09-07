@@ -17,9 +17,9 @@
   "8.2.1": 30_169,
   "lastSlowerRun": {
     "against": 30_169,
-    "score": 27_041,
-    "version": "8.2.1",
-    "worst": 27_041
+    "score": 23_924,
+    "version": "8.2.5",
+    "worst": 21_414
   },
   "lastVersion": 30_169
 }

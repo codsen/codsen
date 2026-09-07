@@ -1,5 +1,11 @@
 {
   "5.1.3": 85_131,
   "5.2.1": 109_267,
+  "lastSlowerRun": {
+    "against": 109_267,
+    "score": 22_919,
+    "version": "5.2.4",
+    "worst": 17_329
+  },
   "lastVersion": 109_267
 }

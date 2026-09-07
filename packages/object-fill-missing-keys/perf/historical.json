@@ -15,9 +15,9 @@
   "11.1.3": 325_434,
   "lastSlowerRun": {
     "against": 325_434,
-    "score": 315_293,
-    "version": "11.2.1",
-    "worst": 315_293
+    "score": 260_398,
+    "version": "11.2.4",
+    "worst": 201_832
   },
   "lastVersion": 325_434
 }

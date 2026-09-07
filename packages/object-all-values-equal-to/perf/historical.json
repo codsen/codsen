@@ -15,9 +15,9 @@
   "4.2.0": 3_308_221,
   "lastSlowerRun": {
     "against": 3_308_221,
-    "score": 2_895_472,
-    "version": "4.2.0",
-    "worst": 2_895_472
+    "score": 3_041_531,
+    "version": "4.2.3",
+    "worst": 2_482_760
   },
   "lastVersion": 3_308_221
 }

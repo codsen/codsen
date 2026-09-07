@@ -10,11 +10,12 @@
   "0.5.3": 3_709,
   "0.8.31": 1_192,
   "0.9.3": 1_588,
+  "0.10.5": 1_928,
   "lastSlowerRun": {
-    "against": 1_588,
-    "score": 1_234,
-    "version": "0.10.1",
-    "worst": 1_234
+    "against": 1_928,
+    "score": 1_620,
+    "version": "0.10.5",
+    "worst": 1_620
   },
-  "lastVersion": 1_588
+  "lastVersion": 1_928
 }

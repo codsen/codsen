@@ -12,9 +12,9 @@
   "4.1.3": 40_584_458,
   "lastSlowerRun": {
     "against": 40_584_458,
-    "score": 37_929_210,
-    "version": "4.2.0",
-    "worst": 37_929_210
+    "score": 36_659_856,
+    "version": "4.2.1",
+    "worst": 36_659_856
   },
   "lastVersion": 40_584_458
 }
