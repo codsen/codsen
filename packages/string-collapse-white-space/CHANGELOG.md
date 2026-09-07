@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 11.2.5 (2026-09-07)
+
+### Bug Fixes
+
+- **string-collapse-white-space:** resolve whitespace runs before callbacks ([eb5ccbb](https://github.com/codsen/codsen/commit/eb5ccbb1de1a6c83bb21efafed2ec3d51beecc98))
+
 ## 11.2.4 (2026-09-06)
 
 ### Performance Improvements

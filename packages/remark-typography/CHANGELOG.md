@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.5 (2026-09-07)
+
+### Bug Fixes
+
+- **remark-typography:** apply widow fallback after partial replacements ([9ffde90](https://github.com/codsen/codsen/commit/9ffde90dad58ca19a991ba55994d4b0fb964a01f))
+
 ## 0.8.4 (2026-09-06)
 
 ### Performance Improvements

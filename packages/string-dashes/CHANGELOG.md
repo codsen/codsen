@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.4.5 (2026-09-07)
+
+### Bug Fixes
+
+- **string-dashes:** honor spans and arithmetic dash context ([010da3b](https://github.com/codsen/codsen/commit/010da3bd654015b95e954286edd8e2287b27536a))
+
 ## 1.4.4 (2026-09-06)
 
 ### Performance Improvements

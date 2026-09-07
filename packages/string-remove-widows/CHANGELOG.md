@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.5 (2026-09-07)
+
+### Bug Fixes
+
+- **string-remove-widows:** preserve HTML and template boundaries ([39d94a4](https://github.com/codsen/codsen/commit/39d94a42bd90f92f0e13ec2a62b5375bf6064a9f))
+
 ## 4.2.4 (2026-09-06)
 
 ### Performance Improvements

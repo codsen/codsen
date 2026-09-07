@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 9.4.6 (2026-09-07)
+
+### Bug Fixes
+
+- **detergent:** preserve processing after encoded apostrophes ([0af06ca](https://github.com/codsen/codsen/commit/0af06ca4e18ea25146b2c042d863650a43189326))
+
 ## 9.4.5 (2026-09-06)
 
 ### Bug Fixes
