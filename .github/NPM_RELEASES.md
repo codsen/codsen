@@ -22,9 +22,11 @@ Re-registering instead would mean editing every package by hand on npmjs.com.
    `npm-production`.
 2. Protect it with required reviewers and restrict deployments to `main`.
    Approval gates the publish job, not the build and test jobs.
-3. In **Settings → Actions → General → Workflow permissions**, enable
-   **Allow GitHub Actions to create and approve pull requests**. The preparation
-   workflow needs this permission to open its release PR.
+3. In **Settings → Actions → General → Workflow permissions**, select
+   **Read repository contents and packages permissions** and keep
+   **Allow GitHub Actions to create and approve pull requests** enabled. Jobs
+   declare any required write permissions explicitly; preparation needs the
+   separate pull-request setting to open its release PR.
 4. Protect `main` (or add an equivalent ruleset), require the `verify.yml`
    checks, and require release branches to be up to date before merging. Do not
    use GitHub's **Update branch** button on a generated release PR; regenerate
