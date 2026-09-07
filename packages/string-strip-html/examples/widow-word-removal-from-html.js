@@ -1,25 +1,23 @@
-// Orphan removal from text within HTML
+// Prevent widow words while preserving HTML
 
 import { strict as assert } from "node:assert";
 import { removeWidows } from "../../string-remove-widows/dist/string-remove-widows.esm.js";
 import { stripHtml } from "../dist/string-strip-html.esm.js";
 
-const someHtml = 'The quick brown fox jumps of the lazy dog.<div class="a">';
+const someHtml =
+  '<p class="underline font-bold">The quick brown fox jumps over the lazy dog.</p>';
+const expected =
+  '<p class="underline font-bold">The quick brown fox jumps over the lazy&nbsp;dog.</p>';
 
-// default widow word removal libs are not aware of HTML:
-// -----------------------------------------------------------------------------
+// HTML tags and their attributes are protected automatically.
+assert.equal(removeWidows(someHtml).res, expected);
 
-assert.equal(
-  removeWidows(someHtml).res,
-  'The quick brown fox jumps of the lazy dog.<div&nbsp;class="a">', // 😱
-);
-
-// luckily, removeWidows() consumes optional HTML tag locations
+// Reuse exact tag spans when stripHtml() has already scanned the same input.
+// Its removal ranges can include surrounding whitespace; use allTagLocations.
+const { allTagLocations } = stripHtml(someHtml);
 assert.equal(
   removeWidows(someHtml, {
-    tagRanges: stripHtml(someHtml)
-      // remove the third argument, what to insert ("&nbsp;" string in these cases)
-      .ranges.map(([from, to]) => [from, to]),
+    tagRanges: allTagLocations,
   }).res,
-  'The quick brown fox jumps of the lazy&nbsp;dog.<div class="a">', // ✅
+  expected,
 );
