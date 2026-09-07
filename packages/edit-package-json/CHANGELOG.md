@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.10.5 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 29.91% higher normalized benchmark score than v0.9.3 (20485 → 26613).
+
 ## 0.10.3 (2026-09-01)
 
 ### Bug Fixes
@@ -29,6 +35,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
+## 0.8.37 (2025-10-08)
+
+### Performance Improvements
+
+- Recorded a 21.93% higher normalized benchmark score than v0.6.6 (19223 → 23438).
+
 ## 0.8.18 (2024-01-05)
 
 ### Bug Fixes
@@ -47,6 +59,24 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 0.6.5 (2022-07-05)
+
+### Performance Improvements
+
+- Recorded a 15.45% higher normalized benchmark score than v0.6.4 (18343 → 21177).
+
+## 0.6.4 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 31.92% higher normalized benchmark score than v0.6.3 (13905 → 18343).
+
+## 0.6.2 (2022-04-18)
+
+### Performance Improvements
+
+- Recorded a 24.64% higher normalized benchmark score than v0.6.1 (15562 → 19397).
+
 ## 0.6.0 (2022-04-11)
 
 ### Features
@@ -55,7 +85,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 5.31% higher normalized benchmark score than v0.5.12.
+- Recorded a 5.31% higher normalized benchmark score than v0.5.12 (15774 → 16612).
+
+## 0.5.11 (2022-01-11)
+
+### Performance Improvements
+
+- Recorded a 8.37% higher normalized benchmark score than v0.5.10 (17123 → 18557).
+
+## 0.5.10 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 26.99% higher normalized benchmark score than v0.5.9 (13484 → 17123).
+
+## 0.5.9 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 9.07% higher normalized benchmark score than v0.5.8 (12363 → 13484).
+
+## 0.5.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 39.36% higher normalized benchmark score than v0.5.5 (18860 → 26283).
 
 ## 0.5.0 (2021-09-09)
 

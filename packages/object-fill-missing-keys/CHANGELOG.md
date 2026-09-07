@@ -26,6 +26,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - clone the input once and cache skipped paths ([35327d9](https://github.com/codsen/codsen/commit/35327d909473a2e3327eef291a521b26303722c9))
 
+## 11.0.32 (2025-10-08)
+
+### Performance Improvements
+
+- Recorded a 137.28% higher normalized benchmark score than v9.1.5 (145906 → 346206).
+
 ## 11.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -58,13 +64,43 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 25.56% higher normalized benchmark score than v9.1.1.
+- Recorded a 25.56% higher normalized benchmark score than v9.1.1 (119804 → 150430).
+
+## 9.1.1 (2022-04-11)
+
+### Performance Improvements
+
+- Recorded a 30.03% higher normalized benchmark score than v9.1.0 (92136 → 119804).
 
 ## 9.1.0 (2022-04-10)
 
 ### Features
 
 - export defaults ([53ec13b](https://github.com/codsen/codsen/commit/53ec13b228cf94c140eabc870da29d5e11f67604))
+
+## 9.0.12 (2022-01-22)
+
+### Performance Improvements
+
+- Recorded a 7.61% higher normalized benchmark score than v9.0.11 (99581 → 107164).
+
+## 9.0.10 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 5.23% higher normalized benchmark score than v9.0.9 (146759 → 154435).
+
+## 9.0.9 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 27.05% higher normalized benchmark score than v9.0.8 (115517 → 146759).
+
+## 9.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 33.03% higher normalized benchmark score than v9.0.5 (140510 → 186921).
 
 ## 9.0.0 (2021-09-09)
 

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.2.4 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 22.14% higher normalized benchmark score than v7.1.3 (141101 → 172335).
+
 ## 7.2.2 (2026-08-22)
 
 ### Performance Improvements
@@ -36,11 +42,59 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 6.0.20 (2022-07-26)
+
+### Performance Improvements
+
+- Recorded a 5.62% higher normalized benchmark score than v6.0.19 (182858 → 193132).
+
+## 6.0.18 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 102.77% higher normalized benchmark score than v6.0.17 (108101 → 219199).
+
 ## 6.0.17 (2022-04-18)
 
 ### Fixed
 
 - tweak types ([6be1471](https://github.com/codsen/codsen/commit/6be147170191b503b074cc60732eed5147509bfb))
+
+## 6.0.16 (2022-04-17)
+
+### Performance Improvements
+
+- Recorded a 22.68% higher normalized benchmark score than v6.0.15 (101680 → 124743).
+
+## 6.0.15 (2022-04-11)
+
+### Performance Improvements
+
+- Recorded a 6.28% higher normalized benchmark score than v6.0.14 (95669 → 101680).
+
+## 6.0.13 (2022-03-21)
+
+### Performance Improvements
+
+- Recorded a 17.58% higher normalized benchmark score than v6.0.12 (122854 → 144452).
+
+## 6.0.10 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 5.28% higher normalized benchmark score than v6.0.9 (153358 → 161454).
+
+## 6.0.9 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 47.17% higher normalized benchmark score than v6.0.8 (104204 → 153358).
+
+## 6.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 16.72% higher normalized benchmark score than v6.0.5 (184478 → 215323).
 
 ## 6.0.0 (2021-09-09)
 

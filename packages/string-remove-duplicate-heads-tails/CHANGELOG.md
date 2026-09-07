@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.2.4 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 27.97% higher normalized benchmark score than v7.2.1 (28985 → 37092).
+
 ## 7.2.3 (2026-09-01)
 
 ### Bug Fixes
@@ -14,6 +20,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+
+## 7.2.1 (2026-08-19)
+
+### Performance Improvements
+
+- Recorded a 11.13% higher normalized benchmark score than v7.1.3 (26081 → 28985).
 
 ## 7.2.0 (2026-08-19)
 
@@ -41,11 +53,41 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - export types ([ff7e78a](https://github.com/codsen/codsen/commit/ff7e78a072dc65fc45bd5a598cfdee6017d3dc5e))
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 6.0.19 (2022-07-26)
+
+### Performance Improvements
+
+- Recorded a 4% higher normalized benchmark score than v6.0.18 (33058 → 34380).
+
+## 6.0.17 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 84.78% higher normalized benchmark score than v6.0.16 (20401 → 37696).
+
 ## 6.0.16 (2022-04-18)
 
 ### Fixed
 
 - tweak types ([6cbe6ab](https://github.com/codsen/codsen/commit/6cbe6abca80722704227c8271144ad9562e4260d))
+
+## 6.0.14 (2022-04-11)
+
+### Performance Improvements
+
+- Recorded a 23.96% higher normalized benchmark score than v6.0.13 (19748 → 24479).
+
+## 6.0.9 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 25.32% higher normalized benchmark score than v6.0.8 (25834 → 32376).
+
+## 6.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 25.87% higher normalized benchmark score than v6.0.5 (38455 → 48404).
 
 ## 6.0.0 (2021-09-09)
 

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.2.4 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 18.39% higher normalized benchmark score than v6.2.1 (734 → 869).
+
 ## 6.2.3 (2026-09-01)
 
 ### Bug Fixes
@@ -14,6 +20,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+
+## 6.2.1 (2026-08-19)
+
+### Performance Improvements
+
+- Recorded a 2.51% higher normalized benchmark score than v6.1.3 (716 → 734).
 
 ## 6.2.0 (2026-08-19)
 
@@ -29,6 +41,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
+## 6.0.40 (2025-10-08)
+
+### Performance Improvements
+
+- Recorded a 6.66% higher normalized benchmark score than v5.0.24 (901 → 961).
+
 ## 6.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -41,11 +59,59 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 5.0.24 (2022-08-01)
+
+### Performance Improvements
+
+- Recorded a 2.39% higher normalized benchmark score than v5.0.23 (880 → 901).
+
+## 5.0.23 (2022-07-26)
+
+### Performance Improvements
+
+- Recorded a 19.73% higher normalized benchmark score than v5.0.22 (735 → 880).
+
+## 5.0.21 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 192.41% higher normalized benchmark score than v5.0.18 (316 → 924).
+
 ## 5.0.19 (2022-04-24)
 
 ### Fixed
 
 - tweak types ([30225e9](https://github.com/codsen/codsen/commit/30225e95298aefa6ab941f668894d5f7465e406c))
+
+## 5.0.16 (2022-04-17)
+
+### Performance Improvements
+
+- Recorded a 19.75% higher normalized benchmark score than v5.0.15 (319 → 382).
+
+## 5.0.13 (2022-03-21)
+
+### Performance Improvements
+
+- Recorded a 3.26% higher normalized benchmark score than v5.0.12 (429 → 443).
+
+## 5.0.11 (2022-01-11)
+
+### Performance Improvements
+
+- Recorded a 16.14% higher normalized benchmark score than v5.0.10 (378 → 439).
+
+## 5.0.9 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 3.72% higher normalized benchmark score than v5.0.8 (403 → 418).
+
+## 5.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 13.25% higher normalized benchmark score than v5.0.5 (536 → 607).
 
 ## 5.0.0 (2021-09-09)
 

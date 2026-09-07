@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.1.2 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 5.99% higher normalized benchmark score than v1.0.0 (7464 → 7911).
+
 ## 1.1.1 (2026-09-03)
 
 ### Performance Improvements

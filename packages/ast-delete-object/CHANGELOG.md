@@ -16,6 +16,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
 
+## 4.2.1 (2026-08-19)
+
+### Performance Improvements
+
+- Recorded a 84.79% higher normalized benchmark score than v4.1.3 (214904 → 397119).
+
 ## 4.2.0 (2026-08-19)
 
 ### Bug Fixes

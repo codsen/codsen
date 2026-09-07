@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.4 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 21.93% higher normalized benchmark score than v4.2.1 (349506 → 426159).
+
 ## 4.2.2 (2026-08-22)
 
 ### Performance Improvements
@@ -22,6 +28,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
+## 4.1.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 16.45% higher normalized benchmark score than v4.0.33 (300012 → 349355).
+
 ## 4.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -33,6 +45,36 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
+
+## 3.0.16 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 241.56% higher normalized benchmark score than v3.0.15 (118069 → 403276).
+
+## 3.0.13 (2022-04-10)
+
+### Performance Improvements
+
+- Recorded a 8.75% higher normalized benchmark score than v3.0.12 (164252 → 178631).
+
+## 3.0.10 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 14.81% higher normalized benchmark score than v3.0.9 (213337 → 244925).
+
+## 3.0.9 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 10.16% higher normalized benchmark score than v3.0.8 (193662 → 213337).
+
+## 3.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 4.64% higher normalized benchmark score than v3.0.5 (316753 → 331452).
 
 ## 3.0.0 (2021-09-09)
 

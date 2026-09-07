@@ -18,13 +18,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 13.27% higher normalized benchmark score than v4.2.1.
+- Recorded a 13.27% higher normalized benchmark score than v4.2.1 (114102 → 129240).
 
 ## 4.2.2 (2026-08-22)
 
 ### Performance Improvements
 
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+
+## 4.2.1 (2026-08-19)
+
+### Performance Improvements
+
+- Recorded a 5.55% higher normalized benchmark score than v4.1.3 (108107 → 114102).
 
 ## 4.2.0 (2026-08-19)
 
@@ -43,6 +49,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - stop shipping debug-only work in published bundles ([6fe5fee](https://github.com/codsen/codsen/commit/6fe5feebdf726b553ae3034690634166b461fca5))
 
+## 4.1.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 41.59% higher normalized benchmark score than v4.0.34 (76353 → 108107).
+
 ## 4.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -55,11 +67,35 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 3.1.6 (2022-07-26)
+
+### Performance Improvements
+
+- Recorded a 14.2% higher normalized benchmark score than v3.1.5 (75165 → 85842).
+
+## 3.1.5 (2022-07-05)
+
+### Performance Improvements
+
+- Recorded a 2.27% higher normalized benchmark score than v3.1.4 (73496 → 75165).
+
+## 3.1.4 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 55.43% higher normalized benchmark score than v3.1.3 (47286 → 73496).
+
 ## 3.1.3 (2022-04-18)
 
 ### Fixed
 
 - tweak types ([a254fd8](https://github.com/codsen/codsen/commit/a254fd88b3ff2598635d51d93795e215d7522cca))
+
+## 3.1.2 (2022-04-17)
+
+### Performance Improvements
+
+- Recorded a 21.91% higher normalized benchmark score than v3.1.1 (61227 → 74643).
 
 ## 3.1.0 (2022-04-10)
 
@@ -69,7 +105,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 5.27% higher normalized benchmark score than v3.0.12.
+- Recorded a 5.27% higher normalized benchmark score than v3.0.12 (65018 → 68446).
+
+## 3.0.11 (2022-01-11)
+
+### Performance Improvements
+
+- Recorded a 8.44% higher normalized benchmark score than v3.0.10 (59821 → 64872).
+
+## 3.0.10 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 39.96% higher normalized benchmark score than v3.0.9 (42740 → 59821).
+
+## 3.0.9 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 7.21% higher normalized benchmark score than v3.0.8 (39864 → 42740).
+
+## 3.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 46.49% higher normalized benchmark score than v3.0.5 (74986 → 109849).
 
 ## 3.0.0 (2021-09-09)
 

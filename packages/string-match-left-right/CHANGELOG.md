@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 9.2.4 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 6.13% higher normalized benchmark score than v9.2.2 (3289440 → 3491053).
+
 ## 9.2.3 (2026-09-01)
 
 ### Bug Fixes
@@ -23,8 +29,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 600.65% higher normalized benchmark score than v9.2.1.
+- Recorded a 600.65% higher normalized benchmark score than v9.2.1 (469484 → 3289440).
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+
+## 9.2.1 (2026-08-19)
+
+### Performance Improvements
+
+- Recorded a 2.74% higher normalized benchmark score than v9.1.3 (456971 → 469484).
 
 ## 9.2.0 (2026-08-19)
 
@@ -40,6 +52,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
+
+## 9.1.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 4.22% higher normalized benchmark score than v9.0.33 (438454 → 456971).
 
 ## 9.0.19 (2024-03-30)
 
@@ -59,11 +77,41 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 8.1.4 (2022-07-05)
+
+### Performance Improvements
+
+- Recorded a 13.39% higher normalized benchmark score than v8.1.3 (690758 → 783280).
+
+## 8.1.3 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 33.99% higher normalized benchmark score than v8.1.2 (515526 → 690758).
+
+## 8.1.2 (2022-04-18)
+
+### Performance Improvements
+
+- Recorded a 3.33% higher normalized benchmark score than v8.1.1 (498896 → 515526).
+
 ## 8.1.0 (2022-04-10)
 
 ### Features
 
 - export defaults and version ([405add5](https://github.com/codsen/codsen/commit/405add56458853550a721691febcd1aeb36a2f43))
+
+## 8.0.12 (2022-01-22)
+
+### Performance Improvements
+
+- Recorded a 46.81% higher normalized benchmark score than v8.0.11 (434774 → 638278).
+
+## 8.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 19.28% higher normalized benchmark score than v8.0.5 (813577 → 970426).
 
 ## 8.0.0 (2021-09-09)
 

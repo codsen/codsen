@@ -3,11 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.2.4 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 114.98% higher normalized benchmark score than v6.2.1 (424837 → 913320).
+
 ## 6.2.2 (2026-08-22)
 
 ### Performance Improvements
 
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+
+## 6.2.1 (2026-08-19)
+
+### Performance Improvements
+
+- Recorded a 18.34% higher normalized benchmark score than v6.1.3 (358985 → 424837).
 
 ## 6.2.0 (2026-08-19)
 
@@ -35,6 +47,42 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - export types ([a153500](https://github.com/codsen/codsen/commit/a1535007407a6908e0fa767ee025eb41f6c8dbdd))
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
+
+## 5.0.17 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 21.69% higher normalized benchmark score than v5.0.16 (460307 → 560159).
+
+## 5.0.16 (2022-04-18)
+
+### Performance Improvements
+
+- Recorded a 13.06% higher normalized benchmark score than v5.0.15 (407127 → 460307).
+
+## 5.0.15 (2022-04-17)
+
+### Performance Improvements
+
+- Recorded a 81.91% higher normalized benchmark score than v5.0.14 (223802 → 407127).
+
+## 5.0.12 (2022-01-22)
+
+### Performance Improvements
+
+- Recorded a 31.31% higher normalized benchmark score than v5.0.11 (311531 → 409071).
+
+## 5.0.9 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 4.34% higher normalized benchmark score than v5.0.8 (485468 → 506521).
+
+## 5.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 47.12% higher normalized benchmark score than v5.0.5 (522877 → 769267).
 
 ## 5.0.0 (2021-09-09)
 

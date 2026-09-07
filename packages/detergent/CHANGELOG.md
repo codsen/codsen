@@ -30,6 +30,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
 
+## 9.4.1 (2026-08-19)
+
+### Performance Improvements
+
+- Recorded a 22.29% higher normalized benchmark score than v9.3.3 (5164 → 6315).
+
 ## 9.4.0 (2026-08-19)
 
 ### Bug Fixes
@@ -45,6 +51,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
+
+## 9.3.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 579.47% higher normalized benchmark score than v9.2.25 (760 → 5164).
 
 ## 9.2.0 (2023-04-16)
 
@@ -70,11 +82,53 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 8.0.25 (2022-08-01)
+
+### Performance Improvements
+
+- Recorded a 37.28% higher normalized benchmark score than v8.0.24 (1792 → 2460).
+
+## 8.0.23 (2022-07-16)
+
+### Performance Improvements
+
+- Recorded a 36.59% higher normalized benchmark score than v8.0.22 (1484 → 2027).
+
+## 8.0.20 (2022-07-05)
+
+### Performance Improvements
+
+- Recorded a 62.18% higher normalized benchmark score than v8.0.19 (981 → 1591).
+
+## 8.0.19 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 19.34% higher normalized benchmark score than v8.0.17 (822 → 981).
+
 ## 8.0.17 (2022-04-18)
 
 ### Fixed
 
 - tweak types ([444d3fe](https://github.com/codsen/codsen/commit/444d3feff61a2d5b5b84e362748fadc96785ba5e))
+
+## 8.0.16 (2022-04-17)
+
+### Performance Improvements
+
+- Recorded a 63.24% higher normalized benchmark score than v8.0.15 (778 → 1270).
+
+## 8.0.12 (2022-01-22)
+
+### Performance Improvements
+
+- Recorded a 19.52% higher normalized benchmark score than v8.0.11 (799 → 955).
+
+## 8.0.10 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 33.67% higher normalized benchmark score than v8.0.9 (695 → 929).
 
 ## 8.0.0 (2021-09-09)
 

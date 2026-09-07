@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.10.5 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 21.41% higher normalized benchmark score than v0.9.3 (1588 → 1928).
+
 ## 0.10.2 (2026-08-22)
 
 ### Performance Improvements
@@ -24,6 +30,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
+
+## 0.9.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 33.22% higher normalized benchmark score than v0.8.31 (1192 → 1588).
 
 ## 0.8.0 (2022-12-01)
 
@@ -55,6 +67,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 0.5.1 (2022-06-16)
+
+### Performance Improvements
+
+- Recorded a 3.75% higher normalized benchmark score than v0.5.0 (3736 → 3876).
+
 ## 0.5.0 (2022-04-29)
 
 ### Fixed
@@ -67,13 +85,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 99.25% higher normalized benchmark score than v0.3.1.
+- Recorded a 99.25% higher normalized benchmark score than v0.3.1 (1875 → 3736).
 
 ## 0.4.0 (2022-04-24)
 
 ### Features
 
 - recognise generics ([09b2aea](https://github.com/codsen/codsen/commit/09b2aea975c1cc8ec63ff78af6bcd7b7ffc95c9d))
+
+## 0.3.1 (2022-04-18)
+
+### Performance Improvements
+
+- Recorded a 7.27% higher normalized benchmark score than v0.3.0 (1748 → 1875).
 
 ## 0.3.0 (2022-04-17)
 
@@ -83,7 +107,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 15.3% higher normalized benchmark score than v0.2.0.
+- Recorded a 15.3% higher normalized benchmark score than v0.2.0 (1516 → 1748).
 
 ## 0.2.0 (2022-04-10)
 
@@ -100,7 +124,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 7.29% higher normalized benchmark score than v0.1.0.
+- Recorded a 7.29% higher normalized benchmark score than v0.1.0 (1413 → 1516).
 
 ## 0.1.0 (2022-03-21)
 

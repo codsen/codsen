@@ -5,6 +5,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 13.7.1 (2026-09-06)
 
+### Performance Improvements
+
+- Recorded a 12.38% higher normalized benchmark score than v13.7.0 (315 → 354).
+
 ### Bug Fixes
 
 - remove title the npm dev-dependency and the single example consumer of it ([b48ee05](https://github.com/codsen/codsen/commit/b48ee059d87e2a72ea53e084e1ff1f5b40d386f3))
@@ -40,16 +44,22 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 12.04% higher normalized benchmark score than v13.6.2.
+- Recorded a 14.96% higher normalized benchmark score than v13.6.2 (274 → 315).
 - record string-strip-html regression ([23e7842](https://github.com/codsen/codsen/commit/23e7842913f2c3128755fc8d2ce3ddaa2df29474))
 
 ## 13.6.2 (2026-08-22)
 
 ### Performance Improvements
 
-- Recorded a 4.58% higher normalized benchmark score than v13.6.1.
+- Recorded a 4.58% higher normalized benchmark score than v13.6.1 (262 → 274).
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
 - record lodash-es removal benchmarks ([0f69b6f](https://github.com/codsen/codsen/commit/0f69b6fdb8c3be04eaa02f82de107390b5263ce9))
+
+## 13.6.1 (2026-08-19)
+
+### Performance Improvements
+
+- Recorded a 191.95% higher normalized benchmark score than v13.6.0 (89.742286422008 → 262).
 
 ## 13.6.0 (2026-08-19)
 

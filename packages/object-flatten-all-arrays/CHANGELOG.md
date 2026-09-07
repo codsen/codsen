@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.2.3 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 8.44% higher normalized benchmark score than v7.2.0 (396885 → 430381).
+
 ## 7.2.1 (2026-08-22)
 
 ### Performance Improvements
@@ -25,7 +31,21 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
+- Recorded a 12.88% higher normalized benchmark score than v7.1.3 (351603 → 396885).
+
 - flatten arrays from a single cloned input ([e1cbcd8](https://github.com/codsen/codsen/commit/e1cbcd81e72719374b2357a4847ed8edd2274ea0))
+
+## 7.1.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 26.42% higher normalized benchmark score than v7.0.33 (278126 → 351603).
+
+## 7.0.33 (2025-10-08)
+
+### Performance Improvements
+
+- Recorded a 91.75% higher normalized benchmark score than v6.1.3 (145048 → 278126).
 
 ## 7.0.19 (2024-03-30)
 
@@ -46,11 +66,35 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - export types ([3cea69a](https://github.com/codsen/codsen/commit/3cea69a1220ccd807aaea9ef8deac0b5c7858df6))
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 6.1.2 (2022-04-28)
+
+### Performance Improvements
+
+- Recorded a 46.57% higher normalized benchmark score than v6.1.1 (105773 → 155029).
+
+## 6.1.1 (2022-04-18)
+
+### Performance Improvements
+
+- Recorded a 9.76% higher normalized benchmark score than v6.1.0 (96371 → 105773).
+
 ## 6.1.0 (2022-04-10)
 
 ### Features
 
 - export defaults ([568da52](https://github.com/codsen/codsen/commit/568da524193b86dda2a197cd42e0c6e49ba405be))
+
+## 6.0.10 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 6.79% higher normalized benchmark score than v6.0.9 (127827 → 136512).
+
+## 6.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 40.18% higher normalized benchmark score than v6.0.5 (124950 → 175156).
 
 ## 6.0.0 (2021-09-09)
 

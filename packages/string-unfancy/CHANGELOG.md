@@ -9,6 +9,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - **string-unfancy:** streamline recursive decoding with the shared HTML entity codec ([81584b3](https://github.com/codsen/codsen/commit/81584b3ac4a553a5840cdb8ee08eb8b11181a2ec))
 
+## 6.2.2 (2026-09-01)
+
+### Performance Improvements
+
+- Recorded a 101.88% higher normalized benchmark score than v6.1.3 (161996 → 327039).
+
 ## 6.2.1 (2026-08-22)
 
 ### Performance Improvements
@@ -27,6 +33,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
+## 6.1.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 26.17% higher normalized benchmark score than v6.0.30 (128397 → 161996).
+
 ## 6.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -38,6 +50,30 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
+
+## 5.0.14 (2022-07-05)
+
+### Performance Improvements
+
+- Recorded a 37.86% higher normalized benchmark score than v5.0.13 (166494 → 229526).
+
+## 5.0.13 (2022-04-18)
+
+### Performance Improvements
+
+- Recorded a 25.21% higher normalized benchmark score than v5.0.12 (132970 → 166494).
+
+## 5.0.12 (2022-01-22)
+
+### Performance Improvements
+
+- Recorded a 5.81% higher normalized benchmark score than v5.0.11 (125672 → 132970).
+
+## 5.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 21.29% higher normalized benchmark score than v5.0.5 (185249 → 224685).
 
 ## 5.0.0 (2021-09-09)
 

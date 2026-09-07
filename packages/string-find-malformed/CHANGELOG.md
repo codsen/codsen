@@ -3,11 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.4 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 6.27% higher normalized benchmark score than v4.2.1 (338417 → 359647).
+
 ## 4.2.2 (2026-08-22)
 
 ### Performance Improvements
 
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+
+## 4.2.1 (2026-08-19)
+
+### Performance Improvements
+
+- Recorded a 18.88% higher normalized benchmark score than v4.1.3 (284675 → 338417).
 
 ## 4.2.0 (2026-08-19)
 

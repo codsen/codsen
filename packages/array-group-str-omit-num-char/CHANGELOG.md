@@ -3,11 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.2.4 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 9.2% higher normalized benchmark score than v6.2.1 (190725 → 208270).
+
 ## 6.2.2 (2026-08-22)
 
 ### Performance Improvements
 
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+
+## 6.2.1 (2026-08-19)
+
+### Performance Improvements
+
+- Recorded a 6.89% higher normalized benchmark score than v6.1.3 (178435 → 190725).
 
 ## 6.2.0 (2026-08-19)
 
@@ -21,6 +33,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
+## 6.1.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 31.92% higher normalized benchmark score than v6.0.30 (135257 → 178435).
+
 ## 6.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -33,11 +51,47 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 5.1.6 (2022-07-26)
+
+### Performance Improvements
+
+- Recorded a 32.48% higher normalized benchmark score than v5.1.5 (198789 → 263351).
+
+## 5.1.4 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 37.16% higher normalized benchmark score than v5.1.3 (185276 → 254129).
+
+## 5.1.3 (2022-04-18)
+
+### Performance Improvements
+
+- Recorded a 9.33% higher normalized benchmark score than v5.1.2 (169471 → 185276).
+
+## 5.1.1 (2022-04-11)
+
+### Performance Improvements
+
+- Recorded a 67.05% higher normalized benchmark score than v5.1.0 (156027 → 260647).
+
 ## 5.1.0 (2022-04-10)
 
 ### Features
 
 - export defaults ([535dc16](https://github.com/codsen/codsen/commit/535dc169a3083da1768cfbee7b1dfb92051f7333))
+
+## 5.0.12 (2022-01-22)
+
+### Performance Improvements
+
+- Recorded a 2.46% higher normalized benchmark score than v5.0.11 (191112 → 195814).
+
+## 5.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 59.08% higher normalized benchmark score than v5.0.5 (222468 → 353904).
 
 ## 5.0.0 (2021-09-09)
 

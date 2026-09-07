@@ -26,7 +26,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 0.61% higher normalized benchmark score than v4.2.3.
 - stop shipping debug-only work in published bundles ([6fe5fee](https://github.com/codsen/codsen/commit/6fe5feebdf726b553ae3034690634166b461fca5))
 
 ## 4.1.0 (2023-05-13)

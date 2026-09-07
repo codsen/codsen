@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.2.4 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 15.4% higher normalized benchmark score than v7.1.3 (130567 → 150669).
+
 ## 7.2.3 (2026-09-01)
 
 ### Bug Fixes
@@ -33,6 +39,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - clone the referenced object only once ([96cdb4f](https://github.com/codsen/codsen/commit/96cdb4f8e8c593ab75c91a45b8c543a95ebd9203))
 
+## 7.1.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 115.29% higher normalized benchmark score than v7.0.32 (60648 → 130567).
+
 ## 7.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -46,17 +58,47 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - export types ([91a9305](https://github.com/codsen/codsen/commit/91a9305f81b03480b7decbaf65cdde03a65808b4))
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 6.1.3 (2022-07-05)
+
+### Performance Improvements
+
+- Recorded a 14.17% higher normalized benchmark score than v6.1.2 (67395 → 76944).
+
 ## 6.1.2 (2022-04-18)
 
 ### Fixed
 
 - tweak types ([fd4c820](https://github.com/codsen/codsen/commit/fd4c8204db0f9151e519737a6fc0767aab6af215))
 
+## 6.1.1 (2022-04-17)
+
+### Performance Improvements
+
+- Recorded a 41.14% higher normalized benchmark score than v6.1.0 (60231 → 85013).
+
 ## 6.1.0 (2022-04-11)
 
 ### Features
 
 - export defaults and version ([1107244](https://github.com/codsen/codsen/commit/1107244b45eff96ac1fc4ab992031ede0d10ba8c))
+
+## 6.0.12 (2022-01-22)
+
+### Performance Improvements
+
+- Recorded a 4.98% higher normalized benchmark score than v6.0.11 (63106 → 66251).
+
+## 6.0.10 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 42.82% higher normalized benchmark score than v6.0.9 (65644 → 93750).
+
+## 6.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 50.88% higher normalized benchmark score than v6.0.5 (79528 → 119992).
 
 ## 6.0.0 (2021-09-09)
 

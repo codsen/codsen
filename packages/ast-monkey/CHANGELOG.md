@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 9.2.4 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 61.07% higher normalized benchmark score than v9.2.1 (111801 → 180078).
+
 ## 9.2.3 (2026-09-01)
 
 ### Bug Fixes
@@ -18,6 +24,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
 
+## 9.2.1 (2026-08-19)
+
+### Performance Improvements
+
+- Recorded a 67.73% higher normalized benchmark score than v9.1.3 (66657 → 111801).
+
 ## 9.2.0 (2026-08-19)
 
 ### Bug Fixes
@@ -31,6 +43,18 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
+## 9.1.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 17.46% higher normalized benchmark score than v9.0.40 (56751 → 66657).
+
+## 9.0.40 (2025-10-08)
+
+### Performance Improvements
+
+- Recorded a 14% higher normalized benchmark score than v8.0.21 (49781 → 56751).
+
 ## 9.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -43,6 +67,18 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 8.0.21 (2022-08-01)
+
+### Performance Improvements
+
+- Recorded a 47.32% higher normalized benchmark score than v8.0.20 (33791 → 49781).
+
+## 8.0.18 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 235.62% higher normalized benchmark score than v8.0.17 (14771 → 49574).
+
 ## 8.0.16 (2022-04-18)
 
 ### Fixed
@@ -53,7 +89,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 82.04% higher normalized benchmark score than v8.0.15.
+- Recorded a 82.04% higher normalized benchmark score than v8.0.15 (13689 → 24920).
+
+## 8.0.13 (2022-04-10)
+
+### Performance Improvements
+
+- Recorded a 27% higher normalized benchmark score than v8.0.12 (21637 → 27479).
+
+## 8.0.12 (2022-01-22)
+
+### Performance Improvements
+
+- Recorded a 4.99% higher normalized benchmark score than v8.0.11 (20609 → 21637).
+
+## 8.0.9 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 45.5% higher normalized benchmark score than v8.0.8 (18017 → 26215).
+
+## 8.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 3.4% higher normalized benchmark score than v8.0.5 (26983 → 27901).
 
 ## 8.0.0 (2021-09-09)
 

@@ -17,7 +17,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 6.2% higher normalized benchmark score than v8.2.1.
+- Recorded a 6.2% higher normalized benchmark score than v8.2.1 (306214 → 325188).
 
 ## 8.2.1 (2026-08-22)
 
@@ -39,6 +39,18 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
+## 8.1.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 263.45% higher normalized benchmark score than v8.0.33 (84263 → 306252).
+
+## 8.0.33 (2025-10-08)
+
+### Performance Improvements
+
+- Recorded a 75.44% higher normalized benchmark score than v7.1.5 (48030 → 84263).
+
 ## 8.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -51,6 +63,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 7.1.4 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 22.77% higher normalized benchmark score than v7.1.3 (48869 → 59997).
+
 ## 7.1.3 (2022-04-18)
 
 ### Fixed
@@ -60,13 +78,37 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 26.24% higher normalized benchmark score than v7.1.2.
+- Recorded a 26.24% higher normalized benchmark score than v7.1.2 (38712 → 48869).
+
+## 7.1.1 (2022-04-11)
+
+### Performance Improvements
+
+- Recorded a 30.68% higher normalized benchmark score than v7.1.0 (31353 → 40973).
 
 ## 7.1.0 (2022-04-10)
 
 ### Features
 
 - export defaults and version ([7c27fb3](https://github.com/codsen/codsen/commit/7c27fb383cc57fcf2b88566471b6f2fc405093a1))
+
+## 7.0.12 (2022-01-22)
+
+### Performance Improvements
+
+- Recorded a 46.58% higher normalized benchmark score than v7.0.11 (29323 → 42983).
+
+## 7.0.9 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 26.63% higher normalized benchmark score than v7.0.8 (43496 → 55081).
+
+## 7.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 31.72% higher normalized benchmark score than v7.0.5 (49375 → 65038).
 
 ## 7.0.0 (2021-09-09)
 

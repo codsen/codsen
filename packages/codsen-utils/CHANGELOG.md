@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.10.1 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 57.97% higher normalized benchmark score than v1.8.0 (18614753 → 29406483).
+
 ## 1.10.0 (2026-09-01)
 
 ### Bug Fixes

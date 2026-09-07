@@ -7,6 +7,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
+- Recorded a 2.84% higher normalized benchmark score than v3.1.3 (6421043 → 6603360).
+
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
 
 ## 3.2.0 (2026-08-19)
@@ -21,6 +23,18 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
+## 3.1.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 218.9% higher normalized benchmark score than v3.0.23 (2013508 → 6421043).
+
+## 3.0.23 (2025-10-08)
+
+### Performance Improvements
+
+- Recorded a 117.93% higher normalized benchmark score than v2.1.2 (923908 → 2013508).
+
 ## 3.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -33,6 +47,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 2.1.2 (2022-07-05)
+
+### Performance Improvements
+
+- Recorded a 107.18% higher normalized benchmark score than v2.1.1 (445938 → 923908).
+
 ## 2.1.0 (2022-04-11)
 
 ### Features
@@ -41,7 +61,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 35.29% higher normalized benchmark score than v2.0.12.
+- Recorded a 35.29% higher normalized benchmark score than v2.0.12 (417347 → 564639).
+
+## 2.0.9 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 10.57% higher normalized benchmark score than v2.0.8 (521303 → 576414).
+
+## 2.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 19.85% higher normalized benchmark score than v2.0.5 (672384 → 805864).
 
 ## 2.0.0 (2021-09-09)
 

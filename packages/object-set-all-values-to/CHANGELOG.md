@@ -9,6 +9,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
 
+## 6.2.1 (2026-08-19)
+
+### Performance Improvements
+
+- Recorded a 41.48% higher normalized benchmark score than v6.1.3 (307893 → 435605).
+
 ## 6.2.0 (2026-08-19)
 
 ### Bug Fixes
@@ -24,6 +30,18 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 - clone nested replacement values only when needed ([c58c8a3](https://github.com/codsen/codsen/commit/c58c8a3c74007ffec4d7efc610e87030a0192c78))
+
+## 6.1.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 18.16% higher normalized benchmark score than v6.0.30 (260566 → 307893).
+
+## 6.0.30 (2025-10-08)
+
+### Performance Improvements
+
+- Recorded a 119.08% higher normalized benchmark score than v5.0.15 (118935 → 260566).
 
 ## 6.0.16 (2024-03-30)
 
@@ -43,6 +61,36 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - export types ([46af5bb](https://github.com/codsen/codsen/commit/46af5bb82513ffa82618c120a523ed53d51a5496))
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
+
+## 5.0.15 (2022-07-05)
+
+### Performance Improvements
+
+- Recorded a 2.52% higher normalized benchmark score than v5.0.14 (116012 → 118935).
+
+## 5.0.14 (2022-04-28)
+
+### Performance Improvements
+
+- Recorded a 32.42% higher normalized benchmark score than v5.0.13 (87611 → 116012).
+
+## 5.0.12 (2022-01-22)
+
+### Performance Improvements
+
+- Recorded a 23.89% higher normalized benchmark score than v5.0.11 (70999 → 87962).
+
+## 5.0.10 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 10.23% higher normalized benchmark score than v5.0.9 (101435 → 111810).
+
+## 5.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 45.08% higher normalized benchmark score than v5.0.5 (93965 → 136322).
 
 ## 5.0.0 (2021-09-09)
 

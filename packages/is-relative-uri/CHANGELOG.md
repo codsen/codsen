@@ -23,7 +23,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 0.94% higher normalized benchmark score than v5.1.3.
+## 5.1.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 15.44% higher normalized benchmark score than v5.0.30 (1007906 → 1163536).
 
 ## 5.0.0 (2022-12-01)
 
@@ -37,6 +41,24 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - export types ([0df9f25](https://github.com/codsen/codsen/commit/0df9f258c1b9ea4fc5950a659fe5bf3088b3b0ce))
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
+
+## 4.1.7 (2022-07-26)
+
+### Performance Improvements
+
+- Recorded a 11.04% higher normalized benchmark score than v4.1.6 (1516840 → 1684365).
+
+## 4.1.6 (2022-07-05)
+
+### Performance Improvements
+
+- Recorded a 7.17% higher normalized benchmark score than v4.1.5 (1415379 → 1516840).
+
+## 4.1.5 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 14.97% higher normalized benchmark score than v4.1.3 (1231069 → 1415379).
 
 ## 4.1.4 (2022-04-24)
 
@@ -52,7 +74,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 35.16% higher normalized benchmark score than v4.1.2.
+- Recorded a 35.16% higher normalized benchmark score than v4.1.2 (910834 → 1231069).
 
 ## 4.1.0 (2022-04-10)
 
@@ -62,7 +84,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 22.85% higher normalized benchmark score than v4.0.12.
+- Recorded a 22.85% higher normalized benchmark score than v4.0.12 (1072432 → 1317431).
+
+## 4.0.9 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 20.17% higher normalized benchmark score than v4.0.8 (1364931 → 1640171).
 
 ## 4.0.0 (2021-09-09)
 

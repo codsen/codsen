@@ -10,6 +10,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
 - record lodash-es removal benchmarks ([0f69b6f](https://github.com/codsen/codsen/commit/0f69b6fdb8c3be04eaa02f82de107390b5263ce9))
 
+## 7.2.1 (2026-08-19)
+
+### Performance Improvements
+
+- Recorded a 36.04% higher normalized benchmark score than v7.2.0 (1365 → 1857).
+
 ## 7.2.0 (2026-08-19)
 
 ### Bug Fixes
@@ -25,6 +31,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
+## 7.1.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 47.04% higher normalized benchmark score than v7.0.30 (929 → 1366).
+
 ## 7.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -36,6 +48,36 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
+
+## 6.0.18 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 139.79% higher normalized benchmark score than v6.0.17 (583 → 1398).
+
+## 6.0.17 (2022-04-18)
+
+### Performance Improvements
+
+- Recorded a 10.21% higher normalized benchmark score than v6.0.16 (529 → 583).
+
+## 6.0.15 (2022-04-11)
+
+### Performance Improvements
+
+- Recorded a 16.18% higher normalized benchmark score than v6.0.14 (655 → 761).
+
+## 6.0.13 (2022-03-21)
+
+### Performance Improvements
+
+- Recorded a 5.59% higher normalized benchmark score than v6.0.12 (752 → 794).
+
+## 6.0.12 (2022-01-22)
+
+### Performance Improvements
+
+- Recorded a 10.59% higher normalized benchmark score than v6.0.11 (680 → 752).
 
 ## 6.0.0 (2021-09-09)
 

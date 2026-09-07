@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 12.2.4 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 44.94% higher normalized benchmark score than v12.1.3 (20171 → 29236).
+
 ## 12.2.3 (2026-09-01)
 
 ### Bug Fixes
@@ -29,6 +35,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
+
+## 12.1.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 13.8% higher normalized benchmark score than v12.0.33 (17725 → 20171).
 
 ## 12.1.0 (2025-10-15)
 
@@ -71,6 +83,18 @@ assert.deepEqual(data, target);
 - export types ([29de20c](https://github.com/codsen/codsen/commit/29de20cec94673562d76ee6a92e12243588b7376))
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 11.0.18 (2022-07-05)
+
+### Performance Improvements
+
+- Recorded a 49.52% higher normalized benchmark score than v11.0.17 (14098 → 21080).
+
+## 11.0.17 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 17.98% higher normalized benchmark score than v11.0.16 (11949 → 14098).
+
 ## 11.0.16 (2022-04-18)
 
 ### Fixed
@@ -79,7 +103,37 @@ assert.deepEqual(data, target);
 
 ### Performance Improvements
 
-- Recorded a 16.19% higher normalized benchmark score than v11.0.15.
+- Recorded a 16.19% higher normalized benchmark score than v11.0.15 (10284 → 11949).
+
+## 11.0.14 (2022-04-11)
+
+### Performance Improvements
+
+- Recorded a 12.27% higher normalized benchmark score than v11.0.13 (16444 → 18461).
+
+## 11.0.13 (2022-04-10)
+
+### Performance Improvements
+
+- Recorded a 43.19% higher normalized benchmark score than v11.0.12 (11484 → 16444).
+
+## 11.0.11 (2022-01-11)
+
+### Performance Improvements
+
+- Recorded a 24.23% higher normalized benchmark score than v11.0.10 (12791 → 15890).
+
+## 11.0.9 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 25.49% higher normalized benchmark score than v11.0.8 (11090 → 13917).
+
+## 11.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 47.8% higher normalized benchmark score than v11.0.5 (14775 → 21838).
 
 ## 11.0.0 (2021-09-09)
 

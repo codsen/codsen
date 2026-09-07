@@ -5,6 +5,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 6.2.3 (2026-09-06)
 
+### Performance Improvements
+
+- Recorded a 2.56% higher normalized benchmark score than v6.2.2 (3266318 → 3350097).
+
 ### Bug Fixes
 
 - **string-left-right:** validate inputs and preserve required sequence matches ([276f9ea](https://github.com/codsen/codsen/commit/276f9ea3694190a2a8ac3b1b6d601785ac42e2da))
@@ -20,7 +24,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 27.63% higher normalized benchmark score than v6.2.1.
+- Recorded a 27.63% higher normalized benchmark score than v6.2.1 (2559233 → 3266318).
 - **string-left-right:** benchmark paired core lookups ([c836bfa](https://github.com/codsen/codsen/commit/c836bfa56a32e995b3c3fa17d470e44dbd2e857f))
 - **string-left-right:** streamline leftward scans ([c6f4a49](https://github.com/codsen/codsen/commit/c6f4a49a864570ed1f04a0dd875456e55c0999d4))
 

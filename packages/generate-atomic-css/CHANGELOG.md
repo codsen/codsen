@@ -26,6 +26,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - stop shipping debug-only work in published bundles ([6fe5fee](https://github.com/codsen/codsen/commit/6fe5feebdf726b553ae3034690634166b461fca5))
 
+## 3.1.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 67.31% higher normalized benchmark score than v3.0.32 (23613 → 39508).
+
 ## 3.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -38,6 +44,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 2.1.2 (2022-04-24)
+
+### Performance Improvements
+
+- Recorded a 77.83% higher normalized benchmark score than v2.1.1 (31766 → 56489).
+
 ## 2.1.1 (2022-04-18)
 
 ### Fixed
@@ -46,7 +58,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 3.31% higher normalized benchmark score than v2.1.0.
+- Recorded a 3.31% higher normalized benchmark score than v2.1.0 (30749 → 31766).
 
 ## 2.1.0 (2022-04-11)
 
@@ -57,6 +69,18 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 - export defaults and version ([1107244](https://github.com/codsen/codsen/commit/1107244b45eff96ac1fc4ab992031ede0d10ba8c))
+
+## 2.0.9 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 6.04% higher normalized benchmark score than v2.0.8 (51107 → 54194).
+
+## 2.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 39.65% higher normalized benchmark score than v2.0.5 (41722 → 58264).
 
 ## 2.0.0 (2021-09-09)
 

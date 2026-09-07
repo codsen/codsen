@@ -15,6 +15,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
 
+## 5.2.1 (2026-08-19)
+
+### Performance Improvements
+
+- Recorded a 2.7% higher normalized benchmark score than v5.1.3 (911068 → 935698).
+
 ## 5.2.0 (2026-08-19)
 
 ### Bug Fixes
@@ -40,6 +46,18 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - export types ([d17ac5d](https://github.com/codsen/codsen/commit/d17ac5da03836299fa5335b3f461d7d9ec214a13))
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 4.1.6 (2022-07-05)
+
+### Performance Improvements
+
+- Recorded a 38.34% higher normalized benchmark score than v4.1.5 (837279 → 1158330).
+
+## 4.1.5 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 16.27% higher normalized benchmark score than v4.1.2 (720147 → 837279).
+
 ## 4.1.2 (2022-04-18)
 
 ### Fixed
@@ -48,7 +66,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 21.89% higher normalized benchmark score than v4.1.1.
+- Recorded a 21.89% higher normalized benchmark score than v4.1.1 (590815 → 720147).
 
 ## 4.1.0 (2022-04-11)
 
@@ -58,7 +76,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 4.47% higher normalized benchmark score than v4.0.12.
+- Recorded a 4.47% higher normalized benchmark score than v4.0.12 (897639 → 937802).
+
+## 4.0.12 (2022-01-22)
+
+### Performance Improvements
+
+- Recorded a 33.04% higher normalized benchmark score than v4.0.11 (674720 → 897639).
+
+## 4.0.8 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 3.18% higher normalized benchmark score than v4.0.7 (964191 → 994883).
+
+## 4.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 38.35% higher normalized benchmark score than v4.0.5 (696906 → 964191).
 
 ## 4.0.0 (2021-09-09)
 

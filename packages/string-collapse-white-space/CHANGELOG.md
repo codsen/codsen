@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 11.2.4 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 8.66% higher normalized benchmark score than v11.2.1 (236744 → 257257).
+
 ## 11.2.3 (2026-09-01)
 
 ### Bug Fixes
@@ -14,6 +20,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+
+## 11.2.1 (2026-08-19)
+
+### Performance Improvements
+
+- Recorded a 21.87% higher normalized benchmark score than v11.1.3 (194262 → 236744).
 
 ## 11.2.0 (2026-08-19)
 
@@ -28,6 +40,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
+## 11.1.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 8.2% higher normalized benchmark score than v11.0.33 (179536 → 194262).
+
 ## 11.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -41,6 +59,24 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - export types ([18f66de](https://github.com/codsen/codsen/commit/18f66de84c8db3cd434f8ab0a6049a2d33de1e3e))
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 10.1.6 (2022-07-26)
+
+### Performance Improvements
+
+- Recorded a 3.66% higher normalized benchmark score than v10.1.5 (257060 → 266476).
+
+## 10.1.4 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 56.28% higher normalized benchmark score than v10.1.2 (167800 → 262246).
+
+## 10.1.1 (2022-04-17)
+
+### Performance Improvements
+
+- Recorded a 47.8% higher normalized benchmark score than v10.1.0 (151508 → 223935).
+
 ## 10.1.0 (2022-04-11)
 
 ### Features
@@ -49,7 +85,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 8.59% higher normalized benchmark score than v10.0.12.
+- Recorded a 8.59% higher normalized benchmark score than v10.0.12 (139524 → 151508).
+
+## 10.0.9 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 27.1% higher normalized benchmark score than v10.0.8 (182685 → 232193).
+
+## 10.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 27.31% higher normalized benchmark score than v10.0.5 (246169 → 313408).
 
 ## 10.0.0 (2021-09-09)
 

@@ -5,6 +5,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.3.1 (2026-09-06)
 
+### Performance Improvements
+
+- Recorded a 15.55% higher normalized benchmark score than v4.2.2 (26312 → 30404).
+
 ### Bug Fixes
 
 - **ast-monkey-traverse:** remove unnecessary test dependency ([013b228](https://github.com/codsen/codsen/commit/013b2283e7b554debb27e135726cb4241e2139cd))

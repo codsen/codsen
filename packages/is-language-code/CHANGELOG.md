@@ -18,6 +18,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.2.0 (2026-08-19)
 
+### Performance Improvements
+
+- Recorded a 6.09% higher normalized benchmark score than v5.1.3 (4586651 → 4865837).
+
 ### Bug Fixes
 
 - resolve various review findings ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
@@ -28,10 +32,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - fix memory leak, rebase and update all data ([2ffb629](https://github.com/codsen/codsen/commit/2ffb6298ec337ec13c270e8d6e00afde161548a3))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
-
-## 5.2.0 (2026-08-05)
-
-### Features
 
 - Replace the positional parser with an RFC 5646 cursor parser.
 - Eliminate per-call RegExp retention; lookup sets and ranges are initialized once.

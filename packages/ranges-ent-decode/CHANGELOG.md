@@ -5,9 +5,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 6.2.4 (2026-09-06)
 
+### Performance Improvements
+
+- Recorded a 6.59% higher normalized benchmark score than v6.2.3 (1220816 → 1301222).
+
 ### Bug Fixes
 
 - **ranges-ent-decode:** scan references with the shared HTML entity codec ([e8da950](https://github.com/codsen/codsen/commit/e8da9509fc5e770ad84d64ca850857dc631b9882))
+
+## 6.2.3 (2026-09-01)
+
+### Performance Improvements
+
+- Recorded a 85.19% higher normalized benchmark score than v6.1.3 (659237 → 1220816).
 
 ## 6.2.2 (2026-08-22)
 
@@ -29,6 +39,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
+## 6.1.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 13.05% higher normalized benchmark score than v6.0.33 (583115 → 659237).
+
 ## 6.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -42,6 +58,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - export types ([2a85f0c](https://github.com/codsen/codsen/commit/2a85f0cf1310f6dee5b1b39595676e9ba72f7f58))
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 5.1.3 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 43.87% higher normalized benchmark score than v5.1.2 (600308 → 863665).
+
 ## 5.1.2 (2022-04-18)
 
 ### Fixed
@@ -50,7 +72,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 5.51% higher normalized benchmark score than v5.1.1.
+- Recorded a 5.51% higher normalized benchmark score than v5.1.1 (568971 → 600308).
+
+## 5.1.1 (2022-04-17)
+
+### Performance Improvements
+
+- Recorded a 15.83% higher normalized benchmark score than v5.1.0 (491192 → 568971).
 
 ## 5.1.0 (2022-04-11)
 
@@ -60,7 +88,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 15.72% higher normalized benchmark score than v5.0.12.
+- Recorded a 15.72% higher normalized benchmark score than v5.0.12 (424465 → 491192).
+
+## 5.0.10 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 19.6% higher normalized benchmark score than v5.0.9 (637405 → 762335).
+
+## 5.0.9 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 8.46% higher normalized benchmark score than v5.0.8 (587674 → 637405).
+
+## 5.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 53.85% higher normalized benchmark score than v5.0.5 (550186 → 846480).
 
 ## 5.0.0 (2021-09-09)
 

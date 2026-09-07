@@ -33,6 +33,24 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 3.0.11 (2022-01-11)
+
+### Performance Improvements
+
+- Recorded a 11.67% higher normalized benchmark score than v3.0.10 (209307447 → 233735387).
+
+## 3.0.9 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 15.91% higher normalized benchmark score than v3.0.8 (177941436 → 206247663).
+
+## 3.0.8 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 58.71% higher normalized benchmark score than v3.0.7 (112118116 → 177941436).
+
 ## 3.0.0 (2021-09-09)
 
 ### Features

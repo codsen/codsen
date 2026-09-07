@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.3 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 4.59% higher normalized benchmark score than v4.2.0 (1683144 → 1760455).
+
 ## 4.2.2 (2026-09-01)
 
 ### Bug Fixes
@@ -30,8 +36,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
 ### Performance Improvements
-
-- Recorded a 0.11% higher normalized benchmark score than v4.1.3.
 
 ## 4.0.0 (2022-12-01)
 

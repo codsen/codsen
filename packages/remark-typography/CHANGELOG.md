@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.4 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 13.15% higher normalized benchmark score than v0.8.2 (1605 → 1816).
+
 ## 0.8.3 (2026-09-01)
 
 ### Bug Fixes

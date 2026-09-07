@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.2.3 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 14.46% higher normalized benchmark score than v5.2.1 (6796378 → 7779244).
+
 ## 5.2.2 (2026-09-01)
 
 ### Bug Fixes

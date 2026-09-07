@@ -11,6 +11,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
+- Recorded a 32.89% higher normalized benchmark score than v0.9.3 (6877 → 9139).
+
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
 
 ## 0.10.0 (2026-08-19)
@@ -36,6 +38,36 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
+
+## 0.6.14 (2022-07-05)
+
+### Performance Improvements
+
+- Recorded a 154.72% higher normalized benchmark score than v0.6.13 (5980 → 15232).
+
+## 0.6.13 (2022-04-18)
+
+### Performance Improvements
+
+- Recorded a 5.04% higher normalized benchmark score than v0.6.12 (5693 → 5980).
+
+## 0.6.11 (2022-01-11)
+
+### Performance Improvements
+
+- Recorded a 18.69% higher normalized benchmark score than v0.6.10 (5585 → 6629).
+
+## 0.6.9 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 15.38% higher normalized benchmark score than v0.6.8 (5636 → 6503).
+
+## 0.6.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 32.93% higher normalized benchmark score than v0.6.5 (12944 → 17206).
 
 ## 0.6.0 (2021-09-09)
 

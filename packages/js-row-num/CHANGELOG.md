@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.2.4 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 16.06% higher normalized benchmark score than v7.2.1 (14324 → 16624).
+
 ## 7.2.3 (2026-09-01)
 
 ### Bug Fixes
@@ -14,6 +20,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+
+## 7.2.1 (2026-08-19)
+
+### Performance Improvements
+
+- Recorded a 20.95% higher normalized benchmark score than v7.1.3 (11843 → 14324).
 
 ## 7.2.0 (2026-08-19)
 
@@ -52,11 +64,29 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - export types ([d732d0c](https://github.com/codsen/codsen/commit/d732d0c0447ec355650b632aae6906e71a621e50))
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
+## 5.1.4 (2022-07-05)
+
+### Performance Improvements
+
+- Recorded a 5.08% higher normalized benchmark score than v5.1.3 (20037 → 21055).
+
+## 5.1.3 (2022-05-04)
+
+### Performance Improvements
+
+- Recorded a 107.51% higher normalized benchmark score than v5.1.2 (9656 → 20037).
+
 ## 5.1.2 (2022-04-18)
 
 ### Fixed
 
 - tweak types ([e215772](https://github.com/codsen/codsen/commit/e215772dc1c9f9efcbdc92f26c3370f5dd0e027e))
+
+## 5.1.1 (2022-04-17)
+
+### Performance Improvements
+
+- Recorded a 38.54% higher normalized benchmark score than v5.1.0 (10359 → 14351).
 
 ## 5.1.0 (2022-04-11)
 
@@ -66,7 +96,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 9.72% higher normalized benchmark score than v5.0.12.
+- Recorded a 9.72% higher normalized benchmark score than v5.0.12 (9441 → 10359).
+
+## 5.0.10 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 29.6% higher normalized benchmark score than v5.0.9 (13614 → 17644).
+
+## 5.0.7 (2021-11-30)
+
+### Performance Improvements
+
+- Recorded a 26.25% higher normalized benchmark score than v5.0.5 (16105 → 20332).
 
 ## 5.0.0 (2021-09-09)
 

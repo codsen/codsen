@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.4.4 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 22.77% higher normalized benchmark score than v1.4.1 (643241 → 789696).
+
 ## 1.4.3 (2026-09-01)
 
 ### Bug Fixes
@@ -14,6 +20,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 - optimise package hot paths and JSON editing ([f3112bd](https://github.com/codsen/codsen/commit/f3112bd7fc0d7c9bc09312d3744c950691d72ca5))
+
+## 1.4.1 (2026-08-19)
+
+### Performance Improvements
+
+- Recorded a 5.24% higher normalized benchmark score than v1.3.3 (611232 → 643241).
 
 ## 1.4.0 (2026-08-19)
 
@@ -31,6 +43,18 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 - skip non-dash characters during conversion ([ed7dad4](https://github.com/codsen/codsen/commit/ed7dad4de14cc57241ac2cf237283af57fb77830))
+
+## 1.3.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 558.67% higher normalized benchmark score than v1.2.27 (92798 → 611232).
+
+## 1.2.27 (2025-10-08)
+
+### Performance Improvements
+
+- Recorded a 513.34% higher normalized benchmark score than v1.0.0 (15130 → 92798).
 
 ## 1.2.0 (2023-01-06)
 

@@ -21,6 +21,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
 - refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
 
+## 6.1.3 (2026-01-15)
+
+### Performance Improvements
+
+- Recorded a 31.01% higher normalized benchmark score than v6.0.19 (31651306 → 41466235).
+
 ## 6.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -32,6 +38,36 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
+
+## 5.0.14 (2022-07-05)
+
+### Performance Improvements
+
+- Recorded a 4.54% higher normalized benchmark score than v5.0.13 (169574960 → 177277067).
+
+## 5.0.12 (2022-01-22)
+
+### Performance Improvements
+
+- Recorded a 10.5% higher normalized benchmark score than v5.0.11 (199124287 → 220041848).
+
+## 5.0.11 (2022-01-11)
+
+### Performance Improvements
+
+- Recorded a 12.23% higher normalized benchmark score than v5.0.10 (177419524 → 199124287).
+
+## 5.0.10 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 23.25% higher normalized benchmark score than v5.0.9 (143953124 → 177419524).
+
+## 5.0.8 (2021-12-24)
+
+### Performance Improvements
+
+- Recorded a 82.16% higher normalized benchmark score than v5.0.7 (112897731 → 205659929).
 
 ## 5.0.0 (2021-09-09)
 
