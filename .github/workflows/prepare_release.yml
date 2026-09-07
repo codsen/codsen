@@ -43,8 +43,8 @@ jobs:
               --base main \
               --state open \
               --limit 100 \
-              --json headRefName,url \
-              --jq '.[] | select(.headRefName | startswith("release/npm-")) | .url'
+              --json headRefName,isCrossRepository,url \
+              --jq '.[] | select(.isCrossRepository == false) | select(.headRefName | startswith("release/npm-")) | .url'
           )
           if [ -n "$open_release" ]; then
             echo "An npm release proposal is already open: $open_release" >&2
