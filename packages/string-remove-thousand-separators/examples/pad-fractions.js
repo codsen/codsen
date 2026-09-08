@@ -1,3 +1,5 @@
+// Pad one-digit fractions without losing precision
+
 import { strict as assert } from "node:assert";
 
 import { remSep } from "../dist/string-remove-thousand-separators.esm.js";
