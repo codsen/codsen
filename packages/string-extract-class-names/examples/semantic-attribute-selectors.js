@@ -1,3 +1,5 @@
+// Read semantic attribute selectors
+
 import assert from "node:assert/strict";
 
 import { extractCssSelectorTokens } from "../dist/string-extract-class-names.esm.js";
