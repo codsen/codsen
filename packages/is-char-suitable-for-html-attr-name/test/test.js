@@ -65,4 +65,12 @@ test("07 - false", () => {
   equal(is("\r"), false, "07.22");
 });
 
+test("08 - suffixes do not change the first-character result", () => {
+  equal(is("-rest"), true, "08.01");
+  equal(is("--"), true, "08.02");
+  equal(is(":rest"), true, "08.03");
+  equal(is("a rest"), true, "08.04");
+  equal(is(" -rest"), false, "08.05");
+});
+
 test.run();
