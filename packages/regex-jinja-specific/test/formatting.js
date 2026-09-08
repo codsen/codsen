@@ -1,17 +1,10 @@
-// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+import { equal, match } from "uvu/assert";
 
 import { isJinjaSpecific } from "../dist/regex-jinja-specific.esm.js";
 
-// /['"]%x?[\+0]?[.>^<]?\d+[\w%]['"]\|format\(/gi
-
-test("01 - format with percentage", () => {
-  match(
-    "{{ '%.2%'|format(container.price.total) }}",
-    isJinjaSpecific(),
-    "01.01",
-  );
+test("01 - string conversion", () => {
+  match("{{ '%s'|format(name) }}", isJinjaSpecific(), "01.01");
 });
 
 test("02 - format in exponent notation", () => {
@@ -46,23 +39,23 @@ test("05 - two decimal places, with sign", () => {
   );
 });
 
-test("06 - pad a number, left side, width 2", () => {
+test("06 - zero pad a number to width 2", () => {
   match(
-    "{{ '%0>2d'|format(container.price.total) }}",
+    "{{ '%02d'|format(container.price.total) }}",
     isJinjaSpecific(),
     "06.01",
   );
 });
 
-test("07 - pad a number, left side, width 2", () => {
+test("07 - left align a number to width 10", () => {
   match(
-    "{{ '%0>2d'|format(container.price.total) }}",
+    "{{ '%-10d'|format(container.price.total) }}",
     isJinjaSpecific(),
     "07.01",
   );
 });
 
-test("08 - pad right side", () => {
+test("08 - hexadecimal conversion followed by a literal suffix", () => {
   match(
     "{{ '%x<4d'|format(container.price.total) }}",
     isJinjaSpecific(),
@@ -70,17 +63,17 @@ test("08 - pad right side", () => {
   );
 });
 
-test("09 - center aligned", () => {
+test("09 - hexadecimal conversion with its base prefix", () => {
   match(
-    "{{ '%^10d'|format(container.price.total) }}",
+    "{{ '%#x'|format(container.price.total) }}",
     isJinjaSpecific(),
     "09.01",
   );
 });
 
-test("10 - left aligned", () => {
+test("10 - literal prefix and multiple conversions", () => {
   match(
-    "{{ '%<10d'|format(container.price.total) }}",
+    "{{ 'Balance for %s: %.2f'|format(name, total) }}",
     isJinjaSpecific(),
     "10.01",
   );
@@ -92,6 +85,36 @@ test("11 - right aligned", () => {
     isJinjaSpecific(),
     "11.01",
   );
+});
+
+test("12 - filter markers accept spaces, tabs and newlines", () => {
+  equal(isJinjaSpecific().test("{{ '%s' | format (name) }}"), true, "12.01");
+  equal(isJinjaSpecific().test("{{ '%s'\t|\tformat\t(name) }}"), true, "12.02");
+  equal(isJinjaSpecific().test("{{ '%s'\n|\nformat\n(name) }}"), true, "12.03");
+});
+
+test("13 - filter names require the format call marker", () => {
+  equal(
+    isJinjaSpecific().test("{{ '%s'|formatSomething(name) }}"),
+    false,
+    "13.01",
+  );
+  equal(isJinjaSpecific().test("{{ '%s'.format(name) }}"), false, "13.02");
+  equal(isJinjaSpecific().test("{{ '%s'|format }}"), false, "13.03");
+});
+
+test("14 - global matching returns exact filter markers", () => {
+  equal(
+    "{{ '%s'|format(name) }} {{ '%d'| \tformat \n(value) }}".match(
+      isJinjaSpecific(),
+    ),
+    ["|format(", "| \tformat \n("],
+    "14.01",
+  );
+});
+
+test("15 - a filter marker does not require a quoted operand", () => {
+  equal(isJinjaSpecific().test("{{ pattern | format(value) }}"), true, "15.01");
 });
 
 test.run();

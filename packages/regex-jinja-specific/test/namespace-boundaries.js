@@ -56,4 +56,17 @@ test("07 - each factory call returns an independent global matcher", () => {
   );
 });
 
+test("08 - namespace calls accept whitespace before the parenthesis", () => {
+  equal(
+    isJinjaSpecific().test("{% set ns = namespace (total=0) %}"),
+    true,
+    "08.01",
+  );
+  equal(
+    isJinjaSpecific().test("{% set ns = namespace\t\n(total=0) %}"),
+    true,
+    "08.02",
+  );
+});
+
 test.run();
