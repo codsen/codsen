@@ -5,6 +5,7 @@ import {
   isStr,
 } from "codsen-utils";
 import { version as v } from "../package.json";
+import { findRemovedLines } from "./sections";
 
 const version: string = v;
 
@@ -115,6 +116,7 @@ function cleanChangelogs(
     //
     // and also remove anything containing "WIP" (case-insensitive)
 
+    const removedLines = findRemovedLines(linesArr, resolvedOpts.extras);
     let newLinesArr = [];
     for (let i = linesArr.length; i--; ) {
       DEV &&
@@ -125,29 +127,10 @@ function cleanChangelogs(
             4,
           )}`,
         );
-      if (
-        linesArr[i]?.startsWith("**Note:** Version bump only") ||
-        (resolvedOpts.extras && linesArr[i].toLowerCase().includes("wip"))
-      ) {
-        // delete all the blank lines above the culprit:
-        while (i && isStr(linesArr[~-i]) && !linesArr[~-i]?.trim()) {
-          i -= 1;
-        }
-        // after that, delete the title, but only if there were no other entries:
-        if (
-          i &&
-          isStr(linesArr[~-i]) &&
-          linesArr[~-i]?.trim()?.startsWith("#")
-        ) {
-          i -= 1;
-        }
-        // delete all the blank lines above the culprit:
-        while (i && isStr(linesArr[~-i]) && !linesArr[~-i]?.trim()) {
-          i -= 1;
-        }
-      } else if (!linesArr[i]?.trim()) {
+      if (removedLines?.has(i)) continue;
+      if (!linesArr[i]?.trim()) {
         // maybe this line is empty or contains only whitespace characters (spaces, tabs etc)?
-        if (!lastLineWasEmpty) {
+        if (newLinesArr.length && !lastLineWasEmpty) {
           // we push trimmed lines to prevent accidental whitespace characters
           // sitting on an empty line:
           newLinesArr.unshift(linesArr[i]?.trim());
@@ -174,6 +157,9 @@ function cleanChangelogs(
           );
       }
     }
+
+    // Removing an initial section can expose a blank line at the new boundary.
+    if (newLinesArr[0] === "") newLinesArr.shift();
 
     /* c8 ignore next */
     final = `${newLinesArr.join(currentLineBreakStyle)}${

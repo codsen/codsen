@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- Recorded a 3.95% higher normalized benchmark score than v5.1.3 (286,484 → 297,798).
+- Recorded a 2.38% higher normalized benchmark score than v5.1.3 (286,484 → 293,301).
 
 ## 5.2.2 (2026-08-22)
 
