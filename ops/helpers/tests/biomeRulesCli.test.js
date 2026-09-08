@@ -391,4 +391,364 @@ test("16 - a project scan excludes tap files from every Biome operation", () => 
   equal(good.report.diagnostics, [], "16.04");
 });
 
+function hasPluginDiagnostic(result, ...fragments) {
+  return result.report.diagnostics.some(
+    (diagnostic) =>
+      diagnostic.category === "plugin" &&
+      diagnostic.severity === "error" &&
+      fragments.every((fragment) => diagnostic.message.includes(fragment)),
+  );
+}
+
+test("17 - named uvu tests require a runner with uvu assertions", () => {
+  const source = `import { test } from "uvu";
+import { equal } from "uvu/assert";
+test("01 - value", () => { equal(1, 1, "01.01"); });
+`;
+  const bad = lint({ "ops/sentinel.js": source });
+  equal(bad.status, 1, "17.01");
+  equal(hasPluginDiagnostic(bad, "module-level", ".run()"), true, "17.02");
+  const good = lint({ "ops/sentinel.js": `${source}test.run();\n` });
+  equal(good.status, 0, "17.03");
+  equal(good.report.diagnostics, [], "17.04");
+});
+
+test("18 - named aliases require a runner with Node assertions", () => {
+  const source = `import assert from "node:assert/strict";
+import { test as check } from "uvu";
+check("01 - value", () => { assert.equal(1, 1); });
+`;
+  const bad = lint({ "ops/sentinel.js": source });
+  equal(bad.status, 1, "18.01");
+  equal(hasPluginDiagnostic(bad, "module-level", ".run()"), true, "18.02");
+  const good = lint({ "ops/sentinel.js": `${source}check.run();\n` });
+  equal(good.status, 0, "18.03");
+  equal(good.report.diagnostics, [], "18.04");
+});
+
+test("19 - test runners remain required when no assertion library is imported", () => {
+  for (const name of ["test", "spec"]) {
+    const binding = name === "test" ? "test" : "test as spec";
+    const source = `import { ${binding} } from "uvu";
+${name}("01 - registration", () => {});
+`;
+    const bad = lint({ "ops/sentinel.js": source });
+    equal(bad.status, 1, `19.01 - ${name}`);
+    equal(
+      hasPluginDiagnostic(bad, "module-level", ".run()"),
+      true,
+      `19.02 - ${name}`,
+    );
+    const good = lint({ "ops/sentinel.js": `${source}${name}.run();\n` });
+    equal(good.status, 0, `19.03 - ${name}`);
+    equal(good.report.diagnostics, [], `19.04 - ${name}`);
+  }
+});
+
+test("20 - one imported alias starts the shared test singleton", () => {
+  for (const imports of [
+    'import { test as first, test as second } from "uvu";',
+    'import { test as first } from "uvu";\nimport { test as second } from "uvu";',
+  ]) {
+    const source = `${imports}
+first("01 - first", () => {});
+second("02 - second", () => {});
+`;
+    const bad = lint({ "ops/sentinel.js": source });
+    equal(bad.status, 1, "20.01");
+    equal(hasPluginDiagnostic(bad, "module-level", ".run()"), true, "20.02");
+    for (const runner of ["first", "second"]) {
+      const good = lint({ "ops/sentinel.js": `${source}${runner}.run();\n` });
+      equal(good.status, 0, "20.03");
+      equal(good.report.diagnostics, [], "20.04");
+    }
+  }
+});
+
+test("21 - every suite instance needs its own module-level runner", () => {
+  const source = `import { suite } from "uvu";
+const first = suite("first");
+const second = suite("second");
+first("01 - first", () => {});
+second("01 - second", () => {});
+first.run();
+`;
+  const bad = lint({ "ops/sentinel.js": source });
+  equal(bad.status, 1, "21.01");
+  equal(hasPluginDiagnostic(bad, "module-level", ".run()"), true, "21.02");
+  const good = lint({ "ops/sentinel.js": `${source}second.run();\n` });
+  equal(good.status, 0, "21.03");
+  equal(good.report.diagnostics, [], "21.04");
+});
+
+test("22 - aliased suite factories produce supported runners", () => {
+  for (const declaration of ["const", "export const"]) {
+    const source = `import { suite as makeSuite } from "uvu";
+${declaration} checks = makeSuite("checks");
+checks("01 - registration", () => {});
+`;
+    const bad = lint({ "ops/sentinel.js": source });
+    equal(bad.status, 1, "22.01");
+    equal(hasPluginDiagnostic(bad, "module-level", ".run()"), true, "22.02");
+    const good = lint({ "ops/sentinel.js": `${source}checks.run();\n` });
+    equal(good.status, 0, "22.03");
+    equal(good.report.diagnostics, [], "22.04");
+  }
+});
+
+test("23 - runners hidden in functions and test callbacks do not start a module", () => {
+  for (const source of [
+    `import { test } from "uvu";
+test("01 - registration", () => {});
+export function start() { test.run(); }
+`,
+    `import { test } from "uvu";
+test("01 - registration", () => { test.run(); });
+`,
+    `import { suite } from "uvu";
+const checks = suite("checks");
+checks("01 - registration", () => {});
+export function start() { checks.run(); }
+`,
+  ]) {
+    const bad = lint({ "ops/sentinel.js": source });
+    equal(bad.status, 1, "23.01");
+    equal(hasPluginDiagnostic(bad, "module-level", ".run()"), true, "23.02");
+  }
+});
+
+test("24 - conditional blocked awaited and assigned runner calls are not direct starts", () => {
+  for (const call of [
+    "if (globalThis.ready) test.run();",
+    "{ test.run(); }",
+    "await test.run();",
+    "export const started = test.run();",
+  ]) {
+    const bad = lint({
+      "ops/sentinel.js": `import { test } from "uvu";
+test("01 - registration", () => {});
+${call}
+`,
+    });
+    equal(bad.status, 1, "24.01");
+    equal(hasPluginDiagnostic(bad, "module-level", ".run()"), true, "24.02");
+  }
+});
+
+test("25 - namespace and default uvu imports receive explicit unsupported diagnostics", () => {
+  for (const statement of [
+    'import * as uvu from "uvu";',
+    'import uvu from "uvu";',
+  ]) {
+    const bad = lint({
+      "ops/sentinel.js": `${statement}
+uvu.test("01 - registration", () => {});
+uvu.test.run();
+`,
+    });
+    equal(bad.status, 1, "25.01");
+    equal(hasPluginDiagnostic(bad, "Unsupported uvu"), true, "25.02");
+  }
+});
+
+test("26 - dynamic and require uvu imports receive explicit unsupported diagnostics", () => {
+  for (const [filename, statement] of [
+    ["ops/sentinel.js", 'const { test } = await import("uvu");'],
+    ["ops/sentinel.cjs", 'const { test } = require("uvu");'],
+  ]) {
+    const bad = lint({
+      [filename]: `${statement}
+test("01 - registration", () => {});
+test.run();
+`,
+    });
+    equal(bad.status, 1, "26.01");
+    equal(hasPluginDiagnostic(bad, "Unsupported uvu"), true, "26.02");
+  }
+});
+
+test("27 - indirect test runners do not satisfy the required module-level start", () => {
+  for (const call of [
+    "const start = test.run; start();",
+    "test.run.call(test);",
+    'test["run"]();',
+    "const checks = test; checks.run();",
+  ]) {
+    const bad = lint({
+      "ops/sentinel.js": `import { test } from "uvu";
+test("01 - registration", () => {});
+${call}
+`,
+    });
+    equal(bad.status, 1, "27.01");
+    equal(hasPluginDiagnostic(bad, "module-level", ".run()"), true, "27.02");
+  }
+});
+
+test("28 - indirect and nested suite construction receives an unsupported diagnostic", () => {
+  for (const source of [
+    `import { suite } from "uvu";
+const groups = { checks: suite("checks") };
+groups.checks.run();
+`,
+    `import { suite } from "uvu";
+let checks;
+checks = suite("checks");
+checks.run();
+`,
+    `import { suite } from "uvu";
+export function make() {
+  const checks = suite("checks");
+  checks.run();
+  return checks;
+}
+`,
+  ]) {
+    const bad = lint({ "ops/sentinel.js": source });
+    equal(bad.status, 1, "28.01");
+    equal(hasPluginDiagnostic(bad, "Unsupported uvu"), true, "28.02");
+  }
+});
+
+test("29 - focused and skipped test aliases fail even with a direct runner", () => {
+  for (const modifier of ["only", "skip"]) {
+    const bad = lint({
+      "ops/sentinel.js": `import { test as checks } from "uvu";
+checks.${modifier}("01 - registration", () => {});
+checks.run();
+`,
+    });
+    equal(bad.status, 1, "29.01");
+    equal(hasPluginDiagnostic(bad, "focused or skipped uvu"), true, "29.02");
+  }
+});
+
+test("30 - focused and skipped suite instances fail even with a direct runner", () => {
+  for (const modifier of ["only", "skip"]) {
+    const bad = lint({
+      "ops/sentinel.js": `import { suite as makeSuite } from "uvu";
+const checks = makeSuite("checks");
+checks.${modifier}("01 - registration", () => {});
+checks.run();
+`,
+    });
+    equal(bad.status, 1, "30.01");
+    equal(hasPluginDiagnostic(bad, "focused or skipped uvu"), true, "30.02");
+  }
+});
+
+test("31 - assertion-only and unrelated modules do not require a uvu runner", () => {
+  for (const source of [
+    'import { equal } from "uvu/assert";\nequal(1, 1);\n',
+    'import assert from "node:assert/strict";\nassert.equal(1, 1);\n',
+    "const test = { run() { return true; } };\nexport const value = test.run();\n",
+  ]) {
+    const good = lint({ "ops/sentinel.js": source });
+    equal(good.status, 0, "31.01");
+    equal(good.report.diagnostics, [], "31.02");
+  }
+});
+
+test("32 - type-only uvu imports do not create runtime runners", () => {
+  for (const source of [
+    'import type { test } from "uvu";\nexport type Runner = typeof test;\n',
+    '// biome-ignore lint/style/useImportType: Exercise a type-only specifier independently of import-clause style.\nimport { type test } from "uvu";\nexport type Runner = typeof test;\n',
+    'import type { suite as makeSuite } from "uvu";\nexport type Factory = typeof makeSuite;\n',
+  ]) {
+    const good = lint({ "ops/sentinel.ts": source });
+    equal(good.status, 0, "32.01");
+    equal(good.report.diagnostics, [], "32.02");
+  }
+});
+
+test("33 - nested suite creation cannot borrow the outer suite runner", () => {
+  const bad = lint({
+    "ops/sentinel.js": `import { suite } from "uvu";
+const checks = suite("outer", { inner: suite("inner") });
+checks.run();
+`,
+  });
+  equal(bad.status, 1, "33.01");
+  equal(
+    hasPluginDiagnostic(bad, "Unsupported uvu suite creation"),
+    true,
+    "33.02",
+  );
+  const good = lint({
+    "ops/sentinel.js": `import { suite } from "uvu";
+const inner = suite("inner");
+const outer = suite("outer", { inner });
+inner.run();
+outer.run();
+`,
+  });
+  equal(good.status, 0, "33.03");
+  equal(good.report.diagnostics, [], "33.04");
+});
+
+test("34 - combined default and side-effect uvu imports remain unsupported", () => {
+  for (const source of [
+    `import uvu, { test } from "uvu";
+export const runtime = uvu;
+test("01 - registration", () => {});
+test.run();
+`,
+    'import "uvu";\nexport const value = 1;\n',
+  ]) {
+    const bad = lint({ "ops/sentinel.js": source });
+    equal(bad.status, 1, "34.01");
+    equal(hasPluginDiagnostic(bad, "Unsupported uvu import"), true, "34.02");
+  }
+  const good = lint({
+    "ops/sentinel.js": `import { test } from "uvu";
+test("01 - registration", () => {});
+test.run();
+`,
+  });
+  equal(good.status, 0, "34.03");
+  equal(good.report.diagnostics, [], "34.04");
+});
+
+test("35 - indirect references do not replace a supported direct start", () => {
+  for (const [source, diagnostic] of [
+    [
+      `import { test } from "uvu";
+const copied = test;
+copied("01 - registration", () => {});
+copied.run();
+`,
+      "module-level direct .run()",
+    ],
+    [
+      `import { suite } from "uvu";
+const copied = suite;
+const checks = copied("checks");
+checks.run();
+`,
+      "Unsupported uvu suite creation",
+    ],
+    [
+      `import { test } from "uvu";
+test["run"]();
+`,
+      "module-level direct .run()",
+    ],
+  ]) {
+    const bad = lint({ "ops/sentinel.js": source });
+    equal(bad.status, 1, "35.01");
+    equal(hasPluginDiagnostic(bad, diagnostic), true, "35.02");
+  }
+  const good = lint({
+    "ops/sentinel.js": `import { test } from "uvu";
+const copied = test;
+copied("01 - registration", () => {});
+const method = "run";
+export const indirectStart = test[method];
+test.run();
+`,
+  });
+  equal(good.status, 0, "35.03");
+  equal(good.report.diagnostics, [], "35.04");
+});
+
 test.run();

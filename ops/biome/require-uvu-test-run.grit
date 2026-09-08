@@ -1,10 +1,114 @@
 engine biome(1.0)
 language js(typescript, jsx)
 
-JsModuleSource() as $source where {
-  $source <: `"uvu/assert"`,
-  $source <: within JsImport() as $import ,
-  $import <: within JsModule() as $module ,
-  $module <: not contains `test.run()`,
-  register_diagnostic(span=$source, message="Files importing `uvu/assert` must call `test.run()`.", severity="error")
+// Match runtime bindings independently of the module's assertion library.
+// The source gate already locates the module; do not re-match its entire items.
+pattern runner_import($kind, $runner) {
+  or {
+    JsShorthandNamedImportSpecifier(local_name=$runner) where {
+      $kind = $runner
+    },
+    JsNamedImportSpecifier(name=$kind, local_name=$runner)
+  } as $binding where {
+    $binding <: not r"(?s)^type\b.*",
+    $binding <: within JsImportNamedClause(named_specifiers=$_, source=`"uvu"`) as $clause ,
+    $clause <: not r"(?s)^type\b.*"
+  }
+}
+
+// Only immediate module items qualify, including exported/multiple declarators.
+pattern suite_binding($factory, $runner, $items, $creation) {
+  JsVariableDeclarator(id=$runner, initializer=JsInitializerClause(expression=`$factory($...)` as $creation)) as $declaration where {
+    $runner <: JsIdentifierBinding(),
+    $items <: some or {
+      JsVariableStatement(declaration=JsVariableDeclaration(declarators=some $declaration)),
+      JsExport(export_clause=JsVariableDeclarationClause(declaration=JsVariableDeclaration(declarators=some $declaration)))
+    }
+  }
+}
+
+// Search from a known runner import, never resolve every unrelated array access.
+pattern runner_members($runner) {
+  or {
+    JsStaticMemberExpression(object=$runner, member=$method) as $member where {
+      $method <: r"only|skip",
+      register_diagnostic(span=$member, message="Do not register focused or skipped uvu tests.", severity="error")
+    }
+  }
+}
+
+pattern runner_issues($kind, $runner, $items) {
+  or {
+    $_ as $specifier where {
+      $kind <: r"test",
+      // Aliases of test share one singleton, including separate import clauses.
+      $items <: not some JsExpressionStatement(expression=`$started.run()`) where {
+        $items <: some JsImport() as $start_import where {
+          $start_import <: contains runner_import(kind=$start_kind, runner=$started),
+          $start_kind <: r"test"
+        }
+      },
+      register_diagnostic(span=$specifier, message="The uvu test singleton needs a module-level direct .run() call; nested, conditional and indirect starts are unsupported.", severity="error")
+    },
+    $_ as $specifier where {
+      $kind <: r"suite",
+      $items <: not contains suite_binding(factory=$runner, runner=$_, items=$items, creation=$_),
+      register_diagnostic(span=$specifier, message="Unsupported uvu suite creation: assign the direct factory call to a module-level identifier.", severity="error")
+    },
+    $_ where {
+      $kind <: r"suite",
+      $items <: contains suite_binding(factory=$runner, runner=$instance, items=$items, creation=$_) as $declaration where {
+        $items <: not some JsExpressionStatement(expression=`$instance.run()`),
+        register_diagnostic(span=$declaration, message="Each uvu suite needs a module-level direct .run() call; nested, conditional and indirect starts are unsupported.", severity="error")
+      }
+    },
+    $_ where {
+      $kind <: r"test",
+      $runner <: not r"test",
+      $items <: contains runner_members(runner=$runner)
+    },
+    $_ where {
+      $kind <: r"suite",
+      $items <: contains suite_binding(factory=$runner, runner=$instance, items=$items, creation=$_) where {
+        $items <: contains runner_members(runner=$instance)
+      }
+    },
+    $_ where {
+      $kind <: r"suite",
+      $items <: contains JsCallExpression(callee=$runner) as $call where {
+        $call <: not within suite_binding(factory=$runner, runner=$_, items=$items, creation=$call) ,
+        register_diagnostic(span=$call, message="Unsupported uvu suite creation: assign the direct factory call to a module-level identifier.", severity="error")
+      }
+    }
+  }
+}
+
+or {
+  JsModuleSource() as $source where {
+    $source <: `"uvu"`,
+    $source <: within JsImport(import_clause=$clause) ,
+    $source <: within JsModule(items=$items) ,
+    $clause <: not r"(?s)^type\b.*",
+    $clause <: or {
+      // Empty import-clause node patterns share a Grit matcher in Biome 2.5.12.
+      // A bounded clause-prefix check distinguishes named from other imports.
+      $_ as $unsupported where {
+        $unsupported <: not r"(?s)^\{.*",
+        register_diagnostic(span=$source, message="Unsupported uvu import: use named test or suite imports.", severity="error")
+      },
+      contains runner_import(kind=$kind, runner=$runner) as $specifier where {
+        $specifier <: runner_issues(kind=$kind, runner=$runner, items=$items)
+      }
+    }
+  },
+  JsImportCallExpression(arguments=JsCallArguments(args=[
+    `"uvu"`, ...
+  ])) as $call where {
+    register_diagnostic(span=$call, message="Unsupported uvu import: use static named test or suite imports.", severity="error")
+  },
+  JsCallExpression(callee=`require`, arguments=JsCallArguments(args=[
+    `"uvu"`, ...
+  ])) as $call where {
+    register_diagnostic(span=$call, message="Unsupported uvu import: use static named test or suite imports.", severity="error")
+  }
 }
