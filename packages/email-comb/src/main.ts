@@ -327,14 +327,14 @@ function cleanBlankLines(str: string, backend: HeadsAndTailsObj[]): string {
   const output: string[] = [];
   let quote: '"' | "'" | null = null;
   let protectedAttributeQuote = false;
-  let escapedStyle = false;
+  let protectedStyle = false;
   let rawTag: "script" | "style" | null = null;
   let tagStartedAt: number | null = null;
 
   for (let i = 0; i < str.length; i++) {
     if (blankLineMatch?.index === i) {
       const replacement =
-        protectedAttributeQuote || (rawTag === "style" && escapedStyle)
+        protectedAttributeQuote || (rawTag === "style" && protectedStyle)
           ? blankLineMatch[0]
           : tagStartedAt !== null && !comment && backendTails === null
             ? ""
@@ -409,9 +409,10 @@ function cleanBlankLines(str: string, backend: HeadsAndTailsObj[]): string {
           ?.toLowerCase();
         if (openingTagName === "script" || openingTagName === "style") {
           rawTag = openingTagName;
-          escapedStyle =
-            rawTag === "style" &&
-            str.slice(i + 1, findStyleEnd(str, i + 1)).includes("\\");
+          if (rawTag === "style") {
+            const css = str.slice(i + 1, findStyleEnd(str, i + 1));
+            protectedStyle = css.includes("\\") || css.includes("/*");
+          }
         }
         tagStartedAt = null;
       }
@@ -631,7 +632,12 @@ function collectBodyAttributes(
       }
 
       let valueEndsAt = cursor;
-      if (!quote && str[valueEndsAt - 1] === "/" && str[cursor] === ">") {
+      if (
+        name !== "style" &&
+        !quote &&
+        str[valueEndsAt - 1] === "/" &&
+        str[cursor] === ">"
+      ) {
         valueEndsAt -= 1;
       }
       if (name === "class" || name === "id" || name === "style") {
@@ -1658,61 +1664,6 @@ function comb(str: string, opts?: InputOpts | null): Res {
             DEV &&
               console.log(`CSS comment-block ends, let's tackle the doNothing`);
 
-            if (round === 1 && resolvedOpts.removeCSSComments) {
-              let lineBreakPresentOnTheLeft = matchLeft(str, commentStartedAt, [
-                "\r\n",
-                "\n",
-                "\r",
-              ]);
-              DEV &&
-                console.log(
-                  `${`\u001b[${33}m${`lineBreakPresentOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
-                    lineBreakPresentOnTheLeft,
-                    null,
-                    4,
-                  )}`,
-                );
-              let startingIndex = commentStartedAt;
-              if (
-                typeof lineBreakPresentOnTheLeft === "string" &&
-                lineBreakPresentOnTheLeft.length
-              ) {
-                startingIndex -= lineBreakPresentOnTheLeft.length;
-                DEV &&
-                  console.log(
-                    `NEW \u001b[${33}m${`startingIndex`}\u001b[${39}m = ${startingIndex}`,
-                  );
-              }
-              if (
-                str[startingIndex - 1] &&
-                characterSuitableForNames(str[startingIndex - 1]) &&
-                str[i + doNothingUntil.length] &&
-                characterSuitableForNames(str[i + doNothingUntil.length])
-              ) {
-                DEV &&
-                  console.log(
-                    `PUSH [${startingIndex}, ${
-                      i + doNothingUntil.length
-                    }, ";"]`,
-                  );
-                finalIndexesToDelete.push(
-                  startingIndex,
-                  i + doNothingUntil.length,
-                  ";",
-                );
-                commentsLength += i + doNothingUntil.length - startingIndex;
-              } else {
-                DEV &&
-                  console.log(
-                    `PUSH [${startingIndex}, ${i + doNothingUntil.length}]`,
-                  );
-                finalIndexesToDelete.push(
-                  startingIndex,
-                  i + doNothingUntil.length,
-                );
-                commentsLength += i + doNothingUntil.length - startingIndex;
-              }
-            }
             commentStartedAt = null;
             DEV &&
               console.log(
@@ -1875,43 +1826,44 @@ function comb(str: string, opts?: InputOpts | null): Res {
         continue;
       }
 
-      // mark where CSS comments start - ROUND 1-only rule
-      // ================
-      DEV &&
-        console.log(
-          `${`\u001b[${33}m${`stateWithinBodyInlineStyle`}\u001b[${39}m`} = ${JSON.stringify(
-            stateWithinBodyInlineStyle,
-            null,
-            4,
-          )}`,
-        );
-      if (
-        round === 1 &&
-        (stateWithinStyleTag ||
-          (stateWithinBodyInlineStyle !== null &&
-            stateWithinBodyInlineStyle < i)) &&
-        !cssOpaque &&
-        str[i] === "/" &&
-        str[i + 1] === "*" &&
-        commentStartedAt === null
-      ) {
-        // 1. mark the beginning
-        commentStartedAt = i;
-        DEV &&
-          console.log(
-            `SET ${`\u001b[${33}m${`commentStartedAt`}\u001b[${39}m`} = ${i}`,
-          );
-
-        // 2. activate doNothing:
-        doNothing = true;
-        DEV &&
-          console.log(
-            `SET ${`\u001b[${33}m${`doNothing`}\u001b[${39}m`} = true`,
-          );
-        doNothingUntil = "*/";
-
-        // just over the "*":
-        i += 1;
+      // Lexical comments have authoritative CSS-region boundaries. Retained
+      // comments remain opaque in both rounds, including unfinished comments.
+      const cssComment = !cssOpaque && activeCssRegion?.comments.get(i);
+      if (!doNothing && cssComment) {
+        if (round === 1 && resolvedOpts.removeCSSComments) {
+          let from = cssComment.from;
+          if (cssComment.canExpand) {
+            const lineBreak = matchLeft(str, from, ["\r\n", "\n", "\r"]);
+            if (typeof lineBreak === "string") {
+              from = Math.max(
+                activeCssRegion?.start ?? from,
+                from - lineBreak.length,
+              );
+            }
+          }
+          if (
+            cssComment.replacement !== str.slice(cssComment.from, cssComment.to)
+          ) {
+            finalIndexesToDelete.push(
+              from,
+              cssComment.to,
+              cssComment.replacement,
+            );
+            commentsLength +=
+              cssComment.to - cssComment.from - cssComment.replacement.length;
+            nonIndentationsWhitespaceLength += cssComment.from - from;
+          }
+        }
+        if (round === 2 && round1RangesClone) {
+          while (
+            round1RangeIndex < round1RangesClone.length &&
+            round1RangesClone[round1RangeIndex][0] < cssComment.to
+          ) {
+            round1RangeIndex++;
+          }
+        }
+        whitespaceStartedAt = null;
+        i = cssComment.to - 1;
         continue;
       }
 

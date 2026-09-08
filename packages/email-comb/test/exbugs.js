@@ -1051,8 +1051,7 @@ test("34 - #91 HTML comments inside style tags don't consume sibling HTML", () =
     "<STYLE>.used{x:y}</STYLE><body><p class=used>visible</p></body>\n";
   let unclosedCssCommentSource =
     "<style>/* unclosed</style><p>visible /* outside */</p><style>.unused{x:y}</style>";
-  let unclosedCssCommentIntended =
-    "<style>/* unclosed</style><p>visible /* outside */</p>\n";
+  let unclosedCssCommentIntended = "<p>visible /* outside */</p>\n";
   let unclosedHtmlCommentSource =
     "<style><!-- unclosed</style><p>visible</p><style>.unused{x:y}</style>";
   let unclosedHtmlCommentIntended =

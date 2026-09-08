@@ -109,7 +109,7 @@ test("03 - HTML inline CSS comments are removed - commented out selectors - semi
   equal(comb(source).result, intended, "03.01");
 });
 
-test("04 - HTML inline CSS comments are removed - commented out selectors - removing comments will result in missing semicol", () => {
+test("04 - removing inline comments preserves the original declaration boundary", () => {
   let source = `<style>
   .aa {z:2;}
 </style>
@@ -118,11 +118,13 @@ test("04 - HTML inline CSS comments are removed - commented out selectors - remo
 </body>
 `;
 
+  // A commented-out semicolon does not separate declarations. Inserting one
+  // would change the input's meaning, so keep the lexical boundary with /**/.
   let intended = `<style>
   .aa {z:2;}
 </style>
 </head>
-<body><a class="aa" style="kk: ll;oo: pp;">z</a>
+<body><a class="aa" style="kk: ll/**/oo: pp;">z</a>
 </body>
 `;
 
@@ -144,7 +146,7 @@ test("05 - inline CSS comments stop at the literal HTML attribute boundary", () 
   .aa {z:2;}
 </style>
 </head>
-<body><a class="aa" style="color: red;/*">z<id style="*/padding-top: 10px;">z</a>
+<body><a class="aa" style="color: red;">z<id style="*/padding-top: 10px;">z</a>
 </body>
 `;
 

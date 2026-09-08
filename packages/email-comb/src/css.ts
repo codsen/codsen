@@ -1,5 +1,19 @@
 import { type CssToken, readCssToken } from "string-extract-class-names";
 
+export interface CssComment {
+  from: number;
+  to: number;
+  replacement: "" | "/**/";
+  canExpand: boolean;
+}
+
+interface PendingComment {
+  token: CssToken;
+  left?: CssToken;
+  leftSignificant?: CssToken;
+  right?: CssToken;
+}
+
 export interface CssRegion {
   source: string;
   start: number;
@@ -8,6 +22,30 @@ export interface CssRegion {
   flags: Uint8Array;
   /** Token keys and ranges use absolute offsets in the original HTML. */
   tokens: Map<number, CssToken>;
+  comments: Map<number, CssComment>;
+}
+
+function commentReplacement(
+  left: CssToken | undefined,
+  right: CssToken | undefined,
+): "" | "/**/" {
+  if (
+    !left ||
+    !right ||
+    (left.kind === "delimiter" && "{};,:".includes(left.value)) ||
+    (right.kind === "delimiter" && "{};,:".includes(right.value)) ||
+    left.kind === "whitespace" ||
+    (right.kind === "whitespace" && !left.raw.includes("\\"))
+  ) {
+    return "";
+  }
+  // A partial tokenizer cannot prove numeric/hash/function joins safe. Keep
+  // the token boundary without introducing selector whitespace or punctuation.
+  return "/**/";
+}
+
+function standalonePunctuation(token: CssToken | undefined): boolean {
+  return token?.kind === "delimiter" && "{};,".includes(token.value);
 }
 
 export function asciiLowerCase(str: string): string {
@@ -40,8 +78,36 @@ export function createCssRegion(
   const css = str.slice(start, end);
   const flags = new Uint8Array(css.length);
   const tokens = new Map<number, CssToken>();
+  const comments = new Map<number, CssComment>();
   const stack: ("(" | "[")[] = [];
   let attributeDepth = 0;
+  let previous: CssToken | undefined;
+  let beforePrevious: CssToken | undefined;
+  let pending: PendingComment | undefined;
+
+  function recordComment(comment: PendingComment, next?: CssToken): void {
+    const { token, left, leftSignificant } = comment;
+    const right = comment.right || next;
+    const canExpand =
+      !leftSignificant ||
+      !next ||
+      standalonePunctuation(leftSignificant) ||
+      standalonePunctuation(next);
+    comments.set(token.range[0], {
+      from: token.range[0],
+      to: token.range[1],
+      replacement: canExpand ? "" : commentReplacement(left, right),
+      canExpand,
+    });
+    if (!canExpand) {
+      for (const neighbor of [left, right]) {
+        if (neighbor?.kind === "whitespace") {
+          const from = neighbor.range[0] - start;
+          flags.fill(flags[from] | 1, from, neighbor.range[1] - start);
+        }
+      }
+    }
+  }
 
   for (let i = 0; i < css.length; ) {
     const token = readCssToken(css, i) as CssToken;
@@ -74,10 +140,29 @@ export function createCssRegion(
 
     token.range = [start + i, start + next];
     tokens.set(start + i, token);
+    if (pending) {
+      if (!pending.right && token.kind === "whitespace") {
+        pending.right = token;
+      } else {
+        recordComment(pending, token);
+        pending = undefined;
+      }
+    }
+    if (token.kind === "comment") {
+      pending = {
+        token,
+        left: previous,
+        leftSignificant:
+          previous?.kind === "whitespace" ? beforePrevious : previous,
+      };
+    }
+    beforePrevious = previous;
+    previous = token;
     i = next;
   }
+  if (pending) recordComment(pending);
 
-  return { source: css, start, end, flags, tokens };
+  return { source: css, start, end, flags, tokens, comments };
 }
 
 interface WrapperPrelude {
