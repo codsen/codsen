@@ -5,6 +5,7 @@ import { isJinjaSpecific } from "regex-jinja-specific";
 
 import { version as v } from "../package.json";
 import { hasJinjaSpecificSyntax } from "./jinja";
+import { hasJspSyntax } from "./jsp";
 
 const version: string = v;
 
@@ -34,7 +35,10 @@ function detectLang(str: string): { name: Output } {
     if (isJinjaSpecific().test(str) && hasJinjaSpecificSyntax(str)) {
       name = "Jinja";
     }
-  } else if (isJSP().test(str)) {
+  } else if (
+    (isJSP().test(str) || str.includes("xmlns")) &&
+    hasJspSyntax(str)
+  ) {
     name = "JSP";
   }
 
