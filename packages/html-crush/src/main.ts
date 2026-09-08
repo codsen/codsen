@@ -9,10 +9,11 @@ import { Ranges } from "ranges-push";
 import { left, right } from "string-left-right";
 import { matchLeft, matchRight, matchRightIncl } from "string-match-left-right";
 import { expander } from "string-range-expander";
-import type { Ranges as RangesType } from "../../../ops/typedefs/common";
+import type { Range, Ranges as RangesType } from "../../../ops/typedefs/common";
 
 import { version as v } from "../package.json";
 import { codePointAtIndex } from "./codePoint";
+import { collectCssRegions, getCssEscapeRanges } from "./css";
 
 const version: string = v;
 
@@ -289,6 +290,44 @@ function crush(str: string, opts?: InputOpts | null): Res {
   const finalIndexesToDelete = new Ranges<string | null | undefined>({
     limitToBeAddedWhitespace: true,
   });
+  // Every whitespace deletion and wrap proposal passes through this guard
+  // before ranges merge, including deferred and end-of-input proposals.
+  const cssEscapeRanges = str.includes("\\")
+    ? getCssEscapeRanges(collectCssRegions(str))
+    : [];
+  function pushRange(
+    from: number | Range | null | undefined,
+    to?: number | null,
+    insert?: string | null,
+  ): void {
+    if (Array.isArray(from)) {
+      [from, to, insert] = from;
+    }
+    if (typeof from !== "number" || typeof to !== "number") return;
+    if (cssEscapeRanges.length) {
+      let lo = 0;
+      let hi = cssEscapeRanges.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >>> 1;
+        if (
+          from === to
+            ? cssEscapeRanges[mid][1] < from
+            : cssEscapeRanges[mid][1] <= from
+        )
+          lo = mid + 1;
+        else hi = mid;
+      }
+      const protectedRange = cssEscapeRanges[lo];
+      if (
+        protectedRange &&
+        (from === to
+          ? protectedRange[0] <= from && from <= protectedRange[1]
+          : protectedRange[0] < to && from < protectedRange[1])
+      )
+        return;
+    }
+    finalIndexesToDelete.push(from, to, insert);
+  }
   let resolvedOpts: Opts = {
     ...defaults,
     ...inputOpts,
@@ -704,7 +743,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
           );
         if (countCharactersPerLine + 1 >= resolvedOpts.lineLengthLimit) {
           DEV && console.log(`line length exceeded!`);
-          finalIndexesToDelete.push(i, i, lineEnding);
+          pushRange(i, i, lineEnding);
           DEV &&
             console.log(
               `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
@@ -777,7 +816,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
                   console.log(
                     `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${y + 1}, ${i}]`,
                   );
-                finalIndexesToDelete.push(y + 1, i);
+                pushRange(y + 1, i);
               }
               DEV && console.log(`\u001b[${36}m${`BREAK`}\u001b[${39}m`);
               break;
@@ -812,7 +851,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
           if (whitespaceStartedAt > 0) {
             whatToInsert = lineEnding;
           }
-          finalIndexesToDelete.push(whitespaceStartedAt, i, whatToInsert);
+          pushRange(whitespaceStartedAt, i, whatToInsert);
           DEV &&
             console.log(
               `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
@@ -940,7 +979,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
           isWhitespaceChar(str[i]) &&
           idxRightOfI
         ) {
-          finalIndexesToDelete.push(i, idxRightOfI as number);
+          pushRange(i, idxRightOfI as number);
           DEV &&
             console.log(
               `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${right(
@@ -955,7 +994,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
         ) {
           // if there's a space in front of "/>"
           if (isWhitespaceChar(str[i]) && idxRightOfI) {
-            finalIndexesToDelete.push(i, idxRightOfI as number);
+            pushRange(i, idxRightOfI as number);
             DEV &&
               console.log(
                 `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${right(
@@ -967,10 +1006,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
           // if there's space between slash and bracket
           let idxAfterSlashGap = right(str, idxOnTheRight + 1);
           if (str[idxOnTheRight + 1] !== ">" && idxAfterSlashGap) {
-            finalIndexesToDelete.push(
-              idxOnTheRight + 1,
-              idxAfterSlashGap as number,
-            );
+            pushRange(idxOnTheRight + 1, idxAfterSlashGap as number);
             DEV &&
               console.log(
                 `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
@@ -1043,7 +1079,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
           );
 
         if (stageFrom != null) {
-          finalIndexesToDelete.push(stageFrom, stageTo);
+          pushRange(stageFrom, stageTo);
           DEV &&
             console.log(
               `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to final [${stageFrom}, ${stageTo}]`,
@@ -1183,7 +1219,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
               resolvedOpts.lineLengthLimit &&
               cpl - (stageTo - stageFrom) >= resolvedOpts.lineLengthLimit
             ) {
-              finalIndexesToDelete.push(stageFrom, stageTo, lineEnding);
+              pushRange(stageFrom, stageTo, lineEnding);
               DEV &&
                 console.log(
                   `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to final [${stageFrom}, ${stageTo}, ${JSON.stringify(
@@ -1210,7 +1246,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
               // we have some character length allowance left so
               // let's just delete the comment and reduce the cpl
               // by that length
-              finalIndexesToDelete.push(stageFrom, stageTo);
+              pushRange(stageFrom, stageTo);
               DEV &&
                 console.log(
                   `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to final [${stageFrom}, ${stageTo}]`,
@@ -1223,7 +1259,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
                 );
             }
 
-            // finalIndexesToDelete.push(i + 1, i + 1, "\n");
+            // pushRange(i + 1, i + 1, "\n");
             // DEV && console.log(`0851 PUSH [${i + 1}, ${i + 1}, "\\n"]`);
             // countCharactersPerLine = 0;
           } else {
@@ -1369,7 +1405,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
           str.startsWith(` type="text/css">`, i + 6) &&
           str[i + 24]
         ) {
-          finalIndexesToDelete.push(i + 23, i + 23, lineEnding);
+          pushRange(i + 23, i + 23, lineEnding);
           DEV &&
             console.log(
               `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i + 23}, ${
@@ -1433,7 +1469,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
               resolvedOpts.removeIndentations ||
               resolvedOpts.removeLineBreaks
             ) {
-              finalIndexesToDelete.push(0, i);
+              pushRange(0, i);
               DEV &&
                 console.log(
                   `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [0, ${i}]`,
@@ -1462,7 +1498,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
                 lastLinebreak !== null &&
                 i > lastLinebreak
               ) {
-                finalIndexesToDelete.push(lastLinebreak + 1, i);
+                pushRange(lastLinebreak + 1, i);
                 DEV &&
                   console.log(
                     `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
@@ -1490,7 +1526,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
                   str.startsWith("<!--<![", i)
                 ) {
                   // push the whole whitespace chunk
-                  finalIndexesToDelete.push(whitespaceStartedAt, i);
+                  pushRange(whitespaceStartedAt, i);
                   DEV &&
                     console.log(
                       `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
@@ -1498,7 +1534,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
                       }, ${i}]`,
                     );
                 } else if (str[whitespaceStartedAt] === " ") {
-                  finalIndexesToDelete.push(whitespaceStartedAt + 1, i);
+                  pushRange(whitespaceStartedAt + 1, i);
                   DEV &&
                     console.log(
                       `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
@@ -1506,13 +1542,13 @@ function crush(str: string, opts?: InputOpts | null): Res {
                       }, ${i}]`,
                     );
                 } else if (str[~-i] === " ") {
-                  finalIndexesToDelete.push(whitespaceStartedAt, ~-i);
+                  pushRange(whitespaceStartedAt, ~-i);
                   DEV &&
                     console.log(
                       `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartedAt}, ${~-i}]`,
                     );
                 } else {
-                  finalIndexesToDelete.push(whitespaceStartedAt, i, " ");
+                  pushRange(whitespaceStartedAt, i, " ");
                   DEV &&
                     console.log(
                       `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartedAt}, ${i}, " "]`,
@@ -1568,7 +1604,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
                         0,
                       )}]`,
                     );
-                  finalIndexesToDelete.push(whitespaceStartedAt, i, lineEnding);
+                  pushRange(whitespaceStartedAt, i, lineEnding);
                 }
                 stageFrom = null;
                 stageTo = null;
@@ -1640,7 +1676,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
                   str[i] === "/" && str[i + 1] === ">" ? right(str, i) : null;
                 if (idxRightOfSlash && (idxRightOfSlash as number) > i + 1) {
                   // delete whitespace between / and >
-                  finalIndexesToDelete.push(i + 1, idxRightOfSlash as number);
+                  pushRange(i + 1, idxRightOfSlash as number);
                   DEV &&
                     console.log(
                       `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
@@ -1708,7 +1744,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
                     whatToAdd === " "
                   )
                 ) {
-                  finalIndexesToDelete.push(whitespaceStartedAt, i, whatToAdd);
+                  pushRange(whitespaceStartedAt, i, whatToAdd);
                   DEV &&
                     console.log(
                       `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartedAt}, ${i}, ${JSON.stringify(
@@ -1762,11 +1798,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
                     countCharactersPerLine > resolvedOpts.lineLengthLimit ||
                     !(whatToAdd === " " && i === whitespaceStartedAt + 1)
                   ) {
-                    finalIndexesToDelete.push(
-                      whitespaceStartedAt,
-                      i,
-                      whatToAdd,
-                    );
+                    pushRange(whitespaceStartedAt, i, whatToAdd);
                     DEV &&
                       console.log(
                         `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartedAt}, ${i}, ${JSON.stringify(
@@ -1915,7 +1947,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
             console.log(
               `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i}, "\\n"]`,
             );
-          finalIndexesToDelete.push(i, i, lineEnding);
+          pushRange(i, i, lineEnding);
           stageFrom = null;
           stageTo = null;
           stageAdd = null;
@@ -2002,7 +2034,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
                   );
                 // push this range only if it's not between curlies, } and {
                 if (!(str[~-stageFrom] === "}" && str[stageTo] === "{")) {
-                  finalIndexesToDelete.push(stageFrom, stageTo, whatToAdd);
+                  pushRange(stageFrom, stageTo, whatToAdd);
                   DEV &&
                     console.log(
                       `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${stageFrom}, ${stageTo}, ${JSON.stringify(
@@ -2129,7 +2161,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
 
                 // don't break at stage, just apply its contents and we're good
                 DEV && console.log(`${`\u001b[${34}m${`██`}\u001b[${39}m`}`);
-                finalIndexesToDelete.push(stageFrom, stageTo, stageAdd);
+                pushRange(stageFrom, stageTo, stageAdd);
                 DEV &&
                   console.log(
                     `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${stageFrom}, ${stageTo}, ${JSON.stringify(
@@ -2152,7 +2184,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
                   resolvedOpts.lineLengthLimit
                 ) {
                   DEV && console.log(`${`\u001b[${34}m${`██`}\u001b[${39}m`}`);
-                  finalIndexesToDelete.push(i, i, lineEnding);
+                  pushRange(i, i, lineEnding);
                   DEV &&
                     console.log(
                       `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i}, ${JSON.stringify(
@@ -2177,7 +2209,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
             } else {
               DEV && console.log(`BUT NO STAGED FOUND`);
               //
-              finalIndexesToDelete.push(i, i, lineEnding);
+              pushRange(i, i, lineEnding);
               DEV &&
                 console.log(
                   `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i}, ${JSON.stringify(
@@ -2215,7 +2247,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
             } else {
               DEV && console.log(`BUT NO STAGED FOUND`);
               //
-              finalIndexesToDelete.push(i + 1, i + 1, lineEnding);
+              pushRange(i + 1, i + 1, lineEnding);
               DEV &&
                 console.log(
                   `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i + 1}, ${
@@ -2248,7 +2280,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
               stageTo !== null &&
               (stageFrom !== stageTo || stageAdd?.length)
             ) {
-              finalIndexesToDelete.push(stageFrom, stageTo, lineEnding);
+              pushRange(stageFrom, stageTo, lineEnding);
               DEV &&
                 console.log(
                   `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${stageFrom}, ${stageTo}, ${JSON.stringify(
@@ -2325,7 +2357,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
                 0,
               )}]`,
             );
-          finalIndexesToDelete.push(stageFrom, stageTo, whatToAdd);
+          pushRange(stageFrom, stageTo, whatToAdd);
 
           DEV &&
             console.log(
@@ -2396,7 +2428,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
           str[i + 1] !== "\r" &&
           str[i + 1] !== "\n"
         ) {
-          finalIndexesToDelete.push(whitespaceStartedAt, i);
+          pushRange(whitespaceStartedAt, i);
           DEV &&
             console.log(
               `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} line's trailing whitespace [${whitespaceStartedAt}, ${i}]`,
@@ -2415,7 +2447,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
             console.log(
               `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} THIS UNFINISHED COMMENT`,
             );
-          finalIndexesToDelete.push([
+          pushRange([
             ...expander({
               str,
               from: styleCommentStartedAt,
@@ -2442,10 +2474,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
               : len;
 
           if (whitespaceStartedAt < finalLineEndingStartsAt) {
-            finalIndexesToDelete.push(
-              whitespaceStartedAt,
-              finalLineEndingStartsAt,
-            );
+            pushRange(whitespaceStartedAt, finalLineEndingStartsAt);
             DEV &&
               console.log(
                 `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} string's trailing whitespace [${whitespaceStartedAt}, ${finalLineEndingStartsAt}]`,
