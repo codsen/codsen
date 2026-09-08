@@ -148,11 +148,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
                 allOK = false;
                 break;
               }
-            } else if (
-              resolvedOpts.removeThousandSeparatorsFromNumbers &&
-              resolvedOpts.forceUKStyle &&
-              res[i] === ","
-            ) {
+            } else if (resolvedOpts.forceUKStyle && res[i] === ",") {
               //
               // Stuff like "100,01" (Russian notation) or "100.01" (UK notation).
               // A Separator followed by two digits and string ends.
