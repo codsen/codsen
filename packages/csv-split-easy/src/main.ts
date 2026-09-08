@@ -114,9 +114,9 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
         if (newElem.trim() !== "") {
           thisRowContainsOnlyEmptySpace = false;
         }
-        // if the element contains the double quote escape character,
-        // chances are it doesn't need to have seperators removed
-        let processedElem = /""/.test(newElem)
+        // Escaped quotes and embedded line breaks identify text. Decode quotes
+        // without trimming or normalizing any part of a multiline field.
+        let processedElem = /""|[\r\n]/.test(newElem)
           ? newElem.replace(/""/g, '"')
           : remSep(newElem, {
               removeThousandSeparatorsFromNumbers:
@@ -169,7 +169,10 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
     //
     // detect a line break
     // ======================
-    else if (str[i] === "\n" || str[i] === "\r") {
+    else if (
+      !ignoreDelimitersThatFollow &&
+      (str[i] === "\n" || str[i] === "\r")
+    ) {
       // question: is it the first line break of its cluster, or not?
       if (!lineBreakStarts) {
         // 1. mark where line break starts:
