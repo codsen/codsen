@@ -18,9 +18,12 @@ import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
 import { emptyCondCommentRegex } from "regex-empty-conditional-comments";
 import {
+  type CssSelectorToken,
+  type CssToken,
   decodeCssSelector,
-  extract,
+  extractCssSelectorTokens,
   readCssSelectorToken,
+  readCssToken,
 } from "string-extract-class-names";
 import { left, right } from "string-left-right";
 import { matchLeft, matchRight, matchRightIncl } from "string-match-left-right";
@@ -30,10 +33,12 @@ import type { Range } from "../../../ops/typedefs/common";
 
 import { version as v } from "../package.json";
 import {
-  regexEmptyMediaQuery,
-  regexEmptyStyleTag,
-  regexEmptyUnclosedMediaQuery,
-} from "./util";
+  asciiLowerCase,
+  createCssRegion,
+  findStyleEnd,
+  removeEmptyWrappers,
+  type CssRegion,
+} from "./css";
 
 const version: string = v;
 const labelOrOutputOpeningTagRegex = /<(?:label|output)(?:[\t\n\f\r />])/i;
@@ -71,72 +76,207 @@ function isHtmlAsciiWhitespace(char: string | undefined): boolean {
 }
 
 function extractCanonicalSelectors(str: string): string[] {
-  return extract(str).res.map((selector) => decodeCssSelector(selector));
+  let result: string[] = [];
+  for (let i = 0; i < str.length; ) {
+    if (str[i] === "[") {
+      let closingAt = cssAttributeEndsAt(str, i);
+      if (closingAt !== null) {
+        result.push(
+          ...attributeSelectorQueue(str, i).map(({ value }) => value),
+        );
+        i = closingAt + 1;
+        continue;
+      }
+    }
+    if (str[i] === "." || str[i] === "#") {
+      let token = readCssSelectorToken(str, i);
+      if (token) {
+        result.push(token.value);
+        i = token.range[1];
+        continue;
+      }
+    }
+    i = (readCssToken(str, i) as CssToken).range[1];
+  }
+  return result;
 }
 
 interface AttributeSelectorQueueItem {
   endsAt: number;
   marker: "." | "#";
   startsAt: number;
+  value: string;
+}
+
+function readSelectorInRegion(
+  str: string,
+  index: number,
+  region?: CssRegion,
+): CssSelectorToken | null {
+  if (!region) return readCssSelectorToken(str, index);
+  let token = readCssSelectorToken(region.source, index - region.start);
+  if (token)
+    token.range = [
+      token.range[0] + region.start,
+      token.range[1] + region.start,
+    ];
+  return token;
 }
 
 function cssAttributeEndsAt(str: string, start: number): number | null {
-  let quote: '"' | "'" | undefined;
-
-  for (let i = start + 1; i < str.length; i++) {
-    if (str[i] === "\\") {
-      i += 1;
-    } else if (quote) {
-      if (str[i] === quote) {
-        quote = undefined;
-      }
-    } else if (str[i] === '"' || str[i] === "'") {
-      quote = str[i] as '"' | "'";
-    } else if (str[i] === "]") {
+  for (let i = start + 1; i < str.length; ) {
+    let token = readCssToken(str, i) as CssToken;
+    if (token.kind === "delimiter" && token.value === "]") {
       return i;
     }
+    i = token.range[1];
   }
-
   return null;
 }
 
 function attributeSelectorQueue(
   str: string,
   openingAt: number,
+  region?: CssRegion,
 ): AttributeSelectorQueueItem[] {
+  if (region)
+    return attributeSelectorQueue(region.source, openingAt - region.start).map(
+      (token) => ({
+        ...token,
+        startsAt: token.startsAt + region.start,
+        endsAt: token.endsAt + region.start,
+      }),
+    );
   let closingAt = cssAttributeEndsAt(str, openingAt);
   if (closingAt === null) {
     return [];
   }
-
-  let fragment = str.slice(openingAt, closingAt + 1);
-  let extracted = extract(fragment);
-  if (extracted.ranges === null) {
+  let nameAt = openingAt + 1;
+  while (isHtmlAsciiWhitespace(str[nameAt])) {
+    nameAt++;
+  }
+  let name = readCssToken(str, nameAt);
+  if (
+    name?.kind !== "identifier" ||
+    !["class", "id"].includes(asciiLowerCase(name.value))
+  ) {
     return [];
   }
+  return extractCssSelectorTokens(str.slice(openingAt, closingAt + 1)).map(
+    (token) => ({
+      startsAt: openingAt + token.range[0],
+      endsAt: openingAt + token.range[1],
+      marker: token.value[0] as "." | "#",
+      value: token.value,
+    }),
+  );
+}
 
-  let result: AttributeSelectorQueueItem[] = [];
-  extracted.ranges.forEach((range, index) => {
-    let selector = extracted.res[index];
-    let raw = fragment.slice(range[0], range[1]);
-    if (
-      (selector[0] === "." || selector[0] === "#") &&
-      selector.slice(1) === raw
-    ) {
-      result.push({
-        endsAt: openingAt + range[1],
-        marker: selector[0] as "." | "#",
-        startsAt: openingAt + range[0],
-      });
+function htmlTagEndsAt(str: string, start: number): number {
+  let quote: string | null = null;
+  for (let i = start; i < str.length; i++) {
+    if (quote) {
+      if (str[i] === quote) quote = null;
+    } else if (str[i] === '"' || str[i] === "'") {
+      quote = str[i];
+    } else if (str[i] === ">") {
+      return i;
     }
-  });
-  return result;
+  }
+  return -1;
+}
+
+interface StyleTagRegion {
+  start: number;
+  end: number;
+  closingEnd: number;
+}
+
+function collectStyleTags(str: string): Map<number, StyleTagRegion> {
+  let tags = new Map<number, StyleTagRegion>();
+  for (
+    let cursor = str.indexOf("<");
+    cursor !== -1;
+    cursor = str.indexOf("<", cursor + 1)
+  ) {
+    if (str.startsWith("<!--", cursor)) {
+      // Conditional comments can contain the email's actual style elements.
+      let conditional =
+        asciiLowerCase(str.slice(cursor, cursor + 7)) === "<!--[if";
+      let close = str.indexOf(conditional ? ">" : "-->", cursor + 4);
+      if (close === -1) break;
+      cursor = close + (conditional ? 0 : 2);
+      continue;
+    }
+    let tag = /^<([a-z][a-z0-9:-]*)(?=[\t\n\f\r />])/i.exec(str.slice(cursor));
+    if (!tag) continue;
+    let start = htmlTagEndsAt(str, cursor + tag[0].length) + 1;
+    if (!start) break;
+    let name = asciiLowerCase(tag[1]);
+    if (name !== "style") {
+      cursor = start - 1;
+      if (name === "plaintext") break;
+      if (
+        [
+          "script",
+          "textarea",
+          "title",
+          "xmp",
+          "iframe",
+          "noembed",
+          "noframes",
+        ].includes(name)
+      ) {
+        let closing = new RegExp(`</${name}(?=[\\t\\n\\f\\r />])`, "gi");
+        closing.lastIndex = start;
+        let close = closing.exec(str);
+        if (!close) break;
+        cursor = htmlTagEndsAt(str, close.index);
+        if (cursor === -1) break;
+      }
+      continue;
+    }
+    let end = findStyleEnd(str, start);
+    let closingEnd = end < str.length ? htmlTagEndsAt(str, end) : -1;
+    tags.set(cursor, { start, end, closingEnd });
+    cursor = closingEnd === -1 ? str.length : closingEnd;
+  }
+  return tags;
+}
+
+function removeEmptyCssWrappers(
+  str: string,
+  emptyStyleReplacement: string,
+): string {
+  let ranges: Range[] = [];
+  for (let [openingAt, { start, end, closingEnd }] of collectStyleTags(str)) {
+    let css = removeEmptyWrappers(str.slice(start, end));
+    if (!css.trim() && closingEnd !== -1) {
+      let from = openingAt;
+      while (from && isWhitespace(str[from - 1])) from--;
+      ranges.push([from, closingEnd + 1, emptyStyleReplacement]);
+    } else if (css !== str.slice(start, end)) {
+      ranges.push([start, end, css]);
+    }
+  }
+  return rApply(str, ranges);
+}
+
+function isTemplateBraceAt(str: string, index: number): boolean {
+  return (
+    (str[index] === "{" || str[index] === "}") &&
+    (str[index - 1] === str[index] ||
+      str[index + 1] === str[index] ||
+      str[index - 1] === "%" ||
+      str[index + 1] === "%")
+  );
 }
 
 function characterSuitableForBodyToken(
   char: string,
   quoteless: boolean,
   quote: '"' | "'" | null = null,
+  templateBrace = false,
 ): boolean {
   if (!char || isHtmlAsciiWhitespace(char)) {
     return false;
@@ -149,7 +289,7 @@ function characterSuitableForBodyToken(
         char !== "=" &&
         char !== "<" &&
         char !== ">"
-    : char !== quote && char !== "{" && char !== "}";
+    : char !== quote && !templateBrace;
 }
 
 function cleanBlankLines(str: string, backend: HeadsAndTailsObj[]): string {
@@ -167,21 +307,25 @@ function cleanBlankLines(str: string, backend: HeadsAndTailsObj[]): string {
   let lastOutputAt = 0;
   const output: string[] = [];
   let quote: '"' | "'" | null = null;
+  let cssQuote = false;
+  let escapedStyle = false;
   let rawTag: "script" | "style" | null = null;
   let tagStartedAt: number | null = null;
 
   for (let i = 0; i < str.length; i++) {
     if (blankLineMatch?.index === i) {
       const replacement =
-        tagStartedAt !== null && !comment && backendTails === null
-          ? ""
-          : rawTag === "style"
-            ? " "
-            : rawTag || comment
-              ? blankLineMatch[0]
-              : blankLineMatch[0].includes("\r\n")
-                ? "\r\n"
-                : "\n";
+        cssQuote || (rawTag === "style" && escapedStyle)
+          ? blankLineMatch[0]
+          : tagStartedAt !== null && !comment && backendTails === null
+            ? ""
+            : rawTag === "style"
+              ? " "
+              : rawTag || comment
+                ? blankLineMatch[0]
+                : blankLineMatch[0].includes("\r\n")
+                  ? "\r\n"
+                  : "\n";
       output.push(str.slice(lastOutputAt, i), replacement);
       lastOutputAt = i + blankLineMatch[0].length;
       i += blankLineMatch[0].length - 1;
@@ -232,8 +376,10 @@ function cleanBlankLines(str: string, backend: HeadsAndTailsObj[]): string {
       if (quote) {
         if (str[i] === quote) {
           quote = null;
+          cssQuote = false;
         }
       } else if (str[i] === '"' || str[i] === "'") {
+        cssQuote = /(?:^|\s)style\s*=\s*$/i.test(str.slice(tagStartedAt, i));
         quote = str[i] as '"' | "'";
       } else if (str[i] === ">") {
         const openingTagName = str
@@ -242,6 +388,9 @@ function cleanBlankLines(str: string, backend: HeadsAndTailsObj[]): string {
           ?.toLowerCase();
         if (openingTagName === "script" || openingTagName === "style") {
           rawTag = openingTagName;
+          escapedStyle =
+            rawTag === "style" &&
+            str.slice(i + 1, findStyleEnd(str, i + 1)).includes("\\");
         }
         tagStartedAt = null;
       }
@@ -711,6 +860,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
   //
   // in which case, singleSelectorType would be === "."
   let singleSelectorType: "." | "#" | undefined;
+  let singleSelectorValue: string | undefined;
 
   // ---------------------------------------------------------------------------
 
@@ -761,8 +911,6 @@ function comb(str: string, opts?: InputOpts | null): Res {
     "import",
     "page",
   ];
-
-  let atRuleBreakCharacters = ["{", "(", "<", '"', "'", "@", ";"];
 
   // insurance
   if (typeof str !== "string") {
@@ -958,6 +1106,16 @@ function comb(str: string, opts?: InputOpts | null): Res {
   let len = str.length;
   const bodyAttributes = collectBodyAttributes(str, resolvedOpts.backend);
   const nextClosingBracketAt = collectNextClosingBrackets(str);
+  const styleTags = collectStyleTags(str);
+  const cssRegions = new Map<number, CssRegion>();
+  let activeCssRegion: CssRegion | undefined;
+  const cssFlagsAt = (index: number): number => {
+    for (let region of cssRegions.values()) {
+      if (index >= region.start && index < region.end)
+        return region.flags[index - region.start];
+    }
+    return 0;
+  };
   totalCounter += len;
 
   let leavePercForLastStage = 0.06; // in range of [0, 1]
@@ -1118,6 +1276,8 @@ function comb(str: string, opts?: InputOpts | null): Res {
     stateWithinBody = false;
     stateWithinBodyInlineStyle = null;
     stateWithinBodyInlineStyleEndsAt = null;
+    activeCssRegion = undefined;
+    singleSelectorValue = undefined;
     commentStartedAt = null;
     doNothingUntil = null;
     styleStartedAt = null;
@@ -1141,6 +1301,12 @@ function comb(str: string, opts?: InputOpts | null): Res {
     totalCounter += len;
 
     stepOuter: for (let i = 0; i < len; i++) {
+      const cssFlags =
+        activeCssRegion && i >= activeCssRegion.start && i < activeCssRegion.end
+          ? activeCssRegion.flags[i - activeCssRegion.start]
+          : 0;
+      const cssOpaque = !!(cssFlags & 1);
+      const cssStructural = !(cssFlags & 3);
       const chr = str[i];
       const chrCode = chr.charCodeAt(0);
       const chrIsWhitespace =
@@ -1253,6 +1419,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
         stateWithinBodyInlineStyleEndsAt = null;
       } else if (
         !stateWithinBody &&
+        !stateWithinStyleTag &&
         bodyStartedAt !== null &&
         (styleStartedAt === null || styleStartedAt < i) &&
         (styleEndedAt === null || styleEndedAt < i)
@@ -1284,7 +1451,6 @@ function comb(str: string, opts?: InputOpts | null): Res {
         // <a style="color: red;/*">z<id style="*/padding-top: 10px;">
         //                        ^            ^                    ^
         //                     false      also false              real
-        commentStartedAt === null &&
         // opening has been caught:
         stateWithinBodyInlineStyleEndsAt !== null &&
         i >= stateWithinBodyInlineStyleEndsAt
@@ -1295,6 +1461,11 @@ function comb(str: string, opts?: InputOpts | null): Res {
           );
         stateWithinBodyInlineStyle = null;
         stateWithinBodyInlineStyleEndsAt = null;
+        if (commentStartedAt !== null && doNothingUntil === "*/") {
+          commentStartedAt = null;
+          doNothing = false;
+          doNothingUntil = null;
+        }
         DEV &&
           console.log(
             `SET ${`\u001b[${33}m${`stateWithinBodyInlineStyle`}\u001b[${39}m`} = ${stateWithinBodyInlineStyle}`,
@@ -1317,6 +1488,24 @@ function comb(str: string, opts?: InputOpts | null): Res {
           );
         stateWithinBodyInlineStyle = bodyAttribute.equalsAt;
         stateWithinBodyInlineStyleEndsAt = bodyAttribute.valueEndsAt;
+        activeCssRegion = cssRegions.get(bodyAttribute.valueStartsAt);
+        if (!activeCssRegion) {
+          activeCssRegion = createCssRegion(
+            str,
+            bodyAttribute.valueStartsAt,
+            bodyAttribute.valueEndsAt,
+          );
+          // Inline references can create CSS quotes. Until decoded mappings are
+          // needed for edits, retain their contents conservatively.
+          if (
+            str
+              .slice(bodyAttribute.valueStartsAt, bodyAttribute.valueEndsAt)
+              .includes("&")
+          ) {
+            activeCssRegion.flags.fill(1);
+          }
+          cssRegions.set(bodyAttribute.valueStartsAt, activeCssRegion);
+        }
         DEV &&
           console.log(
             `SET ${`\u001b[${33}m${`stateWithinBodyInlineStyle`}\u001b[${39}m`} = ${stateWithinBodyInlineStyle} (at character "${
@@ -1347,7 +1536,12 @@ function comb(str: string, opts?: InputOpts | null): Res {
 
       // =============================================
 
-      if (!doNothing && (str[i] === '"' || str[i] === "'")) {
+      if (
+        !doNothing &&
+        !stateWithinStyleTag &&
+        !cssOpaque &&
+        (str[i] === '"' || str[i] === "'")
+      ) {
         // head: protection against false early curlie endings
 
         // if we are "insideCurlyBraces" and any kind of quote is detected,
@@ -1517,12 +1711,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
 
       // head: pinpoint any <style... tag, anywhere within the given HTML
       // ================
-      if (
-        !doNothing &&
-        str[i] === "<" &&
-        str.slice(i + 1, i + 6).toLowerCase() === "style" &&
-        (isHtmlAsciiWhitespace(str[i + 6]) || [">", "/"].includes(str[i + 6]))
-      ) {
+      if (!doNothing && !stateWithinStyleTag && styleTags.has(i)) {
         checkingInsideCurlyBraces = true;
         DEV &&
           console.log(
@@ -1542,11 +1731,21 @@ function comb(str: string, opts?: InputOpts | null): Res {
             `\u001b[${36}m${`\n marching forward until ">":`}\u001b[${39}m`,
           );
         totalCounter += 1;
-        const closingBracketAt = nextClosingBracketAt[i];
+        const styleTag = styleTags.get(i) as StyleTagRegion;
+        const closingBracketAt = styleTag.start - 1;
         if (closingBracketAt !== -1) {
           DEV &&
             console.log(`\u001b[${36}m${` > found, stopping`}\u001b[${39}m`);
           styleStartedAt = closingBracketAt + 1;
+          activeCssRegion = cssRegions.get(styleStartedAt);
+          if (!activeCssRegion) {
+            activeCssRegion = createCssRegion(
+              str,
+              styleStartedAt,
+              styleTag.end,
+            );
+            cssRegions.set(styleStartedAt, activeCssRegion);
+          }
           ruleChunkStartedAt = closingBracketAt + 1;
           DEV &&
             console.log(
@@ -1593,6 +1792,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
         singleSelectorEndsAt = null;
         singleSelectorQueue = [];
         singleSelectorType = undefined;
+        singleSelectorValue = undefined;
         headWholeLineCanBeDeleted = true;
         lastKeptChunksCommaAt = null;
         onlyDeletedChunksFollow = false;
@@ -1625,6 +1825,24 @@ function comb(str: string, opts?: InputOpts | null): Res {
         }
       }
 
+      // CSS permits legacy CDO/CDC markers around top-level rules. They are
+      // not HTML comments enclosing those rules in a style raw-text region.
+      if (
+        !doNothing &&
+        stateWithinStyleTag &&
+        !insideCurlyBraces &&
+        activeCssRegion?.tokens.has(i) &&
+        (str.startsWith("<!--", i) || str.startsWith("-->", i)) &&
+        asciiLowerCase(str.slice(i, i + 7)) !== "<!--[if"
+      ) {
+        let markerLength = str[i] === "<" ? 4 : 3;
+        ruleChunkStartedAt = i + markerLength;
+        selectorChunkStartedAt = null;
+        whitespaceStartedAt = null;
+        i += markerLength - 1;
+        continue;
+      }
+
       // mark where CSS comments start - ROUND 1-only rule
       // ================
       DEV &&
@@ -1640,6 +1858,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
         (stateWithinStyleTag ||
           (stateWithinBodyInlineStyle !== null &&
             stateWithinBodyInlineStyle < i)) &&
+        !cssOpaque &&
         str[i] === "/" &&
         str[i + 1] === "*" &&
         commentStartedAt === null
@@ -1665,7 +1884,13 @@ function comb(str: string, opts?: InputOpts | null): Res {
       }
 
       // pinpoint "@"
-      if (!doNothing && stateWithinStyleTag && str[i] === "@") {
+      if (
+        !doNothing &&
+        stateWithinStyleTag &&
+        cssStructural &&
+        !insideCurlyBraces &&
+        str[i] === "@"
+      ) {
         DEV && console.log(`(i=${i})`);
         // since we are going to march forward, rest the whitespaceStartedAt
         // marker since it might not get reset otherwise
@@ -1673,9 +1898,16 @@ function comb(str: string, opts?: InputOpts | null): Res {
           whitespaceStartedAt = null;
         }
 
-        let matchedAtTagsName =
-          matchRight(str, i, atRulesWhichMightWrapStyles) ||
-          matchRight(str, i, atRulesWhichNeedToBeIgnored);
+        let atToken = activeCssRegion?.tokens.get(i);
+        let decodedAtName =
+          atToken?.kind === "at-keyword" ? asciiLowerCase(atToken.value) : "";
+        let matchedAtTagsName = [
+          ...atRulesWhichMightWrapStyles,
+          ...atRulesWhichNeedToBeIgnored,
+        ].includes(decodedAtName)
+          ? decodedAtName
+          : false;
+        let atNameLength = atToken ? atToken.range[1] - i - 1 : 0;
         if (typeof matchedAtTagsName === "string") {
           DEV && console.log(`@${matchedAtTagsName} detected`);
           let temp;
@@ -1683,10 +1915,10 @@ function comb(str: string, opts?: InputOpts | null): Res {
           // rare case when semicolon follows the at-tag - in that
           // case, we remove the at-rule because it's broken
           if (
-            str[i + matchedAtTagsName.length + 1] === ";" ||
-            (str[i + matchedAtTagsName.length + 1] &&
-              isWhitespace(str[i + matchedAtTagsName.length + 1]) &&
-              matchRight(str, i + matchedAtTagsName.length + 1, ";", {
+            str[i + atNameLength + 1] === ";" ||
+            (str[i + atNameLength + 1] &&
+              isWhitespace(str[i + atNameLength + 1]) &&
+              matchRight(str, i + atNameLength + 1, ";", {
                 trimBeforeMatching: true,
                 cb: (_char, _theRemainderOfTheString, index) => {
                   temp = index;
@@ -1695,215 +1927,78 @@ function comb(str: string, opts?: InputOpts | null): Res {
               }))
           ) {
             DEV && console.log(`BLANK AT-RULE DETECTED`);
-            finalIndexesToDelete.push(
-              i,
-              temp || i + matchedAtTagsName.length + 2,
-            );
+            finalIndexesToDelete.push(i, temp || i + atNameLength + 2);
           }
 
           // these can wrap styles and each other and their pesky curlies can throw
           // our algorithm off-track. We need to jump past the chunk from "@..."
           // to, and including, first curly bracket. But mind the dirty code cases.
 
-          let secondaryStopper;
-          DEV && console.log("1325\n");
-          DEV &&
-            console.log(`\u001b[${36}m${`march forward`}\u001b[${39}m:\n-----`);
+          let ignoredBlockDepth = 0;
+          for (
+            let z = i + atNameLength + 1;
+            z < (activeCssRegion?.end ?? len);
+            z++
+          ) {
+            totalCounter++;
+            let flags =
+              activeCssRegion && z < activeCssRegion.end
+                ? activeCssRegion.flags[z - activeCssRegion.start]
+                : 0;
+            if (flags & 3) continue;
 
-          for (let z = i + 1; z < len; z++) {
-            totalCounter += 1;
-            DEV &&
-              console.log(
-                `\u001b[${36}m${`str[${z}] = ${str[z]}`}\u001b[${39}m; ${`\u001b[${33}m${`secondaryStopper`}\u001b[${39}m`} = ${secondaryStopper}`,
-              );
-
-            // ------------------------------------------------------------------
-
-            // a secondary stopper is any character which must be matched with its
-            // closing counterpart before anything continues. For example, we look
-            // for semicolon. On the way, we encounter an opening bracket. Now,
-            // we must march forward until we meet closing bracket. If, in the way,
-            // we encounter semicolon, it will be ignored, only closing bracket is
-            // what we look. When it is found, THEN continue looking for (new) semicolon.
-
-            // catch the start of Liquid/Nunjucks double opening curlies {{
-            let espTails = "";
-            if (str[z] === "{" && str[z + 1] === "{") {
-              espTails = "}}";
-              DEV &&
-                console.log(
-                  `${`\u001b[${33}m${`espTails`}\u001b[${39}m`} = ${espTails}`,
-                );
-            }
-            if (str[z] === "{" && str[z + 1] === "%") {
-              espTails = "%}";
-              DEV &&
-                console.log(
-                  `${`\u001b[${33}m${`espTails`}\u001b[${39}m`} = ${espTails}`,
-                );
-            }
-            if (espTails && str.includes(espTails, z + 1)) {
-              DEV &&
-                console.log(
-                  `${`\u001b[${32}m${`ESP Nunjucks/Jinja heads detected`}\u001b[${39}m`}`,
-                );
-              z = str.indexOf(espTails, z + 1) + espTails.length - 1;
-              DEV &&
-                console.log(
-                  `${`\u001b[${32}m${`SET`}\u001b[${39}m`} z = ${z}; then ${`\u001b[${31}m${`CONTINUE`}\u001b[${39}m`}`,
-                );
+            // Preserve the existing backend-template recovery inside preludes.
+            let tails = str.startsWith("{{", z)
+              ? "}}"
+              : str.startsWith("{%", z)
+                ? "%}"
+                : "";
+            if (tails && str.includes(tails, z + 2)) {
+              z = str.indexOf(tails, z + 2) + tails.length - 1;
               continue;
-            } else if (espTails) {
-              // if tails are not present, wipe them, for perf reasons
-              DEV &&
-                console.log(
-                  `${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`espTails`}\u001b[${39}m`}`,
-                );
-              espTails = "";
             }
-
-            // catch the ending of a secondary stopper
-            if (secondaryStopper && str[z] === secondaryStopper) {
-              DEV &&
-                console.log(
-                  `\u001b[${36}m${`atRulesWhichNeedToBeIgnored = ${JSON.stringify(
-                    atRulesWhichNeedToBeIgnored,
-                    null,
-                    0,
-                  )} - VS - matchedAtTagsName = ${matchedAtTagsName}\natRulesWhichMightWrapStyles = ${JSON.stringify(
-                    atRulesWhichMightWrapStyles,
-                    null,
-                    0,
-                  )} - VS - matchedAtTagsName = ${matchedAtTagsName}`}\u001b[${39}m`,
-                );
-              if (
-                (str[z] === "}" &&
-                  atRulesWhichNeedToBeIgnored.includes(matchedAtTagsName)) ||
-                (str[z] === "{" &&
-                  atRulesWhichMightWrapStyles.includes(matchedAtTagsName))
-              ) {
+            if (ignoredBlockDepth) {
+              if (str[z] === "{") ignoredBlockDepth++;
+              if (str[z] === "}") ignoredBlockDepth--;
+              if (!ignoredBlockDepth) {
                 i = z;
-                DEV &&
-                  console.log(
-                    `! SET \u001b[${31}m${`i = ${i}`}\u001b[${39}m - THEN, STEP OUT`,
-                  );
                 ruleChunkStartedAt = z + 1;
-                DEV &&
-                  console.log(
-                    `SET ${`\u001b[${33}m${`ruleChunkStartedAt`}\u001b[${39}m`} = ${ruleChunkStartedAt}`,
-                  );
                 continue stepOuter;
-              } else {
-                secondaryStopper = undefined;
-                DEV &&
-                  console.log(
-                    `---- SET \u001b[${35}m${`secondaryStopper`}\u001b[${39}m = undefined`,
-                  );
-                continue;
-                // continue stepouter;
               }
+              continue;
             }
-
-            // set the secondary stopper
-            if (str[z] === '"' && !secondaryStopper) {
-              secondaryStopper = '"';
-              DEV &&
-                console.log(
-                  `SET \u001b[${35}m${`secondaryStopper`}\u001b[${39}m = ${secondaryStopper}`,
-                );
-            } else if (str[z] === "'" && !secondaryStopper) {
-              secondaryStopper = "'";
-              DEV &&
-                console.log(
-                  `SET \u001b[${35}m${`secondaryStopper`}\u001b[${39}m = ${secondaryStopper}`,
-                );
-            } else if (str[z] === "(" && !secondaryStopper) {
-              secondaryStopper = ")";
-              DEV &&
-                console.log(
-                  `SET \u001b[${35}m${`secondaryStopper`}\u001b[${39}m = ${secondaryStopper}`,
-                );
-            } else if (
-              atRulesWhichNeedToBeIgnored.includes(matchedAtTagsName) &&
+            if (
               str[z] === "{" &&
-              !secondaryStopper
+              atRulesWhichNeedToBeIgnored.includes(matchedAtTagsName)
             ) {
-              secondaryStopper = "}";
-              DEV &&
-                console.log(
-                  `SET \u001b[${35}m${`secondaryStopper`}\u001b[${39}m = ${secondaryStopper}`,
-                );
+              ignoredBlockDepth = 1;
+              continue;
             }
-
-            // catch the final, closing character
-            if (!secondaryStopper && atRuleBreakCharacters.includes(str[z])) {
-              // ensure that any wrapped chunks get completely covered and their
-              // contents don't trigger any clauses. There can be links with "@"
-              // for example, and there can be stray tags like @media @media.
-              // These two different cases can be recognised by requiring that any
-              // wrapped chunks like {...} or (...) or "..." or '...' get covered
-              // completely before anything else is considered.
-
-              DEV &&
-                console.log(
-                  `AT-RULE BREAK CHAR: index=${z}, value="${str[z]}"`,
-                );
-
-              // bail out clauses
-              let pushRangeFrom;
-              let pushRangeTo;
-
-              // normal cases:
-              if (str[z] === "{" || str[z] === ";") {
-                insideCurlyBraces = false;
-                ruleChunkStartedAt = z + 1;
-                DEV &&
-                  console.log(
-                    `SET ${`\u001b[${33}m${`insideCurlyBraces`}\u001b[${39}m`} = false; ${`\u001b[${33}m${`ruleChunkStartedAt`}\u001b[${39}m`} = ${ruleChunkStartedAt}; THEN STEP OUT`,
-                  );
-                i = z;
-                continue stepOuter;
-              } else if (str[z] === "@" || str[z] === "<") {
-                if (
-                  round === 1 &&
-                  !str.slice(i, z).includes("{") &&
-                  !str.slice(i, z).includes("(") &&
-                  !str.slice(i, z).includes('"') &&
-                  !str.slice(i, z).includes("'")
-                ) {
-                  pushRangeFrom = i;
-                  pushRangeTo = z + (str[z] === ";" ? 1 : 0);
-                  DEV &&
-                    console.log(
-                      `BROKEN AT-RULE DETECTED, pushing [${pushRangeFrom}, ${pushRangeTo}] = "${str.slice(
-                        pushRangeFrom,
-                        pushRangeTo,
-                      )}" THEN STEP OUT`,
-                    );
-                  finalIndexesToDelete.push(pushRangeFrom, pushRangeTo);
-                }
-              }
-              DEV &&
-                console.log(
-                  `${`\u001b[${33}m${`pushRangeTo`}\u001b[${39}m`} = ${pushRangeTo}; ${`\u001b[${33}m${`z`}\u001b[${39}m`} = ${z}`,
-                );
-              let iOffset = pushRangeTo
-                ? pushRangeTo - 1
-                : z - 1 + (str[z] === "{" ? 1 : 0);
-              DEV &&
-                console.log(
-                  `${`\u001b[${33}m${`iOffset`}\u001b[${39}m`} = ${iOffset}`,
-                );
-              DEV &&
-                console.log(
-                  `! SET \u001b[${31}m${`i = ${iOffset}; ruleChunkStartedAt = ${
-                    iOffset + 1
-                  };`}\u001b[${39}m - THEN, STEP OUT.`,
-                );
-              i = iOffset;
-              ruleChunkStartedAt = iOffset + 1;
+            if (str[z] === "{" || str[z] === ";") {
+              insideCurlyBraces = false;
+              ruleChunkStartedAt = z + 1;
+              i = z;
               continue stepOuter;
             }
+            if (str[z] === "@" || str[z] === "<") {
+              let prelude = str.slice(i, z);
+              if (round === 1 && !/[{("']/.test(prelude)) {
+                finalIndexesToDelete.push(i, z);
+              }
+              i = z - 1;
+              ruleChunkStartedAt = z;
+              continue stepOuter;
+            }
+          }
+          if (activeCssRegion) {
+            if (
+              round === 1 &&
+              !/[{("']/.test(str.slice(i, activeCssRegion.end))
+            ) {
+              finalIndexesToDelete.push(i, activeCssRegion.end);
+            }
+            i = activeCssRegion.end - 1;
+            continue;
           }
         }
       }
@@ -1916,6 +2011,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
         insideCurlyBraces &&
         checkingInsideCurlyBraces &&
         chr === "}" &&
+        cssStructural &&
         !currentlyWithinQuotes &&
         !curliesDepth
       ) {
@@ -2011,10 +2107,10 @@ function comb(str: string, opts?: InputOpts | null): Res {
 
         // catch the START of single selectors (for example, "#head-only-id-2")
         // any character, not permitted in CSS class/id names stops the recording
-        if (singleSelectorStartedAt === null) {
+        if (singleSelectorStartedAt === null && !cssOpaque && !(cssFlags & 4)) {
           // catch the start of a single
           if (chr === "." || chr === "#") {
-            let token = readCssSelectorToken(str, i);
+            let token = readSelectorInRegion(str, i, activeCssRegion);
             if (token) {
               singleSelectorStartedAt = i;
               singleSelectorEndsAt = token.range[1];
@@ -2024,12 +2120,17 @@ function comb(str: string, opts?: InputOpts | null): Res {
                 );
             }
           } else if (chr === "[") {
-            singleSelectorQueue = attributeSelectorQueue(str, i);
+            singleSelectorQueue = attributeSelectorQueue(
+              str,
+              i,
+              activeCssRegion,
+            );
             let firstAttributeSelector = singleSelectorQueue.shift();
             if (firstAttributeSelector) {
               singleSelectorStartedAt = firstAttributeSelector.startsAt;
               singleSelectorEndsAt = firstAttributeSelector.endsAt;
               singleSelectorType = firstAttributeSelector.marker;
+              singleSelectorValue = firstAttributeSelector.value;
               DEV &&
                 console.log(
                   `SET attribute selector: ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}; ${`\u001b[${33}m${`singleSelectorEndsAt`}\u001b[${39}m`} = ${singleSelectorEndsAt}; ${`\u001b[${33}m${`singleSelectorType`}\u001b[${39}m`} = ${singleSelectorType}`,
@@ -2038,7 +2139,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
           } else if (!chrIsWhitespace) {
             // logging:
             DEV && console.log("██");
-            if (chr === "}") {
+            if (chr === "}" && cssStructural) {
               ruleChunkStartedAt = i + 1;
               currentChunk = null;
               DEV &&
@@ -2081,7 +2182,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
                   continue stepOuter;
                 }
               }
-            } else if (str[i] === ",") {
+            } else if (str[i] === "," && cssStructural) {
               // it can be end of a tag, for example:
               // <style>
               // .a, li, .b, .c {}
@@ -2112,7 +2213,9 @@ function comb(str: string, opts?: InputOpts | null): Res {
             singleSelector = `${singleSelectorType}${singleSelector}`;
             singleSelectorType = undefined;
           }
-          singleSelector = decodeCssSelector(singleSelector);
+          singleSelector =
+            singleSelectorValue ?? decodeCssSelector(singleSelector);
+          singleSelectorValue = undefined;
           DEV &&
             console.log(
               `CARVED OUT A SINGLE SELECTOR'S NAME: "\u001b[${32}m${singleSelector}\u001b[${39}m"`,
@@ -2173,7 +2276,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
             }
             // 2. tend trailing comma issue (lastKeptChunksCommaAt and
             // onlyDeletedChunksFollow):
-            if (chr === ",") {
+            if (chr === "," && cssStructural) {
               lastKeptChunksCommaAt = i;
               onlyDeletedChunksFollow = false;
               DEV &&
@@ -2190,8 +2293,13 @@ function comb(str: string, opts?: InputOpts | null): Res {
             singleSelectorStartedAt = nextAttributeSelector.startsAt;
             singleSelectorEndsAt = nextAttributeSelector.endsAt;
             singleSelectorType = nextAttributeSelector.marker;
-          } else if (chr === "." || chr === "#") {
-            let token = readCssSelectorToken(str, i);
+            singleSelectorValue = nextAttributeSelector.value;
+          } else if (
+            !cssOpaque &&
+            !(cssFlags & 4) &&
+            (chr === "." || chr === "#")
+          ) {
+            let token = readSelectorInRegion(str, i, activeCssRegion);
             if (token) {
               singleSelectorStartedAt = i;
               singleSelectorEndsAt = token.range[1];
@@ -2241,7 +2349,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
           }
         }
         // catch the ending of a chunk
-        else if (",{".includes(chr)) {
+        else if (cssStructural && ",{".includes(chr)) {
           let sliceTo = whitespaceStartedAt || i;
           currentChunk = str.slice(selectorChunkStartedAt, sliceTo);
           DEV &&
@@ -2333,7 +2441,10 @@ function comb(str: string, opts?: InputOpts | null): Res {
                   console.log(
                     `\u001b[${36}m${`----- str[${y}]=${str[y]}`}\u001b[${39}m`,
                   );
-                if (!isWhitespace(str[y]) && str[y] !== ",") {
+                if (
+                  cssFlagsAt(y) & 3 ||
+                  (!isWhitespace(str[y]) && str[y] !== ",")
+                ) {
                   fromIndex = y + 1;
                   break;
                 }
@@ -2534,6 +2645,8 @@ function comb(str: string, opts?: InputOpts | null): Res {
       // ================
       if (
         !doNothing &&
+        !stateWithinStyleTag &&
+        !cssOpaque &&
         str[i] === "<" &&
         matchRight(str, i, "body", {
           i: true,
@@ -3030,6 +3143,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
             chr,
             bodyClass.quoteless,
             bodyClass.quote,
+            isTemplateBraceAt(str, i),
           )
         ) {
           // 1. mark the class' starting index
@@ -3094,6 +3208,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
           chr,
           bodyClass.quoteless,
           bodyClass.quote,
+          isTemplateBraceAt(str, i),
         ) ||
           (allTails && matchRightIncl(str, i, allTails)))
       ) {
@@ -3270,7 +3385,12 @@ function comb(str: string, opts?: InputOpts | null): Res {
         !doNothing &&
         bodyId?.valueStart !== null &&
         i > bodyId.valueStart &&
-        (!characterSuitableForBodyToken(chr, bodyId.quoteless, bodyId.quote) ||
+        (!characterSuitableForBodyToken(
+          chr,
+          bodyId.quoteless,
+          bodyId.quote,
+          isTemplateBraceAt(str, i),
+        ) ||
           (allTails && matchRightIncl(str, i, allTails)))
       ) {
         DEV && console.log();
@@ -3709,7 +3829,12 @@ function comb(str: string, opts?: InputOpts | null): Res {
               );
           }
         } else if (
-          characterSuitableForBodyToken(chr, bodyId.quoteless, bodyId.quote)
+          characterSuitableForBodyToken(
+            chr,
+            bodyId.quoteless,
+            bodyId.quote,
+            isTemplateBraceAt(str, i),
+          )
         ) {
           // 1. mark the id's starting index
           bodyId.valueStart = i;
@@ -3765,7 +3890,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
 
       // body: catch the start and end of HTML comments
       // ================
-      if (!doNothing && round === 1) {
+      if (!doNothing && !cssOpaque && round === 1) {
         // 1. catch the HTML comments' cut off point to check for blocking
         // characters (mso, IE, whatever given in the
         // resolvedOpts.doNotRemoveHTMLCommentsWhoseOpeningTagContains)
@@ -3987,14 +4112,19 @@ function comb(str: string, opts?: InputOpts | null): Res {
 
       // reduce curliesDepth on each closing curlie met
       // ================
-      if (chr === "}" && curliesDepth) {
+      if (!doNothing && cssStructural && chr === "}" && curliesDepth) {
         curliesDepth -= 1;
         DEV && console.log(`REDUCE curliesDepth now = ${curliesDepth}`);
       }
 
       // pinpoint opening curly braces (in head styles), but not @media's.
       // ================
-      if (!doNothing && chr === "{" && checkingInsideCurlyBraces) {
+      if (
+        !doNothing &&
+        cssStructural &&
+        chr === "{" &&
+        checkingInsideCurlyBraces
+      ) {
         if (!insideCurlyBraces) {
           // 1. flip the flag
           insideCurlyBraces = true;
@@ -4024,7 +4154,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
 
       // catch the whitespace
       if (!doNothing) {
-        if (chrIsWhitespace) {
+        if (chrIsWhitespace && !cssOpaque) {
           if (whitespaceStartedAt === null) {
             whitespaceStartedAt = i;
             // DEV && console.log(
@@ -4809,7 +4939,12 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
             `range[2]=${JSON.stringify(range[2])} charOnTheLeft = ${str[charOnTheLeft || 0]}(${charOnTheLeft}); charOnTheRight = ${str[charOnTheRight || 0]}(${charOnTheRight})`,
           );
 
-        if (str[charOnTheLeft] === "," && str[charOnTheRight] === "{") {
+        if (
+          str[charOnTheLeft] === "," &&
+          !(cssFlagsAt(charOnTheLeft) & 3) &&
+          str[charOnTheRight] === "{" &&
+          !(cssFlagsAt(charOnTheRight) & 3)
+        ) {
           DEV &&
             console.log(
               `${`\u001b[${31}m${`CHANGED TO [${charOnTheLeft}, ${charOnTheRight}, ${JSON.stringify(range[2])}]`}\u001b[${39}m`}`,
@@ -4858,15 +4993,9 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
   // final fixing:
   // =============
 
-  // remove empty media queries:
-  while (
-    regexEmptyMediaQuery.test(str) ||
-    regexEmptyUnclosedMediaQuery.test(str)
-  ) {
-    str = str.replace(regexEmptyMediaQuery, "");
-    str = str.replace(regexEmptyUnclosedMediaQuery, "");
-    totalCounter += str.length;
-  }
+  // Remove wrappers only in actual style contents, never in strings or URLs.
+  str = removeEmptyCssWrappers(str, trailingNewline || "\n");
+  totalCounter += str.length;
   if (resolvedOpts.reportProgressFunc && len >= 2000) {
     // resolvedOpts.reportProgressFunc(96);
     currentPercentageDone = Math.floor(
@@ -4879,8 +5008,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
     }
   }
 
-  // remove empty style tags:
-  str = str.replace(regexEmptyStyleTag, trailingNewline || "\n");
+  // Empty style tags were removed by the same HTML-bounded cleanup.
   totalCounter += str.length;
   if (resolvedOpts.reportProgressFunc && len >= 2000) {
     // resolvedOpts.reportProgressFunc(97);

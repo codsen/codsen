@@ -129,7 +129,7 @@ test("04 - HTML inline CSS comments are removed - commented out selectors - remo
   equal(comb(source).result, intended, "04.01");
 });
 
-test("05 - HTML inline CSS comments are removed - commented out selectors - very cheeky contents within comments", () => {
+test("05 - inline CSS comments stop at the literal HTML attribute boundary", () => {
   let source = `<head>
 <style type="text/css">
   .aa {z:2;}
@@ -144,7 +144,7 @@ test("05 - HTML inline CSS comments are removed - commented out selectors - very
   .aa {z:2;}
 </style>
 </head>
-<body><a class="aa" style="color: red;padding-top: 10px;">z</a>
+<body><a class="aa" style="color: red;/*">z<id style="*/padding-top: 10px;">z</a>
 </body>
 `;
 
