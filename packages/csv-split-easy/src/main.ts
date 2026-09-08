@@ -89,6 +89,11 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
     str = trimOuterWhitespace(str, resolvedOpts.delimiter);
   }
   for (let i = 0, len = str.length; i < len; i++) {
+    // Start the new record before interpreting its first quote or delimiter.
+    if (lineBreakStarts && str[i] !== "\n" && str[i] !== "\r") {
+      lineBreakStarts = 0;
+      colStarts = i;
+    }
     if (
       thisRowContainsOnlyEmptySpace &&
       str[i] !== '"' &&
@@ -161,10 +166,6 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
       }
       // in all cases, set the new start marker
       colStarts = i + 1;
-      // also, reset the lineBreakStarts in one was active
-      if (lineBreakStarts) {
-        lineBreakStarts = 0;
-      }
     }
     //
     // detect a line break
@@ -207,16 +208,6 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
         rowArray = [];
       }
       colStarts = i + 1;
-    }
-    // if ((str[i] !== '\n') && (str[i] !== '\r'))
-    //
-    // but then, take care if line break state is actice
-    //
-    else if (lineBreakStarts) {
-      // 1. first, turn off the line break state flag:
-      lineBreakStarts = 0;
-      // 2. second, new column's value starts here, so mark that:
-      colStarts = i;
     }
     //
     // detect the end of the file/string
