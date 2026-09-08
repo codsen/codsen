@@ -1063,6 +1063,9 @@ function det(str: string, opts?: Partial<Opts>): Res {
     // since we rely on callback interface, we don't need to assign the function
     // to a result, we perform all the processing within the callback "cb":
     protection.forEachTag(cb, {
+      // Whole-element deletion proposals repeat the closing token. With tag
+      // retention enabled, normalize that closing token only once.
+      ...(resolvedOpts.stripHtml ? {} : { stripTogetherWithTheirContents: [] }),
       trimOnlySpaces: true,
       ignoreTags: resolvedOpts.stripHtml
         ? resolvedOpts.stripHtmlButIgnoreTags
