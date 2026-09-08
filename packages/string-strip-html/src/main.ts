@@ -2175,6 +2175,9 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     if (
       // it's closing bracket
       closesHere &&
+      // A matching attribute quote still ahead makes this bracket value data.
+      // Keep the existing recovery below when the quote is never closed.
+      (!tag.quotes || tag.quotes.next === -1) &&
       //
       // precaution against JSP comparison
       // .. <c:when test="${!empty ab.cd && ab.cd > 0.00}"> ..
@@ -2808,6 +2811,14 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         //                          we're here
         (charCode === CODE_LEFT_BRACKET && isScriptClosingTagAt(i))) &&
       opensHere &&
+      // A quote followed immediately by value characters may belong to a
+      // later tag's attribute when the current attribute was never closed.
+      (!tag.quotes ||
+        tag.quotes.next === -1 ||
+        (tag.quotes.next + 1 < len &&
+          !isWhitespaceCode(str.charCodeAt(tag.quotes.next + 1)) &&
+          str[tag.quotes.next + 1] !== ">" &&
+          str[tag.quotes.next + 1] !== "/")) &&
       !isOpeningAt(i - 1) &&
       !`'"`.includes(str[i + 1]) &&
       (!`'"`.includes(str[i + 2]) || /\w/.test(str[i + 1])) &&
