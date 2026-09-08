@@ -99,11 +99,7 @@ test("07 - the document H1 remains when its releases become empty", () => {
       const input = `# Changelog${eol}${eol}## 2.0.0${eol}${eol}${bump}${eol}${eol}## 1.0.0${eol}${eol}- WIP: unfinished work${ending}`;
       const expected = `# Changelog${ending}`;
       equal(cleanChangelogs(input, { extras: true }).res, expected, "07.01");
-      equal(
-        cleanChangelogs(expected, { extras: true }).res,
-        expected,
-        "07.02",
-      );
+      equal(cleanChangelogs(expected, { extras: true }).res, expected, "07.02");
     }
   }
 });
