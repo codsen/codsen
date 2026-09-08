@@ -3,6 +3,7 @@ import { decode } from "html-entity-codec";
 import { stripHtml } from "string-strip-html";
 import { unfancy } from "string-unfancy";
 import { version as v } from "../package.json";
+import { removeUrls } from "./urls";
 
 const version: string = v;
 
@@ -41,14 +42,7 @@ function extract(str: string): string {
   return [
     // Remove duplicated words using Set
     ...new Set(
-      unfancy(text)
-        .toLowerCase()
-
-        // remove url's - https://stackoverflow.com/a/3809435/3943954
-        .replace(
-          /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g,
-          "",
-        )
+      removeUrls(unfancy(text).toLowerCase())
         // remove newlines, and punctuation
         .replace(
           /\.|,|;|:|"|\+|=|'|`|\^|\?|!|\/|\(|\)|{|}|>|<|#|-|–|—|\n|\r|\t|\[|\]|\d/g,
