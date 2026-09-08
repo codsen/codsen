@@ -20,5 +20,11 @@
   "6.2.1": 149,
   "6.3.1": 151,
   "6.3.2": 149,
+  "lastSlowerRun": {
+    "against": 149,
+    "score": 123,
+    "version": "6.3.2",
+    "worst": 123
+  },
   "lastVersion": 149
 }

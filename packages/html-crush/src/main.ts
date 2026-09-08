@@ -13,7 +13,7 @@ import type { Range, Ranges as RangesType } from "../../../ops/typedefs/common";
 
 import { version as v } from "../package.json";
 import { codePointAtIndex } from "./codePoint";
-import { collectCssRegions, getCssEscapeRanges } from "./css";
+import { collectCssRegions, getCssAnalysis } from "./css";
 
 const version: string = v;
 
@@ -292,40 +292,56 @@ function crush(str: string, opts?: InputOpts | null): Res {
   });
   // Every whitespace deletion and wrap proposal passes through this guard
   // before ranges merge, including deferred and end-of-input proposals.
-  const cssEscapeRanges = str.includes("\\")
-    ? getCssEscapeRanges(collectCssRegions(str))
-    : [];
+  const cssRegions = collectCssRegions(str);
+  const cssAnalysis = getCssAnalysis(cssRegions);
+  const cssCommentRanges: [number, number][] = cssAnalysis.commentTokens.map(
+    ({ from, to }) => [from, to],
+  );
+  let cssRegionIndex = 0;
+  let cssOpaqueIndex = 0;
+  let cssCommentIndex = 0;
+  function intersectsProtectedRange(
+    ranges: [number, number][],
+    from: number,
+    to: number,
+  ): boolean {
+    let lo = 0;
+    let hi = ranges.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >>> 1;
+      if (from === to ? ranges[mid][1] < from : ranges[mid][1] <= from)
+        lo = mid + 1;
+      else hi = mid;
+    }
+    const protectedRange = ranges[lo];
+    return (
+      !!protectedRange &&
+      (from === to
+        ? protectedRange[0] <= from && from <= protectedRange[1]
+        : protectedRange[0] < to && from < protectedRange[1])
+    );
+  }
   function pushRange(
     from: number | Range | null | undefined,
     to?: number | null,
     insert?: string | null,
+    kind?: "css-comment" | "html-comment",
   ): void {
-    if (Array.isArray(from)) {
-      [from, to, insert] = from;
-    }
+    if (Array.isArray(from)) [from, to, insert] = from;
     if (typeof from !== "number" || typeof to !== "number") return;
-    if (cssEscapeRanges.length) {
-      let lo = 0;
-      let hi = cssEscapeRanges.length;
-      while (lo < hi) {
-        const mid = (lo + hi) >>> 1;
-        if (
-          from === to
-            ? cssEscapeRanges[mid][1] < from
-            : cssEscapeRanges[mid][1] <= from
-        )
-          lo = mid + 1;
-        else hi = mid;
-      }
-      const protectedRange = cssEscapeRanges[lo];
-      if (
-        protectedRange &&
-        (from === to
-          ? protectedRange[0] <= from && from <= protectedRange[1]
-          : protectedRange[0] < to && from < protectedRange[1])
-      )
-        return;
-    }
+    if (
+      kind !== "html-comment" &&
+      (intersectsProtectedRange(cssAnalysis.escapeRanges, from, to) ||
+        (kind !== "css-comment" &&
+          (intersectsProtectedRange(
+            cssAnalysis.inlineReferenceRanges,
+            from,
+            to,
+          ) ||
+            (!resolvedOpts.removeCSSComments &&
+              intersectsProtectedRange(cssCommentRanges, from, to)))))
+    )
+      return;
     finalIndexesToDelete.push(from, to, insert);
   }
   let resolvedOpts: Opts = {
@@ -570,7 +586,6 @@ function crush(str: string, opts?: InputOpts | null): Res {
   let withinHTMLConditional = false; // <!--[if lte mso 11]> etc
   let withinInlineStyle = null;
   let htmlAttributeQuoteStartedAt = null;
-  let cssQuoteStartedAt = null;
   let styleCommentStartedAt = null;
   let htmlCommentStartedAt = null;
   let scriptStartedAt = null;
@@ -777,6 +792,86 @@ function crush(str: string, opts?: InputOpts | null): Res {
         DEV && console.log(`TURN OFF doNothing`);
       }
 
+      // Complete CSS tokens are bounded by actual HTML regions. CSS state
+      // cannot hide a literal HTML attribute quote or closing style tag.
+      while (
+        cssRegionIndex < cssRegions.length &&
+        i >= cssRegions[cssRegionIndex].end
+      ) {
+        if (i > cssRegions[cssRegionIndex].end) {
+          if (cssRegions[cssRegionIndex].inline) withinInlineStyle = null;
+          else withinStyleTag = false;
+        }
+        styleCommentStartedAt = null;
+        cssRegionIndex++;
+      }
+      const cssRegion = cssRegions[cssRegionIndex];
+      const inCssRegion =
+        !!cssRegion && i >= cssRegion.start && i < cssRegion.end;
+      while (
+        cssOpaqueIndex < cssAnalysis.opaqueRanges.length &&
+        i >= cssAnalysis.opaqueRanges[cssOpaqueIndex][1]
+      )
+        cssOpaqueIndex++;
+      while (
+        cssCommentIndex < cssAnalysis.commentTokens.length &&
+        i >= cssAnalysis.commentTokens[cssCommentIndex].to
+      ) {
+        cssCommentIndex++;
+        styleCommentStartedAt = null;
+      }
+      const cssComment = cssAnalysis.commentTokens[cssCommentIndex];
+      const inCssComment =
+        !!cssComment && i >= cssComment.from && i < cssComment.to;
+      const cssOpaque = cssAnalysis.opaqueRanges[cssOpaqueIndex];
+      if (!doNothing && htmlCommentStartedAt === null && inCssRegion) {
+        if (inCssComment && i === cssComment.from) {
+          applicableOpts.removeCSSComments = true;
+          if (resolvedOpts.removeCSSComments) {
+            styleCommentStartedAt = i;
+            const range = expander({
+              str,
+              from: cssComment.from,
+              to: cssComment.to,
+              ifLeftSideIncludesThisThenCropTightly:
+                DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS || "",
+              ifRightSideIncludesThisThenCropTightly:
+                DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || "",
+            });
+            stageFrom = Math.max(cssRegion.start, range[0]);
+            stageTo = Math.min(cssRegion.end, range[1]);
+            // Expansion can reach whitespace which terminates a preceding
+            // escape. Remove the verified comment without that whitespace.
+            if (
+              intersectsProtectedRange(
+                cssAnalysis.escapeRanges,
+                stageFrom,
+                stageTo,
+              )
+            ) {
+              stageFrom = cssComment.from;
+              stageTo = cssComment.to;
+            }
+            whitespaceStartedAt = null;
+            pushRange(stageFrom, stageTo, undefined, "css-comment");
+          }
+        }
+        if (
+          (inCssComment &&
+            (resolvedOpts.removeCSSComments || i > cssComment.from)) ||
+          (cssOpaque && i >= cssOpaque[0] && i < cssOpaque[1])
+        ) {
+          if (inCssComment && resolvedOpts.removeCSSComments) {
+            cpl--;
+          } else if (resolvedOpts.removeLineBreaks) {
+            countCharactersPerLine = `\r\n`.includes(str[i])
+              ? 0
+              : countCharactersPerLine + 1;
+          }
+          continue;
+        }
+      }
+
       // catch ending of </script...
       // ███████████████████████████████████████
 
@@ -906,57 +1001,6 @@ function crush(str: string, opts?: InputOpts | null): Res {
         }
       }
 
-      // CSS comment delimiters and whitespace inside a quoted CSS value are
-      // data. Preserve the string until its matching unescaped quote.
-      if (!doNothing && cssQuoteStartedAt !== null) {
-        if (resolvedOpts.removeLineBreaks) {
-          countCharactersPerLine = `\r\n`.includes(str[i])
-            ? 0
-            : countCharactersPerLine + 1;
-        }
-        if (i > cssQuoteStartedAt && str[i] === str[cssQuoteStartedAt]) {
-          let backslashes = 0;
-          for (let y = i; y > 0 && str[y - 1] === "\\"; y--) {
-            backslashes++;
-          }
-          if (backslashes % 2 === 0) {
-            cssQuoteStartedAt = null;
-          }
-        }
-        continue;
-      }
-      if (
-        !doNothing &&
-        (withinStyleTag || withinInlineStyle) &&
-        (withinInlineStyle || tagNameStartsAt === null) &&
-        `"'`.includes(str[i]) &&
-        !(withinInlineStyle && str[i] === str[withinInlineStyle])
-      ) {
-        cssQuoteStartedAt = i;
-        if (resolvedOpts.removeLineBreaks) {
-          countCharactersPerLine += 1;
-        }
-        continue;
-      }
-
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      //             MIDDLE
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-
       // catch ending of the tag's name
       // ███████████████████████████████████████
       if (
@@ -1042,113 +1086,6 @@ function crush(str: string, opts?: InputOpts | null): Res {
         }
       }
 
-      // catch an end of CSS comments
-      // ███████████████████████████████████████
-
-      if (
-        !doNothing &&
-        (withinStyleTag || withinInlineStyle) &&
-        styleCommentStartedAt !== null &&
-        str[i] === "*" &&
-        str[i + 1] === "/"
-      ) {
-        DEV &&
-          console.log(
-            `${`\u001b[${32}m${`ENDING OF A CSS COMMENT CAUGHT`}\u001b[${39}m`}`,
-          );
-        // stage:
-        [stageFrom, stageTo] = expander({
-          str,
-          from: styleCommentStartedAt,
-          to: i + 2,
-          ifLeftSideIncludesThisThenCropTightly:
-            DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS || "",
-          ifRightSideIncludesThisThenCropTightly:
-            DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || "",
-        });
-        DEV &&
-          console.log(
-            `EXPANDED TO ${JSON.stringify([stageFrom, stageTo], null, 0)}`,
-          );
-
-        // reset marker:
-        styleCommentStartedAt = null;
-        DEV &&
-          console.log(
-            `SET ${`\u001b[${33}m${`styleCommentStartedAt`}\u001b[${39}m`} = null`,
-          );
-
-        if (stageFrom != null) {
-          pushRange(stageFrom, stageTo);
-          DEV &&
-            console.log(
-              `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to final [${stageFrom}, ${stageTo}]`,
-            );
-        } else {
-          countCharactersPerLine += 1;
-          DEV &&
-            console.log(
-              `${`\u001b[${33}m${`countCharactersPerLine++`}\u001b[${39}m`}, now = ${JSON.stringify(
-                countCharactersPerLine,
-                null,
-                4,
-              )}`,
-            );
-          i += 1;
-        }
-        // DEV && console.log(`0684 CONTINUE`);
-        // continue;
-
-        doNothing = i + 2;
-        DEV && console.log(`SET doNothing = ${doNothing}`);
-      }
-
-      // catch a start of CSS comments
-      // ███████████████████████████████████████
-
-      if (
-        !doNothing &&
-        (withinStyleTag || withinInlineStyle) &&
-        styleCommentStartedAt === null &&
-        str[i] === "/" &&
-        str[i + 1] === "*"
-      ) {
-        DEV &&
-          console.log(
-            `${`\u001b[${32}m${`STARTING OF A CSS COMMENT CAUGHT`}\u001b[${39}m`}`,
-          );
-
-        // independently of options settings, mark the options setting
-        // "removeCSSComments" as applicable:
-        if (!applicableOpts.removeCSSComments) {
-          applicableOpts.removeCSSComments = true;
-          DEV &&
-            console.log(
-              `SET ${`\u001b[${33}m${`applicableOpts.removeCSSComments`}\u001b[${39}m`} = ${JSON.stringify(
-                applicableOpts.removeCSSComments,
-                null,
-                4,
-              )}; now applicableOpts = ${JSON.stringify(
-                applicableOpts,
-                null,
-                4,
-              )}`,
-            );
-        }
-
-        if (resolvedOpts.removeCSSComments) {
-          styleCommentStartedAt = i;
-          DEV &&
-            console.log(
-              `SET ${`\u001b[${33}m${`styleCommentStartedAt`}\u001b[${39}m`} = ${JSON.stringify(
-                styleCommentStartedAt,
-                null,
-                4,
-              )}`,
-            );
-        }
-      }
-
       // catch an ending of mso conditional tags
       // ███████████████████████████████████████
       if (withinHTMLConditional && str.startsWith("![endif", i + 1)) {
@@ -1219,7 +1156,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
               resolvedOpts.lineLengthLimit &&
               cpl - (stageTo - stageFrom) >= resolvedOpts.lineLengthLimit
             ) {
-              pushRange(stageFrom, stageTo, lineEnding);
+              pushRange(stageFrom, stageTo, lineEnding, "html-comment");
               DEV &&
                 console.log(
                   `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to final [${stageFrom}, ${stageTo}, ${JSON.stringify(
@@ -1246,7 +1183,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
               // we have some character length allowance left so
               // let's just delete the comment and reduce the cpl
               // by that length
-              pushRange(stageFrom, stageTo);
+              pushRange(stageFrom, stageTo, undefined, "html-comment");
               DEV &&
                 console.log(
                   `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to final [${stageFrom}, ${stageTo}]`,
@@ -2440,25 +2377,6 @@ function crush(str: string, opts?: InputOpts | null): Res {
       // ███████████████████████████████████████
       if (!str[i + 1]) {
         if (
-          (withinStyleTag || withinInlineStyle) &&
-          styleCommentStartedAt !== null
-        ) {
-          DEV &&
-            console.log(
-              `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} THIS UNFINISHED COMMENT`,
-            );
-          pushRange([
-            ...expander({
-              str,
-              from: styleCommentStartedAt,
-              to: i + 1,
-              ifLeftSideIncludesThisThenCropTightly:
-                DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS || "",
-              ifRightSideIncludesThisThenCropTightly:
-                DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || "",
-            }),
-          ]);
-        } else if (
           whitespaceStartedAt !== null &&
           (contentStartsAt < len ||
             resolvedOpts.removeIndentations ||

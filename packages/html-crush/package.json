@@ -77,6 +77,7 @@
   },
   "dependencies": {
     "codsen-utils": "^1.10.1",
+    "html-entity-codec": "^1.1.0",
     "ranges-push": "^7.3.1",
     "string-extract-class-names": "^8.3.1",
     "string-left-right": "^6.2.3",
