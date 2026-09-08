@@ -190,7 +190,7 @@ function cleanChangelogs(
           )}`,
         );
       if (literalLines?.has(i)) {
-        newLinesArr.unshift(linesArr[i]);
+        newLinesArr.push(linesArr[i]);
         lastLineWasEmpty = false;
         continue;
       }
@@ -200,7 +200,7 @@ function cleanChangelogs(
         if (newLinesArr.length && !lastLineWasEmpty) {
           // we push trimmed lines to prevent accidental whitespace characters
           // sitting on an empty line:
-          newLinesArr.unshift(linesArr[i]?.trim());
+          newLinesArr.push(linesArr[i]?.trim());
           lastLineWasEmpty = true;
           DEV &&
             console.log(
@@ -210,9 +210,9 @@ function cleanChangelogs(
       }
       // fix asterisk list items into dash (Prettier default):
       else if (linesArr[i][0] === "*" && linesArr[i][1] === " ") {
-        newLinesArr.unshift(`- ${linesArr[i].slice(2)}`);
+        newLinesArr.push(`- ${linesArr[i].slice(2)}`);
       } else {
-        newLinesArr.unshift(linesArr[i]);
+        newLinesArr.push(linesArr[i]);
       }
 
       // reset:
@@ -226,10 +226,10 @@ function cleanChangelogs(
     }
 
     // Removing an initial section can expose a blank line at the new boundary.
-    if (newLinesArr[0] === "") newLinesArr.shift();
+    if (newLinesArr[newLinesArr.length - 1] === "") newLinesArr.pop();
 
     /* c8 ignore next */
-    final = `${newLinesArr.join(currentLineBreakStyle)}${
+    final = `${newLinesArr.reverse().join(currentLineBreakStyle)}${
       changelogEndedWithLinebreak ? currentLineBreakStyle : ""
     }`;
   }
