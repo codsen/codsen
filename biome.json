@@ -89,7 +89,71 @@
             "noUndeclaredDependencies": "error"
           },
           "suspicious": {
-            "noEmptyBlockStatements": "error"
+            "noEmptyBlockStatements": "error",
+            "noExplicitAny": "error"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "packages/array-group-str-omit-num-char/src/main.ts",
+        "packages/ast-compare/src/main.ts",
+        "packages/ast-deep-contains/src/main.ts",
+        "packages/ast-get-object/src/main.ts",
+        "packages/ast-get-values-by-key/src/main.ts",
+        "packages/ast-loose-compare/src/main.ts",
+        "packages/ast-monkey-traverse-with-lookahead/src/main.ts",
+        "packages/ast-monkey-traverse/src/main.ts",
+        "packages/ast-monkey/src/main.ts",
+        "packages/codsen-utils/src/main.ts",
+        "packages/csv-sort/src/util/findType.ts",
+        "packages/detergent/src/main.ts",
+        "packages/detergent/src/processCharacter.ts",
+        "packages/edit-package-json/src/main.ts",
+        "packages/email-comb/src/main.ts",
+        "packages/generate-atomic-css/src/util.ts",
+        "packages/html-entities-not-email-friendly/src/main.ts",
+        "packages/html-img-alt/src/main.ts",
+        "packages/html-table-patcher/src/main.ts",
+        "packages/is-char-suitable-for-html-attr-name/src/main.ts",
+        "packages/is-html-attribute-closing/src/main.ts",
+        "packages/is-media-descriptor/src/util.ts",
+        "packages/json-comb-core/src/main.ts",
+        "packages/json-variables/src/main.ts",
+        "packages/object-all-values-equal-to/src/main.ts",
+        "packages/object-delete-key/src/main.ts",
+        "packages/object-flatten-all-arrays/src/main.ts",
+        "packages/object-flatten-referencing/src/main.ts",
+        "packages/object-flatten-referencing/src/util.ts",
+        "packages/object-merge-advanced/src/main.ts",
+        "packages/object-no-new-keys/src/main.ts",
+        "packages/object-set-all-values-to/src/main.ts",
+        "packages/ranges-apply/src/main.ts",
+        "packages/ranges-iterate/src/main.ts",
+        "packages/ranges-merge/src/main.ts",
+        "packages/ranges-push/src/main.ts",
+        "packages/ranges-push/src/rMerge.ts",
+        "packages/rehype-responsive-tables/src/main.ts",
+        "packages/rehype-responsive-tables/src/util.ts",
+        "packages/string-collapse-white-space/src/main.ts",
+        "packages/string-convert-indexes/src/main.ts",
+        "packages/string-extract-class-names/src/main.ts",
+        "packages/string-extract-sass-vars/src/main.ts",
+        "packages/string-fix-broken-named-entities/src/main.ts",
+        "packages/string-process-comma-separated/src/main.ts",
+        "packages/string-range-expander/src/main.ts",
+        "packages/string-remove-widows/src/main.ts",
+        "packages/string-strip-html/src/main.ts",
+        "packages/string-strip-html/src/util.ts",
+        "packages/string-uglify/src/main.ts",
+        "packages/test-mixer/src/main.ts",
+        "packages/tsd-extract/src/main.ts"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noExplicitAny": "off"
           }
         }
       }

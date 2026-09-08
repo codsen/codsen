@@ -1,4 +1,6 @@
-# uvu runner guard
+# Biome checks
+
+## uvu runner guard
 
 `require-uvu-test-run.grit` checks runtime runner imports from `uvu`, regardless
 of whether assertions use `uvu/assert`, `node:assert`, or another library.
@@ -37,3 +39,19 @@ Biome version. Re-run `ops/helpers/tests/biomeRulesCli.test.js` when changing
 the plugin or upgrading Biome. Its fixtures inherit the real root configuration
 and invoke the actual CLI; runner checks are exercised alongside the other
 rules. Keep the root `packages/*/tap` force-ignore intact.
+
+## Explicit-any allowances
+
+The source override in [biome.json](../../biome.json) enables `noExplicitAny`
+for `packages/*/src/**`. A later override lists the exact legacy source files
+that still contain explicit `any` types. Keep that list sorted and limited to
+existing type debt; new files in the same packages remain checked.
+
+When improving a listed file's types, remove its allowance once it passes the
+rule. Use correct relationships or justified local suppressions, and verify the
+package's public types and consumers. Replacing every `any` with `unknown`
+mechanically can break the API without making its types more useful.
+
+The global setting remains off for generated declarations and intentional
+consumer-type tests. Fix declaration types through their authored source and
+build pipeline, without editing generated `.d.ts` files.

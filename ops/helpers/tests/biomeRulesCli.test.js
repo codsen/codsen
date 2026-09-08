@@ -751,4 +751,57 @@ test.run();
   equal(good.report.diagnostics, [], "35.04");
 });
 
+test("36 - clean authored source rejects explicit any types and casts", () => {
+  for (const source of [
+    "export type Input = any;\n",
+    "export function identity(value: unknown) { return value as any; }\n",
+  ]) {
+    const bad = lint({ "packages/fixture/src/main.ts": source });
+    equal(bad.status, 1, "36.01");
+    equal(severities(bad, "suspicious/noExplicitAny"), ["error"], "36.02");
+  }
+  const good = lint({
+    "packages/fixture/src/main.ts": `export function identity(value: unknown): unknown { return value; }
+export const label: "any" = "any";
+`,
+  });
+  equal(good.status, 0, "36.03");
+  equal(good.report.diagnostics, [], "36.04");
+});
+
+test("37 - legacy any allowances apply to exact files rather than their siblings", () => {
+  const source = "export type Input = any;\n";
+  for (const [legacy, sibling] of [
+    [
+      "packages/codsen-utils/src/main.ts",
+      "packages/codsen-utils/src/new-file.ts",
+    ],
+    [
+      "packages/csv-sort/src/util/findType.ts",
+      "packages/csv-sort/src/util/new-file.ts",
+    ],
+  ]) {
+    const good = lint({ [legacy]: source });
+    equal(good.status, 0, "37.01");
+    equal(good.report.diagnostics, [], "37.02");
+    const bad = lint({ [sibling]: source });
+    equal(bad.status, 1, "37.03");
+    equal(severities(bad, "suspicious/noExplicitAny"), ["error"], "37.04");
+  }
+});
+
+test("38 - declarations intentional consumer types and ops retain their any policy", () => {
+  const source = "export type Input = any;\n";
+  for (const filename of [
+    "packages/fixture/types/index.d.ts",
+    "packages/arrayiffy-if-string/test-types/consumer.ts",
+    "packages/object-delete-key/test-types/consumer.ts",
+    "ops/sentinel.ts",
+  ]) {
+    const good = lint({ [filename]: source });
+    equal(good.status, 0, "38.01");
+    equal(good.report.diagnostics, [], "38.02");
+  }
+});
+
 test.run();
