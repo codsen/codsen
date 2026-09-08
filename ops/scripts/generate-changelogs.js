@@ -24,19 +24,21 @@ const packageNames = readdirSync(path.resolve("packages"))
   .sort();
 
 const gatheredChangelogs = {};
+const pendingFiles = [];
 // Typography remains a separate editorial step. The timeline renderer itself
 // reads Markdown directly and has no Unified or HTML-parser dependency.
 const typography = remark().use(remarkGfm).use(remarkTypography);
 
-async function cleanSourceChangelog(filename, label) {
+function cleanSourceChangelog(filename, label) {
   try {
     const original = readFileSync(filename, "utf8");
     const cleaned = cleanChangelogs(original, { extras: true }).res;
-    await writeGeneratedFile({
+    if (!cleaned.trim()) {
+      throw new Error("cleaned changelog is empty");
+    }
+    pendingFiles.push({
       contents: cleaned,
       filename: path.resolve(filename),
-      fixCommand: "npm run ci:generate:changelogs",
-      mode,
     });
     return cleaned;
   } catch (error) {
@@ -49,7 +51,7 @@ async function cleanSourceChangelog(filename, label) {
   }
 }
 
-await cleanSourceChangelog(path.join("data", "CHANGELOG.md"), "@codsen/data");
+cleanSourceChangelog(path.join("data", "CHANGELOG.md"), "@codsen/data");
 
 for (let packageName of packageNames) {
   try {
@@ -58,7 +60,7 @@ for (let packageName of packageNames) {
       packageName,
       "CHANGELOG.md",
     );
-    let changelogContents = await cleanSourceChangelog(
+    let changelogContents = cleanSourceChangelog(
       changelogFilename,
       packageName,
     );
@@ -85,12 +87,20 @@ if (JSON.stringify(gatheredNames) !== JSON.stringify(packageNames)) {
   );
 }
 
-await writeGeneratedFile({
+pendingFiles.push({
   contents: `export const changelogs = ${JSON.stringify(gatheredChangelogs, null, 0)};\n`,
   filename: path.resolve("./data/sources/changelogs.ts"),
-  fixCommand: "npm run ci:generate:changelogs",
-  mode,
 });
+
+// Read, clean and render every source before replacing any file. A bad later
+// changelog must not leave earlier sources changed after generation fails.
+for (const pendingFile of pendingFiles) {
+  await writeGeneratedFile({
+    ...pendingFile,
+    fixCommand: "npm run ci:generate:changelogs",
+    mode,
+  });
+}
 
 console.log(
   `\u001b[${32}m${mode === "check" ? "Verified" : "Generated"} ${gatheredNames.length} changelogs in data/sources/changelogs.ts\u001b[${39}m`,
