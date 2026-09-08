@@ -120,6 +120,11 @@ function readToken(str: string, start: number): TemplateToken | null {
   return null;
 }
 
+export function hasTemplateComment(str: string): boolean {
+  const start = str.indexOf("{#");
+  return start !== -1 && str.indexOf("#}", start + 2) !== -1;
+}
+
 export function hasJinjaSpecificSyntax(str: string): boolean {
   for (let i = str.indexOf("{"); i !== -1; i = str.indexOf("{", i)) {
     const kind = str[i + 1];

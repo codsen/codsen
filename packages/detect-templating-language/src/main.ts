@@ -4,7 +4,7 @@ import { isJSP } from "regex-is-jsp";
 import { isJinjaSpecific } from "regex-jinja-specific";
 
 import { version as v } from "../package.json";
-import { hasJinjaSpecificSyntax } from "./jinja";
+import { hasJinjaSpecificSyntax, hasTemplateComment } from "./jinja";
 import { hasJspSyntax } from "./jsp";
 
 const version: string = v;
@@ -30,7 +30,7 @@ function detectLang(str: string): { name: Output } {
   // real action starts
   // ---------------------------------------------------------------------------
 
-  if (isJinjaNunjucksRegex().test(str)) {
+  if (isJinjaNunjucksRegex().test(str) || hasTemplateComment(str)) {
     name = "Nunjucks";
     if (isJinjaSpecific().test(str) && hasJinjaSpecificSyntax(str)) {
       name = "Jinja";
