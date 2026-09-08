@@ -15,15 +15,16 @@ import {
 import * as htmlEntities from "html-entity-codec";
 import { rApply } from "ranges-apply";
 import { rInvert } from "ranges-invert";
-import { Ranges } from "ranges-push";
+import { type Range as RangeTuple, Ranges } from "ranges-push";
 import { collapse } from "string-collapse-white-space";
 import { fixEnt } from "string-fix-broken-named-entities";
 import { chompLeft, left, leftStopAtNewLines, right } from "string-left-right";
 import { removeWidows } from "string-remove-widows";
-import { type CbObj, stripHtml } from "string-strip-html";
+import type { CbObj } from "string-strip-html";
 import { version as v } from "../package.json";
 import { codePointAtIndex, codePointBeforeIndex } from "./codePoint";
 import { processCharacter } from "./processCharacter";
+import { HtmlProtection } from "./html-protection";
 import {
   type ApplicableOpts,
   defaultOpts,
@@ -38,24 +39,7 @@ const version: string = v;
 // import escape from "js-string-escape";
 
 const ansiPattern = ansiRegex();
-
-function isTrimmedWhitespace(char: string): boolean {
-  return char === " " || char === "\r" || char === "\n" || char === "\t";
-}
-
-function trimOuterWhitespace(str: string): string {
-  let start = 0;
-  let end = str.length;
-
-  while (start < end && isTrimmedWhitespace(str[start])) {
-    start += 1;
-  }
-  while (end > start && isTrimmedWhitespace(str[end - 1])) {
-    end -= 1;
-  }
-
-  return start === 0 && end === str.length ? str : str.slice(start, end);
-}
+type Range = RangeTuple<string | null | undefined>;
 
 function isNum(something: unknown): boolean {
   return Number.isInteger(something);
@@ -105,6 +89,42 @@ function det(str: string, opts?: Partial<Opts>): Res {
   }
 
   let resolvedOpts = { ...defaultOpts, ...opts };
+  const protection = new HtmlProtection(
+    !resolvedOpts.stripHtml ||
+      resolvedOpts.stripHtmlButIgnoreTags.includes("style"),
+  );
+  protection.refresh(str);
+
+  function applyProseRanges(ranges: Range[] | null): void {
+    if (!ranges?.length) return;
+    protection.refresh(str);
+    const eligible = protection.filter(ranges);
+    if (eligible?.length) str = rApply(str, eligible);
+  }
+
+  function collapseProse(options: Parameters<typeof collapse>[1]): void {
+    protection.refresh(str);
+    const collapsed = collapse(str, options);
+    if (!protection.ranges.length) str = collapsed.result;
+    else applyProseRanges(collapsed.ranges);
+  }
+
+  function replaceProse(
+    pattern: RegExp,
+    replacement: string | ((match: string) => string),
+  ): void {
+    const ranges: Range[] = [];
+    str.replace(pattern, (match, ...args: unknown[]) => {
+      const from = args[args.length - 2] as number;
+      ranges.push([
+        from,
+        from + match.length,
+        typeof replacement === "function" ? replacement(match) : replacement,
+      ]);
+      return match;
+    });
+    applyProseRanges(ranges);
+  }
 
   // prepare applicable rules object. It is a clone of the default resolvedOpts object
   // (which comes from util.js), where for starters all values are turned off,
@@ -210,12 +230,12 @@ function det(str: string, opts?: Partial<Opts>): Res {
       `${`\u001b[${90}m${`================= NEXT STEP. Initial =================`}\u001b[${39}m`}`,
     );
   if (str.includes("\u001B") || str.includes("\u009B")) {
-    str = str.replace(ansiPattern, "");
+    replaceProse(ansiPattern, "");
   }
   if (str.includes("\u200A")) {
-    str = str.replace(/\u200A/g, " ");
+    replaceProse(/\u200A/g, " ");
   }
-  str = trimOuterWhitespace(str);
+  replaceProse(/^[ \r\n\t]+|[ \r\n\t]+$/g, "");
 
   DEV &&
     console.log(
@@ -226,16 +246,25 @@ function det(str: string, opts?: Partial<Opts>): Res {
   // NEXT STEP.
 
   if (str.includes("&")) {
-    let temp = str;
-    let lastVal;
+    let previous: string;
     do {
-      lastVal = temp;
-      temp = htmlEntities.decode(temp);
-    } while (temp !== str && lastVal !== temp);
-
-    if (str !== temp) {
-      str = temp;
-    }
+      previous = str;
+      protection.refresh(str);
+      const ranges: Range[] = [];
+      for (
+        let at = str.indexOf("&");
+        at !== -1;
+        at = str.indexOf("&", at + 1)
+      ) {
+        if (protection.contains(at)) continue;
+        const reference = htmlEntities.scanReference(str, at);
+        if (reference) {
+          ranges.push([at, reference.end, reference.value]);
+          at = reference.end - 1;
+        }
+      }
+      applyProseRanges(ranges);
+    } while (str !== previous && str.includes("&"));
   }
 
   DEV &&
@@ -246,11 +275,11 @@ function det(str: string, opts?: Partial<Opts>): Res {
         0,
       )}`,
     );
-  str = collapse(str, {
+  collapseProse({
     trimLines: true,
     removeEmptyLines: true,
     limitConsecutiveEmptyLinesTo: 1,
-  }).result;
+  });
 
   DEV && console.log(`"str" after collapsing: ${JSON.stringify(str, null, 0)}`);
 
@@ -262,12 +291,14 @@ function det(str: string, opts?: Partial<Opts>): Res {
   // that's mostly some nasties converted into spaces - those spaces will
   // be needed to already by there in the main loop
 
+  protection.refresh(str);
   const replacementCharacterAt = str.indexOf("\uFFFD");
   for (
     let i = replacementCharacterAt;
     i !== -1;
     i = str.indexOf("\uFFFD", i + 1)
   ) {
+    if (protection.contains(i)) continue;
     if (str[i].charCodeAt(0) === 65533) {
       // REPLACEMENT CHARACTER, \uFFFD, or "�"
       DEV && console.log(`main.js: entering charcode #65533 catch clauses`);
@@ -363,7 +394,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
   // NEXT STEP.
 
   if (replacementCharacterAt !== -1) {
-    str = rApply(str, finalIndexesToDelete.current());
+    applyProseRanges(finalIndexesToDelete.current());
     finalIndexesToDelete.wipe();
   }
 
@@ -377,7 +408,8 @@ function det(str: string, opts?: Partial<Opts>): Res {
       `${`\u001b[${90}m${`================= NEXT STEP. fix broken HTML entity references =================`}\u001b[${39}m`}`,
     );
 
-  let entityFixes = fixEnt(str);
+  protection.refresh(str);
+  let entityFixes = protection.filter(fixEnt(str));
   if (entityFixes?.length) {
     // 1. report option as applicable:
     applicableOpts.fixBrokenEntities = true;
@@ -418,24 +450,12 @@ function det(str: string, opts?: Partial<Opts>): Res {
           `${`\u001b[${90}m${`================= NEXT STEP. HTML tags, pt.1 =================`}\u001b[${39}m`}`,
         );
 
-      let calcRanges = stripHtml(str, {
-        cb: ({ tag, rangesArr }) => {
-          DEV &&
-            console.log(
-              `${`\u001b[${33}m${`tag`}\u001b[${39}m`} = ${JSON.stringify(
-                tag,
-                null,
-                4,
-              )}`,
-            );
-          rangesArr.push(tag.start, tag.end);
-        },
-        skipHtmlDecoding: true,
-      }).ranges;
+      protection.refresh(str);
+      const calcRanges = protection.callbackRanges;
 
       let outsideTagRanges: Range[] = (
         rInvert(calcRanges, str.length) || []
-      ).reduce((accumRanges, currRange) => {
+      ).reduce<Range[]>((accumRanges, currRange) => {
         // The callback is called once and its result kept. Calling it twice -
         // once to compare, once to build the range - runs any side effect the
         // callback has twice, and lands the second call's value in the output,
@@ -444,9 +464,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
         let replacement = cb(slice);
         // if there's difference after callback's result, push it as range
         if (slice !== replacement) {
-          return (accumRanges as any).concat([
-            [currRange[0], currRange[1], replacement],
-          ]);
+          accumRanges.push([currRange[0], currRange[1], replacement]);
         }
         return accumRanges;
       }, []);
@@ -474,6 +492,9 @@ function det(str: string, opts?: Partial<Opts>): Res {
 
   // ---------------------------------------------------------------------------
   // NEXT STEP.
+
+  protection.refresh(str);
+  for (const range of protection.ranges) skipArr.push(range[0], range[1]);
 
   // tend the HTML tags
   // but maybe our input string doesn't even have any HTML tags?
@@ -509,6 +530,9 @@ function det(str: string, opts?: Partial<Opts>): Res {
             4,
           )}`,
         );
+
+      // A tag-looking substring inside retained CSS is raw text.
+      if (protection.containsStyle(tag.start)) return;
 
       // if it's a tag
       const tagName = tag.kind === "tag" ? tag.name.toLowerCase() : null;
@@ -1038,8 +1062,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
 
     // since we rely on callback interface, we don't need to assign the function
     // to a result, we perform all the processing within the callback "cb":
-    stripHtml(str, {
-      cb,
+    protection.forEachTag(cb, {
       trimOnlySpaces: true,
       ignoreTags: resolvedOpts.stripHtml
         ? resolvedOpts.stripHtmlButIgnoreTags
@@ -1075,6 +1098,8 @@ function det(str: string, opts?: Partial<Opts>): Res {
     );
 
   DEV && console.log(`process outside tag ranges`);
+  const tagEdits = finalIndexesToDelete.current();
+  finalIndexesToDelete.wipe();
   const tagRanges = skipArr.current();
   let tagRangeIndex = 0;
   let offset = 0;
@@ -1164,6 +1189,11 @@ function det(str: string, opts?: Partial<Opts>): Res {
         4,
       )}`,
     );
+  protection.refresh(str);
+  const proseEdits = protection.filter(finalIndexesToDelete.current());
+  finalIndexesToDelete.wipe();
+  finalIndexesToDelete.push(tagEdits);
+  finalIndexesToDelete.push(proseEdits);
   str = rApply(str, finalIndexesToDelete.current());
   finalIndexesToDelete.wipe();
 
@@ -1177,10 +1207,10 @@ function det(str: string, opts?: Partial<Opts>): Res {
     );
   // patch up spaces in front of <br/>
   if (str.includes(" <br")) {
-    str = str.replace(/ (<br[/]?>)/g, "$1");
+    replaceProse(/ (?=<br[/]?>)/g, "");
   }
 
-  str = str.replace(/(\r\n|\r|\n){3,}/g, `${eolChar}${eolChar}`);
+  replaceProse(/(\r\n|\r|\n){3,}/g, `${eolChar}${eolChar}`);
 
   DEV &&
     console.log(
@@ -1218,12 +1248,8 @@ function det(str: string, opts?: Partial<Opts>): Res {
     );
 
   // remove widow words
-  const widowTagRanges = str.includes("<")
-    ? stripHtml(str, {
-        skipHtmlDecoding: true,
-        trimOnlySpaces: true,
-      }).allTagLocations
-    : [];
+  protection.refresh(str);
+  const widowTagRanges = protection.ranges;
   let widowFixes = removeWidows(str, {
     ignore: "all",
     convertEntities: resolvedOpts.convertEntities, // full-on setup
@@ -1280,7 +1306,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
   if (widowFixes?.ranges?.length) {
     // 3. if option is enabled, apply it:
     if (resolvedOpts.removeWidows) {
-      str = widowFixes.res;
+      applyProseRanges(widowFixes.ranges);
 
       DEV &&
         console.log(
@@ -1318,24 +1344,11 @@ function det(str: string, opts?: Partial<Opts>): Res {
         4,
       )}`,
     );
-  if (
-    (str.includes("\r") || str.includes("\n")) &&
-    str.trim() !== str.replace(/\r\n|\r|\n/gm, " ").trim()
-  ) {
-    // 1. report resolvedOpts.removeLineBreaks might be applicable
-    applicableOpts.removeLineBreaks = true;
-
-    DEV &&
-      console.log(
-        `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts.removeLineBreaks`}\u001b[${39}m`} = ${
-          applicableOpts.removeLineBreaks
-        }`,
-      );
-
-    // 2. apply if option is on
-    if (resolvedOpts.removeLineBreaks) {
-      str = str.replace(/\r\n|\r|\n/gm, " ");
-    }
+  if (str.includes("\r") || str.includes("\n")) {
+    const original = str;
+    replaceProse(/\r\n|\r|\n/g, " ");
+    if (original.trim() !== str.trim()) applicableOpts.removeLineBreaks = true;
+    if (!resolvedOpts.removeLineBreaks) str = original;
   }
 
   // ---------------------------------------------------------------------------
@@ -1348,9 +1361,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
 
   DEV && console.log(`str before collapsing: ${JSON.stringify(str, null, 0)}`);
 
-  str = collapse(str, {
-    trimLines: true,
-  }).result;
+  collapseProse({ trimLines: true });
 
   DEV && console.log(`str after collapsing: ${JSON.stringify(str, null, 0)}`);
 
