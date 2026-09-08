@@ -72,6 +72,29 @@
   },
   "overrides": [
     {
+      "includes": ["**/*.cjs", "**/*.js", "**/*.jsx", "**/*.mjs"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUndeclaredVariables": "error"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages/*/src/**"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUndeclaredDependencies": "error"
+          },
+          "suspicious": {
+            "noEmptyBlockStatements": "error"
+          }
+        }
+      }
+    },
+    {
       "includes": [
         "packages/ast-delete-object/src/main.ts",
         "packages/ast-loose-compare/src/main.ts",
