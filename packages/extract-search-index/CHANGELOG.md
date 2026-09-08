@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.2.5 (2026-09-07)
+
+### Performance Improvements
+
+- Recorded a 25.95% higher normalized benchmark score than v2.2.3 (53,375 → 67,227).
+
 ## 2.2.3 (2026-09-01)
 
 ### Performance Improvements

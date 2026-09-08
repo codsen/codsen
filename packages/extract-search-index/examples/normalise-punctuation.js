@@ -1,4 +1,4 @@
-// Normalise fancy punctuation and omit digits and emoji
+// Normalise fancy punctuation and omit digits and astral characters
 
 import { strict as assert } from "node:assert";
 

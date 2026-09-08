@@ -18,11 +18,8 @@ function extract(str: string): string {
     ...new Set(
       stripHtml(
         unfancy(
-          str
-            .split("")
-            // remove surrogates and any emoji
-            .map((char) => (char.charCodeAt(0) < 55291 ? char : " "))
-            .join(""),
+          // Preserve BMP characters outside the UTF-16 surrogate interval.
+          str.replace(/[\uD800-\uDFFF]/g, " "),
         ),
         {
           stripTogetherWithTheirContents: [
