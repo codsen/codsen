@@ -37,6 +37,9 @@ const packagesOutsideMonorepoObj = {
     description:
       "HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages",
   },
+  "detect-templating-language": {
+    description: "Detects various templating languages present in string",
+  },
   "easy-replace": {
     description:
       "Replace strings with optional lookarounds, but without regexes",
@@ -61,6 +64,16 @@ const packagesOutsideMonorepoObj = {
   },
   "ranges-offset": {
     description: "Increment or decrement each index in every range",
+  },
+  "regex-is-jinja-nunjucks": {
+    description: "Regular expression for detecting Jinja or Nunjucks code",
+  },
+  "regex-is-jsp": {
+    description:
+      "Regular expression for detecting JSP (Java Server Pages) code",
+  },
+  "regex-jinja-specific": {
+    description: "Regular expression for detecting Python-specific Jinja code",
   },
   "seo-editor": {
     description: "Copywriting keyword to-do list automation",

@@ -218,17 +218,6 @@ export const interdeps = [
     ]
   },
   {
-    "name": "detect-templating-language",
-    "tarballSizeBytes": 11615,
-    "unpackedSizeBytes": 29992,
-    "imports": [
-      "codsen-utils",
-      "regex-is-jinja-nunjucks",
-      "regex-is-jsp",
-      "regex-jinja-specific"
-    ]
-  },
-  {
     "name": "detergent",
     "tarballSizeBytes": 136176,
     "unpackedSizeBytes": 457889,
@@ -688,24 +677,6 @@ export const interdeps = [
     "name": "regex-empty-conditional-comments",
     "tarballSizeBytes": 4811,
     "unpackedSizeBytes": 11566,
-    "imports": []
-  },
-  {
-    "name": "regex-is-jinja-nunjucks",
-    "tarballSizeBytes": 4398,
-    "unpackedSizeBytes": 10533,
-    "imports": []
-  },
-  {
-    "name": "regex-is-jsp",
-    "tarballSizeBytes": 4533,
-    "unpackedSizeBytes": 10760,
-    "imports": []
-  },
-  {
-    "name": "regex-jinja-specific",
-    "tarballSizeBytes": 4394,
-    "unpackedSizeBytes": 10411,
     "imports": []
   },
   {

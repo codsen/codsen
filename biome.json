@@ -257,8 +257,7 @@
         "packages/js-row-num/examples/_quickTake.js",
         "packages/js-row-num/test/test.js",
         "packages/json-variables/test/basic.js",
-        "packages/object-flatten-referencing/test/flattenReferencing.js",
-        "packages/regex-is-jsp/test/test.js"
+        "packages/object-flatten-referencing/test/flattenReferencing.js"
       ],
       "linter": {
         "rules": {

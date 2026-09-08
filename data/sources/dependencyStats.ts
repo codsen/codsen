@@ -90,9 +90,6 @@ export const dependencyStats: DependencyStats = {
     "ranges-push",
     "ranges-sort",
     "regex-empty-conditional-comments",
-    "regex-is-jinja-nunjucks",
-    "regex-is-jsp",
-    "regex-jinja-specific",
     "str-indexes-of-plus",
     "string-apostrophes",
     "string-collapse-leading-whitespace",
@@ -157,7 +154,7 @@ export const dependencyStats: DependencyStats = {
     "codsen-format-diagnostic-value": 2,
     "codsen-glob": 8,
     "codsen-parser": 1,
-    "codsen-utils": 78,
+    "codsen-utils": 77,
     "csv-sort": 1,
     "csv-split-easy": 1,
     "currency.js": 1,
@@ -192,9 +189,6 @@ export const dependencyStats: DependencyStats = {
     "ranges-push": 12,
     "ranges-sort": 2,
     "regex-empty-conditional-comments": 1,
-    "regex-is-jinja-nunjucks": 1,
-    "regex-is-jsp": 1,
-    "regex-jinja-specific": 1,
     "semver-compare": 1,
     "sort-keys": 1,
     "sort-package-json": 1,
@@ -260,9 +254,6 @@ export const dependencyStats: DependencyStats = {
     "is-relative-uri",
     "ranges-is-index-within",
     "regex-empty-conditional-comments",
-    "regex-is-jinja-nunjucks",
-    "regex-is-jsp",
-    "regex-jinja-specific",
     "remark-conventional-commit-changelog-timeline",
     "str-indexes-of-plus",
     "string-character-is-astral-surrogate",
@@ -297,7 +288,6 @@ export const dependencyStats: DependencyStats = {
     "color-shorthand-hex-to-six-digit",
     "csv-split-easy",
     "detect-is-it-html-or-xhtml",
-    "detect-templating-language",
     "email-all-chars-within-ascii",
     "email-comb",
     "extract-search-index",
@@ -335,9 +325,6 @@ export const dependencyStats: DependencyStats = {
     "ranges-regex",
     "ranges-sort",
     "regex-empty-conditional-comments",
-    "regex-is-jinja-nunjucks",
-    "regex-is-jsp",
-    "regex-jinja-specific",
     "remark-conventional-commit-changelog-timeline",
     "str-indexes-of-plus",
     "string-apostrophes",
@@ -413,7 +400,7 @@ export const dependencyStats: DependencyStats = {
   ],
   "top10OwnDeps": [
     {
-      "codsen-utils": 78
+      "codsen-utils": 77
     },
     {
       "ranges-apply": 15

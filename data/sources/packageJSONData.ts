@@ -26,6 +26,9 @@ export const packageJSONData = {
   "codsen-tokenizer": {
     "description": "HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages"
   },
+  "detect-templating-language": {
+    "description": "Detects various templating languages present in string"
+  },
   "easy-replace": {
     "description": "Replace strings with optional lookarounds, but without regexes"
   },
@@ -46,6 +49,15 @@ export const packageJSONData = {
   },
   "ranges-offset": {
     "description": "Increment or decrement each index in every range"
+  },
+  "regex-is-jinja-nunjucks": {
+    "description": "Regular expression for detecting Jinja or Nunjucks code"
+  },
+  "regex-is-jsp": {
+    "description": "Regular expression for detecting JSP (Java Server Pages) code"
+  },
+  "regex-jinja-specific": {
+    "description": "Regular expression for detecting Python-specific Jinja code"
   },
   "seo-editor": {
     "description": "Copywriting keyword to-do list automation"
@@ -2546,88 +2558,6 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.10.1"
-    },
-    "engines": {
-      "node": ">=18.20.8"
-    },
-    "publishConfig": {
-      "registry": "https://registry.npmjs.org/"
-    }
-  },
-  "detect-templating-language": {
-    "name": "detect-templating-language",
-    "version": "4.2.3",
-    "description": "Detects various templating languages present in string",
-    "keywords": [
-      "check",
-      "code",
-      "detect",
-      "language",
-      "template",
-      "templating"
-    ],
-    "homepage": "https://codsen.com/os/detect-templating-language",
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/codsen/codsen.git",
-      "directory": "packages/detect-templating-language"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/detect-templating-language.umd.js",
-      "default": "./dist/detect-templating-language.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node ../../ops/scripts/esbuild.js && npm run dts",
-      "coverage": "c8 uvu test",
-      "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js'",
-      "lect:check": "node '../../ops/lect/lect.js' --check",
-      "lint": "biome lint --error-on-warnings . && npm run typecheck",
-      "lint:fix": "biome lint --write --error-on-warnings . && npm run typecheck",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "biome format",
-      "prettier:format": "biome format --write .",
-      "pretest": "npm run lect:check && npm run build",
-      "test": "npm run devtest",
-      "typecheck": "tsc --noEmit --pretty false --project tsconfig.json",
-      "unit": "uvu test"
-    },
-    "c8": {
-      "all": true,
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "include": [
-        "dist/*.esm.js"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    },
-    "dependencies": {
-      "codsen-utils": "^1.10.1",
-      "regex-is-jinja-nunjucks": "^4.2.1",
-      "regex-is-jsp": "^4.2.1",
-      "regex-jinja-specific": "^4.2.1"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -6891,254 +6821,6 @@ export const packageJSONData = {
       ],
       "lines": 100,
       "statements": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    },
-    "engines": {
-      "node": ">=18.20.8"
-    },
-    "publishConfig": {
-      "registry": "https://registry.npmjs.org/"
-    }
-  },
-  "regex-is-jinja-nunjucks": {
-    "name": "regex-is-jinja-nunjucks",
-    "version": "4.2.1",
-    "description": "Regular expression for detecting Jinja or Nunjucks code",
-    "keywords": [
-      "code",
-      "detect",
-      "expression",
-      "identify",
-      "is",
-      "jinja",
-      "nunjucks",
-      "regex",
-      "regexp",
-      "regular",
-      "source",
-      "tell"
-    ],
-    "homepage": "https://codsen.com/os/regex-is-jinja-nunjucks",
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/codsen/codsen.git",
-      "directory": "packages/regex-is-jinja-nunjucks"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/regex-is-jinja-nunjucks.umd.js",
-      "default": "./dist/regex-is-jinja-nunjucks.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node ../../ops/scripts/esbuild.js && npm run dts",
-      "coverage": "c8 uvu test",
-      "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js'",
-      "lect:check": "node '../../ops/lect/lect.js' --check",
-      "lint": "biome lint --error-on-warnings . && npm run typecheck",
-      "lint:fix": "biome lint --write --error-on-warnings . && npm run typecheck",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "biome format",
-      "prettier:format": "biome format --write .",
-      "pretest": "npm run lect:check && npm run build",
-      "test": "npm run devtest",
-      "typecheck": "tsc --noEmit --pretty false --project tsconfig.json",
-      "unit": "uvu test"
-    },
-    "c8": {
-      "all": true,
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "include": [
-        "dist/*.esm.js"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    },
-    "engines": {
-      "node": ">=18.20.8"
-    },
-    "publishConfig": {
-      "registry": "https://registry.npmjs.org/"
-    }
-  },
-  "regex-is-jsp": {
-    "name": "regex-is-jsp",
-    "version": "4.2.1",
-    "description": "Regular expression for detecting JSP (Java Server Pages) code",
-    "keywords": [
-      "code",
-      "detect",
-      "expression",
-      "identify",
-      "is",
-      "java",
-      "jsp",
-      "pages",
-      "regex",
-      "regexp",
-      "regular",
-      "server",
-      "source",
-      "tell"
-    ],
-    "homepage": "https://codsen.com/os/regex-is-jsp",
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/codsen/codsen.git",
-      "directory": "packages/regex-is-jsp"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/regex-is-jsp.umd.js",
-      "default": "./dist/regex-is-jsp.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node ../../ops/scripts/esbuild.js && npm run dts",
-      "coverage": "c8 uvu test",
-      "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js'",
-      "lect:check": "node '../../ops/lect/lect.js' --check",
-      "lint": "biome lint --error-on-warnings . && npm run typecheck",
-      "lint:fix": "biome lint --write --error-on-warnings . && npm run typecheck",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "biome format",
-      "prettier:format": "biome format --write .",
-      "pretest": "npm run lect:check && npm run build",
-      "test": "npm run devtest",
-      "typecheck": "tsc --noEmit --pretty false --project tsconfig.json",
-      "unit": "uvu test"
-    },
-    "c8": {
-      "all": true,
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "include": [
-        "dist/*.esm.js"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    },
-    "engines": {
-      "node": ">=18.20.8"
-    },
-    "publishConfig": {
-      "registry": "https://registry.npmjs.org/"
-    }
-  },
-  "regex-jinja-specific": {
-    "name": "regex-jinja-specific",
-    "version": "4.2.1",
-    "description": "Regular expression for detecting Python-specific Jinja code",
-    "keywords": [
-      "code",
-      "detect",
-      "expression",
-      "identify",
-      "is",
-      "jinja",
-      "python",
-      "regex",
-      "regexp",
-      "regular",
-      "source",
-      "tell"
-    ],
-    "homepage": "https://codsen.com/os/regex-jinja-specific",
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/codsen/codsen.git",
-      "directory": "packages/regex-jinja-specific"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/regex-jinja-specific.umd.js",
-      "default": "./dist/regex-jinja-specific.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node ../../ops/scripts/esbuild.js && npm run dts",
-      "coverage": "c8 uvu test",
-      "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js'",
-      "lect:check": "node '../../ops/lect/lect.js' --check",
-      "lint": "biome lint --error-on-warnings . && npm run typecheck",
-      "lint:fix": "biome lint --write --error-on-warnings . && npm run typecheck",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "biome format",
-      "prettier:format": "biome format --write .",
-      "pretest": "npm run lect:check && npm run build",
-      "test": "npm run devtest",
-      "typecheck": "tsc --noEmit --pretty false --project tsconfig.json",
-      "unit": "uvu test"
-    },
-    "c8": {
-      "all": true,
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "include": [
-        "dist/*.esm.js"
-      ],
-      "lines": 100
     },
     "lect": {
       "licence": {
