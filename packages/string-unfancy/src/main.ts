@@ -48,7 +48,7 @@ function unfancy(str: string): string {
   // Every typography substitution is non-ASCII. Native scanning avoids a
   // per-character dictionary lookup for already plain text.
   if (!/[\u0080-\uFFFF]/.test(res)) return res;
-  for (let i = 0, len = res.length; i < len; i++) {
+  for (let i = 0; i < res.length; i++) {
     if (res[i] in CHARS) {
       res = `${res.slice(0, i)}${CHARS[res[i]] as string}${res.slice(i + 1)}`;
     }
