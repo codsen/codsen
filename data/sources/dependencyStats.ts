@@ -167,7 +167,7 @@ export const dependencyStats: DependencyStats = {
     "html-all-known-attributes": 1,
     "html-crush": 1,
     "html-entities-not-email-friendly": 1,
-    "html-entity-codec": 5,
+    "html-entity-codec": 7,
     "is-char-suitable-for-html-attr-name": 1,
     "js-row-num": 1,
     "json-comb-core": 1,
@@ -203,7 +203,7 @@ export const dependencyStats: DependencyStats = {
     "string-collapse-leading-whitespace": 1,
     "string-collapse-white-space": 1,
     "string-dashes": 2,
-    "string-extract-class-names": 1,
+    "string-extract-class-names": 2,
     "string-find-heads-tails": 1,
     "string-fix-broken-named-entities": 1,
     "string-left-right": 15,
@@ -431,13 +431,13 @@ export const dependencyStats: DependencyStats = {
       "arrayiffy-if-string": 7
     },
     {
+      "html-entity-codec": 7
+    },
+    {
       "string-match-left-right": 7
     },
     {
       "ast-monkey-traverse": 6
-    },
-    {
-      "html-entity-codec": 5
     },
     {
       "ranges-merge": 5

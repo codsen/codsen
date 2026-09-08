@@ -3167,6 +3167,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.10.1",
+      "html-entity-codec": "^1.1.0",
       "string-strip-html": "^13.7.2",
       "string-unfancy": "^6.2.3"
     },
@@ -3512,7 +3513,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.10.1",
+      "html-entity-codec": "^1.1.0",
       "ranges-push": "^7.3.1",
+      "string-extract-class-names": "^8.3.1",
       "string-left-right": "^6.2.3",
       "string-match-left-right": "^9.2.4",
       "string-range-expander": "^4.2.4"
