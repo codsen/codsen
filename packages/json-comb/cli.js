@@ -218,4 +218,8 @@ glob([...input, "!**/node_modules/**", "!**/package-lock.json"], {
           );
         });
     }
+  })
+  .catch((error) => {
+    console.error(`${messagePrefix}[ID_3] ${error.message}`);
+    process.exitCode = 1;
   });
