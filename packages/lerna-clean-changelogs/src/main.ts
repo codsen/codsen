@@ -76,7 +76,7 @@ function cleanChangelogs(
     // Code needs a fence run, four spaces or a tab; heading links also need
     // the existing HTML block boundaries when extras is enabled.
     if (/```|~~~| {4}|\t/.test(changelog) || headingExclusions) {
-      linesArr = changelog.split(/\r?\n/);
+      linesArr = changelog.split(/\r\n|\r|\n/);
       // The final empty split item represents the EOF newline appended below.
       if (changelogEndedWithLinebreak && linesArr[linesArr.length - 1] === "") {
         linesArr.pop();
@@ -92,7 +92,7 @@ function cleanChangelogs(
           /(https:\/\/git\.sr\.ht\/~[^/]+\/[^/]+\/)commits\//g,
           "$1commit/",
         );
-      linesArr = changelog.split(/\r?\n/);
+      linesArr = changelog.split(/\r\n|\r|\n/);
     } else {
       let first = 0;
       let end = linesArr.length;
