@@ -85,8 +85,7 @@ test("13 - both empty strings", () => {
 });
 
 test("14 - both undefined", () => {
-  let input;
-  let result = pullAll(input, undefined);
+  let result = pullAll(undefined, undefined);
   equal(result, [], "14.01");
 });
 
