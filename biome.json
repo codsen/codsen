@@ -98,7 +98,6 @@
       "includes": [
         "packages/ast-delete-object/src/main.ts",
         "packages/ast-loose-compare/src/main.ts",
-        "packages/ast-monkey-traverse/src/main.ts",
         "packages/csv-sort/src/main.ts",
         "packages/detergent/src/main.ts",
         "packages/detergent/src/processCharacter.ts",
@@ -115,7 +114,6 @@
         "packages/object-flatten-referencing/src/util.ts",
         "packages/object-merge-advanced/src/main.ts",
         "packages/object-no-new-keys/src/main.ts",
-        "packages/ranges-ent-decode/src/main.ts",
         "packages/ranges-merge/src/main.ts",
         "packages/ranges-push/src/rMerge.ts",
         "packages/ranges-regex/src/main.ts",
@@ -123,12 +121,10 @@
         "packages/string-find-malformed/src/main.ts",
         "packages/string-fix-broken-named-entities/src/main.ts",
         "packages/string-fix-broken-named-entities/src/util.ts",
-        "packages/string-left-right/src/main.ts",
         "packages/string-range-expander/src/main.ts",
         "packages/string-remove-duplicate-heads-tails/src/main.ts",
         "packages/string-remove-thousand-separators/src/main.ts",
         "packages/string-remove-widows/src/main.ts",
-        "packages/string-trim-spaces-only/src/main.ts",
         "packages/test-mixer/src/main.ts",
         "packages/tsd-extract/src/main.ts"
       ],
@@ -147,11 +143,9 @@
         "packages/object-merge-advanced/test/test.js",
         "packages/ranges-process-outside/examples/_quickTake.js",
         "packages/ranges-process-outside/test/test.js",
-        "packages/remark-conventional-commit-changelog-timeline/examples/_quickTake.js",
         "packages/string-convert-indexes/test/nativeToUnicode.js",
         "packages/string-convert-indexes/test/unicodeToNative.js",
         "packages/string-match-left-right/test/cb.js",
-        "packages/string-strip-html/examples/cb-which-does-nothing.js",
         "packages/string-strip-html/examples/leave-only-opening-td.js",
         "packages/string-strip-html/test/ranges.js",
         "packages/string-uglify/test/test.js"
@@ -166,14 +160,10 @@
     },
     {
       "includes": [
-        "packages/all-named-html-entities/examples/_quickTake.js",
         "packages/detergent/examples/_quickTake.js",
         "packages/email-comb/examples/_quickTake.js",
         "packages/generate-atomic-css/examples/_quickTake.js",
         "packages/html-crush/examples/_quickTake.js",
-        "packages/html-entities-not-email-friendly/examples/_quickTake.js",
-        "packages/json-comb-core/examples/_quickTake.js",
-        "packages/json-comb-core/examples/enforceKeyset.js",
         "packages/json-comb-core/examples/enforceKeysetSync.js",
         "packages/json-comb-core/examples/findUnusedSync-2.js",
         "packages/json-comb-core/examples/findUnusedSync.js",
@@ -183,8 +173,7 @@
         "packages/json-comb-core/examples/noNewKeys.js",
         "packages/json-comb-core/examples/sortAllObjectsSync.js",
         "packages/string-left-right/examples/_quickTake.js",
-        "packages/string-match-left-right/examples/cb.js",
-        "packages/string-uglify/examples/_quickTake.js"
+        "packages/string-match-left-right/examples/cb.js"
       ],
       "linter": {
         "rules": {
@@ -196,7 +185,6 @@
     },
     {
       "includes": [
-        "packages/detect-templating-language/examples/_quickTake.js",
         "packages/js-row-num/examples/_quickTake.js",
         "packages/js-row-num/test/test.js",
         "packages/json-variables/test/basic.js",
