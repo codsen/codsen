@@ -1,4 +1,4 @@
-import { formatDiagnosticValue } from "codsen-utils";
+import { formatDiagnosticValue, isPlainObject } from "codsen-utils";
 /* eslint no-param-reassign:0 */
 
 import { remSep } from "string-remove-thousand-separators";
@@ -20,14 +20,6 @@ const defaults: Opts = {
   padSingleDecimalPlaceNumbers: true,
   forceUKStyle: false,
 };
-
-function isPlainObject(value: unknown): value is Record<string, unknown> {
-  if (value === null || typeof value !== "object") {
-    return false;
-  }
-  const prototype = Object.getPrototypeOf(value);
-  return prototype === null || prototype === Object.prototype;
-}
 
 function trimOuterWhitespace(str: string, delimiter: string): string {
   let start = 0;
