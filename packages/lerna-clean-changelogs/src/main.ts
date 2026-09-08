@@ -5,6 +5,7 @@ import {
   isStr,
 } from "codsen-utils";
 import { version as v } from "../package.json";
+import { protectedLiteralLines } from "./literals";
 import { findRemovedLines } from "./sections";
 
 const version: string = v;
@@ -65,13 +66,69 @@ function cleanChangelogs(
       (changelog[~-changelog.length] === "\n" ||
         changelog[~-changelog.length] === "\r");
 
-    changelog = changelog
-      ?.trim()
-      .replace(
-        /(https:\/\/git\.sr\.ht\/~[^/]+\/[^/]+\/)commits\//g,
-        "$1commit/",
-      );
-    let linesArr = changelog.split(/\r?\n/);
+    let linesArr: string[] = [];
+    let literalLines: Set<number> | undefined;
+    // Every supported code block needs a fence run, four spaces, or a tab.
+    if (/```|~~~| {4}|\t/.test(changelog)) {
+      linesArr = changelog.split(/\r?\n/);
+      // The final empty split item represents the EOF newline appended below.
+      if (changelogEndedWithLinebreak && linesArr[linesArr.length - 1] === "") {
+        linesArr.pop();
+      }
+      literalLines = protectedLiteralLines(linesArr);
+    }
+    if (!literalLines) {
+      // Preserve the established non-literal cleanup and empty-result fallback.
+      changelog = changelog
+        .trim()
+        .replace(
+          /(https:\/\/git\.sr\.ht\/~[^/]+\/[^/]+\/)commits\//g,
+          "$1commit/",
+        );
+      linesArr = changelog.split(/\r?\n/);
+    } else {
+      let first = 0;
+      let end = linesArr.length;
+      while (
+        first < end &&
+        !literalLines.has(first) &&
+        !linesArr[first].trim()
+      ) {
+        first += 1;
+      }
+      while (
+        end > first &&
+        !literalLines.has(end - 1) &&
+        !linesArr[end - 1].trim()
+      ) {
+        end -= 1;
+      }
+      if (first || end !== linesArr.length) {
+        const rebased = new Set<number>();
+        for (const index of literalLines) {
+          if (index >= first && index < end) rebased.add(index - first);
+        }
+        literalLines = rebased;
+        linesArr = linesArr.slice(first, end);
+      }
+      if (!literalLines.has(0)) {
+        linesArr[0] = linesArr[0].replace(/^\s+/, "");
+      }
+      if (!literalLines.has(linesArr.length - 1)) {
+        linesArr[linesArr.length - 1] = linesArr[linesArr.length - 1].replace(
+          /\s+$/,
+          "",
+        );
+      }
+      for (let i = 0; i < linesArr.length; i += 1) {
+        if (!literalLines.has(i)) {
+          linesArr[i] = linesArr[i].replace(
+            /(https:\/\/git\.sr\.ht\/~[^/]+\/[^/]+\/)commits\//g,
+            "$1commit/",
+          );
+        }
+      }
+    }
     DEV &&
       console.log(
         `${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
@@ -88,6 +145,7 @@ function cleanChangelogs(
       // into:
       // ## 2.9.1 (2018-12-27)
       linesArr.forEach((line, i) => {
+        if (literalLines?.has(i)) return;
         if (line?.startsWith("#")) {
           linesArr[i] = line.replace(
             /(#+) \[?(\d+\.\d+\.\d+)\s?\]\([^)]*\)/g,
@@ -116,7 +174,11 @@ function cleanChangelogs(
     //
     // and also remove anything containing "WIP" (case-insensitive)
 
-    const removedLines = findRemovedLines(linesArr, resolvedOpts.extras);
+    const removedLines = findRemovedLines(
+      linesArr,
+      resolvedOpts.extras,
+      literalLines,
+    );
     let newLinesArr = [];
     for (let i = linesArr.length; i--; ) {
       DEV &&
@@ -127,6 +189,11 @@ function cleanChangelogs(
             4,
           )}`,
         );
+      if (literalLines?.has(i)) {
+        newLinesArr.unshift(linesArr[i]);
+        lastLineWasEmpty = false;
+        continue;
+      }
       if (removedLines?.has(i)) continue;
       if (!linesArr[i]?.trim()) {
         // maybe this line is empty or contains only whitespace characters (spaces, tabs etc)?

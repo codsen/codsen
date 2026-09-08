@@ -9,9 +9,11 @@ interface Section {
 export function findRemovedLines(
   lines: string[],
   extras: boolean,
+  literalLines?: ReadonlySet<number>,
 ): Set<number> | undefined {
   let removed: Set<number> | undefined;
   for (let i = 0; i < lines.length; i += 1) {
+    if (literalLines?.has(i)) continue;
     if (
       lines[i].startsWith("**Note:** Version bump only") ||
       (extras && lines[i].toLowerCase().includes("wip"))
@@ -41,7 +43,8 @@ export function findRemovedLines(
   };
 
   for (let i = 0; i < lines.length; i += 1) {
-    const heading = /^ {0,3}(#{1,6})(?:[ \t]+|$)/.exec(lines[i]);
+    const heading =
+      !literalLines?.has(i) && /^ {0,3}(#{1,6})(?:[ \t]+|$)/.exec(lines[i]);
     if (heading) {
       // Generated logs can mix H1 and H2 release headings without nesting them.
       const level = heading[1].length;
