@@ -30,6 +30,24 @@ interface CssSelectorToken {
   raw: string;
   range: [from: number, to: number];
 }
+interface CssToken {
+  kind:
+    | "identifier"
+    | "at-keyword"
+    | "function"
+    | "string"
+    | "bad-string"
+    | "url"
+    | "bad-url"
+    | "comment"
+    | "whitespace"
+    | "delimiter";
+  /** Decoded content; names exclude @ and (, strings exclude their quotes. */
+  value: string;
+  raw: string;
+  /** Half-open UTF-16 offsets in the supplied CSS region. */
+  range: [from: number, to: number];
+}
 /**
  * Decode CSS escapes in one extracted class/id selector while retaining its
  * leading dot or hash.
@@ -48,12 +66,26 @@ declare function readCssSelectorToken(
  * exact ID values retain their whitespace. This is not a selector evaluator.
  */
 declare function extractCssSelectorTokens(str: string): CssSelectorToken[];
+/**
+ * Read one lexical token at an exact UTF-16 index in an isolated CSS region.
+ * Advance to range[1] to continue; out-of-range positions return null.
+ *
+ * Identifiers, at-keywords, function names, strings, and unquoted URLs expose
+ * decoded values. Whitespace retains its raw value, comments expose their raw
+ * body, bad strings expose the decoded prefix, and bad URLs have an empty value.
+ * Quoted URL arguments are separate function, whitespace, and string tokens.
+ * Numbers, hashes, and other grammar-specific tokens use individual delimiters
+ * and identifiers; this bounded reader is not a complete CSS tokenizer/parser.
+ * Callers must establish HTML boundaries and decode inline HTML references first.
+ */
+declare function readCssToken(str: string, start: number): CssToken | null;
 
 export {
   decodeCssSelector,
   extract,
   extractCssSelectorTokens,
   readCssSelectorToken,
+  readCssToken,
   version,
 };
-export type { CssSelectorToken, Result };
+export type { CssSelectorToken, CssToken, Result };

@@ -196,6 +196,25 @@ export interface CssSelectorToken {
   range: [from: number, to: number];
 }
 
+export interface CssToken {
+  kind:
+    | "identifier"
+    | "at-keyword"
+    | "function"
+    | "string"
+    | "bad-string"
+    | "url"
+    | "bad-url"
+    | "comment"
+    | "whitespace"
+    | "delimiter";
+  /** Decoded content; names exclude @ and (, strings exclude their quotes. */
+  value: string;
+  raw: string;
+  /** Half-open UTF-16 offsets in the supplied CSS region. */
+  range: [from: number, to: number];
+}
+
 const selectorBreakCharacters = `.# ~\\!@$%^&*()+=,/';:"?><[]{}|\``;
 
 function isCssHexDigit(char: string | undefined): boolean {
@@ -341,6 +360,7 @@ interface CssDecodedUnit {
 interface CssStringValue {
   endsAt: number;
   units: CssDecodedUnit[];
+  bad: boolean;
 }
 
 interface AttributeSelectorValue {
@@ -435,21 +455,25 @@ function findCssAttributeEnd(str: string, start: number): number | null {
   return null;
 }
 
-function readCssStringValue(
-  str: string,
-  quoteAt: number,
-): CssStringValue | null {
+function readCssStringValue(str: string, quoteAt: number): CssStringValue {
   let quote = str[quoteAt];
   let units: CssDecodedUnit[] = [];
 
   for (let i = quoteAt + 1; ; ) {
     if (str[i] === quote) {
-      return { endsAt: i + 1, units };
+      return { endsAt: i + 1, units, bad: false };
+    }
+    if (i === str.length) {
+      return { endsAt: i, units, bad: false };
     }
     if (isCssNewline(str[i])) {
-      return null;
+      return { endsAt: i, units, bad: true };
     }
     if (str[i] === "\\") {
+      // Unlike an identifier escape, a string's final backslash adds no value.
+      if (i + 1 === str.length) {
+        return { endsAt: i + 1, units, bad: false };
+      }
       if (isCssNewline(str[i + 1])) {
         i += str[i + 1] === "\r" && str[i + 2] === "\n" ? 3 : 2;
         continue;
@@ -469,6 +493,73 @@ function readCssStringValue(
     });
     i += current.rawLength;
   }
+}
+
+function cssToken(
+  str: string,
+  start: number,
+  end: number,
+  kind: CssToken["kind"],
+  value: string,
+): CssToken {
+  return { kind, value, raw: str.slice(start, end), range: [start, end] };
+}
+
+function readCssUrlToken(str: string, start: number, bodyAt: number): CssToken {
+  let i = bodyAt;
+  let value = "";
+  while (i < str.length) {
+    if (str[i] === ")") {
+      return cssToken(str, start, i + 1, "url", value);
+    }
+    if (isCssWhitespace(str[i])) {
+      while (isCssWhitespace(str[i])) {
+        i++;
+      }
+      if (i === str.length || str[i] === ")") {
+        return cssToken(str, start, i === str.length ? i : i + 1, "url", value);
+      }
+      break;
+    }
+    if (str[i] === "\\") {
+      let end = cssEscapeEndsAt(str, i);
+      if (end === null) {
+        break;
+      }
+      value += decodeCssSelector(str.slice(i, end));
+      i = end;
+      continue;
+    }
+    let current = cssCodePointAt(str, i) as CssCodePoint;
+    if (
+      str[i] === '"' ||
+      str[i] === "'" ||
+      str[i] === "(" ||
+      current.codePoint <= 8 ||
+      current.codePoint === 11 ||
+      (current.codePoint >= 14 && current.codePoint <= 31) ||
+      current.codePoint === 127
+    ) {
+      break;
+    }
+    value += current.value;
+    i += current.rawLength;
+  }
+  if (i === str.length) {
+    return cssToken(str, start, i, "url", value);
+  }
+
+  // Bad URL recovery ignores apparent strings/comments and stops at the next
+  // unescaped closing parenthesis, or the bounded region's end.
+  while (i < str.length) {
+    if (str[i] === ")") {
+      i++;
+      break;
+    }
+    let end = cssEscapeEndsAt(str, i);
+    i = end === null ? i + 1 : end;
+  }
+  return cssToken(str, start, i, "bad-url", "");
 }
 
 function decodeCssIdentifierUnits(
@@ -586,7 +677,7 @@ function readAttributeSelector(
   let valueTo: number;
   if (quoted) {
     let value = readCssStringValue(str, valueStartsAt);
-    if (value === null || right(str, value.endsAt - 1) !== closeAt) {
+    if (value.bad || right(str, value.endsAt - 1) !== closeAt) {
       return { closeAt, selectors: [] };
     }
     units = value.units;
@@ -743,10 +834,97 @@ function extractCssSelectorTokens(str: string): CssSelectorToken[] {
   return tokens;
 }
 
+/**
+ * Read one lexical token at an exact UTF-16 index in an isolated CSS region.
+ * Advance to range[1] to continue; out-of-range positions return null.
+ *
+ * Identifiers, at-keywords, function names, strings, and unquoted URLs expose
+ * decoded values. Whitespace retains its raw value, comments expose their raw
+ * body, bad strings expose the decoded prefix, and bad URLs have an empty value.
+ * Quoted URL arguments are separate function, whitespace, and string tokens.
+ * Numbers, hashes, and other grammar-specific tokens use individual delimiters
+ * and identifiers; this bounded reader is not a complete CSS tokenizer/parser.
+ * Callers must establish HTML boundaries and decode inline HTML references first.
+ */
+function readCssToken(str: string, start: number): CssToken | null {
+  if (typeof str !== "string") {
+    throw new TypeError(
+      `string-extract-class-names/readCssToken(): [THROW_ID_06] first str should be string, not ${typeof str}, currently equal to ${formatDiagnosticValue(str, 4)}`,
+    );
+  }
+  if (!Number.isInteger(start)) {
+    throw new TypeError(
+      `string-extract-class-names/readCssToken(): [THROW_ID_07] second start should be an integer, not ${typeof start}, currently equal to ${formatDiagnosticValue(start, 4)}`,
+    );
+  }
+  if (start < 0 || start >= str.length) {
+    return null;
+  }
+
+  if (isCssWhitespace(str[start])) {
+    let end = start + 1;
+    while (isCssWhitespace(str[end])) {
+      end++;
+    }
+    return cssToken(str, start, end, "whitespace", str.slice(start, end));
+  }
+  if (str[start] === "/" && str[start + 1] === "*") {
+    let closeAt = str.indexOf("*/", start + 2);
+    return cssToken(
+      str,
+      start,
+      closeAt === -1 ? str.length : closeAt + 2,
+      "comment",
+      str.slice(start + 2, closeAt === -1 ? str.length : closeAt),
+    );
+  }
+  if (str[start] === '"' || str[start] === "'") {
+    let value = readCssStringValue(str, start);
+    return cssToken(
+      str,
+      start,
+      value.endsAt,
+      value.bad ? "bad-string" : "string",
+      value.units.map((unit) => unit.value).join(""),
+    );
+  }
+
+  let atKeyword = str[start] === "@";
+  let identifier = readCssIdentifierValue(str, atKeyword ? start + 1 : start);
+  if (identifier !== null) {
+    let end = identifier.range[1];
+    if (atKeyword) {
+      return cssToken(str, start, end, "at-keyword", identifier.value);
+    }
+    if (str[end] === "(") {
+      if (identifier.value.toLowerCase() === "url") {
+        let bodyAt = end + 1;
+        while (isCssWhitespace(str[bodyAt])) {
+          bodyAt++;
+        }
+        if (str[bodyAt] !== '"' && str[bodyAt] !== "'") {
+          return readCssUrlToken(str, start, bodyAt);
+        }
+      }
+      return cssToken(str, start, end + 1, "function", identifier.value);
+    }
+    return cssToken(str, start, end, "identifier", identifier.value);
+  }
+  let current = cssCodePointAt(str, start) as CssCodePoint;
+  return cssToken(
+    str,
+    start,
+    start + current.rawLength,
+    "delimiter",
+    current.value,
+  );
+}
+
 export {
   decodeCssSelector,
   extract,
   extractCssSelectorTokens,
   readCssSelectorToken,
+  readCssToken,
   version,
 };
