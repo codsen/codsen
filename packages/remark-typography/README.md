@@ -37,14 +37,12 @@ import { remark } from "remark";
 
 import fixTypography from "remark-typography";
 
-(async () => {
-  assert.equal(
-    (await remark().use(fixTypography, {}).process("Yes that's true but..."))
-      .toString()
-      .trim(),
-    "Yes that\u2019s true\u00A0but\u2026",
-  );
-})();
+assert.equal(
+  (await remark().use(fixTypography, {}).process("Yes that's true but..."))
+    .toString()
+    .trim(),
+  "Yes that\u2019s true\u00A0but\u2026",
+);
 ```
 
 
