@@ -57,7 +57,16 @@
       },
       "suspicious": {
         "noExplicitAny": "off",
-        "noSkippedTests": "error"
+        "noSkippedTests": "error",
+        "noConstantBinaryExpressions": "error",
+        "noDuplicateDependencies": "error",
+        "noParametersOnlyUsedInRecursion": "error",
+        "noUnassignedVariables": "error",
+        "useErrorMessage": "error",
+        "noImportCycles": "error"
+      },
+      "correctness": {
+        "noUnusedInstantiation": "error"
       }
     }
   },
