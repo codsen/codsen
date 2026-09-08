@@ -1,6 +1,7 @@
 import { test } from "uvu";
 import { equal, ok, throws } from "uvu/assert";
 
+import { cleanChangelogs } from "../../../packages/lerna-clean-changelogs/dist/lerna-clean-changelogs.esm.js";
 import {
   changelogReleases,
   perfGainBullet,
@@ -346,6 +347,36 @@ test("19 - migrates and deduplicates grouped and ungrouped gain claims", () => {
     stale.result.includes("- The 1,000-row sample now finishes faster."),
     "19.06",
   );
+});
+
+test("20 - cleaning preserves the release above a leading bump note and retained gains", () => {
+  const changelog =
+    "# Changelog\n\n## 2.0.0 (2026-09-08)\n\n- New published fix.\n\n## 1.0.1 (2026-09-07)\n\n**Note:** Version bump only for package example\n\n### Performance Improvements\n\n- The 1,000-row sample now finishes faster.\n";
+  const expected =
+    "# Changelog\n\n## 2.0.0 (2026-09-08)\n\n- New published fix.\n\n## 1.0.1 (2026-09-07)\n\n### Performance Improvements\n\n- The 1,000-row sample now finishes faster.\n";
+  const cleaned = cleanChangelogs(changelog, { extras: true }).res;
+  equal(cleaned, expected, "20.01");
+  equal(cleanChangelogs(cleaned, { extras: true }).res, expected, "20.02");
+});
+
+test("21 - reconciliation and cleaning preserve release attribution and grouped scores", () => {
+  const history = { "1.0.0": 1200.5, "1.0.1": 1500.625 };
+  const changelog =
+    "# Changelog\n\n## 2.0.0 (2026-09-08)\n\n- New published fix.\n\n## 1.0.1 (2026-09-07)\n\n**Note:** Version bump only for package example\n\n### Performance Improvements\n\n- The 1,000-row sample now finishes faster.\n";
+  const expected =
+    "# Changelog\n\n## 2.0.0 (2026-09-08)\n\n- New published fix.\n\n## 1.0.1 (2026-09-07)\n\n### Performance Improvements\n\n- Recorded a 25% higher normalized benchmark score than v1.0.0 (1,200.5 → 1,500.625).\n\n- The 1,000-row sample now finishes faster.\n";
+  for (const eol of ["\n", "\r\n"]) {
+    const reconciled = syncPerfChangelog({
+      changelog: changelog.replace(/\n/g, eol),
+      history,
+    });
+    const cleaned = cleanChangelogs(reconciled.result, { extras: true }).res;
+    equal(cleaned, expected.replace(/\n/g, eol), "21.01");
+    const second = syncPerfChangelog({ changelog: cleaned, history });
+    equal(second.result, cleaned, "21.02");
+    equal(second.changes, [], "21.03");
+    equal(cleanChangelogs(cleaned, { extras: true }).res, cleaned, "21.04");
+  }
 });
 
 test.run();
