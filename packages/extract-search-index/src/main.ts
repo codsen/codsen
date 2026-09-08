@@ -31,7 +31,7 @@ function extract(str: string): string {
   }
 
   // Attribute delimiters belong to the original HTML, before text decoding.
-  let text = stripMarkup(str).replace(/[\uD800-\uDFFF]/g, " ");
+  let text = stripMarkup(str);
   while (text.includes("&")) {
     const decoded = decode(text);
     if (decoded === text) break;
@@ -43,6 +43,8 @@ function extract(str: string): string {
     // Remove duplicated words using Set
     ...new Set(
       removeUrls(unfancy(text).toLowerCase())
+        // Decode first, and recognize complete URLs before separating characters.
+        .replace(/[\uD800-\uDFFF]/g, " ")
         // remove newlines, and punctuation
         .replace(
           /\.|,|;|:|"|\+|=|'|`|\^|\?|!|\/|\(|\)|{|}|>|<|#|-|–|—|\n|\r|\t|\[|\]|\d/g,
