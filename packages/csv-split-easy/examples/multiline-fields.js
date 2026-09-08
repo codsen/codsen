@@ -1,3 +1,5 @@
+// Preserve line breaks inside quoted fields
+
 import { strict as assert } from "node:assert";
 
 import { splitEasy } from "../dist/csv-split-easy.esm.js";
