@@ -1,3 +1,4 @@
+import { rejects } from "node:assert/strict";
 import pMap from "p-map";
 import { test } from "uvu";
 import { equal, not, ok, throws, unreachable } from "uvu/assert";
@@ -2723,42 +2724,38 @@ test("60 - does not mutate input args: sortAllObjectsSync()", () => {
 test("61 - getKeyset() - throws when there's no input", () => {
   throws(
     () => {
-      getKeyset();
+      return getKeyset();
     },
-    "61.01",
+    /\[THROW_ID_01\]/,
     "61.01",
   );
 });
 
-test("62 - getKeyset() - throws when input is not an array of promises", () => {
-  throws(
-    () => {
-      getKeyset(makePromise("aa"));
-    },
-    "62.01",
+test("62 - getKeyset() - rejects a string iterable containing non-object values", async () => {
+  await rejects(
+    getKeyset("aa"),
+    /\[THROW_ID_04\].*0th element resolved not to a plain object/,
     "62.01",
   );
 });
 
-test("63 - getKeyset() - resolves to a rejected promise when input array contains not only plain objects", async () => {
-  await getKeyset(
-    makePromise([
-      {
-        a: "a",
-        b: "b",
-      },
-      {
-        a: "a",
-      },
-      "zzzz", // <----- problem!
-    ]),
-  )
-    .then(() => {
-      not.ok("not ok");
-    })
-    .catch(() => {
-      ok("ok");
-    });
+test("63 - getKeyset() - rejects when the third value is not a plain object", async () => {
+  await rejects(
+    getKeyset(
+      makePromise([
+        {
+          a: "a",
+          b: "b",
+        },
+        {
+          a: "a",
+        },
+        "zzzz", // <----- problem!
+      ]),
+    ),
+    /\[THROW_ID_04\].*2th element resolved not to a plain object/,
+    "63.01",
+  );
 });
 
 test("64 - getKeyset() - calculates - three objects - default placeholder", async () => {
@@ -2903,7 +2900,7 @@ test("65 - getKeyset() - calculates - three objects - custom placeholder", async
 test("66 - getKeyset() - settings argument is not a plain object - throws", () => {
   throws(
     () => {
-      getKeyset([{ a: "a" }, { b: "b" }], "zzz");
+      return getKeyset([{ a: "a" }, { b: "b" }], "zzz");
     },
     /THROW_ID_02/,
     "66.01",
@@ -3777,44 +3774,32 @@ test("82 - enforceKeyset() - array vs string clashes", async () => {
   );
 });
 
-test("83 - enforceKeyset() - all inputs missing - resolves to rejected promise", () => {
+test("83 - enforceKeyset() - all inputs missing - throws synchronously", () => {
   throws(
     () => {
-      enforceKeyset();
+      return enforceKeyset();
     },
     /THROW_ID_10/g,
     "83.01",
   );
 });
 
-test("84 - enforceKeyset() - second input arg missing - resolves to rejected promise", () => {
+test("84 - enforceKeyset() - second input arg missing - throws synchronously", () => {
   throws(
     () => {
-      enforceKeyset({ a: "a" });
+      return enforceKeyset({ a: "a" });
     },
     /THROW_ID_11/g,
     "84.01",
   );
 });
 
-test("85 - enforceKeyset() - second input arg is not a plain obj - resolves to rejected promise", async () => {
-  await enforceKeyset({ a: "a" }, "zzz")
-    .then(() => {
-      not.ok("not ok");
-    })
-    .catch(() => {
-      ok("ok");
-    });
+test("85 - enforceKeyset() - rejects when the schema is not a plain object", async () => {
+  await rejects(enforceKeyset({ a: "a" }, "zzz"), /\[THROW_ID_14\]/, "85.01");
 });
 
-test("86 - enforceKeyset() - first input arg is not a plain obj - resolves to rejected promise", async () => {
-  await enforceKeyset("zzz", "zzz")
-    .then(() => {
-      not.ok("not ok");
-    })
-    .catch(() => {
-      ok("ok");
-    });
+test("86 - enforceKeyset() - rejects when the input is not a plain object", async () => {
+  await rejects(enforceKeyset("zzz", "zzz"), /\[THROW_ID_13\]/, "86.01");
 });
 
 test("87 - enforceKeyset() - array over empty array", async () => {
