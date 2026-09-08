@@ -78,7 +78,7 @@ function cleanChangelogs(
       literalLines = protectedLiteralLines(linesArr);
     }
     if (!literalLines) {
-      // Preserve the established non-literal cleanup and empty-result fallback.
+      // Preserve the established non-literal cleanup.
       changelog = changelog
         .trim()
         .replace(
@@ -236,7 +236,7 @@ function cleanChangelogs(
 
   return {
     version,
-    res: final || changelog,
+    res: final ?? changelog,
   };
 }
 
