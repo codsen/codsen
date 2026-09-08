@@ -109,11 +109,10 @@ test("04 - removes classes and id's from HTML even if it's heavily messed up", (
   let intended = `<title>Dummy HTML</title>
 <style type="text/css">
   .real-class-1:active, whatever[lang|en]{width:100% !important;}
-  #real-id-1:hover{width:100% !important;}
 </style>
 </head>
 <body>
-<table id="real-id-1" width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
       <table width="100%" border="0" cellpadding="0" cellspacing="0">

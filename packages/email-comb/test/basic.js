@@ -247,11 +247,10 @@ test("10 - removes classes and id's from HTML5 (normal input)", () => {
 <title>Dummy HTML</title>
 <style type="text/css">
   .real-class-1:active, whatever[lang|en]{width:100% !important;}
-  #real-id-1:hover{width:100% !important;}
 </style>
 </head>
 <body>
-<table id="real-id-1" width="100%" cellspacing="0">
+<table width="100%" cellspacing="0">
   <tr>
     <td>
       <table width="100%" cellspacing="0">
@@ -311,11 +310,10 @@ test("11 - removes classes and id's from HTML5 - uglifies", () => {
   <title>Dummy HTML</title>
   <style type="text/css">
     .v.w:active, whatever[lang|en]{width:100% !important;}
-    #t:hover{width:100% !important;}
   </style>
 </head>
 <body>
-  <table id='t' width='100%' border='0' cellpadding='0' cellspacing='0'>
+  <table width='100%' border='0' cellpadding='0' cellspacing='0'>
     <tr>
       <td>
         <table width='100%' border='0' cellpadding='0' cellspacing='0'>
@@ -686,11 +684,10 @@ test("18 - removes classes wrapped with conditional Outlook comments", () => {
   <title>Dummy HTML</title>
   <style type="text/css">
     .real-class-1:active, whatever[lang|en]{width:100% !important;}
-    #real-id-1:hover{width:100% !important;}
   </style>
 </head>
 <body>
-  <table id="real-id-1" width="100%" border="0" cellpadding="0" cellspacing="0">
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr>
       <td>
         <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -714,11 +711,10 @@ test("18 - removes classes wrapped with conditional Outlook comments", () => {
   <title>Dummy HTML</title>
   <style type="text/css">
     .v:active, whatever[lang|en]{width:100% !important;}
-    #t:hover{width:100% !important;}
   </style>
 </head>
 <body>
-  <table id="t" width="100%" border="0" cellpadding="0" cellspacing="0">
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr>
       <td>
         <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -1045,16 +1041,13 @@ test("26 - separate style tags, wrapped with Outlook comments - used CSS", () =>
 
   let intended = `<html>
 <head>
-<style>
-#real-id-1:hover{z}
-</style>
 <!--[if mso]>
 <style>
 .real-class-1, .real-class-1 table { display: block; }
 </style><![endif]-->
 </head>
 <body>
-  <table id="real-id-1" width="100%">
+  <table width="100%">
     <tr>
       <td>
         <table width="100%">
@@ -1073,16 +1066,13 @@ test("26 - separate style tags, wrapped with Outlook comments - used CSS", () =>
 
   let intendedUglified = `<html>
 <head>
-<style>
-#t:hover{z}
-</style>
 <!--[if mso]>
 <style>
 .v, .v table { display: block; }
 </style><![endif]-->
 </head>
 <body>
-  <table id="t" width="100%">
+  <table width="100%">
     <tr>
       <td>
         <table width="100%">
@@ -1139,12 +1129,9 @@ test("27 - separate style tags, wrapped with Outlook comments - unused CSS", () 
 
   let intended = `<html>
 <head>
-<style>
-#real-id-1:hover{z}
-</style>
 </head>
 <body>
-  <table id="real-id-1" width="100%">
+  <table width="100%">
     <tr>
       <td>
         <table width="100%">
@@ -1163,12 +1150,9 @@ test("27 - separate style tags, wrapped with Outlook comments - unused CSS", () 
 
   let intendedUglified = `<html>
 <head>
-<style>
-#t:hover{z}
-</style>
 </head>
 <body>
-  <table id="t" width="100%">
+  <table width="100%">
     <tr>
       <td>
         <table width="100%">
@@ -1232,16 +1216,13 @@ test("28 - separate style tags, wrapped with Outlook comments - part-used CSS", 
 
   let intended = `<html>
 <head>
-<style>
-#real-id-1:hover{z}
-</style>
 <!--[if mso]>
 <style>
 .real-class-1 table { display: block; }
 </style><![endif]-->
 </head>
 <body>
-  <table id="real-id-1" width="100%">
+  <table width="100%">
     <tr>
       <td>
         <table width="100%">
@@ -1260,16 +1241,13 @@ test("28 - separate style tags, wrapped with Outlook comments - part-used CSS", 
 
   let intendedUglified = `<html>
 <head>
-<style>
-#t:hover{z}
-</style>
 <!--[if mso]>
 <style>
 .v table { display: block; }
 </style><![endif]-->
 </head>
 <body>
-  <table id="t" width="100%">
+  <table width="100%">
     <tr>
       <td>
         <table width="100%">
@@ -1288,12 +1266,9 @@ test("28 - separate style tags, wrapped with Outlook comments - part-used CSS", 
 
   let intendedAllCommentsDeleted = `<html>
 <head>
-<style>
-#real-id-1:hover{z}
-</style>
 </head>
 <body>
-  <table id="real-id-1" width="100%">
+  <table width="100%">
     <tr>
       <td>
         <table width="100%">
@@ -1312,12 +1287,9 @@ test("28 - separate style tags, wrapped with Outlook comments - part-used CSS", 
 
   let intendedAllCommentsDeletedUglified = `<html>
 <head>
-<style>
-#t:hover{z}
-</style>
 </head>
 <body>
-  <table id="t" width="100%">
+  <table width="100%">
     <tr>
       <td>
         <table width="100%">

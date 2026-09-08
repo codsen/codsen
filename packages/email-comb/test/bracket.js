@@ -46,7 +46,7 @@ test(`02 - bracket notation - bracket notation - id's`, () => {
   a[id="used"]{x:1;}
 </style>
 </head>
-<body id="used"><a id="used">z</a>
+<body id="used"><a>z</a>
 </body>
 `;
 

@@ -34,11 +34,16 @@ import type { Range } from "../../../ops/typedefs/common";
 import { version as v } from "../package.json";
 import {
   asciiLowerCase,
+  type CssRegion,
   createCssRegion,
   findStyleEnd,
   removeEmptyWrappers,
-  type CssRegion,
 } from "./css";
+
+import {
+  type HtmlAttributeToken,
+  readHtmlAttributeTokens,
+} from "./html-attribute-tokens";
 
 import {
   type Quote,
@@ -88,9 +93,8 @@ function extractCanonicalSelectors(str: string): string[] {
     if (str[i] === "[") {
       let closingAt = cssAttributeEndsAt(str, i);
       if (closingAt !== null) {
-        result.push(
-          ...attributeSelectorQueue(str, i).map(({ value }) => value),
-        );
+        for (const token of attributeSelectorQueue(str, i))
+          result.push(token.value);
         i = closingAt + 1;
         continue;
       }
@@ -322,7 +326,7 @@ function cleanBlankLines(str: string, backend: HeadsAndTailsObj[]): string {
   let lastOutputAt = 0;
   const output: string[] = [];
   let quote: '"' | "'" | null = null;
-  let cssQuote = false;
+  let protectedAttributeQuote = false;
   let escapedStyle = false;
   let rawTag: "script" | "style" | null = null;
   let tagStartedAt: number | null = null;
@@ -330,7 +334,7 @@ function cleanBlankLines(str: string, backend: HeadsAndTailsObj[]): string {
   for (let i = 0; i < str.length; i++) {
     if (blankLineMatch?.index === i) {
       const replacement =
-        cssQuote || (rawTag === "style" && escapedStyle)
+        protectedAttributeQuote || (rawTag === "style" && escapedStyle)
           ? blankLineMatch[0]
           : tagStartedAt !== null && !comment && backendTails === null
             ? ""
@@ -391,10 +395,12 @@ function cleanBlankLines(str: string, backend: HeadsAndTailsObj[]): string {
       if (quote) {
         if (str[i] === quote) {
           quote = null;
-          cssQuote = false;
+          protectedAttributeQuote = false;
         }
       } else if (str[i] === '"' || str[i] === "'") {
-        cssQuote = /(?:^|\s)style\s*=\s*$/i.test(str.slice(tagStartedAt, i));
+        protectedAttributeQuote = /(?:^|\s)(?:style|class|id)\s*=\s*$/i.test(
+          str.slice(tagStartedAt, i),
+        );
         quote = str[i] as '"' | "'";
       } else if (str[i] === ">") {
         const openingTagName = str
@@ -456,6 +462,7 @@ export interface HeadsAndTailsObj {
 type BodyAttributeName = "class" | "id" | "style";
 
 interface BodyAttribute {
+  tokens?: HtmlAttributeToken[];
   empty: boolean;
   equalsAt: number;
   name: BodyAttributeName;
@@ -472,7 +479,7 @@ function collectBodyAttributes(
   backend: HeadsAndTailsObj[],
 ): Map<number, BodyAttribute> {
   const attributes = new Map<number, BodyAttribute>();
-  const lowerStr = str.toLowerCase();
+  const lowerStr = asciiLowerCase(str);
   const protectedPairs = backend.filter(
     ({ heads, tails }) => heads.length && tails.length,
   );
@@ -628,7 +635,16 @@ function collectBodyAttributes(
         valueEndsAt -= 1;
       }
       if (name === "class" || name === "id" || name === "style") {
+        const rawValue =
+          name === "style" ? "" : str.slice(valueStartsAt, valueEndsAt);
+        const dynamic =
+          /\{\{|\{%/.test(rawValue) ||
+          protectedPairs.some(({ heads }) => rawValue.includes(heads));
         attributes.set(nameStartsAt, {
+          tokens:
+            name !== "style" && !empty && !dynamic
+              ? readHtmlAttributeTokens(str, valueStartsAt, valueEndsAt, name)
+              : undefined,
           empty,
           equalsAt,
           name,
@@ -2735,6 +2751,149 @@ function comb(str: string, opts?: InputOpts | null): Res {
           );
       }
 
+      // Static attributes use decoded HTML identities and retain raw spans.
+      // Template-bearing values continue through the existing backend path.
+      if (
+        !doNothing &&
+        stateWithinBody &&
+        !stateWithinStyleTag &&
+        !currentlyWithinQuotes &&
+        bodyAttribute?.tokens
+      ) {
+        const attribute = bodyAttribute;
+        const tokens = attribute.tokens as HtmlAttributeToken[];
+        const isClass = attribute.name === "class";
+        const marker = isClass ? "." : "#";
+        const attributeEndsAt =
+          attribute.valueEndsAt +
+          (attribute.quote && str[attribute.valueEndsAt] === attribute.quote
+            ? 1
+            : 0);
+        if (round === 1) {
+          for (const token of tokens) {
+            (isClass ? bodyClassesArr : bodyIdsArr).push(
+              `${marker}${token.value}`,
+            );
+          }
+          if (attribute.nameEndsAt < attribute.equalsAt) {
+            finalIndexesToDelete.push(attribute.nameEndsAt, attribute.equalsAt);
+          }
+          const openingAt = attribute.valueStartsAt - (attribute.quote ? 1 : 0);
+          if (attribute.equalsAt + 1 < openingAt) {
+            finalIndexesToDelete.push(attribute.equalsAt + 1, openingAt);
+          }
+        } else {
+          const deleted = isClass ? bodyClassesToDeleteSet : bodyIdsToDeleteSet;
+          const retained = tokens.filter(({ value }) => !deleted.has(value));
+          if (!retained.length) {
+            const range = expander({
+              str,
+              from: attribute.nameStartsAt,
+              to: attributeEndsAt,
+              ifRightSideIncludesThisThenCropTightly: "/>",
+              wipeAllWhitespaceOnLeft: true,
+            });
+            finalIndexesToDelete.push(
+              range[0],
+              range[1],
+              str[range[0] - 1]?.trim() &&
+                str[range[1]]?.trim() &&
+                !"/>".includes(str[range[1]])
+                ? " "
+                : "",
+            );
+          } else {
+            // Remove complete semantic token runs, including encoded separators.
+            // Keep one original gap between survivors so they cannot concatenate.
+            let previous: HtmlAttributeToken | undefined;
+            for (let tokenIndex = 0; tokenIndex < tokens.length; tokenIndex++) {
+              const token = tokens[tokenIndex];
+              if (deleted.has(token.value)) {
+                const from = previous ? previous.to : attribute.valueStartsAt;
+                while (
+                  tokenIndex + 1 < tokens.length &&
+                  deleted.has(tokens[tokenIndex + 1].value)
+                )
+                  tokenIndex++;
+                const to =
+                  tokenIndex + 1 === tokens.length
+                    ? attribute.valueEndsAt
+                    : previous
+                      ? tokens[tokenIndex].to
+                      : tokens[tokenIndex + 1].from;
+                finalIndexesToDelete.push(from, to);
+                continue;
+              }
+              const canonical = `${marker}${token.value}`;
+              if (
+                resolvedOpts.uglify &&
+                !bodyIdsReferencedByForAttributesSet.has(canonical) &&
+                !match(canonical, resolvedOpts.whitelist)
+              ) {
+                const replacement = uglifiedBySelector.get(canonical);
+                if (replacement !== undefined && replacement !== canonical) {
+                  finalIndexesToDelete.push(
+                    token.from,
+                    token.to,
+                    serializeHtmlAttribute(
+                      replacement.slice(1),
+                      attribute.quote,
+                    ),
+                  );
+                }
+              }
+              previous = token;
+            }
+            if (isClass) {
+              // Only HTML class-list whitespace is insignificant. Preserve
+              // encoded separators and every character of an exact ID value.
+              const first = retained[0];
+              const last = retained[retained.length - 1];
+              nonIndentationsWhitespaceLength +=
+                str
+                  .slice(attribute.valueStartsAt, tokens[0].from)
+                  .replace(/[^\t\n\f\r ]/g, "").length +
+                str
+                  .slice(tokens[tokens.length - 1].to, attribute.valueEndsAt)
+                  .replace(/[^\t\n\f\r ]/g, "").length;
+              if (first.from > attribute.valueStartsAt)
+                finalIndexesToDelete.push(attribute.valueStartsAt, first.from);
+              if (last.to < attribute.valueEndsAt)
+                finalIndexesToDelete.push(last.to, attribute.valueEndsAt);
+              for (
+                let tokenIndex = 1;
+                tokenIndex < tokens.length;
+                tokenIndex++
+              ) {
+                const from = tokens[tokenIndex - 1].to;
+                const to = tokens[tokenIndex].from;
+                if (
+                  !deleted.has(tokens[tokenIndex - 1].value) &&
+                  !deleted.has(tokens[tokenIndex].value) &&
+                  to > from + 1 &&
+                  !str.slice(from, to).includes("&")
+                ) {
+                  finalIndexesToDelete.push(from + 1, to);
+                  nonIndentationsWhitespaceLength += to - from - 1;
+                }
+              }
+            }
+          }
+        }
+        // The raw value has already been consumed, including HTML quotes.
+        // Advance the first-round deletion cursor past any skipped syntax gaps.
+        while (
+          round === 2 &&
+          round1RangesClone &&
+          round1RangeIndex < round1RangesClone.length &&
+          round1RangesClone[round1RangeIndex][0] < attributeEndsAt
+        )
+          round1RangeIndex++;
+        i = attributeEndsAt - 1;
+        whitespaceStartedAt = null;
+        continue;
+      }
+
       // catch the start of a class attribute within body
       // ================
       if (
@@ -3271,123 +3430,206 @@ function comb(str: string, opts?: InputOpts | null): Res {
               );
           }
         } else {
-          // normal operations can continue
-          let carvedClass = `${str.slice(bodyClass.valueStart, i)}`;
-          const canonicalClass = decodeHtmlEntities(carvedClass, {
-            context: "attribute",
-          });
-          DEV &&
-            console.log(
-              `CARVED OUT BODY CLASS "${`\u001b[${32}m${carvedClass}\u001b[${39}m`}"`,
-            );
-          DEV &&
-            console.log(
-              `██ ${`\u001b[${33}m${`allTails`}\u001b[${39}m`} = ${JSON.stringify(
-                allTails,
-                null,
-                4,
-              )}`,
-            );
-          // DEV && console.log(
-          //   `2716 R1 = ${!!(allTails && matchRightIncl(str, i, allTails))}`
-          // );
-          // DEV && console.log(`2718 R2 = ${!!matchRightIncl(str, i, allTails)}`);
-          // DEV && console.log(
-          //   `2720 R3 = ${!!(allHeads && matchRightIncl(str, i, allHeads))}`
-          // );
-
-          if (round === 1) {
-            bodyClassesArr.push(`.${canonicalClass}`);
-            DEV &&
-              console.log(
-                `\u001b[${35}m${`PUSH`}\u001b[${39}m slice ".${carvedClass}" to bodyClassesArr which becomes:\n${JSON.stringify(
-                  bodyClassesArr,
-                  null,
-                  0,
-                )}`,
-              );
-          }
-          // round 2
-          else if (
-            bodyClass.valueStart != null &&
-            bodyClassesToDeleteSet.has(canonicalClass)
-          ) {
-            // submit this class for deletion
-            DEV &&
-              console.log(
-                `${`\u001b[${33}m${`carvedClass`}\u001b[${39}m`} = ${carvedClass}`,
-              );
-            DEV &&
-              console.log(
-                `before expanding, ${`\u001b[${33}m${`bodyClass.valueStart`}\u001b[${39}m`} = ${JSON.stringify(
-                  bodyClass.valueStart,
-                  null,
-                  0,
-                )}`,
-              );
-
-            let expandedRange = expander({
+          // Static portions beside backend expressions still decode before
+          // class-list splitting; the expression itself remains on the legacy
+          // opaque path. Only raw ampersands require this mapped fallback.
+          const rawClass = str.slice(bodyClass.valueStart, i);
+          if (rawClass.includes("&")) {
+            const tokens = readHtmlAttributeTokens(
               str,
-              from: bodyClass.valueStart,
-              to:
-                bodyClass.quoteless && chr === ">" && str[i - 1] === "/"
-                  ? i - 1
-                  : i,
-              ifLeftSideIncludesThisThenCropTightly: `"'`,
-              ifRightSideIncludesThisThenCropTightly: `"'`,
-              wipeAllWhitespaceOnLeft: true,
-            });
-
-            // precaution against too tight crop when backend markers are involved
-            let whatToInsert = "";
-            if (
-              str[expandedRange[0] - 1]?.trim() &&
-              str[expandedRange[1]]?.trim() &&
-              (allHeads || allTails) &&
-              ((allHeads &&
-                matchLeft(str, expandedRange[0], allTails as string[])) ||
-                (allTails &&
-                  matchRightIncl(str, expandedRange[1], allHeads as string[])))
-            ) {
-              whatToInsert = " ";
+              bodyClass.valueStart,
+              i,
+              "class",
+            );
+            if (round === 1) {
+              for (const token of tokens)
+                bodyClassesArr.push(`.${token.value}`);
+            } else {
+              const retained = tokens.filter(
+                ({ value }) => !bodyClassesToDeleteSet.has(value),
+              );
+              if (retained.length) bodyClassOrIdCanBeDeleted = false;
+              let previous: HtmlAttributeToken | undefined;
+              for (
+                let tokenIndex = 0;
+                tokenIndex < tokens.length;
+                tokenIndex++
+              ) {
+                const token = tokens[tokenIndex];
+                if (bodyClassesToDeleteSet.has(token.value)) {
+                  const from = previous ? previous.to : bodyClass.valueStart;
+                  while (
+                    tokenIndex + 1 < tokens.length &&
+                    bodyClassesToDeleteSet.has(tokens[tokenIndex + 1].value)
+                  )
+                    tokenIndex++;
+                  const to =
+                    tokenIndex + 1 === tokens.length
+                      ? i
+                      : previous
+                        ? tokens[tokenIndex].to
+                        : tokens[tokenIndex + 1].from;
+                  finalIndexesToDelete.push(
+                    from,
+                    to,
+                    str[from - 1]?.trim() &&
+                      str[to]?.trim() &&
+                      ((allTails && matchLeft(str, from, allTails)) ||
+                        (allHeads && matchRightIncl(str, to, allHeads)))
+                      ? " "
+                      : "",
+                  );
+                } else {
+                  const canonical = `.${token.value}`;
+                  const replacement = uglifiedBySelector.get(canonical);
+                  if (
+                    resolvedOpts.uglify &&
+                    replacement !== undefined &&
+                    replacement !== canonical &&
+                    !match(canonical, resolvedOpts.whitelist)
+                  ) {
+                    finalIndexesToDelete.push(
+                      token.from,
+                      token.to,
+                      serializeHtmlAttribute(
+                        replacement.slice(1),
+                        bodyClass.quote,
+                      ),
+                    );
+                  }
+                  previous = token;
+                }
+              }
             }
-
-            (finalIndexesToDelete as any).push(...expandedRange, whatToInsert);
+          } else {
+            // normal operations can continue
+            const carvedClass = rawClass;
+            const canonicalClass = rawClass;
             DEV &&
               console.log(
-                `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
-                  [expandedRange[0], expandedRange[1], whatToInsert],
+                `CARVED OUT BODY CLASS "${`\u001b[${32}m${carvedClass}\u001b[${39}m`}"`,
+              );
+            DEV &&
+              console.log(
+                `██ ${`\u001b[${33}m${`allTails`}\u001b[${39}m`} = ${JSON.stringify(
+                  allTails,
                   null,
-                  0,
+                  4,
                 )}`,
               );
-          } else {
-            // 1. turn off the bodyClassOrIdCanBeDeleted
-            bodyClassOrIdCanBeDeleted = false;
-            DEV &&
-              console.log(
-                `SET ${`\u001b[${33}m${`bodyClassOrIdCanBeDeleted`}\u001b[${39}m`} = false`,
-              );
+            // DEV && console.log(
+            //   `2716 R1 = ${!!(allTails && matchRightIncl(str, i, allTails))}`
+            // );
+            // DEV && console.log(`2718 R2 = ${!!matchRightIncl(str, i, allTails)}`);
+            // DEV && console.log(
+            //   `2720 R3 = ${!!(allHeads && matchRightIncl(str, i, allHeads))}`
+            // );
 
-            // 2. uglify?
-            if (
-              resolvedOpts.uglify &&
-              !(
-                Array.isArray(resolvedOpts.whitelist) &&
-                resolvedOpts.whitelist.length &&
-                match(`.${canonicalClass}`, resolvedOpts.whitelist)
-              )
-            ) {
-              const replacement = uglifiedBySelector.get(`.${canonicalClass}`);
-              if (
-                replacement !== undefined &&
-                replacement !== `.${canonicalClass}`
-              ) {
-                finalIndexesToDelete.push(
-                  bodyClass.valueStart,
-                  i,
-                  serializeHtmlAttribute(replacement.slice(1), bodyClass.quote),
+            if (round === 1) {
+              bodyClassesArr.push(`.${canonicalClass}`);
+              DEV &&
+                console.log(
+                  `\u001b[${35}m${`PUSH`}\u001b[${39}m slice ".${carvedClass}" to bodyClassesArr which becomes:\n${JSON.stringify(
+                    bodyClassesArr,
+                    null,
+                    0,
+                  )}`,
                 );
+            }
+            // round 2
+            else if (
+              bodyClass.valueStart != null &&
+              bodyClassesToDeleteSet.has(canonicalClass)
+            ) {
+              // submit this class for deletion
+              DEV &&
+                console.log(
+                  `${`\u001b[${33}m${`carvedClass`}\u001b[${39}m`} = ${carvedClass}`,
+                );
+              DEV &&
+                console.log(
+                  `before expanding, ${`\u001b[${33}m${`bodyClass.valueStart`}\u001b[${39}m`} = ${JSON.stringify(
+                    bodyClass.valueStart,
+                    null,
+                    0,
+                  )}`,
+                );
+
+              let expandedRange = expander({
+                str,
+                from: bodyClass.valueStart,
+                to:
+                  bodyClass.quoteless && chr === ">" && str[i - 1] === "/"
+                    ? i - 1
+                    : i,
+                ifLeftSideIncludesThisThenCropTightly: `"'`,
+                ifRightSideIncludesThisThenCropTightly: `"'`,
+                wipeAllWhitespaceOnLeft: true,
+              });
+
+              // precaution against too tight crop when backend markers are involved
+              let whatToInsert = "";
+              if (
+                str[expandedRange[0] - 1]?.trim() &&
+                str[expandedRange[1]]?.trim() &&
+                (allHeads || allTails) &&
+                ((allHeads &&
+                  matchLeft(str, expandedRange[0], allTails as string[])) ||
+                  (allTails &&
+                    matchRightIncl(
+                      str,
+                      expandedRange[1],
+                      allHeads as string[],
+                    )))
+              ) {
+                whatToInsert = " ";
+              }
+
+              (finalIndexesToDelete as any).push(
+                ...expandedRange,
+                whatToInsert,
+              );
+              DEV &&
+                console.log(
+                  `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+                    [expandedRange[0], expandedRange[1], whatToInsert],
+                    null,
+                    0,
+                  )}`,
+                );
+            } else {
+              // 1. turn off the bodyClassOrIdCanBeDeleted
+              bodyClassOrIdCanBeDeleted = false;
+              DEV &&
+                console.log(
+                  `SET ${`\u001b[${33}m${`bodyClassOrIdCanBeDeleted`}\u001b[${39}m`} = false`,
+                );
+
+              // 2. uglify?
+              if (
+                resolvedOpts.uglify &&
+                !(
+                  Array.isArray(resolvedOpts.whitelist) &&
+                  resolvedOpts.whitelist.length &&
+                  match(`.${canonicalClass}`, resolvedOpts.whitelist)
+                )
+              ) {
+                const replacement = uglifiedBySelector.get(
+                  `.${canonicalClass}`,
+                );
+                if (
+                  replacement !== undefined &&
+                  replacement !== `.${canonicalClass}`
+                ) {
+                  finalIndexesToDelete.push(
+                    bodyClass.valueStart,
+                    i,
+                    serializeHtmlAttribute(
+                      replacement.slice(1),
+                      bodyClass.quote,
+                    ),
+                  );
+                }
               }
             }
           }
@@ -4407,9 +4649,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
 
       allClassesAndIdsWithinBody = uniq(bodyClassesArr.concat(bodyIdsArr));
       bodyIdsReferencedByForAttributes = bodyIdsArr.filter((id) =>
-        idsReferencedByForAttributesSet.has(
-          decodeHtmlEntities(id.slice(1), { context: "attribute" }),
-        ),
+        idsReferencedByForAttributesSet.has(id.slice(1)),
       );
       bodyIdsReferencedByForAttributesSet = new Set(
         bodyIdsReferencedByForAttributes,
@@ -5097,14 +5337,14 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
 
   // Keep the established leading-space cleanup inside real HTML attributes.
   // A global replacement would also rewrite CSS strings or other attribute data.
-  if (/ (?:class|id)=["'] /.test(str)) {
+  if (/ class=["'] /.test(str)) {
     const leadingSpaces: Range[] = [];
     for (const attribute of collectBodyAttributes(
       str,
       resolvedOpts.backend,
     ).values()) {
       if (
-        attribute.name !== "style" &&
+        attribute.name === "class" &&
         attribute.quote &&
         str[attribute.valueStartsAt] === " "
       ) {
@@ -5290,11 +5530,13 @@ function extractIdsReferencedByForAttributes(str: string): string[] {
       if (attributeName === "for" && !forAttributeSeen) {
         forAttributeSeen = true;
         if (value) {
-          result.push(
-            ...decodeHtmlEntities(value, { context: "attribute" })
-              .split(/[\t\n\f\r ]+/u)
-              .filter(Boolean),
-          );
+          for (const token of readHtmlAttributeTokens(
+            value,
+            0,
+            value.length,
+            tagNameLength === 5 ? "id" : "class",
+          ))
+            result.push(token.value);
         }
       }
     }

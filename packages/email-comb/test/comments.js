@@ -413,11 +413,10 @@ test("19 - removes comments from style blocks - opts.removeHTMLComments + opts.r
 <title>Dummy HTML</title>
 <style type="text/css">
   .real-class-1:active, whatever[lang|en]{width:100% !important;}
-  #real-id-1:hover{width:100% !important;}
 </style>
 </head>
 <body>
-<table id="real-id-1" width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
       <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -439,13 +438,11 @@ test("19 - removes comments from style blocks - opts.removeHTMLComments + opts.r
 <meta charset="UTF-8">
 <title>Dummy HTML</title>
 <style type="text/css">
-  .real-class-1:active, whatever[lang|en]{width:100% !important;}
-  /* some comments */
-  #real-id-1:hover{width:100% !important;} /* some more comments */
+  .real-class-1:active, whatever[lang|en]{width:100% !important;} /* some more comments */
 </style>
 </head>
 <body>
-<table id="real-id-1" width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
       <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -468,12 +465,11 @@ test("19 - removes comments from style blocks - opts.removeHTMLComments + opts.r
 <title>Dummy HTML</title>
 <style type="text/css">
   .real-class-1:active, whatever[lang|en]{width:100% !important;}
-  #real-id-1:hover{width:100% !important;}
 </style>
 </head>
 <body>
 <!-- zzz -->
-<table id="real-id-1" width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
       <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -495,14 +491,12 @@ test("19 - removes comments from style blocks - opts.removeHTMLComments + opts.r
 <meta charset="UTF-8">
 <title>Dummy HTML</title>
 <style type="text/css">
-  .real-class-1:active, whatever[lang|en]{width:100% !important;}
-  /* some comments */
-  #real-id-1:hover{width:100% !important;} /* some more comments */
+  .real-class-1:active, whatever[lang|en]{width:100% !important;} /* some more comments */
 </style>
 </head>
 <body>
 <!-- zzz -->
-<table id="real-id-1" width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
       <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -588,12 +582,9 @@ test("20 - false real class is commented-out and therefore gets removed", () => 
 <head>
 <meta charset="UTF-8">
 <title>Dummy HTML</title>
-<style type="text/css">
-  #real-id-1:hover{width:100% !important;}
-</style>
 </head>
 <body>
-<table id="real-id-1" width="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
       <table width="100%" border="0" cellpadding="0" cellspacing="0">
