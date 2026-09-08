@@ -804,4 +804,133 @@ test("38 - declarations intentional consumer types and ops retain their any poli
   }
 });
 
+test("39 - floating promises fail while awaited and caught work passes", () => {
+  const bad = lint({
+    "ops/sentinel.js": `export async function performWork() { return "done"; }
+performWork();
+`,
+  });
+  equal(bad.status, 1, "39.01");
+  equal(severities(bad, "nursery/noFloatingPromises"), ["error"], "39.02");
+  for (const source of [
+    `export async function performWork() { return "done"; }
+await performWork();
+`,
+    `import process from "node:process";
+export async function performWork() { return "done"; }
+performWork().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});
+`,
+  ]) {
+    const good = lint({ "ops/sentinel.js": source });
+    equal(good.status, 0, "39.03");
+    equal(good.report.diagnostics, [], "39.04");
+  }
+});
+
+test("40 - promise conditions fail while their resolved values pass", () => {
+  const bad = lint({
+    "ops/sentinel.js": `const ready = Promise.resolve(false);
+export const label = ready ? "ready" : "waiting";
+`,
+  });
+  equal(bad.status, 1, "40.01");
+  equal(severities(bad, "nursery/noMisusedPromises"), ["error"], "40.02");
+  const good = lint({
+    "ops/sentinel.js": `const ready = await Promise.resolve(false);
+export const label = ready ? "ready" : "waiting";
+`,
+  });
+  equal(good.status, 0, "40.03");
+  equal(good.report.diagnostics, [], "40.04");
+});
+
+test("41 - awaiting synchronous values fails while thenables pass", () => {
+  const bad = lint({
+    "ops/sentinel.js": "export const answer = await 42;\n",
+  });
+  equal(bad.status, 1, "41.01");
+  equal(severities(bad, "nursery/useAwaitThenable"), ["error"], "41.02");
+  const good = lint({
+    "ops/sentinel.js": "export const answer = await Promise.resolve(42);\n",
+  });
+  equal(good.status, 0, "41.03");
+  equal(good.report.diagnostics, [], "41.04");
+});
+
+test("42 - the owned benchmark launcher exception excludes neighboring scripts", () => {
+  const helper = {
+    "ops/helpers/perf-fixture.ts": `import process from "node:process";
+export function runPerf(
+  testme: (callerDir: string) => unknown,
+  callerDir: string,
+): Promise<unknown> {
+  return Promise.resolve()
+    .then(() => testme(callerDir))
+    .catch((error) => {
+      console.error(error);
+      process.exitCode = 1;
+    });
+}
+`,
+  };
+  const good = lint({
+    ...helper,
+    "packages/fixture/perf/check.js": `import { runPerf } from "../../../ops/helpers/perf-fixture.ts";
+runPerf(() => 42, ".");
+`,
+  });
+  equal(good.status, 0, "42.01");
+  equal(good.report.diagnostics, [], "42.02");
+  for (const [filename, importPath] of [
+    [
+      "packages/fixture/perf/neighbor.js",
+      "../../../ops/helpers/perf-fixture.ts",
+    ],
+    ["ops/neighbor.js", "./helpers/perf-fixture.ts"],
+  ]) {
+    const bad = lint({
+      ...helper,
+      [filename]: `import { runPerf } from "${importPath}";
+runPerf(() => 42, ".");
+`,
+    });
+    equal(bad.status, 1, "42.03");
+    equal(severities(bad, "nursery/noFloatingPromises"), ["error"], "42.04");
+    const handled = lint({
+      ...helper,
+      [filename]: `import { runPerf } from "${importPath}";
+await runPerf(() => 42, ".");
+`,
+    });
+    equal(handled.status, 0, "42.05");
+    equal(handled.report.diagnostics, [], "42.06");
+  }
+});
+
+test("43 - benchmark launchers still reject misused promises and invalid awaits", () => {
+  for (const [source, rule] of [
+    [
+      `const ready = Promise.resolve(false);
+export const label = ready ? "ready" : "waiting";
+`,
+      "nursery/noMisusedPromises",
+    ],
+    ["export const answer = await 42;\n", "nursery/useAwaitThenable"],
+  ]) {
+    const bad = lint({ "packages/fixture/perf/check.js": source });
+    equal(bad.status, 1, "43.01");
+    equal(severities(bad, rule), ["error"], "43.02");
+  }
+  const good = lint({
+    "packages/fixture/perf/check.js": `const ready = await Promise.resolve(false);
+export const label = ready ? "ready" : "waiting";
+`,
+  });
+  equal(good.status, 0, "43.03");
+  equal(good.report.diagnostics, [], "43.04");
+});
+
 test.run();

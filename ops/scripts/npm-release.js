@@ -1242,7 +1242,7 @@ async function verifyReleaseConsumer({
     typescriptApi,
   );
   await importReleaseConsumer(consumerDirectory, plan);
-  await smokeReleaseConsumerBins(consumerDirectory, plan);
+  smokeReleaseConsumerBins(consumerDirectory, plan);
   await compileReleaseConsumer(consumerDirectory, plan, typescript);
   console.log(
     `Verified isolated publish consumer for ${plan.name}@${plan.version}.`,

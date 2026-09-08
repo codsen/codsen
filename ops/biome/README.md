@@ -55,3 +55,19 @@ mechanically can break the API without making its types more useful.
 The global setting remains off for generated declarations and intentional
 consumer-type tests. Fix declaration types through their authored source and
 build pipeline, without editing generated `.d.ts` files.
+
+## Promise handling
+
+`noFloatingPromises`, `noMisusedPromises`, and `useAwaitThenable` run at error
+severity. Await asynchronous work or handle its rejection. Marking a promise
+with `void` does not handle a rejection.
+
+Only `noFloatingPromises` is disabled for `packages/*/perf/check.js`. Those
+launchers call [runPerf](../scripts/perf.js), which catches benchmark failures,
+reports them, and sets `process.exitCode`. This exception preserves that
+existing ownership; new asynchronous work still needs explicit handling. The
+other two promise rules remain active in benchmark launchers, and neighboring
+performance scripts have no exception.
+
+These checks use Biome's project/type inference. Keep TypeScript and runtime
+tests alongside them; a clean lint result does not prove every async path.

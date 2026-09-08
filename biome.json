@@ -67,6 +67,11 @@
       },
       "correctness": {
         "noUnusedInstantiation": "error"
+      },
+      "nursery": {
+        "noFloatingPromises": "error",
+        "noMisusedPromises": "error",
+        "useAwaitThenable": "error"
       }
     }
   },
@@ -269,6 +274,16 @@
         "actions": {
           "source": {
             "organizeImports": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages/*/perf/check.js"],
+      "linter": {
+        "rules": {
+          "nursery": {
+            "noFloatingPromises": "off"
           }
         }
       }
