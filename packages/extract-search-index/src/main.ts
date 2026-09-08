@@ -1,9 +1,25 @@
 import { formatDiagnosticValue } from "codsen-utils";
+import { decode } from "html-entity-codec";
 import { stripHtml } from "string-strip-html";
 import { unfancy } from "string-unfancy";
 import { version as v } from "../package.json";
 
 const version: string = v;
+
+function stripMarkup(str: string): string {
+  return str.includes("<")
+    ? stripHtml(str, {
+        skipHtmlDecoding: true,
+        stripTogetherWithTheirContents: [
+          "script",
+          "style",
+          "xml",
+          "code",
+          "pre",
+        ],
+      }).result
+    : str;
+}
 
 function extract(str: string): string {
   // Insurance
@@ -13,25 +29,20 @@ function extract(str: string): string {
     );
   }
 
+  // Attribute delimiters belong to the original HTML, before text decoding.
+  let text = stripMarkup(str).replace(/[\uD800-\uDFFF]/g, " ");
+  while (text.includes("&")) {
+    const decoded = decode(text);
+    if (decoded === text) break;
+    // Retain the existing interpretation of recursively encoded HTML as markup.
+    text = stripMarkup(decoded);
+  }
+
   return [
     // Remove duplicated words using Set
     ...new Set(
-      stripHtml(
-        unfancy(
-          // Preserve BMP characters outside the UTF-16 surrogate interval.
-          str.replace(/[\uD800-\uDFFF]/g, " "),
-        ),
-        {
-          stripTogetherWithTheirContents: [
-            "script",
-            "style",
-            "xml",
-            "code",
-            "pre",
-          ],
-        },
-      )
-        .result.toLowerCase()
+      unfancy(text)
+        .toLowerCase()
 
         // remove url's - https://stackoverflow.com/a/3809435/3943954
         .replace(
