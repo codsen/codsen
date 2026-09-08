@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.3 (2026-09-06)
+
+### Performance Improvements
+
+- Recorded a 13.82% higher normalized benchmark score than v4.2.0 (2,163,867 → 2,462,915).
+
 ## 4.2.1 (2026-08-22)
 
 ### Performance Improvements

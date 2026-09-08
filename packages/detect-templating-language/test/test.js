@@ -67,15 +67,15 @@ test("04 - Jinja - with Python namespaces", () => {
   );
 });
 
-test("05 - Jinja - with Python backwards declarations", () => {
+test("05 - shared inline conditionals retain the Nunjucks fallback", () => {
   equal(
     detectLang("<div>{{'oodles' if crambles else 'brambles'}}</div>"),
-    { name: "Jinja" },
+    { name: "Nunjucks" },
     "05.01",
   );
   equal(
     detectLang('<div>{{"oodles" if crambles else "brambles"}}</div>'),
-    { name: "Jinja" },
+    { name: "Nunjucks" },
     "05.02",
   );
 });
