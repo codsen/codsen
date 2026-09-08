@@ -5,6 +5,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 6.2.3 (2026-09-06)
 
+### Performance Improvements
+
+- Recorded a 35.02% higher normalized benchmark score than v6.2.2 (327,039 → 441,569).
+
 ### Bug Fixes
 
 - **string-unfancy:** streamline recursive decoding with the shared HTML entity codec ([81584b3](https://github.com/codsen/codsen/commit/81584b3ac4a553a5840cdb8ee08eb8b11181a2ec))

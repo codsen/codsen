@@ -31,6 +31,8 @@ const CHARS: Obj = {
   "\uFE49": "-",
   "\u00A0": " ",
 };
+// The mapping keys are single BMP characters without character-class syntax.
+const mappedCharacters = new RegExp(`[${Object.keys(CHARS).join("")}]`, "g");
 
 function unfancy(str: string): string {
   if (!isStr(str)) {
@@ -48,12 +50,7 @@ function unfancy(str: string): string {
   // Every typography substitution is non-ASCII. Native scanning avoids a
   // per-character dictionary lookup for already plain text.
   if (!/[\u0080-\uFFFF]/.test(res)) return res;
-  for (let i = 0; i < res.length; i++) {
-    if (res[i] in CHARS) {
-      res = `${res.slice(0, i)}${CHARS[res[i]] as string}${res.slice(i + 1)}`;
-    }
-  }
-  return res;
+  return res.replace(mappedCharacters, (char) => CHARS[char] as string);
 }
 
 export { unfancy, version };
