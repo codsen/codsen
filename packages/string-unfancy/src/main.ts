@@ -7,6 +7,10 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
+export interface Opts {
+  preserveCombiningMarks: boolean;
+}
+
 const CHARS: Obj = {
   "\u00B4": "'",
   "\u02BB": "'",
@@ -33,8 +37,19 @@ const CHARS: Obj = {
 };
 // The mapping keys are single BMP characters without character-class syntax.
 const mappedCharacters = new RegExp(`[${Object.keys(CHARS).join("")}]`, "g");
+const mappedPunctuation = new RegExp(
+  `[${Object.keys(CHARS)
+    .filter((char) => char < "\u0312" || char > "\u0315")
+    .join("")}]`,
+  "g",
+);
 
-function unfancy(str: string): string {
+function unfancy(str: string, opts?: Partial<Opts>): string;
+function unfancy(str: string): string;
+function unfancy(
+  str: string,
+  opts: Partial<Opts> | undefined = undefined,
+): string {
   if (!isStr(str)) {
     throw new Error(
       `string-unfancy/unfancy(): [THROW_ID_01] The input is not a string! It's: ${typeof str}`,
@@ -50,7 +65,12 @@ function unfancy(str: string): string {
   // Every typography substitution is non-ASCII. Native scanning avoids a
   // per-character dictionary lookup for already plain text.
   if (!/[\u0080-\uFFFF]/.test(res)) return res;
-  return res.replace(mappedCharacters, (char) => CHARS[char] as string);
+  return res.replace(
+    opts?.preserveCombiningMarks === true
+      ? mappedPunctuation
+      : mappedCharacters,
+    (char) => CHARS[char] as string,
+  );
 }
 
 export { unfancy, version };
