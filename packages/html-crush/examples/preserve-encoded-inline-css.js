@@ -1,3 +1,5 @@
+// Preserve encoded inline CSS
+
 import { strict as assert } from "node:assert";
 import { crush } from "../dist/html-crush.esm.js";
 

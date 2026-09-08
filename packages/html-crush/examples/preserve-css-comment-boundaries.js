@@ -1,3 +1,5 @@
+// Preserve CSS token boundaries when removing comments
+
 import { strict as assert } from "node:assert";
 import { crush } from "../dist/html-crush.esm.js";
 
