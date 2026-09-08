@@ -15,7 +15,7 @@ import {
 import * as htmlEntities from "html-entity-codec";
 import { rApply } from "ranges-apply";
 import { rInvert } from "ranges-invert";
-import { type Range as RangeTuple, Ranges } from "ranges-push";
+import { Ranges, type Range as RangeTuple } from "ranges-push";
 import { collapse } from "string-collapse-white-space";
 import { fixEnt } from "string-fix-broken-named-entities";
 import { chompLeft, left, leftStopAtNewLines, right } from "string-left-right";
@@ -23,8 +23,8 @@ import { removeWidows } from "string-remove-widows";
 import type { CbObj } from "string-strip-html";
 import { version as v } from "../package.json";
 import { codePointAtIndex, codePointBeforeIndex } from "./codePoint";
-import { processCharacter } from "./processCharacter";
 import { HtmlProtection } from "./html-protection";
+import { processCharacter } from "./processCharacter";
 import {
   type ApplicableOpts,
   defaultOpts,
