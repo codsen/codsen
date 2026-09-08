@@ -40,6 +40,13 @@ import {
   type CssRegion,
 } from "./css";
 
+import {
+  type Quote,
+  serializeCssIdentifier,
+  serializeCssString,
+  serializeHtmlAttribute,
+} from "./serialize";
+
 const version: string = v;
 const labelOrOutputOpeningTagRegex = /<(?:label|output)(?:[\t\n\f\r />])/i;
 
@@ -106,6 +113,7 @@ interface AttributeSelectorQueueItem {
   marker: "." | "#";
   startsAt: number;
   value: string;
+  quote: Quote;
 }
 
 function readSelectorInRegion(
@@ -162,12 +170,19 @@ function attributeSelectorQueue(
   ) {
     return [];
   }
+  let valueAt = str.indexOf("=", name.range[1]) + 1;
+  while (isHtmlAsciiWhitespace(str[valueAt])) valueAt++;
+  let quote: Quote =
+    str[valueAt] === '"' || str[valueAt] === "'"
+      ? (str[valueAt] as Quote)
+      : null;
   return extractCssSelectorTokens(str.slice(openingAt, closingAt + 1)).map(
     (token) => ({
       startsAt: openingAt + token.range[0],
       endsAt: openingAt + token.range[1],
       marker: token.value[0] as "." | "#",
       value: token.value,
+      quote,
     }),
   );
 }
@@ -861,6 +876,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
   // in which case, singleSelectorType would be === "."
   let singleSelectorType: "." | "#" | undefined;
   let singleSelectorValue: string | undefined;
+  let singleSelectorQuote: Quote = null;
 
   // ---------------------------------------------------------------------------
 
@@ -2131,6 +2147,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
               singleSelectorEndsAt = firstAttributeSelector.endsAt;
               singleSelectorType = firstAttributeSelector.marker;
               singleSelectorValue = firstAttributeSelector.value;
+              singleSelectorQuote = firstAttributeSelector.quote;
               DEV &&
                 console.log(
                   `SET attribute selector: ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}; ${`\u001b[${33}m${`singleSelectorEndsAt`}\u001b[${39}m`} = ${singleSelectorEndsAt}; ${`\u001b[${33}m${`singleSelectorType`}\u001b[${39}m`} = ${singleSelectorType}`,
@@ -2258,21 +2275,25 @@ function comb(str: string, opts?: InputOpts | null): Res {
                 !match(singleSelector, resolvedOpts.whitelist))
             ) {
               let uglifiedSelector = uglifiedBySelector.get(singleSelector);
+              // The allocator can shorten a two-code-point name to unsafe
+              // punctuation or a leading digit. Preserve unchanged raw text;
+              // serialize changed names for their actual destination syntax.
               if (
-                syntheticSelectorType &&
-                uglifiedSelector?.startsWith(syntheticSelectorType)
+                uglifiedSelector !== undefined &&
+                uglifiedSelector !== singleSelector
               ) {
-                uglifiedSelector = uglifiedSelector.slice(1);
-              }
-              DEV &&
-                console.log(
-                  `${`\u001b[${31}m${`PUSH [${singleSelectorStartedAt}, ${selectorEndsAt}, ${uglifiedSelector}]`}\u001b[${39}m`}`,
+                const name = uglifiedSelector.slice(1);
+                uglifiedSelector = syntheticSelectorType
+                  ? singleSelectorQuote
+                    ? serializeCssString(name, singleSelectorQuote)
+                    : serializeCssIdentifier(name)
+                  : `${uglifiedSelector[0]}${serializeCssIdentifier(name)}`;
+                currentChunksMinifiedSelectors.push(
+                  singleSelectorStartedAt,
+                  selectorEndsAt,
+                  uglifiedSelector,
                 );
-              currentChunksMinifiedSelectors.push(
-                singleSelectorStartedAt,
-                selectorEndsAt,
-                uglifiedSelector,
-              );
+              }
             }
             // 2. tend trailing comma issue (lastKeptChunksCommaAt and
             // onlyDeletedChunksFollow):
@@ -2294,6 +2315,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
             singleSelectorEndsAt = nextAttributeSelector.endsAt;
             singleSelectorType = nextAttributeSelector.marker;
             singleSelectorValue = nextAttributeSelector.value;
+            singleSelectorQuote = nextAttributeSelector.quote;
           } else if (
             !cssOpaque &&
             !(cssFlags & 4) &&
@@ -3356,18 +3378,17 @@ function comb(str: string, opts?: InputOpts | null): Res {
                 match(`.${canonicalClass}`, resolvedOpts.whitelist)
               )
             ) {
-              DEV &&
-                console.log(
-                  `${`\u001b[${31}m${`PUSH [${bodyClass.valueStart}, ${i},
-                  ${uglifiedBySelector.get(
-                    `.${canonicalClass}`,
-                  )}]`}\u001b[${39}m`}`,
+              const replacement = uglifiedBySelector.get(`.${canonicalClass}`);
+              if (
+                replacement !== undefined &&
+                replacement !== `.${canonicalClass}`
+              ) {
+                finalIndexesToDelete.push(
+                  bodyClass.valueStart,
+                  i,
+                  serializeHtmlAttribute(replacement.slice(1), bodyClass.quote),
                 );
-              finalIndexesToDelete.push(
-                bodyClass.valueStart,
-                i,
-                uglifiedBySelector.get(`.${canonicalClass}`)?.slice(1),
-              );
+              }
             }
           }
 
@@ -3504,16 +3525,17 @@ function comb(str: string, opts?: InputOpts | null): Res {
               match(`#${canonicalId}`, resolvedOpts.whitelist)
             )
           ) {
-            DEV &&
-              console.log(
-                `${`\u001b[${31}m${`PUSH [${bodyId.valueStart}, ${i},
-                ${uglifiedBySelector.get(`#${canonicalId}`)}]`}\u001b[${39}m`}`,
+            const replacement = uglifiedBySelector.get(`#${canonicalId}`);
+            if (
+              replacement !== undefined &&
+              replacement !== `#${canonicalId}`
+            ) {
+              finalIndexesToDelete.push(
+                bodyId.valueStart,
+                i,
+                serializeHtmlAttribute(replacement.slice(1), bodyId.quote),
               );
-            finalIndexesToDelete.push(
-              bodyId.valueStart,
-              i,
-              uglifiedBySelector.get(`#${canonicalId}`)?.slice(1),
-            );
+            }
           }
         }
 
@@ -5073,6 +5095,28 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
     str = str.trimLeft();
   }
 
+  // Keep the established leading-space cleanup inside real HTML attributes.
+  // A global replacement would also rewrite CSS strings or other attribute data.
+  if (/ (?:class|id)=["'] /.test(str)) {
+    const leadingSpaces: Range[] = [];
+    for (const attribute of collectBodyAttributes(
+      str,
+      resolvedOpts.backend,
+    ).values()) {
+      if (
+        attribute.name !== "style" &&
+        attribute.quote &&
+        str[attribute.valueStartsAt] === " "
+      ) {
+        leadingSpaces.push([
+          attribute.valueStartsAt,
+          attribute.valueStartsAt + 1,
+        ]);
+      }
+    }
+    str = rApply(str, leadingSpaces);
+  }
+
   DEV &&
     console.log(
       `${`\u001b[${33}m${`allClassesAndIdsWithinHeadFinal`}\u001b[${39}m`} = ${JSON.stringify(
@@ -5081,10 +5125,6 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
         4,
       )}`,
     );
-
-  // remove first character, space, inside classes/id's - it might
-  // be a leftover after class/id removal
-  str = str.replace(/ ((class|id)=["']) /g, " $1");
 
   return {
     log: {
