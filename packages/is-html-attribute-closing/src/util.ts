@@ -3,6 +3,47 @@ import { left } from "string-left-right";
 
 declare let DEV: boolean;
 
+// Indices remain UTF-16 offsets. Looking left can land on the second code
+// unit of a supplementary character; classify the complete pair either way.
+function isAttrNameCharAt(str: string, index: number): boolean {
+  if (typeof index !== "number") {
+    return false;
+  }
+  let code = str.charCodeAt(index);
+  if (code >= 0xdc00 && code <= 0xdfff) {
+    let previous = str.charCodeAt(index - 1);
+    if (previous >= 0xd800 && previous <= 0xdbff) {
+      return isAttrNameChar(str.slice(index - 1, index + 1));
+    }
+  }
+  return isAttrNameChar(
+    code >= 0xd800 && code <= 0xdbff ? str.slice(index, index + 2) : str[index],
+  );
+}
+
+// Missing-equals recovery gives word-like chunks more weight than punctuation
+// in a broken value, as in `alt !'`. This is a recovery heuristic, not the HTML
+// attribute-name grammar used for names followed by an equals sign.
+function isRecoveryNameCharAt(str: string, index: number): boolean {
+  let code = str.charCodeAt(index);
+  return (
+    (code > 127 ||
+      (code >= 48 && code <= 57) ||
+      (code >= 65 && code <= 90) ||
+      (code >= 97 && code <= 122) ||
+      "-:_.".includes(str[index])) &&
+    isAttrNameCharAt(str, index)
+  );
+}
+
+function attrNameEndsAt(str: string, start: number): number {
+  let end = start;
+  while (end < str.length && isAttrNameCharAt(str, end)) {
+    end += (str.codePointAt(end) as number) > 0xffff ? 2 : 1;
+  }
+  return end;
+}
+
 function makeTheQuoteOpposite(quoteChar: string): string {
   return quoteChar === `'` ? `"` : `'`;
 }
@@ -66,13 +107,22 @@ function plausibleAttrStartsAtX(str: string, start: number): boolean {
     console.log(
       `${`\u001b[${35}m${`plausibleAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`,
     );
-  if (!isAttrNameChar(str[start]) || !start) {
+  if (!isAttrNameCharAt(str, start) || !start) {
     return false;
   }
-  // const regex = /^[a-zA-Z0-9:-]*[=]?((?:'[^']*')|(?:"[^"]*"))/;
-  let regex =
-    /^[a-zA-Z0-9:-]*(\s*[=]?\s*((?:'[^']*')|(?:"[^"]*")))|( [^/>'"=]*['"])/;
-  return regex.test(str.slice(start));
+  let nameEndsAt = attrNameEndsAt(str, start);
+  let equalsAt = nameEndsAt;
+  while (str[equalsAt] && " \t\n\f\r".includes(str[equalsAt])) {
+    equalsAt++;
+  }
+  if (str[equalsAt] !== "=" && !isRecoveryNameCharAt(str, start)) {
+    return false;
+  }
+  return (
+    /^\s*=?\s*(?:'[^']*'|"[^"]*")/.test(str.slice(nameEndsAt)) ||
+    // Retain the existing loose recovery for missing equals and closing quotes.
+    / [^/>'"=]*['"]/.test(str.slice(start))
+  );
 }
 
 // difference is equal is required
@@ -81,23 +131,21 @@ function guaranteedAttrStartsAtX(str: string, start: number): boolean {
     console.log(
       `${`\u001b[${35}m${`guaranteedAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`,
     );
-  if (!start || !isAttrNameChar(str[start])) {
+  if (!start || !isAttrNameCharAt(str, start)) {
     DEV && console.log(`083g return false`);
     return false;
   }
   // either quotes match or does not match but tag closing follows
-  // const regex = /^[a-zA-Z0-9:-]*[=]?(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
-  let regex =
-    /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
-  DEV && console.log(`090g return ${regex.test(str.slice(start))}`);
-  return regex.test(str.slice(start));
+  return /^=(?:'[^']*'|"[^"]*"|['"][^'"]*['"]\s*\/?>)/.test(
+    str.slice(attrNameEndsAt(str, start)),
+  );
 }
 
 function findAttrNameCharsChunkOnTheLeft(
   str: string,
   i: number,
 ): undefined | string {
-  if (!isAttrNameChar(str[left(str, i) as number])) {
+  if (!isAttrNameCharAt(str, left(str, i) as number)) {
     return;
   }
   for (let y = i; y--; ) {
@@ -109,7 +157,7 @@ function findAttrNameCharsChunkOnTheLeft(
           4,
         )}`,
       );
-    if (str[y].trim().length && !isAttrNameChar(str[y])) {
+    if (str[y].trim().length && !isAttrNameCharAt(str, y)) {
       return str.slice(y + 1, i);
     }
   }
@@ -119,6 +167,8 @@ export {
   ensureXIsNotPresentBeforeOneOfY,
   findAttrNameCharsChunkOnTheLeft,
   guaranteedAttrStartsAtX,
+  isAttrNameCharAt,
+  isRecoveryNameCharAt,
   makeTheQuoteOpposite,
   plausibleAttrStartsAtX,
   xBeforeYOnTheRight,

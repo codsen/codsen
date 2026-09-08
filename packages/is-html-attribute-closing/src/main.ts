@@ -7,6 +7,8 @@ import {
   ensureXIsNotPresentBeforeOneOfY,
   findAttrNameCharsChunkOnTheLeft,
   guaranteedAttrStartsAtX,
+  isAttrNameCharAt,
+  isRecoveryNameCharAt,
   makeTheQuoteOpposite,
   plausibleAttrStartsAtX,
   xBeforeYOnTheRight,
@@ -326,7 +328,7 @@ function isAttrClosing(
         // we're on suspected
         i === isThisClosingIdx &&
         // it's not a character suitable for attr name,
-        (!isAttrNameChar(str[leftVal]) ||
+        (!isAttrNameCharAt(str, leftVal) ||
           // or it is, but whatever we extracted is not recognised attr name
           (attrNameCharsChunkOnTheLeft &&
             !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft))) &&
@@ -341,7 +343,7 @@ function isAttrClosing(
 
       let E42 =
         // or next character is suitable for a tag name:
-        isAttrNameChar(str[rightVal]);
+        isAttrNameCharAt(str, rightVal);
 
       let E43 =
         // or in case of:
@@ -580,7 +582,7 @@ function isAttrClosing(
       // <img alt="so-called "artists"!' class='yo'/>
       //                              ^
       //                         we land here, on excl. mark
-      if (isAttrNameChar(str[i])) {
+      if (isRecoveryNameCharAt(str, i)) {
         DEV &&
           console.log(
             `${`\u001b[${32}m${`██ new attribute name starts`}\u001b[${39}m`}`,
@@ -595,7 +597,7 @@ function isAttrClosing(
             )}`,
           );
       }
-    } else if (chunkStartsAt && !isAttrNameChar(str[i])) {
+    } else if (chunkStartsAt && !isRecoveryNameCharAt(str, i)) {
       DEV && console.log(`inside the attr name END catching clauses`);
 
       // ending of an attr name chunk
@@ -1188,7 +1190,7 @@ function isAttrClosing(
         let R33 =
           str[idxOfAttrOpening - 2] &&
           str[idxOfAttrOpening - 1] === "=" &&
-          isAttrNameChar(str[idxOfAttrOpening - 2]);
+          isAttrNameCharAt(str, idxOfAttrOpening - 2);
 
         let R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", [
           `='`,
@@ -1405,7 +1407,7 @@ function isAttrClosing(
         // name on the left of equal (if it's a real
         // attribute name its name characters must pass
         // the isAttrNameChar()...)
-        isAttrNameChar(str[firstNonWhitespaceCharOnTheLeft as number]) &&
+        isAttrNameCharAt(str, firstNonWhitespaceCharOnTheLeft as number) &&
         // ensure it's not
         // <img src="https://z.com/r.png?a=" />
         //                                ^
@@ -1596,7 +1598,7 @@ function isAttrClosing(
     }
 
     // at the bottom, PART II of reset chunk
-    if (chunkStartsAt && !isAttrNameChar(str[i])) {
+    if (chunkStartsAt && !isRecoveryNameCharAt(str, i)) {
       DEV &&
         console.log(
           `${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`}`,
