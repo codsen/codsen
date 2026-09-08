@@ -47,6 +47,39 @@ function remSep(str: string, opts?: Partial<Opts>): string {
     return res;
   }
 
+  // Recognize positive unsigned fractions without rounding or underflow.
+  // Their decimal separator must never be treated as a grouping separator.
+  let decimalAt = 0;
+  while (res[decimalAt] === "0") {
+    decimalAt += 1;
+  }
+  if (res[decimalAt] === "." || res[decimalAt] === ",") {
+    let i = decimalAt + 1;
+    let positive = false;
+    for (; i < res.length; i++) {
+      let digit = res.charCodeAt(i);
+      if (digit < 48 || digit > 57) {
+        break;
+      }
+      if (digit > 48) {
+        positive = true;
+      }
+    }
+    if (positive && i === res.length) {
+      if (resolvedOpts.forceUKStyle && res[decimalAt] === ",") {
+        res = `${res.slice(0, decimalAt)}.${res.slice(decimalAt + 1)}`;
+      }
+      if (
+        resolvedOpts.padSingleDecimalPlaceNumbers &&
+        res.length === decimalAt + 2
+      ) {
+        res += "0";
+      }
+      return res;
+    }
+  }
+
+  // Preserve the existing handling of other numeric spellings below one.
   if (+str > 0 && +str < 1) {
     DEV && console.log(`early return - less than 1`);
     return str;
