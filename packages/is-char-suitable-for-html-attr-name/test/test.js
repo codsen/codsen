@@ -40,29 +40,36 @@ test("06 - true", () => {
   equal(is(":"), true, "06.05");
 });
 
-test("07 - false", () => {
-  equal(is("_"), false, "07.01");
-  equal(is("!"), false, "07.02");
-  equal(is("@"), false, "07.03");
-  equal(is("£"), false, "07.04");
-  equal(is("$"), false, "07.05");
-  equal(is("%"), false, "07.06");
-  equal(is("^"), false, "07.07");
-  equal(is("&"), false, "07.08");
-  equal(is("*"), false, "07.09");
-  equal(is("("), false, "07.10");
-  equal(is(")"), false, "07.11");
-  equal(is("["), false, "07.12");
-  equal(is("]"), false, "07.13");
-  equal(is("'"), false, "07.14");
-  equal(is('"'), false, "07.15");
-  equal(is("`"), false, "07.16");
-  equal(is(" "), false, "07.17");
-  equal(is("/"), false, "07.18");
-  equal(is(BACKSLASH), false, "07.19");
-  equal(is("\t"), false, "07.20");
-  equal(is("\n"), false, "07.21");
-  equal(is("\r"), false, "07.22");
+test("07 - permitted punctuation and Unicode", () => {
+  for (const char of [
+    "_",
+    ".",
+    "!",
+    "@",
+    "£",
+    "$",
+    "%",
+    "^",
+    "&",
+    "*",
+    "(",
+    ")",
+    "[",
+    "]",
+    "`",
+    BACKSLASH,
+    "é",
+    "中",
+    "😀",
+    "\u00a0",
+    "\ufdcf",
+    "\ufdf0",
+    "\ufffd",
+    "\u{1fffd}",
+  ]) {
+    equal(is(char), true, "07.01");
+    equal(is(`${char} rest`), true, "07.02");
+  }
 });
 
 test("08 - suffixes do not change the first-character result", () => {
@@ -71,6 +78,37 @@ test("08 - suffixes do not change the first-character result", () => {
   equal(is(":rest"), true, "08.03");
   equal(is("a rest"), true, "08.04");
   equal(is(" -rest"), false, "08.05");
+});
+
+test("09 - forbidden boundaries and lone surrogates", () => {
+  for (const char of [
+    "\0",
+    "\u001f",
+    "\t",
+    "\n",
+    "\r",
+    "\f",
+    " ",
+    '"',
+    "'",
+    "/",
+    "<",
+    "=",
+    ">",
+    "\u007f",
+    "\u009f",
+    "\ud800",
+    "\udfff",
+    "\ufdd0",
+    "\ufdef",
+    "\ufffe",
+    "\uffff",
+    "\u{1fffe}",
+    "\u{10ffff}",
+  ]) {
+    equal(is(char), false, "09.01");
+    equal(is(`${char}rest`), false, "09.02");
+  }
 });
 
 test.run();
