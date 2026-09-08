@@ -39,10 +39,17 @@ function extract(str: string): string {
     text = stripMarkup(decoded);
   }
 
+  // ASCII cannot change under NFC; decoding has already reached a fixed point.
+  const hasNonAscii = /[\u0080-\uFFFF]/.test(text);
+  text = unfancy(hasNonAscii ? text.normalize("NFC") : text, {
+    preserveCombiningMarks: true,
+  }).toLowerCase();
+  if (hasNonAscii) text = text.normalize("NFC");
+
   return [
     // Remove duplicated words using Set
     ...new Set(
-      removeUrls(unfancy(text).toLowerCase())
+      removeUrls(text)
         // Decode first, and recognize complete URLs before separating characters.
         .replace(/[\uD800-\uDFFF]/g, " ")
         // remove newlines, and punctuation

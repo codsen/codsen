@@ -23,8 +23,8 @@ test("03 - fullwidth letters retain their width and lowercase normally", () => {
   equal(extract("ＡＢＣ ＤＥＦ"), "ａｂｃ ｄｅｆ", "03.01");
 });
 
-test("04 - ordinary and compatibility CJK letters survive", () => {
-  equal(extract("漢字 \uF900\uFA0E"), "漢字 \uF900\uFA0E", "04.01");
+test("04 - ordinary and canonically normalized CJK letters survive", () => {
+  equal(extract("漢字 \uF900\uFA0E"), "漢字 \u8C48\uFA0E", "04.01");
 });
 
 test("05 - Arabic presentation letters survive without compatibility folding", () => {
