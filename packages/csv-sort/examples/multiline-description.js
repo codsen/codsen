@@ -1,3 +1,5 @@
+// Sort transactions with multiline descriptions
+
 import { strict as assert } from "node:assert";
 
 import { sort } from "../dist/csv-sort.esm.js";
