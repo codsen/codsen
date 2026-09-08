@@ -339,7 +339,12 @@ function crush(str: string, opts?: InputOpts | null): Res {
             to,
           ) ||
             (!resolvedOpts.removeCSSComments &&
-              intersectsProtectedRange(cssCommentRanges, from, to)))))
+              intersectsProtectedRange(cssCommentRanges, from, to)) ||
+            intersectsProtectedRange(
+              cssAnalysis.commentBoundaryRanges,
+              from,
+              to,
+            ))))
     )
       return;
     finalIndexesToDelete.push(from, to, insert);
@@ -829,15 +834,17 @@ function crush(str: string, opts?: InputOpts | null): Res {
           applicableOpts.removeCSSComments = true;
           if (resolvedOpts.removeCSSComments) {
             styleCommentStartedAt = i;
-            const range = expander({
-              str,
-              from: cssComment.from,
-              to: cssComment.to,
-              ifLeftSideIncludesThisThenCropTightly:
-                DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS || "",
-              ifRightSideIncludesThisThenCropTightly:
-                DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || "",
-            });
+            const range = cssComment.canExpand
+              ? expander({
+                  str,
+                  from: cssComment.from,
+                  to: cssComment.to,
+                  ifLeftSideIncludesThisThenCropTightly:
+                    DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS || "",
+                  ifRightSideIncludesThisThenCropTightly:
+                    DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || "",
+                })
+              : [cssComment.from, cssComment.to];
             stageFrom = Math.max(cssRegion.start, range[0]);
             stageTo = Math.min(cssRegion.end, range[1]);
             // Expansion can reach whitespace which terminates a preceding
@@ -853,7 +860,12 @@ function crush(str: string, opts?: InputOpts | null): Res {
               stageTo = cssComment.to;
             }
             whitespaceStartedAt = null;
-            pushRange(stageFrom, stageTo, undefined, "css-comment");
+            pushRange(
+              stageFrom,
+              stageTo,
+              cssComment.replacement || undefined,
+              "css-comment",
+            );
           }
         }
         if (

@@ -1,5 +1,5 @@
 import { scanReference } from "html-entity-codec";
-import { readCssToken } from "string-extract-class-names";
+import { type CssToken, readCssToken } from "string-extract-class-names";
 
 export interface CssSourceMapping {
   decodedFrom: number;
@@ -27,6 +27,8 @@ export interface CssCommentToken {
   to: number;
   region: CssRegion;
   closed: boolean;
+  replacement: "" | "/**/";
+  canExpand: boolean;
 }
 
 export interface CssAnalysis {
@@ -34,6 +36,7 @@ export interface CssAnalysis {
   opaqueRanges: [number, number][];
   commentTokens: CssCommentToken[];
   inlineReferenceRanges: [number, number][];
+  commentBoundaryRanges: [number, number][];
 }
 
 function isAsciiWhitespace(char: string | undefined): boolean {
@@ -316,6 +319,7 @@ export function getCssAnalysis(regions: CssRegion[]): CssAnalysis {
   const opaqueRanges: [number, number][] = [];
   const commentTokens: CssCommentToken[] = [];
   const inlineReferenceRanges: [number, number][] = [];
+  const commentBoundaryRanges: [number, number][] = [];
   for (const region of regions) {
     if (region.inline) {
       region.decoded ||= decodeInlineCss(region);
@@ -328,6 +332,8 @@ export function getCssAnalysis(regions: CssRegion[]): CssAnalysis {
       ? (region.decoded as DecodedCssView).source
       : region.source;
     let escapedTokenBefore = false;
+    let previousToken: CssToken | null = null;
+    let previousSignificantToken: CssToken | null = null;
     for (let cursor = 0; cursor < source.length; ) {
       const token = readCssToken(source, cursor);
       if (!token) break;
@@ -350,15 +356,57 @@ export function getCssAnalysis(regions: CssRegion[]): CssAnalysis {
           escapeRanges.push([from, to]);
         if (data || escaped) opaqueRanges.push([from, to]);
         if (token.kind === "comment") {
+          const nextToken = readCssToken(source, token.range[1]);
+          const nextSignificantToken =
+            nextToken?.kind === "whitespace"
+              ? readCssToken(source, nextToken.range[1])
+              : nextToken;
+          // These punctuators cannot join an adjacent token. Other apparent
+          // boundaries include numbers, hashes, functions and selector data;
+          // the partial reader deliberately does not classify all of those.
+          const canExpand =
+            !previousSignificantToken ||
+            !nextSignificantToken ||
+            [previousSignificantToken, nextSignificantToken].some(
+              (neighbor) =>
+                neighbor?.kind === "delimiter" &&
+                "{};,".includes(neighbor.raw),
+            );
+          const separated =
+            previousToken?.kind === "whitespace" ||
+            (nextToken?.kind === "whitespace" &&
+              !previousToken?.raw.includes("\\"));
+          // A colon stays a delimiter, but expanding through whitespace beside
+          // it could change a descendant pseudo-selector into a compound one.
+          const adjacentColon = [previousToken, nextToken].some(
+            (neighbor) =>
+              neighbor?.kind === "delimiter" && neighbor.raw === ":",
+          );
+          const replacement =
+            canExpand || separated || adjacentColon ? "" : "/**/";
+          if (!canExpand) {
+            let boundaryFrom = token.range[0];
+            let boundaryTo = token.range[1];
+            while (isAsciiWhitespace(source[boundaryFrom - 1])) boundaryFrom--;
+            while (isAsciiWhitespace(source[boundaryTo])) boundaryTo++;
+            commentBoundaryRanges.push([
+              rawOffset(region, boundaryFrom, false),
+              rawOffset(region, boundaryTo, true),
+            ]);
+          }
           commentTokens.push({
             from,
             to,
             region,
             closed: token.raw.length >= 4 && token.raw.endsWith("*/"),
+            replacement,
+            canExpand,
           });
         }
       }
       escapedTokenBefore = escaped || token.kind === "bad-string";
+      previousToken = token;
+      if (token.kind !== "whitespace") previousSignificantToken = token;
       cursor = token.range[1];
     }
   }
@@ -368,5 +416,6 @@ export function getCssAnalysis(regions: CssRegion[]): CssAnalysis {
     opaqueRanges: mergeRanges(opaqueRanges),
     commentTokens,
     inlineReferenceRanges: mergeRanges(inlineReferenceRanges),
+    commentBoundaryRanges: mergeRanges(commentBoundaryRanges),
   };
 }
