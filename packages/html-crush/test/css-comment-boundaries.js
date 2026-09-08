@@ -318,4 +318,23 @@ test("16 - keeps descendant and compound pseudo-selectors distinct", () => {
   equal(results, Array(16).fill(true), "16.01");
 });
 
+test("17 - applicability excludes already minimal required separators", () => {
+  const sources = [
+    ["<style>a/**/b{color:red}</style>", false],
+    ["<style>a/*note*/b{color:red}</style>", true],
+    ['<b style="width:1&#47;**&#47;px">x</b>', true],
+    ["<style>/**/a{color:red}</style>", true],
+  ];
+  const results = [];
+  for (const [source, expected] of sources) {
+    for (const removeCSSComments of [false, true]) {
+      results.push(
+        m(equal, source, { removeCSSComments }).applicableOpts
+          .removeCSSComments === expected,
+      );
+    }
+  }
+  equal(results, Array(8).fill(true), "17.01");
+});
+
 test.run();

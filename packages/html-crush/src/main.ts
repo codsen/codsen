@@ -831,7 +831,12 @@ function crush(str: string, opts?: InputOpts | null): Res {
       const cssOpaque = cssAnalysis.opaqueRanges[cssOpaqueIndex];
       if (!doNothing && htmlCommentStartedAt === null && inCssRegion) {
         if (inCssComment && i === cssComment.from) {
-          applicableOpts.removeCSSComments = true;
+          if (
+            cssComment.to - cssComment.from !== cssComment.replacement.length ||
+            str.slice(cssComment.from, cssComment.to) !== cssComment.replacement
+          ) {
+            applicableOpts.removeCSSComments = true;
+          }
           if (resolvedOpts.removeCSSComments) {
             styleCommentStartedAt = i;
             const range = cssComment.canExpand
