@@ -78,6 +78,7 @@ export function removeUrls(str: string): string {
       candidate = candidate.slice(0, candidateEndsAt);
     }
     try {
+      // biome-ignore lint/correctness/noUnusedInstantiation: URL construction validates the candidate by throwing; no parsed value is needed.
       new URL(candidate);
     } catch {
       continue;
