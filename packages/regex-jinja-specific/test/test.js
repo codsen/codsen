@@ -20,8 +20,12 @@ test("03 - namespaces", () => {
   match("{% set x = namespace(blablabla) %}", isJinjaSpecific(), "03.01");
 });
 
-test("04 - backwards order", () => {
-  match("{{'oodles' if crambles else 'brambles'}}", isJinjaSpecific(), "04.01");
+test("04 - inline conditionals are shared syntax", () => {
+  not.match(
+    "{{'oodles' if crambles else 'brambles'}}",
+    isJinjaSpecific(),
+    "04.01",
+  );
 });
 
 test.run();
