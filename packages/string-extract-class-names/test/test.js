@@ -2229,12 +2229,24 @@ test("76 - reads HTML-style class and ID attribute selectors", () => {
   );
   equal(
     e('[class="foo:bar"][class="foo\\:bar"]'),
-    { res: [String.raw`.foo\:bar`], ranges: [[25, 33]] },
+    {
+      res: [".foo:bar", String.raw`.foo\:bar`],
+      ranges: [
+        [8, 15],
+        [25, 33],
+      ],
+    },
     "76.10",
   );
   equal(
     e('[class="&copy;"][class="\\26 copy"]'),
-    { res: [String.raw`.\26 copy`], ranges: [[24, 32]] },
+    {
+      res: [".&copy;", String.raw`.\26 copy`],
+      ranges: [
+        [8, 14],
+        [24, 32],
+      ],
+    },
     "76.11",
   );
   equal(
@@ -2255,7 +2267,13 @@ test("76 - reads HTML-style class and ID attribute selectors", () => {
   );
   equal(
     e('[class="foo]bar"].real'),
-    { res: [".real"], ranges: [[17, 22]] },
+    {
+      res: [".foo]bar", ".real"],
+      ranges: [
+        [8, 15],
+        [17, 22],
+      ],
+    },
     "76.14",
   );
   equal(
@@ -2265,12 +2283,24 @@ test("76 - reads HTML-style class and ID attribute selectors", () => {
   );
   equal(
     e('[class="foo\\\nbar"].real'),
-    { res: [".real"], ranges: [[18, 23]] },
+    {
+      res: [".foo\\\nbar", ".real"],
+      ranges: [
+        [8, 16],
+        [18, 23],
+      ],
+    },
     "76.16",
   );
   equal(
     e('[class="foo\\\r\nbar"].real'),
-    { res: [".real"], ranges: [[19, 24]] },
+    {
+      res: [".foo\\\r\nbar", ".real"],
+      ranges: [
+        [8, 17],
+        [19, 24],
+      ],
+    },
     "76.17",
   );
 });

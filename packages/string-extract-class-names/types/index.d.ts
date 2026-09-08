@@ -42,6 +42,18 @@ declare function readCssSelectorToken(
   str: string,
   start: number,
 ): CssSelectorToken | null;
+/**
+ * Extract canonical class/ID inventory entries with their original source
+ * spelling and UTF-16 ranges. Quoted attribute values follow CSS string rules;
+ * exact ID values retain their whitespace. This is not a selector evaluator.
+ */
+declare function extractCssSelectorTokens(str: string): CssSelectorToken[];
 
-export { decodeCssSelector, extract, readCssSelectorToken, version };
+export {
+  decodeCssSelector,
+  extract,
+  extractCssSelectorTokens,
+  readCssSelectorToken,
+  version,
+};
 export type { CssSelectorToken, Result };

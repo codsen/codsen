@@ -1,5 +1,5 @@
 import { formatDiagnosticValue } from "codsen-utils";
-import { left, right } from "string-left-right";
+import { right } from "string-left-right";
 import type { Ranges } from "../../../ops/typedefs/common";
 
 import { version as v } from "../package.json";
@@ -38,6 +38,10 @@ function extract(str: string): Result {
     );
   }
 
+  return extractInternal(str);
+}
+
+function extractInternal(str: string, semantic?: CssSelectorToken[]): Result {
   let badChars = selectorBreakCharacters;
 
   // action
@@ -92,7 +96,15 @@ function extract(str: string): Result {
           selectorStartsAt,
           i,
         ]);
-        result.res.push(str.slice(selectorStartsAt, i));
+        const raw = str.slice(selectorStartsAt, i);
+        result.res.push(raw);
+        if (semantic) {
+          semantic.push({
+            value: decodeCssSelector(raw),
+            raw,
+            range: [selectorStartsAt, i],
+          });
+        }
       }
       selectorStartsAt = null;
       DEV &&
@@ -114,44 +126,47 @@ function extract(str: string): Result {
         );
     }
 
-    // catch zzz[class=]
-    if (
-      str[i] &&
-      str[i].toLowerCase() === "c" &&
-      str.slice(i, i + 5).toLowerCase() === "class" &&
-      attributeNameCanEnd(str[i + 5]) &&
-      typeof left(str, i) === "number" &&
-      str[left(str, i) as number] === "["
-    ) {
-      let temp1 = right(str, i + 4);
-      let attribute = readAttributeSelector(str, i, ".", temp1);
-      if (attribute !== null) {
-        for (let selector of attribute.selectors) {
-          result.res.push(`.${selector.raw}`);
-          (result.ranges as [from: number, to: number][]).push(selector.range);
-        }
-        i = attribute.closeAt;
-        continue;
+    // Attribute names use CSS identifier syntax, including escaped letters.
+    if (str[i] === "[") {
+      let nameStartsAt = i + 1;
+      while (isCssWhitespace(str[nameStartsAt])) {
+        nameStartsAt++;
       }
-    }
-
-    // catch zzz[id=]
-    if (
-      str[i] &&
-      str[i].toLowerCase() === "i" &&
-      str.slice(i, i + 2).toLowerCase() === "id" &&
-      attributeNameCanEnd(str[i + 2]) &&
-      str[left(str, i) as number] === "["
-    ) {
-      let temp2 = right(str, i + 1);
-      let attribute = readAttributeSelector(str, i, "#", temp2);
-      if (attribute !== null) {
-        for (let selector of attribute.selectors) {
-          result.res.push(`#${selector.raw}`);
-          (result.ranges as [from: number, to: number][]).push(selector.range);
+      let first = str[nameStartsAt]?.toLowerCase();
+      if (first === "c" || first === "i" || first === "\\") {
+        let name = readCssIdentifierValue(str, nameStartsAt);
+        let marker: "." | "#" | null =
+          name?.value.toLowerCase() === "class"
+            ? "."
+            : name?.value.toLowerCase() === "id"
+              ? "#"
+              : null;
+        if (name && marker && attributeNameCanEnd(str[name.range[1]])) {
+          let attribute = readAttributeSelector(
+            str,
+            nameStartsAt,
+            marker,
+            right(str, name.range[1] - 1),
+            !!semantic,
+          );
+          if (attribute !== null) {
+            for (let selector of attribute.selectors) {
+              result.res.push(`${marker}${selector.raw}`);
+              (result.ranges as [from: number, to: number][]).push(
+                selector.range,
+              );
+              if (semantic) {
+                semantic.push({
+                  value: `${marker}${selector.value}`,
+                  raw: selector.raw,
+                  range: selector.range,
+                });
+              }
+            }
+            i = attribute.closeAt;
+            continue;
+          }
         }
-        i = attribute.closeAt;
-        continue;
       }
     }
 
@@ -329,6 +344,7 @@ interface CssStringValue {
 }
 
 interface AttributeSelectorValue {
+  value: string;
   raw: string;
   range: [from: number, to: number];
 }
@@ -498,14 +514,17 @@ function splitHtmlClassTokens(
   let tokens: AttributeSelectorValue[] = [];
   let tokenStartsAt: number | null = null;
   let tokenEndsAt = 0;
+  let value = "";
 
   function commit(): void {
     if (tokenStartsAt !== null) {
       tokens.push({
+        value,
         raw: str.slice(tokenStartsAt, tokenEndsAt),
         range: [tokenStartsAt, tokenEndsAt],
       });
       tokenStartsAt = null;
+      value = "";
     }
   }
 
@@ -517,6 +536,7 @@ function splitHtmlClassTokens(
         tokenStartsAt = unit.range[0];
       }
       tokenEndsAt = unit.range[1];
+      value += unit.value;
     }
   }
   commit();
@@ -538,6 +558,7 @@ function readAttributeSelector(
   nameStartsAt: number,
   marker: "." | "#",
   operatorAt: number | null,
+  semantic = false,
 ): AttributeSelectorRead | null {
   let closeAt = findCssAttributeEnd(str, nameStartsAt);
   if (closeAt === null) {
@@ -560,12 +581,17 @@ function readAttributeSelector(
   }
 
   let units: CssDecodedUnit[];
-  if (str[valueStartsAt] === '"' || str[valueStartsAt] === "'") {
+  let quoted = str[valueStartsAt] === '"' || str[valueStartsAt] === "'";
+  let valueFrom = valueStartsAt;
+  let valueTo: number;
+  if (quoted) {
     let value = readCssStringValue(str, valueStartsAt);
     if (value === null || right(str, value.endsAt - 1) !== closeAt) {
       return { closeAt, selectors: [] };
     }
     units = value.units;
+    valueFrom++;
+    valueTo = value.endsAt - 1;
   } else {
     let value = readCssIdentifierValue(str, valueStartsAt);
     if (
@@ -576,6 +602,22 @@ function readAttributeSelector(
       return { closeAt, selectors: [] };
     }
     units = decodeCssIdentifierUnits(str, value.range[0], value.range[1]);
+    valueTo = value.range[1];
+  }
+
+  if (semantic && marker === "#") {
+    return {
+      closeAt,
+      selectors: units.length
+        ? [
+            {
+              value: units.map((unit) => unit.value).join(""),
+              raw: str.slice(valueFrom, valueTo),
+              range: [valueFrom, valueTo],
+            },
+          ]
+        : [],
+    };
   }
 
   let selectors = splitHtmlClassTokens(str, units);
@@ -588,9 +630,9 @@ function readAttributeSelector(
 
   return {
     closeAt,
-    selectors: selectors.filter((selector) =>
-      rawSpellsCssIdentifier(str, selector),
-    ),
+    selectors: quoted
+      ? selectors
+      : selectors.filter((selector) => rawSpellsCssIdentifier(str, selector)),
   };
 }
 
@@ -685,4 +727,26 @@ function readCssSelectorToken(
   return readCssSelectorTokenInternal(str, start);
 }
 
-export { decodeCssSelector, extract, readCssSelectorToken, version };
+/**
+ * Extract canonical class/ID inventory entries with their original source
+ * spelling and UTF-16 ranges. Quoted attribute values follow CSS string rules;
+ * exact ID values retain their whitespace. This is not a selector evaluator.
+ */
+function extractCssSelectorTokens(str: string): CssSelectorToken[] {
+  if (typeof str !== "string") {
+    throw new TypeError(
+      `string-extract-class-names/extractCssSelectorTokens(): [THROW_ID_05] first str should be string, not ${typeof str}, currently equal to ${formatDiagnosticValue(str, 4)}`,
+    );
+  }
+  let tokens: CssSelectorToken[] = [];
+  extractInternal(str, tokens);
+  return tokens;
+}
+
+export {
+  decodeCssSelector,
+  extract,
+  extractCssSelectorTokens,
+  readCssSelectorToken,
+  version,
+};
