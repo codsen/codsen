@@ -369,8 +369,7 @@ export function getCssAnalysis(regions: CssRegion[]): CssAnalysis {
             !nextSignificantToken ||
             [previousSignificantToken, nextSignificantToken].some(
               (neighbor) =>
-                neighbor?.kind === "delimiter" &&
-                "{};,".includes(neighbor.raw),
+                neighbor?.kind === "delimiter" && "{};,".includes(neighbor.raw),
             );
           const separated =
             previousToken?.kind === "whitespace" ||
