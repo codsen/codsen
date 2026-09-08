@@ -219,8 +219,12 @@ function cleanChangelogs(
             );
         }
       }
-      // fix asterisk list items into dash (Prettier default):
-      else if (linesArr[i][0] === "*" && linesArr[i][1] === " ") {
+      // Normalize list markers without turning thematic breaks into list items.
+      else if (
+        linesArr[i][0] === "*" &&
+        linesArr[i][1] === " " &&
+        !/^(?:\*[ \t]*){3,}$/.test(linesArr[i])
+      ) {
         newLinesArr.push(`- ${linesArr[i].slice(2)}`);
       } else {
         newLinesArr.push(linesArr[i]);
