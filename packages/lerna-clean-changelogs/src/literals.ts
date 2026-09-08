@@ -291,9 +291,11 @@ function interruptsContainerParagraph(
 
 /** Classify code blocks without changing original physical lines. This scanner
  * tracks the block boundaries needed by changelog cleanup; it does not parse
- * inline Markdown or produce a document tree. */
+ * inline Markdown or produce a document tree. The optional output set records
+ * HTML block lines separately from protected code. */
 export function protectedLiteralLines(
   lines: readonly string[],
+  headingExclusions?: Set<number>,
 ): Set<number> | undefined {
   let protectedLines: Set<number> | undefined;
   const containers: Container[] = [];
@@ -372,7 +374,10 @@ export function protectedLiteralLines(
       continue;
     }
     if (html) {
-      if (htmlEnds(line, cursor.index, html)) html = undefined;
+      const ended = htmlEnds(line, cursor.index, html);
+      // A blank line ends a complete-tag block without belonging to that block.
+      if (html !== "blank" || !ended) headingExclusions?.add(lineIndex);
+      if (ended) html = undefined;
       continue;
     }
 
@@ -442,6 +447,7 @@ export function protectedLiteralLines(
     }
     html = htmlOpening(line, cursor.index, paragraph);
     if (html) {
+      headingExclusions?.add(lineIndex);
       if (htmlEnds(line, cursor.index, html)) html = undefined;
       paragraph = false;
       continue;

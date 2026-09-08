@@ -7,6 +7,7 @@ import {
 import { version as v } from "../package.json";
 import { protectedLiteralLines } from "./literals";
 import { findRemovedLines } from "./sections";
+import { removeVersionLink } from "./version-links";
 
 const version: string = v;
 
@@ -68,16 +69,22 @@ function cleanChangelogs(
 
     let linesArr: string[] = [];
     let literalLines: Set<number> | undefined;
-    // Every supported code block needs a fence run, four spaces, or a tab.
-    if (/```|~~~| {4}|\t/.test(changelog)) {
+    let headingExclusions =
+      resolvedOpts.extras && changelog.includes("<")
+        ? new Set<number>()
+        : undefined;
+    // Code needs a fence run, four spaces or a tab; heading links also need
+    // the existing HTML block boundaries when extras is enabled.
+    if (/```|~~~| {4}|\t/.test(changelog) || headingExclusions) {
       linesArr = changelog.split(/\r?\n/);
       // The final empty split item represents the EOF newline appended below.
       if (changelogEndedWithLinebreak && linesArr[linesArr.length - 1] === "") {
         linesArr.pop();
       }
-      literalLines = protectedLiteralLines(linesArr);
+      literalLines = protectedLiteralLines(linesArr, headingExclusions);
+      if (!headingExclusions?.size) headingExclusions = undefined;
     }
-    if (!literalLines) {
+    if (!literalLines && !headingExclusions) {
       // Preserve the established non-literal cleanup.
       changelog = changelog
         .trim()
@@ -91,37 +98,46 @@ function cleanChangelogs(
       let end = linesArr.length;
       while (
         first < end &&
-        !literalLines.has(first) &&
+        !literalLines?.has(first) &&
         !linesArr[first].trim()
       ) {
         first += 1;
       }
       while (
         end > first &&
-        !literalLines.has(end - 1) &&
+        !literalLines?.has(end - 1) &&
         !linesArr[end - 1].trim()
       ) {
         end -= 1;
       }
       if (first || end !== linesArr.length) {
-        const rebased = new Set<number>();
-        for (const index of literalLines) {
-          if (index >= first && index < end) rebased.add(index - first);
+        if (literalLines) {
+          const rebased = new Set<number>();
+          for (const index of literalLines) {
+            if (index >= first && index < end) rebased.add(index - first);
+          }
+          literalLines = rebased;
         }
-        literalLines = rebased;
+        if (headingExclusions) {
+          const rebased = new Set<number>();
+          for (const index of headingExclusions) {
+            if (index >= first && index < end) rebased.add(index - first);
+          }
+          headingExclusions = rebased;
+        }
         linesArr = linesArr.slice(first, end);
       }
-      if (!literalLines.has(0)) {
+      if (!literalLines?.has(0)) {
         linesArr[0] = linesArr[0].replace(/^\s+/, "");
       }
-      if (!literalLines.has(linesArr.length - 1)) {
+      if (!literalLines?.has(linesArr.length - 1)) {
         linesArr[linesArr.length - 1] = linesArr[linesArr.length - 1].replace(
           /\s+$/,
           "",
         );
       }
       for (let i = 0; i < linesArr.length; i += 1) {
-        if (!literalLines.has(i)) {
+        if (!literalLines?.has(i)) {
           linesArr[i] = linesArr[i].replace(
             /(https:\/\/git\.sr\.ht\/~[^/]+\/[^/]+\/)commits\//g,
             "$1commit/",
@@ -146,12 +162,7 @@ function cleanChangelogs(
       // ## 2.9.1 (2018-12-27)
       linesArr.forEach((line, i) => {
         if (literalLines?.has(i)) return;
-        if (line?.startsWith("#")) {
-          linesArr[i] = line.replace(
-            /(#+) \[?(\d+\.\d+\.\d+)\s?\]\([^)]*\)/g,
-            "$1 $2",
-          );
-        }
+        if (!headingExclusions?.has(i)) linesArr[i] = removeVersionLink(line);
         if (i && linesArr[i]?.startsWith("# ")) {
           linesArr[i] = `#${linesArr[i]}`;
         }
