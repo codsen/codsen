@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 13.7.3 (2026-09-09)
+
+### Bug Fixes
+
+- **string-strip-html:** keep quoted brackets inside attribute values ([11b9fda](https://github.com/codsen/codsen/commit/11b9fdaed7a45a52e1dd20e7f675708b76271637))
+
 ## 13.7.1 (2026-09-06)
 
 ### Performance Improvements

@@ -1,6 +1,6 @@
 {
   "name": "string-remove-thousand-separators",
-  "version": "7.2.4",
+  "version": "7.2.5",
   "description": "Detects and removes thousand separators (dot/comma/quote/space) from string-type digits",
   "keywords": [
     "amount",
@@ -67,9 +67,9 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.10.1",
-    "ranges-apply": "^7.2.4",
-    "ranges-push": "^7.3.1"
+    "codsen-utils": "^1.10.2",
+    "ranges-apply": "^7.2.5",
+    "ranges-push": "^7.3.2"
   },
   "engines": {
     "node": ">=18.20.8"

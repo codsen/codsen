@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.5 (2026-09-09)
+
+### Bug Fixes
+
+- **is-html-attribute-closing:** recognize Unicode attribute boundaries ([8b58d67](https://github.com/codsen/codsen/commit/8b58d67c33526cc540de9cc93a1a67856c9f9630))
+
 ## 4.2.4 (2026-09-06)
 
 ### Performance Improvements

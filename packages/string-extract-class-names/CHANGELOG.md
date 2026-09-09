@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 8.4.0 (2026-09-09)
+
+### Features
+
+- **string-extract-class-names:** expose bounded CSS token reader ([68648de](https://github.com/codsen/codsen/commit/68648de46ab834e7734a1f9ecd5b90cad289c3ed))
+- **string-extract-class-names:** expose canonical attribute selector tokens ([fc2ef0b](https://github.com/codsen/codsen/commit/fc2ef0b5f9aae1a6964af9db72683dcd8c7948db))
+
 ## 8.3.1 (2026-09-06)
 
 ### Performance Improvements

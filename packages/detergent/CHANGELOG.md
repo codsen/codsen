@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 9.4.7 (2026-09-09)
+
+### Bug Fixes
+
+- **detergent:** normalize retained closing tags once ([a5fae3a](https://github.com/codsen/codsen/commit/a5fae3a1c57bf18694e28bee9912ed0c14c797da))
+- **detergent:** protect retained markup throughout prose cleanup ([60454a4](https://github.com/codsen/codsen/commit/60454a457b2ef7cdf86fde7b3662aa5a89b7ab04))
+
 ## 9.4.6 (2026-09-07)
 
 ### Bug Fixes

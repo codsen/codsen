@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.3.0 (2026-09-09)
+
+### Bug Fixes
+
+- **string-unfancy:** normalize every character after expanding ellipses ([8a62ca6](https://github.com/codsen/codsen/commit/8a62ca6a243dbacb7a44b7d37d727e402da4e131))
+
+### Features
+
+- **string-unfancy:** optionally preserve combining marks ([660b7a9](https://github.com/codsen/codsen/commit/660b7a9aedaf201a139700839b4ec8e0078fb10f))
+
+### Performance Improvements
+
+- **string-unfancy:** replace mapped typography in a single pass ([54e3972](https://github.com/codsen/codsen/commit/54e39728b3b3853b67a007635e0a8ba2f51a80a5))
+
 ## 6.2.3 (2026-09-06)
 
 ### Performance Improvements

@@ -1,6 +1,6 @@
 {
   "name": "js-row-num-cli",
-  "version": "4.2.5",
+  "version": "4.2.6",
   "description": "Update all row numbers in all console.logs in given files",
   "keywords": [
     "automated",
@@ -72,8 +72,8 @@
   "dependencies": {
     "arrayiffy-if-string": "^5.2.3",
     "codsen-glob": "^1.1.2",
-    "codsen-utils": "^1.10.1",
-    "js-row-num": "^7.2.4"
+    "codsen-utils": "^1.10.2",
+    "js-row-num": "^7.2.5"
   },
   "engines": {
     "node": ">=18.20.8"

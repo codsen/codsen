@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.2.5 (2026-09-09)
+
+### Bug Fixes
+
+- **string-remove-thousand-separators:** convert decimals independently of grouping ([423e020](https://github.com/codsen/codsen/commit/423e0201590f26a7181cededd2944e4199fe84d7))
+- **string-remove-thousand-separators:** preserve and pad positive fractions ([4e056b0](https://github.com/codsen/codsen/commit/4e056b0660d1037ca14e123ac0e1de6fb2d42750))
+
 ## 7.2.4 (2026-09-06)
 
 ### Performance Improvements

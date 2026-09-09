@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.3.3 (2026-09-09)
+
+### Bug Fixes
+
+- **html-crush:** preserve CSS escapes across whitespace edits ([0c1ce07](https://github.com/codsen/codsen/commit/0c1ce07cba1850cc59b9bb0f9abecac87993b0d1))
+- **html-crush:** preserve CSS strings and decoded inline contexts ([4157b3c](https://github.com/codsen/codsen/commit/4157b3c864f5a99ba161d29b9f80542242718d54))
+- **html-crush:** preserve token boundaries when removing CSS comments ([ce3b25f](https://github.com/codsen/codsen/commit/ce3b25fc01af59b04eba64e2e9ecdaa42b04db66))
+- **html-crush:** report only effective CSS comment removal ([0d53f83](https://github.com/codsen/codsen/commit/0d53f83ee1e7b4e77c512a3e36882fa998411d97))
+
 ## 6.3.0 (2026-09-01)
 
 ### Bug Fixes
