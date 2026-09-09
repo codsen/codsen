@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.2.5 (2026-09-09)
+
+### Bug Fixes
+
+- **lerna-clean-changelogs:** clean CR-only and mixed line endings ([315a319](https://github.com/codsen/codsen/commit/315a31938fa10370172b66e137efe5a9bf70d961))
+- **lerna-clean-changelogs:** preserve asterisk thematic breaks ([f7c6441](https://github.com/codsen/codsen/commit/f7c64414802fd7ca8fc8080488f7bbd231d78bcc))
+- **lerna-clean-changelogs:** preserve headings for retained changes ([ec60169](https://github.com/codsen/codsen/commit/ec60169559dabdcad6bbb5d01e1f69a5b132ce6e))
+- **lerna-clean-changelogs:** preserve literal code during cleanup ([16c1692](https://github.com/codsen/codsen/commit/16c16929ea35bc23301b4f17e916d34c6804a503))
+- **lerna-clean-changelogs:** return valid empty cleanup results ([523cae6](https://github.com/codsen/codsen/commit/523cae68eae043f52a0e070585935f2ece538a65))
+- **lerna-clean-changelogs:** unwrap complete version heading links ([80c20e9](https://github.com/codsen/codsen/commit/80c20e97c665d5eac20227a9d3b051c6ddb86efc))
+
+### Performance Improvements
+
+- **lerna-clean-changelogs:** collect retained lines in linear time ([2927410](https://github.com/codsen/codsen/commit/29274106f0d6050ba305e13644905b0a7850ea5b))
+
 ## 5.2.4 (2026-09-06)
 
 ### Performance Improvements

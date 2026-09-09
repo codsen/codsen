@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.2.6 (2026-09-09)
+
+### Bug Fixes
+
+- **extract-search-index:** filter characters after decoding and URL removal ([e1c6882](https://github.com/codsen/codsen/commit/e1c6882947382d6aaaeb76c77cbf039ea4acbc65))
+- **extract-search-index:** normalize canonical word spellings ([58b9828](https://github.com/codsen/codsen/commit/58b98286e1fa82c6ab19b7f6a4bf041274e6c292))
+- **extract-search-index:** parse HTML before decoding retained text ([a6c46f4](https://github.com/codsen/codsen/commit/a6c46f42740a5c4e9615a57944128f706c4c3cd7))
+- **extract-search-index:** preserve BMP words outside the surrogate range ([fef1698](https://github.com/codsen/codsen/commit/fef1698a0b837ef9761a9b8e18df70dd0e607c32))
+- **extract-search-index:** preserve prose around complete URL spans ([7b392db](https://github.com/codsen/codsen/commit/7b392dbf1ad5c2717f50a1ec30d5a00731690755))
+
 ## 2.2.5 (2026-09-07)
 
 ### Performance Improvements

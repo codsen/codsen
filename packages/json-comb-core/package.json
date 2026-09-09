@@ -1,6 +1,6 @@
 {
   "name": "json-comb-core",
-  "version": "8.2.5",
+  "version": "8.2.6",
   "description": "The inner core of json-comb",
   "keywords": [
     "comb",
@@ -67,12 +67,12 @@
     "various": {}
   },
   "dependencies": {
-    "codsen-utils": "^1.10.1",
-    "object-fill-missing-keys": "^11.2.4",
-    "object-flatten-all-arrays": "^7.2.3",
-    "object-merge-advanced": "^14.2.3",
-    "object-no-new-keys": "^5.3.3",
-    "object-set-all-values-to": "^6.2.4",
+    "codsen-utils": "^1.10.2",
+    "object-fill-missing-keys": "^11.2.5",
+    "object-flatten-all-arrays": "^7.2.4",
+    "object-merge-advanced": "^14.2.4",
+    "object-no-new-keys": "^5.3.4",
+    "object-set-all-values-to": "^6.2.5",
     "semver-compare": "^1.0.0",
     "sort-keys": "^5.1.0"
   },

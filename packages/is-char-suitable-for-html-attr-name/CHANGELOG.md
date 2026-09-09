@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.3 (2026-09-09)
+
+### Bug Fixes
+
+- **is-char-suitable-for-html-attr-name:** inspect leading punctuation consistently ([fcfb60d](https://github.com/codsen/codsen/commit/fcfb60d5cd00b9055db415f9e83da4cdbd6c1c17))
+- **is-char-suitable-for-html-attr-name:** recognize Unicode attribute characters ([5688ddc](https://github.com/codsen/codsen/commit/5688ddcddfdf4135b83c5ba8ba76b90cb09b198a))
+
 ## 4.2.2 (2026-09-06)
 
 ### Performance Improvements

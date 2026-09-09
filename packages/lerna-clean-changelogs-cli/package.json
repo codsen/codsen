@@ -1,6 +1,6 @@
 {
   "name": "lerna-clean-changelogs-cli",
-  "version": "4.2.5",
+  "version": "4.2.6",
   "description": "CLI application to cleanse the lerna/commitizen-generated changelogs",
   "keywords": [
     "changelog",
@@ -70,8 +70,8 @@
   },
   "dependencies": {
     "codsen-glob": "^1.1.2",
-    "codsen-utils": "^1.10.1",
-    "lerna-clean-changelogs": "^5.2.4"
+    "codsen-utils": "^1.10.2",
+    "lerna-clean-changelogs": "^5.2.5"
   },
   "devDependencies": {
     "p-map": "^7.0.7"

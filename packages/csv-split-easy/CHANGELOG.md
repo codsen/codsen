@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.2.5 (2026-09-09)
+
+### Bug Fixes
+
+- **csv-split-easy:** accept plain options from other realms ([e4f167b](https://github.com/codsen/codsen/commit/e4f167b638e950e7daeaab505e4302a90a678fa3))
+- **csv-split-easy:** preserve quoted multiline field content ([2500899](https://github.com/codsen/codsen/commit/2500899139c6638e704527eeaf1543c08330f69a))
+- **csv-split-easy:** reset record state before quoted fields ([6dab51d](https://github.com/codsen/codsen/commit/6dab51d2c196730b0276327e9a79744649e3952f))
+
 ## 7.2.4 (2026-09-06)
 
 ### Performance Improvements

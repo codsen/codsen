@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.4.3 (2026-09-09)
+
+### Bug Fixes
+
+- **email-comb:** decode HTML class lists and preserve exact IDs ([9207ee2](https://github.com/codsen/codsen/commit/9207ee2215c47e93b66c56925c7f4f3bbc9e0a12))
+- **email-comb:** preserve CSS comment token boundaries ([941b75b](https://github.com/codsen/codsen/commit/941b75b3dc27af190805e241eb05692d2e1bcdd9))
+- **email-comb:** respect CSS tokens and HTML boundaries ([495f518](https://github.com/codsen/codsen/commit/495f518bef4a2cc99c79bc3a3ea461b81c77254d))
+- **email-comb:** serialize renamed selectors for their output context ([070c1f5](https://github.com/codsen/codsen/commit/070c1f512bb6491bc207aac6fef8d72cd0f54938))
+
 ## 7.4.1 (2026-09-06)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "string-extract-class-names",
-  "version": "8.3.1",
+  "version": "8.4.0",
   "description": "Extracts class and ID names from isolated CSS selector fragments",
   "keywords": ["class", "css", "extract", "id", "selector", "string"],
   "homepage": "https://codsen.com/os/string-extract-class-names",
@@ -58,8 +58,8 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.10.1",
-    "string-left-right": "^6.2.3"
+    "codsen-utils": "^1.10.2",
+    "string-left-right": "^6.2.4"
   },
   "engines": {
     "node": ">=18.20.8"

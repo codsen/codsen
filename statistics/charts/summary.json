@@ -3,8 +3,8 @@
   "sources": {
     "downloadRevision": "35aa96e81906d3366406311db39d3c20d376b47d48f44d8c4938b218ffa0456f",
     "downloadsThrough": "2026-09-06",
-    "interdepsSha256": "5a665f9a0ae5324753ebb968209e6ff530ed05419d8d8c3d4d7ed68d04c99cd0",
-    "packageLockSha256": "af8f128929e8056134e33fc2fa07b25d9af7432366a24262d95e369ec1750e98"
+    "interdepsSha256": "add5215d341cd80fd28c1699a45989f172aa912614d617bc9dfc058a1921d282",
+    "packageLockSha256": "927b7a367a6077a7a4f7560b752f1334103ed0dec16c6a16df5b14ee5c13801e"
   },
   "downloads": {
     "revision": "35aa96e81906d3366406311db39d3c20d376b47d48f44d8c4938b218ffa0456f",

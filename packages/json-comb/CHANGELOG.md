@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.11.6 (2026-09-09)
+
+### Bug Fixes
+
+- **json-comb:** report asynchronous processing failures ([28ef86e](https://github.com/codsen/codsen/commit/28ef86ea8722be35ce781820c74df95943904b95))
+
 ## 0.11.5 (2026-09-06)
 
 ### Bug Fixes
