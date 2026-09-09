@@ -48,6 +48,12 @@ const packagesOutsideMonorepoObj = {
     description:
       "Generate homepage in the BrowserSync root with links/screenshots to all your email templates",
   },
+  "eslint-plugin-row-num": {
+    description: "ESLint plugin to update row numbers on each console.log",
+  },
+  "eslint-plugin-test-num": {
+    description: "ESLint plugin to update unit test numbers automatically",
+  },
   "gulp-email-remove-unused-css": {
     description:
       "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY",
@@ -98,6 +104,10 @@ const packagesOutsideMonorepoObj = {
   },
 };
 
+// Retirement is package-wide policy, not merely the latest version's npm flag.
+// The eight posthtml names below whose latest versions lack that flag still
+// announce deprecation and replacements in their published npm READMEs.
+// eslint-on-airbnb-base-badge is locally retired and unavailable from npm.
 const deprecated = [
   "bitsausage",
   "chlu",
@@ -119,7 +129,61 @@ const deprecated = [
   "string-slices-array-push",
 ];
 
-const packagesOutsideMonorepo = Object.keys(packagesOutsideMonorepoObj);
+const packagesOutsideMonorepo = Object.keys(packagesOutsideMonorepoObj).sort();
+
+// npm maintainer membership and a local checkout do not alone make a package
+// a public Codsen product. Keep the audited exceptions explicit.
+const catalogueExclusions = {
+  "@codsen/data": "Auxiliary generated metadata package",
+  "codsen-test-1": "npm README and SVG publishing experiment",
+  "eslint-plugin-row-num-tbc":
+    "Unpublished frozen checkout alias for eslint-plugin-row-num",
+  "eslint-plugin-test-num-tbc":
+    "Unpublished frozen checkout alias for eslint-plugin-test-num",
+  "postcss-nested-import":
+    "Co-maintained third-party project outside the Codsen-authored catalogue",
+};
+
+function createCodsenPackageLists(workspaceNames) {
+  if (!Array.isArray(workspaceNames)) {
+    throw new TypeError("Codsen workspace names must be an array");
+  }
+  const seen = new Set();
+  for (const name of workspaceNames) {
+    if (
+      typeof name !== "string" ||
+      name.length > 214 ||
+      !/^(?:@[a-z0-9][a-z0-9._-]*\/)?[a-z0-9][a-z0-9._-]*$/.test(name)
+    ) {
+      throw new TypeError(
+        `Invalid Codsen workspace package name: ${String(name)}`,
+      );
+    }
+    if (seen.has(name)) {
+      throw new TypeError(`Duplicate Codsen workspace package name: ${name}`);
+    }
+    if (packagesOutsideMonorepo.includes(name)) {
+      throw new TypeError(
+        `Codsen package is both a workspace and external: ${name}`,
+      );
+    }
+    seen.add(name);
+  }
+  const current = [
+    ...workspaceNames.filter(
+      (name) =>
+        !Object.hasOwn(catalogueExclusions, name) && !deprecated.includes(name),
+    ),
+    ...packagesOutsideMonorepo,
+  ].sort();
+  return {
+    all: [...current],
+    current,
+    historical: [...new Set([...current, ...deprecated])].sort(),
+    deprecated: [...deprecated].sort(),
+    packagesOutsideMonorepo: [...packagesOutsideMonorepo],
+  };
+}
 
 // Every Codsen name resolvable outside this checkout.
 const codsenPackagesOutsideWorkspace = new Set([
@@ -128,7 +192,9 @@ const codsenPackagesOutsideWorkspace = new Set([
 ]);
 
 export {
+  catalogueExclusions,
   codsenPackagesOutsideWorkspace,
+  createCodsenPackageLists,
   deprecated,
   packagesOutsideMonorepo,
   packagesOutsideMonorepoObj,

@@ -1,0 +1,304 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "api": "https://api.npmjs.org",
+    "documentation": "https://github.com/npm/registry/blob/main/docs/download-counts.md",
+    "earliestDay": "2015-01-10"
+  },
+  "through": "2026-09-06",
+  "packages": {
+    "@codsen/data": {
+      "status": "auxiliary",
+      "includedInPortfolio": false,
+      "firstPublishedDay": null,
+      "availability": "available",
+      "file": "packages/@codsen/data.ndjson",
+      "sha256": "58504fe9a05dd3eb37ef3be37f21930df2842231d3530fdb7aaa25fbc6a83346",
+      "coverage": {
+        "start": "2015-01-10",
+        "end": "2026-09-06",
+        "days": 4258,
+        "missing": []
+      },
+      "total": 22240
+    },
+    "bitsausage": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2017-06-19",
+      "availability": "available",
+      "file": "packages/bitsausage.ndjson",
+      "sha256": "f93561290a4329239ed40d379cc38c5df4f74d36438191e1dc81b7999bc00178",
+      "coverage": {
+        "start": "2017-06-19",
+        "end": "2026-09-06",
+        "days": 3367,
+        "missing": []
+      },
+      "total": 9471
+    },
+    "chlu": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2017-05-16",
+      "availability": "available",
+      "file": "packages/chlu.ndjson",
+      "sha256": "58e0af4797ab1add1e676bff28cb2ea69b01ecc168a2bde81a3d44d72cf3d765",
+      "coverage": {
+        "start": "2017-05-16",
+        "end": "2026-09-06",
+        "days": 3401,
+        "missing": []
+      },
+      "total": 57149
+    },
+    "chlu-cli": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2017-05-17",
+      "availability": "available",
+      "file": "packages/chlu-cli.ndjson",
+      "sha256": "a04f74975d3f09af8f769fa08e61e3cea0d6ae57384158ca600a3964415d8c33",
+      "coverage": {
+        "start": "2017-05-17",
+        "end": "2026-09-06",
+        "days": 3400,
+        "missing": []
+      },
+      "total": 46410
+    },
+    "email-remove-unused-css": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2016-11-24",
+      "availability": "available",
+      "file": "packages/email-remove-unused-css.ndjson",
+      "sha256": "17089ab2c3bf9d56b10bb2deffc23cc958a287cd690f858761b5d9e233567259",
+      "coverage": {
+        "start": "2016-11-24",
+        "end": "2026-09-06",
+        "days": 3574,
+        "missing": []
+      },
+      "total": 52178
+    },
+    "eslint-on-airbnb-base-badge": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": null,
+      "availability": "unavailable",
+      "file": "packages/eslint-on-airbnb-base-badge.ndjson",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "coverage": {
+        "start": null,
+        "end": null,
+        "days": 0,
+        "missing": [
+          {
+            "start": "2015-01-10",
+            "end": "2026-09-06"
+          }
+        ]
+      },
+      "total": null
+    },
+    "fol": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2017-01-25",
+      "availability": "available",
+      "file": "packages/fol.ndjson",
+      "sha256": "aec8feb8d0da05c66f5216d069ba357b04458b0d784d28475d22c60206764ba4",
+      "coverage": {
+        "start": "2017-01-25",
+        "end": "2026-09-06",
+        "days": 3512,
+        "missing": []
+      },
+      "total": 2963
+    },
+    "posthtml-ast-compare": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2016-10-19",
+      "availability": "available",
+      "file": "packages/posthtml-ast-compare.ndjson",
+      "sha256": "4839b518b62e9bdab1c01ca127166fbe11d2301b2a1876c77c0604803504e287",
+      "coverage": {
+        "start": "2016-10-19",
+        "end": "2026-09-06",
+        "days": 3610,
+        "missing": []
+      },
+      "total": 11730
+    },
+    "posthtml-ast-contains-only-empty-space": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2016-10-31",
+      "availability": "available",
+      "file": "packages/posthtml-ast-contains-only-empty-space.ndjson",
+      "sha256": "a234b56c65a8a5ecb26fbbb98b5dc0c598bfb794ee4e10b70d93cd9d427bcf2e",
+      "coverage": {
+        "start": "2016-10-31",
+        "end": "2026-09-06",
+        "days": 3598,
+        "missing": []
+      },
+      "total": 13415
+    },
+    "posthtml-ast-delete-key": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2016-11-06",
+      "availability": "available",
+      "file": "packages/posthtml-ast-delete-key.ndjson",
+      "sha256": "80a3c3c362dd400efdfb3f8a319a40ec60fa7a5c07d260827e2c0535732c1e1c",
+      "coverage": {
+        "start": "2016-11-06",
+        "end": "2026-09-06",
+        "days": 3592,
+        "missing": []
+      },
+      "total": 17135
+    },
+    "posthtml-ast-delete-object": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2016-10-17",
+      "availability": "available",
+      "file": "packages/posthtml-ast-delete-object.ndjson",
+      "sha256": "9a31c1e5501d5b71127afa1a241a1542146a86ebf8b026544509f3fda18fce14",
+      "coverage": {
+        "start": "2016-10-17",
+        "end": "2026-09-06",
+        "days": 3612,
+        "missing": []
+      },
+      "total": 50603
+    },
+    "posthtml-ast-get-object": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2016-11-18",
+      "availability": "available",
+      "file": "packages/posthtml-ast-get-object.ndjson",
+      "sha256": "252802a2f6a191c781ff170071c5ae536e47a1eeb28a8a2d461b41275c3a1f8f",
+      "coverage": {
+        "start": "2016-11-18",
+        "end": "2026-09-06",
+        "days": 3580,
+        "missing": []
+      },
+      "total": 8628
+    },
+    "posthtml-ast-get-values-by-key": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2016-10-24",
+      "availability": "available",
+      "file": "packages/posthtml-ast-get-values-by-key.ndjson",
+      "sha256": "a0ee62fb119094dade07c8723ba5238f734b69fd4d256fdcd1fa9456108bad81",
+      "coverage": {
+        "start": "2016-10-24",
+        "end": "2026-09-06",
+        "days": 3605,
+        "missing": []
+      },
+      "total": 9657
+    },
+    "posthtml-ast-is-empty": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2016-11-06",
+      "availability": "available",
+      "file": "packages/posthtml-ast-is-empty.ndjson",
+      "sha256": "e9458ddc21bdbe18d8dace0fd90fedd2e98d76f0c28ea91f085d57ecd8fe2ba1",
+      "coverage": {
+        "start": "2016-11-06",
+        "end": "2026-09-06",
+        "days": 3592,
+        "missing": []
+      },
+      "total": 11512
+    },
+    "posthtml-ast-loose-compare": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2016-11-05",
+      "availability": "available",
+      "file": "packages/posthtml-ast-loose-compare.ndjson",
+      "sha256": "597822ff2f02f3d0c336b1dfd38961680c6b3df3312a2da32812f205693f9132",
+      "coverage": {
+        "start": "2016-11-05",
+        "end": "2026-09-06",
+        "days": 3593,
+        "missing": []
+      },
+      "total": 7295
+    },
+    "posthtml-color-shorthand-hex-to-six-digit": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2017-01-09",
+      "availability": "available",
+      "file": "packages/posthtml-color-shorthand-hex-to-six-digit.ndjson",
+      "sha256": "8688a09c654b27ba10c7b67b2fe3b8f8a67d8a8d5994ce8984b971c633c4bac5",
+      "coverage": {
+        "start": "2017-01-09",
+        "end": "2026-09-06",
+        "days": 3528,
+        "missing": []
+      },
+      "total": 2110
+    },
+    "posthtml-email-remove-unused-css": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2017-01-09",
+      "availability": "available",
+      "file": "packages/posthtml-email-remove-unused-css.ndjson",
+      "sha256": "ee30fd9757ba528ced9291956bfc908c027b32028ec00210112654d8dfd5845f",
+      "coverage": {
+        "start": "2017-01-09",
+        "end": "2026-09-06",
+        "days": 3528,
+        "missing": []
+      },
+      "total": 4619
+    },
+    "string-replace-slices-array": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2017-07-25",
+      "availability": "available",
+      "file": "packages/string-replace-slices-array.ndjson",
+      "sha256": "fe2758d334cecc5f2a0c6d307cd160e02fa0fc8261a0d51d89e70f04c1e37be9",
+      "coverage": {
+        "start": "2017-07-25",
+        "end": "2026-09-06",
+        "days": 3331,
+        "missing": []
+      },
+      "total": 88098
+    },
+    "string-slices-array-push": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2017-07-28",
+      "availability": "available",
+      "file": "packages/string-slices-array-push.ndjson",
+      "sha256": "9bad72092ec2d1a08e146aacd28b72b0007a1ab1e8119b91418dcfeb86ebd004",
+      "coverage": {
+        "start": "2017-07-28",
+        "end": "2026-09-06",
+        "days": 3328,
+        "missing": []
+      },
+      "total": 87719
+    }
+  },
+  "anomalies": [],
+  "revision": "2928a6a1c72819cc70cc24b5cb731cb310293b3e7557b66c47536d02c79bc168",
+  "updatedAt": "2026-09-09T06:02:02.017Z"
+}

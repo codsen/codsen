@@ -5,8 +5,8 @@ import git from "simple-git";
 import { firstPublishedAt } from "../../data/sources/firstPublishedAt.ts";
 import { programClassification } from "../../data/sources/programClassification.ts";
 import {
-  deprecated,
-  packagesOutsideMonorepo,
+  createCodsenPackageLists,
+  packagesOutsideMonorepo as declaredOutsidePackages,
   packagesOutsideMonorepoObj,
 } from "../helpers/codsenPackages.js";
 import { dependencyStatuses } from "../helpers/dependencyStatuses.js";
@@ -57,8 +57,7 @@ const packageKinds = readPackageKindResolver(path.resolve("."));
 // READ ALL LIBS
 // =============
 
-const allPackages = [...packagesOutsideMonorepo, ...deprecated];
-const currentPackages = [...packagesOutsideMonorepo];
+const publicWorkspaceNames = [];
 const cliPackages = [];
 const programPackages = [];
 const specialPackages = [];
@@ -125,7 +124,7 @@ for (let packageName of packageNames) {
       readFileSync(path.join("packages", packageName, "package.json"), "utf8"),
     );
     let name = packageJsonContents.name;
-    if (packagesOutsideMonorepo.includes(name)) {
+    if (declaredOutsidePackages.includes(name)) {
       throw new Error(
         `generate-info.js: current workspace ${name} is still listed as outside the monorepo`,
       );
@@ -154,8 +153,7 @@ for (let packageName of packageNames) {
     }
 
     if (!packageJsonContents.private) {
-      allPackages.push(name);
-      currentPackages.push(name);
+      publicWorkspaceNames.push(name);
     }
     if (packageJsonContents.bin) {
       cliPackages.push(name);
@@ -233,6 +231,14 @@ for (let packageName of packageNames) {
     );
   }
 }
+
+const {
+  all: allPackages,
+  current: currentPackages,
+  historical: historicalPackages,
+  deprecated,
+  packagesOutsideMonorepo,
+} = createCodsenPackageLists(publicWorkspaceNames);
 
 // splits follow
 // -----------------------------------------------------------------------------
@@ -354,7 +360,9 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
     name: packageName,
     ...packageSizes.get(packageName),
     imports: pack.dependencies
-      ? Object.keys(pack.dependencies).filter((n) => allPackages.includes(n))
+      ? Object.keys(pack.dependencies).filter((n) =>
+          historicalPackages.includes(n),
+        )
       : [],
   });
 
@@ -392,7 +400,7 @@ const allOwnDeps = new Set();
 const allExternalDeps = new Set();
 
 for (let depName in dependencyStats.dependencies) {
-  if (allPackages.includes(depName)) {
+  if (historicalPackages.includes(depName)) {
     // it's one of ours
     allOwnDeps.add(depName);
   } else {
@@ -403,11 +411,11 @@ for (let depName in dependencyStats.dependencies) {
 
 dependencyStats.top10OwnDeps = topDependencies(
   dependencyStats.dependencies,
-  (depName) => allPackages.includes(depName),
+  (depName) => historicalPackages.includes(depName),
 );
 dependencyStats.top10ExternalDeps = topDependencies(
   dependencyStats.dependencies,
-  (depName) => !allPackages.includes(depName),
+  (depName) => !historicalPackages.includes(depName),
 );
 dependencyStats.allOwnDeps = [...allOwnDeps].sort();
 dependencyStats.allExternalDeps = [...allExternalDeps].sort();
@@ -415,11 +423,11 @@ dependencyStats.allExternalDeps = [...allExternalDeps].sort();
 // 4. write files
 // -----------------------------------------------------------------------------
 
-// This is the same complete inventory emitted as packages.all below, including
-// external and deprecated names. Finish registry reads before writing any data.
+// Preserve publication evidence for the complete historical catalogue, including
+// deprecated names excluded from packages.all. Finish registry reads before writes.
 const publicationDates = shouldRefreshNpmDates
-  ? await refreshFirstPublishedAt(allPackages, firstPublishedAt)
-  : projectFirstPublishedAt(allPackages, firstPublishedAt);
+  ? await refreshFirstPublishedAt(historicalPackages, firstPublishedAt)
+  : projectFirstPublishedAt(historicalPackages, firstPublishedAt);
 const publicationDatesFilename = path.resolve(
   "data/sources/firstPublishedAt.ts",
 );
@@ -428,7 +436,7 @@ await writeGeneratedFile({
 import type { Package } from "./packages.js";
 
 /** Earliest observed npm version publication, in milliseconds since the Unix
- * epoch, for every packages.all entry. Null means no publication date is known.
+ * epoch, for every packages.historical entry. Null means no date is known.
  * Consumers choose their own recency cut-off or number of newest packages. */
 export const firstPublishedAt: Record<Package, number | null> = ${JSON.stringify(publicationDates, null, 2)};
 `,
@@ -441,7 +449,7 @@ if (shouldRefreshNpmDates) {
     (name) => publicationDates[name] === null,
   );
   console.log(
-    `Refreshed npm first-publication dates for ${allPackages.length} packages; ${unknown.length} unknown${unknown.length ? `: ${unknown.join(", ")}` : "."}`,
+    `Refreshed npm first-publication dates for ${historicalPackages.length} packages; ${unknown.length} unknown${unknown.length ? `: ${unknown.join(", ")}` : "."}`,
   );
 }
 
@@ -464,6 +472,7 @@ await writeGeneratedFile({
 await writeGeneratedFile({
   contents: `const all = ${JSON.stringify(allPackages.sort(), null, 2)} as const;
 const current = ${JSON.stringify(currentPackages.sort(), null, 2)} as const;
+const historical = ${JSON.stringify(historicalPackages.sort(), null, 2)} as const;
 const cli = ${JSON.stringify(cliPackages.sort(), null, 2)} as const;
 const deprecated = ${JSON.stringify(deprecated.sort(), null, 2)} as const;
 const programs = ${JSON.stringify(programPackages.sort(), null, 2)} as const;
@@ -512,11 +521,12 @@ const splitListMiscLibs = ${JSON.stringify(
     2,
   )} as const;
 
-export type Package = typeof all[number];
+export type Package = typeof historical[number];
 
 export const packages = {
     all,
     current,
+    historical,
     cli,
     deprecated,
     programs,
@@ -525,6 +535,7 @@ export const packages = {
     packagesOutsideMonorepo,
     totalPackageCount: ${allPackages.length},
     currentPackagesCount: ${currentPackages.length},
+    historicalPackageCount: ${historicalPackages.length},
     cliCount: ${cliPackages.length},
     programsCount: ${programPackages.length},
     specialCount: ${specialPackages.length},

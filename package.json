@@ -66,6 +66,9 @@
     "prettier": "npm run check",
     "prettier:format": "npm run check:fix",
     "preview:update-notifier": "node ./ops/scripts/preview-cli-update-notifier.js",
+    "stats:check": "node ./ops/scripts/verify-npm-downloads.js",
+    "stats:export": "node ./ops/scripts/export-npm-downloads.js",
+    "stats:refresh": "node ./ops/scripts/refresh-npm-downloads.js",
     "test": "npm run verify && npm run test:compatibility && npm run test:quality",
     "test:compatibility": "node ./ops/scripts/test-node-compatibility.js",
     "coverage:workspaces": "node ./ops/scripts/coverage-workspaces.js",
@@ -77,7 +80,7 @@
     "turbo": "turbo",
     "typecheck": "node ./ops/scripts/typecheck-workspaces.js",
     "unit": "npm run test:ops-helpers && turbo run unit",
-    "verify": "npm run ci:verify:root-toolchain && npm run ci:verify:package-kinds && npm run ci:verify:debug-log-production-cost && npm run ci:verify:test-numbering && npm run ci:verify:dependency-security-policy && npm run check && npm run lint:markdown && npm run test:ops-helpers && npm run ci:verify:coverage-policy && npm run ci:verify:node-compatibility && npm run verify:generated && npm run ci:verify:browser-iifes && npm run typecheck",
+    "verify": "npm run ci:verify:root-toolchain && npm run ci:verify:package-kinds && npm run ci:verify:debug-log-production-cost && npm run ci:verify:test-numbering && npm run ci:verify:dependency-security-policy && npm run check && npm run lint:markdown && npm run stats:check && npm run test:ops-helpers && npm run ci:verify:coverage-policy && npm run ci:verify:node-compatibility && npm run verify:generated && npm run ci:verify:browser-iifes && npm run typecheck",
     "verify:generated": "npm run lect:check && npm run ci:verify:info && npm run ci:verify:changelogs && npm run ci:verify:root-readme && npm run build -- '--filter=./data/**' && npm run ci:verify:data",
     "wipe": "rm package-lock.json || true && rm -rf node_modules && git clean -fXd && npm i"
   },

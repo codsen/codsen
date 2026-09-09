@@ -4,6 +4,23 @@ Metadata for Codsen packages, including package lists, declarations, examples,
 changelogs, dependency statistics, first-publication dates, and the coverage and
 performance gates each package is held to.
 
+## Package catalogue
+
+`packages.all` and `packages.current` contain the same current Codsen product
+catalogue: public monorepo packages and packages maintained elsewhere, including
+frozen libraries that remain available on npm. Both exclude decommissioned
+packages, the auxiliary `@codsen/data` package, publishing experiments, and
+third-party projects that share an npm maintainer.
+
+`packages.historical` adds the names in `packages.deprecated`. Use it for
+"published ever" counts and publication chronology. The `Package` type covers
+this historical list so deprecated documentation remains type-safe.
+`totalPackageCount` counts `all`; `historicalPackageCount` counts `historical`.
+
+The generator and the [npm download archive](../statistics/npm-downloads/README.md)
+use the same selector in `ops/helpers/codsenPackages.js`. Edit that policy or the
+workspace manifests, then regenerate; do not edit `data/sources/packages.ts`.
+
 ## First-publication dates
 
 ```js
@@ -16,10 +33,10 @@ const recentlyPublished = packages.all.filter((name) => {
 });
 ```
 
-`firstPublishedAt` maps every name in `packages.all` to milliseconds since the
+`firstPublishedAt` maps every name in `packages.historical` to milliseconds since the
 Unix epoch, suitable for `new Date(timestamp)` and comparisons with `Date.now()`.
 It includes packages published outside the monorepo and deprecated packages.
-Choose a narrower list, such as `packages.current`, to exclude deprecated names.
+Choose `packages.all` or `packages.current` to exclude deprecated names.
 
 Each number is the earliest version-publication time observed in npm's
 [package metadata](https://github.com/npm/registry/blob/main/docs/responses/package-metadata.md).
@@ -93,13 +110,13 @@ npm run ci:verify:data
 ```
 
 The refresh queries the public npm registry for the complete inventory emitted
-as `data/sources/packages.ts`'s `all` list. HTTP 404 leaves an unknown package at
+as `data/sources/packages.ts`'s `historical` list. HTTP 404 leaves an unknown package at
 `null`; other registry or metadata errors fail generation without replacing the
 snapshot. Do not edit `data/sources/firstPublishedAt.ts` by hand.
 
 Ordinary generation and verification use the checked-in snapshot without network
 requests. Generation adds new package names with `null` and removes names no
-longer in `packages.all`. Release preparation and rehearsal explicitly refresh
+longer in `packages.historical`. Release preparation and rehearsal explicitly refresh
 npm dates, then build the snapshot into `@codsen/data`. A package first published
 in that same release receives its timestamp on a subsequent refresh, because
 release preparation runs before publication. Importing `@codsen/data` never

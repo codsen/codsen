@@ -167,6 +167,7 @@
     "unskipped",
     "urlid",
     "vars",
+    "vendored",
     "vers",
     "vmax",
     "vmin",

@@ -4,6 +4,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { isDeepStrictEqual } from "node:util";
+import { createCodsenPackageLists } from "../helpers/codsenPackages.js";
 import { dependencyStatuses } from "../helpers/dependencyStatuses.js";
 import { projectFirstPublishedAt } from "../helpers/firstPublishedAt.js";
 import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
@@ -100,12 +101,47 @@ async function verifyData() {
   }
 
   const directories = packageDirectories();
+  const expectedLists = createCodsenPackageLists(
+    directories
+      .map((directory) =>
+        JSON.parse(
+          readFileSync(
+            path.join(ROOT, "packages", directory, "package.json"),
+            "utf8",
+          ),
+        ),
+      )
+      .filter((manifest) => !manifest.private)
+      .map((manifest) => manifest.name),
+  );
+  for (const [listName, expected] of Object.entries(expectedLists)) {
+    assertSameList(
+      [...data.packages[listName]],
+      expected,
+      `packages.${listName}`,
+    );
+  }
+  for (const [countName, expected] of [
+    ["totalPackageCount", expectedLists.all.length],
+    ["currentPackagesCount", expectedLists.current.length],
+    ["historicalPackageCount", expectedLists.historical.length],
+    [
+      "packagesOutsideMonorepoCount",
+      expectedLists.packagesOutsideMonorepo.length,
+    ],
+  ]) {
+    if (data.packages[countName] !== expected) {
+      fail(
+        `packages.${countName} is ${data.packages[countName]}; expected ${expected}`,
+      );
+    }
+  }
   assertSameList(
     sortedKeys(data.firstPublishedAt),
-    [...data.packages.all].sort(),
+    expectedLists.historical,
     "firstPublishedAt keys",
   );
-  projectFirstPublishedAt(data.packages.all, data.firstPublishedAt);
+  projectFirstPublishedAt(expectedLists.historical, data.firstPublishedAt);
   for (const entry of data.interdeps) {
     if (Object.hasOwn(entry, "size")) {
       fail(
@@ -154,9 +190,6 @@ async function verifyData() {
       fail(
         `packageJSONData has stale ${manifest.name} version ${packageData.version}; expected ${manifest.version}`,
       );
-    }
-    if (!manifest.private && !data.packages.current.includes(manifest.name)) {
-      fail(`packages.current is missing ${manifest.name}`);
     }
 
     const kind = packageKinds.kindFor(manifest.name);

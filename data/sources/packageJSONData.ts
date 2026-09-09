@@ -35,6 +35,12 @@ export const packageJSONData = {
   "email-homey": {
     "description": "Generate homepage in the BrowserSync root with links/screenshots to all your email templates"
   },
+  "eslint-plugin-row-num": {
+    "description": "ESLint plugin to update row numbers on each console.log"
+  },
+  "eslint-plugin-test-num": {
+    "description": "ESLint plugin to update unit test numbers automatically"
+  },
   "gulp-email-remove-unused-css": {
     "description": "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY"
   },
