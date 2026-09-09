@@ -24,6 +24,7 @@
       "!!data/sources/packages.ts",
       "!!data/sources/perfStats.ts",
       "!!ops/**/*.esm.js",
+      "!!statistics/charts",
       "!!statistics/npm-downloads/manifest.json",
       "!!statistics/npm-downloads/packages",
       "!!statistics/npm-downloads/retired/manifest.json",

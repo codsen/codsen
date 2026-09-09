@@ -500,4 +500,94 @@ test("09 - generation rejects symlinks and unexpected changed paths", () => {
   });
 });
 
+test("10 - generated website charts survive the release proposal handoff", () => {
+  withFixture((fixture) => {
+    const filenames = [
+      "dependency-molecule.html",
+      "dependency-molecule.svg",
+      "dependency-topology-narrow.svg",
+      "dependency-topology.svg",
+      "download-concentration-history.svg",
+      "download-concentration.svg",
+      "download-ranking.svg",
+      "index.html",
+      "interdependencies.svg",
+      "summary.json",
+    ];
+    prepare(fixture);
+    for (const filename of filenames) {
+      write(
+        fixture.repositoryRoot,
+        `statistics/charts/${filename}`,
+        `generated ${filename}\n`,
+      );
+    }
+    const proposal = createReleaseProposal(fixture);
+    equal(
+      proposal.changes
+        .filter((change) => change.path.startsWith("statistics/"))
+        .map((change) => change.path),
+      filenames.map((filename) => `statistics/charts/${filename}`),
+      "10.01",
+    );
+    git(fixture.repositoryRoot, "reset", "--hard", "--quiet", fixture.baseSha);
+    git(fixture.repositoryRoot, "clean", "-fd", "--quiet");
+    applyReleaseProposal({ ...fixture, proposal });
+    equal(
+      filenames.map((filename) =>
+        readFileSync(
+          path.join(fixture.repositoryRoot, "statistics/charts", filename),
+          "utf8",
+        ),
+      ),
+      filenames.map((filename) => `generated ${filename}\n`),
+      "10.02",
+    );
+    equal(git(fixture.repositoryRoot, "diff", "--name-only"), "", "10.03");
+    equal(
+      git(fixture.repositoryRoot, "diff", "--cached", "--name-only").split(
+        "\n",
+      ),
+      proposal.changes.map((change) => change.path),
+      "10.04",
+    );
+  });
+});
+
+test("11 - chart permission does not admit arbitrary statistics or executable charts", () => {
+  withFixture((fixture) => {
+    const paths = [
+      "statistics/charts/README.md",
+      "statistics/charts/unexpected.svg",
+      "statistics/charts/client.js",
+      "statistics/charts/nested/index.html",
+      "statistics/charts/summary.json/child",
+      "statistics/charts/.git/config",
+      "statistics/npm-downloads/manifest.json",
+      "statistics/index.html",
+    ];
+    for (const [index, filename] of paths.entries()) {
+      const proposal = adding(fixture.proposal, addedRecord(filename));
+      throws(
+        () => applyReleaseProposal({ ...fixture, proposal }),
+        /unexpected generated path/,
+        `11.${String(index + 1).padStart(2, "0")}`,
+      );
+    }
+    throws(
+      () =>
+        applyReleaseProposal({
+          ...fixture,
+          proposal: adding(
+            fixture.proposal,
+            addedRecord("statistics/charts/index.html", "payload", "100755"),
+          ),
+        }),
+      /mode changes and new executable files/,
+      "11.09",
+    );
+    equal(git(fixture.repositoryRoot, "status", "--porcelain"), "", "11.10");
+  });
+});
+
 test.run();

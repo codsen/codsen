@@ -31,6 +31,20 @@ const ROOT_OUTPUTS = new Set([
   "README.md",
   "package-lock.json",
 ]);
+// Keep this list limited to the chart generator's outputs. Statistics archives,
+// documentation, and arbitrary files in this directory are not release output.
+const CHART_OUTPUTS = new Set([
+  "statistics/charts/dependency-molecule.html",
+  "statistics/charts/dependency-molecule.svg",
+  "statistics/charts/dependency-topology-narrow.svg",
+  "statistics/charts/dependency-topology.svg",
+  "statistics/charts/download-concentration-history.svg",
+  "statistics/charts/download-concentration.svg",
+  "statistics/charts/download-ranking.svg",
+  "statistics/charts/index.html",
+  "statistics/charts/interdependencies.svg",
+  "statistics/charts/summary.json",
+]);
 const RETIRED_PACKAGE_CONFIGS = new Set([
   ".babelrc",
   ".editorconfig",
@@ -135,7 +149,7 @@ function assertSafeProposalPath(filename) {
 function validateProposalPath(filename, { baseFiles, workspaces }, deletion) {
   assertSafeProposalPath(filename);
   const parts = filename.split("/");
-  if (ROOT_OUTPUTS.has(filename)) {
+  if (ROOT_OUTPUTS.has(filename) || CHART_OUTPUTS.has(filename)) {
     return;
   }
   const workspace =

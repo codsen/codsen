@@ -71,7 +71,9 @@ persisted checkout credentials. A separate job checks out trusted tooling at
 the same base SHA, downloads the generation job's changes by artifact ID, and
 validates the complete changeset before applying it. The handoff permits
 release files in existing workspaces, root release documentation and the
-lockfile, and the single release-plan file. It rejects changes to privileged
+lockfile, the single release-plan file, and the ten generated website chart
+files. The chart permission excludes statistics archives, chart documentation,
+and arbitrary files in that directory. It rejects changes to privileged
 tooling, workflows, Git configuration, symbolic links, and file modes. The
 privileged job installs no repository dependencies and executes no generated
 code; it renders the summary from the validated plan, commits the proposal with
@@ -108,8 +110,8 @@ normal release proposal and publishing approval and do not need `force_all`.
    receive a fresh version, including packages with no changes; it does not
    republish an existing `name@version`.
 3. Review the generated release PR, including its versions, changelogs, lockfile,
-   generated data, and build output. Its description and the preparation run's
-   job summary show a table with every selected package, its current and proposed
+   generated data, website charts, and build output. Its description and the
+   preparation run's job summary show a table with every selected package, its current and proposed
    versions, semantic bump, and dependency-ordered publish layer. Merge it only
    after all CI checks pass. Preparation also verifies that every proposed
    `name@version` is still available on npm, and validates that the compiled
@@ -133,6 +135,60 @@ normal release proposal and publishing approval and do not need `force_all`.
    Approve the protected `npm-production` deployment when ready. The workflow
    publishes only registry-pending versions, verifies them on npm, and then
    pushes their Git tags.
+
+## Website charts
+
+Release preparation and rehearsal regenerate `statistics/charts` after package
+versions, the lockfile, and dependency data are current. Both run
+`stats:charts:check` before creating the release plan. Root `npm run generate`
+also rebuilds the charts, and `npm run verify:generated` checks their freshness.
+Chart generation reads the stored npm download archive; fetching new download
+counts remains the separate `npm run stats:refresh` operation.
+
+After **Release npm packages** completes successfully for a `main` push,
+**Refresh website charts** (`refresh-website.yml`) requests a Vercel build. This
+separate workflow waits for the entire release run to finish. The website's
+`ops:charts` build step then resolves the latest completed successful `ci.yml`
+release on `main`, fetches every chart from that exact commit, and records the
+source revision with the copied assets. The refresh workflow makes the hook
+request without checking out or executing the completed run's code.
+
+### Enable automatic rebuilds
+
+1. Deploy the website integration that runs `ops:charts` before building and
+   serves the charts from `public/statistics/charts/`. If no successful release
+   contains the charts yet, first set the website's `CODSEN_CHARTS_REVISION` to a
+   full 40-character commit SHA containing verified chart output.
+2. Complete a normal npm release containing the chart generator, generated
+   chart files, and release automation. Hosted website builds need a completed
+   successful release whose commit contains those files. Remove any temporary
+   `CODSEN_CHARTS_REVISION` override when that successful release is available.
+3. In the website's Vercel project, open **Settings → Git → Deploy Hooks** and
+   create a hook for its production branch. Vercel accepts a POST to this URL
+   without a payload. See [Vercel Deploy Hooks](https://vercel.com/docs/deploy-hooks).
+4. In this monorepo's **Settings → Secrets and variables → Actions**, add the
+   repository secret `CODSEN_WEBSITE_DEPLOY_HOOK` with that hook URL. Keep the URL
+   secret because anyone who has it can request a deployment.
+5. Run **Refresh website charts** manually on `main` to verify the connection,
+   then check the deployment in Vercel. Workflow success confirms that Vercel
+   accepted the request; deployment completion is reported by Vercel.
+
+Until the secret is configured, the workflow reports a warning and records the
+missing setup in its summary without requesting a rebuild. A failed request
+can be retried by running **Refresh website charts** on `main`. Check Vercel
+first: a request can reach it even when the response is lost. Retrying selects
+the latest successful release available when the new website build starts.
+
+### Preview or publish a statistics-only update
+
+Locally, the website's `npm run ops:charts` reads and checks the sibling
+monorepo snapshot, so chart changes can be previewed before a release.
+
+Hosted builds default to the latest successful npm release, which excludes
+later statistics-only commits. To publish such an update independently, commit
+verified chart output, set the website build's `CODSEN_CHARTS_REVISION` to that
+full 40-character commit SHA, and rebuild the website. The override remains
+pinned until it is removed; remove it to resume automatic release updates.
 
 ## Recover a failed publish
 

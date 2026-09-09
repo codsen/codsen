@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 790" width="1280" height="790" fill="#203a43" role="img" aria-labelledby="dependency-molecule-title dependency-molecule-desc" style="max-width:100%;height:auto">
+<title id="dependency-molecule-title">Dependency molecule: string-strip-html</title>
+<desc id="dependency-molecule-desc">Static perspective projection of 10 packages and 15 production and optional dependency links. Arrows point to dependencies. Workspace manifests and package-lock.json snapshot; development and peer dependencies are excluded. 0 unresolved dependencies. Open dependency-molecule.html for rotation, zoom, and other roots.</desc>
+<style>
+text{font-family:Arial,Helvetica,sans-serif}
+.title{font-size:28px;font-weight:700;letter-spacing:-.5px}
+.subtitle,.muted{fill:#526a73;font-size:13px}
+.label{font-size:13px}.small{font-size:12px}.metric{font-size:30px;font-weight:700}
+.grid{stroke:#dce5e6;stroke-width:1}.axis{stroke:#91a5aa;stroke-width:1}
+a:hover text,a:focus text{fill:#007c78;text-decoration:underline}
+a:focus{outline:2px solid #007c78}
+</style>
+<rect width="1280" height="790" fill="#fbfcfa"/>
+<defs><marker id="molecule-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#8eb6b0"/></marker></defs>
+<text x="48" y="48" class="small">CODSEN / DEPENDENCY MOLECULE</text>
+<text x="48" y="91" class="title">string-strip-html</text>
+<text x="48" y="120" class="subtitle">10 packages · 15 dependency links · static 3D projection</text>
+<g transform="translate(0 50)"><line x1="640.00" y1="360.00" x2="627.88" y2="385.57" stroke="#8eb6b0" stroke-width="1.4" marker-end="url(#molecule-arrow)"/>
+<line x1="640.00" y1="360.00" x2="606.11" y2="492.00" stroke="#8eb6b0" stroke-width="1.4" marker-end="url(#molecule-arrow)"/>
+<line x1="640.00" y1="360.00" x2="843.51" y2="386.44" stroke="#8eb6b0" stroke-width="1.4" marker-end="url(#molecule-arrow)"/>
+<line x1="640.00" y1="360.00" x2="429.98" y2="294.46" stroke="#8eb6b0" stroke-width="1.4" marker-end="url(#molecule-arrow)"/>
+<line x1="640.00" y1="360.00" x2="845.13" y2="436.65" stroke="#8eb6b0" stroke-width="1.4" marker-end="url(#molecule-arrow)"/>
+<line x1="624.65" y1="392.38" x2="544.83" y2="382.75" stroke="#8eb6b0" stroke-width="1.4" marker-end="url(#molecule-arrow)"/>
+<line x1="851.07" y1="387.43" x2="632.18" y2="392.21" stroke="#8eb6b0" stroke-width="1.4" marker-end="url(#molecule-arrow)"/>
+<line x1="851.07" y1="387.43" x2="749.91" y2="313.14" stroke="#8eb6b0" stroke-width="1.4" marker-end="url(#molecule-arrow)"/>
+<line x1="422.51" y1="292.13" x2="617.90" y2="389.03" stroke="#8eb6b0" stroke-width="1.4" marker-end="url(#molecule-arrow)"/>
+<line x1="422.51" y1="292.13" x2="641.37" y2="244.21" stroke="#8eb6b0" stroke-width="1.4" marker-end="url(#molecule-arrow)"/>
+<line x1="422.51" y1="292.13" x2="349.82" y2="151.52" stroke="#8eb6b0" stroke-width="1.4" marker-end="url(#molecule-arrow)"/>
+<line x1="852.87" y1="439.54" x2="632.02" y2="393.90" stroke="#8eb6b0" stroke-width="1.4" marker-end="url(#molecule-arrow)"/>
+<line x1="743.16" y1="308.19" x2="630.79" y2="388.01" stroke="#8eb6b0" stroke-width="1.4" marker-end="url(#molecule-arrow)"/>
+<line x1="743.16" y1="308.19" x2="655.18" y2="246.96" stroke="#8eb6b0" stroke-width="1.4" marker-end="url(#molecule-arrow)"/>
+<line x1="648.87" y1="242.57" x2="625.85" y2="384.94" stroke="#8eb6b0" stroke-width="1.4" marker-end="url(#molecule-arrow)"/><line x1="640.00" y1="360.00" x2="657.00" y2="355.00" stroke="#c4d5d1" stroke-width="0.8"/>
+<line x1="624.65" y1="392.38" x2="641.65" y2="425.38" stroke="#c4d5d1" stroke-width="0.8"/>
+<line x1="603.90" y1="500.58" x2="620.90" y2="495.58" stroke="#c4d5d1" stroke-width="0.8"/>
+<line x1="851.07" y1="387.43" x2="868.07" y2="382.43" stroke="#c4d5d1" stroke-width="0.8"/>
+<line x1="422.51" y1="292.13" x2="439.51" y2="287.13" stroke="#c4d5d1" stroke-width="0.8"/>
+<line x1="852.87" y1="439.54" x2="869.87" y2="434.54" stroke="#c4d5d1" stroke-width="0.8"/>
+<line x1="538.05" y1="381.93" x2="521.05" y2="376.93" stroke="#c4d5d1" stroke-width="0.8"/>
+<line x1="743.16" y1="308.19" x2="726.16" y2="303.19" stroke="#c4d5d1" stroke-width="0.8"/>
+<line x1="648.87" y1="242.57" x2="665.87" y2="237.57" stroke="#c4d5d1" stroke-width="0.8"/>
+<line x1="346.22" y1="144.56" x2="363.22" y2="139.56" stroke="#c4d5d1" stroke-width="0.8"/><a href="https://codsen.com/os/string-strip-html" target="_blank" rel="noopener noreferrer"><g transform="translate(640.00 360.00)"><title>string-strip-html@13.7.2 — packages/string-strip-html</title><circle r="12.00" fill="#153c38" stroke="#fff" stroke-width="2"/><g transform="translate(17.00 -8.00)" text-anchor="start"><text x="0" y="0" class="label" style="font-size:14px;paint-order:stroke;stroke:#fbfcfa;stroke-width:5;stroke-linejoin:round;font-weight:700">string-strip-html</text><text x="0" y="16" class="small" style="font-size:11px;paint-order:stroke;stroke:#fbfcfa;stroke-width:4">13.7.2</text></g></g></a>
+<a href="https://codsen.com/os/codsen-utils" target="_blank" rel="noopener noreferrer"><g transform="translate(624.65 392.38)"><title>codsen-utils@1.10.1 — packages/codsen-utils</title><circle r="6.59" fill="#208b7b" stroke="#fff" stroke-width="2"/><g transform="translate(17.00 30.00)" text-anchor="start"><text x="0" y="0" class="label" style="font-size:14px;paint-order:stroke;stroke:#fbfcfa;stroke-width:5;stroke-linejoin:round">codsen-utils</text><text x="0" y="16" class="small" style="font-size:11px;paint-order:stroke;stroke:#fbfcfa;stroke-width:4">1.10.1</text></g></g></a>
+<a href="https://codsen.com/os/html-entity-codec" target="_blank" rel="noopener noreferrer"><g transform="translate(603.90 500.58)"><title>html-entity-codec@1.1.0 — packages/html-entity-codec</title><circle r="7.75" fill="#208b7b" stroke="#fff" stroke-width="2"/><g transform="translate(17.00 -8.00)" text-anchor="start"><text x="0" y="0" class="label" style="font-size:14px;paint-order:stroke;stroke:#fbfcfa;stroke-width:5;stroke-linejoin:round">html-entity-codec</text><text x="0" y="16" class="small" style="font-size:11px;paint-order:stroke;stroke:#fbfcfa;stroke-width:4">1.1.0</text></g></g></a>
+<a href="https://codsen.com/os/ranges-apply" target="_blank" rel="noopener noreferrer"><g transform="translate(851.07 387.43)"><title>ranges-apply@7.2.4 — packages/ranges-apply</title><circle r="6.67" fill="#208b7b" stroke="#fff" stroke-width="2"/><g transform="translate(17.00 -8.00)" text-anchor="start"><text x="0" y="0" class="label" style="font-size:14px;paint-order:stroke;stroke:#fbfcfa;stroke-width:5;stroke-linejoin:round">ranges-apply</text><text x="0" y="16" class="small" style="font-size:11px;paint-order:stroke;stroke:#fbfcfa;stroke-width:4">7.2.4</text></g></g></a>
+<a href="https://codsen.com/os/ranges-push" target="_blank" rel="noopener noreferrer"><g transform="translate(422.51 292.13)"><title>ranges-push@7.3.1 — packages/ranges-push</title><circle r="6.84" fill="#208b7b" stroke="#fff" stroke-width="2"/><g transform="translate(17.00 -8.00)" text-anchor="start"><text x="0" y="0" class="label" style="font-size:14px;paint-order:stroke;stroke:#fbfcfa;stroke-width:5;stroke-linejoin:round">ranges-push</text><text x="0" y="16" class="small" style="font-size:11px;paint-order:stroke;stroke:#fbfcfa;stroke-width:4">7.3.1</text></g></g></a>
+<a href="https://codsen.com/os/string-left-right" target="_blank" rel="noopener noreferrer"><g transform="translate(852.87 439.54)"><title>string-left-right@6.2.3 — packages/string-left-right</title><circle r="7.23" fill="#208b7b" stroke="#fff" stroke-width="2"/><g transform="translate(17.00 -8.00)" text-anchor="start"><text x="0" y="0" class="label" style="font-size:14px;paint-order:stroke;stroke:#fbfcfa;stroke-width:5;stroke-linejoin:round">string-left-right</text><text x="0" y="16" class="small" style="font-size:11px;paint-order:stroke;stroke:#fbfcfa;stroke-width:4">6.2.3</text></g></g></a>
+<a href="https://codsen.com/os/codsen-format-diagnostic-value" target="_blank" rel="noopener noreferrer"><g transform="translate(538.05 381.93)"><title>codsen-format-diagnostic-value@1.1.1 — packages/codsen-format-diagnostic-value</title><circle r="5.98" fill="#208b7b" stroke="#fff" stroke-width="2"/><g transform="translate(-17.00 -8.00)" text-anchor="end"><text x="0" y="0" class="label" style="font-size:14px;paint-order:stroke;stroke:#fbfcfa;stroke-width:5;stroke-linejoin:round">codsen-format-diagnostic-value</text><text x="0" y="16" class="small" style="font-size:11px;paint-order:stroke;stroke:#fbfcfa;stroke-width:4">1.1.1</text></g></g></a>
+<a href="https://codsen.com/os/ranges-merge" target="_blank" rel="noopener noreferrer"><g transform="translate(743.16 308.19)"><title>ranges-merge@9.2.4 — packages/ranges-merge</title><circle r="7.32" fill="#208b7b" stroke="#fff" stroke-width="2"/><g transform="translate(-17.00 -8.00)" text-anchor="end"><text x="0" y="0" class="label" style="font-size:14px;paint-order:stroke;stroke:#fbfcfa;stroke-width:5;stroke-linejoin:round">ranges-merge</text><text x="0" y="16" class="small" style="font-size:11px;paint-order:stroke;stroke:#fbfcfa;stroke-width:4">9.2.4</text></g></g></a>
+<a href="https://codsen.com/os/ranges-sort" target="_blank" rel="noopener noreferrer"><g transform="translate(648.87 242.57)"><title>ranges-sort@6.2.3 — packages/ranges-sort</title><circle r="6.72" fill="#208b7b" stroke="#fff" stroke-width="2"/><g transform="translate(17.00 -8.00)" text-anchor="start"><text x="0" y="0" class="label" style="font-size:14px;paint-order:stroke;stroke:#fbfcfa;stroke-width:5;stroke-linejoin:round">ranges-sort</text><text x="0" y="16" class="small" style="font-size:11px;paint-order:stroke;stroke:#fbfcfa;stroke-width:4">6.2.3</text></g></g></a>
+<a href="https://codsen.com/os/string-collapse-leading-whitespace" target="_blank" rel="noopener noreferrer"><g transform="translate(346.22 144.56)"><title>string-collapse-leading-whitespace@7.3.1 — packages/string-collapse-leading-whitespace</title><circle r="6.85" fill="#208b7b" stroke="#fff" stroke-width="2"/><g transform="translate(17.00 -8.00)" text-anchor="start"><text x="0" y="0" class="label" style="font-size:14px;paint-order:stroke;stroke:#fbfcfa;stroke-width:5;stroke-linejoin:round">string-collapse-leading-whitespace</text><text x="0" y="16" class="small" style="font-size:11px;paint-order:stroke;stroke:#fbfcfa;stroke-width:4">7.3.1</text></g></g></a></g>
+<circle cx="56" cy="708" r="6" fill="#208b7b"/><text x="70" y="712" class="small">Workspace package</text>
+<circle cx="252" cy="708" r="6" fill="#dd9a45"/><text x="266" y="712" class="small">External package</text>
+<text x="470" y="712" class="small">Arrows point to dependencies · dashed links are optional</text>
+<text x="48" y="746" class="small">Current workspace manifests + local npm lockfile · excludes development and peer dependencies</text>
+<text x="48" y="768" class="small">Open dependency-molecule.html to rotate, zoom, and choose a package.</text>
+</svg>

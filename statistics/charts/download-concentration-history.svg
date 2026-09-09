@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 580" width="960" height="580" fill="#203a43" role="img" aria-labelledby="download-concentration-history-title download-concentration-history-desc" style="max-width:100%;height:auto">
+<title id="download-concentration-history-title">Has concentration changed?</title>
+<desc id="download-concentration-history-desc">Download concentration for today&apos;s fixed cohort of 138 packages, using complete calendar years. Known prepublication periods contribute zero; missing observations create gaps.</desc>
+<style>
+text{font-family:Arial,Helvetica,sans-serif}
+.title{font-size:28px;font-weight:700;letter-spacing:-.5px}
+.subtitle,.muted{fill:#526a73;font-size:13px}
+.label{font-size:13px}.small{font-size:12px}.metric{font-size:30px;font-weight:700}
+.grid{stroke:#dce5e6;stroke-width:1}.axis{stroke:#91a5aa;stroke-width:1}
+a:hover text,a:focus text{fill:#007c78;text-decoration:underline}
+a:focus{outline:2px solid #007c78}
+</style>
+<rect width="960" height="580" fill="#fbfcfa"/>
+<text x="40" y="35" font-size="12" fill="#007c78" letter-spacing="1.5">CODSEN / NPM DOWNLOADS</text>
+<text x="40" y="78" font-size="30" fill="#203a43" font-weight="700">Has concentration changed?</text>
+<text x="40" y="108" font-size="14" fill="#526a73" >Complete calendar years · fixed cohort of today&apos;s 138 current libraries and CLIs</text>
+<line x1="86" y1="423" x2="880" y2="423" stroke="#dce5e6" />
+<text x="74" y="427" font-size="11" fill="#526a73" text-anchor="end">0%</text>
+<line x1="86" y1="374.4" x2="880" y2="374.4" stroke="#dce5e6" />
+<text x="74" y="378.4" font-size="11" fill="#526a73" text-anchor="end">20%</text>
+<line x1="86" y1="325.8" x2="880" y2="325.8" stroke="#dce5e6" />
+<text x="74" y="329.8" font-size="11" fill="#526a73" text-anchor="end">40%</text>
+<line x1="86" y1="277.20000000000005" x2="880" y2="277.20000000000005" stroke="#dce5e6" />
+<text x="74" y="281.20000000000005" font-size="11" fill="#526a73" text-anchor="end">60%</text>
+<line x1="86" y1="228.6" x2="880" y2="228.6" stroke="#dce5e6" />
+<text x="74" y="232.6" font-size="11" fill="#526a73" text-anchor="end">80%</text>
+<line x1="86" y1="180" x2="880" y2="180" stroke="#dce5e6" />
+<text x="74" y="184" font-size="11" fill="#526a73" text-anchor="end">100%</text>
+<line x1="86" y1="145" x2="111" y2="145" stroke="#007c78" stroke-width="3"/>
+<text x="120" y="149" font-size="12" fill="#526a73" >Download share of the top fifth</text>
+<circle cx="86" cy="180" r="4" fill="#007c78" stroke="#007c78" stroke-width="2"><title>2016: Download share of the top fifth 100.0%</title></circle>
+<line x1="86" y1="180" x2="174.22222222222223" y2="195.72253585596582" stroke="#007c78" stroke-width="2.5"/>
+<circle cx="174.22222222222223" cy="195.72253585596582" r="4" fill="#007c78" stroke="#007c78" stroke-width="2"><title>2017: Download share of the top fifth 93.5%</title></circle>
+<line x1="174.22222222222223" y1="195.72253585596582" x2="262.44444444444446" y2="200.27052109445836" stroke="#007c78" stroke-width="2.5"/>
+<circle cx="262.44444444444446" cy="200.27052109445836" r="4" fill="#007c78" stroke="#007c78" stroke-width="2"><title>2018: Download share of the top fifth 91.7%</title></circle>
+<line x1="262.44444444444446" y1="200.27052109445836" x2="350.66666666666663" y2="219.77922926619485" stroke="#007c78" stroke-width="2.5"/>
+<circle cx="350.66666666666663" cy="219.77922926619485" r="4" fill="#007c78" stroke="#007c78" stroke-width="2"><title>2019: Download share of the top fifth 83.6%</title></circle>
+<line x1="350.66666666666663" y1="219.77922926619485" x2="438.88888888888886" y2="196.00985422852307" stroke="#007c78" stroke-width="2.5"/>
+<circle cx="438.88888888888886" cy="196.00985422852307" r="4" fill="white" stroke="#007c78" stroke-width="2"><title>2020: Download share of the top fifth 93.4%; provisional because the archive flags suspected zeros</title></circle>
+<line x1="438.88888888888886" y1="196.00985422852307" x2="527.1111111111111" y2="191.4512168182922" stroke="#007c78" stroke-width="2.5"/>
+<circle cx="527.1111111111111" cy="191.4512168182922" r="4" fill="white" stroke="#007c78" stroke-width="2"><title>2021: Download share of the top fifth 95.3%; provisional because the archive flags suspected zeros</title></circle>
+<line x1="527.1111111111111" y1="191.4512168182922" x2="615.3333333333333" y2="193.7586802441869" stroke="#007c78" stroke-width="2.5"/>
+<circle cx="615.3333333333333" cy="193.7586802441869" r="4" fill="white" stroke="#007c78" stroke-width="2"><title>2022: Download share of the top fifth 94.3%; provisional because the archive flags suspected zeros</title></circle>
+<line x1="615.3333333333333" y1="193.7586802441869" x2="703.5555555555555" y2="190.32843350529103" stroke="#007c78" stroke-width="2.5"/>
+<circle cx="703.5555555555555" cy="190.32843350529103" r="4" fill="white" stroke="#007c78" stroke-width="2"><title>2023: Download share of the top fifth 95.7%; provisional because the archive flags suspected zeros</title></circle>
+<line x1="703.5555555555555" y1="190.32843350529103" x2="791.7777777777777" y2="185.6058417364039" stroke="#007c78" stroke-width="2.5"/>
+<circle cx="791.7777777777777" cy="185.6058417364039" r="4" fill="#007c78" stroke="#007c78" stroke-width="2"><title>2024: Download share of the top fifth 97.7%</title></circle>
+<line x1="791.7777777777777" y1="185.6058417364039" x2="880" y2="185.28062908324335" stroke="#007c78" stroke-width="2.5"/>
+<circle cx="880" cy="185.28062908324335" r="4" fill="white" stroke="#007c78" stroke-width="2"><title>2025: Download share of the top fifth 97.8%; provisional because the archive flags suspected zeros</title></circle>
+<line x1="454" y1="145" x2="479" y2="145" stroke="#b86619" stroke-width="3"/>
+<text x="488" y="149" font-size="12" fill="#526a73" >Package share needed to reach 80%</text>
+<circle cx="86" cy="414.19565217391306" r="4" fill="#b86619" stroke="#b86619" stroke-width="2"><title>2016: Package share needed to reach 80% 3.6%</title></circle>
+<line x1="86" y1="414.19565217391306" x2="174.22222222222223" y2="391.30434782608694" stroke="#b86619" stroke-width="2.5"/>
+<circle cx="174.22222222222223" cy="391.30434782608694" r="4" fill="#b86619" stroke="#b86619" stroke-width="2"><title>2017: Package share needed to reach 80% 13.0%</title></circle>
+<line x1="174.22222222222223" y1="391.30434782608694" x2="262.44444444444446" y2="396.5869565217391" stroke="#b86619" stroke-width="2.5"/>
+<circle cx="262.44444444444446" cy="396.5869565217391" r="4" fill="#b86619" stroke="#b86619" stroke-width="2"><title>2018: Package share needed to reach 80% 10.9%</title></circle>
+<line x1="262.44444444444446" y1="396.5869565217391" x2="350.66666666666663" y2="382.5" stroke="#b86619" stroke-width="2.5"/>
+<circle cx="350.66666666666663" cy="382.5" r="4" fill="#b86619" stroke="#b86619" stroke-width="2"><title>2019: Package share needed to reach 80% 16.7%</title></circle>
+<line x1="350.66666666666663" y1="382.5" x2="438.88888888888886" y2="394.82608695652175" stroke="#b86619" stroke-width="2.5"/>
+<circle cx="438.88888888888886" cy="394.82608695652175" r="4" fill="white" stroke="#b86619" stroke-width="2"><title>2020: Package share needed to reach 80% 11.6%; provisional because the archive flags suspected zeros</title></circle>
+<line x1="438.88888888888886" y1="394.82608695652175" x2="527.1111111111111" y2="398.3478260869565" stroke="#b86619" stroke-width="2.5"/>
+<circle cx="527.1111111111111" cy="398.3478260869565" r="4" fill="white" stroke="#b86619" stroke-width="2"><title>2021: Package share needed to reach 80% 10.1%; provisional because the archive flags suspected zeros</title></circle>
+<line x1="527.1111111111111" y1="398.3478260869565" x2="615.3333333333333" y2="401.8695652173913" stroke="#b86619" stroke-width="2.5"/>
+<circle cx="615.3333333333333" cy="401.8695652173913" r="4" fill="white" stroke="#b86619" stroke-width="2"><title>2022: Package share needed to reach 80% 8.7%; provisional because the archive flags suspected zeros</title></circle>
+<line x1="615.3333333333333" y1="401.8695652173913" x2="703.5555555555555" y2="401.8695652173913" stroke="#b86619" stroke-width="2.5"/>
+<circle cx="703.5555555555555" cy="401.8695652173913" r="4" fill="white" stroke="#b86619" stroke-width="2"><title>2023: Package share needed to reach 80% 8.7%; provisional because the archive flags suspected zeros</title></circle>
+<line x1="703.5555555555555" y1="401.8695652173913" x2="791.7777777777777" y2="405.39130434782606" stroke="#b86619" stroke-width="2.5"/>
+<circle cx="791.7777777777777" cy="405.39130434782606" r="4" fill="#b86619" stroke="#b86619" stroke-width="2"><title>2024: Package share needed to reach 80% 7.2%</title></circle>
+<line x1="791.7777777777777" y1="405.39130434782606" x2="880" y2="405.39130434782606" stroke="#b86619" stroke-width="2.5"/>
+<circle cx="880" cy="405.39130434782606" r="4" fill="white" stroke="#b86619" stroke-width="2"><title>2025: Package share needed to reach 80% 7.2%; provisional because the archive flags suspected zeros</title></circle>
+<text x="86" y="449" font-size="11" fill="#526a73" text-anchor="middle">2016</text>
+<text x="174.22222222222223" y="449" font-size="11" fill="#526a73" text-anchor="middle">2017</text>
+<text x="262.44444444444446" y="449" font-size="11" fill="#526a73" text-anchor="middle">2018</text>
+<text x="350.66666666666663" y="449" font-size="11" fill="#526a73" text-anchor="middle">2019</text>
+<text x="438.88888888888886" y="449" font-size="11" fill="#526a73" text-anchor="middle">2020</text>
+<text x="527.1111111111111" y="449" font-size="11" fill="#526a73" text-anchor="middle">2021</text>
+<text x="615.3333333333333" y="449" font-size="11" fill="#526a73" text-anchor="middle">2022</text>
+<text x="703.5555555555555" y="449" font-size="11" fill="#526a73" text-anchor="middle">2023</text>
+<text x="791.7777777777777" y="449" font-size="11" fill="#526a73" text-anchor="middle">2024</text>
+<text x="880" y="449" font-size="11" fill="#526a73" text-anchor="middle">2025</text>
+<text x="483" y="483" font-size="12" fill="#526a73" text-anchor="middle">Calendar year</text>
+<text x="40" y="504" font-size="12" fill="#526a73" >Today&apos;s cohort is held fixed; packages not yet published in an earlier year contribute known zeros.</text>
+<text x="40" y="526" font-size="12" fill="#526a73" >The cohort is not a reconstruction of the portfolio in each year. A whole-package fifth is rounded up.</text>
+<text x="40" y="548" font-size="12" fill="#526a73" >Gaps mean incomplete or zero totals. Hollow markers retain archive-flagged suspected shared-zero days.</text>
+</svg>

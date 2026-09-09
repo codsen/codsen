@@ -1,0 +1,72 @@
+---
+name: Refresh website charts
+
+on:
+  workflow_run:
+    workflows: [Release npm packages]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: codsen-website-charts
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: Request the website rebuild
+    # The website resolves the latest completed successful ci.yml run. Starting
+    # this inside that release run would still select the previous release.
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_run' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Request a Vercel build with the latest verified release charts
+        shell: bash
+        env:
+          CODSEN_WEBSITE_DEPLOY_HOOK: ${{ secrets.CODSEN_WEBSITE_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$CODSEN_WEBSITE_DEPLOY_HOOK" ]; then
+            echo "::warning::Website refresh skipped: configure the CODSEN_WEBSITE_DEPLOY_HOOK repository secret."
+            echo "Website refresh skipped. Set CODSEN_WEBSITE_DEPLOY_HOOK after completing the website setup in .github/NPM_RELEASES.md. No rebuild was requested." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          # Treat the hook URL as a credential. Do not print it or the response,
+          # follow redirects, or let a local curl configuration change the call.
+          if ! http_status=$(
+            curl --disable --fail --silent \
+              --proto '=https' \
+              --request POST \
+              --connect-timeout 10 \
+              --max-time 30 \
+              --retry 2 \
+              --retry-delay 5 \
+              --retry-max-time 120 \
+              --output /dev/null \
+              --write-out '%{http_code}' \
+              --url "$CODSEN_WEBSITE_DEPLOY_HOOK"
+          ); then
+            echo "::error::Website rebuild request failed. Check Vercel before retrying Refresh website charts."
+            echo "The website rebuild request failed. Check Vercel for an accepted deployment before retrying this workflow on main." >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
+          case "$http_status" in
+            2??)
+              echo "Vercel accepted a website rebuild request. Track build and deployment completion in Vercel." >> "$GITHUB_STEP_SUMMARY"
+              ;;
+            *)
+              echo "::error::Vercel did not accept the website rebuild request. Check the deploy hook configuration."
+              echo "Vercel did not accept the website rebuild request. Check CODSEN_WEBSITE_DEPLOY_HOOK, then retry this workflow on main." >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+              ;;
+          esac

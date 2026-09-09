@@ -32,6 +32,7 @@ const requiredGates = [
   "npm run ci:verify:node-compatibility",
   "npm run ci:verify:browser-iifes",
   "npm run ci:verify:data",
+  "npm run stats:charts:check",
   "npm run lint:markdown",
   "npm run typecheck",
   gateCommand,
@@ -235,6 +236,65 @@ test("10 - cold verification modes disable the nested npm download cache", () =>
   );
   ok(release.includes('cache: "save-only"'), "10.02");
   ok(rehearsal.includes('cache: "false"'), "10.03");
+});
+
+test("11 - website refresh waits for a successful main release in this repository", () => {
+  const workflow = readRepositoryFile(".github/workflows/refresh-website.yml");
+  const refresh = jobSection(workflow, "refresh");
+
+  ok(workflow.includes("workflows: [Release npm packages]"), "11.01");
+  ok(workflow.includes("types: [completed]"), "11.02");
+  ok(workflow.includes("branches: [main]"), "11.03");
+  ok(workflow.includes("workflow_dispatch:"), "11.04");
+  for (const [index, condition] of [
+    "github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'",
+    "github.event_name == 'workflow_run'",
+    "github.event.workflow_run.conclusion == 'success'",
+    "github.event.workflow_run.event == 'push'",
+    "github.event.workflow_run.head_branch == 'main'",
+    "github.event.workflow_run.head_repository.full_name == github.repository",
+  ].entries()) {
+    ok(refresh.includes(condition), `11.${String(index + 5).padStart(2, "0")}`);
+  }
+  ok(
+    !readRepositoryFile(releaseWorkflow).includes("CODSEN_WEBSITE_DEPLOY_HOOK"),
+    "11.11",
+  );
+});
+
+test("12 - website refresh only sends the secret hook and reports request status", () => {
+  const workflow = readRepositoryFile(".github/workflows/refresh-website.yml");
+
+  ok(workflow.includes("permissions: {}"), "12.01");
+  equal([...workflow.matchAll(/\buses:/gu)], [], "12.02");
+  ok(
+    !/\b(?:npm|node|gh|git) (?:run|ci|install|checkout|fetch)\b/u.test(
+      workflow,
+    ),
+    "12.03",
+  );
+  ok(
+    workflow.includes(
+      `CODSEN_WEBSITE_DEPLOY_HOOK: \${{ secrets.CODSEN_WEBSITE_DEPLOY_HOOK }}`,
+    ),
+    "12.04",
+  );
+  const missingSecret = workflow.indexOf(
+    'if [ -z "$CODSEN_WEBSITE_DEPLOY_HOOK" ]',
+  );
+  const request = workflow.indexOf("curl --disable --fail --silent");
+  ok(missingSecret > -1 && missingSecret < request, "12.05");
+  ok(workflow.includes("::warning::Website refresh skipped:"), "12.06");
+  ok(workflow.includes("No rebuild was requested."), "12.07");
+  ok(workflow.includes("--request POST"), "12.08");
+  ok(workflow.includes("--max-time 30"), "12.09");
+  ok(workflow.includes("--retry 2"), "12.10");
+  ok(workflow.includes("--retry-max-time 120"), "12.11");
+  ok(workflow.includes("--output /dev/null"), "12.12");
+  ok(workflow.includes('--url "$CODSEN_WEBSITE_DEPLOY_HOOK"'), "12.13");
+  ok(workflow.includes('case "$http_status" in\n            2??)'), "12.14");
+  ok(workflow.includes("Vercel accepted a website rebuild request."), "12.15");
+  ok(!workflow.includes("--location"), "12.16");
 });
 
 test.run();

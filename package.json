@@ -46,7 +46,7 @@
     "format:check": "biome format .",
     "graph": "turbo run build --graph=deps-graph.html",
     "fix": "npm run ci:fix:test-numbering && npm run check:fix && npm run generate",
-    "generate": "npm run lect && npm run ci:generate:changelogs && npm run ci:generate:info && npm run ci:build:root-readme",
+    "generate": "npm run lect && npm run ci:generate:changelogs && npm run ci:generate:info && npm run stats:charts && npm run ci:build:root-readme",
     "house": "npm run fix",
     "lect": "npm run ci:generate:npmrc && npm run ci:generate:package-kind-config && node ./ops/lect/root.js && turbo run lect",
     "lect:check": "npm run ci:verify:npmrc && npm run ci:verify:package-kinds && node ./ops/lect/root.js --check && turbo run lect:check",
@@ -66,6 +66,8 @@
     "prettier": "npm run check",
     "prettier:format": "npm run check:fix",
     "preview:update-notifier": "node ./ops/scripts/preview-cli-update-notifier.js",
+    "stats:charts": "node ./ops/scripts/generate-statistics-charts.js",
+    "stats:charts:check": "node ./ops/scripts/generate-statistics-charts.js --check",
     "stats:check": "node ./ops/scripts/verify-npm-downloads.js",
     "stats:export": "node ./ops/scripts/export-npm-downloads.js",
     "stats:refresh": "node ./ops/scripts/refresh-npm-downloads.js",
@@ -81,7 +83,7 @@
     "typecheck": "node ./ops/scripts/typecheck-workspaces.js",
     "unit": "npm run test:ops-helpers && turbo run unit",
     "verify": "npm run ci:verify:root-toolchain && npm run ci:verify:package-kinds && npm run ci:verify:debug-log-production-cost && npm run ci:verify:test-numbering && npm run ci:verify:dependency-security-policy && npm run check && npm run lint:markdown && npm run stats:check && npm run test:ops-helpers && npm run ci:verify:coverage-policy && npm run ci:verify:node-compatibility && npm run verify:generated && npm run ci:verify:browser-iifes && npm run typecheck",
-    "verify:generated": "npm run lect:check && npm run ci:verify:info && npm run ci:verify:changelogs && npm run ci:verify:root-readme && npm run build -- '--filter=./data/**' && npm run ci:verify:data",
+    "verify:generated": "npm run lect:check && npm run ci:verify:info && npm run stats:charts:check && npm run ci:verify:changelogs && npm run ci:verify:root-readme && npm run build -- '--filter=./data/**' && npm run ci:verify:data",
     "wipe": "rm package-lock.json || true && rm -rf node_modules && git clean -fXd && npm i"
   },
   "devDependencies": {

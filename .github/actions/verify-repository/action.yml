@@ -232,6 +232,13 @@ runs:
         node ops/scripts/ci-telemetry.js run
         --name "Verify package information" -- npm run ci:verify:info
 
+    - name: Verify generated website charts
+      if: inputs.phase != 'validate'
+      shell: bash
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Verify generated website charts" -- npm run stats:charts:check
+
     - name: Verify generated changelogs
       if: inputs.phase != 'validate'
       shell: bash
