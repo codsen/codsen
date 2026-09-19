@@ -21,6 +21,8 @@
   <img src="https://img.shields.io/badge/licence-MIT-brightgreen.svg?style=flat-square" alt="MIT Licence">
 </p>
 
+**Maintenance is moving to [ast-compare](https://codsen.com/os/ast-compare).** For whitespace-tolerant comparisons, use `compare(bigValue, smallPattern, { hungryForWhitespace: true })`. The replacement is not drop-in: array matching, nullish inputs, and primitive comparisons differ. Follow the [migration guide](https://codsen.com/os/ast-loose-compare#migrate-to-ast-compare) and test your inputs before switching. The installation and API below document `ast-loose-compare` for existing users.
+
 **No 3rd party dependencies.** All dependencies, checked recursively, are Codsen packages.
 
 ## Install

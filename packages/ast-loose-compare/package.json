@@ -72,6 +72,9 @@
   "lect": {
     "licence": {
       "extras": [""]
+    },
+    "readme": {
+      "notice": "**Maintenance is moving to [ast-compare](https://codsen.com/os/ast-compare).** For whitespace-tolerant comparisons, use `compare(bigValue, smallPattern, { hungryForWhitespace: true })`. The replacement is not drop-in: array matching, nullish inputs, and primitive comparisons differ. Follow the [migration guide](https://codsen.com/os/ast-loose-compare#migrate-to-ast-compare) and test your inputs before switching. The installation and API below document `ast-loose-compare` for existing users."
     }
   },
   "dependencies": {
