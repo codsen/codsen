@@ -5,7 +5,7 @@
     "documentation": "https://github.com/npm/registry/blob/main/docs/download-counts.md",
     "earliestDay": "2015-01-10"
   },
-  "through": "2026-09-06",
+  "through": "2026-09-11",
   "packages": {
     "@codsen/data": {
       "status": "auxiliary",
@@ -18,7 +18,12 @@
         "start": "2015-01-10",
         "end": "2026-09-06",
         "days": 4258,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-07",
+            "end": "2026-09-11"
+          }
+        ]
       },
       "total": 22240
     },
@@ -33,7 +38,12 @@
         "start": "2017-06-19",
         "end": "2026-09-06",
         "days": 3367,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-07",
+            "end": "2026-09-11"
+          }
+        ]
       },
       "total": 9471
     },
@@ -48,7 +58,12 @@
         "start": "2017-05-16",
         "end": "2026-09-06",
         "days": 3401,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-07",
+            "end": "2026-09-11"
+          }
+        ]
       },
       "total": 57149
     },
@@ -63,7 +78,12 @@
         "start": "2017-05-17",
         "end": "2026-09-06",
         "days": 3400,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-07",
+            "end": "2026-09-11"
+          }
+        ]
       },
       "total": 46410
     },
@@ -78,7 +98,12 @@
         "start": "2016-11-24",
         "end": "2026-09-06",
         "days": 3574,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-07",
+            "end": "2026-09-11"
+          }
+        ]
       },
       "total": 52178
     },
@@ -96,7 +121,7 @@
         "missing": [
           {
             "start": "2015-01-10",
-            "end": "2026-09-06"
+            "end": "2026-09-11"
           }
         ]
       },
@@ -113,7 +138,12 @@
         "start": "2017-01-25",
         "end": "2026-09-06",
         "days": 3512,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-07",
+            "end": "2026-09-11"
+          }
+        ]
       },
       "total": 2963
     },
@@ -128,7 +158,12 @@
         "start": "2016-10-19",
         "end": "2026-09-06",
         "days": 3610,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-07",
+            "end": "2026-09-11"
+          }
+        ]
       },
       "total": 11730
     },
@@ -143,7 +178,12 @@
         "start": "2016-10-31",
         "end": "2026-09-06",
         "days": 3598,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-07",
+            "end": "2026-09-11"
+          }
+        ]
       },
       "total": 13415
     },
@@ -158,7 +198,12 @@
         "start": "2016-11-06",
         "end": "2026-09-06",
         "days": 3592,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-07",
+            "end": "2026-09-11"
+          }
+        ]
       },
       "total": 17135
     },
@@ -173,7 +218,12 @@
         "start": "2016-10-17",
         "end": "2026-09-06",
         "days": 3612,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-07",
+            "end": "2026-09-11"
+          }
+        ]
       },
       "total": 50603
     },
@@ -188,7 +238,12 @@
         "start": "2016-11-18",
         "end": "2026-09-06",
         "days": 3580,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-07",
+            "end": "2026-09-11"
+          }
+        ]
       },
       "total": 8628
     },
@@ -203,7 +258,12 @@
         "start": "2016-10-24",
         "end": "2026-09-06",
         "days": 3605,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-07",
+            "end": "2026-09-11"
+          }
+        ]
       },
       "total": 9657
     },
@@ -218,7 +278,12 @@
         "start": "2016-11-06",
         "end": "2026-09-06",
         "days": 3592,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-07",
+            "end": "2026-09-11"
+          }
+        ]
       },
       "total": 11512
     },
@@ -233,7 +298,12 @@
         "start": "2016-11-05",
         "end": "2026-09-06",
         "days": 3593,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-07",
+            "end": "2026-09-11"
+          }
+        ]
       },
       "total": 7295
     },
@@ -248,7 +318,12 @@
         "start": "2017-01-09",
         "end": "2026-09-06",
         "days": 3528,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-07",
+            "end": "2026-09-11"
+          }
+        ]
       },
       "total": 2110
     },
@@ -263,9 +338,29 @@
         "start": "2017-01-09",
         "end": "2026-09-06",
         "days": 3528,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-07",
+            "end": "2026-09-11"
+          }
+        ]
       },
       "total": 4619
+    },
+    "ranges-iterate": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2019-06-01",
+      "availability": "available",
+      "file": "packages/ranges-iterate.ndjson",
+      "sha256": "b3abdf56576fd96b1336d1f3f54fc568d831eaf793b1f751deed9cce092909eb",
+      "coverage": {
+        "start": "2019-06-01",
+        "end": "2026-09-11",
+        "days": 2660,
+        "missing": []
+      },
+      "total": 29750
     },
     "string-replace-slices-array": {
       "status": "deprecated",
@@ -278,7 +373,12 @@
         "start": "2017-07-25",
         "end": "2026-09-06",
         "days": 3331,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-07",
+            "end": "2026-09-11"
+          }
+        ]
       },
       "total": 88098
     },
@@ -293,12 +393,17 @@
         "start": "2017-07-28",
         "end": "2026-09-06",
         "days": 3328,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-07",
+            "end": "2026-09-11"
+          }
+        ]
       },
       "total": 87719
     }
   },
   "anomalies": [],
-  "revision": "2928a6a1c72819cc70cc24b5cb731cb310293b3e7557b66c47536d02c79bc168",
-  "updatedAt": "2026-09-09T06:02:02.017Z"
+  "revision": "e2415f9ce950231a424053f4099ffdb8005c60c475134d7707ffa52f33ace53b",
+  "updatedAt": "2026-09-19T12:26:14.954Z"
 }

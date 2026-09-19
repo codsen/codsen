@@ -154,7 +154,7 @@ export const dependencyStats: DependencyStats = {
     "codsen-format-diagnostic-value": 2,
     "codsen-glob": 8,
     "codsen-parser": 1,
-    "codsen-utils": 77,
+    "codsen-utils": 76,
     "csv-sort": 1,
     "csv-split-easy": 1,
     "currency.js": 1,
@@ -318,7 +318,6 @@ export const dependencyStats: DependencyStats = {
     "ranges-ent-decode",
     "ranges-invert",
     "ranges-is-index-within",
-    "ranges-iterate",
     "ranges-merge",
     "ranges-process-outside",
     "ranges-push",
@@ -400,7 +399,7 @@ export const dependencyStats: DependencyStats = {
   ],
   "top10OwnDeps": [
     {
-      "codsen-utils": 77
+      "codsen-utils": 76
     },
     {
       "ranges-apply": 15

@@ -83,7 +83,6 @@ export const perfStats: PerfStats = {
     "ranges-ent-decode": 1301222,
     "ranges-invert": 880972,
     "ranges-is-index-within": 14015456,
-    "ranges-iterate": 5082124,
     "ranges-merge": 1313719,
     "ranges-process-outside": 823838,
     "ranges-push": 740422,
@@ -184,7 +183,6 @@ export const perfStats: PerfStats = {
     "ranges-ent-decode",
     "ranges-invert",
     "ranges-is-index-within",
-    "ranges-iterate",
     "ranges-merge",
     "ranges-process-outside",
     "ranges-push",
@@ -222,7 +220,7 @@ export const perfStats: PerfStats = {
     "util-array-object-or-both",
     "util-nonempty"
   ],
-  "recordedRuns": 1004,
+  "recordedRuns": 1001,
   "regressionThresholdPercent": 10,
   "unchangedTolerancePercent": 2
 };

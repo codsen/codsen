@@ -81,7 +81,6 @@ export const coverageStats: CoverageStats = {
     "ranges-ent-decode",
     "ranges-invert",
     "ranges-is-index-within",
-    "ranges-iterate",
     "ranges-merge",
     "ranges-process-outside",
     "ranges-push",

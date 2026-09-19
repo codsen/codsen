@@ -620,14 +620,6 @@ export const interdeps = [
     "imports": []
   },
   {
-    "name": "ranges-iterate",
-    "tarballSizeBytes": 9624,
-    "unpackedSizeBytes": 23034,
-    "imports": [
-      "codsen-utils"
-    ]
-  },
-  {
     "name": "ranges-merge",
     "tarballSizeBytes": 12503,
     "unpackedSizeBytes": 32136,

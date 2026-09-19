@@ -1312,21 +1312,6 @@
       },
       "total": 82875
     },
-    "ranges-iterate": {
-      "status": "current",
-      "includedInPortfolio": true,
-      "firstPublishedDay": "2019-06-01",
-      "availability": "available",
-      "file": "packages/ranges-iterate.ndjson",
-      "sha256": "b3abdf56576fd96b1336d1f3f54fc568d831eaf793b1f751deed9cce092909eb",
-      "coverage": {
-        "start": "2019-06-01",
-        "end": "2026-09-11",
-        "days": 2660,
-        "missing": []
-      },
-      "total": 29750
-    },
     "ranges-merge": {
       "status": "current",
       "includedInPortfolio": true,
@@ -2159,7 +2144,6 @@
         "generate-atomic-css-cli",
         "html-img-alt",
         "object-flatten-referencing",
-        "ranges-iterate",
         "string-convert-indexes"
       ]
     },
@@ -2586,7 +2570,7 @@
       ]
     }
   ],
-  "retiredRevision": "2928a6a1c72819cc70cc24b5cb731cb310293b3e7557b66c47536d02c79bc168",
-  "revision": "1548d5f411ad87364a579a0c23e23579c7b8dd45084170c1967433bd439ce90e",
-  "updatedAt": "2026-09-16T05:41:51.869Z"
+  "retiredRevision": "e2415f9ce950231a424053f4099ffdb8005c60c475134d7707ffa52f33ace53b",
+  "revision": "d9bcf739c62a7a0bea20717e51dfbb1c37c3d3d0a04ada3044261b413cb817e0",
+  "updatedAt": "2026-09-19T12:26:14.954Z"
 }
