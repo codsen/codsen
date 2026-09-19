@@ -86,7 +86,7 @@ test("008 - retained style raw text survives every later prose cleanup stage", (
 
 test("009 - invokes the callback once per real prose slice without exposing CSS", () => {
   const opening = String.raw`<b title="two  three" style="font-family:'\31  a'">`;
-  const style = String.raw`<style>.private{content:"hidden  CSS &amp;"}</style>`;
+  const style = `<style>.private{content:"hidden  CSS &amp;"}</style>`;
   const seen = [];
   const actual = det(`one${opening}four</b>${style}five`, {
     stripHtmlButIgnoreTags: ["b", "style"],

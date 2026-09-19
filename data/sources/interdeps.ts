@@ -38,8 +38,8 @@ export const interdeps = [
   },
   {
     "name": "ast-compare",
-    "tarballSizeBytes": 16730,
-    "unpackedSizeBytes": 51949,
+    "tarballSizeBytes": 16739,
+    "unpackedSizeBytes": 52089,
     "imports": [
       "codsen-utils"
     ]
