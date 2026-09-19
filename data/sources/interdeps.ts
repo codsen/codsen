@@ -53,25 +53,6 @@ export const interdeps = [
     ]
   },
   {
-    "name": "ast-delete-object",
-    "tarballSizeBytes": 17981,
-    "unpackedSizeBytes": 50260,
-    "imports": [
-      "ast-compare",
-      "ast-monkey",
-      "codsen-utils"
-    ]
-  },
-  {
-    "name": "ast-get-object",
-    "tarballSizeBytes": 15610,
-    "unpackedSizeBytes": 43397,
-    "imports": [
-      "ast-compare",
-      "codsen-utils"
-    ]
-  },
-  {
     "name": "ast-get-values-by-key",
     "tarballSizeBytes": 13112,
     "unpackedSizeBytes": 33533,
@@ -321,18 +302,6 @@ export const interdeps = [
     "imports": []
   },
   {
-    "name": "html-img-alt",
-    "tarballSizeBytes": 45128,
-    "unpackedSizeBytes": 133444,
-    "imports": [
-      "check-types-mini",
-      "codsen-utils",
-      "ranges-apply",
-      "ranges-push",
-      "string-unfancy"
-    ]
-  },
-  {
     "name": "html-table-patcher",
     "tarballSizeBytes": 41705,
     "unpackedSizeBytes": 143449,
@@ -560,16 +529,6 @@ export const interdeps = [
     "unpackedSizeBytes": 27810,
     "imports": [
       "codsen-utils",
-      "ranges-merge"
-    ]
-  },
-  {
-    "name": "ranges-ent-decode",
-    "tarballSizeBytes": 29353,
-    "unpackedSizeBytes": 83197,
-    "imports": [
-      "codsen-utils",
-      "html-entity-codec",
       "ranges-merge"
     ]
   },

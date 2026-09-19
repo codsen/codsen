@@ -944,22 +944,6 @@ function htmlCrushSmoke(api, equal) {
   );
 }
 
-function htmlImgAltSmoke(api, equal) {
-  equal(typeof api.alts, "function");
-  equal(typeof api.version, "string");
-  equal(
-    api.alts('zzz<img src="spacer.gif" >zzz'),
-    'zzz<img src="spacer.gif" alt="" >zzz',
-  );
-  var message = "";
-  try {
-    api.alts("text", { rogue: true });
-  } catch (error) {
-    message = error.message;
-  }
-  equal(message.indexOf("html-img-alt/alts(): [THROW_ID_03]") === 0, true);
-}
-
 function generateAtomicCssSmoke(api, equal) {
   equal(api.extractFromToSource("mt|10"), [0, 10, "mt"]);
   equal(api.extractFromToSource(".m$$$[lang|=en] { margin: $$$px; } | 2 | 4"), [
@@ -1217,7 +1201,6 @@ const IIFE_API_SMOKES = Object.freeze({
   "generate-atomic-css": generateAtomicCssSmoke,
   "html-crush": htmlCrushSmoke,
   "html-entity-codec": htmlEntityCodecSmoke,
-  "html-img-alt": htmlImgAltSmoke,
   "is-language-code": languageCodeSmoke,
   "object-boolean-combinations": objectBooleanCombinationsSmoke,
   "object-delete-key": objectDeleteKeySmoke,

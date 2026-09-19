@@ -120,7 +120,6 @@ export const dependencyStats: DependencyStats = {
     "edit-package-json",
     "email-all-chars-within-ascii-cli",
     "generate-atomic-css-cli",
-    "html-img-alt",
     "html-table-patcher",
     "js-row-num-cli",
     "json-comb",
@@ -143,14 +142,14 @@ export const dependencyStats: DependencyStats = {
     "array-includes-with-glob": 1,
     "array-pull-all-with-glob": 1,
     "arrayiffy-if-string": 7,
-    "ast-compare": 4,
+    "ast-compare": 2,
     "ast-get-values-by-key": 1,
-    "ast-monkey": 6,
-    "check-types-mini": 2,
+    "ast-monkey": 5,
+    "check-types-mini": 1,
     "codsen-format-diagnostic-value": 2,
     "codsen-glob": 8,
     "codsen-parser": 1,
-    "codsen-utils": 73,
+    "codsen-utils": 69,
     "csv-sort": 1,
     "csv-split-easy": 1,
     "currency.js": 1,
@@ -160,7 +159,7 @@ export const dependencyStats: DependencyStats = {
     "html-all-known-attributes": 1,
     "html-crush": 1,
     "html-entities-not-email-friendly": 1,
-    "html-entity-codec": 7,
+    "html-entity-codec": 6,
     "is-char-suitable-for-html-attr-name": 1,
     "js-row-num": 1,
     "json-comb-core": 1,
@@ -176,13 +175,13 @@ export const dependencyStats: DependencyStats = {
     "p-progress": 1,
     "package-json": 1,
     "picomatch": 1,
-    "ranges-apply": 15,
+    "ranges-apply": 14,
     "ranges-crop": 2,
     "ranges-invert": 2,
     "ranges-is-index-within": 1,
-    "ranges-merge": 4,
+    "ranges-merge": 3,
     "ranges-process-outside": 1,
-    "ranges-push": 12,
+    "ranges-push": 11,
     "ranges-sort": 2,
     "regex-empty-conditional-comments": 1,
     "semver-compare": 1,
@@ -207,7 +206,7 @@ export const dependencyStats: DependencyStats = {
     "string-trim-spaces-only": 1,
     "string-typo-match": 2,
     "string-uglify": 1,
-    "string-unfancy": 2,
+    "string-unfancy": 1,
     "unicode-segmenter": 1,
     "unified": 2,
     "unist-util-visit": 1,
@@ -225,7 +224,6 @@ export const dependencyStats: DependencyStats = {
     "is-html-attribute-closing": 1,
     "is-html-tag-opening": 1,
     "p-map": 5,
-    "parse5": 1,
     "ranges-apply": 2,
     "ranges-invert": 1,
     "rehype": 1,
@@ -266,8 +264,6 @@ export const dependencyStats: DependencyStats = {
     "arrayiffy-if-string",
     "ast-compare",
     "ast-contains-only-empty-space",
-    "ast-delete-object",
-    "ast-get-object",
     "ast-get-values-by-key",
     "ast-is-empty",
     "ast-monkey",
@@ -307,7 +303,6 @@ export const dependencyStats: DependencyStats = {
     "object-set-all-values-to",
     "ranges-apply",
     "ranges-crop",
-    "ranges-ent-decode",
     "ranges-invert",
     "ranges-is-index-within",
     "ranges-merge",
@@ -351,7 +346,6 @@ export const dependencyStats: DependencyStats = {
     "csv-sort": "currency.js",
     "detergent": "ansi-regex",
     "generate-atomic-css-cli": "picomatch",
-    "html-img-alt": "parse5",
     "js-row-num-cli": "picomatch",
     "json-variables": "object-path",
     "string-convert-indexes": "unicode-segmenter"
@@ -390,16 +384,16 @@ export const dependencyStats: DependencyStats = {
   ],
   "top10OwnDeps": [
     {
-      "codsen-utils": 73
-    },
-    {
-      "ranges-apply": 15
+      "codsen-utils": 69
     },
     {
       "string-left-right": 15
     },
     {
-      "ranges-push": 12
+      "ranges-apply": 14
+    },
+    {
+      "ranges-push": 11
     },
     {
       "codsen-glob": 8
@@ -408,16 +402,16 @@ export const dependencyStats: DependencyStats = {
       "arrayiffy-if-string": 7
     },
     {
-      "html-entity-codec": 7
-    },
-    {
       "string-match-left-right": 7
     },
     {
-      "ast-monkey": 6
+      "html-entity-codec": 6
     },
     {
-      "ast-compare": 4
+      "ast-monkey": 5
+    },
+    {
+      "ranges-merge": 3
     }
   ]
 };

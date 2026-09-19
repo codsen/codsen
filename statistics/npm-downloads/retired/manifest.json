@@ -27,6 +27,36 @@
       },
       "total": 22240
     },
+    "ast-delete-object": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2018-03-11",
+      "availability": "available",
+      "file": "packages/ast-delete-object.ndjson",
+      "sha256": "e199f14f99c855ab018ff2de8b8f6c9d08d05735e7bd02a33f8530dca3704da7",
+      "coverage": {
+        "start": "2018-03-11",
+        "end": "2026-09-18",
+        "days": 3114,
+        "missing": []
+      },
+      "total": 55118
+    },
+    "ast-get-object": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2018-03-10",
+      "availability": "available",
+      "file": "packages/ast-get-object.ndjson",
+      "sha256": "270533409a70a4853f9acd966c6f10ed18192e244f8217bfeb668032f8da4080",
+      "coverage": {
+        "start": "2018-03-10",
+        "end": "2026-09-18",
+        "days": 3115,
+        "missing": []
+      },
+      "total": 58397
+    },
     "ast-loose-compare": {
       "status": "deprecated",
       "includedInPortfolio": false,
@@ -196,6 +226,21 @@
         ]
       },
       "total": 2963
+    },
+    "html-img-alt": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2017-08-05",
+      "availability": "available",
+      "file": "packages/html-img-alt.ndjson",
+      "sha256": "73565b1f4abf507c9930ca7eae02687c28d52c06740ac4bbc6bbd1030df125bf",
+      "coverage": {
+        "start": "2017-08-05",
+        "end": "2026-09-18",
+        "days": 3332,
+        "missing": []
+      },
+      "total": 46428
     },
     "posthtml-ast-compare": {
       "status": "deprecated",
@@ -397,6 +442,21 @@
       },
       "total": 4619
     },
+    "ranges-ent-decode": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2018-08-22",
+      "availability": "available",
+      "file": "packages/ranges-ent-decode.ndjson",
+      "sha256": "b8c44a25a46d85c6a2b16da711be715e3fab848c5837009fa8bd63acb5b1acdd",
+      "coverage": {
+        "start": "2018-08-22",
+        "end": "2026-09-18",
+        "days": 2950,
+        "missing": []
+      },
+      "total": 40527
+    },
     "ranges-iterate": {
       "status": "deprecated",
       "includedInPortfolio": false,
@@ -479,6 +539,6 @@
     }
   },
   "anomalies": [],
-  "revision": "a4cd960111b2a61f752f12683689e3e63f824cbc122a95b954649e98aecc6ae4",
-  "updatedAt": "2026-09-19T23:00:47.972Z"
+  "revision": "c82ff87d217eb219c37a29d4b5ef951641e36de56e44b2bddaa2956bc26694a3",
+  "updatedAt": "2026-09-19T23:40:36.764Z"
 }

@@ -57,7 +57,6 @@ export const programClassification = {
     "is-html-tag-opening",
     "is-html-attribute-closing",
     "is-language-code",
-    "html-img-alt",
     "is-media-descriptor",
     "is-relative-uri",
     "is-char-suitable-for-html-attr-name",

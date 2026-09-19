@@ -109,6 +109,8 @@ const packagesOutsideMonorepoObj = {
 // announce deprecation and replacements in their published npm READMEs.
 // eslint-on-airbnb-base-badge is locally retired and unavailable from npm.
 const deprecated = [
+  "ast-delete-object",
+  "ast-get-object",
   "ast-loose-compare",
   "ast-monkey-traverse",
   "ast-monkey-traverse-with-lookahead",
@@ -118,6 +120,7 @@ const deprecated = [
   "email-remove-unused-css",
   "eslint-on-airbnb-base-badge",
   "fol",
+  "html-img-alt",
   "posthtml-ast-compare",
   "posthtml-ast-contains-only-empty-space",
   "posthtml-ast-delete-key",
@@ -128,6 +131,7 @@ const deprecated = [
   "posthtml-ast-loose-compare",
   "posthtml-color-shorthand-hex-to-six-digit",
   "posthtml-email-remove-unused-css",
+  "ranges-ent-decode",
   "ranges-iterate",
   "ranges-regex",
   "string-replace-slices-array",

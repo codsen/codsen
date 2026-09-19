@@ -1,0 +1,621 @@
+{
+  "schemaVersion": 1,
+  "frozenRevision": "fe2563742f3fb797b242ac37554e309b4c544d13",
+  "repository": "https://github.com/codsen/codsen",
+  "sourceTree": "https://github.com/codsen/codsen/tree/fe2563742f3fb797b242ac37554e309b4c544d13",
+  "reason": "ast-delete-object, ast-get-object, html-img-alt, and ranges-ent-decode retired from active maintenance; their original performance evidence is retained independently of successor workloads.",
+  "scoreFormula": "target operations per second * perf-ref canonical score / reference operations per second",
+  "reference": {
+    "name": "perf-ref",
+    "version": "1.0.5",
+    "canonicalScore": 183
+  },
+  "harness": [
+    {
+      "sourcePath": "ops/scripts/perf.js",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/ops/scripts/perf.js",
+      "sha256": "cc35acc89306f7882209073fcb990cd491bfbb3ca1584387476a0eb60cdad974"
+    },
+    {
+      "sourcePath": "ops/scripts/historicalJson.js",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/ops/scripts/historicalJson.js",
+      "sha256": "ba852ebd6c9ad68efb2d2e6f654e719e453a230e4452227737765b8c6c3fbf35"
+    },
+    {
+      "sourcePath": "ops/helpers/perfMeasurement.js",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/ops/helpers/perfMeasurement.js",
+      "sha256": "4828a27c0f154652bc2c5163f82d32a7802353f0acc6b06b38bac5c7d6bac3b9"
+    },
+    {
+      "sourcePath": "ops/helpers/perfPolicy.js",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/ops/helpers/perfPolicy.js",
+      "sha256": "0718f71445b3dbe41c1c79720c6df1542be94ed41f429797c68cb890d22e156e"
+    },
+    {
+      "sourcePath": "ops/perf-policy.json",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/ops/perf-policy.json",
+      "sha256": "30d19fe18a83767eda950a65b2423e172f73bd62f36f06288825db49716d071e"
+    },
+    {
+      "sourcePath": "package-lock.json",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/package-lock.json",
+      "sha256": "09e2685e68cbcf9d1e70ce701fd61c341e0abfa90f17411d31e915890222baa9"
+    },
+    {
+      "sourcePath": ".agents/PERFORMANCE.md",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/.agents/PERFORMANCE.md",
+      "sha256": "0da061b126d186c5cd65446af0d7715ca2e8969e91a4e5a767375a2e638a44d4"
+    }
+  ],
+  "packages": {
+    "ast-delete-object": {
+      "version": "4.2.7",
+      "release": {
+        "tag": "ast-delete-object@4.2.7",
+        "revision": "c1898722b0926cda2d53d1e8d430396e6f3192bc",
+        "sourceTree": "https://github.com/codsen/codsen/tree/c1898722b0926cda2d53d1e8d430396e6f3192bc/packages/ast-delete-object"
+      },
+      "recordedVersions": [
+        {
+          "version": "4.1.3",
+          "score": 214904,
+          "tag": "ast-delete-object@4.1.3",
+          "revision": "ae6dc7ea79a0aebd5c7f7b7d644f39e148478568",
+          "sourceTree": "https://github.com/codsen/codsen/tree/ae6dc7ea79a0aebd5c7f7b7d644f39e148478568/packages/ast-delete-object"
+        },
+        {
+          "version": "4.2.1",
+          "score": 397119,
+          "tag": "ast-delete-object@4.2.1",
+          "revision": "4aed874fbcfc638f6ecaa682374ea523a916b9c1",
+          "sourceTree": "https://github.com/codsen/codsen/tree/4aed874fbcfc638f6ecaa682374ea523a916b9c1/packages/ast-delete-object"
+        }
+      ],
+      "evidence": [
+        {
+          "archivePath": "ast-delete-object/original-workload/check.js.txt",
+          "sourcePath": "packages/ast-delete-object/perf/check.js",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/ast-delete-object/perf/check.js",
+          "sha256": "a1b4a8b4de7832fdb451ba1d346acb8db089cf351de95441777c4c535cf50eb8"
+        },
+        {
+          "archivePath": "ast-delete-object/historical.json.txt",
+          "sourcePath": "packages/ast-delete-object/perf/historical.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/ast-delete-object/perf/historical.json",
+          "sha256": "1d04d7b095221c94e1a43fb62d65691bdffaf631a572e4a830ddbe71f2943837"
+        },
+        {
+          "archivePath": "ast-delete-object/CHANGELOG.md",
+          "sourcePath": "packages/ast-delete-object/CHANGELOG.md",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/ast-delete-object/CHANGELOG.md",
+          "sha256": "91108787b08f4cacefd5df4ca488784d6e2df47e44e8e6c6fe282ef6ac9b916d"
+        },
+        {
+          "archivePath": "ast-delete-object/package.json.txt",
+          "sourcePath": "packages/ast-delete-object/package.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/ast-delete-object/package.json",
+          "sha256": "ee846420ac53ceaf9a70d15ab65295ef1b648fade8c7f922123b43ee7a2cce5e"
+        },
+        {
+          "archivePath": "ast-delete-object/original-workload/main.ts.txt",
+          "sourcePath": "packages/ast-delete-object/src/main.ts",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/ast-delete-object/src/main.ts",
+          "sha256": "e397f2678a02889646563d07e702b92edda128debd806762a6015ac74ec14d9e"
+        },
+        {
+          "archivePath": "ast-delete-object/LICENSE",
+          "sourcePath": "packages/ast-delete-object/LICENSE",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/ast-delete-object/LICENSE",
+          "sha256": "44c5e27070432ee1282b08ee45677ff56c86eb7cde22284dbcc8655b44fc7484"
+        }
+      ]
+    },
+    "ast-get-object": {
+      "version": "4.2.6",
+      "release": {
+        "tag": "ast-get-object@4.2.6",
+        "revision": "3a7e62cd9b0d0fbaff950b4d42a8778ee2a43ebe",
+        "sourceTree": "https://github.com/codsen/codsen/tree/3a7e62cd9b0d0fbaff950b4d42a8778ee2a43ebe/packages/ast-get-object"
+      },
+      "recordedVersions": [
+        {
+          "version": "3.0.5",
+          "score": 147176,
+          "tag": "ast-get-object@3.0.5",
+          "revision": "351150dca7847d274a33f18abe4e5652d1b3f626",
+          "sourceTree": "https://github.com/codsen/codsen/tree/351150dca7847d274a33f18abe4e5652d1b3f626/packages/ast-get-object"
+        },
+        {
+          "version": "3.0.7",
+          "score": 175163,
+          "tag": "ast-get-object@3.0.7",
+          "revision": "72a1cef2b0c2d3668b95c56958989ddac8dcc1ac",
+          "sourceTree": "https://github.com/codsen/codsen/tree/72a1cef2b0c2d3668b95c56958989ddac8dcc1ac/packages/ast-get-object"
+        },
+        {
+          "version": "3.0.8",
+          "score": 111514,
+          "tag": "ast-get-object@3.0.8",
+          "revision": null,
+          "sourceTree": null,
+          "provenance": "Release tag unavailable in the local Git history; no exact release revision asserted."
+        },
+        {
+          "version": "3.0.9",
+          "score": 143507,
+          "tag": "ast-get-object@3.0.9",
+          "revision": null,
+          "sourceTree": null,
+          "provenance": "Release tag unavailable in the local Git history; no exact release revision asserted."
+        },
+        {
+          "version": "3.0.10",
+          "score": 124984,
+          "tag": "ast-get-object@3.0.10",
+          "revision": "c94152083d5137792b9722c2db754f6a2da31129",
+          "sourceTree": "https://github.com/codsen/codsen/tree/c94152083d5137792b9722c2db754f6a2da31129/packages/ast-get-object"
+        },
+        {
+          "version": "3.0.11",
+          "score": 104322,
+          "tag": "ast-get-object@3.0.11",
+          "revision": "29c26a9ede83ba8fceb1b7bf69f55d94cbf491d0",
+          "sourceTree": "https://github.com/codsen/codsen/tree/29c26a9ede83ba8fceb1b7bf69f55d94cbf491d0/packages/ast-get-object"
+        },
+        {
+          "version": "3.0.12",
+          "score": 91602,
+          "tag": "ast-get-object@3.0.12",
+          "revision": "f804ea7b045b65d5ecee135e164c0b889e65437f",
+          "sourceTree": "https://github.com/codsen/codsen/tree/f804ea7b045b65d5ecee135e164c0b889e65437f/packages/ast-get-object"
+        },
+        {
+          "version": "3.0.13",
+          "score": 105071,
+          "tag": "ast-get-object@3.0.13",
+          "revision": "8248e895aa1d81db70a836deb979a172593ba394",
+          "sourceTree": "https://github.com/codsen/codsen/tree/8248e895aa1d81db70a836deb979a172593ba394/packages/ast-get-object"
+        },
+        {
+          "version": "3.0.14",
+          "score": 105170,
+          "tag": "ast-get-object@3.0.14",
+          "revision": "8decd15a4bc35ccd963f5673313c60f71ee3be20",
+          "sourceTree": "https://github.com/codsen/codsen/tree/8decd15a4bc35ccd963f5673313c60f71ee3be20/packages/ast-get-object"
+        },
+        {
+          "version": "3.0.15",
+          "score": 92007,
+          "tag": "ast-get-object@3.0.15",
+          "revision": "f977a655d9a2d97b5c9cdf8a2ab58c09b00479b0",
+          "sourceTree": "https://github.com/codsen/codsen/tree/f977a655d9a2d97b5c9cdf8a2ab58c09b00479b0/packages/ast-get-object"
+        },
+        {
+          "version": "3.0.16",
+          "score": 108179,
+          "tag": "ast-get-object@3.0.16",
+          "revision": "411b10a3851ddac57a7a1d8ac900efa363d79819",
+          "sourceTree": "https://github.com/codsen/codsen/tree/411b10a3851ddac57a7a1d8ac900efa363d79819/packages/ast-get-object"
+        },
+        {
+          "version": "3.0.17",
+          "score": 97396,
+          "tag": "ast-get-object@3.0.17",
+          "revision": "90592ea960942c56b4db0b8cecd7a7ae8605f435",
+          "sourceTree": "https://github.com/codsen/codsen/tree/90592ea960942c56b4db0b8cecd7a7ae8605f435/packages/ast-get-object"
+        },
+        {
+          "version": "3.0.18",
+          "score": 139029,
+          "tag": "ast-get-object@3.0.18",
+          "revision": "3b2e16d2bba5743b966d2942a9aab5d9a77e5ab3",
+          "sourceTree": "https://github.com/codsen/codsen/tree/3b2e16d2bba5743b966d2942a9aab5d9a77e5ab3/packages/ast-get-object"
+        },
+        {
+          "version": "3.0.19",
+          "score": 147047,
+          "tag": "ast-get-object@3.0.19",
+          "revision": "e3eb24d6a6dff33e55eac100da22b912b7416211",
+          "sourceTree": "https://github.com/codsen/codsen/tree/e3eb24d6a6dff33e55eac100da22b912b7416211/packages/ast-get-object"
+        },
+        {
+          "version": "3.0.20",
+          "score": 125523,
+          "tag": "ast-get-object@3.0.20",
+          "revision": "696ed28530de9334eaca85fe3e9d4f80be9b50c7",
+          "sourceTree": "https://github.com/codsen/codsen/tree/696ed28530de9334eaca85fe3e9d4f80be9b50c7/packages/ast-get-object"
+        },
+        {
+          "version": "4.0.40",
+          "score": 295390,
+          "tag": "ast-get-object@4.0.40",
+          "revision": "2d8c4e185c6aaef386c86dd3f0cc1967cfffea43",
+          "sourceTree": "https://github.com/codsen/codsen/tree/2d8c4e185c6aaef386c86dd3f0cc1967cfffea43/packages/ast-get-object"
+        },
+        {
+          "version": "4.1.3",
+          "score": 417718,
+          "tag": "ast-get-object@4.1.3",
+          "revision": "ae6dc7ea79a0aebd5c7f7b7d644f39e148478568",
+          "sourceTree": "https://github.com/codsen/codsen/tree/ae6dc7ea79a0aebd5c7f7b7d644f39e148478568/packages/ast-get-object"
+        }
+      ],
+      "evidence": [
+        {
+          "archivePath": "ast-get-object/original-workload/check.js.txt",
+          "sourcePath": "packages/ast-get-object/perf/check.js",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/ast-get-object/perf/check.js",
+          "sha256": "1157789b07b2c7b205bbfd175a9a4c97f18c70e04e35862876e5314dfd246599"
+        },
+        {
+          "archivePath": "ast-get-object/historical.json.txt",
+          "sourcePath": "packages/ast-get-object/perf/historical.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/ast-get-object/perf/historical.json",
+          "sha256": "f66b452cc1392598d6d00473b014d3843122e08b5334cae35adb42ae1361df15"
+        },
+        {
+          "archivePath": "ast-get-object/CHANGELOG.md",
+          "sourcePath": "packages/ast-get-object/CHANGELOG.md",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/ast-get-object/CHANGELOG.md",
+          "sha256": "0f197ecec1a5473a17f143b5604386b027d50b7ce6500caf14a6b28837af386d"
+        },
+        {
+          "archivePath": "ast-get-object/package.json.txt",
+          "sourcePath": "packages/ast-get-object/package.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/ast-get-object/package.json",
+          "sha256": "601a332d0a7565bd4e5cbaa0e12369b55878cc72e38c05bc2fe7782ff5a4329e"
+        },
+        {
+          "archivePath": "ast-get-object/original-workload/main.ts.txt",
+          "sourcePath": "packages/ast-get-object/src/main.ts",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/ast-get-object/src/main.ts",
+          "sha256": "2e67819b1c40d1727d4eab16f0013eb6c3458ecbe7cc42cee3a5433e388caa4d"
+        },
+        {
+          "archivePath": "ast-get-object/LICENSE",
+          "sourcePath": "packages/ast-get-object/LICENSE",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/ast-get-object/LICENSE",
+          "sha256": "44c5e27070432ee1282b08ee45677ff56c86eb7cde22284dbcc8655b44fc7484"
+        }
+      ]
+    },
+    "html-img-alt": {
+      "version": "4.2.5",
+      "release": {
+        "tag": "html-img-alt@4.2.5",
+        "revision": "35b0d4e396ad9dcd091561b7c8c3153cb3647a8b",
+        "sourceTree": "https://github.com/codsen/codsen/tree/35b0d4e396ad9dcd091561b7c8c3153cb3647a8b/packages/html-img-alt"
+      },
+      "recordedVersions": [
+        {
+          "version": "3.0.5",
+          "score": 74986,
+          "tag": "html-img-alt@3.0.5",
+          "revision": "351150dca7847d274a33f18abe4e5652d1b3f626",
+          "sourceTree": "https://github.com/codsen/codsen/tree/351150dca7847d274a33f18abe4e5652d1b3f626/packages/html-img-alt"
+        },
+        {
+          "version": "3.0.7",
+          "score": 109849,
+          "tag": "html-img-alt@3.0.7",
+          "revision": "72a1cef2b0c2d3668b95c56958989ddac8dcc1ac",
+          "sourceTree": "https://github.com/codsen/codsen/tree/72a1cef2b0c2d3668b95c56958989ddac8dcc1ac/packages/html-img-alt"
+        },
+        {
+          "version": "3.0.8",
+          "score": 39864,
+          "tag": "html-img-alt@3.0.8",
+          "revision": null,
+          "sourceTree": null,
+          "provenance": "Release tag unavailable in the local Git history; no exact release revision asserted."
+        },
+        {
+          "version": "3.0.9",
+          "score": 42740,
+          "tag": "html-img-alt@3.0.9",
+          "revision": null,
+          "sourceTree": null,
+          "provenance": "Release tag unavailable in the local Git history; no exact release revision asserted."
+        },
+        {
+          "version": "3.0.10",
+          "score": 59821,
+          "tag": "html-img-alt@3.0.10",
+          "revision": "c94152083d5137792b9722c2db754f6a2da31129",
+          "sourceTree": "https://github.com/codsen/codsen/tree/c94152083d5137792b9722c2db754f6a2da31129/packages/html-img-alt"
+        },
+        {
+          "version": "3.0.11",
+          "score": 64872,
+          "tag": "html-img-alt@3.0.11",
+          "revision": "29c26a9ede83ba8fceb1b7bf69f55d94cbf491d0",
+          "sourceTree": "https://github.com/codsen/codsen/tree/29c26a9ede83ba8fceb1b7bf69f55d94cbf491d0/packages/html-img-alt"
+        },
+        {
+          "version": "3.0.12",
+          "score": 65018,
+          "tag": "html-img-alt@3.0.12",
+          "revision": "f804ea7b045b65d5ecee135e164c0b889e65437f",
+          "sourceTree": "https://github.com/codsen/codsen/tree/f804ea7b045b65d5ecee135e164c0b889e65437f/packages/html-img-alt"
+        },
+        {
+          "version": "3.1.0",
+          "score": 68446,
+          "tag": "html-img-alt@3.1.0",
+          "revision": "8248e895aa1d81db70a836deb979a172593ba394",
+          "sourceTree": "https://github.com/codsen/codsen/tree/8248e895aa1d81db70a836deb979a172593ba394/packages/html-img-alt"
+        },
+        {
+          "version": "3.1.1",
+          "score": 61227,
+          "tag": "html-img-alt@3.1.1",
+          "revision": "8decd15a4bc35ccd963f5673313c60f71ee3be20",
+          "sourceTree": "https://github.com/codsen/codsen/tree/8decd15a4bc35ccd963f5673313c60f71ee3be20/packages/html-img-alt"
+        },
+        {
+          "version": "3.1.2",
+          "score": 74643,
+          "tag": "html-img-alt@3.1.2",
+          "revision": "f977a655d9a2d97b5c9cdf8a2ab58c09b00479b0",
+          "sourceTree": "https://github.com/codsen/codsen/tree/f977a655d9a2d97b5c9cdf8a2ab58c09b00479b0/packages/html-img-alt"
+        },
+        {
+          "version": "3.1.3",
+          "score": 47286,
+          "tag": "html-img-alt@3.1.3",
+          "revision": "411b10a3851ddac57a7a1d8ac900efa363d79819",
+          "sourceTree": "https://github.com/codsen/codsen/tree/411b10a3851ddac57a7a1d8ac900efa363d79819/packages/html-img-alt"
+        },
+        {
+          "version": "3.1.4",
+          "score": 73496,
+          "tag": "html-img-alt@3.1.4",
+          "revision": "e31bdbb384a317055adb2a8db141d568727076bf",
+          "sourceTree": "https://github.com/codsen/codsen/tree/e31bdbb384a317055adb2a8db141d568727076bf/packages/html-img-alt"
+        },
+        {
+          "version": "3.1.5",
+          "score": 75165,
+          "tag": "html-img-alt@3.1.5",
+          "revision": "3b2e16d2bba5743b966d2942a9aab5d9a77e5ab3",
+          "sourceTree": "https://github.com/codsen/codsen/tree/3b2e16d2bba5743b966d2942a9aab5d9a77e5ab3/packages/html-img-alt"
+        },
+        {
+          "version": "3.1.6",
+          "score": 85842,
+          "tag": "html-img-alt@3.1.6",
+          "revision": "e3eb24d6a6dff33e55eac100da22b912b7416211",
+          "sourceTree": "https://github.com/codsen/codsen/tree/e3eb24d6a6dff33e55eac100da22b912b7416211/packages/html-img-alt"
+        },
+        {
+          "version": "4.0.34",
+          "score": 76353,
+          "tag": "html-img-alt@4.0.34",
+          "revision": "2d8c4e185c6aaef386c86dd3f0cc1967cfffea43",
+          "sourceTree": "https://github.com/codsen/codsen/tree/2d8c4e185c6aaef386c86dd3f0cc1967cfffea43/packages/html-img-alt"
+        },
+        {
+          "version": "4.1.3",
+          "score": 108107,
+          "tag": "html-img-alt@4.1.3",
+          "revision": "ae6dc7ea79a0aebd5c7f7b7d644f39e148478568",
+          "sourceTree": "https://github.com/codsen/codsen/tree/ae6dc7ea79a0aebd5c7f7b7d644f39e148478568/packages/html-img-alt"
+        },
+        {
+          "version": "4.2.1",
+          "score": 114102,
+          "tag": "html-img-alt@4.2.1",
+          "revision": "4aed874fbcfc638f6ecaa682374ea523a916b9c1",
+          "sourceTree": "https://github.com/codsen/codsen/tree/4aed874fbcfc638f6ecaa682374ea523a916b9c1/packages/html-img-alt"
+        },
+        {
+          "version": "4.2.3",
+          "score": 129240,
+          "tag": "html-img-alt@4.2.3",
+          "revision": "918918a79b070219126007e39372218204c62efd",
+          "sourceTree": "https://github.com/codsen/codsen/tree/918918a79b070219126007e39372218204c62efd/packages/html-img-alt"
+        }
+      ],
+      "evidence": [
+        {
+          "archivePath": "html-img-alt/original-workload/check.js.txt",
+          "sourcePath": "packages/html-img-alt/perf/check.js",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/html-img-alt/perf/check.js",
+          "sha256": "636894a4479de7fc3e59ea226f3615d233614a654376da6590a900dacfdc6b33"
+        },
+        {
+          "archivePath": "html-img-alt/historical.json.txt",
+          "sourcePath": "packages/html-img-alt/perf/historical.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/html-img-alt/perf/historical.json",
+          "sha256": "a7d529d08b3521e9ac52c07fcebbfb3ce135f746cdf442ff0f8c2da0112c2c75"
+        },
+        {
+          "archivePath": "html-img-alt/CHANGELOG.md",
+          "sourcePath": "packages/html-img-alt/CHANGELOG.md",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/html-img-alt/CHANGELOG.md",
+          "sha256": "83beb1c3704d3412710e9ebdbb4a1d2a222d3d5bf0d109bca857f23487512004"
+        },
+        {
+          "archivePath": "html-img-alt/package.json.txt",
+          "sourcePath": "packages/html-img-alt/package.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/html-img-alt/package.json",
+          "sha256": "7a9f3195e795b8851b09775707c179247bf844a415276e3987daafd342285811"
+        },
+        {
+          "archivePath": "html-img-alt/original-workload/main.ts.txt",
+          "sourcePath": "packages/html-img-alt/src/main.ts",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/html-img-alt/src/main.ts",
+          "sha256": "4cb46c9e0d33bbec2f324b0e14db748e2e49ff812462a899849f12b55460305f"
+        },
+        {
+          "archivePath": "html-img-alt/LICENSE",
+          "sourcePath": "packages/html-img-alt/LICENSE",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/html-img-alt/LICENSE",
+          "sha256": "44c5e27070432ee1282b08ee45677ff56c86eb7cde22284dbcc8655b44fc7484"
+        }
+      ]
+    },
+    "ranges-ent-decode": {
+      "version": "6.2.5",
+      "release": {
+        "tag": "ranges-ent-decode@6.2.5",
+        "revision": "35b0d4e396ad9dcd091561b7c8c3153cb3647a8b",
+        "sourceTree": "https://github.com/codsen/codsen/tree/35b0d4e396ad9dcd091561b7c8c3153cb3647a8b/packages/ranges-ent-decode"
+      },
+      "recordedVersions": [
+        {
+          "version": "5.0.5",
+          "score": 550186,
+          "tag": "ranges-ent-decode@5.0.5",
+          "revision": "351150dca7847d274a33f18abe4e5652d1b3f626",
+          "sourceTree": "https://github.com/codsen/codsen/tree/351150dca7847d274a33f18abe4e5652d1b3f626/packages/ranges-ent-decode"
+        },
+        {
+          "version": "5.0.7",
+          "score": 846480,
+          "tag": "ranges-ent-decode@5.0.7",
+          "revision": "72a1cef2b0c2d3668b95c56958989ddac8dcc1ac",
+          "sourceTree": "https://github.com/codsen/codsen/tree/72a1cef2b0c2d3668b95c56958989ddac8dcc1ac/packages/ranges-ent-decode"
+        },
+        {
+          "version": "5.0.8",
+          "score": 587674,
+          "tag": "ranges-ent-decode@5.0.8",
+          "revision": null,
+          "sourceTree": null,
+          "provenance": "Release tag unavailable in the local Git history; no exact release revision asserted."
+        },
+        {
+          "version": "5.0.9",
+          "score": 637405,
+          "tag": "ranges-ent-decode@5.0.9",
+          "revision": null,
+          "sourceTree": null,
+          "provenance": "Release tag unavailable in the local Git history; no exact release revision asserted."
+        },
+        {
+          "version": "5.0.10",
+          "score": 762335,
+          "tag": "ranges-ent-decode@5.0.10",
+          "revision": "c94152083d5137792b9722c2db754f6a2da31129",
+          "sourceTree": "https://github.com/codsen/codsen/tree/c94152083d5137792b9722c2db754f6a2da31129/packages/ranges-ent-decode"
+        },
+        {
+          "version": "5.0.11",
+          "score": 488934,
+          "tag": "ranges-ent-decode@5.0.11",
+          "revision": "29c26a9ede83ba8fceb1b7bf69f55d94cbf491d0",
+          "sourceTree": "https://github.com/codsen/codsen/tree/29c26a9ede83ba8fceb1b7bf69f55d94cbf491d0/packages/ranges-ent-decode"
+        },
+        {
+          "version": "5.0.12",
+          "score": 424465,
+          "tag": "ranges-ent-decode@5.0.12",
+          "revision": "f804ea7b045b65d5ecee135e164c0b889e65437f",
+          "sourceTree": "https://github.com/codsen/codsen/tree/f804ea7b045b65d5ecee135e164c0b889e65437f/packages/ranges-ent-decode"
+        },
+        {
+          "version": "5.1.0",
+          "score": 491192,
+          "tag": "ranges-ent-decode@5.1.0",
+          "revision": "8decd15a4bc35ccd963f5673313c60f71ee3be20",
+          "sourceTree": "https://github.com/codsen/codsen/tree/8decd15a4bc35ccd963f5673313c60f71ee3be20/packages/ranges-ent-decode"
+        },
+        {
+          "version": "5.1.1",
+          "score": 568971,
+          "tag": "ranges-ent-decode@5.1.1",
+          "revision": "f977a655d9a2d97b5c9cdf8a2ab58c09b00479b0",
+          "sourceTree": "https://github.com/codsen/codsen/tree/f977a655d9a2d97b5c9cdf8a2ab58c09b00479b0/packages/ranges-ent-decode"
+        },
+        {
+          "version": "5.1.2",
+          "score": 600308,
+          "tag": "ranges-ent-decode@5.1.2",
+          "revision": "411b10a3851ddac57a7a1d8ac900efa363d79819",
+          "sourceTree": "https://github.com/codsen/codsen/tree/411b10a3851ddac57a7a1d8ac900efa363d79819/packages/ranges-ent-decode"
+        },
+        {
+          "version": "5.1.3",
+          "score": 863665,
+          "tag": "ranges-ent-decode@5.1.3",
+          "revision": "e31bdbb384a317055adb2a8db141d568727076bf",
+          "sourceTree": "https://github.com/codsen/codsen/tree/e31bdbb384a317055adb2a8db141d568727076bf/packages/ranges-ent-decode"
+        },
+        {
+          "version": "5.1.4",
+          "score": 687015,
+          "tag": "ranges-ent-decode@5.1.4",
+          "revision": "3b2e16d2bba5743b966d2942a9aab5d9a77e5ab3",
+          "sourceTree": "https://github.com/codsen/codsen/tree/3b2e16d2bba5743b966d2942a9aab5d9a77e5ab3/packages/ranges-ent-decode"
+        },
+        {
+          "version": "6.0.33",
+          "score": 583115,
+          "tag": "ranges-ent-decode@6.0.33",
+          "revision": "2d8c4e185c6aaef386c86dd3f0cc1967cfffea43",
+          "sourceTree": "https://github.com/codsen/codsen/tree/2d8c4e185c6aaef386c86dd3f0cc1967cfffea43/packages/ranges-ent-decode"
+        },
+        {
+          "version": "6.1.3",
+          "score": 659237,
+          "tag": "ranges-ent-decode@6.1.3",
+          "revision": "ae6dc7ea79a0aebd5c7f7b7d644f39e148478568",
+          "sourceTree": "https://github.com/codsen/codsen/tree/ae6dc7ea79a0aebd5c7f7b7d644f39e148478568/packages/ranges-ent-decode"
+        },
+        {
+          "version": "6.2.3",
+          "score": 1220816,
+          "tag": "ranges-ent-decode@6.2.3",
+          "revision": "918918a79b070219126007e39372218204c62efd",
+          "sourceTree": "https://github.com/codsen/codsen/tree/918918a79b070219126007e39372218204c62efd/packages/ranges-ent-decode"
+        },
+        {
+          "version": "6.2.4",
+          "score": 1301222,
+          "tag": "ranges-ent-decode@6.2.4",
+          "revision": "4874b31b9640840e369e86a1e54b79428ea5d937",
+          "sourceTree": "https://github.com/codsen/codsen/tree/4874b31b9640840e369e86a1e54b79428ea5d937/packages/ranges-ent-decode"
+        }
+      ],
+      "evidence": [
+        {
+          "archivePath": "ranges-ent-decode/original-workload/check.js.txt",
+          "sourcePath": "packages/ranges-ent-decode/perf/check.js",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/ranges-ent-decode/perf/check.js",
+          "sha256": "3c7e48ee0cc962d475ada76f68e50a8dc6410327286d3e99a0675e91aaf95024"
+        },
+        {
+          "archivePath": "ranges-ent-decode/historical.json.txt",
+          "sourcePath": "packages/ranges-ent-decode/perf/historical.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/ranges-ent-decode/perf/historical.json",
+          "sha256": "a89997b05e200a6cb73b0ac017c67ab704d5984572e732e2049e66a1248da1b2"
+        },
+        {
+          "archivePath": "ranges-ent-decode/CHANGELOG.md",
+          "sourcePath": "packages/ranges-ent-decode/CHANGELOG.md",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/ranges-ent-decode/CHANGELOG.md",
+          "sha256": "9797ed52fe1928101bd8031ac6687a84191766e4f30e9e356383a1299c039cfc"
+        },
+        {
+          "archivePath": "ranges-ent-decode/package.json.txt",
+          "sourcePath": "packages/ranges-ent-decode/package.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/ranges-ent-decode/package.json",
+          "sha256": "6ca278cb27a7d154c851bbce375de0c2d053d9c98e00589cff4bb517910d9af2"
+        },
+        {
+          "archivePath": "ranges-ent-decode/original-workload/main.ts.txt",
+          "sourcePath": "packages/ranges-ent-decode/src/main.ts",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/ranges-ent-decode/src/main.ts",
+          "sha256": "82fa946cb68c5ae10a77394fe69a48a27849d697c7fe516424bc5d1439f59cd3"
+        },
+        {
+          "archivePath": "ranges-ent-decode/LICENSE",
+          "sourcePath": "packages/ranges-ent-decode/LICENSE",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/fe2563742f3fb797b242ac37554e309b4c544d13/packages/ranges-ent-decode/LICENSE",
+          "sha256": "44c5e27070432ee1282b08ee45677ff56c86eb7cde22284dbcc8655b44fc7484"
+        }
+      ]
+    }
+  }
+}

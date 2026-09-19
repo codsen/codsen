@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "sources": {
-    "downloadRevision": "1095f5dc01a3eaf5a288d6ea920214ce7b9fb4dac7ebd7f3b7e0f1346f1f6b2c",
+    "downloadRevision": "52934f599aaf697f88c5a6b765a4dcf20c32eaf6f27f91fa82bd704841304a02",
     "downloadsThrough": "2026-09-18",
-    "interdepsSha256": "ec534aca4f1e4775006c8e864766bdc96ed78bd16197983ee9bf6e39ebcd2255",
-    "packageLockSha256": "09e2685e68cbcf9d1e70ce701fd61c341e0abfa90f17411d31e915890222baa9"
+    "interdepsSha256": "168fe8842defd8a89afed9f99c7864eefe640462c413cf3258a97069068ae604",
+    "packageLockSha256": "c805a7a3a1b28b691876b24da8ba5b67a362910c937c8f0bfa5304fc250a6354"
   },
   "downloads": {
-    "revision": "1095f5dc01a3eaf5a288d6ea920214ce7b9fb4dac7ebd7f3b7e0f1346f1f6b2c",
+    "revision": "52934f599aaf697f88c5a6b765a4dcf20c32eaf6f27f91fa82bd704841304a02",
     "through": "2026-09-18",
     "cohort": "Current, available libraries and CLIs included in the archive portfolio; excludes generated data and retired packages.",
     "historyCohort": "The current cohort is fixed across calendar years. Known prepublication days count as zero. This does not reconstruct each year's portfolio.",
@@ -17,11 +17,11 @@
       "start": "2025-09-19",
       "end": "2026-09-18",
       "days": 365,
-      "packageCount": 133,
+      "packageCount": 129,
       "complete": true,
       "missingPackages": [],
-      "observedDownloads": 162433957,
-      "totalDownloads": 162433957,
+      "observedDownloads": 162405791,
+      "totalDownloads": 162405791,
       "provisional": true,
       "anomalyDays": [
         "2025-10-17",
@@ -46,1074 +46,1042 @@
         "2026-09-17"
       ],
       "packagesFor80Percent": 11,
-      "packageShareFor80Percent": 8.270676691729323,
-      "achieved80PercentShare": 80.72111362773732,
-      "top20PercentCount": 27,
-      "top20PercentPackageShare": 20.30075187969925,
-      "top20PercentDownloadShare": 97.2027782343565,
+      "packageShareFor80Percent": 8.527131782945736,
+      "achieved80PercentShare": 80.735113072415,
+      "top20PercentCount": 26,
+      "top20PercentPackageShare": 20.155038759689923,
+      "top20PercentDownloadShare": 96.84120192487471,
       "ranked": [
         {
           "name": "is-language-code",
           "downloads": 17922982,
           "rank": 1,
-          "share": 11.034011810720095,
+          "share": 11.03592543691992,
           "cumulativeDownloads": 17922982,
-          "cumulativeShare": 11.034011810720095
+          "cumulativeShare": 11.03592543691992
         },
         {
           "name": "string-strip-html",
           "downloads": 16056085,
           "rank": 2,
-          "share": 9.884685010782567,
+          "share": 9.886399309492603,
           "cumulativeDownloads": 33979067,
-          "cumulativeShare": 20.91869682150266
+          "cumulativeShare": 20.92232474641252
         },
         {
           "name": "codsen-utils",
           "downloads": 11981700,
           "rank": 3,
-          "share": 7.376351731676401,
+          "share": 7.377631010707002,
           "cumulativeDownloads": 45960767,
-          "cumulativeShare": 28.295048553179065
+          "cumulativeShare": 28.29995575711952
         },
         {
           "name": "ranges-merge",
           "downloads": 11942229,
           "rank": 4,
-          "share": 7.352052009666919,
+          "share": 7.353327074402169,
           "cumulativeDownloads": 57902996,
-          "cumulativeShare": 35.64710056284598
+          "cumulativeShare": 35.65328283152169
         },
         {
           "name": "ranges-sort",
           "downloads": 11861231,
           "rank": 5,
-          "share": 7.302186820456513,
+          "share": 7.303453237083153,
           "cumulativeDownloads": 69764227,
-          "cumulativeShare": 42.94928738330249
+          "cumulativeShare": 42.95673606860485
         },
         {
           "name": "ranges-push",
           "downloads": 11852848,
           "rank": 6,
-          "share": 7.297025953754238,
+          "share": 7.298291475332921,
           "cumulativeDownloads": 81617075,
-          "cumulativeShare": 50.24631333705673
+          "cumulativeShare": 50.25502754393777
         },
         {
           "name": "string-collapse-leading-whitespace",
           "downloads": 11807573,
           "rank": 7,
-          "share": 7.269153087245176,
+          "share": 7.270413774838855,
           "cumulativeDownloads": 93424648,
-          "cumulativeShare": 57.515466424301906
+          "cumulativeShare": 57.525441318776615
         },
         {
           "name": "ranges-apply",
           "downloads": 11785272,
           "rank": 8,
-          "share": 7.2554238151078225,
+          "share": 7.256682121636906,
           "cumulativeDownloads": 105209920,
-          "cumulativeShare": 64.77089023940972
+          "cumulativeShare": 64.78212344041353
         },
         {
           "name": "string-trim-spaces-only",
           "downloads": 11604126,
           "rank": 9,
-          "share": 7.143904029869813,
+          "share": 7.145142995547491,
           "cumulativeDownloads": 116814046,
-          "cumulativeShare": 71.91479426927955
+          "cumulativeShare": 71.92726643596103
         },
         {
           "name": "string-left-right",
           "downloads": 11534832,
           "rank": 10,
-          "share": 7.101244230601364,
+          "share": 7.1024757977996,
           "cumulativeDownloads": 128348878,
-          "cumulativeShare": 79.01603849988092
+          "cumulativeShare": 79.02974223376062
         },
         {
           "name": "arrayiffy-if-string",
           "downloads": 2769621,
           "rank": 11,
-          "share": 1.7050751278564247,
+          "share": 1.7053708386543927,
           "cumulativeDownloads": 131118499,
-          "cumulativeShare": 80.72111362773732
+          "cumulativeShare": 80.735113072415
         },
         {
           "name": "string-match-left-right",
           "downloads": 2505819,
           "rank": 12,
-          "share": 1.5426694308752202,
+          "share": 1.5429369756894937,
           "cumulativeDownloads": 133624318,
-          "cumulativeShare": 82.26378305861255
+          "cumulativeShare": 82.2780500481045
         },
         {
           "name": "string-character-is-astral-surrogate",
           "downloads": 2445879,
           "rank": 13,
-          "share": 1.505768279719985,
+          "share": 1.506029424775869,
           "cumulativeDownloads": 136070197,
-          "cumulativeShare": 83.76955133833253
+          "cumulativeShare": 83.78407947288036
         },
         {
           "name": "html-crush",
           "downloads": 2337715,
           "rank": 14,
-          "share": 1.4391787549693196,
+          "share": 1.4394283514188235,
           "cumulativeDownloads": 138407912,
-          "cumulativeShare": 85.20873009330185
+          "cumulativeShare": 85.22350782429919
         },
         {
           "name": "string-range-expander",
           "downloads": 2333959,
           "rank": 15,
-          "share": 1.4368664305826153,
+          "share": 1.437115626006218,
           "cumulativeDownloads": 140741871,
-          "cumulativeShare": 86.64559652388448
+          "cumulativeShare": 86.66062345030542
         },
         {
           "name": "object-boolean-combinations",
           "downloads": 2295114,
           "rank": 16,
-          "share": 1.412952095970918,
+          "share": 1.4131971439368194,
           "cumulativeDownloads": 143036985,
-          "cumulativeShare": 88.05854861985539
+          "cumulativeShare": 88.07382059424224
         },
         {
           "name": "test-mixer",
           "downloads": 2251774,
           "rank": 17,
-          "share": 1.3862704828399888,
+          "share": 1.3865109034196939,
           "cumulativeDownloads": 145288759,
-          "cumulativeShare": 89.44481910269538
+          "cumulativeShare": 89.46033149766193
         },
         {
           "name": "email-comb",
           "downloads": 2035385,
           "rank": 18,
-          "share": 1.2530538796145931,
+          "share": 1.2532711964686039,
           "cumulativeDownloads": 147324144,
-          "cumulativeShare": 90.69787298230997
+          "cumulativeShare": 90.71360269413053
         },
         {
           "name": "color-shorthand-hex-to-six-digit",
           "downloads": 1994780,
           "rank": 19,
-          "share": 1.2280560277183914,
+          "share": 1.2282690092005402,
           "cumulativeDownloads": 149318924,
-          "cumulativeShare": 91.92592901002837
+          "cumulativeShare": 91.94187170333107
         },
         {
           "name": "string-uglify",
           "downloads": 1361461,
           "rank": 20,
-          "share": 0.8381627986813127,
+          "share": 0.8383081610679757,
           "cumulativeDownloads": 150680385,
-          "cumulativeShare": 92.76409180870968
+          "cumulativeShare": 92.78017986439905
         },
         {
           "name": "string-extract-class-names",
           "downloads": 1346068,
           "rank": 21,
-          "share": 0.8286863318856413,
+          "share": 0.8288300507707881,
           "cumulativeDownloads": 152026453,
-          "cumulativeShare": 93.59277814059533
+          "cumulativeShare": 93.60900991516984
         },
         {
           "name": "array-pull-all-with-glob",
           "downloads": 1346047,
           "rank": 22,
-          "share": 0.8286734035544058,
+          "share": 0.8288171201973951,
           "cumulativeDownloads": 153372500,
-          "cumulativeShare": 94.42145154414973
+          "cumulativeShare": 94.43782703536723
         },
         {
           "name": "regex-empty-conditional-comments",
           "downloads": 1340776,
           "rank": 23,
-          "share": 0.8254283924142782,
+          "share": 0.8255715462757113,
           "cumulativeDownloads": 154713276,
-          "cumulativeShare": 95.246879936564
+          "cumulativeShare": 95.26339858164295
         },
         {
           "name": "ast-monkey-util",
           "downloads": 1021598,
           "rank": 24,
-          "share": 0.6289313015997018,
+          "share": 0.6290403770146349,
           "cumulativeDownloads": 155734874,
-          "cumulativeShare": 95.8758112381637
+          "cumulativeShare": 95.89243895865758
         },
         {
           "name": "json-sort-cli",
           "downloads": 776446,
           "rank": 25,
-          "share": 0.47800719402532316,
+          "share": 0.4780900947060441,
           "cumulativeDownloads": 156511320,
-          "cumulativeShare": 96.35381843218903
+          "cumulativeShare": 96.37052905336361
         },
         {
           "name": "string-remove-widows",
           "downloads": 764400,
           "rank": 26,
-          "share": 0.47059125697467313,
+          "share": 0.4706728715110904,
           "cumulativeDownloads": 157275720,
-          "cumulativeShare": 96.8244096891637
+          "cumulativeShare": 96.84120192487471
         },
         {
           "name": "remark-typography",
           "downloads": 614599,
           "rank": 27,
-          "share": 0.37836854519280105,
+          "share": 0.3784341655649459,
           "cumulativeDownloads": 157890319,
-          "cumulativeShare": 97.2027782343565
+          "cumulativeShare": 97.21963609043965
         },
         {
           "name": "object-merge-advanced",
           "downloads": 372653,
           "rank": 28,
-          "share": 0.22941816285371908,
+          "share": 0.22945795079437778,
           "cumulativeDownloads": 158262972,
-          "cumulativeShare": 97.43219639721022
+          "cumulativeShare": 97.44909404123403
         },
         {
           "name": "util-nonempty",
           "downloads": 369625,
           "rank": 29,
-          "share": 0.2275540206165143,
+          "share": 0.22759348525940187,
           "cumulativeDownloads": 158632597,
-          "cumulativeShare": 97.65975041782674
+          "cumulativeShare": 97.67668752649344
         },
         {
           "name": "array-includes-with-glob",
           "downloads": 324251,
           "rank": 30,
-          "share": 0.19962020626019716,
+          "share": 0.1996548263479102,
           "cumulativeDownloads": 158956848,
-          "cumulativeShare": 97.85937062408692
+          "cumulativeShare": 97.87634235284135
         },
         {
           "name": "check-types-mini",
           "downloads": 290178,
           "rank": 31,
-          "share": 0.17864368101307782,
+          "share": 0.1786746631467101,
           "cumulativeDownloads": 159247026,
-          "cumulativeShare": 98.0380143051
+          "cumulativeShare": 98.05501701598806
         },
         {
           "name": "ast-monkey",
           "downloads": 265810,
           "rank": 32,
-          "share": 0.16364189170125307,
+          "share": 0.16367027207792115,
           "cumulativeDownloads": 159512836,
-          "cumulativeShare": 98.20165619680127
+          "cumulativeShare": 98.21868728806598
         },
         {
           "name": "ast-is-empty",
           "downloads": 265037,
           "rank": 33,
-          "share": 0.16316600598482003,
+          "share": 0.1631943038287348,
           "cumulativeDownloads": 159777873,
-          "cumulativeShare": 98.36482220278609
+          "cumulativeShare": 98.38188159189471
         },
         {
           "name": "ast-compare",
           "downloads": 260867,
           "rank": 34,
-          "share": 0.16059880878232868,
+          "share": 0.16062666139780693,
           "cumulativeDownloads": 160038740,
-          "cumulativeShare": 98.52542101156841
+          "cumulativeShare": 98.54250825329251
         },
         {
           "name": "ast-contains-only-empty-space",
           "downloads": 248963,
           "rank": 35,
-          "share": 0.15327029187622387,
+          "share": 0.15329687350865462,
           "cumulativeDownloads": 160287703,
-          "cumulativeShare": 98.67869130344464
+          "cumulativeShare": 98.69580512680118
         },
         {
           "name": "object-delete-key",
           "downloads": 247039,
           "rank": 36,
-          "share": 0.15208581048111758,
+          "share": 0.15211218668920495,
           "cumulativeDownloads": 160534742,
-          "cumulativeShare": 98.83077711392575
+          "cumulativeShare": 98.84791731349037
         },
         {
           "name": "util-array-object-or-both",
           "downloads": 246417,
           "rank": 37,
-          "share": 0.15170288562261644,
+          "share": 0.15172919542013127,
           "cumulativeDownloads": 160781159,
-          "cumulativeShare": 98.98247999954836
+          "cumulativeShare": 98.99964650891052
         },
         {
           "name": "edit-package-json",
           "downloads": 106429,
           "rank": 38,
-          "share": 0.06552139833667908,
+          "share": 0.06553276169813428,
           "cumulativeDownloads": 160887588,
-          "cumulativeShare": 99.04800139788506
+          "cumulativeShare": 99.06517927060865
         },
         {
           "name": "string-remove-duplicate-heads-tails",
           "downloads": 88134,
           "rank": 39,
-          "share": 0.054258359291216425,
+          "share": 0.054267769306329726,
           "cumulativeDownloads": 160975722,
-          "cumulativeShare": 99.10225975717627
+          "cumulativeShare": 99.11944703991497
         },
         {
           "name": "json-variables",
           "downloads": 87451,
           "rank": 40,
-          "share": 0.0538378807086501,
+          "share": 0.053847217800256884,
           "cumulativeDownloads": 161063173,
-          "cumulativeShare": 99.15609763788493
+          "cumulativeShare": 99.17329425771523
         },
         {
           "name": "string-find-heads-tails",
           "downloads": 86486,
           "rank": 41,
-          "share": 0.05324379310663471,
+          "share": 0.05325302716576159,
           "cumulativeDownloads": 161149659,
-          "cumulativeShare": 99.20934143099154
+          "cumulativeShare": 99.226547284881
         },
         {
           "name": "ast-get-values-by-key",
           "downloads": 85937,
           "rank": 42,
-          "share": 0.052905809590047724,
+          "share": 0.05291498503276894,
           "cumulativeDownloads": 161235596,
-          "cumulativeShare": 99.2622472405816
+          "cumulativeShare": 99.27946226991376
         },
         {
           "name": "codsen-format-diagnostic-value",
           "downloads": 74472,
           "rank": 43,
-          "share": 0.04584755637024837,
+          "share": 0.04585550770169273,
           "cumulativeDownloads": 161310068,
-          "cumulativeShare": 99.30809479695185
+          "cumulativeShare": 99.32531777761545
         },
         {
           "name": "string-apostrophes",
           "downloads": 55102,
           "rank": 44,
-          "share": 0.0339227098924888,
+          "share": 0.03392859310047632,
           "cumulativeDownloads": 161365170,
-          "cumulativeShare": 99.34201750684434
+          "cumulativeShare": 99.35924637071592
         },
         {
           "name": "string-collapse-white-space",
           "downloads": 53711,
           "rank": 45,
-          "share": 0.03306636185683761,
+          "share": 0.033072096548576894,
           "cumulativeDownloads": 161418881,
-          "cumulativeShare": 99.37508386870118
+          "cumulativeShare": 99.3923184672645
         },
         {
           "name": "string-remove-thousand-separators",
           "downloads": 45250,
           "rank": 46,
-          "share": 0.027857475638545206,
+          "share": 0.027862306954312976,
           "cumulativeDownloads": 161464131,
-          "cumulativeShare": 99.40294134433972
+          "cumulativeShare": 99.42018077421882
         },
         {
           "name": "ranges-crop",
           "downloads": 40010,
           "rank": 47,
-          "share": 0.02463154917786064,
+          "share": 0.024635821021924024,
           "cumulativeDownloads": 161504141,
-          "cumulativeShare": 99.42757289351758
+          "cumulativeShare": 99.44481659524075
         },
         {
           "name": "ranges-invert",
           "downloads": 39422,
           "rank": 48,
-          "share": 0.024269555903264736,
+          "share": 0.024273764966915495,
           "cumulativeDownloads": 161543563,
-          "cumulativeShare": 99.45184244942085
+          "cumulativeShare": 99.46909036020766
         },
         {
           "name": "csv-split-easy",
           "downloads": 34341,
           "rank": 49,
-          "share": 0.021141515379078032,
+          "share": 0.021145181947360488,
           "cumulativeDownloads": 161577904,
-          "cumulativeShare": 99.47298396479992
+          "cumulativeShare": 99.49023554215502
         },
         {
           "name": "is-html-tag-opening",
           "downloads": 34210,
           "rank": 50,
-          "share": 0.021060867217560918,
+          "share": 0.02106451979905076,
           "cumulativeDownloads": 161612114,
-          "cumulativeShare": 99.49404483201748
+          "cumulativeShare": 99.51130006195406
         },
         {
           "name": "string-dashes",
           "downloads": 33541,
           "rank": 51,
-          "share": 0.02064900752248497,
+          "share": 0.020652588675240034,
           "cumulativeDownloads": 161645655,
-          "cumulativeShare": 99.51469383953997
+          "cumulativeShare": 99.53195265062931
         },
         {
           "name": "lerna-clean-changelogs-cli",
           "downloads": 30194,
           "rank": 52,
-          "share": 0.018588477777463735,
+          "share": 0.018591701573006103,
           "cumulativeDownloads": 161675849,
-          "cumulativeShare": 99.53328231731743
+          "cumulativeShare": 99.55054435220232
         },
         {
           "name": "detergent",
           "downloads": 27424,
           "rank": 53,
-          "share": 0.01688316932401025,
+          "share": 0.01688609736828904,
           "cumulativeDownloads": 161703273,
-          "cumulativeShare": 99.55016548664145
+          "cumulativeShare": 99.56743044957061
         },
         {
           "name": "lerna-clean-changelogs",
           "downloads": 27060,
           "rank": 54,
-          "share": 0.016659078249260408,
+          "share": 0.016661967429474237,
           "cumulativeDownloads": 161730333,
-          "cumulativeShare": 99.5668245648907
+          "cumulativeShare": 99.58409241700008
         },
         {
           "name": "object-fill-missing-keys",
           "downloads": 24454,
           "rank": 55,
-          "share": 0.015054733906408498,
+          "share": 0.01505734484554187,
           "cumulativeDownloads": 161754787,
-          "cumulativeShare": 99.58187929879712
+          "cumulativeShare": 99.59914976184562
         },
         {
           "name": "html-entity-codec",
           "downloads": 23529,
           "rank": 56,
-          "share": 0.014485271697222768,
+          "share": 0.014487783874652597,
           "cumulativeDownloads": 161778316,
-          "cumulativeShare": 99.59636457049433
+          "cumulativeShare": 99.61363754572028
         },
         {
           "name": "string-fix-broken-named-entities",
           "downloads": 23429,
           "rank": 57,
-          "share": 0.014423708215148635,
+          "share": 0.01442620971563754,
           "cumulativeDownloads": 161801745,
-          "cumulativeShare": 99.61078827870948
+          "cumulativeShare": 99.62806375543592
         },
         {
           "name": "ranges-process-outside",
           "downloads": 22384,
           "rank": 58,
-          "share": 0.013780369827473944,
+          "share": 0.013782759753930203,
           "cumulativeDownloads": 161824129,
-          "cumulativeShare": 99.62456864853696
+          "cumulativeShare": 99.64184651518984
         },
         {
           "name": "all-named-html-entities",
           "downloads": 22215,
           "rank": 59,
-          "share": 0.013676327542768658,
+          "share": 0.013678699425194759,
           "cumulativeDownloads": 161846344,
-          "cumulativeShare": 99.63824497607973
+          "cumulativeShare": 99.65552521461504
         },
         {
           "name": "object-all-values-equal-to",
           "downloads": 21106,
           "rank": 60,
-          "share": 0.012993588526566523,
+          "share": 0.012995842001717783,
           "cumulativeDownloads": 161867450,
-          "cumulativeShare": 99.65123856460629
+          "cumulativeShare": 99.66852105661675
         },
         {
           "name": "html-entities-not-email-friendly",
           "downloads": 20321,
           "rank": 61,
-          "share": 0.012510315192284578,
+          "share": 0.012512484853449593,
           "cumulativeDownloads": 161887771,
-          "cumulativeShare": 99.66374887979858
+          "cumulativeShare": 99.68103354147021
         },
         {
           "name": "json-comb-core",
           "downloads": 19499,
           "rank": 62,
-          "share": 0.012004263369635206,
+          "share": 0.012006345266345829,
           "cumulativeDownloads": 161907270,
-          "cumulativeShare": 99.67575314316821
+          "cumulativeShare": 99.69303988673656
         },
         {
           "name": "codsen-tokenizer",
           "downloads": 18281,
           "rank": 63,
-          "share": 0.011254420157972263,
+          "share": 0.011256372009542442,
           "cumulativeDownloads": 161925551,
-          "cumulativeShare": 99.68700756332618
+          "cumulativeShare": 99.7042962587461
         },
         {
           "name": "json-comb",
           "downloads": 16881,
           "rank": 64,
-          "share": 0.010392531408934402,
+          "share": 0.010394333783331653,
           "cumulativeDownloads": 161942432,
-          "cumulativeShare": 99.69740009473512
+          "cumulativeShare": 99.71469059252942
         },
         {
           "name": "string-extract-sass-vars",
           "downloads": 16171,
           "rank": 65,
-          "share": 0.009955430686208057,
+          "share": 0.009957157254324755,
           "cumulativeDownloads": 161958603,
-          "cumulativeShare": 99.70735552542132
+          "cumulativeShare": 99.72464774978374
         },
         {
           "name": "codsen-glob",
           "downloads": 15720,
           "rank": 66,
-          "share": 0.009677779382053716,
+          "share": 0.00967945779716685,
           "cumulativeDownloads": 161974323,
-          "cumulativeShare": 99.71703330480338
+          "cumulativeShare": 99.73432720758092
         },
         {
           "name": "is-html-attribute-closing",
           "downloads": 15018,
           "rank": 67,
-          "share": 0.009245603737893302,
+          "share": 0.009247207200881156,
           "cumulativeDownloads": 161989341,
-          "cumulativeShare": 99.72627890854127
+          "cumulativeShare": 99.7435744147818
         },
         {
           "name": "object-flatten-all-arrays",
           "downloads": 14917,
           "rank": 68,
-          "share": 0.009183424620998429,
+          "share": 0.00918501730027595,
           "cumulativeDownloads": 162004258,
-          "cumulativeShare": 99.73546233316227
+          "cumulativeShare": 99.75275943208207
         },
         {
           "name": "string-unfancy",
           "downloads": 14570,
           "rank": 69,
-          "share": 0.008969799338201186,
+          "share": 0.008971354968493704,
           "cumulativeDownloads": 162018828,
-          "cumulativeShare": 99.74443213250048
+          "cumulativeShare": 99.76173078705057
         },
         {
           "name": "html-all-known-attributes",
           "downloads": 14562,
           "rank": 70,
-          "share": 0.008964874259635255,
+          "share": 0.0089664290357725,
           "cumulativeDownloads": 162033390,
-          "cumulativeShare": 99.7533970067601
+          "cumulativeShare": 99.77069721608633
         },
         {
           "name": "object-no-new-keys",
           "downloads": 14517,
           "rank": 71,
-          "share": 0.008937170692701897,
+          "share": 0.008938720664215723,
           "cumulativeDownloads": 162047907,
-          "cumulativeShare": 99.7623341774528
+          "cumulativeShare": 99.77963593675055
         },
         {
           "name": "is-char-suitable-for-html-attr-name",
           "downloads": 14058,
           "rank": 72,
-          "share": 0.008654594309981625,
+          "share": 0.008656095274336617,
           "cumulativeDownloads": 162061965,
-          "cumulativeShare": 99.77098877176279
+          "cumulativeShare": 99.7882920320249
         },
         {
           "name": "stristri",
           "downloads": 13758,
           "rank": 73,
-          "share": 0.008469903863759226,
+          "share": 0.008471372797291446,
           "cumulativeDownloads": 162075723,
-          "cumulativeShare": 99.77945867562656
+          "cumulativeShare": 99.79676340482219
         },
         {
           "name": "object-set-all-values-to",
           "downloads": 13190,
           "rank": 74,
-          "share": 0.00812022328557815,
+          "share": 0.008121631574085927,
           "cumulativeDownloads": 162088913,
-          "cumulativeShare": 99.78757889891213
+          "cumulativeShare": 99.80488503639627
         },
         {
           "name": "regex-is-jsp",
           "downloads": 13074,
           "rank": 75,
-          "share": 0.008048809646372156,
+          "share": 0.00805020554962846,
           "cumulativeDownloads": 162101987,
-          "cumulativeShare": 99.7956277085585
+          "cumulativeShare": 99.8129352419459
         },
         {
           "name": "detect-templating-language",
           "downloads": 12972,
           "rank": 76,
-          "share": 0.007986014894656541,
+          "share": 0.007987399907433104,
           "cumulativeDownloads": 162114959,
-          "cumulativeShare": 99.80361372345315
+          "cumulativeShare": 99.82092264185333
         },
         {
           "name": "regex-is-jinja-nunjucks",
           "downloads": 12931,
           "rank": 77,
-          "share": 0.007960773867006147,
+          "share": 0.00796215450223693,
           "cumulativeDownloads": 162127890,
-          "cumulativeShare": 99.81157449732017
+          "cumulativeShare": 99.82888479635557
         },
         {
           "name": "regex-jinja-specific",
           "downloads": 12599,
           "rank": 78,
-          "share": 0.007756383106520023,
+          "share": 0.007757728294306944,
           "cumulativeDownloads": 162140489,
-          "cumulativeShare": 99.81933088042668
+          "cumulativeShare": 99.83664252464987
         },
         {
           "name": "csv-sort",
           "downloads": 10502,
           "rank": 79,
-          "share": 0.006465396887425454,
+          "share": 0.006466518179761213,
           "cumulativeDownloads": 162150991,
-          "cumulativeShare": 99.82579627731411
+          "cumulativeShare": 99.84310904282964
         },
         {
           "name": "update-versions",
           "downloads": 9749,
           "rank": 80,
-          "share": 0.006001823867407232,
+          "share": 0.006002864762377839,
           "cumulativeDownloads": 162160740,
-          "cumulativeShare": 99.83179810118152
+          "cumulativeShare": 99.84911190759202
         },
         {
           "name": "lerna-link-dep",
           "downloads": 8902,
           "rank": 81,
-          "share": 0.005480381174239325,
+          "share": 0.0054813316355203125,
           "cumulativeDownloads": 162169642,
-          "cumulativeShare": 99.83727848235576
+          "cumulativeShare": 99.85459323922753
         },
         {
           "name": "emlint",
           "downloads": 8498,
           "rank": 82,
-          "share": 0.0052316647066598275,
+          "share": 0.0052325720330994845,
           "cumulativeDownloads": 162178140,
-          "cumulativeShare": 99.84251014706241
+          "cumulativeShare": 99.85982581126063
         },
         {
           "name": "generate-atomic-css-cli",
           "downloads": 8421,
           "rank": 83,
-          "share": 0.005184260825462745,
+          "share": 0.005185159930657891,
           "cumulativeDownloads": 162186561,
-          "cumulativeShare": 99.84769440788787
-        },
-        {
-          "name": "html-img-alt",
-          "downloads": 8201,
-          "rank": 84,
-          "share": 0.005048821164899652,
-          "cumulativeDownloads": 162194762,
-          "cumulativeShare": 99.85274322905278
+          "cumulativeShare": 99.8650109711913
         },
         {
           "name": "html-table-patcher",
           "downloads": 8178,
-          "rank": 85,
-          "share": 0.005034661564022601,
-          "cumulativeDownloads": 162202940,
-          "cumulativeShare": 99.85777789061679
+          "rank": 84,
+          "share": 0.005035534724251304,
+          "cumulativeDownloads": 162194739,
+          "cumulativeShare": 99.87004650591554
         },
         {
           "name": "csv-sort-cli",
           "downloads": 7796,
-          "rank": 86,
-          "share": 0.004799489062499413,
-          "cumulativeDownloads": 162210736,
-          "cumulativeShare": 99.8625773796793
+          "rank": 85,
+          "share": 0.004800321436813789,
+          "cumulativeDownloads": 162202535,
+          "cumulativeShare": 99.87484682735236
         },
         {
           "name": "helga",
           "downloads": 7574,
-          "rank": 87,
-          "share": 0.004662818132294837,
-          "cumulativeDownloads": 162218310,
-          "cumulativeShare": 99.8672401978116
+          "rank": 86,
+          "share": 0.0046636268038003645,
+          "cumulativeDownloads": 162210109,
+          "cumulativeShare": 99.87951045415616
         },
         {
           "name": "array-group-str-omit-num-char",
           "downloads": 7464,
-          "rank": 88,
-          "share": 0.004595098302013292,
-          "cumulativeDownloads": 162225774,
-          "cumulativeShare": 99.8718352961136
-        },
-        {
-          "name": "ast-delete-object",
-          "downloads": 7201,
-          "rank": 89,
-          "share": 0.004433186344158321,
-          "cumulativeDownloads": 162232975,
-          "cumulativeShare": 99.87626848245776
+          "rank": 87,
+          "share": 0.0045958952288838026,
+          "cumulativeDownloads": 162217573,
+          "cumulativeShare": 99.88410634938504
         },
         {
           "name": "eslint-plugin-row-num",
           "downloads": 7017,
-          "rank": 90,
-          "share": 0.004319909537141917,
-          "cumulativeDownloads": 162239992,
-          "cumulativeShare": 99.8805883919949
-        },
-        {
-          "name": "ast-get-object",
-          "downloads": 6962,
-          "rank": 91,
-          "share": 0.004286049622001143,
-          "cumulativeDownloads": 162246954,
-          "cumulativeShare": 99.88487444161692
+          "rank": 88,
+          "share": 0.0043206587380865006,
+          "cumulativeDownloads": 162224590,
+          "cumulativeShare": 99.88842700812313
         },
         {
           "name": "js-row-num-cli",
           "downloads": 6836,
-          "rank": 92,
-          "share": 0.004208479634587736,
-          "cumulativeDownloads": 162253790,
-          "cumulativeShare": 99.88908292125149
+          "rank": 89,
+          "share": 0.004209209510269249,
+          "cumulativeDownloads": 162231426,
+          "cumulativeShare": 99.8926362176334
         },
         {
           "name": "js-row-num",
           "downloads": 6799,
-          "rank": 93,
-          "share": 0.004185701146220307,
-          "cumulativeDownloads": 162260589,
-          "cumulativeShare": 99.89326862239771
+          "rank": 90,
+          "share": 0.004186427071433678,
+          "cumulativeDownloads": 162238225,
+          "cumulativeShare": 99.89682264470483
         },
         {
           "name": "email-all-chars-within-ascii-cli",
           "downloads": 6637,
-          "rank": 94,
-          "share": 0.004085968305260211,
-          "cumulativeDownloads": 162267226,
-          "cumulativeShare": 99.89735459070297
+          "rank": 91,
+          "share": 0.004086676933829287,
+          "cumulativeDownloads": 162244862,
+          "cumulativeShare": 99.90090932163866
         },
         {
           "name": "codsen-parser",
           "downloads": 6586,
-          "rank": 95,
-          "share": 0.0040545709294024035,
-          "cumulativeDownloads": 162273812,
-          "cumulativeShare": 99.90140916163239
+          "rank": 92,
+          "share": 0.004055274112731608,
+          "cumulativeDownloads": 162251448,
+          "cumulativeShare": 99.9049645957514
         },
         {
           "name": "generate-atomic-css",
           "downloads": 6542,
-          "rank": 96,
-          "share": 0.004027482997289784,
-          "cumulativeDownloads": 162280354,
-          "cumulativeShare": 99.90543664462967
+          "rank": 93,
+          "share": 0.004028181482764984,
+          "cumulativeDownloads": 162257990,
+          "cumulativeShare": 99.90899277723415
         },
         {
           "name": "string-convert-indexes",
           "downloads": 6515,
-          "rank": 97,
-          "share": 0.004010860857129769,
-          "cumulativeDownloads": 162286869,
-          "cumulativeShare": 99.90944750548681
+          "rank": 94,
+          "share": 0.0040115564598309185,
+          "cumulativeDownloads": 162264505,
+          "cumulativeShare": 99.91300433369399
         },
         {
           "name": "bitbucket-slug",
           "downloads": 6410,
-          "rank": 98,
-          "share": 0.003946219200951929,
-          "cumulativeDownloads": 162293279,
-          "cumulativeShare": 99.91339372468775
+          "rank": 95,
+          "share": 0.003946903592865109,
+          "cumulativeDownloads": 162270915,
+          "cumulativeShare": 99.91695123728685
         },
         {
           "name": "gulp-email-remove-unused-css",
           "downloads": 6357,
-          "rank": 99,
-          "share": 0.0039135905554526385,
-          "cumulativeDownloads": 162299636,
-          "cumulativeShare": 99.9173073152432
+          "rank": 96,
+          "share": 0.003914269288587129,
+          "cumulativeDownloads": 162277272,
+          "cumulativeShare": 99.92086550657544
         },
         {
           "name": "email-all-chars-within-ascii",
           "downloads": 6351,
-          "rank": 100,
-          "share": 0.00390989674652819,
-          "cumulativeDownloads": 162305987,
-          "cumulativeShare": 99.92121721198973
+          "rank": 97,
+          "share": 0.003910574839046226,
+          "cumulativeDownloads": 162283623,
+          "cumulativeShare": 99.92477608141449
         },
         {
           "name": "easy-replace",
           "downloads": 6326,
-          "rank": 101,
-          "share": 0.0038945058760096575,
-          "cumulativeDownloads": 162312313,
-          "cumulativeShare": 99.92511171786575
+          "rank": 98,
+          "share": 0.0038951812992924616,
+          "cumulativeDownloads": 162289949,
+          "cumulativeShare": 99.92867126271378
         },
         {
           "name": "object-flatten-referencing",
           "downloads": 6261,
-          "rank": 102,
-          "share": 0.003854489612661471,
-          "cumulativeDownloads": 162318574,
-          "cumulativeShare": 99.9289662074784
+          "rank": 99,
+          "share": 0.003855158095932675,
+          "cumulativeDownloads": 162296210,
+          "cumulativeShare": 99.93252642080971
         },
         {
           "name": "detect-is-it-html-or-xhtml",
           "downloads": 6219,
-          "rank": 103,
-          "share": 0.0038286329501903346,
-          "cumulativeDownloads": 162324793,
-          "cumulativeShare": 99.9327948404286
+          "rank": 100,
+          "share": 0.0038292969491463516,
+          "cumulativeDownloads": 162302429,
+          "cumulativeShare": 99.93635571775886
         },
         {
           "name": "string-split-by-whitespace",
           "downloads": 6193,
-          "rank": 104,
-          "share": 0.0038126264448510605,
-          "cumulativeDownloads": 162330986,
-          "cumulativeShare": 99.93660746687344
+          "rank": 101,
+          "share": 0.0038132876678024373,
+          "cumulativeDownloads": 162308622,
+          "cumulativeShare": 99.94016900542665
         },
         {
           "name": "charcode-is-valid-xml-name-character",
           "downloads": 6074,
-          "rank": 105,
-          "share": 0.0037393659011828416,
-          "cumulativeDownloads": 162337060,
-          "cumulativeShare": 99.94034683277462
-        },
-        {
-          "name": "ranges-ent-decode",
-          "downloads": 5802,
-          "rank": 106,
-          "share": 0.0035719132299412,
-          "cumulativeDownloads": 162342862,
-          "cumulativeShare": 99.94391874600457
+          "rank": 102,
+          "share": 0.00374001441857452,
+          "cumulativeDownloads": 162314696,
+          "cumulativeShare": 99.94390901984524
         },
         {
           "name": "array-of-arrays-into-ast",
           "downloads": 5751,
-          "rank": 107,
-          "share": 0.0035405158540833923,
-          "cumulativeDownloads": 162348613,
-          "cumulativeShare": 99.94745926185865
+          "rank": 103,
+          "share": 0.003541129884955888,
+          "cumulativeDownloads": 162320447,
+          "cumulativeShare": 99.94745014973019
         },
         {
           "name": "ranges-is-index-within",
           "downloads": 5739,
-          "rank": 108,
-          "share": 0.0035331282362344963,
-          "cumulativeDownloads": 162354352,
-          "cumulativeShare": 99.95099239009488
+          "rank": 104,
+          "share": 0.0035337409858740816,
+          "cumulativeDownloads": 162326186,
+          "cumulativeShare": 99.95098389071606
         },
         {
           "name": "is-relative-uri",
           "downloads": 5687,
-          "rank": 109,
-          "share": 0.003501115225555947,
-          "cumulativeDownloads": 162360039,
-          "cumulativeShare": 99.95449350532044
+          "rank": 105,
+          "share": 0.003501722423186252,
+          "cumulativeDownloads": 162331873,
+          "cumulativeShare": 99.95448561313925
         },
         {
           "name": "str-indexes-of-plus",
           "downloads": 5521,
-          "rank": 110,
-          "share": 0.003398919845312886,
-          "cumulativeDownloads": 162365560,
-          "cumulativeShare": 99.95789242516575
+          "rank": 106,
+          "share": 0.003399509319221258,
+          "cumulativeDownloads": 162337394,
+          "cumulativeShare": 99.95788512245846
         },
         {
           "name": "rehype-responsive-tables",
           "downloads": 5503,
-          "rank": 111,
-          "share": 0.0033878384185395422,
-          "cumulativeDownloads": 162371063,
-          "cumulativeShare": 99.9612802635843
+          "rank": 107,
+          "share": 0.0033884259705985486,
+          "cumulativeDownloads": 162342897,
+          "cumulativeShare": 99.96127354842908
         },
         {
           "name": "email-homey",
           "downloads": 4875,
-          "rank": 112,
-          "share": 0.0030012197511139864,
-          "cumulativeDownloads": 162375938,
-          "cumulativeShare": 99.9642814833354
+          "rank": 108,
+          "share": 0.003001740251983995,
+          "cumulativeDownloads": 162347772,
+          "cumulativeShare": 99.96427528868107
         },
         {
           "name": "lect",
           "downloads": 4582,
-          "rank": 113,
-          "share": 0.0028208387486367767,
-          "cumulativeDownloads": 162380520,
-          "cumulativeShare": 99.96710232208405
+          "rank": 109,
+          "share": 0.00282132796606988,
+          "cumulativeDownloads": 162352354,
+          "cumulativeShare": 99.96709661664713
         },
         {
           "name": "is-media-descriptor",
           "downloads": 4444,
-          "rank": 114,
-          "share": 0.0027358811433744732,
-          "cumulativeDownloads": 162384964,
-          "cumulativeShare": 99.96983820322743
+          "rank": 110,
+          "share": 0.002736355626629102,
+          "cumulativeDownloads": 162356798,
+          "cumulativeShare": 99.96983297227375
         },
         {
           "name": "array-of-arrays-sort-by-col",
           "downloads": 4437,
-          "rank": 115,
-          "share": 0.0027315716996292837,
-          "cumulativeDownloads": 162389401,
-          "cumulativeShare": 99.97256977492704
+          "rank": 111,
+          "share": 0.002732045435498048,
+          "cumulativeDownloads": 162361235,
+          "cumulativeShare": 99.97256501770924
         },
         {
           "name": "string-find-malformed",
           "downloads": 4425,
-          "rank": 116,
-          "share": 0.002724184081780388,
-          "cumulativeDownloads": 162393826,
-          "cumulativeShare": 99.97529395900882
+          "rank": 112,
+          "share": 0.0027246565364162415,
+          "cumulativeDownloads": 162365660,
+          "cumulativeShare": 99.97528967424567
         },
         {
           "name": "ast-deep-contains",
           "downloads": 4108,
-          "rank": 117,
-          "share": 0.0025290278436053857,
-          "cumulativeDownloads": 162397934,
-          "cumulativeShare": 99.97782298685244
+          "rank": 113,
+          "share": 0.0025294664523385127,
+          "cumulativeDownloads": 162369768,
+          "cumulativeShare": 99.97781914069802
         },
         {
           "name": "eslint-plugin-test-num",
           "downloads": 4088,
-          "rank": 118,
-          "share": 0.0025167151471905593,
-          "cumulativeDownloads": 162402022,
-          "cumulativeShare": 99.98033970199963
+          "rank": 114,
+          "share": 0.002517151620535502,
+          "cumulativeDownloads": 162373856,
+          "cumulativeShare": 99.98033629231854
         },
         {
           "name": "string-process-comma-separated",
           "downloads": 3816,
-          "rank": 119,
-          "share": 0.002349262475948918,
-          "cumulativeDownloads": 162405838,
-          "cumulativeShare": 99.98268896447557
+          "rank": 115,
+          "share": 0.0023496699080145485,
+          "cumulativeDownloads": 162377672,
+          "cumulativeShare": 99.98268596222655
         },
         {
           "name": "string-overlap-one-on-another",
           "downloads": 3779,
-          "rank": 120,
-          "share": 0.0023264839875814882,
-          "cumulativeDownloads": 162409617,
-          "cumulativeShare": 99.98501544846316
+          "rank": 116,
+          "share": 0.002326887469178978,
+          "cumulativeDownloads": 162381451,
+          "cumulativeShare": 99.98501284969574
         },
         {
           "name": "extract-search-index",
           "downloads": 3422,
-          "rank": 121,
-          "share": 0.002106702356576833,
-          "cumulativeDownloads": 162413039,
-          "cumulativeShare": 99.98712215081973
+          "rank": 117,
+          "share": 0.0021070677214952266,
+          "cumulativeDownloads": 162384873,
+          "cumulativeShare": 99.98711991741723
         },
         {
           "name": "tap-parse-string-to-object",
           "downloads": 3404,
-          "rank": 122,
-          "share": 0.0020956209298034893,
-          "cumulativeDownloads": 162416443,
-          "cumulativeShare": 99.98921777174954
+          "rank": 118,
+          "share": 0.0020959843728725167,
+          "cumulativeDownloads": 162388277,
+          "cumulativeShare": 99.9892159017901
         },
         {
           "name": "tsd-extract",
           "downloads": 3230,
-          "rank": 123,
-          "share": 0.001988500470994498,
-          "cumulativeDownloads": 162419673,
-          "cumulativeShare": 99.99120627222054
+          "rank": 119,
+          "share": 0.0019888453361863187,
+          "cumulativeDownloads": 162391507,
+          "cumulativeShare": 99.99120474712629
         },
         {
           "name": "codsen",
           "downloads": 2923,
-          "rank": 124,
-          "share": 0.0017995005810269092,
-          "cumulativeDownloads": 162422596,
-          "cumulativeShare": 99.99300577280155
+          "rank": 120,
+          "share": 0.0017998126680100958,
+          "cumulativeDownloads": 162394430,
+          "cumulativeShare": 99.9930045597943
         },
         {
           "name": "remark-conventional-commit-changelog-timeline",
           "downloads": 2694,
-          "rank": 125,
-          "share": 0.0016585202070771446,
-          "cumulativeDownloads": 162425290,
-          "cumulativeShare": 99.99466429300864
+          "rank": 121,
+          "share": 0.001658807843865617,
+          "cumulativeDownloads": 162397124,
+          "cumulativeShare": 99.99466336763817
         },
         {
           "name": "line-column-mini",
           "downloads": 2639,
-          "rank": 126,
-          "share": 0.0016246602919363713,
-          "cumulativeDownloads": 162427929,
-          "cumulativeShare": 99.99628895330058
+          "rank": 122,
+          "share": 0.001624942056407336,
+          "cumulativeDownloads": 162399763,
+          "cumulativeShare": 99.99628830969456
         },
         {
           "name": "ranges-offset",
           "downloads": 1690,
-          "rank": 127,
-          "share": 0.0010404228470528487,
-          "cumulativeDownloads": 162429619,
-          "cumulativeShare": 99.99732937614763
+          "rank": 123,
+          "share": 0.0010406032873544516,
+          "cumulativeDownloads": 162401453,
+          "cumulativeShare": 99.99732891298193
         },
         {
           "name": "string-truncator",
           "downloads": 1167,
-          "rank": 128,
-          "share": 0.0007184458358051329,
-          "cumulativeDownloads": 162430786,
-          "cumulativeShare": 99.99804782198342
+          "rank": 124,
+          "share": 0.0007185704357057071,
+          "cumulativeDownloads": 162402620,
+          "cumulativeShare": 99.99804748341762
         },
         {
           "name": "seo-editor",
           "downloads": 1008,
-          "rank": 129,
-          "share": 0.0006205598993072613,
-          "cumulativeDownloads": 162431794,
-          "cumulativeShare": 99.99866838188274
+          "rank": 125,
+          "share": 0.0006206675228717676,
+          "cumulativeDownloads": 162403628,
+          "cumulativeShare": 99.9986681509405
         },
         {
           "name": "string-bionic-split",
           "downloads": 859,
-          "rank": 130,
-          "share": 0.000528830311016803,
-          "cumulativeDownloads": 162432653,
-          "cumulativeShare": 99.99919721219376
+          "rank": 126,
+          "share": 0.0005289220259393337,
+          "cumulativeDownloads": 162404487,
+          "cumulativeShare": 99.99919707296644
         },
         {
           "name": "perf-ref",
           "downloads": 622,
-          "rank": 131,
-          "share": 0.0003829248585011076,
-          "cumulativeDownloads": 162433275,
-          "cumulativeShare": 99.99958013705226
+          "rank": 127,
+          "share": 0.00038299126907365025,
+          "cumulativeDownloads": 162405109,
+          "cumulativeShare": 99.99958006423552
         },
         {
           "name": "string-typo-match",
           "downloads": 396,
-          "rank": 132,
-          "share": 0.0002437913890135669,
-          "cumulativeDownloads": 162433671,
-          "cumulativeShare": 99.99982392844127
+          "rank": 128,
+          "share": 0.00024383366969962295,
+          "cumulativeDownloads": 162405505,
+          "cumulativeShare": 99.99982389790522
         },
         {
           "name": "tsd-extract-noesm",
           "downloads": 286,
-          "rank": 133,
-          "share": 0.00017607155873202053,
-          "cumulativeDownloads": 162433957,
+          "rank": 129,
+          "share": 0.00017610209478306104,
+          "cumulativeDownloads": 162405791,
           "cumulativeShare": 100
         }
       ]
@@ -1124,7 +1092,7 @@
         "start": "2016-01-01",
         "end": "2016-12-31",
         "days": 366,
-        "packageCount": 133,
+        "packageCount": 129,
         "complete": true,
         "missingPackages": [],
         "observedDownloads": 10299,
@@ -1132,10 +1100,10 @@
         "provisional": false,
         "anomalyDays": [],
         "packagesFor80Percent": 5,
-        "packageShareFor80Percent": 3.7593984962406015,
+        "packageShareFor80Percent": 3.875968992248062,
         "achieved80PercentShare": 83.42557529857267,
-        "top20PercentCount": 27,
-        "top20PercentPackageShare": 20.30075187969925,
+        "top20PercentCount": 26,
+        "top20PercentPackageShare": 20.155038759689923,
         "top20PercentDownloadShare": 100
       },
       {
@@ -1143,131 +1111,131 @@
         "start": "2017-01-01",
         "end": "2017-12-31",
         "days": 365,
-        "packageCount": 133,
+        "packageCount": 129,
         "complete": true,
         "missingPackages": [],
-        "observedDownloads": 117813,
-        "totalDownloads": 117813,
+        "observedDownloads": 117102,
+        "totalDownloads": 117102,
         "provisional": false,
         "anomalyDays": [],
-        "packagesFor80Percent": 18,
-        "packageShareFor80Percent": 13.533834586466165,
-        "achieved80PercentShare": 81.52071503144815,
-        "top20PercentCount": 27,
-        "top20PercentPackageShare": 20.30075187969925,
-        "top20PercentDownloadShare": 92.79790854999024
+        "packagesFor80Percent": 17,
+        "packageShareFor80Percent": 13.178294573643413,
+        "achieved80PercentShare": 80.21980837218835,
+        "top20PercentCount": 26,
+        "top20PercentPackageShare": 20.155038759689923,
+        "top20PercentDownloadShare": 92.41515943365613
       },
       {
         "year": 2018,
         "start": "2018-01-01",
         "end": "2018-12-31",
         "days": 365,
-        "packageCount": 133,
+        "packageCount": 129,
         "complete": true,
         "missingPackages": [],
-        "observedDownloads": 905263,
-        "totalDownloads": 905263,
+        "observedDownloads": 901432,
+        "totalDownloads": 901432,
         "provisional": false,
         "anomalyDays": [],
         "packagesFor80Percent": 15,
-        "packageShareFor80Percent": 11.278195488721805,
-        "achieved80PercentShare": 80.96608388943324,
-        "top20PercentCount": 27,
-        "top20PercentPackageShare": 20.30075187969925,
-        "top20PercentDownloadShare": 91.1419112456822
+        "packageShareFor80Percent": 11.627906976744185,
+        "achieved80PercentShare": 81.3101820214947,
+        "top20PercentCount": 26,
+        "top20PercentPackageShare": 20.155038759689923,
+        "top20PercentDownloadShare": 91.02794220750982
       },
       {
         "year": 2019,
         "start": "2019-01-01",
         "end": "2019-12-31",
         "days": 365,
-        "packageCount": 133,
+        "packageCount": 129,
         "complete": true,
         "missingPackages": [],
-        "observedDownloads": 2937598,
-        "totalDownloads": 2937598,
+        "observedDownloads": 2911286,
+        "totalDownloads": 2911286,
         "provisional": false,
         "anomalyDays": [],
-        "packagesFor80Percent": 24,
-        "packageShareFor80Percent": 18.045112781954884,
-        "achieved80PercentShare": 80.78351769030344,
-        "top20PercentCount": 27,
-        "top20PercentPackageShare": 20.30075187969925,
-        "top20PercentDownloadShare": 82.60854616594918
+        "packagesFor80Percent": 23,
+        "packageShareFor80Percent": 17.829457364341085,
+        "achieved80PercentShare": 80.69076689820237,
+        "top20PercentCount": 26,
+        "top20PercentPackageShare": 20.155038759689923,
+        "top20PercentDownloadShare": 82.74439543212175
       },
       {
         "year": 2020,
         "start": "2020-01-01",
         "end": "2020-12-31",
         "days": 366,
-        "packageCount": 133,
+        "packageCount": 129,
         "complete": true,
         "missingPackages": [],
-        "observedDownloads": 15186364,
-        "totalDownloads": 15186364,
+        "observedDownloads": 15159508,
+        "totalDownloads": 15159508,
         "provisional": true,
         "anomalyDays": [
           "2020-06-22"
         ],
         "packagesFor80Percent": 15,
-        "packageShareFor80Percent": 11.278195488721805,
-        "achieved80PercentShare": 81.3597580039567,
-        "top20PercentCount": 27,
-        "top20PercentPackageShare": 20.30075187969925,
-        "top20PercentDownloadShare": 93.39019530942365
+        "packageShareFor80Percent": 11.627906976744185,
+        "achieved80PercentShare": 81.50389181495864,
+        "top20PercentCount": 26,
+        "top20PercentPackageShare": 20.155038759689923,
+        "top20PercentDownloadShare": 93.18157291120531
       },
       {
         "year": 2021,
         "start": "2021-01-01",
         "end": "2021-12-31",
         "days": 365,
-        "packageCount": 133,
+        "packageCount": 129,
         "complete": true,
         "missingPackages": [],
-        "observedDownloads": 40598726,
-        "totalDownloads": 40598726,
+        "observedDownloads": 40572120,
+        "totalDownloads": 40572120,
         "provisional": true,
         "anomalyDays": [
           "2021-10-03"
         ],
         "packagesFor80Percent": 13,
-        "packageShareFor80Percent": 9.774436090225564,
-        "achieved80PercentShare": 80.52024588160722,
-        "top20PercentCount": 27,
-        "top20PercentPackageShare": 20.30075187969925,
-        "top20PercentDownloadShare": 95.25659992384983
+        "packageShareFor80Percent": 10.077519379844961,
+        "achieved80PercentShare": 80.57304868466326,
+        "top20PercentCount": 26,
+        "top20PercentPackageShare": 20.155038759689923,
+        "top20PercentDownloadShare": 94.86775894382646
       },
       {
         "year": 2022,
         "start": "2022-01-01",
         "end": "2022-12-31",
         "days": 365,
-        "packageCount": 133,
+        "packageCount": 129,
         "complete": true,
         "missingPackages": [],
-        "observedDownloads": 52632846,
-        "totalDownloads": 52632846,
+        "observedDownloads": 52604154,
+        "totalDownloads": 52604154,
         "provisional": true,
         "anomalyDays": [
           "2022-07-22"
         ],
         "packagesFor80Percent": 11,
-        "packageShareFor80Percent": 8.270676691729323,
-        "achieved80PercentShare": 80.34363180740786,
-        "top20PercentCount": 27,
-        "top20PercentPackageShare": 20.30075187969925,
-        "top20PercentDownloadShare": 94.25643257064229
+        "packageShareFor80Percent": 8.527131782945736,
+        "achieved80PercentShare": 80.3874538121077,
+        "top20PercentCount": 26,
+        "top20PercentPackageShare": 20.155038759689923,
+        "top20PercentDownloadShare": 93.75022360401424
       },
       {
         "year": 2023,
         "start": "2023-01-01",
         "end": "2023-12-31",
         "days": 365,
-        "packageCount": 133,
+        "packageCount": 129,
         "complete": true,
         "missingPackages": [],
-        "observedDownloads": 53402747,
-        "totalDownloads": 53402747,
+        "observedDownloads": 53365780,
+        "totalDownloads": 53365780,
         "provisional": true,
         "anomalyDays": [
           "2023-06-17",
@@ -1275,41 +1243,41 @@
           "2023-11-03"
         ],
         "packagesFor80Percent": 11,
-        "packageShareFor80Percent": 8.270676691729323,
-        "achieved80PercentShare": 80.24707043628298,
-        "top20PercentCount": 27,
-        "top20PercentPackageShare": 20.30075187969925,
-        "top20PercentDownloadShare": 95.68128957860539
+        "packageShareFor80Percent": 8.527131782945736,
+        "achieved80PercentShare": 80.30265837021402,
+        "top20PercentCount": 26,
+        "top20PercentPackageShare": 20.155038759689923,
+        "top20PercentDownloadShare": 95.34233360779136
       },
       {
         "year": 2024,
         "start": "2024-01-01",
         "end": "2024-12-31",
         "days": 366,
-        "packageCount": 133,
+        "packageCount": 129,
         "complete": true,
         "missingPackages": [],
-        "observedDownloads": 66290044,
-        "totalDownloads": 66290044,
+        "observedDownloads": 66275722,
+        "totalDownloads": 66275722,
         "provisional": false,
         "anomalyDays": [],
         "packagesFor80Percent": 10,
-        "packageShareFor80Percent": 7.518796992481203,
-        "achieved80PercentShare": 84.70492793759497,
-        "top20PercentCount": 27,
-        "top20PercentPackageShare": 20.30075187969925,
-        "top20PercentDownloadShare": 97.6851365493135
+        "packageShareFor80Percent": 7.751937984496124,
+        "achieved80PercentShare": 84.72323243796575,
+        "top20PercentCount": 26,
+        "top20PercentPackageShare": 20.155038759689923,
+        "top20PercentDownloadShare": 97.50680196286659
       },
       {
         "year": 2025,
         "start": "2025-01-01",
         "end": "2025-12-31",
         "days": 365,
-        "packageCount": 133,
+        "packageCount": 129,
         "complete": true,
         "missingPackages": [],
-        "observedDownloads": 104239029,
-        "totalDownloads": 104239029,
+        "observedDownloads": 104224438,
+        "totalDownloads": 104224438,
         "provisional": true,
         "anomalyDays": [
           "2025-07-02",
@@ -1319,24 +1287,24 @@
           "2025-10-21"
         ],
         "packagesFor80Percent": 10,
-        "packageShareFor80Percent": 7.518796992481203,
-        "achieved80PercentShare": 81.45765440696881,
-        "top20PercentCount": 27,
-        "top20PercentPackageShare": 20.30075187969925,
-        "top20PercentDownloadShare": 97.82586040781328
+        "packageShareFor80Percent": 7.751937984496124,
+        "achieved80PercentShare": 81.46905814929892,
+        "top20PercentCount": 26,
+        "top20PercentPackageShare": 20.155038759689923,
+        "top20PercentDownloadShare": 97.52856235118294
       }
     ]
   },
   "dependencies": {
-    "packageCount": 133,
-    "directDependencyCount": 225,
+    "packageCount": 129,
+    "directDependencyCount": 212,
     "maximumKnownDepth": 8,
     "unknownOutgoingPackageCount": 28,
     "knownIsolatedPackageCount": 8
   },
   "molecule": {
     "defaultRoot": "string-strip-html",
-    "selectableRoots": 105,
+    "selectableRoots": 101,
     "packages": 10,
     "edges": 15,
     "externalPackages": 0,

@@ -19,6 +19,14 @@ and checksums. Two historical `ranges-regex` release tags, `5.0.8` and `5.0.9`,
 are unavailable in the local Git history; their scores remain preserved without
 an asserted release revision.
 
+The object, HTML, and entity-decoding archives were captured from
+[revision fe2563742f3fb797b242ac37554e309b4c544d13](https://github.com/codsen/codsen/tree/fe2563742f3fb797b242ac37554e309b4c544d13).
+Their [manifest](object-html-and-entity-manifest.json) records the frozen package
+versions, release revisions, source links, and SHA-256 checksums. Historical tags
+for `ast-get-object` and `html-img-alt` versions `3.0.8` and `3.0.9`, and
+`ranges-ent-decode` versions `5.0.8` and `5.0.9`, are unavailable locally; the
+manifest preserves those scores without asserting their release revisions.
+
 | Package | Frozen package version | Recorded versions and normalized scores |
 | --- | --- | --- |
 | `ast-monkey-traverse` | 4.3.1 | 4.2.2: 26,312; 4.3.1: 30,404 |
@@ -26,6 +34,10 @@ an asserted release revision.
 | `ast-loose-compare` | 4.2.4 | 4.1.3: 1,681,338; 4.2.0: 1,683,144; 4.2.3: 1,760,455 |
 | `ranges-iterate` | 4.2.4 | 4.1.3: 4,363,352; 4.2.0: 5,099,135; 4.2.3: 5,082,124 |
 | `ranges-regex` | 6.2.5 | 17 accepted scores, from 5.0.5: 1,333,180 through 6.2.1: 1,221,560; see the complete history |
+| `ast-delete-object` | 4.2.7 | 4.1.3: 214,904; 4.2.1: 397,119 |
+| `ast-get-object` | 4.2.6 | 17 accepted scores, from 3.0.5: 147,176 through 4.1.3: 417,718; see the complete history |
+| `html-img-alt` | 4.2.5 | 18 accepted scores, from 3.0.5: 74,986 through 4.2.3: 129,240; see the complete history |
+| `ranges-ent-decode` | 6.2.5 | 16 accepted scores, from 5.0.5: 550,186 through 6.2.4: 1,301,222; see the complete history |
 
 Each package directory contains byte-for-byte copies of its complete history,
 changelog, manifest, license, source, and measured workload. The `.txt` suffixes
@@ -45,6 +57,13 @@ replacement. The `ranges-regex` workload records ranges with empty replacement
 strings for two matches. The `ast-loose-compare` workload compares nested object
 subsets. Their arguments and callback work are preserved in their own workload
 files.
+
+The `ast-delete-object` workload removes an object matching a subset, while
+`ast-get-object` retrieves a matching object. The `html-img-alt` workload adds
+an empty alternative-text attribute to an image tag. The `ranges-ent-decode`
+workload identifies a numeric entity replacement range. All four retain their
+original arguments, source, and `lastSlowerRun` records. Their frozen package
+versions have no separate accepted scores.
 
 Scores use `target rate * 183 / reference rate`, with `perf-ref@1.0.5` providing
 the canonical reference score. They are historical measurements, not new
@@ -89,6 +108,17 @@ npm run build:packages
 npm run perf --workspace ranges-iterate
 npm run perf --workspace ranges-regex
 npm run perf --workspace ast-loose-compare
+```
+
+For the object, HTML, and entity-decoding workloads, create a disposable checkout
+at `fe2563742f3fb797b242ac37554e309b4c544d13` using the same procedure. After
+installing dependencies and building, run these benchmarks serially:
+
+```sh
+npm run perf --workspace ast-delete-object
+npm run perf --workspace ast-get-object
+npm run perf --workspace html-img-alt
+npm run perf --workspace ranges-ent-decode
 ```
 
 For the implementation corresponding to an older recorded score, use its exact
