@@ -286,7 +286,7 @@ test("10 - follows the audited product catalogue including both canonical ESLint
     "2015-12-14",
     "10.03",
   );
-  equal(Object.keys(result).length, 137, "10.04");
+  equal(Object.keys(result).length, 136, "10.04");
   equal(
     ["eslint-plugin-row-num", "eslint-plugin-test-num"].map(
       (name) => result[name].includedInPortfolio,

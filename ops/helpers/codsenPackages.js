@@ -126,6 +126,7 @@ const deprecated = [
   "posthtml-color-shorthand-hex-to-six-digit",
   "posthtml-email-remove-unused-css",
   "ranges-iterate",
+  "ranges-regex",
   "string-replace-slices-array",
   "string-slices-array-push",
 ];

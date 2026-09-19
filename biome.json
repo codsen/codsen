@@ -189,7 +189,6 @@
         "packages/object-no-new-keys/src/main.ts",
         "packages/ranges-merge/src/main.ts",
         "packages/ranges-push/src/rMerge.ts",
-        "packages/ranges-regex/src/main.ts",
         "packages/string-find-heads-tails/src/main.ts",
         "packages/string-find-malformed/src/main.ts",
         "packages/string-fix-broken-named-entities/src/main.ts",
