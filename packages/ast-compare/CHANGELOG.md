@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 4.2.5 (2026-09-09)
+## 4.2.6 (2026-09-19)
 
 ### Performance Improvements
 
