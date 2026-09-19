@@ -519,7 +519,7 @@ export const packageJSONData = {
   },
   "ast-compare": {
     "name": "ast-compare",
-    "version": "4.2.5",
+    "version": "4.2.6",
     "description": "Compare anything: AST, objects, arrays, strings and nested thereof",
     "keywords": [
       "array",
@@ -799,7 +799,7 @@ export const packageJSONData = {
   },
   "ast-delete-object": {
     "name": "ast-delete-object",
-    "version": "4.2.5",
+    "version": "4.2.6",
     "description": "Delete all plain objects in AST if they contain a certain key/value pair",
     "keywords": [
       "ast",
@@ -880,7 +880,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "ast-compare": "^4.2.5",
+      "ast-compare": "^4.2.6",
       "ast-monkey-traverse": "^4.3.1",
       "codsen-utils": "^1.10.2"
     },
@@ -893,7 +893,7 @@ export const packageJSONData = {
   },
   "ast-get-object": {
     "name": "ast-get-object",
-    "version": "4.2.5",
+    "version": "4.2.6",
     "description": "Getter/setter for nested parsed HTML AST’s, querying objects by key/value pairs",
     "keywords": [
       "ast",
@@ -975,7 +975,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "ast-compare": "^4.2.5",
+      "ast-compare": "^4.2.6",
       "codsen-utils": "^1.10.2"
     },
     "engines": {
@@ -1178,7 +1178,7 @@ export const packageJSONData = {
   },
   "ast-monkey": {
     "name": "ast-monkey",
-    "version": "9.2.5",
+    "version": "9.2.6",
     "description": "Traverse and edit AST",
     "keywords": [
       "ast",
@@ -1264,7 +1264,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "ast-compare": "^4.2.5",
+      "ast-compare": "^4.2.6",
       "ast-monkey-traverse": "^4.3.1",
       "check-types-mini": "^8.2.4",
       "codsen-utils": "^1.10.2",
@@ -2481,7 +2481,7 @@ export const packageJSONData = {
   },
   "detergent": {
     "name": "detergent",
-    "version": "9.4.7",
+    "version": "9.4.8",
     "description": "Extract, clean, encode text and fix English style",
     "keywords": [
       "brief",
@@ -5138,7 +5138,7 @@ export const packageJSONData = {
   },
   "object-delete-key": {
     "name": "object-delete-key",
-    "version": "4.2.5",
+    "version": "4.2.6",
     "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.",
     "keywords": [
       "ast",
@@ -5219,7 +5219,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "ast-compare": "^4.2.5",
+      "ast-compare": "^4.2.6",
       "codsen-utils": "^1.10.2"
     },
     "engines": {

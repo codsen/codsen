@@ -38,8 +38,8 @@ export const interdeps = [
   },
   {
     "name": "ast-compare",
-    "tarballSizeBytes": 16739,
-    "unpackedSizeBytes": 52089,
+    "tarballSizeBytes": 16782,
+    "unpackedSizeBytes": 52241,
     "imports": [
       "codsen-utils"
     ]
@@ -204,7 +204,7 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "tarballSizeBytes": 136307,
+    "tarballSizeBytes": 136308,
     "unpackedSizeBytes": 458236,
     "imports": [
       "all-named-html-entities",
