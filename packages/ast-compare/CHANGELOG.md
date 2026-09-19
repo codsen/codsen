@@ -5,6 +5,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.2.6 (2026-09-19)
 
+### Bug Fixes
+
+- improve the perf ([3b34a21](https://github.com/codsen/codsen/commit/3b34a21dfc29861d9fe3372072b7376c1b977815))
+
+## 4.2.6 (2026-09-19)
+
 ### Performance Improvements
 
 - Recorded a 38.33% higher normalized benchmark score than v4.2.4 (9,622 → 13,310).
