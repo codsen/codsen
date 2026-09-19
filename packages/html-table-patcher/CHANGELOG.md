@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.2.6 (2026-09-19)
+
+### Bug Fixes
+
+- **html-table-patcher:** use consolidated lookahead entry ([36e14a9](https://github.com/codsen/codsen/commit/36e14a92b04ef66aee52a431c779fd17df2ece66))
+
 ## 6.2.4 (2026-09-06)
 
 ### Performance Improvements

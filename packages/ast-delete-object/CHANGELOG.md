@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.7 (2026-09-19)
+
+### Bug Fixes
+
+- **ast-delete-object:** use consolidated traversal entry ([c8a4802](https://github.com/codsen/codsen/commit/c8a480280ce580f225bf71da113e08f279539e31))
+
 ## 4.2.3 (2026-09-01)
 
 ### Bug Fixes

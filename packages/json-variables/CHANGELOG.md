@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 12.2.6 (2026-09-19)
+
+### Bug Fixes
+
+- **json-variables:** use consolidated traversal entry ([9a86712](https://github.com/codsen/codsen/commit/9a867128dd140c27ce300ddbf4c780b72034fd94))
+
 ## 12.2.4 (2026-09-06)
 
 ### Performance Improvements

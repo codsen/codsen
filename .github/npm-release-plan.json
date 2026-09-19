@@ -1,7 +1,7 @@
 {
-  "baseRef": "59f0867de6bf1176ee344c001876b6c7fe6d003a",
-  "baseSha": "59f0867de6bf1176ee344c001876b6c7fe6d003a",
-  "createdAt": "2026-09-19T13:21:45.342Z",
+  "baseRef": "49119dd3fb52b69768ef32b663af9ddb259838f9",
+  "baseSha": "49119dd3fb52b69768ef32b663af9ddb259838f9",
+  "createdAt": "2026-09-19T18:24:09.125Z",
   "dependencyFields": [
     "dependencies",
     "optionalDependencies",
@@ -10,14 +10,24 @@
   "kind": "codsen-npm-release-plan",
   "layers": [
     [
-      "ast-compare",
-      "detergent"
+      "ast-monkey",
+      "edit-package-json",
+      "string-remove-widows",
+      "string-strip-html"
     ],
     [
+      "ast-deep-contains",
       "ast-delete-object",
-      "ast-get-object",
-      "ast-monkey",
-      "object-delete-key"
+      "ast-get-values-by-key",
+      "detergent",
+      "extract-search-index",
+      "html-table-patcher",
+      "remark-typography",
+      "string-convert-indexes",
+      "update-versions"
+    ],
+    [
+      "json-variables"
     ],
     [
       "@codsen/data"
@@ -25,73 +35,151 @@
   ],
   "packages": [
     {
-      "baseVersion": "0.6.2",
+      "baseVersion": "0.6.3",
       "dependencies": [],
       "directory": "data",
-      "layer": 2,
+      "layer": 3,
       "name": "@codsen/data",
-      "version": "0.6.3"
+      "version": "0.6.4"
     },
     {
-      "baseVersion": "4.2.5",
-      "dependencies": [],
-      "directory": "packages/ast-compare",
-      "layer": 0,
-      "name": "ast-compare",
-      "version": "4.2.6"
-    },
-    {
-      "baseVersion": "4.2.5",
+      "baseVersion": "5.2.4",
       "dependencies": [
-        "ast-compare"
+        "ast-monkey"
+      ],
+      "directory": "packages/ast-deep-contains",
+      "layer": 1,
+      "name": "ast-deep-contains",
+      "version": "5.2.5"
+    },
+    {
+      "baseVersion": "4.2.6",
+      "dependencies": [
+        "ast-monkey"
       ],
       "directory": "packages/ast-delete-object",
       "layer": 1,
       "name": "ast-delete-object",
-      "version": "4.2.6"
+      "version": "4.2.7"
     },
     {
-      "baseVersion": "4.2.5",
+      "baseVersion": "5.2.5",
       "dependencies": [
-        "ast-compare"
+        "ast-monkey"
       ],
-      "directory": "packages/ast-get-object",
+      "directory": "packages/ast-get-values-by-key",
       "layer": 1,
-      "name": "ast-get-object",
-      "version": "4.2.6"
+      "name": "ast-get-values-by-key",
+      "version": "5.2.6"
     },
     {
-      "baseVersion": "9.2.5",
-      "dependencies": [
-        "ast-compare"
-      ],
-      "directory": "packages/ast-monkey",
-      "layer": 1,
-      "name": "ast-monkey",
-      "version": "9.2.6"
-    },
-    {
-      "baseVersion": "9.4.7",
+      "baseVersion": "9.2.6",
       "dependencies": [],
-      "directory": "packages/detergent",
+      "directory": "packages/ast-monkey",
       "layer": 0,
-      "name": "detergent",
-      "version": "9.4.8"
+      "name": "ast-monkey",
+      "version": "10.0.0"
     },
     {
-      "baseVersion": "4.2.5",
+      "baseVersion": "9.4.8",
       "dependencies": [
-        "ast-compare"
+        "string-remove-widows",
+        "string-strip-html"
       ],
-      "directory": "packages/object-delete-key",
+      "directory": "packages/detergent",
       "layer": 1,
-      "name": "object-delete-key",
-      "version": "4.2.6"
+      "name": "detergent",
+      "version": "9.4.9"
+    },
+    {
+      "baseVersion": "0.10.6",
+      "dependencies": [],
+      "directory": "packages/edit-package-json",
+      "layer": 0,
+      "name": "edit-package-json",
+      "version": "0.10.7"
+    },
+    {
+      "baseVersion": "2.2.6",
+      "dependencies": [
+        "string-strip-html"
+      ],
+      "directory": "packages/extract-search-index",
+      "layer": 1,
+      "name": "extract-search-index",
+      "version": "2.2.7"
+    },
+    {
+      "baseVersion": "6.2.5",
+      "dependencies": [
+        "ast-monkey"
+      ],
+      "directory": "packages/html-table-patcher",
+      "layer": 1,
+      "name": "html-table-patcher",
+      "version": "6.2.6"
+    },
+    {
+      "baseVersion": "12.2.5",
+      "dependencies": [
+        "ast-get-values-by-key",
+        "ast-monkey"
+      ],
+      "directory": "packages/json-variables",
+      "layer": 2,
+      "name": "json-variables",
+      "version": "12.2.6"
+    },
+    {
+      "baseVersion": "0.8.6",
+      "dependencies": [
+        "string-remove-widows"
+      ],
+      "directory": "packages/remark-typography",
+      "layer": 1,
+      "name": "remark-typography",
+      "version": "0.8.7"
+    },
+    {
+      "baseVersion": "6.2.5",
+      "dependencies": [
+        "ast-monkey"
+      ],
+      "directory": "packages/string-convert-indexes",
+      "layer": 1,
+      "name": "string-convert-indexes",
+      "version": "6.2.6"
+    },
+    {
+      "baseVersion": "4.2.6",
+      "dependencies": [],
+      "directory": "packages/string-remove-widows",
+      "layer": 0,
+      "name": "string-remove-widows",
+      "version": "4.2.7"
+    },
+    {
+      "baseVersion": "13.7.3",
+      "dependencies": [],
+      "directory": "packages/string-strip-html",
+      "layer": 0,
+      "name": "string-strip-html",
+      "version": "13.7.4"
+    },
+    {
+      "baseVersion": "7.2.6",
+      "dependencies": [
+        "edit-package-json"
+      ],
+      "directory": "packages/update-versions",
+      "layer": 1,
+      "name": "update-versions",
+      "version": "7.2.7"
     }
   ],
-  "plannedAtSha": "59f0867de6bf1176ee344c001876b6c7fe6d003a",
-  "preparedTreeSha256": "644950563ed7f213e2f80e9100fe5f0f0032e1cf420eb49db14542abb1ef1a57",
+  "plannedAtSha": "49119dd3fb52b69768ef32b663af9ddb259838f9",
+  "preparedTreeSha256": "213b9ae7d528695a326e6983c355481f5ec494b4cd3ff91d83c871f08f2a0195",
   "schemaVersion": 1,
-  "selectedCount": 7,
+  "selectedCount": 15,
   "workspaceCount": 108
 }

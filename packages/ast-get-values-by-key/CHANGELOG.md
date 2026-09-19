@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.2.6 (2026-09-19)
+
+### Bug Fixes
+
+- **ast-get-values-by-key:** use consolidated traversal entry ([ec0ff3d](https://github.com/codsen/codsen/commit/ec0ff3dc4c4922f14dc24fc616ddbf9bb5a2de9f))
+
 ## 5.2.3 (2026-09-01)
 
 ### Bug Fixes

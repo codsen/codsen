@@ -1,6 +1,6 @@
 {
   "name": "string-convert-indexes",
-  "version": "6.2.5",
+  "version": "6.2.6",
   "description": "Convert between native JS string character indexes and grapheme-count-based indexes",
   "keywords": [
     "astral",
@@ -66,7 +66,7 @@
     "various": {}
   },
   "dependencies": {
-    "ast-monkey": "^9.2.5",
+    "ast-monkey": "^10.0.0",
     "codsen-utils": "^1.10.2",
     "unicode-segmenter": "^0.17.3"
   },
