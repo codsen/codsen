@@ -112,8 +112,6 @@
         "packages/ast-deep-contains/src/main.ts",
         "packages/ast-get-object/src/main.ts",
         "packages/ast-get-values-by-key/src/main.ts",
-        "packages/ast-monkey-traverse-with-lookahead/src/main.ts",
-        "packages/ast-monkey-traverse/src/main.ts",
         "packages/ast-monkey/src/lookahead.ts",
         "packages/ast-monkey/src/main.ts",
         "packages/ast-monkey/src/traverse.ts",

@@ -75,7 +75,7 @@ test("03 - retains retired packages in historical ownership without listing them
     true,
     "03.02",
   );
-  equal(result.deprecated.length, 21, "03.03");
+  equal(result.deprecated.length, 23, "03.03");
   equal(
     deprecated.every((name) => codsenPackagesOutsideWorkspace.has(name)),
     true,
@@ -177,7 +177,7 @@ test("09 - projects the real public catalogue without the auxiliary data workspa
     .filter(({ manifest }) => !manifest.private)
     .map(({ manifest }) => manifest.name);
   const result = createCodsenPackageLists(names);
-  equal(result.all.length, 135, "09.01");
+  equal(result.all.length, 133, "09.01");
   equal(result.historical.length, 156, "09.02");
   equal(result.all.includes("@codsen/data"), false, "09.03");
   equal(result.all, [...result.all].sort(), "09.04");

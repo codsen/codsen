@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "frozenRevision": "c1898722b0926cda2d53d1e8d430396e6f3192bc",
+  "repository": "https://github.com/codsen/codsen",
+  "sourceTree": "https://github.com/codsen/codsen/tree/c1898722b0926cda2d53d1e8d430396e6f3192bc",
+  "reason": "Traversal implementations consolidated in ast-monkey 10.0.0; legacy performance evidence retained independently of retired workspaces.",
+  "scoreFormula": "target operations per second * perf-ref canonical score / reference operations per second",
+  "reference": {
+    "name": "perf-ref",
+    "version": "1.0.5",
+    "canonicalScore": 183
+  },
+  "harness": [
+    {
+      "sourcePath": "ops/scripts/perf.js",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/ops/scripts/perf.js",
+      "sha256": "cc35acc89306f7882209073fcb990cd491bfbb3ca1584387476a0eb60cdad974"
+    },
+    {
+      "sourcePath": "ops/scripts/historicalJson.js",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/ops/scripts/historicalJson.js",
+      "sha256": "ba852ebd6c9ad68efb2d2e6f654e719e453a230e4452227737765b8c6c3fbf35"
+    },
+    {
+      "sourcePath": "ops/helpers/perfMeasurement.js",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/ops/helpers/perfMeasurement.js",
+      "sha256": "4828a27c0f154652bc2c5163f82d32a7802353f0acc6b06b38bac5c7d6bac3b9"
+    },
+    {
+      "sourcePath": "ops/helpers/perfPolicy.js",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/ops/helpers/perfPolicy.js",
+      "sha256": "0718f71445b3dbe41c1c79720c6df1542be94ed41f429797c68cb890d22e156e"
+    },
+    {
+      "sourcePath": "ops/perf-policy.json",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/ops/perf-policy.json",
+      "sha256": "30d19fe18a83767eda950a65b2423e172f73bd62f36f06288825db49716d071e"
+    },
+    {
+      "sourcePath": "package-lock.json",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/package-lock.json",
+      "sha256": "85046232da65a790b3b4cee7bf333b1a3651295c631486873ea398f734c59ee1"
+    },
+    {
+      "sourcePath": ".agents/PERFORMANCE.md",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/.agents/PERFORMANCE.md",
+      "sha256": "0da061b126d186c5cd65446af0d7715ca2e8969e91a4e5a767375a2e638a44d4"
+    }
+  ],
+  "packages": {
+    "ast-monkey-traverse": {
+      "version": "4.3.1",
+      "recordedVersions": [
+        {
+          "version": "4.2.2",
+          "score": 26312,
+          "tag": "ast-monkey-traverse@4.2.2",
+          "revision": "8b291f1f00beb8622cc994a8236a60a57e399c46",
+          "sourceTree": "https://github.com/codsen/codsen/tree/8b291f1f00beb8622cc994a8236a60a57e399c46/packages/ast-monkey-traverse"
+        },
+        {
+          "version": "4.3.1",
+          "score": 30404,
+          "tag": "ast-monkey-traverse@4.3.1",
+          "revision": "4874b31b9640840e369e86a1e54b79428ea5d937",
+          "sourceTree": "https://github.com/codsen/codsen/tree/4874b31b9640840e369e86a1e54b79428ea5d937/packages/ast-monkey-traverse"
+        }
+      ],
+      "evidence": [
+        {
+          "archivePath": "ast-monkey-traverse/original-workload/check.js.txt",
+          "sourcePath": "packages/ast-monkey-traverse/perf/check.js",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/packages/ast-monkey-traverse/perf/check.js",
+          "sha256": "9870892467ded45743f1ca7e411ec464353c3cc0e51e11fd096613abc59dd895"
+        },
+        {
+          "archivePath": "ast-monkey-traverse/historical.json.txt",
+          "sourcePath": "packages/ast-monkey-traverse/perf/historical.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/packages/ast-monkey-traverse/perf/historical.json",
+          "sha256": "6ef3c8a693eb3125f7b90211c3c33e7d084d452984eb1211f11245cb7dca02d9"
+        },
+        {
+          "archivePath": "ast-monkey-traverse/CHANGELOG.md",
+          "sourcePath": "packages/ast-monkey-traverse/CHANGELOG.md",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/packages/ast-monkey-traverse/CHANGELOG.md",
+          "sha256": "11e7561d79022a0087c60d3f9c04fc5234c29155b115f080e01ae2b296cfc4b1"
+        },
+        {
+          "archivePath": "ast-monkey-traverse/package.json.txt",
+          "sourcePath": "packages/ast-monkey-traverse/package.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/packages/ast-monkey-traverse/package.json",
+          "sha256": "4f689629abcffed03d5da4e42907f90ef0f225b84193c8e3a6facaea8423cd81"
+        },
+        {
+          "archivePath": "ast-monkey-traverse/original-workload/main.ts.txt",
+          "sourcePath": "packages/ast-monkey-traverse/src/main.ts",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/packages/ast-monkey-traverse/src/main.ts",
+          "sha256": "0b942e65c40015037e48594be3cc1dfc4e56b27dd118b47d8c86c69fd682e75b"
+        },
+        {
+          "archivePath": "ast-monkey-traverse/LICENSE",
+          "sourcePath": "packages/ast-monkey-traverse/LICENSE",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/packages/ast-monkey-traverse/LICENSE",
+          "sha256": "44c5e27070432ee1282b08ee45677ff56c86eb7cde22284dbcc8655b44fc7484"
+        }
+      ]
+    },
+    "ast-monkey-traverse-with-lookahead": {
+      "version": "4.2.5",
+      "recordedVersions": [
+        {
+          "version": "4.1.3",
+          "score": 15634,
+          "tag": "ast-monkey-traverse-with-lookahead@4.1.3",
+          "revision": "ae6dc7ea79a0aebd5c7f7b7d644f39e148478568",
+          "sourceTree": "https://github.com/codsen/codsen/tree/ae6dc7ea79a0aebd5c7f7b7d644f39e148478568/packages/ast-monkey-traverse-with-lookahead"
+        },
+        {
+          "version": "4.2.4",
+          "score": 20435,
+          "tag": "ast-monkey-traverse-with-lookahead@4.2.4",
+          "revision": "4874b31b9640840e369e86a1e54b79428ea5d937",
+          "sourceTree": "https://github.com/codsen/codsen/tree/4874b31b9640840e369e86a1e54b79428ea5d937/packages/ast-monkey-traverse-with-lookahead"
+        }
+      ],
+      "evidence": [
+        {
+          "archivePath": "ast-monkey-traverse-with-lookahead/original-workload/check.js.txt",
+          "sourcePath": "packages/ast-monkey-traverse-with-lookahead/perf/check.js",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/packages/ast-monkey-traverse-with-lookahead/perf/check.js",
+          "sha256": "8340947d64e996fbcf869c47c329ce36e4c5376dd42f8b6af182120ebad66ec8"
+        },
+        {
+          "archivePath": "ast-monkey-traverse-with-lookahead/historical.json.txt",
+          "sourcePath": "packages/ast-monkey-traverse-with-lookahead/perf/historical.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/packages/ast-monkey-traverse-with-lookahead/perf/historical.json",
+          "sha256": "5e089dfe5aca6764a1751510f5c5b8f22b854977b0bcd22bc35eaee34657f503"
+        },
+        {
+          "archivePath": "ast-monkey-traverse-with-lookahead/CHANGELOG.md",
+          "sourcePath": "packages/ast-monkey-traverse-with-lookahead/CHANGELOG.md",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/packages/ast-monkey-traverse-with-lookahead/CHANGELOG.md",
+          "sha256": "2c24c59dbf8b9aafcf1da64f0922dd6a4f116a0a42b1c1538b613aa3e3caaf2d"
+        },
+        {
+          "archivePath": "ast-monkey-traverse-with-lookahead/package.json.txt",
+          "sourcePath": "packages/ast-monkey-traverse-with-lookahead/package.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/packages/ast-monkey-traverse-with-lookahead/package.json",
+          "sha256": "b5937db27fe5fc500f361438b158be3e1b166fb3e3d4e062b681fa0733488465"
+        },
+        {
+          "archivePath": "ast-monkey-traverse-with-lookahead/original-workload/main.ts.txt",
+          "sourcePath": "packages/ast-monkey-traverse-with-lookahead/src/main.ts",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/packages/ast-monkey-traverse-with-lookahead/src/main.ts",
+          "sha256": "b89eab9d12c472da05e5012904510a0699b7b38da3d9d33c70e4f1833f040711"
+        },
+        {
+          "archivePath": "ast-monkey-traverse-with-lookahead/LICENSE",
+          "sourcePath": "packages/ast-monkey-traverse-with-lookahead/LICENSE",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/c1898722b0926cda2d53d1e8d430396e6f3192bc/packages/ast-monkey-traverse-with-lookahead/LICENSE",
+          "sha256": "44c5e27070432ee1282b08ee45677ff56c86eb7cde22284dbcc8655b44fc7484"
+        }
+      ]
+    }
+  }
+}

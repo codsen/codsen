@@ -27,7 +27,6 @@
     "ast-contains-only-empty-space",
     "ast-is-empty",
     "ast-monkey",
-    "ast-monkey-traverse",
     "ast-monkey-util",
     "codsen-glob",
     "codsen-utils",

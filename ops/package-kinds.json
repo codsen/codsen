@@ -13,8 +13,6 @@
     "ast-get-values-by-key",
     "ast-is-empty",
     "ast-monkey",
-    "ast-monkey-traverse",
-    "ast-monkey-traverse-with-lookahead",
     "ast-monkey-util",
     "charcode-is-valid-xml-name-character",
     "check-types-mini",
