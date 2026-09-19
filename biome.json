@@ -140,7 +140,6 @@
         "packages/object-no-new-keys/src/main.ts",
         "packages/object-set-all-values-to/src/main.ts",
         "packages/ranges-apply/src/main.ts",
-        "packages/ranges-iterate/src/main.ts",
         "packages/ranges-merge/src/main.ts",
         "packages/ranges-push/src/main.ts",
         "packages/ranges-push/src/rMerge.ts",

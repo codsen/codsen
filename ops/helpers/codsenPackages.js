@@ -125,6 +125,7 @@ const deprecated = [
   "posthtml-ast-loose-compare",
   "posthtml-color-shorthand-hex-to-six-digit",
   "posthtml-email-remove-unused-css",
+  "ranges-iterate",
   "string-replace-slices-array",
   "string-slices-array-push",
 ];
