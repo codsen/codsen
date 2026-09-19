@@ -2,7 +2,7 @@
 
 import { promises as fsp } from "node:fs";
 import path from "node:path";
-import { traverse } from "ast-monkey-traverse";
+import { traverse } from "ast-monkey/traverse";
 import { glob } from "codsen-glob";
 import objectPath from "object-path";
 import pMap from "p-map";
