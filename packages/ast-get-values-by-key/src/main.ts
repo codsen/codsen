@@ -1,6 +1,6 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-import { traverse } from "ast-monkey-traverse";
+import { traverse } from "ast-monkey/traverse";
 import { deepClone as clone, match } from "codsen-utils";
 import { version as v } from "../package.json";
 

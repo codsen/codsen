@@ -76,7 +76,7 @@
     }
   },
   "dependencies": {
-    "ast-monkey-traverse": "^4.3.1",
+    "ast-monkey": "^9.2.5",
     "codsen-utils": "^1.10.2"
   },
   "engines": {
