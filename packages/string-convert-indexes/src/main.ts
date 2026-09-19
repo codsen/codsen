@@ -1,4 +1,4 @@
-import { traverse } from "ast-monkey-traverse";
+import { traverse } from "ast-monkey/traverse";
 import { formatDiagnosticValue } from "codsen-utils";
 import { collectGraphemes } from "unicode-segmenter/grapheme";
 import { version as v } from "../package.json";
