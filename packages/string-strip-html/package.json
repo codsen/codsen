@@ -78,7 +78,7 @@
     "string-left-right": "^6.2.4"
   },
   "devDependencies": {
-    "ast-monkey-traverse": "^4.3.1",
+    "ast-monkey": "^9.2.5",
     "ranges-invert": "^6.2.5"
   },
   "engines": {

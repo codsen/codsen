@@ -1,7 +1,7 @@
 // Strip HTML from a raw JSON string
 
 import { strict as assert } from "node:assert";
-import { traverse } from "ast-monkey-traverse";
+import { traverse } from "ast-monkey/traverse";
 
 import { stripHtml } from "../dist/string-strip-html.esm.js";
 
