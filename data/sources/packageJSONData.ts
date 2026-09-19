@@ -787,7 +787,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "ast-monkey-traverse": "^4.3.1",
+      "ast-monkey": "^9.2.5",
       "object-path": "^0.11.8"
     },
     "engines": {
@@ -881,7 +881,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-compare": "^4.2.6",
-      "ast-monkey-traverse": "^4.3.1",
+      "ast-monkey": "^9.2.5",
       "codsen-utils": "^1.10.2"
     },
     "engines": {
@@ -1069,7 +1069,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "ast-monkey-traverse": "^4.3.1",
+      "ast-monkey": "^9.2.5",
       "codsen-utils": "^1.10.2"
     },
     "engines": {
@@ -1217,9 +1217,19 @@ export const packageJSONData = {
     },
     "type": "module",
     "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/ast-monkey.umd.js",
-      "default": "./dist/ast-monkey.esm.js"
+      ".": {
+        "types": "./types/index.d.ts",
+        "script": "./dist/ast-monkey.umd.js",
+        "default": "./dist/ast-monkey.esm.js"
+      },
+      "./traverse": {
+        "types": "./types/traverse.d.ts",
+        "default": "./dist/ast-monkey-traverse.esm.js"
+      },
+      "./lookahead": {
+        "types": "./types/lookahead.d.ts",
+        "default": "./dist/ast-monkey-lookahead.esm.js"
+      }
     },
     "types": "types/index.d.ts",
     "scripts": {
@@ -1227,7 +1237,7 @@ export const packageJSONData = {
       "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
+      "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types",
       "examples": "node '../../ops/scripts/run-examples.js'",
       "lect": "node '../../ops/lect/lect.js'",
       "lect:check": "node '../../ops/lect/lect.js' --check",
@@ -1261,11 +1271,22 @@ export const packageJSONData = {
         "extras": [
           ""
         ]
+      },
+      "readme": {
+        "features": {
+          "summary": "Transform and inspect nested arrays and objects with two traversal contracts and higher-level helpers.",
+          "items": [
+            "Use `traverse` and `DELETE` from `ast-monkey/traverse` to transform a cloned tree, replace values, or remove entries.",
+            "Use `traverseWithLookahead` from `ast-monkey/lookahead` to observe visits and preview upcoming nodes. Its callback return is ignored, and callback values can reference the original input.",
+            "Import all APIs, including `find`, `get`, `set`, `drop`, `del`, and `arrayFirstOnly`, from `ast-monkey`.",
+            "The traversal subpaths load smaller JavaScript entry points. They share the package installation and its dependencies.",
+            "Direct browser scripts keep `dist/ast-monkey.umd.js` and the `astMonkey` global, including both traversal APIs."
+          ]
+        }
       }
     },
     "dependencies": {
       "ast-compare": "^4.2.6",
-      "ast-monkey-traverse": "^4.3.1",
       "check-types-mini": "^8.2.4",
       "codsen-utils": "^1.10.2",
       "util-array-object-or-both": "^5.2.2"
@@ -2663,7 +2684,7 @@ export const packageJSONData = {
       "string-left-right": "^6.2.4"
     },
     "devDependencies": {
-      "ast-monkey-traverse": "^4.3.1",
+      "ast-monkey": "^9.2.5",
       "codsen-glob": "^1.1.2",
       "p-map": "^7.0.7"
     },
@@ -3713,7 +3734,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "ast-monkey-traverse-with-lookahead": "^4.2.5",
+      "ast-monkey": "^9.2.5",
       "codsen-parser": "^0.14.25",
       "ranges-apply": "^7.2.5",
       "ranges-push": "^7.3.2"
@@ -4778,7 +4799,7 @@ export const packageJSONData = {
     "dependencies": {
       "arrayiffy-if-string": "^5.2.3",
       "ast-get-values-by-key": "^5.2.5",
-      "ast-monkey-traverse": "^4.3.1",
+      "ast-monkey": "^9.2.5",
       "codsen-utils": "^1.10.2",
       "object-path": "^0.11.8",
       "ranges-apply": "^7.2.5",
@@ -7340,7 +7361,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "ast-monkey-traverse": "^4.3.1",
+      "ast-monkey": "^9.2.5",
       "codsen-utils": "^1.10.2",
       "unicode-segmenter": "^0.17.3"
     },
@@ -8657,7 +8678,7 @@ export const packageJSONData = {
       "string-left-right": "^6.2.4"
     },
     "devDependencies": {
-      "ast-monkey-traverse": "^4.3.1",
+      "ast-monkey": "^9.2.5",
       "ranges-invert": "^6.2.5"
     },
     "engines": {

@@ -3,8 +3,8 @@
   "sources": {
     "downloadRevision": "8e94b990ca2b27e73aac07c1376552418547176f9d9ab4c07700031b23b9e9f0",
     "downloadsThrough": "2026-09-18",
-    "interdepsSha256": "91f636b9518995ae7e870073b5752e981800399ce31908b3bd5cfcdd3bfe5a96",
-    "packageLockSha256": "33b1001507804f58f2cf361ad296a8cbecb77b50ace27a5bda374906f7390fbb"
+    "interdepsSha256": "ed2e88eff221c8cea7ec2bbff2f08d5b9a6193749cfc572736b3e9ee6c042561",
+    "packageLockSha256": "4af289bf8b7fef760118f5ee01d0be4975e93fd1aa7ae42a5d66ecff25f6c1a5"
   },
   "downloads": {
     "revision": "8e94b990ca2b27e73aac07c1376552418547176f9d9ab4c07700031b23b9e9f0",
@@ -1345,10 +1345,10 @@
   },
   "dependencies": {
     "packageCount": 135,
-    "directDependencyCount": 227,
+    "directDependencyCount": 226,
     "maximumKnownDepth": 8,
     "unknownOutgoingPackageCount": 28,
-    "knownIsolatedPackageCount": 8
+    "knownIsolatedPackageCount": 9
   },
   "molecule": {
     "defaultRoot": "string-strip-html",

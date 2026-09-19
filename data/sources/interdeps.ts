@@ -46,19 +46,19 @@ export const interdeps = [
   },
   {
     "name": "ast-deep-contains",
-    "tarballSizeBytes": 10191,
-    "unpackedSizeBytes": 26784,
+    "tarballSizeBytes": 10180,
+    "unpackedSizeBytes": 26729,
     "imports": [
-      "ast-monkey-traverse"
+      "ast-monkey"
     ]
   },
   {
     "name": "ast-delete-object",
-    "tarballSizeBytes": 17906,
-    "unpackedSizeBytes": 50122,
+    "tarballSizeBytes": 17905,
+    "unpackedSizeBytes": 50067,
     "imports": [
       "ast-compare",
-      "ast-monkey-traverse",
+      "ast-monkey",
       "codsen-utils"
     ]
   },
@@ -73,10 +73,10 @@ export const interdeps = [
   },
   {
     "name": "ast-get-values-by-key",
-    "tarballSizeBytes": 13052,
-    "unpackedSizeBytes": 33391,
+    "tarballSizeBytes": 13050,
+    "unpackedSizeBytes": 33336,
     "imports": [
-      "ast-monkey-traverse",
+      "ast-monkey",
       "codsen-utils"
     ]
   },
@@ -90,21 +90,14 @@ export const interdeps = [
   },
   {
     "name": "ast-monkey",
-    "tarballSizeBytes": 36281,
-    "unpackedSizeBytes": 112123,
+    "tarballSizeBytes": 41284,
+    "unpackedSizeBytes": 131547,
     "imports": [
       "ast-compare",
-      "ast-monkey-traverse",
       "check-types-mini",
       "codsen-utils",
       "util-array-object-or-both"
     ]
-  },
-  {
-    "name": "ast-monkey-traverse",
-    "tarballSizeBytes": 9666,
-    "unpackedSizeBytes": 27137,
-    "imports": []
   },
   {
     "name": "ast-monkey-traverse-with-lookahead",
@@ -227,8 +220,8 @@ export const interdeps = [
   },
   {
     "name": "edit-package-json",
-    "tarballSizeBytes": 19251,
-    "unpackedSizeBytes": 59308,
+    "tarballSizeBytes": 19244,
+    "unpackedSizeBytes": 59299,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -349,10 +342,10 @@ export const interdeps = [
   },
   {
     "name": "html-table-patcher",
-    "tarballSizeBytes": 41630,
-    "unpackedSizeBytes": 143374,
+    "tarballSizeBytes": 41632,
+    "unpackedSizeBytes": 143255,
     "imports": [
-      "ast-monkey-traverse-with-lookahead",
+      "ast-monkey",
       "codsen-parser",
       "ranges-apply",
       "ranges-push"
@@ -448,12 +441,12 @@ export const interdeps = [
   },
   {
     "name": "json-variables",
-    "tarballSizeBytes": 33641,
-    "unpackedSizeBytes": 106518,
+    "tarballSizeBytes": 33636,
+    "unpackedSizeBytes": 106463,
     "imports": [
       "arrayiffy-if-string",
       "ast-get-values-by-key",
-      "ast-monkey-traverse",
+      "ast-monkey",
       "codsen-utils",
       "ranges-apply",
       "ranges-push",
@@ -691,10 +684,10 @@ export const interdeps = [
   },
   {
     "name": "string-convert-indexes",
-    "tarballSizeBytes": 14883,
-    "unpackedSizeBytes": 37769,
+    "tarballSizeBytes": 14884,
+    "unpackedSizeBytes": 37714,
     "imports": [
-      "ast-monkey-traverse",
+      "ast-monkey",
       "codsen-utils"
     ]
   },
@@ -824,8 +817,8 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "tarballSizeBytes": 56927,
-    "unpackedSizeBytes": 173765,
+    "tarballSizeBytes": 56920,
+    "unpackedSizeBytes": 173756,
     "imports": [
       "codsen-utils",
       "html-entity-codec",

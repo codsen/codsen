@@ -54,8 +54,7 @@ export const dependencyStats: DependencyStats = {
     "arrayiffy-if-string",
     "ast-compare",
     "ast-get-values-by-key",
-    "ast-monkey-traverse",
-    "ast-monkey-traverse-with-lookahead",
+    "ast-monkey",
     "check-types-mini",
     "codsen-format-diagnostic-value",
     "codsen-glob",
@@ -146,8 +145,7 @@ export const dependencyStats: DependencyStats = {
     "arrayiffy-if-string": 7,
     "ast-compare": 4,
     "ast-get-values-by-key": 1,
-    "ast-monkey-traverse": 6,
-    "ast-monkey-traverse-with-lookahead": 1,
+    "ast-monkey": 6,
     "check-types-mini": 2,
     "codsen-format-diagnostic-value": 2,
     "codsen-glob": 8,
@@ -220,7 +218,7 @@ export const dependencyStats: DependencyStats = {
   "devDependencies": {
     "@types/picomatch": 1,
     "@types/semver-compare": 1,
-    "ast-monkey-traverse": 2,
+    "ast-monkey": 2,
     "ast-monkey-util": 1,
     "codsen-glob": 1,
     "color-shorthand-hex-to-six-digit": 1,
@@ -419,7 +417,7 @@ export const dependencyStats: DependencyStats = {
       "string-match-left-right": 7
     },
     {
-      "ast-monkey-traverse": 6
+      "ast-monkey": 6
     },
     {
       "ast-compare": 4
