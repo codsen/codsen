@@ -1,5 +1,4 @@
 import { compare } from "ast-compare";
-import { DELETE, traverse } from "ast-monkey-traverse";
 import { checkTypesMini } from "check-types-mini";
 import {
   formatDiagnosticValue,
@@ -9,6 +8,28 @@ import {
 import { arrObjOrBoth } from "util-array-object-or-both";
 
 import { version as v } from "../package.json";
+import { traverseWithLookahead } from "./lookahead.js";
+import { DELETE, traverse } from "./traverse.js";
+
+export type {
+  LookaheadCallback,
+  LookaheadInnerObj,
+  LookaheadNextToken,
+  LookaheadObj,
+} from "./lookahead.js";
+export type {
+  Callback,
+  InnerObj,
+  ReadonlyTreeArray,
+  ReadonlyTreeContainer,
+  ReadonlyTreeObject,
+  ReadonlyTreeValue,
+  Stop,
+  TreeArray,
+  TreeObject,
+  TreePrimitive,
+  TreeValue,
+} from "./traverse.js";
 
 const version: string = v;
 const hasOwn = Object.prototype.hasOwnProperty;
@@ -1046,4 +1067,15 @@ function arrayFirstOnly(input: JsonValue): JsonValue {
 
 // -----------------------------------------------------------------------------
 
-export { arrayFirstOnly, DELETE, del, drop, find, get, set, traverse, version };
+export {
+  arrayFirstOnly,
+  DELETE,
+  del,
+  drop,
+  find,
+  get,
+  set,
+  traverse,
+  traverseWithLookahead,
+  version,
+};

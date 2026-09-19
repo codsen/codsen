@@ -1,6 +1,5 @@
 import { runInNewContext } from "node:vm";
 import { compare } from "ast-compare";
-import { DELETE as TRAVERSE_DELETE } from "ast-monkey-traverse";
 import { test } from "uvu";
 import { equal, is, throws } from "uvu/assert";
 
@@ -416,8 +415,8 @@ test("11 - invalid options and trees retain package-owned prefixes", () => {
   }
 });
 
-test("12 - the re-exported traversal token deletes without colliding", () => {
-  is(DELETE, TRAVERSE_DELETE, "12.01");
+test("12 - the traversal token deletes without colliding", () => {
+  is(DELETE, Symbol.for("ast-monkey-traverse.delete"), "12.01");
   equal(
     traverse([Number.NaN, "drop"], (key) => (key === "drop" ? DELETE : key)),
     [Number.NaN],

@@ -23,6 +23,16 @@
 
 **No 3rd party dependencies.** All dependencies, checked recursively, are Codsen packages.
 
+## Features
+
+Transform and inspect nested arrays and objects with two traversal contracts and higher-level helpers.
+
+- Use `traverse` and `DELETE` from `ast-monkey/traverse` to transform a cloned tree, replace values, or remove entries.
+- Use `traverseWithLookahead` from `ast-monkey/lookahead` to observe visits and preview upcoming nodes. Its callback return is ignored, and callback values can reference the original input.
+- Import all APIs, including `find`, `get`, `set`, `drop`, `del`, and `arrayFirstOnly`, from `ast-monkey`.
+- The traversal subpaths load smaller JavaScript entry points. They share the package installation and its dependencies.
+- Direct browser scripts keep `dist/ast-monkey.umd.js` and the `astMonkey` global, including both traversal APIs.
+
 ## Install
 
 This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). If you're not ready yet, install an older version of this program, 7.15.0 (`npm i ast-monkey@7.15.0`).

@@ -1,4 +1,4 @@
-// Traverse a tree using the re-exported `traverse`
+// Traverse a tree using `traverse`
 
 import { strict as assert } from "node:assert";
 

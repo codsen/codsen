@@ -1,11 +1,10 @@
-import json from "@rollup/plugin-json";
-import dts from "rollup-plugin-dts";
+import { readFileSync } from "node:fs";
 
-export default () => [
-  // Type definitions
-  {
-    input: "src/main.ts",
-    output: [{ file: "types/index.d.ts", format: "es" }],
-    plugins: [json(), dts()],
-  },
-];
+import { declarationEntries } from "../../ops/helpers/declarationEntries.js";
+
+export default () =>
+  declarationEntries(
+    JSON.parse(
+      readFileSync(new URL("./package.json", import.meta.url), "utf8"),
+    ),
+  );
