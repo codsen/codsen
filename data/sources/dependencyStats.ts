@@ -154,7 +154,7 @@ export const dependencyStats: DependencyStats = {
     "codsen-format-diagnostic-value": 2,
     "codsen-glob": 8,
     "codsen-parser": 1,
-    "codsen-utils": 76,
+    "codsen-utils": 75,
     "csv-sort": 1,
     "csv-split-easy": 1,
     "currency.js": 1,
@@ -184,7 +184,7 @@ export const dependencyStats: DependencyStats = {
     "ranges-crop": 2,
     "ranges-invert": 2,
     "ranges-is-index-within": 1,
-    "ranges-merge": 5,
+    "ranges-merge": 4,
     "ranges-process-outside": 1,
     "ranges-push": 12,
     "ranges-sort": 2,
@@ -230,7 +230,7 @@ export const dependencyStats: DependencyStats = {
     "is-html-tag-opening": 1,
     "p-map": 5,
     "parse5": 1,
-    "ranges-apply": 3,
+    "ranges-apply": 2,
     "ranges-invert": 1,
     "rehype": 1,
     "rehype-parse": 1,
@@ -321,7 +321,6 @@ export const dependencyStats: DependencyStats = {
     "ranges-merge",
     "ranges-process-outside",
     "ranges-push",
-    "ranges-regex",
     "ranges-sort",
     "regex-empty-conditional-comments",
     "remark-conventional-commit-changelog-timeline",
@@ -399,7 +398,7 @@ export const dependencyStats: DependencyStats = {
   ],
   "top10OwnDeps": [
     {
-      "codsen-utils": 76
+      "codsen-utils": 75
     },
     {
       "ranges-apply": 15
@@ -426,7 +425,7 @@ export const dependencyStats: DependencyStats = {
       "ast-monkey-traverse": 6
     },
     {
-      "ranges-merge": 5
+      "ast-compare": 4
     }
   ]
 };

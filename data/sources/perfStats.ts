@@ -86,7 +86,6 @@ export const perfStats: PerfStats = {
     "ranges-merge": 1313719,
     "ranges-process-outside": 823838,
     "ranges-push": 740422,
-    "ranges-regex": 1221560,
     "ranges-sort": 59834,
     "regex-empty-conditional-comments": 38029787,
     "remark-typography": 1816,
@@ -186,7 +185,6 @@ export const perfStats: PerfStats = {
     "ranges-merge",
     "ranges-process-outside",
     "ranges-push",
-    "ranges-regex",
     "ranges-sort",
     "regex-empty-conditional-comments",
     "remark-typography",
@@ -220,7 +218,7 @@ export const perfStats: PerfStats = {
     "util-array-object-or-both",
     "util-nonempty"
   ],
-  "recordedRuns": 1001,
+  "recordedRuns": 984,
   "regressionThresholdPercent": 10,
   "unchangedTolerancePercent": 2
 };

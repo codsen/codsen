@@ -1372,21 +1372,6 @@
       },
       "total": 35072502
     },
-    "ranges-regex": {
-      "status": "current",
-      "includedInPortfolio": true,
-      "firstPublishedDay": "2018-08-24",
-      "availability": "available",
-      "file": "packages/ranges-regex.ndjson",
-      "sha256": "7db21f6c097dbab8b8a18c1c9ecc3d8309190b58ca4dc28af3b62baeabb3037d",
-      "coverage": {
-        "start": "2018-08-24",
-        "end": "2026-09-11",
-        "days": 2941,
-        "missing": []
-      },
-      "total": 42368
-    },
     "ranges-sort": {
       "status": "current",
       "includedInPortfolio": true,
@@ -2570,7 +2555,7 @@
       ]
     }
   ],
-  "retiredRevision": "e2415f9ce950231a424053f4099ffdb8005c60c475134d7707ffa52f33ace53b",
-  "revision": "d9bcf739c62a7a0bea20717e51dfbb1c37c3d3d0a04ada3044261b413cb817e0",
-  "updatedAt": "2026-09-19T12:26:14.954Z"
+  "retiredRevision": "be5c9db14dcc40a194e3ee9b1cab2876f366eaeb6274d2119435fa4f6b8c3528",
+  "revision": "6058e566400d76514454f36724d2379263fe80668c55cbbb909fd9cf7e23d9fa",
+  "updatedAt": "2026-09-19T12:36:44.728Z"
 }

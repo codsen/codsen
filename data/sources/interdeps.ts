@@ -649,15 +649,6 @@ export const interdeps = [
     ]
   },
   {
-    "name": "ranges-regex",
-    "tarballSizeBytes": 10775,
-    "unpackedSizeBytes": 28500,
-    "imports": [
-      "codsen-utils",
-      "ranges-merge"
-    ]
-  },
-  {
     "name": "ranges-sort",
     "tarballSizeBytes": 10773,
     "unpackedSizeBytes": 27153,

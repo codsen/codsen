@@ -84,7 +84,6 @@ export const coverageStats: CoverageStats = {
     "ranges-merge",
     "ranges-process-outside",
     "ranges-push",
-    "ranges-regex",
     "ranges-sort",
     "regex-empty-conditional-comments",
     "rehype-responsive-tables",
