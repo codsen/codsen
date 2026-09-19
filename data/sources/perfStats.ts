@@ -34,8 +34,6 @@ export const perfStats: PerfStats = {
     "ast-get-values-by-key": 380246,
     "ast-is-empty": 1562477,
     "ast-monkey": 180078,
-    "ast-monkey-traverse": 30404,
-    "ast-monkey-traverse-with-lookahead": 20435,
     "ast-monkey-util": 9936107,
     "charcode-is-valid-xml-name-character": 6603360,
     "check-types-mini": 325188,
@@ -132,8 +130,6 @@ export const perfStats: PerfStats = {
     "ast-get-values-by-key",
     "ast-is-empty",
     "ast-monkey",
-    "ast-monkey-traverse",
-    "ast-monkey-traverse-with-lookahead",
     "ast-monkey-util",
     "charcode-is-valid-xml-name-character",
     "check-types-mini",
@@ -216,7 +212,7 @@ export const perfStats: PerfStats = {
     "util-array-object-or-both",
     "util-nonempty"
   ],
-  "recordedRuns": 981,
+  "recordedRuns": 977,
   "regressionThresholdPercent": 10,
   "unchangedTolerancePercent": 2
 };

@@ -100,14 +100,6 @@ export const interdeps = [
     ]
   },
   {
-    "name": "ast-monkey-traverse-with-lookahead",
-    "tarballSizeBytes": 9114,
-    "unpackedSizeBytes": 22527,
-    "imports": [
-      "codsen-utils"
-    ]
-  },
-  {
     "name": "charcode-is-valid-xml-name-character",
     "tarballSizeBytes": 5973,
     "unpackedSizeBytes": 15397,

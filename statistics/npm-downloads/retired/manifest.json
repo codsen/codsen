@@ -5,7 +5,7 @@
     "documentation": "https://github.com/npm/registry/blob/main/docs/download-counts.md",
     "earliestDay": "2015-01-10"
   },
-  "through": "2026-09-11",
+  "through": "2026-09-18",
   "packages": {
     "@codsen/data": {
       "status": "auxiliary",
@@ -21,7 +21,7 @@
         "missing": [
           {
             "start": "2026-09-07",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -38,9 +38,44 @@
         "start": "2018-03-10",
         "end": "2026-09-11",
         "days": 3108,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-12",
+            "end": "2026-09-18"
+          }
+        ]
       },
       "total": 47224
+    },
+    "ast-monkey-traverse": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2017-12-22",
+      "availability": "available",
+      "file": "packages/ast-monkey-traverse.ndjson",
+      "sha256": "c9c0055c120af2f5fe2c00e148a0870f9debc5c7c48caafd65a7f1b4c387658d",
+      "coverage": {
+        "start": "2017-12-22",
+        "end": "2026-09-18",
+        "days": 3193,
+        "missing": []
+      },
+      "total": 6130648
+    },
+    "ast-monkey-traverse-with-lookahead": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2020-04-04",
+      "availability": "available",
+      "file": "packages/ast-monkey-traverse-with-lookahead.ndjson",
+      "sha256": "8c02fd0b01953deeef2a3d263de8738d14f33d8d8da1b9d936b717fbf0a2f8ac",
+      "coverage": {
+        "start": "2020-04-04",
+        "end": "2026-09-18",
+        "days": 2359,
+        "missing": []
+      },
+      "total": 19579
     },
     "bitsausage": {
       "status": "deprecated",
@@ -56,7 +91,7 @@
         "missing": [
           {
             "start": "2026-09-07",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -76,7 +111,7 @@
         "missing": [
           {
             "start": "2026-09-07",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -96,7 +131,7 @@
         "missing": [
           {
             "start": "2026-09-07",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -116,7 +151,7 @@
         "missing": [
           {
             "start": "2026-09-07",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -136,7 +171,7 @@
         "missing": [
           {
             "start": "2015-01-10",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -156,7 +191,7 @@
         "missing": [
           {
             "start": "2026-09-07",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -176,7 +211,7 @@
         "missing": [
           {
             "start": "2026-09-07",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -196,7 +231,7 @@
         "missing": [
           {
             "start": "2026-09-07",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -216,7 +251,7 @@
         "missing": [
           {
             "start": "2026-09-07",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -236,7 +271,7 @@
         "missing": [
           {
             "start": "2026-09-07",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -256,7 +291,7 @@
         "missing": [
           {
             "start": "2026-09-07",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -276,7 +311,7 @@
         "missing": [
           {
             "start": "2026-09-07",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -296,7 +331,7 @@
         "missing": [
           {
             "start": "2026-09-07",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -316,7 +351,7 @@
         "missing": [
           {
             "start": "2026-09-07",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -336,7 +371,7 @@
         "missing": [
           {
             "start": "2026-09-07",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -356,7 +391,7 @@
         "missing": [
           {
             "start": "2026-09-07",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -373,7 +408,12 @@
         "start": "2019-06-01",
         "end": "2026-09-11",
         "days": 2660,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-12",
+            "end": "2026-09-18"
+          }
+        ]
       },
       "total": 29750
     },
@@ -388,7 +428,12 @@
         "start": "2018-08-24",
         "end": "2026-09-11",
         "days": 2941,
-        "missing": []
+        "missing": [
+          {
+            "start": "2026-09-12",
+            "end": "2026-09-18"
+          }
+        ]
       },
       "total": 42368
     },
@@ -406,7 +451,7 @@
         "missing": [
           {
             "start": "2026-09-07",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -426,7 +471,7 @@
         "missing": [
           {
             "start": "2026-09-07",
-            "end": "2026-09-11"
+            "end": "2026-09-18"
           }
         ]
       },
@@ -434,6 +479,6 @@
     }
   },
   "anomalies": [],
-  "revision": "27b8d38d7a523067e2ee7e26268bc5bdf0c6f144d9de06eaf7f91cd46bc74728",
-  "updatedAt": "2026-09-19T12:43:52.646Z"
+  "revision": "a4cd960111b2a61f752f12683689e3e63f824cbc122a95b954649e98aecc6ae4",
+  "updatedAt": "2026-09-19T23:00:47.972Z"
 }

@@ -232,36 +232,6 @@
       },
       "total": 451386
     },
-    "ast-monkey-traverse": {
-      "status": "current",
-      "includedInPortfolio": true,
-      "firstPublishedDay": "2017-12-22",
-      "availability": "available",
-      "file": "packages/ast-monkey-traverse.ndjson",
-      "sha256": "c9c0055c120af2f5fe2c00e148a0870f9debc5c7c48caafd65a7f1b4c387658d",
-      "coverage": {
-        "start": "2017-12-22",
-        "end": "2026-09-18",
-        "days": 3193,
-        "missing": []
-      },
-      "total": 6130648
-    },
-    "ast-monkey-traverse-with-lookahead": {
-      "status": "current",
-      "includedInPortfolio": true,
-      "firstPublishedDay": "2020-04-04",
-      "availability": "available",
-      "file": "packages/ast-monkey-traverse-with-lookahead.ndjson",
-      "sha256": "8c02fd0b01953deeef2a3d263de8738d14f33d8d8da1b9d936b717fbf0a2f8ac",
-      "coverage": {
-        "start": "2020-04-04",
-        "end": "2026-09-18",
-        "days": 2359,
-        "missing": []
-      },
-      "total": 19579
-    },
     "ast-monkey-util": {
       "status": "current",
       "includedInPortfolio": true,
@@ -2041,7 +2011,6 @@
         "array-pull-all-with-glob",
         "arrayiffy-if-string",
         "ast-is-empty",
-        "ast-monkey-traverse",
         "email-comb",
         "ranges-apply",
         "ranges-merge",
@@ -2076,7 +2045,6 @@
         "array-pull-all-with-glob",
         "arrayiffy-if-string",
         "ast-get-values-by-key",
-        "ast-monkey-traverse",
         "check-types-mini",
         "color-shorthand-hex-to-six-digit",
         "email-comb",
@@ -2131,7 +2099,6 @@
       "kind": "suspected-shared-zero",
       "packages": [
         "arrayiffy-if-string",
-        "ast-monkey-traverse",
         "ast-monkey-util",
         "check-types-mini",
         "codsen-utils",
@@ -2190,7 +2157,6 @@
       "kind": "suspected-shared-zero",
       "packages": [
         "array-pull-all-with-glob",
-        "ast-monkey-traverse",
         "ranges-push",
         "string-left-right",
         "string-trim-spaces-only"
@@ -2222,7 +2188,6 @@
       "kind": "suspected-shared-zero",
       "packages": [
         "array-pull-all-with-glob",
-        "ast-monkey-traverse",
         "ranges-push",
         "string-character-is-astral-surrogate",
         "string-left-right",
@@ -2360,7 +2325,6 @@
         "array-pull-all-with-glob",
         "arrayiffy-if-string",
         "ast-get-values-by-key",
-        "ast-monkey-traverse",
         "ast-monkey-util",
         "codsen-utils",
         "color-shorthand-hex-to-six-digit",
@@ -2438,7 +2402,6 @@
         "array-includes-with-glob",
         "array-pull-all-with-glob",
         "arrayiffy-if-string",
-        "ast-monkey-traverse",
         "ast-monkey-util",
         "codsen-utils",
         "color-shorthand-hex-to-six-digit",
@@ -2551,7 +2514,6 @@
         "ast-get-values-by-key",
         "ast-is-empty",
         "ast-monkey",
-        "ast-monkey-traverse",
         "ast-monkey-util",
         "check-types-mini",
         "codsen-format-diagnostic-value",
@@ -2612,7 +2574,6 @@
         "ast-get-values-by-key",
         "ast-is-empty",
         "ast-monkey",
-        "ast-monkey-traverse",
         "ast-monkey-util",
         "check-types-mini",
         "codsen-format-diagnostic-value",
@@ -2664,7 +2625,7 @@
       ]
     }
   ],
-  "retiredRevision": "27b8d38d7a523067e2ee7e26268bc5bdf0c6f144d9de06eaf7f91cd46bc74728",
-  "revision": "8e94b990ca2b27e73aac07c1376552418547176f9d9ab4c07700031b23b9e9f0",
-  "updatedAt": "2026-09-19T13:04:41.262Z"
+  "retiredRevision": "a4cd960111b2a61f752f12683689e3e63f824cbc122a95b954649e98aecc6ae4",
+  "revision": "1095f5dc01a3eaf5a288d6ea920214ce7b9fb4dac7ebd7f3b7e0f1346f1f6b2c",
+  "updatedAt": "2026-09-19T23:00:47.972Z"
 }

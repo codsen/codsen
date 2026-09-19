@@ -20,12 +20,7 @@ export const programClassification = {
     "object-boolean-combinations",
     "test-mixer",
   ],
-  astLibsList: [
-    "ast-monkey",
-    "ast-monkey-traverse",
-    "ast-monkey-util",
-    "ast-monkey-traverse-with-lookahead",
-  ],
+  astLibsList: ["ast-monkey", "ast-monkey-util"],
   stringLibsList: [
     "edit-package-json",
     "easy-replace",

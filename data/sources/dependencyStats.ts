@@ -150,7 +150,7 @@ export const dependencyStats: DependencyStats = {
     "codsen-format-diagnostic-value": 2,
     "codsen-glob": 8,
     "codsen-parser": 1,
-    "codsen-utils": 74,
+    "codsen-utils": 73,
     "csv-sort": 1,
     "csv-split-easy": 1,
     "currency.js": 1,
@@ -239,7 +239,6 @@ export const dependencyStats: DependencyStats = {
     "all-named-html-entities",
     "arrayiffy-if-string",
     "ast-contains-only-empty-space",
-    "ast-monkey-traverse",
     "ast-monkey-util",
     "codsen-format-diagnostic-value",
     "html-all-known-attributes",
@@ -272,8 +271,6 @@ export const dependencyStats: DependencyStats = {
     "ast-get-values-by-key",
     "ast-is-empty",
     "ast-monkey",
-    "ast-monkey-traverse",
-    "ast-monkey-traverse-with-lookahead",
     "ast-monkey-util",
     "charcode-is-valid-xml-name-character",
     "check-types-mini",
@@ -393,7 +390,7 @@ export const dependencyStats: DependencyStats = {
   ],
   "top10OwnDeps": [
     {
-      "codsen-utils": 74
+      "codsen-utils": 73
     },
     {
       "ranges-apply": 15
