@@ -114,14 +114,14 @@ manually.
 
 ## Package membership
 
-The canonical snapshot contains 136 current products. Its package set
+The canonical snapshot contains 135 current products. Its package set
 matches both `all` and `current` from the shared
 [`createCodsenPackageLists` selector](../../ops/helpers/codsenPackages.js),
 which combines published workspaces and the explicitly maintained list of
 products published elsewhere. Generated website metadata and download
 collection use this same policy.
 
-The 20 deprecated packages and the auxiliary `@codsen/data` package have 21
+The 21 deprecated packages and the auxiliary `@codsen/data` package have 22
 previously collected histories in `retired/`. They are excluded from the
 primary manifest, portfolio totals, chart exports, and refresh requests.
 The selector's `historical` list remains available for consumers that need

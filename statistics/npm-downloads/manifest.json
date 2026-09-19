@@ -217,21 +217,6 @@
       },
       "total": 1359595
     },
-    "ast-loose-compare": {
-      "status": "current",
-      "includedInPortfolio": true,
-      "firstPublishedDay": "2018-03-10",
-      "availability": "available",
-      "file": "packages/ast-loose-compare.ndjson",
-      "sha256": "69eb566630be796bbdfc737f92240ca8dc3043989252d873c3532ec9b932e43b",
-      "coverage": {
-        "start": "2018-03-10",
-        "end": "2026-09-11",
-        "days": 3108,
-        "missing": []
-      },
-      "total": 47224
-    },
     "ast-monkey": {
       "status": "current",
       "includedInPortfolio": true,
@@ -2555,7 +2540,7 @@
       ]
     }
   ],
-  "retiredRevision": "be5c9db14dcc40a194e3ee9b1cab2876f366eaeb6274d2119435fa4f6b8c3528",
-  "revision": "6058e566400d76514454f36724d2379263fe80668c55cbbb909fd9cf7e23d9fa",
-  "updatedAt": "2026-09-19T12:36:44.728Z"
+  "retiredRevision": "27b8d38d7a523067e2ee7e26268bc5bdf0c6f144d9de06eaf7f91cd46bc74728",
+  "revision": "bc0d91870dc2d05a12b9a15adbca14a604b2ced9f1fe9ff1e8d5166838435bce",
+  "updatedAt": "2026-09-19T12:43:52.646Z"
 }

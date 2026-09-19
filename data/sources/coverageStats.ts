@@ -23,7 +23,6 @@ export const coverageStats: CoverageStats = {
     "ast-get-object",
     "ast-get-values-by-key",
     "ast-is-empty",
-    "ast-loose-compare",
     "ast-monkey",
     "ast-monkey-traverse",
     "ast-monkey-traverse-with-lookahead",

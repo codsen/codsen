@@ -53,7 +53,6 @@ export const dependencyStats: DependencyStats = {
     "array-pull-all-with-glob",
     "arrayiffy-if-string",
     "ast-compare",
-    "ast-contains-only-empty-space",
     "ast-get-values-by-key",
     "ast-monkey-traverse",
     "ast-monkey-traverse-with-lookahead",
@@ -146,7 +145,6 @@ export const dependencyStats: DependencyStats = {
     "array-pull-all-with-glob": 1,
     "arrayiffy-if-string": 7,
     "ast-compare": 4,
-    "ast-contains-only-empty-space": 1,
     "ast-get-values-by-key": 1,
     "ast-monkey-traverse": 6,
     "ast-monkey-traverse-with-lookahead": 1,
@@ -154,7 +152,7 @@ export const dependencyStats: DependencyStats = {
     "codsen-format-diagnostic-value": 2,
     "codsen-glob": 8,
     "codsen-parser": 1,
-    "codsen-utils": 75,
+    "codsen-utils": 74,
     "csv-sort": 1,
     "csv-split-easy": 1,
     "currency.js": 1,
@@ -275,7 +273,6 @@ export const dependencyStats: DependencyStats = {
     "ast-get-object",
     "ast-get-values-by-key",
     "ast-is-empty",
-    "ast-loose-compare",
     "ast-monkey",
     "ast-monkey-traverse",
     "ast-monkey-traverse-with-lookahead",
@@ -398,7 +395,7 @@ export const dependencyStats: DependencyStats = {
   ],
   "top10OwnDeps": [
     {
-      "codsen-utils": 75
+      "codsen-utils": 74
     },
     {
       "ranges-apply": 15

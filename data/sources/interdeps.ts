@@ -45,12 +45,6 @@ export const interdeps = [
     ]
   },
   {
-    "name": "ast-contains-only-empty-space",
-    "tarballSizeBytes": 7954,
-    "unpackedSizeBytes": 23406,
-    "imports": []
-  },
-  {
     "name": "ast-deep-contains",
     "tarballSizeBytes": 10191,
     "unpackedSizeBytes": 26784,
@@ -91,15 +85,6 @@ export const interdeps = [
     "tarballSizeBytes": 10513,
     "unpackedSizeBytes": 28408,
     "imports": [
-      "codsen-utils"
-    ]
-  },
-  {
-    "name": "ast-loose-compare",
-    "tarballSizeBytes": 9645,
-    "unpackedSizeBytes": 24881,
-    "imports": [
-      "ast-contains-only-empty-space",
       "codsen-utils"
     ]
   },

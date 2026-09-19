@@ -13,7 +13,7 @@ a:focus{outline:2px solid #007c78}
 <rect width="960" height="736" fill="#fbfcfa"/>
 <text x="40" y="35" font-size="12" fill="#007c78" letter-spacing="1.5">CODSEN / NPM DOWNLOADS</text>
 <text x="40" y="78" font-size="30" fill="#203a43" font-weight="700">Where the downloads go</text>
-<text x="40" y="108" font-size="14" fill="#526a73" >2025-09-12 to 2026-09-11 · 136 current libraries and CLIs</text>
+<text x="40" y="108" font-size="14" fill="#526a73" >2025-09-12 to 2026-09-11 · 135 current libraries and CLIs</text>
 <text x="40" y="150" font-size="11" fill="#526a73" letter-spacing="1">RANK / PACKAGE</text>
 <text x="428" y="150" font-size="11" fill="#526a73" letter-spacing="1">DOWNLOADS</text>
 <text x="917" y="150" font-size="11" fill="#526a73" text-anchor="end" letter-spacing="1">COUNT / SHARE</text>
@@ -21,98 +21,98 @@ a:focus{outline:2px solid #007c78}
 <line x1="40" y1="195" x2="920" y2="195" stroke="#ecf0f2" />
 <text x="40" y="182" font-size="11" fill="#526a73" >01</text>
 <text x="76" y="182" font-size="12" fill="#203a43" >is-language-code</text>
-<rect x="428" y="167" width="228.10898278833335" height="19" rx="3" fill="#007c78"/>
+<rect x="428" y="167" width="228.17222473070873" height="19" rx="3" fill="#007c78"/>
 <text x="917" y="182" font-size="12" fill="#526a73" text-anchor="end">17,705,857 / 10.9%</text></a>
 <a href="https://codsen.com/os/string-strip-html" target="_top"><title>string-strip-html: 15,971,013 downloads (9.9%)</title>
 <line x1="40" y1="226" x2="920" y2="226" stroke="#ecf0f2" />
 <text x="40" y="213" font-size="11" fill="#526a73" >02</text>
 <text x="76" y="213" font-size="12" fill="#203a43" >string-strip-html</text>
-<rect x="428" y="198" width="205.75855376722225" height="19" rx="3" fill="#007c78"/>
+<rect x="428" y="198" width="205.81559917789184" height="19" rx="3" fill="#007c78"/>
 <text x="917" y="213" font-size="12" fill="#526a73" text-anchor="end">15,971,013 / 9.9%</text></a>
 <a href="https://codsen.com/os/codsen-utils" target="_top"><title>codsen-utils: 11,870,132 downloads (7.3%)</title>
 <line x1="40" y1="257" x2="920" y2="257" stroke="#ecf0f2" />
 <text x="40" y="244" font-size="11" fill="#526a73" >03</text>
 <text x="76" y="244" font-size="12" fill="#203a43" >codsen-utils</text>
-<rect x="428" y="229" width="152.9258784866073" height="19" rx="3" fill="#007c78"/>
+<rect x="428" y="229" width="152.96827633292065" height="19" rx="3" fill="#007c78"/>
 <text x="917" y="244" font-size="12" fill="#526a73" text-anchor="end">11,870,132 / 7.3%</text></a>
 <a href="https://codsen.com/os/ranges-merge" target="_top"><title>ranges-merge: 11,848,812 downloads (7.3%)</title>
 <line x1="40" y1="288" x2="920" y2="288" stroke="#ecf0f2" />
 <text x="40" y="275" font-size="11" fill="#526a73" >04</text>
 <text x="76" y="275" font-size="12" fill="#203a43" >ranges-merge</text>
-<rect x="428" y="260" width="152.65120759589314" height="19" rx="3" fill="#007c78"/>
+<rect x="428" y="260" width="152.69352929123502" height="19" rx="3" fill="#007c78"/>
 <text x="917" y="275" font-size="12" fill="#526a73" text-anchor="end">11,848,812 / 7.3%</text></a>
 <a href="https://codsen.com/os/ranges-sort" target="_top"><title>ranges-sort: 11,767,949 downloads (7.3%)</title>
 <line x1="40" y1="319" x2="920" y2="319" stroke="#ecf0f2" />
 <text x="40" y="306" font-size="11" fill="#526a73" >05</text>
 <text x="76" y="306" font-size="12" fill="#203a43" >ranges-sort</text>
-<rect x="428" y="291" width="151.6094293484345" height="19" rx="3" fill="#007c78"/>
+<rect x="428" y="291" width="151.6514622165716" height="19" rx="3" fill="#007c78"/>
 <text x="917" y="306" font-size="12" fill="#526a73" text-anchor="end">11,767,949 / 7.3%</text></a>
 <a href="https://codsen.com/os/ranges-push" target="_top"><title>ranges-push: 11,759,817 downloads (7.3%)</title>
 <line x1="40" y1="350" x2="920" y2="350" stroke="#ecf0f2" />
 <text x="40" y="337" font-size="11" fill="#526a73" >06</text>
 <text x="76" y="337" font-size="12" fill="#203a43" >ranges-push</text>
-<rect x="428" y="322" width="151.50466275916213" height="19" rx="3" fill="#007c78"/>
+<rect x="428" y="322" width="151.54666658134704" height="19" rx="3" fill="#007c78"/>
 <text x="917" y="337" font-size="12" fill="#526a73" text-anchor="end">11,759,817 / 7.3%</text></a>
 <a href="https://codsen.com/os/string-collapse-leading-whitespace" target="_top"><title>string-collapse-leading-whitespace: 11,714,770 downloads (7.2%)</title>
 <line x1="40" y1="381" x2="920" y2="381" stroke="#ecf0f2" />
 <text x="40" y="368" font-size="11" fill="#526a73" >07</text>
 <text x="76" y="368" font-size="12" fill="#203a43" >string-collapse-leading-whitespace</text>
-<rect x="428" y="353" width="150.9243109949032" height="19" rx="3" fill="#007c78"/>
+<rect x="428" y="353" width="150.96615391780048" height="19" rx="3" fill="#007c78"/>
 <text x="917" y="368" font-size="12" fill="#526a73" text-anchor="end">11,714,770 / 7.2%</text></a>
 <a href="https://codsen.com/os/ranges-apply" target="_top"><title>ranges-apply: 11,693,332 downloads (7.2%)</title>
 <line x1="40" y1="412" x2="920" y2="412" stroke="#ecf0f2" />
 <text x="40" y="399" font-size="11" fill="#526a73" >08</text>
 <text x="76" y="399" font-size="12" fill="#203a43" >ranges-apply</text>
-<rect x="428" y="384" width="150.64811988068513" height="19" rx="3" fill="#007c78"/>
+<rect x="428" y="384" width="150.68988623113742" height="19" rx="3" fill="#007c78"/>
 <text x="917" y="399" font-size="12" fill="#526a73" text-anchor="end">11,693,332 / 7.2%</text></a>
 <a href="https://codsen.com/os/string-trim-spaces-only" target="_top"><title>string-trim-spaces-only: 11,565,237 downloads (7.1%)</title>
 <line x1="40" y1="443" x2="920" y2="443" stroke="#ecf0f2" />
 <text x="40" y="430" font-size="11" fill="#526a73" >09</text>
 <text x="76" y="430" font-size="12" fill="#203a43" >string-trim-spaces-only</text>
-<rect x="428" y="415" width="148.99783996764438" height="19" rx="3" fill="#007c78"/>
+<rect x="428" y="415" width="149.0391487872012" height="19" rx="3" fill="#007c78"/>
 <text x="917" y="430" font-size="12" fill="#526a73" text-anchor="end">11,565,237 / 7.1%</text></a>
 <a href="https://codsen.com/os/string-left-right" target="_top"><title>string-left-right: 11,443,978 downloads (7.1%)</title>
 <line x1="40" y1="474" x2="920" y2="474" stroke="#ecf0f2" />
 <text x="40" y="461" font-size="11" fill="#526a73" >10</text>
 <text x="76" y="461" font-size="12" fill="#203a43" >string-left-right</text>
-<rect x="428" y="446" width="147.43562995183265" height="19" rx="3" fill="#007c78"/>
+<rect x="428" y="446" width="147.47650565738144" height="19" rx="3" fill="#007c78"/>
 <text x="917" y="461" font-size="12" fill="#526a73" text-anchor="end">11,443,978 / 7.1%</text></a>
 <a href="https://codsen.com/os/arrayiffy-if-string" target="_top"><title>arrayiffy-if-string: 2,738,059 downloads (1.7%)</title>
 <line x1="40" y1="505" x2="920" y2="505" stroke="#ecf0f2" />
 <text x="40" y="492" font-size="11" fill="#526a73" >11</text>
 <text x="76" y="492" font-size="12" fill="#203a43" >arrayiffy-if-string</text>
-<rect x="428" y="477" width="35.275098703465254" height="19" rx="3" fill="#007c78"/>
+<rect x="428" y="477" width="35.284878527706375" height="19" rx="3" fill="#007c78"/>
 <text x="917" y="492" font-size="12" fill="#526a73" text-anchor="end">2,738,059 / 1.7%</text></a>
 <a href="https://codsen.com/os/string-match-left-right" target="_top"><title>string-match-left-right: 2,473,287 downloads (1.5%)</title>
 <line x1="40" y1="536" x2="920" y2="536" stroke="#ecf0f2" />
 <text x="40" y="523" font-size="11" fill="#526a73" >12</text>
 <text x="76" y="523" font-size="12" fill="#203a43" >string-match-left-right</text>
-<rect x="428" y="508" width="31.863974825596333" height="19" rx="3" fill="#007c78"/>
+<rect x="428" y="508" width="31.872808934780192" height="19" rx="3" fill="#007c78"/>
 <text x="917" y="523" font-size="12" fill="#526a73" text-anchor="end">2,473,287 / 1.5%</text></a>
 <a href="https://codsen.com/os/string-character-is-astral-surrogate" target="_top"><title>string-character-is-astral-surrogate: 2,420,962 downloads (1.5%)</title>
 <line x1="40" y1="567" x2="920" y2="567" stroke="#ecf0f2" />
 <text x="40" y="554" font-size="11" fill="#526a73" >13</text>
 <text x="76" y="554" font-size="12" fill="#203a43" >string-character-is-astral-surrogate</text>
-<rect x="428" y="539" width="31.189858767593634" height="19" rx="3" fill="#007c78"/>
+<rect x="428" y="539" width="31.19850598186273" height="19" rx="3" fill="#007c78"/>
 <text x="917" y="554" font-size="12" fill="#526a73" text-anchor="end">2,420,962 / 1.5%</text></a>
 <a href="https://codsen.com/os/html-crush" target="_top"><title>html-crush: 2,307,280 downloads (1.4%)</title>
 <line x1="40" y1="598" x2="920" y2="598" stroke="#ecf0f2" />
 <text x="40" y="585" font-size="11" fill="#526a73" >14</text>
 <text x="76" y="585" font-size="12" fill="#203a43" >html-crush</text>
-<rect x="428" y="570" width="29.72526513728569" height="19" rx="3" fill="#007c78"/>
+<rect x="428" y="570" width="29.733506301144853" height="19" rx="3" fill="#007c78"/>
 <text x="917" y="585" font-size="12" fill="#526a73" text-anchor="end">2,307,280 / 1.4%</text></a>
 <a href="https://codsen.com/os/string-range-expander" target="_top"><title>string-range-expander: 2,303,044 downloads (1.4%)</title>
 <line x1="40" y1="629" x2="920" y2="629" stroke="#ecf0f2" />
 <text x="40" y="616" font-size="11" fill="#526a73" >15</text>
 <text x="76" y="616" font-size="12" fill="#203a43" >string-range-expander</text>
-<rect x="428" y="601" width="29.670691690143798" height="19" rx="3" fill="#007c78"/>
+<rect x="428" y="601" width="29.67891772381932" height="19" rx="3" fill="#007c78"/>
 <text x="917" y="616" font-size="12" fill="#526a73" text-anchor="end">2,303,044 / 1.4%</text></a>
-<g><title>All other 121 packages: 22,509,848 downloads (13.9%)</title>
+<g><title>All other 120 packages: 22,503,609 downloads (13.9%)</title>
 <line x1="40" y1="660" x2="920" y2="660" stroke="#ecf0f2" />
 <text x="40" y="647" font-size="11" fill="#526a73" >—</text>
-<text x="76" y="647" font-size="12" fill="#526a73" >All other 121 packages</text>
+<text x="76" y="647" font-size="12" fill="#526a73" >All other 120 packages</text>
 <rect x="428" y="632" width="290" height="19" rx="3" fill="#b5c6ce"/>
-<text x="917" y="647" font-size="12" fill="#526a73" text-anchor="end">22,509,848 / 13.9%</text></g>
+<text x="917" y="647" font-size="12" fill="#526a73" text-anchor="end">22,503,609 / 13.9%</text></g>
 <text x="40" y="687" font-size="12" fill="#526a73" >npm downloads count package fetches, including dependency and automated installs; they are not unique users.</text>
 <text x="40" y="709" font-size="12" fill="#526a73" >Provisional: 18 suspected shared-zero days are retained as archived, without estimation.</text>
 </svg>
