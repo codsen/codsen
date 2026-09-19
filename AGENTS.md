@@ -663,10 +663,15 @@ erase.
   data includes npm pack sizes.
 - `README.md` is fully regenerated. It is assembled from the package name and
   description, package type, standard badges and links, optional playground and
-  ESM notices, optional `package.json#lect.readme.features`,
+  ESM notices, optional `package.json#lect.readme.notice` and
+  `package.json#lect.readme.features`,
   `examples/_quickTake.js`, and optional
   `package.json#lect.licence.extras`. Edit those inputs or
   `ops/lect/plugins/readme.js`, not the generated README.
+  - `lect.readme.notice` adds a nonempty Markdown string after the badges and
+    before dependency claims and installation. Use it for migration or
+    maintenance notices; omit the field when no notice is needed. Keep the
+    lifecycle status accurate and link to the package's migration guide.
   - `lect.readme.features` opts a package into a `## Features` section before
     installation. Supply a nonempty `summary` string and an `items` array of
     nonempty Markdown strings. Omit the field when no section is wanted.

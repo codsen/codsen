@@ -24,6 +24,12 @@ function hasPlayground(name) {
 
 async function readme({ mode, state, quickTakeExample }) {
   const packageName = state.pack.name;
+  const notice = state.pack.lect?.readme?.notice;
+  if (notice !== undefined && (typeof notice !== "string" || !notice.trim())) {
+    throw new Error(
+      `lect/readme: ${packageName} lect.readme.notice needs a nonempty string`,
+    );
+  }
   const features = state.pack.lect?.readme?.features;
   let featuresSection = "";
   if (features !== undefined) {
@@ -110,7 +116,7 @@ async function readme({ mode, state, quickTakeExample }) {
       ? `\n  <a href="https://codsen.com/os/${packageName}/play"><img src="https://img.shields.io/badge/playground-here-brightgreen?style=flat-square" alt="playground"></a>`
       : ""
   }
-</p>${dependencyNotice ? `\n\n${dependencyNotice}` : ""}${featuresSection}
+</p>${notice === undefined ? "" : `\n\n${notice.trim()}`}${dependencyNotice ? `\n\n${dependencyNotice}` : ""}${featuresSection}
 
 ## Install${state.pack?.exports ? `\n\n${esmNotice}` : ""}
 
