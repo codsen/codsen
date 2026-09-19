@@ -76,7 +76,7 @@
   "dependencies": {
     "arrayiffy-if-string": "^5.2.3",
     "ast-get-values-by-key": "^5.2.5",
-    "ast-monkey-traverse": "^4.3.1",
+    "ast-monkey": "^9.2.5",
     "codsen-utils": "^1.10.2",
     "object-path": "^0.11.8",
     "ranges-apply": "^7.2.5",

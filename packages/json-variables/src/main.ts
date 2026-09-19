@@ -2,7 +2,7 @@
 
 import { arrayiffy } from "arrayiffy-if-string";
 import { type Findings, getByKey } from "ast-get-values-by-key";
-import { traverse } from "ast-monkey-traverse";
+import { traverse } from "ast-monkey/traverse";
 import {
   formatDiagnosticValue,
   isBool,
@@ -82,7 +82,7 @@ function trimIfString(something: any): any {
 }
 
 // getByKey() answers "where does this key appear anywhere in the input" by
-// traversing the whole thing, and ast-monkey-traverse deep-clones as it walks.
+// traversing the whole thing, and traverse deep-clones as it walks.
 // The input is never mutated over a jVar() call - traverse() works on its own
 // copy of it - so for a given key that answer cannot change, yet an input with
 // N values referring to the same variable used to ask for it N times over. One
