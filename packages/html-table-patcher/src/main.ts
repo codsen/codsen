@@ -1,4 +1,4 @@
-import { traverse } from "ast-monkey-traverse-with-lookahead";
+import { traverseWithLookahead } from "ast-monkey/lookahead";
 import { cparser } from "codsen-parser";
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
@@ -75,7 +75,7 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
   // ---------------------------------------------------------------------------
 
   // traversal is done from a callback, same like Array.prototype.forEach()
-  // you don't assign anything, as in "const x = traverse(..." -
+  // you don't assign anything, as in "const x = traverseWithLookahead(..." -
   // instead, you do the deed inside the callback function
   //
 
@@ -86,7 +86,7 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
 
   DEV &&
     console.log(`${`\u001b[${36}m${`COMMENCE THE TRAVERSE`}\u001b[${39}m`}`);
-  traverse(cparser(str), (token, _val, innerObj) => {
+  traverseWithLookahead(cparser(str), (token, _val, innerObj) => {
     /* c8 ignore next */
     if (
       isObj(token) &&
