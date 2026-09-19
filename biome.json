@@ -112,7 +112,6 @@
         "packages/ast-deep-contains/src/main.ts",
         "packages/ast-get-object/src/main.ts",
         "packages/ast-get-values-by-key/src/main.ts",
-        "packages/ast-loose-compare/src/main.ts",
         "packages/ast-monkey-traverse-with-lookahead/src/main.ts",
         "packages/ast-monkey-traverse/src/main.ts",
         "packages/ast-monkey/src/main.ts",
@@ -170,7 +169,6 @@
     {
       "includes": [
         "packages/ast-delete-object/src/main.ts",
-        "packages/ast-loose-compare/src/main.ts",
         "packages/csv-sort/src/main.ts",
         "packages/detergent/src/main.ts",
         "packages/detergent/src/processCharacter.ts",

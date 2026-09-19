@@ -109,6 +109,7 @@ const packagesOutsideMonorepoObj = {
 // announce deprecation and replacements in their published npm READMEs.
 // eslint-on-airbnb-base-badge is locally retired and unavailable from npm.
 const deprecated = [
+  "ast-loose-compare",
   "bitsausage",
   "chlu",
   "chlu-cli",
