@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 10.0.0 (2026-09-19)
+
+- feat(ast-monkey)!: consolidate traversal APIs and lightweight entries ([f8b7330](https://github.com/codsen/codsen/commit/f8b73303c6360d0001752b04354da9483b99dc30))
+
+### BREAKING CHANGES
+
+- DELETE now belongs to ast-monkey's generated declarations.
+  Migrate traverse, DELETE, and callback type imports together; mixing legacy
+  and canonical unique symbol types is no longer assignable. Validation errors
+  use ast-monkey prefixes, and traverse's tree and callback throw IDs are now
+  01 and 02, respectively.
+
 ## 9.2.4 (2026-09-06)
 
 ### Performance Improvements

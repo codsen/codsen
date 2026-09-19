@@ -1,6 +1,6 @@
 {
   "name": "json-variables",
-  "version": "12.2.5",
+  "version": "12.2.6",
   "description": "Resolves custom-marked, cross-referenced paths in parsed JSON",
   "keywords": [
     "comb",
@@ -75,8 +75,8 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "^5.2.3",
-    "ast-get-values-by-key": "^5.2.5",
-    "ast-monkey": "^9.2.5",
+    "ast-get-values-by-key": "^5.2.6",
+    "ast-monkey": "^10.0.0",
     "codsen-utils": "^1.10.2",
     "object-path": "^0.11.8",
     "ranges-apply": "^7.2.5",

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.2.5 (2026-09-19)
+
+### Bug Fixes
+
+- **ast-deep-contains:** use consolidated traversal entry ([37b2644](https://github.com/codsen/codsen/commit/37b2644a2f3c1f19a8e5d80052dd680826a23e31))
+
 ## 5.2.3 (2026-09-01)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "string-strip-html",
-  "version": "13.7.3",
+  "version": "13.7.4",
   "description": "Strip HTML tags from strings. No parser, accepts mixed sources.",
   "keywords": [
     "code",
@@ -78,7 +78,7 @@
     "string-left-right": "^6.2.4"
   },
   "devDependencies": {
-    "ast-monkey": "^9.2.5",
+    "ast-monkey": "^10.0.0",
     "ranges-invert": "^6.2.5"
   },
   "engines": {

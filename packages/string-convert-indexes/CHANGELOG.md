@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.2.6 (2026-09-19)
+
+### Bug Fixes
+
+- **string-convert-indexes:** use consolidated traversal entry ([fdb79c8](https://github.com/codsen/codsen/commit/fdb79c86f45323e71e04a2bd45cf3076b6ddaffd))
+
 ## 6.2.3 (2026-09-01)
 
 ### Bug Fixes
