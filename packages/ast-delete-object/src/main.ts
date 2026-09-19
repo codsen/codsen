@@ -1,5 +1,5 @@
 import { compare } from "ast-compare";
-import { DELETE, traverse } from "ast-monkey-traverse";
+import { DELETE, traverse } from "ast-monkey/traverse";
 import { deepClone as clone, isPlainObject as isObj } from "codsen-utils";
 
 import { version as v } from "../package.json";
