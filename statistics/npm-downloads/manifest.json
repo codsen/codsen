@@ -5,7 +5,7 @@
     "documentation": "https://github.com/npm/registry/blob/main/docs/download-counts.md",
     "earliestDay": "2015-01-10"
   },
-  "through": "2026-09-11",
+  "through": "2026-09-18",
   "packages": {
     "all-named-html-entities": {
       "status": "current",
@@ -13,14 +13,14 @@
       "firstPublishedDay": "2019-04-06",
       "availability": "available",
       "file": "packages/all-named-html-entities.ndjson",
-      "sha256": "98e00e89dc905d4df242ba3596602c7b0da1a8e412ac8c6ebbcab27581ad1dc2",
+      "sha256": "671da829e7971092a2843db3c5aaf5d0b6c56744016f2b1f3a60059710c06438",
       "coverage": {
         "start": "2019-04-06",
-        "end": "2026-09-11",
-        "days": 2716,
+        "end": "2026-09-18",
+        "days": 2723,
         "missing": []
       },
-      "total": 90004
+      "total": 90701
     },
     "array-group-str-omit-num-char": {
       "status": "current",
@@ -28,14 +28,14 @@
       "firstPublishedDay": "2018-10-11",
       "availability": "available",
       "file": "packages/array-group-str-omit-num-char.ndjson",
-      "sha256": "035488887414300d9a25c4b95bb830e49792fdff3766aa23dfe2cf5eb7a6c40a",
+      "sha256": "f798e09a89a98144d607586c47c6ee2bba70f98866c6c4c514943bd0143f1772",
       "coverage": {
         "start": "2018-10-11",
-        "end": "2026-09-11",
-        "days": 2893,
+        "end": "2026-09-18",
+        "days": 2900,
         "missing": []
       },
-      "total": 49082
+      "total": 49296
     },
     "array-includes-with-glob": {
       "status": "current",
@@ -43,14 +43,14 @@
       "firstPublishedDay": "2017-04-22",
       "availability": "available",
       "file": "packages/array-includes-with-glob.ndjson",
-      "sha256": "326f456a659f90a389078b4dc0a948699a8dd8f3e7b80b83efc9467da19ecd12",
+      "sha256": "51218bb89786767fac250f38437473f3018b732ead0fdaa95f9fe0da1f6d65b9",
       "coverage": {
         "start": "2017-04-22",
-        "end": "2026-09-11",
-        "days": 3430,
+        "end": "2026-09-18",
+        "days": 3437,
         "missing": []
       },
-      "total": 1296614
+      "total": 1301194
     },
     "array-of-arrays-into-ast": {
       "status": "current",
@@ -58,14 +58,14 @@
       "firstPublishedDay": "2018-03-31",
       "availability": "available",
       "file": "packages/array-of-arrays-into-ast.ndjson",
-      "sha256": "76627157d0d7cc0d3ddbad188bbdd55c8a7dd82fc92ac7dd675e6c223c8e5569",
+      "sha256": "c8b0593278bfdb6eb4d63f332bbcb4692b5ebb421afdc71207a93170a0ab0b25",
       "coverage": {
         "start": "2018-03-31",
-        "end": "2026-09-11",
-        "days": 3087,
+        "end": "2026-09-18",
+        "days": 3094,
         "missing": []
       },
-      "total": 53610
+      "total": 53797
     },
     "array-of-arrays-sort-by-col": {
       "status": "current",
@@ -73,14 +73,14 @@
       "firstPublishedDay": "2018-04-04",
       "availability": "available",
       "file": "packages/array-of-arrays-sort-by-col.ndjson",
-      "sha256": "24201c50fbbe8a9dd279fcc30e28566dcfd111e4821f5d5ca1309fb2537ca951",
+      "sha256": "7a8bf581d3ca0b1460b5e0419af18b6e0260952ac137dbeb71ee04c48782fa78",
       "coverage": {
         "start": "2018-04-04",
-        "end": "2026-09-11",
-        "days": 3083,
+        "end": "2026-09-18",
+        "days": 3090,
         "missing": []
       },
-      "total": 43462
+      "total": 43631
     },
     "array-pull-all-with-glob": {
       "status": "current",
@@ -88,14 +88,14 @@
       "firstPublishedDay": "2016-11-22",
       "availability": "available",
       "file": "packages/array-pull-all-with-glob.ndjson",
-      "sha256": "9fa3664040895ce53d629464a1f85909b1dd05875f93ec0895e7f311ed128051",
+      "sha256": "4079db8c8471708763f50295e20d5e530232f7e6b9226d9941bbbe58614db90f",
       "coverage": {
         "start": "2016-11-22",
-        "end": "2026-09-11",
-        "days": 3581,
+        "end": "2026-09-18",
+        "days": 3588,
         "missing": []
       },
-      "total": 3518018
+      "total": 3553432
     },
     "arrayiffy-if-string": {
       "status": "current",
@@ -103,14 +103,14 @@
       "firstPublishedDay": "2017-05-22",
       "availability": "available",
       "file": "packages/arrayiffy-if-string.ndjson",
-      "sha256": "67e3c6d4f72619e119dd41e38997c954bdc91543051a3cae854d2f17edd633af",
+      "sha256": "e625e6bcd0cc7935b8ae9821e84e219c8cb65febfd66880bf2205aa73caf0555",
       "coverage": {
         "start": "2017-05-22",
-        "end": "2026-09-11",
-        "days": 3400,
+        "end": "2026-09-18",
+        "days": 3407,
         "missing": []
       },
-      "total": 8285328
+      "total": 8344704
     },
     "ast-compare": {
       "status": "current",
@@ -118,14 +118,14 @@
       "firstPublishedDay": "2017-10-24",
       "availability": "available",
       "file": "packages/ast-compare.ndjson",
-      "sha256": "041a73044e103438402d26cc86d29e3e381a9b1217426163091a4a8b684910e4",
+      "sha256": "7148845b5d9a62c731d247517928be3692370a4cae4ede4c28ad8f66f82782aa",
       "coverage": {
         "start": "2017-10-24",
-        "end": "2026-09-11",
-        "days": 3245,
+        "end": "2026-09-18",
+        "days": 3252,
         "missing": []
       },
-      "total": 456944
+      "total": 458215
     },
     "ast-contains-only-empty-space": {
       "status": "current",
@@ -133,14 +133,14 @@
       "firstPublishedDay": "2018-03-10",
       "availability": "available",
       "file": "packages/ast-contains-only-empty-space.ndjson",
-      "sha256": "b23c3ea2225c7ca4310073e3e4c331450d936d1c2c779e11677cb1a51876843b",
+      "sha256": "bdc9743274d080477a1e498fcc38680e7a43bd3fb0b70585afabe9edf10125b2",
       "coverage": {
         "start": "2018-03-10",
-        "end": "2026-09-11",
-        "days": 3108,
+        "end": "2026-09-18",
+        "days": 3115,
         "missing": []
       },
-      "total": 431725
+      "total": 432308
     },
     "ast-deep-contains": {
       "status": "current",
@@ -148,14 +148,14 @@
       "firstPublishedDay": "2019-11-11",
       "availability": "available",
       "file": "packages/ast-deep-contains.ndjson",
-      "sha256": "4cd2d747aef0bf5cbbadba1adb36cc25fc7ed1308fd3cd62335a295c91c07365",
+      "sha256": "5327d8872cc2d53a28153213e53cd3cea415b84a148443fdbdf21c3ad54d6d2f",
       "coverage": {
         "start": "2019-11-11",
-        "end": "2026-09-11",
-        "days": 2497,
+        "end": "2026-09-18",
+        "days": 2504,
         "missing": []
       },
-      "total": 22940
+      "total": 23081
     },
     "ast-delete-object": {
       "status": "current",
@@ -163,14 +163,14 @@
       "firstPublishedDay": "2018-03-11",
       "availability": "available",
       "file": "packages/ast-delete-object.ndjson",
-      "sha256": "1f4867ce4afefe555092afcffb0a9e9d65ac0c38c097f7d44d0fda52216bfb82",
+      "sha256": "e199f14f99c855ab018ff2de8b8f6c9d08d05735e7bd02a33f8530dca3704da7",
       "coverage": {
         "start": "2018-03-11",
-        "end": "2026-09-11",
-        "days": 3107,
+        "end": "2026-09-18",
+        "days": 3114,
         "missing": []
       },
-      "total": 54872
+      "total": 55118
     },
     "ast-get-object": {
       "status": "current",
@@ -178,14 +178,14 @@
       "firstPublishedDay": "2018-03-10",
       "availability": "available",
       "file": "packages/ast-get-object.ndjson",
-      "sha256": "b4d5ae77a19e92b4f8b94ad1f04489910a44d1c05d56c317be39a99db41b0632",
+      "sha256": "270533409a70a4853f9acd966c6f10ed18192e244f8217bfeb668032f8da4080",
       "coverage": {
         "start": "2018-03-10",
-        "end": "2026-09-11",
-        "days": 3108,
+        "end": "2026-09-18",
+        "days": 3115,
         "missing": []
       },
-      "total": 58138
+      "total": 58397
     },
     "ast-get-values-by-key": {
       "status": "current",
@@ -193,14 +193,14 @@
       "firstPublishedDay": "2018-03-11",
       "availability": "available",
       "file": "packages/ast-get-values-by-key.ndjson",
-      "sha256": "87b5ddda7c4b4ff8d4044f5c0743692773d6bba3b98ff2b3803029f1e2594dbb",
+      "sha256": "688dbed246aa0a464b62e516a10afa07301fde11e562dd7110f721d97d015c51",
       "coverage": {
         "start": "2018-03-11",
-        "end": "2026-09-11",
-        "days": 3107,
+        "end": "2026-09-18",
+        "days": 3114,
         "missing": []
       },
-      "total": 1251297
+      "total": 1252158
     },
     "ast-is-empty": {
       "status": "current",
@@ -208,14 +208,14 @@
       "firstPublishedDay": "2018-03-11",
       "availability": "available",
       "file": "packages/ast-is-empty.ndjson",
-      "sha256": "391743eb7082842ee7de476c345b39ddc8923b69585519ef052eb633f5596f2f",
+      "sha256": "fe17433b57f474f7e817a8309647c20b76791026baf1bc6a5dcb0edaa5a88de8",
       "coverage": {
         "start": "2018-03-11",
-        "end": "2026-09-11",
-        "days": 3107,
+        "end": "2026-09-18",
+        "days": 3114,
         "missing": []
       },
-      "total": 1359595
+      "total": 1360471
     },
     "ast-monkey": {
       "status": "current",
@@ -223,14 +223,14 @@
       "firstPublishedDay": "2017-02-15",
       "availability": "available",
       "file": "packages/ast-monkey.ndjson",
-      "sha256": "bc244aaddcc460fdcf0956c13ac9c05efd322ffceaa847250fdbdac00b61d057",
+      "sha256": "5a6495094a113a18f8e78a25ed63482721f43e6ef18668c177586aa4899980f7",
       "coverage": {
         "start": "2017-02-15",
-        "end": "2026-09-11",
-        "days": 3496,
+        "end": "2026-09-18",
+        "days": 3503,
         "missing": []
       },
-      "total": 450371
+      "total": 451386
     },
     "ast-monkey-traverse": {
       "status": "current",
@@ -238,14 +238,14 @@
       "firstPublishedDay": "2017-12-22",
       "availability": "available",
       "file": "packages/ast-monkey-traverse.ndjson",
-      "sha256": "3cc3ba85729e5cae87e0c4db141a5888ff1ca3f5806ec589fba62ba481f7bf75",
+      "sha256": "c9c0055c120af2f5fe2c00e148a0870f9debc5c7c48caafd65a7f1b4c387658d",
       "coverage": {
         "start": "2017-12-22",
-        "end": "2026-09-11",
-        "days": 3186,
+        "end": "2026-09-18",
+        "days": 3193,
         "missing": []
       },
-      "total": 6120924
+      "total": 6130648
     },
     "ast-monkey-traverse-with-lookahead": {
       "status": "current",
@@ -253,14 +253,14 @@
       "firstPublishedDay": "2020-04-04",
       "availability": "available",
       "file": "packages/ast-monkey-traverse-with-lookahead.ndjson",
-      "sha256": "f93018f4acdc2b398079c9e10e4d5a0495714ae3d6c17455ade3034857af4003",
+      "sha256": "8c02fd0b01953deeef2a3d263de8738d14f33d8d8da1b9d936b717fbf0a2f8ac",
       "coverage": {
         "start": "2020-04-04",
-        "end": "2026-09-11",
-        "days": 2352,
+        "end": "2026-09-18",
+        "days": 2359,
         "missing": []
       },
-      "total": 19455
+      "total": 19579
     },
     "ast-monkey-util": {
       "status": "current",
@@ -268,14 +268,14 @@
       "firstPublishedDay": "2020-03-16",
       "availability": "available",
       "file": "packages/ast-monkey-util.ndjson",
-      "sha256": "b0a2ede9a17331096a241e58406f694fa2e5c0a4051d2d2dc6087784aad8a1eb",
+      "sha256": "0f79dd662138399cdb8b0ad3f4bf7f54dd17f69eff8f681a29ffdce2a5bc7665",
       "coverage": {
         "start": "2020-03-16",
-        "end": "2026-09-11",
-        "days": 2371,
+        "end": "2026-09-18",
+        "days": 2378,
         "missing": []
       },
-      "total": 4198265
+      "total": 4205950
     },
     "bitbucket-slug": {
       "status": "current",
@@ -283,14 +283,14 @@
       "firstPublishedDay": "2018-06-13",
       "availability": "available",
       "file": "packages/bitbucket-slug.ndjson",
-      "sha256": "3abec67b5771ad41bb809318bfd30a339daded7a055bf9f8f3b2652566e7c82a",
+      "sha256": "c2083f979a9a0f12868a335bdf5b55f0a8a9d6a4c18fb67330968b5c121fd85a",
       "coverage": {
         "start": "2018-06-13",
-        "end": "2026-09-11",
-        "days": 3013,
+        "end": "2026-09-18",
+        "days": 3020,
         "missing": []
       },
-      "total": 47457
+      "total": 47639
     },
     "charcode-is-valid-xml-name-character": {
       "status": "current",
@@ -298,14 +298,14 @@
       "firstPublishedDay": "2018-02-05",
       "availability": "available",
       "file": "packages/charcode-is-valid-xml-name-character.ndjson",
-      "sha256": "a34a6fe59ba6509e5e42ef8d7d4c0c9dfc1cc4116d009856d2a57e59b5647084",
+      "sha256": "ad413cd57a54351fd76d17bb51c712ef5d75bdb4bdf835be68f5137faf8bb1b1",
       "coverage": {
         "start": "2018-02-05",
-        "end": "2026-09-11",
-        "days": 3141,
+        "end": "2026-09-18",
+        "days": 3148,
         "missing": []
       },
-      "total": 40843
+      "total": 41048
     },
     "check-types-mini": {
       "status": "current",
@@ -313,14 +313,14 @@
       "firstPublishedDay": "2017-05-15",
       "availability": "available",
       "file": "packages/check-types-mini.ndjson",
-      "sha256": "b940ca77b7a1915a0acd1b1042521482e29f7bc8619b740389e591750ecb9113",
+      "sha256": "8b7ddc36023d0ae5533a9b50da998e99d953a135488198432ccf64ac78a74145",
       "coverage": {
         "start": "2017-05-15",
-        "end": "2026-09-11",
-        "days": 3407,
+        "end": "2026-09-18",
+        "days": 3414,
         "missing": []
       },
-      "total": 2232665
+      "total": 2233879
     },
     "codsen": {
       "status": "current",
@@ -328,14 +328,14 @@
       "firstPublishedDay": "2022-01-11",
       "availability": "available",
       "file": "packages/codsen.ndjson",
-      "sha256": "894555ec5fb2860ca10eb9c8e971b970211a5f0a035e53b383e055ca53272f22",
+      "sha256": "71e5d4a8183b4a5b9ce4e39a39fc9131811ceea2417c363e726ab7d3c5f7c9d3",
       "coverage": {
         "start": "2022-01-11",
-        "end": "2026-09-11",
-        "days": 1705,
+        "end": "2026-09-18",
+        "days": 1712,
         "missing": []
       },
-      "total": 7527
+      "total": 7635
     },
     "codsen-format-diagnostic-value": {
       "status": "current",
@@ -343,14 +343,14 @@
       "firstPublishedDay": "2026-08-28",
       "availability": "available",
       "file": "packages/codsen-format-diagnostic-value.ndjson",
-      "sha256": "d5f29b2d49ea2a481d7f1de0209f5ef427b1496b9ab57c520193956d66128644",
+      "sha256": "d33683bfc0362635a2450ffc778031891c0753b454d5361ce31163cda7aa764c",
       "coverage": {
         "start": "2026-08-28",
-        "end": "2026-09-11",
-        "days": 15,
+        "end": "2026-09-18",
+        "days": 22,
         "missing": []
       },
-      "total": 35154
+      "total": 74472
     },
     "codsen-glob": {
       "status": "current",
@@ -358,14 +358,14 @@
       "firstPublishedDay": "2026-08-17",
       "availability": "available",
       "file": "packages/codsen-glob.ndjson",
-      "sha256": "300a11bbf3ea5f09f421d7c4470da066f2c28e4824eca912fbc54f6551912a82",
+      "sha256": "736e691901f60dc28f309c5d3a924d342527b8a991fbc19b384b8685056731b0",
       "coverage": {
         "start": "2026-08-17",
-        "end": "2026-09-11",
-        "days": 26,
+        "end": "2026-09-18",
+        "days": 33,
         "missing": []
       },
-      "total": 11848
+      "total": 15720
     },
     "codsen-parser": {
       "status": "current",
@@ -373,14 +373,14 @@
       "firstPublishedDay": "2020-02-09",
       "availability": "available",
       "file": "packages/codsen-parser.ndjson",
-      "sha256": "5d9bf05b327c9f908fd569406d369e08bf3f011039ed3996e18015ca14df30cc",
+      "sha256": "c2935fb349c49e620e0380673a660afbddb6ce93027d0eac4dee255693fff769",
       "coverage": {
         "start": "2020-02-09",
-        "end": "2026-09-11",
-        "days": 2407,
+        "end": "2026-09-18",
+        "days": 2414,
         "missing": []
       },
-      "total": 33950
+      "total": 34092
     },
     "codsen-tokenizer": {
       "status": "current",
@@ -388,14 +388,14 @@
       "firstPublishedDay": "2019-11-02",
       "availability": "available",
       "file": "packages/codsen-tokenizer.ndjson",
-      "sha256": "e6c70422795825565866e3b28dd5a719db8e0d1a60cbf79b946781a9de4d7a61",
+      "sha256": "7c620a7dbf07de320082ae225e81be82660b51d8e2ab4053fa4143c7a69857f5",
       "coverage": {
         "start": "2019-11-02",
-        "end": "2026-09-11",
-        "days": 2506,
+        "end": "2026-09-18",
+        "days": 2513,
         "missing": []
       },
-      "total": 426832
+      "total": 427365
     },
     "codsen-utils": {
       "status": "current",
@@ -403,14 +403,14 @@
       "firstPublishedDay": "2022-12-22",
       "availability": "available",
       "file": "packages/codsen-utils.ndjson",
-      "sha256": "59d5d8a436b8d269ccfd6dcec7e4ac91cd8c7dc75c9c2778324cc4f4361e9c63",
+      "sha256": "2dcad341316c1728cc9d02535a9c8a1101800c4613868e2d83078af3fcf705d1",
       "coverage": {
         "start": "2022-12-22",
-        "end": "2026-09-11",
-        "days": 1360,
+        "end": "2026-09-18",
+        "days": 1367,
         "missing": []
       },
-      "total": 20159601
+      "total": 20379923
     },
     "color-shorthand-hex-to-six-digit": {
       "status": "current",
@@ -418,14 +418,14 @@
       "firstPublishedDay": "2017-01-06",
       "availability": "available",
       "file": "packages/color-shorthand-hex-to-six-digit.ndjson",
-      "sha256": "2c94d14a47f1841f21702875a954717a74059e5160f50ddde7fa52d7bb0d197e",
+      "sha256": "c0aeefba5b794370a29e7b6345debc55ad4af37b9cd11764384250ffdb27cefb",
       "coverage": {
         "start": "2017-01-06",
-        "end": "2026-09-11",
-        "days": 3536,
+        "end": "2026-09-18",
+        "days": 3543,
         "missing": []
       },
-      "total": 4381980
+      "total": 4430949
     },
     "csv-sort": {
       "status": "current",
@@ -433,14 +433,14 @@
       "firstPublishedDay": "2017-08-22",
       "availability": "available",
       "file": "packages/csv-sort.ndjson",
-      "sha256": "62c3cca33f013ee2a55c58ec8b7e3720d6f842a565317135dc75618cae4b48f2",
+      "sha256": "7d45911cf35d4ff73677caf7a08698960634d238f01b815d5a89149cbe4b29b0",
       "coverage": {
         "start": "2017-08-22",
-        "end": "2026-09-11",
-        "days": 3308,
+        "end": "2026-09-18",
+        "days": 3315,
         "missing": []
       },
-      "total": 62692
+      "total": 62979
     },
     "csv-sort-cli": {
       "status": "current",
@@ -448,14 +448,14 @@
       "firstPublishedDay": "2017-08-26",
       "availability": "available",
       "file": "packages/csv-sort-cli.ndjson",
-      "sha256": "7a9c0c74fdf2d6f0ab85ed88f4fbe0099daa7f18e7a3231a513cf2217844cafa",
+      "sha256": "822e288893208f899eff0ed26c900dff19debee984c307e31d034a1d27a4c5f3",
       "coverage": {
         "start": "2017-08-26",
-        "end": "2026-09-11",
-        "days": 3304,
+        "end": "2026-09-18",
+        "days": 3311,
         "missing": []
       },
-      "total": 59111
+      "total": 59419
     },
     "csv-split-easy": {
       "status": "current",
@@ -463,14 +463,14 @@
       "firstPublishedDay": "2017-08-13",
       "availability": "available",
       "file": "packages/csv-split-easy.ndjson",
-      "sha256": "d89ada3079899978fc590d9f650e5c2a5ab7214d3afb9a25701a0c293bc15792",
+      "sha256": "f2865d1b5f38582a44c9322f603d10b78c0fdf1eb9789a502ec914d978699993",
       "coverage": {
         "start": "2017-08-13",
-        "end": "2026-09-11",
-        "days": 3317,
+        "end": "2026-09-18",
+        "days": 3324,
         "missing": []
       },
-      "total": 153022
+      "total": 153862
     },
     "detect-is-it-html-or-xhtml": {
       "status": "current",
@@ -478,14 +478,14 @@
       "firstPublishedDay": "2016-11-24",
       "availability": "available",
       "file": "packages/detect-is-it-html-or-xhtml.ndjson",
-      "sha256": "085eb5c724b9e033899732f59bf1d2d986d8eb138d8a029132663b11edccb10a",
+      "sha256": "508a50af729d8465a0459ca2de5d639173439734831f2c1ae57855fc1af38a39",
       "coverage": {
         "start": "2016-11-24",
-        "end": "2026-09-11",
-        "days": 3579,
+        "end": "2026-09-18",
+        "days": 3586,
         "missing": []
       },
-      "total": 49937
+      "total": 50132
     },
     "detect-templating-language": {
       "status": "current",
@@ -493,14 +493,14 @@
       "firstPublishedDay": "2020-12-04",
       "availability": "available",
       "file": "packages/detect-templating-language.ndjson",
-      "sha256": "c07ae58b1ff3f3ba82afdc8c487be2a9786e9f5a455d7a68bd47749fe05daae8",
+      "sha256": "149716581c400eda722435d8222518d707b57622e3df031f615215c9144d7f05",
       "coverage": {
         "start": "2020-12-04",
-        "end": "2026-09-11",
-        "days": 2108,
+        "end": "2026-09-18",
+        "days": 2115,
         "missing": []
       },
-      "total": 29698
+      "total": 30157
     },
     "detergent": {
       "status": "current",
@@ -508,14 +508,14 @@
       "firstPublishedDay": "2015-11-11",
       "availability": "available",
       "file": "packages/detergent.ndjson",
-      "sha256": "ebceeacf1e9065d09973dc69a8db482b9587c20bb6384da30e484ed13660a307",
+      "sha256": "29dd7db3a562839eb1518eab773644bf02a9ecdd08d3719e254c15eff4029340",
       "coverage": {
         "start": "2015-11-11",
-        "end": "2026-09-11",
-        "days": 3958,
+        "end": "2026-09-18",
+        "days": 3965,
         "missing": []
       },
-      "total": 166307
+      "total": 167188
     },
     "easy-replace": {
       "status": "current",
@@ -523,14 +523,14 @@
       "firstPublishedDay": "2016-08-25",
       "availability": "available",
       "file": "packages/easy-replace.ndjson",
-      "sha256": "12189c89954f18bcf3f273778b1ec7390e5a9758f7a12a883fe0f7dc7bcbeb32",
+      "sha256": "dad862c52b167b5950b19243ca1ad8d644265a4a9b0a840d8471698aecd8d148",
       "coverage": {
         "start": "2016-08-25",
-        "end": "2026-09-11",
-        "days": 3670,
+        "end": "2026-09-18",
+        "days": 3677,
         "missing": []
       },
-      "total": 66852
+      "total": 67040
     },
     "edit-package-json": {
       "status": "current",
@@ -538,14 +538,14 @@
       "firstPublishedDay": "2019-09-23",
       "availability": "available",
       "file": "packages/edit-package-json.ndjson",
-      "sha256": "2893d48f798eb64d3ec12c85a5040fb4e1f8c0f88c4d5656255628fc6b735fb9",
+      "sha256": "ce77f5f6fe6c381c3bf56c664d5cb92c2c8e57fccb105d43218d89b6204e5ee5",
       "coverage": {
         "start": "2019-09-23",
-        "end": "2026-09-11",
-        "days": 2546,
+        "end": "2026-09-18",
+        "days": 2553,
         "missing": []
       },
-      "total": 381468
+      "total": 385686
     },
     "email-all-chars-within-ascii": {
       "status": "current",
@@ -553,14 +553,14 @@
       "firstPublishedDay": "2017-08-24",
       "availability": "available",
       "file": "packages/email-all-chars-within-ascii.ndjson",
-      "sha256": "31a3ad010d3b5ddd8227493db2e31cdc29c95d4d501147cae777c3dc81d8f864",
+      "sha256": "1f81c8ad6f53b94a74b14fa097516cad519132c5e6202561d9c039d875c25255",
       "coverage": {
         "start": "2017-08-24",
-        "end": "2026-09-11",
-        "days": 3306,
+        "end": "2026-09-18",
+        "days": 3313,
         "missing": []
       },
-      "total": 49164
+      "total": 49379
     },
     "email-all-chars-within-ascii-cli": {
       "status": "current",
@@ -568,14 +568,14 @@
       "firstPublishedDay": "2017-08-27",
       "availability": "available",
       "file": "packages/email-all-chars-within-ascii-cli.ndjson",
-      "sha256": "c08e493851b558c8b4f65515c95949c1d4e30a0097e6c762efd034dda96251c8",
+      "sha256": "90c08131ec817ef1f0382cf2bcb9474c5e7ddbc7af2daa8a969e413eb736c8b6",
       "coverage": {
         "start": "2017-08-27",
-        "end": "2026-09-11",
-        "days": 3303,
+        "end": "2026-09-18",
+        "days": 3310,
         "missing": []
       },
-      "total": 53858
+      "total": 54128
     },
     "email-comb": {
       "status": "current",
@@ -583,14 +583,14 @@
       "firstPublishedDay": "2018-12-15",
       "availability": "available",
       "file": "packages/email-comb.ndjson",
-      "sha256": "25a9165811f66387bab711d2c2c1a1c1fedace51c2aa418959487b85f7f928b4",
+      "sha256": "04e5b0adbc370eb58a9dbf869fa01ebcfb15ab2768299e66c8987bdfaa4d241e",
       "coverage": {
         "start": "2018-12-15",
-        "end": "2026-09-11",
-        "days": 2828,
+        "end": "2026-09-18",
+        "days": 2835,
         "missing": []
       },
-      "total": 5131258
+      "total": 5180268
     },
     "email-homey": {
       "status": "current",
@@ -598,14 +598,14 @@
       "firstPublishedDay": "2016-11-04",
       "availability": "available",
       "file": "packages/email-homey.ndjson",
-      "sha256": "a7f60af9f3b9e57b8a2cb5cf787c47bb0f7f90ca67e5964044d435554e755f2d",
+      "sha256": "936031fddcc04a0a46ed7c7b591152d64c0a561e63334244108ad1977e53fe3b",
       "coverage": {
         "start": "2016-11-04",
-        "end": "2026-09-11",
-        "days": 3599,
+        "end": "2026-09-18",
+        "days": 3606,
         "missing": []
       },
-      "total": 40068
+      "total": 40214
     },
     "emlint": {
       "status": "current",
@@ -613,14 +613,14 @@
       "firstPublishedDay": "2019-01-27",
       "availability": "available",
       "file": "packages/emlint.ndjson",
-      "sha256": "5ea1db8e772b08e8be08261bda6a79da7cfaf138b18462aec61fa5eada8486da",
+      "sha256": "1418635946c6fef8941ef1ed85bc3574c0b77c0caea092331351200b63774cb8",
       "coverage": {
         "start": "2019-01-27",
-        "end": "2026-09-11",
-        "days": 2785,
+        "end": "2026-09-18",
+        "days": 2792,
         "missing": []
       },
-      "total": 56878
+      "total": 57172
     },
     "eslint-plugin-row-num": {
       "status": "current",
@@ -628,14 +628,14 @@
       "firstPublishedDay": "2019-12-09",
       "availability": "available",
       "file": "packages/eslint-plugin-row-num.ndjson",
-      "sha256": "1cc13bab8261ccf0e6ce539d8b634bfb2486b718489b85752ae923a74c6fad90",
+      "sha256": "860f612b295a5bcd678e89219e06b3a2f468bbb8f228bb007ad666145bc5d07a",
       "coverage": {
         "start": "2019-12-09",
-        "end": "2026-09-11",
-        "days": 2469,
+        "end": "2026-09-18",
+        "days": 2476,
         "missing": []
       },
-      "total": 26483
+      "total": 26592
     },
     "eslint-plugin-test-num": {
       "status": "current",
@@ -643,14 +643,14 @@
       "firstPublishedDay": "2020-05-06",
       "availability": "available",
       "file": "packages/eslint-plugin-test-num.ndjson",
-      "sha256": "1eebf00a06fb7adf0c2b10b477b4ebc4da88d6196b30ddf2fe67c0e8f43dcc82",
+      "sha256": "9e857bf4e950012f9e6961d6651465fa676ef39dffdb6972c23433121a895ef3",
       "coverage": {
         "start": "2020-05-06",
-        "end": "2026-09-11",
-        "days": 2320,
+        "end": "2026-09-18",
+        "days": 2327,
         "missing": []
       },
-      "total": 17918
+      "total": 18016
     },
     "extract-search-index": {
       "status": "current",
@@ -658,14 +658,14 @@
       "firstPublishedDay": "2022-05-17",
       "availability": "available",
       "file": "packages/extract-search-index.ndjson",
-      "sha256": "4ccd9939a2e6f5a91d52a5505850fa6d0d0b5657bc75cdca847f5dc32fcd967d",
+      "sha256": "b4498cd8cee94d4c8270b5cdce4b58f24b78b62172c8ca9aa9739ae7b120f4a1",
       "coverage": {
         "start": "2022-05-17",
-        "end": "2026-09-11",
-        "days": 1579,
+        "end": "2026-09-18",
+        "days": 1586,
         "missing": []
       },
-      "total": 12650
+      "total": 12772
     },
     "generate-atomic-css": {
       "status": "current",
@@ -673,14 +673,14 @@
       "firstPublishedDay": "2019-06-29",
       "availability": "available",
       "file": "packages/generate-atomic-css.ndjson",
-      "sha256": "e2d0044197094028e19f8b29529dde593d1ba5387948a88261e57f2e4ee4d00b",
+      "sha256": "77f0cff08686d569ccdad88ea60093efed4f816e010ad691c11da59f3e98e21c",
       "coverage": {
         "start": "2019-06-29",
-        "end": "2026-09-11",
-        "days": 2632,
+        "end": "2026-09-18",
+        "days": 2639,
         "missing": []
       },
-      "total": 35350
+      "total": 35537
     },
     "generate-atomic-css-cli": {
       "status": "current",
@@ -688,14 +688,14 @@
       "firstPublishedDay": "2019-07-19",
       "availability": "available",
       "file": "packages/generate-atomic-css-cli.ndjson",
-      "sha256": "85f26f72dc46be7d69a63c155b3a81967572a89986fc90d237dd41cba640c48c",
+      "sha256": "4994c46cdb816d6b63a8de6acc2c6675a7720c1b35520f6cc2fd5824b626e2f4",
       "coverage": {
         "start": "2019-07-19",
-        "end": "2026-09-11",
-        "days": 2612,
+        "end": "2026-09-18",
+        "days": 2619,
         "missing": []
       },
-      "total": 38761
+      "total": 39012
     },
     "gulp-email-remove-unused-css": {
       "status": "current",
@@ -703,14 +703,14 @@
       "firstPublishedDay": "2016-12-02",
       "availability": "available",
       "file": "packages/gulp-email-remove-unused-css.ndjson",
-      "sha256": "1998495c9dbf666e54355d7b9ed5ba9ba01cb6d6db287c00352401948879b937",
+      "sha256": "709767d469801791f743ed392463749be21ab8519fdf0c25a904aebfd5ed30fe",
       "coverage": {
         "start": "2016-12-02",
-        "end": "2026-09-11",
-        "days": 3571,
+        "end": "2026-09-18",
+        "days": 3578,
         "missing": []
       },
-      "total": 82244
+      "total": 82493
     },
     "helga": {
       "status": "current",
@@ -718,14 +718,14 @@
       "firstPublishedDay": "2019-06-17",
       "availability": "available",
       "file": "packages/helga.ndjson",
-      "sha256": "d0daf9c1153a8e823a3bd64de7659817865eb2db86909cb5edae66d8de90d521",
+      "sha256": "5ff54bd5990e03b314a9641a7deacb46cf2df21a201a666fb379f2cba471abbc",
       "coverage": {
         "start": "2019-06-17",
-        "end": "2026-09-11",
-        "days": 2644,
+        "end": "2026-09-18",
+        "days": 2651,
         "missing": []
       },
-      "total": 28468
+      "total": 28599
     },
     "html-all-known-attributes": {
       "status": "current",
@@ -733,14 +733,14 @@
       "firstPublishedDay": "2019-12-27",
       "availability": "available",
       "file": "packages/html-all-known-attributes.ndjson",
-      "sha256": "427742f22276f5ca16c4b9f86d6f8cbe7ae34832b6046125df864a0e296487c7",
+      "sha256": "b5949c0c56a42862ea67880561c41177115d2d1f84bcda30286a98640e801773",
       "coverage": {
         "start": "2019-12-27",
-        "end": "2026-09-11",
-        "days": 2451,
+        "end": "2026-09-18",
+        "days": 2458,
         "missing": []
       },
-      "total": 410821
+      "total": 411283
     },
     "html-crush": {
       "status": "current",
@@ -748,14 +748,14 @@
       "firstPublishedDay": "2018-12-10",
       "availability": "available",
       "file": "packages/html-crush.ndjson",
-      "sha256": "920300d03465db28e59de7ba4db502dd78dfca08bef1968403cf71e59ed9937a",
+      "sha256": "b2e87b4c1c52584301db08749702b5a6b303e948f604f8c26afbf2c36d849ff5",
       "coverage": {
         "start": "2018-12-10",
-        "end": "2026-09-11",
-        "days": 2833,
+        "end": "2026-09-18",
+        "days": 2840,
         "missing": []
       },
-      "total": 5316601
+      "total": 5371751
     },
     "html-entities-not-email-friendly": {
       "status": "current",
@@ -763,14 +763,14 @@
       "firstPublishedDay": "2019-08-26",
       "availability": "available",
       "file": "packages/html-entities-not-email-friendly.ndjson",
-      "sha256": "85cd0ef6d2d46a7caebbfc9c4ae7d7a9ead14c6ec2a95529b8ce894b62eed61d",
+      "sha256": "7c0ce939e197d355e238aec8b5c2130cdc8725ec647f4515bd0bb235056c5a1b",
       "coverage": {
         "start": "2019-08-26",
-        "end": "2026-09-11",
-        "days": 2574,
+        "end": "2026-09-18",
+        "days": 2581,
         "missing": []
       },
-      "total": 76640
+      "total": 77296
     },
     "html-entity-codec": {
       "status": "current",
@@ -778,14 +778,14 @@
       "firstPublishedDay": "2026-09-05",
       "availability": "available",
       "file": "packages/html-entity-codec.ndjson",
-      "sha256": "6d9fcb05b4bf1a5ff00ced8d2737535fd9e93a8aa3a047e853a6e93f43a6d3cf",
+      "sha256": "f1e4bfca408a27b9ffcbd619c6ff220d05ff1af2489b0ecb31c03190e2ac2c59",
       "coverage": {
         "start": "2026-09-05",
-        "end": "2026-09-11",
-        "days": 7,
+        "end": "2026-09-18",
+        "days": 14,
         "missing": []
       },
-      "total": 9850
+      "total": 23529
     },
     "html-img-alt": {
       "status": "current",
@@ -793,14 +793,14 @@
       "firstPublishedDay": "2017-08-05",
       "availability": "available",
       "file": "packages/html-img-alt.ndjson",
-      "sha256": "a89407739b5806f2cfea3d49a0b5658ba6df940eeeb7eae6f64ac5c7d47eb3ce",
+      "sha256": "73565b1f4abf507c9930ca7eae02687c28d52c06740ac4bbc6bbd1030df125bf",
       "coverage": {
         "start": "2017-08-05",
-        "end": "2026-09-11",
-        "days": 3325,
+        "end": "2026-09-18",
+        "days": 3332,
         "missing": []
       },
-      "total": 46201
+      "total": 46428
     },
     "html-table-patcher": {
       "status": "current",
@@ -808,14 +808,14 @@
       "firstPublishedDay": "2018-08-13",
       "availability": "available",
       "file": "packages/html-table-patcher.ndjson",
-      "sha256": "1339febe8a9963a966990fdf388d20ef2b3a6b984f76f26431ce67289cacabc6",
+      "sha256": "04fea5b9701b997aeec678714b837a824283f69bd6ab17978624b22fde266ae2",
       "coverage": {
         "start": "2018-08-13",
-        "end": "2026-09-11",
-        "days": 2952,
+        "end": "2026-09-18",
+        "days": 2959,
         "missing": []
       },
-      "total": 59923
+      "total": 60204
     },
     "is-char-suitable-for-html-attr-name": {
       "status": "current",
@@ -823,14 +823,14 @@
       "firstPublishedDay": "2020-04-13",
       "availability": "available",
       "file": "packages/is-char-suitable-for-html-attr-name.ndjson",
-      "sha256": "78e8114f273646c6533b6bbbde4ee869192f1dfc621dbd999d9370291f944032",
+      "sha256": "dc5a99169ebc6fc5a7c5226877b707b01074d35002063d246d212c9f46adfc21",
       "coverage": {
         "start": "2020-04-13",
-        "end": "2026-09-11",
-        "days": 2343,
+        "end": "2026-09-18",
+        "days": 2350,
         "missing": []
       },
-      "total": 88135
+      "total": 88611
     },
     "is-html-attribute-closing": {
       "status": "current",
@@ -838,14 +838,14 @@
       "firstPublishedDay": "2020-04-13",
       "availability": "available",
       "file": "packages/is-html-attribute-closing.ndjson",
-      "sha256": "392929667ad8dbb9ee87d32f0017dbb4ce406d1b938c5c6d7fe86a790f2e4207",
+      "sha256": "b0e1185f022e8137ff749e5f558922e59115319e9953a34c8c076bf01e50062f",
       "coverage": {
         "start": "2020-04-13",
-        "end": "2026-09-11",
-        "days": 2343,
+        "end": "2026-09-18",
+        "days": 2350,
         "missing": []
       },
-      "total": 94175
+      "total": 94728
     },
     "is-html-tag-opening": {
       "status": "current",
@@ -853,14 +853,14 @@
       "firstPublishedDay": "2019-11-02",
       "availability": "available",
       "file": "packages/is-html-tag-opening.ndjson",
-      "sha256": "09f1419b48940e6ddeabfe8d1c1520bb7243c1795ff045e24c483311cbbebb78",
+      "sha256": "7549ebcbb6b555d8fbeace7c3baf2e6a3779ac446f18ddf2bc3f013ce490990c",
       "coverage": {
         "start": "2019-11-02",
-        "end": "2026-09-11",
-        "days": 2506,
+        "end": "2026-09-18",
+        "days": 2513,
         "missing": []
       },
-      "total": 433523
+      "total": 434370
     },
     "is-language-code": {
       "status": "current",
@@ -868,14 +868,14 @@
       "firstPublishedDay": "2020-01-05",
       "availability": "available",
       "file": "packages/is-language-code.ndjson",
-      "sha256": "2fa861886f5d07a1450aaaafe4d0aa3f49ab0950e2700a837ecb66d162f33d10",
+      "sha256": "e304e4d54dc701ac45e4815f5d09347d03004fc90e22481443877a2481a0f756",
       "coverage": {
         "start": "2020-01-05",
-        "end": "2026-09-11",
-        "days": 2442,
+        "end": "2026-09-18",
+        "days": 2449,
         "missing": []
       },
-      "total": 53501289
+      "total": 53920693
     },
     "is-media-descriptor": {
       "status": "current",
@@ -883,14 +883,14 @@
       "firstPublishedDay": "2020-01-05",
       "availability": "available",
       "file": "packages/is-media-descriptor.ndjson",
-      "sha256": "d7965f65af4e8f26958ecee0ed4cbcdd8137c2f82fba8b28111c7acf12809c61",
+      "sha256": "acd10f3f303ba83e1028749955434afa1dc845238ec8d5066ddb27a20ad735ea",
       "coverage": {
         "start": "2020-01-05",
-        "end": "2026-09-11",
-        "days": 2442,
+        "end": "2026-09-18",
+        "days": 2449,
         "missing": []
       },
-      "total": 23568
+      "total": 23847
     },
     "is-relative-uri": {
       "status": "current",
@@ -898,14 +898,14 @@
       "firstPublishedDay": "2020-01-11",
       "availability": "available",
       "file": "packages/is-relative-uri.ndjson",
-      "sha256": "206d0225bf5bc0d5ee26c78225cb396e195b2f27aafc1810ca78fe1abbbe1c36",
+      "sha256": "566f8d945df6373aded6a9b6c84c00d4489508bdba8de90c64e98acc567b3e8b",
       "coverage": {
         "start": "2020-01-11",
-        "end": "2026-09-11",
-        "days": 2436,
+        "end": "2026-09-18",
+        "days": 2443,
         "missing": []
       },
-      "total": 26150
+      "total": 26309
     },
     "js-row-num": {
       "status": "current",
@@ -913,14 +913,14 @@
       "firstPublishedDay": "2018-07-11",
       "availability": "available",
       "file": "packages/js-row-num.ndjson",
-      "sha256": "b7150e4a01dfaefbaa1a198aff7f50dcdb305269749645396dc6d7f72cbfb5ea",
+      "sha256": "e4cc047e7b1779d41102efdc10803be2f2330d644fe5949e2d8fdeaa2dd0c415",
       "coverage": {
         "start": "2018-07-11",
-        "end": "2026-09-11",
-        "days": 2985,
+        "end": "2026-09-18",
+        "days": 2992,
         "missing": []
       },
-      "total": 55594
+      "total": 55829
     },
     "js-row-num-cli": {
       "status": "current",
@@ -928,14 +928,14 @@
       "firstPublishedDay": "2018-07-12",
       "availability": "available",
       "file": "packages/js-row-num-cli.ndjson",
-      "sha256": "81a424c00f711457c14d3df4a709a3e04d6f0d8bdab01a00cb0a53f14488e60a",
+      "sha256": "b30383f19e5a2d5f1bcbb7852891e155e28320d3204ddbe7af0dd62caef48828",
       "coverage": {
         "start": "2018-07-12",
-        "end": "2026-09-11",
-        "days": 2984,
+        "end": "2026-09-18",
+        "days": 2991,
         "missing": []
       },
-      "total": 56712
+      "total": 56988
     },
     "json-comb": {
       "status": "current",
@@ -943,14 +943,14 @@
       "firstPublishedDay": "2017-12-12",
       "availability": "available",
       "file": "packages/json-comb.ndjson",
-      "sha256": "85bbd60dc8b5600dbc5e72584bbe74ca07f6a26ae9ba7d05d14ba433357f499a",
+      "sha256": "2abba2177060cdc48b0054129490657e506c360a83edaa3efc0fc5f3a6591204",
       "coverage": {
         "start": "2017-12-12",
-        "end": "2026-09-11",
-        "days": 3196,
+        "end": "2026-09-18",
+        "days": 3203,
         "missing": []
       },
-      "total": 62693
+      "total": 62982
     },
     "json-comb-core": {
       "status": "current",
@@ -958,14 +958,14 @@
       "firstPublishedDay": "2017-03-18",
       "availability": "available",
       "file": "packages/json-comb-core.ndjson",
-      "sha256": "0400fee42c3ac310d89219fb70ea4d4c3169c1a9735cbbcad7862c020a3a1074",
+      "sha256": "85ba132f18c519c6e17e38838d558c15853cd3c01c2bdc2fa175d5248783302f",
       "coverage": {
         "start": "2017-03-18",
-        "end": "2026-09-11",
-        "days": 3465,
+        "end": "2026-09-18",
+        "days": 3472,
         "missing": []
       },
-      "total": 86035
+      "total": 86320
     },
     "json-sort-cli": {
       "status": "current",
@@ -973,14 +973,14 @@
       "firstPublishedDay": "2017-10-12",
       "availability": "available",
       "file": "packages/json-sort-cli.ndjson",
-      "sha256": "3fc3b1e895d6f05dec29755de2787dac7824fc7b34245f489349bd68a499b79b",
+      "sha256": "41814e1d93bf7444ee849197562cadfacf37d2b85f7f3ad6d93fe8e694ffc6a8",
       "coverage": {
         "start": "2017-10-12",
-        "end": "2026-09-11",
-        "days": 3257,
+        "end": "2026-09-18",
+        "days": 3264,
         "missing": []
       },
-      "total": 3935614
+      "total": 3947718
     },
     "json-variables": {
       "status": "current",
@@ -988,14 +988,14 @@
       "firstPublishedDay": "2017-03-28",
       "availability": "available",
       "file": "packages/json-variables.ndjson",
-      "sha256": "ed8f69cb1281332c327d19a3ef1b920752f157e8b7580676c10105668b8c9971",
+      "sha256": "35c218f82570ca739a89249e8b2ffe6697c15815c8f73fc53ab361eeeac1b75f",
       "coverage": {
         "start": "2017-03-28",
-        "end": "2026-09-11",
-        "days": 3455,
+        "end": "2026-09-18",
+        "days": 3462,
         "missing": []
       },
-      "total": 1280309
+      "total": 1281239
     },
     "lect": {
       "status": "current",
@@ -1003,14 +1003,14 @@
       "firstPublishedDay": "2017-12-07",
       "availability": "available",
       "file": "packages/lect.ndjson",
-      "sha256": "0bb483075cdb5078c801dc9a3a3a7e57c34176a8d985454ef16e7d73e05c6329",
+      "sha256": "6cff7bf84b0f87a06ec5c2a189352a9b3f8630bd57dc421993163093caf53fd3",
       "coverage": {
         "start": "2017-12-07",
-        "end": "2026-09-11",
-        "days": 3201,
+        "end": "2026-09-18",
+        "days": 3208,
         "missing": []
       },
-      "total": 44424
+      "total": 44628
     },
     "lerna-clean-changelogs": {
       "status": "current",
@@ -1018,14 +1018,14 @@
       "firstPublishedDay": "2019-01-20",
       "availability": "available",
       "file": "packages/lerna-clean-changelogs.ndjson",
-      "sha256": "afb2787437765d5cbb6dadd61bb5f0feb46ed465d2276f9a520552f7515771e6",
+      "sha256": "63ac64bc5dff307531bc4f781d9b3ead7ad8f750f9d001a722b03cca990be347",
       "coverage": {
         "start": "2019-01-20",
-        "end": "2026-09-11",
-        "days": 2792,
+        "end": "2026-09-18",
+        "days": 2799,
         "missing": []
       },
-      "total": 182176
+      "total": 182628
     },
     "lerna-clean-changelogs-cli": {
       "status": "current",
@@ -1033,14 +1033,14 @@
       "firstPublishedDay": "2019-01-20",
       "availability": "available",
       "file": "packages/lerna-clean-changelogs-cli.ndjson",
-      "sha256": "8392086cfa67e810bfb5b452c1bface4ef87e24e4e69fcfdc6160224b652ff1a",
+      "sha256": "0a0e551d6a69dde7b45247397e51ac9b1f12195f0d45889c58c1a4568a56b2f0",
       "coverage": {
         "start": "2019-01-20",
-        "end": "2026-09-11",
-        "days": 2792,
+        "end": "2026-09-18",
+        "days": 2799,
         "missing": []
       },
-      "total": 187414
+      "total": 187904
     },
     "lerna-link-dep": {
       "status": "current",
@@ -1048,14 +1048,14 @@
       "firstPublishedDay": "2019-08-15",
       "availability": "available",
       "file": "packages/lerna-link-dep.ndjson",
-      "sha256": "77820fc7fd19e8b663dfd1b997701c99f09dae721a46b82fde8a8f2036985058",
+      "sha256": "2102297c3f091651e8694dd3fad38749a78d235680d97f7ac8247f2bea4472f8",
       "coverage": {
         "start": "2019-08-15",
-        "end": "2026-09-11",
-        "days": 2585,
+        "end": "2026-09-18",
+        "days": 2592,
         "missing": []
       },
-      "total": 26175
+      "total": 26259
     },
     "line-column-mini": {
       "status": "current",
@@ -1063,14 +1063,14 @@
       "firstPublishedDay": "2021-01-23",
       "availability": "available",
       "file": "packages/line-column-mini.ndjson",
-      "sha256": "7f647d5f3ddf0bcfc9bd6ddeee1f21ca1aad8a0be2582cb36f57374936a7090e",
+      "sha256": "25e8999a3f100594c90f7f98ceebe42c42a1bc5d48c056d7d6aba58407ab0f1b",
       "coverage": {
         "start": "2021-01-23",
-        "end": "2026-09-11",
-        "days": 2058,
+        "end": "2026-09-18",
+        "days": 2065,
         "missing": []
       },
-      "total": 12201
+      "total": 12265
     },
     "object-all-values-equal-to": {
       "status": "current",
@@ -1078,14 +1078,14 @@
       "firstPublishedDay": "2017-12-13",
       "availability": "available",
       "file": "packages/object-all-values-equal-to.ndjson",
-      "sha256": "ff960703aae024ecd2c8a226aa119858c24f1b5f14954ddf9226e6d7f2d7b215",
+      "sha256": "1d8e4cdda6216c363d8c777715122bbcbf75f34b5e89f6f37ff28340d09bee44",
       "coverage": {
         "start": "2017-12-13",
-        "end": "2026-09-11",
-        "days": 3195,
+        "end": "2026-09-18",
+        "days": 3202,
         "missing": []
       },
-      "total": 127315
+      "total": 127926
     },
     "object-boolean-combinations": {
       "status": "current",
@@ -1093,14 +1093,14 @@
       "firstPublishedDay": "2015-12-14",
       "availability": "available",
       "file": "packages/object-boolean-combinations.ndjson",
-      "sha256": "c0d7313851015a362203c95f6f82eb2f22f9c5a5a701bdbbf2c6b2db810d85a7",
+      "sha256": "bd08265a4304b09aa24f3159f17a9b66b94227baf3c4ea25e2ff8e9b28287d78",
       "coverage": {
         "start": "2015-12-14",
-        "end": "2026-09-11",
-        "days": 3925,
+        "end": "2026-09-18",
+        "days": 3932,
         "missing": []
       },
-      "total": 4800732
+      "total": 4849643
     },
     "object-delete-key": {
       "status": "current",
@@ -1108,14 +1108,14 @@
       "firstPublishedDay": "2017-10-23",
       "availability": "available",
       "file": "packages/object-delete-key.ndjson",
-      "sha256": "af11d3bb574ba2fa1bdb2a933f6a31138a0fcf5e5a5b562ca4312985523d0bd6",
+      "sha256": "8d75cb4b39a77437c603e4119a2da02c9d6b1fef6efe6372b8770baf0b72ab41",
       "coverage": {
         "start": "2017-10-23",
-        "end": "2026-09-11",
-        "days": 3246,
+        "end": "2026-09-18",
+        "days": 3253,
         "missing": []
       },
-      "total": 382478
+      "total": 383428
     },
     "object-fill-missing-keys": {
       "status": "current",
@@ -1123,14 +1123,14 @@
       "firstPublishedDay": "2016-12-05",
       "availability": "available",
       "file": "packages/object-fill-missing-keys.ndjson",
-      "sha256": "32897048214fa1627111190e71c9de5e49bf40cf1153918653cc12d6aede5e1a",
+      "sha256": "9feafe4071d6fab6fb658a06ac24ef2b5c4f8452799fbbc39b32d24f2d247f6c",
       "coverage": {
         "start": "2016-12-05",
-        "end": "2026-09-11",
-        "days": 3568,
+        "end": "2026-09-18",
+        "days": 3575,
         "missing": []
       },
-      "total": 148140
+      "total": 148666
     },
     "object-flatten-all-arrays": {
       "status": "current",
@@ -1138,14 +1138,14 @@
       "firstPublishedDay": "2016-12-03",
       "availability": "available",
       "file": "packages/object-flatten-all-arrays.ndjson",
-      "sha256": "c10d8d66cd4b9af023beb8f864df5cf905f54cc68da22260d7e01d4580bc4a64",
+      "sha256": "f96e3209aa7e80c1275a3a5ce86c909610052c64e9b2ba002fde453848f532e9",
       "coverage": {
         "start": "2016-12-03",
-        "end": "2026-09-11",
-        "days": 3570,
+        "end": "2026-09-18",
+        "days": 3577,
         "missing": []
       },
-      "total": 73000
+      "total": 73629
     },
     "object-flatten-referencing": {
       "status": "current",
@@ -1153,14 +1153,14 @@
       "firstPublishedDay": "2017-04-03",
       "availability": "available",
       "file": "packages/object-flatten-referencing.ndjson",
-      "sha256": "cfa0df4822f5350d8cb971b31f7c8339cfcb2274988df4ae932d5a44e3a04f1c",
+      "sha256": "b020fff77e24567fa5846b9ec60b89968396270e7bc4f97ed42de5bfb0b41ffe",
       "coverage": {
         "start": "2017-04-03",
-        "end": "2026-09-11",
-        "days": 3449,
+        "end": "2026-09-18",
+        "days": 3456,
         "missing": []
       },
-      "total": 51800
+      "total": 52409
     },
     "object-merge-advanced": {
       "status": "current",
@@ -1168,14 +1168,14 @@
       "firstPublishedDay": "2016-12-05",
       "availability": "available",
       "file": "packages/object-merge-advanced.ndjson",
-      "sha256": "c1efb8cd26b753385cc2a9b6c62ae1d9a8db90c3efc72ea9c7e738eb3536f7ec",
+      "sha256": "d8c67bc507982835db4aff1524633e6c193b569d7f84d2754caadd50133b7c46",
       "coverage": {
         "start": "2016-12-05",
-        "end": "2026-09-11",
-        "days": 3568,
+        "end": "2026-09-18",
+        "days": 3575,
         "missing": []
       },
-      "total": 1313562
+      "total": 1319585
     },
     "object-no-new-keys": {
       "status": "current",
@@ -1183,14 +1183,14 @@
       "firstPublishedDay": "2017-05-15",
       "availability": "available",
       "file": "packages/object-no-new-keys.ndjson",
-      "sha256": "c0c85383428d498c4092f620dbe765686a6c336ddf7ed1630cf5ceb77582e818",
+      "sha256": "c75aff57ce30aebae2ac7f2faa169af022e5a655e8455a15daa43889dc07e3de",
       "coverage": {
         "start": "2017-05-15",
-        "end": "2026-09-11",
-        "days": 3407,
+        "end": "2026-09-18",
+        "days": 3414,
         "missing": []
       },
-      "total": 67576
+      "total": 67951
     },
     "object-set-all-values-to": {
       "status": "current",
@@ -1198,14 +1198,14 @@
       "firstPublishedDay": "2016-12-02",
       "availability": "available",
       "file": "packages/object-set-all-values-to.ndjson",
-      "sha256": "545c1b654525ff06167e48ef13cb0b9ccbb4a7462bfc51d1077082c311076bda",
+      "sha256": "cddcc89d6764c1035c77deb89eb342cf8d73bbe9b7cf9e487b3d68dc779032ae",
       "coverage": {
         "start": "2016-12-02",
-        "end": "2026-09-11",
-        "days": 3571,
+        "end": "2026-09-18",
+        "days": 3578,
         "missing": []
       },
-      "total": 69273
+      "total": 69736
     },
     "perf-ref": {
       "status": "current",
@@ -1213,14 +1213,14 @@
       "firstPublishedDay": "2021-11-08",
       "availability": "available",
       "file": "packages/perf-ref.ndjson",
-      "sha256": "d57233becd15e054a30ff9faf6cc90b0631197ca1f30b084f639b8e6ca1ab4ad",
+      "sha256": "3f00350e261a8a0868bf2d5ddeb5b9310c5195326ee2fcfb8fb70fb7c0fd691f",
       "coverage": {
         "start": "2021-11-08",
-        "end": "2026-09-11",
-        "days": 1769,
+        "end": "2026-09-18",
+        "days": 1776,
         "missing": []
       },
-      "total": 2397
+      "total": 2414
     },
     "ranges-apply": {
       "status": "current",
@@ -1228,14 +1228,14 @@
       "firstPublishedDay": "2018-06-18",
       "availability": "available",
       "file": "packages/ranges-apply.ndjson",
-      "sha256": "7da215fd3463b4653fde8c4bb451f556d322c8235a217487e284b2b12b8aadc8",
+      "sha256": "be6f7ccc6f2c4c244d299f8c7236f40ea1e3ae6c24b70e26fd552afcebdc4db4",
       "coverage": {
         "start": "2018-06-18",
-        "end": "2026-09-11",
-        "days": 3008,
+        "end": "2026-09-18",
+        "days": 3015,
         "missing": []
       },
-      "total": 35169741
+      "total": 35397882
     },
     "ranges-crop": {
       "status": "current",
@@ -1243,14 +1243,14 @@
       "firstPublishedDay": "2018-08-17",
       "availability": "available",
       "file": "packages/ranges-crop.ndjson",
-      "sha256": "bbdb60feb25270a143bc1dc40b66994e3ba4f1517eeaf72cb02d502f8fe8def9",
+      "sha256": "e0368e4d4e116dc16c50191eaa791d866f512e6203eaa2bde4d6a68c3ed21d28",
       "coverage": {
         "start": "2018-08-17",
-        "end": "2026-09-11",
-        "days": 2948,
+        "end": "2026-09-18",
+        "days": 2955,
         "missing": []
       },
-      "total": 190132
+      "total": 191071
     },
     "ranges-ent-decode": {
       "status": "current",
@@ -1258,14 +1258,14 @@
       "firstPublishedDay": "2018-08-22",
       "availability": "available",
       "file": "packages/ranges-ent-decode.ndjson",
-      "sha256": "375b7d0abec9b10bf1f919ee256d6b5125fe71a4c2a39560e6ce1d2f51643836",
+      "sha256": "b8c44a25a46d85c6a2b16da711be715e3fab848c5837009fa8bd63acb5b1acdd",
       "coverage": {
         "start": "2018-08-22",
-        "end": "2026-09-11",
-        "days": 2943,
+        "end": "2026-09-18",
+        "days": 2950,
         "missing": []
       },
-      "total": 40302
+      "total": 40527
     },
     "ranges-invert": {
       "status": "current",
@@ -1273,14 +1273,14 @@
       "firstPublishedDay": "2018-06-10",
       "availability": "available",
       "file": "packages/ranges-invert.ndjson",
-      "sha256": "c0ce10947dfd4150f1578242b9131f0369e4459bdab6ae2c9cbc7ff18b20254b",
+      "sha256": "f6988159048ea0b09b8cb6971a52320dd922bced606971dc16da12bebdf80bec",
       "coverage": {
         "start": "2018-06-10",
-        "end": "2026-09-11",
-        "days": 3016,
+        "end": "2026-09-18",
+        "days": 3023,
         "missing": []
       },
-      "total": 182303
+      "total": 183188
     },
     "ranges-is-index-within": {
       "status": "current",
@@ -1288,14 +1288,14 @@
       "firstPublishedDay": "2017-09-13",
       "availability": "available",
       "file": "packages/ranges-is-index-within.ndjson",
-      "sha256": "356ff92b8f868752d34c4a4cfe1ff7770fa62891a93b9f22680339390364eced",
+      "sha256": "126efc7e3aae6d91d891f916d1ca3b43e4c0207d4179fe914a8593e99785a439",
       "coverage": {
         "start": "2017-09-13",
-        "end": "2026-09-11",
-        "days": 3286,
+        "end": "2026-09-18",
+        "days": 3293,
         "missing": []
       },
-      "total": 82875
+      "total": 83063
     },
     "ranges-merge": {
       "status": "current",
@@ -1303,14 +1303,14 @@
       "firstPublishedDay": "2017-09-18",
       "availability": "available",
       "file": "packages/ranges-merge.ndjson",
-      "sha256": "0b45df4d618f8ddd5d1b3ca4be1025a9d734359e1fad7ba87b7501807b41c851",
+      "sha256": "a4f0121660d5e1216ab49d55ad44dd06d6de96a3f0e94f058505bdeb4aa3d510",
       "coverage": {
         "start": "2017-09-18",
-        "end": "2026-09-11",
-        "days": 3281,
+        "end": "2026-09-18",
+        "days": 3288,
         "missing": []
       },
-      "total": 35611082
+      "total": 35841168
     },
     "ranges-offset": {
       "status": "current",
@@ -1318,14 +1318,14 @@
       "firstPublishedDay": "2020-11-02",
       "availability": "available",
       "file": "packages/ranges-offset.ndjson",
-      "sha256": "7b5ef98554f07d62025dd36a5be3e4a153bbd10b9d54ae75bc17651a24f0a247",
+      "sha256": "f88a6e644335a475f016da7ff0a251bb7b8c02d30359c19434c1275dd614ed2d",
       "coverage": {
         "start": "2020-11-02",
-        "end": "2026-09-11",
-        "days": 2140,
+        "end": "2026-09-18",
+        "days": 2147,
         "missing": []
       },
-      "total": 17883
+      "total": 17942
     },
     "ranges-process-outside": {
       "status": "current",
@@ -1333,14 +1333,14 @@
       "firstPublishedDay": "2019-01-27",
       "availability": "available",
       "file": "packages/ranges-process-outside.ndjson",
-      "sha256": "0fa9c5beaba3ac61365171b3d16504207632b460539ece369d0efd3039bc3f40",
+      "sha256": "b99eea831b7f00d512a86b2178e135e2bdb4392ce50aefa119bfd4e6ae31ceaa",
       "coverage": {
         "start": "2019-01-27",
-        "end": "2026-09-11",
-        "days": 2785,
+        "end": "2026-09-18",
+        "days": 2792,
         "missing": []
       },
-      "total": 95021
+      "total": 95779
     },
     "ranges-push": {
       "status": "current",
@@ -1348,14 +1348,14 @@
       "firstPublishedDay": "2018-06-18",
       "availability": "available",
       "file": "packages/ranges-push.ndjson",
-      "sha256": "accfc85d131fa43267f177cfe41cce2e5d05b73e825f9729b8b817997eb619bc",
+      "sha256": "e6d277cf74ae94bd3efe10e19e4ce2d7ed880325b4566dd2aff71565bc4c69ee",
       "coverage": {
         "start": "2018-06-18",
-        "end": "2026-09-11",
-        "days": 3008,
+        "end": "2026-09-18",
+        "days": 3015,
         "missing": []
       },
-      "total": 35072502
+      "total": 35300520
     },
     "ranges-sort": {
       "status": "current",
@@ -1363,14 +1363,14 @@
       "firstPublishedDay": "2017-09-11",
       "availability": "available",
       "file": "packages/ranges-sort.ndjson",
-      "sha256": "6408faef1211f189053b82d07c6c3964f5fc50413b65d8966726a4b638ef4470",
+      "sha256": "b0b33653569602dee9f5108b51fbbad96046d8fc5369dc9fd73309cd99c7a869",
       "coverage": {
         "start": "2017-09-11",
-        "end": "2026-09-11",
-        "days": 3288,
+        "end": "2026-09-18",
+        "days": 3295,
         "missing": []
       },
-      "total": 35450826
+      "total": 35680701
     },
     "regex-empty-conditional-comments": {
       "status": "current",
@@ -1378,14 +1378,14 @@
       "firstPublishedDay": "2018-04-19",
       "availability": "available",
       "file": "packages/regex-empty-conditional-comments.ndjson",
-      "sha256": "d5fd97c1e5a4a4b645ac66778ae3b9cdbc3b66a4301b05c3a17d8ea2bcc82250",
+      "sha256": "621d3e58a0d3980d8c836a88c0dd84ea19f5ea90f4fa123e556cfc155ca15420",
       "coverage": {
         "start": "2018-04-19",
-        "end": "2026-09-11",
-        "days": 3068,
+        "end": "2026-09-18",
+        "days": 3075,
         "missing": []
       },
-      "total": 3468914
+      "total": 3504199
     },
     "regex-is-jinja-nunjucks": {
       "status": "current",
@@ -1393,14 +1393,14 @@
       "firstPublishedDay": "2020-12-04",
       "availability": "available",
       "file": "packages/regex-is-jinja-nunjucks.ndjson",
-      "sha256": "ff8ddbb7d73c65d1b5c7569d2e5c26a7a3e830dd0f0f646e5ab95e042fadefbb",
+      "sha256": "cd37e27b185058a36796f4771cbb83c8a08c2b194a1171c8c588dbde59397fc8",
       "coverage": {
         "start": "2020-12-04",
-        "end": "2026-09-11",
-        "days": 2108,
+        "end": "2026-09-18",
+        "days": 2115,
         "missing": []
       },
-      "total": 29881
+      "total": 30330
     },
     "regex-is-jsp": {
       "status": "current",
@@ -1408,14 +1408,14 @@
       "firstPublishedDay": "2020-12-04",
       "availability": "available",
       "file": "packages/regex-is-jsp.ndjson",
-      "sha256": "49cb8e8d3e7dfc159f4fe17ccaeef167c930b19e98986005faec42cd8fc0352a",
+      "sha256": "c15e460ccf594861739a828cafa3246633035232bd2661685d1beea896233864",
       "coverage": {
         "start": "2020-12-04",
-        "end": "2026-09-11",
-        "days": 2108,
+        "end": "2026-09-18",
+        "days": 2115,
         "missing": []
       },
-      "total": 29815
+      "total": 30261
     },
     "regex-jinja-specific": {
       "status": "current",
@@ -1423,14 +1423,14 @@
       "firstPublishedDay": "2020-12-09",
       "availability": "available",
       "file": "packages/regex-jinja-specific.ndjson",
-      "sha256": "75c8263c4af7051d7f9e2c3b6ba080d57f578e4728023f1f04fc8eae7dec1b80",
+      "sha256": "086f8aa600030a6e4588e176cf87f2c535658fba8785d1339d53d4522e15bb67",
       "coverage": {
         "start": "2020-12-09",
-        "end": "2026-09-11",
-        "days": 2103,
+        "end": "2026-09-18",
+        "days": 2110,
         "missing": []
       },
-      "total": 29253
+      "total": 29690
     },
     "rehype-responsive-tables": {
       "status": "current",
@@ -1438,14 +1438,14 @@
       "firstPublishedDay": "2022-09-27",
       "availability": "available",
       "file": "packages/rehype-responsive-tables.ndjson",
-      "sha256": "e6d906b74a7d53446c3ba25947529088792329d32048d873cb0da6b8abe9d52e",
+      "sha256": "8de50430c72232436dac05bc5312199da6795e482406d139f2ceeb2597ca22ef",
       "coverage": {
         "start": "2022-09-27",
-        "end": "2026-09-11",
-        "days": 1446,
+        "end": "2026-09-18",
+        "days": 1453,
         "missing": []
       },
-      "total": 10411
+      "total": 10534
     },
     "remark-conventional-commit-changelog-timeline": {
       "status": "current",
@@ -1453,14 +1453,14 @@
       "firstPublishedDay": "2022-10-22",
       "availability": "available",
       "file": "packages/remark-conventional-commit-changelog-timeline.ndjson",
-      "sha256": "43d04a60215531baabe2870d5eba01109d40f8e79016f6ee2def3018d548b9f8",
+      "sha256": "35f4af52f9d11bc1a16507dd8f108457abcd94db518600edf83080401d0233b9",
       "coverage": {
         "start": "2022-10-22",
-        "end": "2026-09-11",
-        "days": 1421,
+        "end": "2026-09-18",
+        "days": 1428,
         "missing": []
       },
-      "total": 7548
+      "total": 7614
     },
     "remark-typography": {
       "status": "current",
@@ -1468,14 +1468,14 @@
       "firstPublishedDay": "2022-09-19",
       "availability": "available",
       "file": "packages/remark-typography.ndjson",
-      "sha256": "953285762b51b4f6984718f2794df63917538aba807fe1409e99bbd43d66c194",
+      "sha256": "9e91730398c1ea19ac6c08139293b5b57251e01f9459f39c33f49230c0999fe4",
       "coverage": {
         "start": "2022-09-19",
-        "end": "2026-09-11",
-        "days": 1454,
+        "end": "2026-09-18",
+        "days": 1461,
         "missing": []
       },
-      "total": 721935
+      "total": 740740
     },
     "seo-editor": {
       "status": "current",
@@ -1483,14 +1483,14 @@
       "firstPublishedDay": "2022-08-29",
       "availability": "available",
       "file": "packages/seo-editor.ndjson",
-      "sha256": "142d9f59ea5e5aa1435ae6eae8af27578f5c1cf598f2a9284e9ffaa8f09478e8",
+      "sha256": "657043077c4ced873c2b5a585d3515c31ca0b22aa268232a7ad97a8c0d5ae593",
       "coverage": {
         "start": "2022-08-29",
-        "end": "2026-09-11",
-        "days": 1475,
+        "end": "2026-09-18",
+        "days": 1482,
         "missing": []
       },
-      "total": 5773
+      "total": 5807
     },
     "str-indexes-of-plus": {
       "status": "current",
@@ -1498,14 +1498,14 @@
       "firstPublishedDay": "2017-03-23",
       "availability": "available",
       "file": "packages/str-indexes-of-plus.ndjson",
-      "sha256": "d852dbac6bb5ebb123773b0ebee00f17f5e554995f17015f40af5c55f2a9e5b8",
+      "sha256": "0f0363272e68a86395fc4acf6af543c350e1ce8a34e9733f75faba18040e6c61",
       "coverage": {
         "start": "2017-03-23",
-        "end": "2026-09-11",
-        "days": 3460,
+        "end": "2026-09-18",
+        "days": 3467,
         "missing": []
       },
-      "total": 41179
+      "total": 41344
     },
     "string-apostrophes": {
       "status": "current",
@@ -1513,14 +1513,14 @@
       "firstPublishedDay": "2019-09-11",
       "availability": "available",
       "file": "packages/string-apostrophes.ndjson",
-      "sha256": "fb032a3261371ef306681e05fa11aa18c2db043c8f1ba5e08942d88ceeaf34e6",
+      "sha256": "3f1b0872f7c0a3b92a652b08e9aba48c06404189004ec45e816c146998e390ab",
       "coverage": {
         "start": "2019-09-11",
-        "end": "2026-09-11",
-        "days": 2558,
+        "end": "2026-09-18",
+        "days": 2565,
         "missing": []
       },
-      "total": 106575
+      "total": 119177
     },
     "string-bionic-split": {
       "status": "current",
@@ -1528,14 +1528,14 @@
       "firstPublishedDay": "2022-05-24",
       "availability": "available",
       "file": "packages/string-bionic-split.ndjson",
-      "sha256": "21eeed56c2e429e909561ab8ea7936d05be2a7791cb083c299768e51e5c36f55",
+      "sha256": "455c000018a36b6e47a43f148d67a6ba950de2b0d2429a6f6ef60df6c0680795",
       "coverage": {
         "start": "2022-05-24",
-        "end": "2026-09-11",
-        "days": 1572,
+        "end": "2026-09-18",
+        "days": 1579,
         "missing": []
       },
-      "total": 4649
+      "total": 4681
     },
     "string-character-is-astral-surrogate": {
       "status": "current",
@@ -1543,14 +1543,14 @@
       "firstPublishedDay": "2018-03-04",
       "availability": "available",
       "file": "packages/string-character-is-astral-surrogate.ndjson",
-      "sha256": "3aa92e88fc0777aa35ceb5d16100badbdc8a0fe062034eda32af802bc5ec8a8b",
+      "sha256": "b02bca8bfa115f8b382831fdea0729cc9198ae565fcbf484dd06b38773906329",
       "coverage": {
         "start": "2018-03-04",
-        "end": "2026-09-11",
-        "days": 3114,
+        "end": "2026-09-18",
+        "days": 3121,
         "missing": []
       },
-      "total": 7179836
+      "total": 7230915
     },
     "string-collapse-leading-whitespace": {
       "status": "current",
@@ -1558,14 +1558,14 @@
       "firstPublishedDay": "2018-01-18",
       "availability": "available",
       "file": "packages/string-collapse-leading-whitespace.ndjson",
-      "sha256": "99dae404d281f2b528c4913ef41fc9255f488801f66f030b9b2cda24ea68c85e",
+      "sha256": "6f1251619fa7cdf3c99a8c36a84b206f744716b0a01855017abfe9eedc9e2564",
       "coverage": {
         "start": "2018-01-18",
-        "end": "2026-09-11",
-        "days": 3159,
+        "end": "2026-09-18",
+        "days": 3166,
         "missing": []
       },
-      "total": 35022415
+      "total": 35249771
     },
     "string-collapse-white-space": {
       "status": "current",
@@ -1573,14 +1573,14 @@
       "firstPublishedDay": "2017-09-02",
       "availability": "available",
       "file": "packages/string-collapse-white-space.ndjson",
-      "sha256": "ba16538cc2c933430004b389869b3adfe33784a0cad799525376f60077d72b72",
+      "sha256": "52ffd11c39ad81d6e677464ccf2c1de2a01e1349efc691f42e09d96e3003187d",
       "coverage": {
         "start": "2017-09-02",
-        "end": "2026-09-11",
-        "days": 3297,
+        "end": "2026-09-18",
+        "days": 3304,
         "missing": []
       },
-      "total": 311850
+      "total": 313568
     },
     "string-convert-indexes": {
       "status": "current",
@@ -1588,14 +1588,14 @@
       "firstPublishedDay": "2017-12-25",
       "availability": "available",
       "file": "packages/string-convert-indexes.ndjson",
-      "sha256": "5f86b31e0e968d175f829c8a5936a09f78efa048c489494ae25b4c7e645756d9",
+      "sha256": "9045c3b013d1553e269c22d38422b7141d6d98efbfeaa424ce8b96610bf191f4",
       "coverage": {
         "start": "2017-12-25",
-        "end": "2026-09-11",
-        "days": 3183,
+        "end": "2026-09-18",
+        "days": 3190,
         "missing": []
       },
-      "total": 47661
+      "total": 48178
     },
     "string-dashes": {
       "status": "current",
@@ -1603,14 +1603,14 @@
       "firstPublishedDay": "2022-12-26",
       "availability": "available",
       "file": "packages/string-dashes.ndjson",
-      "sha256": "183c76fe589e63ac0169bc95d881be189a777c9f10d021d6aa359d680a9ab2ec",
+      "sha256": "846a891e98b2c4475351b2ef56977641701115e066eb4836542f75711f41e9fc",
       "coverage": {
         "start": "2022-12-26",
-        "end": "2026-09-11",
-        "days": 1356,
+        "end": "2026-09-18",
+        "days": 1363,
         "missing": []
       },
-      "total": 27076
+      "total": 39088
     },
     "string-extract-class-names": {
       "status": "current",
@@ -1618,14 +1618,14 @@
       "firstPublishedDay": "2016-10-21",
       "availability": "available",
       "file": "packages/string-extract-class-names.ndjson",
-      "sha256": "3a83a277a9b1e93c46959d73682f475bc53e48535d69b7d4f680057272a22a89",
+      "sha256": "b7f76d454262c35b06ded1a4f2ec5fe11300babf4f99ff98294132a7ad1247fb",
       "coverage": {
         "start": "2016-10-21",
-        "end": "2026-09-11",
-        "days": 3613,
+        "end": "2026-09-18",
+        "days": 3620,
         "missing": []
       },
-      "total": 3661615
+      "total": 3697980
     },
     "string-extract-sass-vars": {
       "status": "current",
@@ -1633,14 +1633,14 @@
       "firstPublishedDay": "2020-04-20",
       "availability": "available",
       "file": "packages/string-extract-sass-vars.ndjson",
-      "sha256": "e4196f83c507e889877985a9c4ca9220bdb55f5cc4a37d7a3d0f1f0456c40d6f",
+      "sha256": "884cad98d0b4024d8e05852c6219e5619355bb5e1cba287ac4d7ea54748c1925",
       "coverage": {
         "start": "2020-04-20",
-        "end": "2026-09-11",
-        "days": 2336,
+        "end": "2026-09-18",
+        "days": 2343,
         "missing": []
       },
-      "total": 44642
+      "total": 44921
     },
     "string-find-heads-tails": {
       "status": "current",
@@ -1648,14 +1648,14 @@
       "firstPublishedDay": "2017-12-25",
       "availability": "available",
       "file": "packages/string-find-heads-tails.ndjson",
-      "sha256": "d245d2071f37a91d922c43cac2a18d58f9120227558d8be37d8b612b2c10c4c7",
+      "sha256": "cdc894d15c8006409c5cfbb6f8df32959da1c2e8f9046b62448f3adfbcc69e5e",
       "coverage": {
         "start": "2017-12-25",
-        "end": "2026-09-11",
-        "days": 3183,
+        "end": "2026-09-18",
+        "days": 3190,
         "missing": []
       },
-      "total": 1258693
+      "total": 1259582
     },
     "string-find-malformed": {
       "status": "current",
@@ -1663,14 +1663,14 @@
       "firstPublishedDay": "2020-03-16",
       "availability": "available",
       "file": "packages/string-find-malformed.ndjson",
-      "sha256": "308223156c69b2cdacabf37a557d428c7471c2db8a25cecd8af14054bda6bfcb",
+      "sha256": "eb8e7cb0ea0a21e5a082963570733d887f099c688695a19c838ff3c15f19737b",
       "coverage": {
         "start": "2020-03-16",
-        "end": "2026-09-11",
-        "days": 2371,
+        "end": "2026-09-18",
+        "days": 2378,
         "missing": []
       },
-      "total": 24169
+      "total": 24321
     },
     "string-fix-broken-named-entities": {
       "status": "current",
@@ -1678,14 +1678,14 @@
       "firstPublishedDay": "2018-08-29",
       "availability": "available",
       "file": "packages/string-fix-broken-named-entities.ndjson",
-      "sha256": "3fd9253b8f8117cfb2a0794bfed9cf32585f75636daed273f5d49a8bede55515",
+      "sha256": "6ad173cbd7f5d26209d882873973b92a675d1147309288904b80fea4bad32f23",
       "coverage": {
         "start": "2018-08-29",
-        "end": "2026-09-11",
-        "days": 2936,
+        "end": "2026-09-18",
+        "days": 2943,
         "missing": []
       },
-      "total": 106837
+      "total": 107916
     },
     "string-left-right": {
       "status": "current",
@@ -1693,14 +1693,14 @@
       "firstPublishedDay": "2019-03-04",
       "availability": "available",
       "file": "packages/string-left-right.ndjson",
-      "sha256": "078e62eea4fc3be90025d7ef59a66d0c2548261b46d04742a2dd03ac6af0e4cb",
+      "sha256": "4e4994976c5793271b43bc663ad80996fd9686ded3cbe89e1fc3b6767fe28121",
       "coverage": {
         "start": "2019-03-04",
-        "end": "2026-09-11",
-        "days": 2749,
+        "end": "2026-09-18",
+        "days": 2756,
         "missing": []
       },
-      "total": 33748733
+      "total": 33973174
     },
     "string-match-left-right": {
       "status": "current",
@@ -1708,14 +1708,14 @@
       "firstPublishedDay": "2017-10-28",
       "availability": "available",
       "file": "packages/string-match-left-right.ndjson",
-      "sha256": "f92609f6d0e7f89f30090bc6a3a0ca376d5e0080da7557376319f2bc6f1455d6",
+      "sha256": "511016bc44351c18f9d66917c4054ea64b6fcd5a2593f64e6a480bf2b73835a4",
       "coverage": {
         "start": "2017-10-28",
-        "end": "2026-09-11",
-        "days": 3241,
+        "end": "2026-09-18",
+        "days": 3248,
         "missing": []
       },
-      "total": 7278405
+      "total": 7337573
     },
     "string-overlap-one-on-another": {
       "status": "current",
@@ -1723,14 +1723,14 @@
       "firstPublishedDay": "2018-08-16",
       "availability": "available",
       "file": "packages/string-overlap-one-on-another.ndjson",
-      "sha256": "9af2fc6d3ad559bb70902e8c5ae6dbb5ae93dcaabe90bc06fdb5c54f6f467e29",
+      "sha256": "e3305d2f4a9367bef48ea8ef50644def8dbbef0becffa9dd97d3ce6c4ccedc1e",
       "coverage": {
         "start": "2018-08-16",
-        "end": "2026-09-11",
-        "days": 2949,
+        "end": "2026-09-18",
+        "days": 2956,
         "missing": []
       },
-      "total": 33574
+      "total": 33709
     },
     "string-process-comma-separated": {
       "status": "current",
@@ -1738,14 +1738,14 @@
       "firstPublishedDay": "2019-12-27",
       "availability": "available",
       "file": "packages/string-process-comma-separated.ndjson",
-      "sha256": "4da95cb10e1b87969ca070da1183b0d1ed65103dbf87edb7cc84afa1b7d2d498",
+      "sha256": "517c12f215709453d3bfa4d174f35330d4a283165bbb0d04a5a27346fd6bcc96",
       "coverage": {
         "start": "2019-12-27",
-        "end": "2026-09-11",
-        "days": 2451,
+        "end": "2026-09-18",
+        "days": 2458,
         "missing": []
       },
-      "total": 18868
+      "total": 19135
     },
     "string-range-expander": {
       "status": "current",
@@ -1753,14 +1753,14 @@
       "firstPublishedDay": "2018-09-11",
       "availability": "available",
       "file": "packages/string-range-expander.ndjson",
-      "sha256": "605e6b9e77a653edbef4dea955ba57a2ab6550c3c6286bf1796bbcc875a2e1f2",
+      "sha256": "87d8c20f44da1a3080350bc3f34bfd002ca554cc2d275ff46243142b261d5c02",
       "coverage": {
         "start": "2018-09-11",
-        "end": "2026-09-11",
-        "days": 2923,
+        "end": "2026-09-18",
+        "days": 2930,
         "missing": []
       },
-      "total": 5850312
+      "total": 5906096
     },
     "string-remove-duplicate-heads-tails": {
       "status": "current",
@@ -1768,14 +1768,14 @@
       "firstPublishedDay": "2018-01-19",
       "availability": "available",
       "file": "packages/string-remove-duplicate-heads-tails.ndjson",
-      "sha256": "21debadb8386ac3979371f1318cb61a368466d84640da9d15851d55e62c718ae",
+      "sha256": "d201adbacc539a98008e4f9770b5905271c483d392bae20d17b8d40302525cc8",
       "coverage": {
         "start": "2018-01-19",
-        "end": "2026-09-11",
-        "days": 3158,
+        "end": "2026-09-18",
+        "days": 3165,
         "missing": []
       },
-      "total": 1259836
+      "total": 1261058
     },
     "string-remove-thousand-separators": {
       "status": "current",
@@ -1783,14 +1783,14 @@
       "firstPublishedDay": "2017-08-15",
       "availability": "available",
       "file": "packages/string-remove-thousand-separators.ndjson",
-      "sha256": "99c0d7a2492f8b76c0fe70af971bb54757edab9b99e97bcd43f078782741fb2e",
+      "sha256": "cc8f9d3536973690e0c3385220298eaa63bfdaa17355f0b3fa84385e28437d63",
       "coverage": {
         "start": "2017-08-15",
-        "end": "2026-09-11",
-        "days": 3315,
+        "end": "2026-09-18",
+        "days": 3322,
         "missing": []
       },
-      "total": 179781
+      "total": 181134
     },
     "string-remove-widows": {
       "status": "current",
@@ -1798,14 +1798,14 @@
       "firstPublishedDay": "2019-08-08",
       "availability": "available",
       "file": "packages/string-remove-widows.ndjson",
-      "sha256": "6edf07d2a0cb82fb044bff036e89c0b695a58e606220e054ed1857790c8c037d",
+      "sha256": "0708647d3f149f97678a174aa3e87a60ab3aa85a106866e2cbfb2ea81c57340d",
       "coverage": {
         "start": "2019-08-08",
-        "end": "2026-09-11",
-        "days": 2592,
+        "end": "2026-09-18",
+        "days": 2599,
         "missing": []
       },
-      "total": 1990634
+      "total": 2016465
     },
     "string-split-by-whitespace": {
       "status": "current",
@@ -1813,14 +1813,14 @@
       "firstPublishedDay": "2018-01-11",
       "availability": "available",
       "file": "packages/string-split-by-whitespace.ndjson",
-      "sha256": "ae1d5c1d7726f1ed2ac4e5fe99ac470d0ce68f26d5666d8f2d5aaba7aeec49ab",
+      "sha256": "7b9f8e6d320f4f64ac3330a232a33933d81747550d514be09ec51a9701eb90a0",
       "coverage": {
         "start": "2018-01-11",
-        "end": "2026-09-11",
-        "days": 3166,
+        "end": "2026-09-18",
+        "days": 3173,
         "missing": []
       },
-      "total": 75871
+      "total": 76353
     },
     "string-strip-html": {
       "status": "current",
@@ -1828,14 +1828,14 @@
       "firstPublishedDay": "2017-11-27",
       "availability": "available",
       "file": "packages/string-strip-html.ndjson",
-      "sha256": "d802566f8d233223c05a7653f5f38cf75951214bf1e10b92cc958ecbdb54ab38",
+      "sha256": "cc4fbdc2f02b2f9b8184a94bdcc35e53efa9e4c18adf1d67f20828fd798b8066",
       "coverage": {
         "start": "2017-11-27",
-        "end": "2026-09-11",
-        "days": 3211,
+        "end": "2026-09-18",
+        "days": 3218,
         "missing": []
       },
-      "total": 42526004
+      "total": 42808030
     },
     "string-trim-spaces-only": {
       "status": "current",
@@ -1843,14 +1843,14 @@
       "firstPublishedDay": "2018-02-13",
       "availability": "available",
       "file": "packages/string-trim-spaces-only.ndjson",
-      "sha256": "9faabfa95c83c597d08586bf907143dd01accd71bd93fe4b491a14fde9574292",
+      "sha256": "76d5cdce23d93de55fba360a640fab241b29d63d32696934fb4a78021479c903",
       "coverage": {
         "start": "2018-02-13",
-        "end": "2026-09-11",
-        "days": 3133,
+        "end": "2026-09-18",
+        "days": 3140,
         "missing": []
       },
-      "total": 34522217
+      "total": 34695886
     },
     "string-truncator": {
       "status": "current",
@@ -1858,14 +1858,14 @@
       "firstPublishedDay": "2022-06-16",
       "availability": "available",
       "file": "packages/string-truncator.ndjson",
-      "sha256": "6a5e3191e22c617f8db469a20724b42584b7c9f7bd93a949a57f22d986c5b812",
+      "sha256": "87e73391b7fdc2bddf27bde7d8278fdee211da2cfb19563d1ed6e141fe8da6ef",
       "coverage": {
         "start": "2022-06-16",
-        "end": "2026-09-11",
-        "days": 1549,
+        "end": "2026-09-18",
+        "days": 1556,
         "missing": []
       },
-      "total": 5797
+      "total": 5843
     },
     "string-typo-match": {
       "status": "current",
@@ -1873,14 +1873,14 @@
       "firstPublishedDay": "2026-09-05",
       "availability": "available",
       "file": "packages/string-typo-match.ndjson",
-      "sha256": "154f26383cb75db9bc837391bd77cfa11b8fddadcc70fbb6b69c91e2d2796843",
+      "sha256": "2f8430df2f652299b14b70fd55cef030a1f379ad9aa843c52abf7841f9faf421",
       "coverage": {
         "start": "2026-09-05",
-        "end": "2026-09-11",
-        "days": 7,
+        "end": "2026-09-18",
+        "days": 14,
         "missing": []
       },
-      "total": 239
+      "total": 396
     },
     "string-uglify": {
       "status": "current",
@@ -1888,14 +1888,14 @@
       "firstPublishedDay": "2019-06-21",
       "availability": "available",
       "file": "packages/string-uglify.ndjson",
-      "sha256": "2192705404d693dd3c7e74d49ec1a5efb488badaae64421590eec8b87110c54a",
+      "sha256": "d4ec1e930229ab661ffcc4d0ae9168bba785af86b3093f47c66e9b5abd39c5c0",
       "coverage": {
         "start": "2019-06-21",
-        "end": "2026-09-11",
-        "days": 2640,
+        "end": "2026-09-18",
+        "days": 2647,
         "missing": []
       },
-      "total": 3469649
+      "total": 3504897
     },
     "string-unfancy": {
       "status": "current",
@@ -1903,14 +1903,14 @@
       "firstPublishedDay": "2017-06-26",
       "availability": "available",
       "file": "packages/string-unfancy.ndjson",
-      "sha256": "8d560cdb4fc9a6e7d1878434751c97ebc358d73a04331d79d7076c96a89dc9a7",
+      "sha256": "0f02aed07b84a1f9a489d37446131db9c647c0cf0dd7d497a3182398462d2790",
       "coverage": {
         "start": "2017-06-26",
-        "end": "2026-09-11",
-        "days": 3365,
+        "end": "2026-09-18",
+        "days": 3372,
         "missing": []
       },
-      "total": 519387
+      "total": 519930
     },
     "stristri": {
       "status": "current",
@@ -1918,14 +1918,14 @@
       "firstPublishedDay": "2020-12-06",
       "availability": "available",
       "file": "packages/stristri.ndjson",
-      "sha256": "1ca9af166551ce014a6bf9c07a18ffeb4365d22dfe4ab6ab2be1f4804647d146",
+      "sha256": "3ef5a15d6ccd107849b346124382645711b1c70c7e868646b05b4d586ce1844f",
       "coverage": {
         "start": "2020-12-06",
-        "end": "2026-09-11",
-        "days": 2106,
+        "end": "2026-09-18",
+        "days": 2113,
         "missing": []
       },
-      "total": 36555
+      "total": 37015
     },
     "tap-parse-string-to-object": {
       "status": "current",
@@ -1933,14 +1933,14 @@
       "firstPublishedDay": "2019-12-09",
       "availability": "available",
       "file": "packages/tap-parse-string-to-object.ndjson",
-      "sha256": "68036bbe0d7edda5a66fe9098df51857579d36d03749b7b9293e7efab7ab1ad6",
+      "sha256": "e31e26f391a51db15ea6923193e8124dc065022beddabed86c70fe98e56e3110",
       "coverage": {
         "start": "2019-12-09",
-        "end": "2026-09-11",
-        "days": 2469,
+        "end": "2026-09-18",
+        "days": 2476,
         "missing": []
       },
-      "total": 20202
+      "total": 20301
     },
     "test-mixer": {
       "status": "current",
@@ -1948,14 +1948,14 @@
       "firstPublishedDay": "2020-12-06",
       "availability": "available",
       "file": "packages/test-mixer.ndjson",
-      "sha256": "6690e02abd8e9abc34235102d41edd2cea6860df56fbf1d369e9d2f52cf35650",
+      "sha256": "0edaa1556a50b8f1e3f5141aae83c656e0addcfa83f0bfd8c8bc94cff88fb4a1",
       "coverage": {
         "start": "2020-12-06",
-        "end": "2026-09-11",
-        "days": 2106,
+        "end": "2026-09-18",
+        "days": 2113,
         "missing": []
       },
-      "total": 4680051
+      "total": 4728700
     },
     "tsd-extract": {
       "status": "current",
@@ -1963,14 +1963,14 @@
       "firstPublishedDay": "2022-03-21",
       "availability": "available",
       "file": "packages/tsd-extract.ndjson",
-      "sha256": "477f90c1496b4dbfcf6838baaacfadba4bf73e200652d43cd76567df081c15f4",
+      "sha256": "76435ba3c4773bc6cbf9cda3fa78b03fcfc649a17e51ccf3aa866e82844c94cd",
       "coverage": {
         "start": "2022-03-21",
-        "end": "2026-09-11",
-        "days": 1636,
+        "end": "2026-09-18",
+        "days": 1643,
         "missing": []
       },
-      "total": 11424
+      "total": 11527
     },
     "tsd-extract-noesm": {
       "status": "current",
@@ -1978,14 +1978,14 @@
       "firstPublishedDay": "2022-04-06",
       "availability": "available",
       "file": "packages/tsd-extract-noesm.ndjson",
-      "sha256": "91aaf8444ca98b7a519af56a334b24f8b454ace0867470266547f3c2677b128b",
+      "sha256": "4d520b9ec8bb3157a65b28c8eb2282a972b5fb08107b505c53cf65594cd55a27",
       "coverage": {
         "start": "2022-04-06",
-        "end": "2026-09-11",
-        "days": 1620,
+        "end": "2026-09-18",
+        "days": 1627,
         "missing": []
       },
-      "total": 1720
+      "total": 1729
     },
     "update-versions": {
       "status": "current",
@@ -1993,14 +1993,14 @@
       "firstPublishedDay": "2019-01-27",
       "availability": "available",
       "file": "packages/update-versions.ndjson",
-      "sha256": "b99d745854e527b88abcffa1ad1a56210a17cdd044860c78b8ce651060f9adc8",
+      "sha256": "f5e42cda7055eff2f48dd934f69618dea953cf15d6dae8dc30c0d5a336967dab",
       "coverage": {
         "start": "2019-01-27",
-        "end": "2026-09-11",
-        "days": 2785,
+        "end": "2026-09-18",
+        "days": 2792,
         "missing": []
       },
-      "total": 55804
+      "total": 56104
     },
     "util-array-object-or-both": {
       "status": "current",
@@ -2008,14 +2008,14 @@
       "firstPublishedDay": "2017-06-14",
       "availability": "available",
       "file": "packages/util-array-object-or-both.ndjson",
-      "sha256": "c43e251ba47af634a91a8dab6a7d52e57750e9dec824d9c391573234e884f93c",
+      "sha256": "726208fbccc29c4483a73e2a4efeeb2c160ce526a5cf0c562edb0423dfb5a23e",
       "coverage": {
         "start": "2017-06-14",
-        "end": "2026-09-11",
-        "days": 3377,
+        "end": "2026-09-18",
+        "days": 3384,
         "missing": []
       },
-      "total": 402426
+      "total": 403240
     },
     "util-nonempty": {
       "status": "current",
@@ -2023,14 +2023,14 @@
       "firstPublishedDay": "2016-12-23",
       "availability": "available",
       "file": "packages/util-nonempty.ndjson",
-      "sha256": "37387c296d85b2c3a122f1d6caf2b8eaa55975f0349bb4a2ca09957ea20fd17f",
+      "sha256": "c8153c27d44d03c29aa3c63a95c86aa25e40d3f96c39d9b5efcca3c18becd10f",
       "coverage": {
         "start": "2016-12-23",
-        "end": "2026-09-11",
-        "days": 3550,
+        "end": "2026-09-18",
+        "days": 3557,
         "missing": []
       },
-      "total": 1309847
+      "total": 1315711
     }
   },
   "anomalies": [
@@ -2538,9 +2538,133 @@
         "test-mixer",
         "util-array-object-or-both"
       ]
+    },
+    {
+      "day": "2026-09-15",
+      "kind": "suspected-shared-zero",
+      "packages": [
+        "all-named-html-entities",
+        "array-includes-with-glob",
+        "array-pull-all-with-glob",
+        "arrayiffy-if-string",
+        "ast-compare",
+        "ast-get-values-by-key",
+        "ast-is-empty",
+        "ast-monkey",
+        "ast-monkey-traverse",
+        "ast-monkey-util",
+        "check-types-mini",
+        "codsen-format-diagnostic-value",
+        "codsen-glob",
+        "codsen-utils",
+        "color-shorthand-hex-to-six-digit",
+        "csv-split-easy",
+        "detergent",
+        "edit-package-json",
+        "email-comb",
+        "html-crush",
+        "html-entities-not-email-friendly",
+        "html-entity-codec",
+        "is-language-code",
+        "json-sort-cli",
+        "json-variables",
+        "object-boolean-combinations",
+        "object-merge-advanced",
+        "ranges-apply",
+        "ranges-crop",
+        "ranges-invert",
+        "ranges-merge",
+        "ranges-process-outside",
+        "ranges-push",
+        "ranges-sort",
+        "regex-empty-conditional-comments",
+        "remark-typography",
+        "string-apostrophes",
+        "string-character-is-astral-surrogate",
+        "string-collapse-leading-whitespace",
+        "string-collapse-white-space",
+        "string-dashes",
+        "string-extract-class-names",
+        "string-find-heads-tails",
+        "string-fix-broken-named-entities",
+        "string-left-right",
+        "string-match-left-right",
+        "string-range-expander",
+        "string-remove-duplicate-heads-tails",
+        "string-remove-thousand-separators",
+        "string-remove-widows",
+        "string-strip-html",
+        "string-trim-spaces-only",
+        "string-uglify",
+        "test-mixer",
+        "util-nonempty"
+      ]
+    },
+    {
+      "day": "2026-09-17",
+      "kind": "suspected-shared-zero",
+      "packages": [
+        "all-named-html-entities",
+        "array-includes-with-glob",
+        "array-pull-all-with-glob",
+        "arrayiffy-if-string",
+        "ast-compare",
+        "ast-get-values-by-key",
+        "ast-is-empty",
+        "ast-monkey",
+        "ast-monkey-traverse",
+        "ast-monkey-util",
+        "check-types-mini",
+        "codsen-format-diagnostic-value",
+        "codsen-glob",
+        "codsen-utils",
+        "color-shorthand-hex-to-six-digit",
+        "csv-split-easy",
+        "detergent",
+        "edit-package-json",
+        "email-comb",
+        "html-crush",
+        "html-entities-not-email-friendly",
+        "html-entity-codec",
+        "is-language-code",
+        "json-sort-cli",
+        "json-variables",
+        "object-boolean-combinations",
+        "object-delete-key",
+        "object-merge-advanced",
+        "ranges-apply",
+        "ranges-crop",
+        "ranges-invert",
+        "ranges-merge",
+        "ranges-process-outside",
+        "ranges-push",
+        "ranges-sort",
+        "regex-empty-conditional-comments",
+        "remark-typography",
+        "string-apostrophes",
+        "string-character-is-astral-surrogate",
+        "string-collapse-leading-whitespace",
+        "string-collapse-white-space",
+        "string-dashes",
+        "string-extract-class-names",
+        "string-find-heads-tails",
+        "string-fix-broken-named-entities",
+        "string-left-right",
+        "string-match-left-right",
+        "string-range-expander",
+        "string-remove-duplicate-heads-tails",
+        "string-remove-thousand-separators",
+        "string-remove-widows",
+        "string-strip-html",
+        "string-trim-spaces-only",
+        "string-uglify",
+        "test-mixer",
+        "util-array-object-or-both",
+        "util-nonempty"
+      ]
     }
   ],
   "retiredRevision": "27b8d38d7a523067e2ee7e26268bc5bdf0c6f144d9de06eaf7f91cd46bc74728",
-  "revision": "bc0d91870dc2d05a12b9a15adbca14a604b2ced9f1fe9ff1e8d5166838435bce",
-  "updatedAt": "2026-09-19T12:43:52.646Z"
+  "revision": "8e94b990ca2b27e73aac07c1376552418547176f9d9ab4c07700031b23b9e9f0",
+  "updatedAt": "2026-09-19T13:04:41.262Z"
 }
