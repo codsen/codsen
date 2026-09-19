@@ -26,7 +26,7 @@ export const perfStats: PerfStats = {
     "array-includes-with-glob": 107877,
     "array-pull-all-with-glob": 489630,
     "arrayiffy-if-string": 39706843,
-    "ast-compare": 9622,
+    "ast-compare": 13310,
     "ast-contains-only-empty-space": 1682352,
     "ast-deep-contains": 109267,
     "ast-delete-object": 397119,
@@ -222,7 +222,7 @@ export const perfStats: PerfStats = {
     "util-array-object-or-both",
     "util-nonempty"
   ],
-  "recordedRuns": 1003,
+  "recordedRuns": 1004,
   "regressionThresholdPercent": 10,
   "unchangedTolerancePercent": 2
 };

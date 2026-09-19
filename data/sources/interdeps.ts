@@ -38,8 +38,8 @@ export const interdeps = [
   },
   {
     "name": "ast-compare",
-    "tarballSizeBytes": 17012,
-    "unpackedSizeBytes": 51774,
+    "tarballSizeBytes": 16730,
+    "unpackedSizeBytes": 51949,
     "imports": [
       "codsen-utils"
     ]
@@ -60,8 +60,8 @@ export const interdeps = [
   },
   {
     "name": "ast-delete-object",
-    "tarballSizeBytes": 17889,
-    "unpackedSizeBytes": 50103,
+    "tarballSizeBytes": 17906,
+    "unpackedSizeBytes": 50122,
     "imports": [
       "ast-compare",
       "ast-monkey-traverse",
@@ -70,8 +70,8 @@ export const interdeps = [
   },
   {
     "name": "ast-get-object",
-    "tarballSizeBytes": 15586,
-    "unpackedSizeBytes": 43457,
+    "tarballSizeBytes": 15610,
+    "unpackedSizeBytes": 43397,
     "imports": [
       "ast-compare",
       "codsen-utils"
@@ -96,8 +96,8 @@ export const interdeps = [
   },
   {
     "name": "ast-loose-compare",
-    "tarballSizeBytes": 9402,
-    "unpackedSizeBytes": 23847,
+    "tarballSizeBytes": 9645,
+    "unpackedSizeBytes": 24881,
     "imports": [
       "ast-contains-only-empty-space",
       "codsen-utils"
@@ -105,8 +105,8 @@ export const interdeps = [
   },
   {
     "name": "ast-monkey",
-    "tarballSizeBytes": 36261,
-    "unpackedSizeBytes": 112103,
+    "tarballSizeBytes": 36281,
+    "unpackedSizeBytes": 112123,
     "imports": [
       "ast-compare",
       "ast-monkey-traverse",
@@ -513,8 +513,8 @@ export const interdeps = [
   },
   {
     "name": "object-delete-key",
-    "tarballSizeBytes": 21650,
-    "unpackedSizeBytes": 65322,
+    "tarballSizeBytes": 21718,
+    "unpackedSizeBytes": 65341,
     "imports": [
       "ast-compare",
       "codsen-utils"
