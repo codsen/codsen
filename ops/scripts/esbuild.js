@@ -8,6 +8,7 @@ import {
 } from "../helpers/browserCompatibility.js";
 import { devLogOriginsPlugin } from "../helpers/devLogOrigins.js";
 import { nodeTargetFromEngineRange } from "../helpers/nodeEngine.js";
+import { libraryEntries } from "../helpers/packageEntries.js";
 
 const arguments_ = process.argv.slice(2);
 if (
@@ -23,6 +24,7 @@ const name2 = path.basename(path.resolve("./"));
 
 const pkg = require2(path.join(path.resolve("./"), "package.json"));
 const nodeTarget = nodeTargetFromEngineRange(pkg.engines?.node);
+const entries = libraryEntries(pkg);
 
 // Builds must not leave output from older compiler layouts behind.
 rmSync(path.join(path.resolve("./"), "dist"), {
@@ -60,12 +62,9 @@ const banner = {
 };
 
 // ESM
-if (
-  (pkg.exports && (typeof pkg.exports === "string" || pkg.exports.default)) ||
-  !pkg.type
-) {
+for (const entry of entries.filter((item) => item.default)) {
   await esbuild.build({
-    entryPoints: [path.join(path.resolve("./"), "src/main.ts")],
+    entryPoints: [path.resolve(entry.source)],
     platform: "node",
     format: "esm",
     bundle: true,
@@ -73,7 +72,7 @@ if (
     minify: !isDevelopment,
     sourcemap: false,
     target: [nodeTarget],
-    outfile: path.join(path.resolve("./"), `dist/${name2}.esm.js`),
+    outfile: path.resolve(entry.default),
     // pure,
     banner,
     external: external2,
@@ -82,9 +81,9 @@ if (
 }
 
 // IIFE
-if (pkg.exports?.script) {
+for (const entry of entries.filter((item) => item.script)) {
   await esbuild.build({
-    entryPoints: [path.join(path.resolve("./"), "src/main.ts")],
+    entryPoints: [path.resolve(entry.source)],
     format: "iife",
     globalName: iifeGlobalName(name2),
     bundle: true,
@@ -92,7 +91,7 @@ if (pkg.exports?.script) {
     minify: !isDevelopment,
     sourcemap: false,
     target: [IIFE_BROWSER_POLICY.esbuildTarget],
-    outfile: path.join(path.resolve("./"), `dist/${name2}.umd.js`),
+    outfile: path.resolve(entry.script),
     // pure,
     banner,
     // no "external" - bundle everything

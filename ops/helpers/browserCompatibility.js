@@ -375,6 +375,7 @@ function astMonkeySmoke(api, equal) {
       typeof api.get,
       typeof api.set,
       typeof api.traverse,
+      typeof api.traverseWithLookahead,
       typeof api.version,
     ],
     [
@@ -386,10 +387,27 @@ function astMonkeySmoke(api, equal) {
       "function",
       "function",
       "function",
+      "function",
       "string",
     ],
   );
   equal(api.DELETE === Symbol.for("ast-monkey-traverse.delete"), true);
+  var observed = [];
+  equal(
+    api.traverseWithLookahead(
+      { a: { b: 1 }, c: 2 },
+      (_key, _value, info) => {
+        observed.push([info.path, info.next.map((item) => item[2].path)]);
+      },
+      1,
+    ),
+    undefined,
+  );
+  equal(observed, [
+    ["a", ["a.b"]],
+    ["a.b", ["c"]],
+    ["c", []],
+  ]);
   equal(api.find({ a: 1 }, { key: "a" }), [
     { index: 1, key: "a", val: 1, path: [1] },
   ]);

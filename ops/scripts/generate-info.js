@@ -17,6 +17,7 @@ import {
 import { writeGeneratedFile } from "../helpers/generatedFiles.js";
 import { npmPackageSizes } from "../helpers/npmPackageSizes.js";
 import { missingPackageBuildArtifacts } from "../helpers/packageBuildArtifacts.js";
+import { rootExport } from "../helpers/packageEntries.js";
 import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
 import { readPackageKindResolver } from "../helpers/packageKindsFile.js";
 import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
@@ -158,7 +159,7 @@ for (let packageName of packageNames) {
     if (packageJsonContents.bin) {
       cliPackages.push(name);
     }
-    if (packageJsonContents.exports?.script) {
+    if (rootExport(packageJsonContents)?.script) {
       scriptAvailable.push(name);
     }
     // also present in ./ops/lect/lect.js:

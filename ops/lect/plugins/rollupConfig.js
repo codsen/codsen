@@ -1,6 +1,7 @@
 import path from "node:path";
 import objectPath from "object-path";
 import { writeGeneratedFile } from "../../helpers/generatedFiles.js";
+import { libraryEntries } from "../../helpers/packageEntries.js";
 import { PACKAGE_KINDS } from "../../helpers/packageKinds.js";
 
 // writes rollup.config.js
@@ -13,7 +14,20 @@ async function rollupConfig({ mode, state }) {
   if (objectPath.has(state.pack, "exports")) {
     try {
       await writeGeneratedFile({
-        contents: `import json from "@rollup/plugin-json";
+        contents:
+          libraryEntries(state.pack).length > 1
+            ? `import { readFileSync } from "node:fs";
+
+import { declarationEntries } from "../../ops/helpers/declarationEntries.js";
+
+export default () =>
+  declarationEntries(
+    JSON.parse(
+      readFileSync(new URL("./package.json", import.meta.url), "utf8"),
+    ),
+  );
+`
+            : `import json from "@rollup/plugin-json";
 import dts from "rollup-plugin-dts";
 
 export default () => [

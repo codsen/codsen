@@ -14,6 +14,7 @@ import {
   iifeGlobalName,
 } from "../helpers/browserCompatibility.js";
 import { findUnsupportedIifeRegexpSyntax } from "../helpers/browserRegexpSyntax.js";
+import { rootExport } from "../helpers/packageEntries.js";
 import { readWorkspaceRecords } from "../helpers/workspaceInventoryFile.js";
 
 const repositoryRoot = path.resolve(
@@ -61,7 +62,7 @@ function parseArguments(argv) {
 function discoverIifePackages() {
   const packages = [];
   for (const { directory, manifest } of readWorkspaceRecords(repositoryRoot)) {
-    const scriptExport = manifest.exports?.script;
+    const scriptExport = rootExport(manifest)?.script;
     if (!scriptExport) {
       continue;
     }

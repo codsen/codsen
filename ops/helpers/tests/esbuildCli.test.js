@@ -9,7 +9,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { test } from "uvu";
 import { equal, match } from "uvu/assert";
@@ -78,10 +78,9 @@ function runBuild(root, { args = [], ambientDev } = {}) {
 }
 
 function readOutputs(root) {
-  const outputStem = path.basename(root);
   return {
-    esm: readFileSync(path.join(root, `dist/${outputStem}.esm.js`), "utf8"),
-    iife: readFileSync(path.join(root, `dist/${outputStem}.umd.js`), "utf8"),
+    esm: readFileSync(path.join(root, "dist/index.js"), "utf8"),
+    iife: readFileSync(path.join(root, "dist/browser.js"), "utf8"),
   };
 }
 
@@ -175,6 +174,55 @@ test("04 - unknown mode flags fail before deleting output", () => {
       "04.02",
     );
     equal(existsSync(marker), true, "04.03");
+  } finally {
+    rmSync(root, { force: true, recursive: true });
+  }
+});
+
+test("05 - nested root exports preserve scripts and isolate subpath loading", async () => {
+  const root = createFixture();
+  try {
+    const filename = path.join(root, "package.json");
+    const manifest = JSON.parse(readFileSync(filename, "utf8"));
+    manifest.exports = {
+      ".": manifest.exports,
+      "./traverse": {
+        default: "./dist/traverse.js",
+        types: "./types/traverse.d.ts",
+      },
+    };
+    writeFileSync(filename, JSON.stringify(manifest));
+    writeFileSync(
+      path.join(root, "src/traverse.ts"),
+      'export const DELETE: unique symbol = Symbol.for("fixture.delete");\n',
+    );
+    writeFileSync(
+      path.join(root, "src/main.ts"),
+      'export { DELETE } from "./traverse.js";\nexport const helpers = "root-only-heavy-helper";\n',
+    );
+
+    const result = runBuild(root);
+    equal(result.status, 0, "05.01");
+    const rootApi = await import(
+      pathToFileURL(path.join(root, "dist/index.js")).href
+    );
+    const slimApi = await import(
+      pathToFileURL(path.join(root, "dist/traverse.js")).href
+    );
+    equal(rootApi.DELETE === slimApi.DELETE, true, "05.02");
+    equal(Object.keys(slimApi), ["DELETE"], "05.03");
+    equal(
+      readFileSync(path.join(root, "dist/traverse.js"), "utf8").includes(
+        "root-only-heavy-helper",
+      ),
+      false,
+      "05.04",
+    );
+    equal(
+      readOutputs(root).iife.includes("root-only-heavy-helper"),
+      true,
+      "05.05",
+    );
   } finally {
     rmSync(root, { force: true, recursive: true });
   }

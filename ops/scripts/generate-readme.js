@@ -54,7 +54,7 @@ Please [visit codsen.com](https://codsen.com/os/) for an overview and full docum
 
 ## 🌐 Browser bundles
 
-Packages whose \`package.json\` declares \`exports.script\` ship a classic-script IIFE at that path and support Chromium ${IIFE_BROWSER_POLICY.minimumMajor} and later. The bundle exposes its named exports on \`window\` under the lower-camel-cased package name: remove each hyphen and uppercase the following character. For example, \`codsen-utils\` uses \`window.${iifeGlobalName("codsen-utils")}\`. The historical \`*.umd.js\` filename is retained for CDN compatibility even though the emitted format is IIFE.
+Packages whose \`package.json\` declares a root \`script\` export (\`exports.script\` or \`exports["."].script\`) ship a classic-script IIFE at that path and support Chromium ${IIFE_BROWSER_POLICY.minimumMajor} and later. The bundle exposes its named exports on \`window\` under the lower-camel-cased package name: remove each hyphen and uppercase the following character. For example, \`codsen-utils\` uses \`window.${iifeGlobalName("codsen-utils")}\`. The historical \`*.umd.js\` filename is retained for CDN compatibility even though the emitted format is IIFE.
 
 ## 🛠️ Tech stack
 

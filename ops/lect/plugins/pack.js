@@ -5,6 +5,7 @@ import sortPackageJson, { sortOrder } from "sort-package-json";
 import { coverageConfigForPackage } from "../../helpers/coveragePolicy.js";
 import { writeGeneratedFile } from "../../helpers/generatedFiles.js";
 import { formatGeneratedContents } from "../../helpers/generatedFormatting.js";
+import { libraryEntries } from "../../helpers/packageEntries.js";
 import { PACKAGE_KINDS } from "../../helpers/packageKinds.js";
 
 function format(obj) {
@@ -45,6 +46,16 @@ function normalisePackageJson({
     content.scripts = { ...objectPath.get(lectrc, "scripts.cli") };
   } else {
     content.scripts = { ...objectPath.get(lectrc, "scripts.rollup") };
+    if (
+      state.packageKind === PACKAGE_KINDS.TYPESCRIPT_LIBRARY &&
+      state.pack.exports !== undefined &&
+      libraryEntries(state.pack).length > 1
+    ) {
+      content.scripts.dts = content.scripts.dts.replace(
+        "types/index.d.ts",
+        "types",
+      );
+    }
   }
 
   // if perf script mentions "skip", don't change it

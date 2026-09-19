@@ -7,6 +7,7 @@ import { isDeepStrictEqual } from "node:util";
 import { createCodsenPackageLists } from "../helpers/codsenPackages.js";
 import { dependencyStatuses } from "../helpers/dependencyStatuses.js";
 import { projectFirstPublishedAt } from "../helpers/firstPublishedAt.js";
+import { rootExport } from "../helpers/packageEntries.js";
 import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
 import { readPackageKindResolver } from "../helpers/packageKindsFile.js";
 
@@ -196,7 +197,7 @@ async function verifyData() {
     if (manifest.bin) {
       cliNames.push(manifest.name);
     }
-    if (manifest.exports?.script) {
+    if (rootExport(manifest)?.script) {
       scriptNames.push(manifest.name);
     }
     if (kind === PACKAGE_KINDS.TYPESCRIPT_LIBRARY) {
