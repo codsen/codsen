@@ -1,0 +1,654 @@
+{
+  "schemaVersion": 1,
+  "coverage": [
+    {
+      "target": "html-crush",
+      "caseId": "html-void-br",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "html-void-wbr",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "html-unquoted-solidus",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "html-separated-solidus",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "html-double-quoted-greater-than",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "html-single-quoted-greater-than",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "html-boolean-attribute",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "html-ascii-case",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "html-named-references",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "html-numeric-recovery",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "html-reference-context",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "html-textarea-rcdata",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "html-title-rcdata",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "html-comments",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "html-doctype",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "html-optional-end-tags",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "html-foreign-self-close",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "html-unquoted-class-solidus",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "css-comments",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "css-hex-escape",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "css-escaped-punctuation",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "css-string-delimiters",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "css-url-delimiters",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "css-attribute-selector",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "css-is-selector",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "css-not-selector",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "css-nested-conditional",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "css-custom-properties",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "css-nesting",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "css-font-face",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "js-template-lines",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "js-regexp",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "js-line-comment",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "js-html-like-string",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "js-modern-operators",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "html-crush",
+      "caseId": "js-end-tag-prefix",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "html-void-br",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "html-void-wbr",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "html-unquoted-solidus",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "html-separated-solidus",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "html-double-quoted-greater-than",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "html-single-quoted-greater-than",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "html-boolean-attribute",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "html-ascii-case",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "html-named-references",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "html-numeric-recovery",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "html-reference-context",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "html-textarea-rcdata",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "html-title-rcdata",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "html-comments",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "html-doctype",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "html-optional-end-tags",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "html-foreign-self-close",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "html-unquoted-class-solidus",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "css-comments",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "css-hex-escape",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "css-escaped-punctuation",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "css-string-delimiters",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "css-url-delimiters",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "css-attribute-selector",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "css-is-selector",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "css-not-selector",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "css-nested-conditional",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "css-custom-properties",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "css-nesting",
+      "profile": "default",
+      "status": "known-failure",
+      "reason": "Nested selector usage is not inventoried by the current declaration scanner; child class removal can invalidate retained nested CSS. Requires a scoped nesting grammar update."
+    },
+    {
+      "target": "email-comb",
+      "caseId": "css-font-face",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "js-template-lines",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "js-regexp",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "js-line-comment",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "js-html-like-string",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "js-modern-operators",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "email-comb",
+      "caseId": "js-end-tag-prefix",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "html-void-br",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "html-void-wbr",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "html-unquoted-solidus",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "html-separated-solidus",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "html-double-quoted-greater-than",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "html-single-quoted-greater-than",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "html-boolean-attribute",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "html-ascii-case",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "html-named-references",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "html-numeric-recovery",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "html-reference-context",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "html-textarea-rcdata",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "html-title-rcdata",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "html-comments",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "html-doctype",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "html-optional-end-tags",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "html-foreign-self-close",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "html-unquoted-class-solidus",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "css-comments",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "css-hex-escape",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "css-escaped-punctuation",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "css-string-delimiters",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "css-url-delimiters",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "css-attribute-selector",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "css-is-selector",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "css-not-selector",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "css-nested-conditional",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "css-custom-properties",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "css-nesting",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "css-font-face",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "js-template-lines",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "js-regexp",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "js-line-comment",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "js-html-like-string",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "js-modern-operators",
+      "profile": "default",
+      "status": "covered"
+    },
+    {
+      "target": "string-strip-html",
+      "caseId": "js-end-tag-prefix",
+      "profile": "default",
+      "status": "covered"
+    }
+  ]
+}

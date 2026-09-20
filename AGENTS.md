@@ -408,6 +408,22 @@ contain committed legacy fixtures such as old Vue.js distributions.
 - Do not run Biome directly on files inside these directories or replace the
   global exclusion with tool-specific formatter or linter exceptions.
 
+## Standards-derived package tests
+
+`ops/standards/README.md` describes the shared standards catalogue. Read it when
+adding or updating standards-derived HTML, CSS, or JavaScript cases.
+
+- Keep pinned sources, provenance, requirements, and input cases shared, while
+  keeping reviewed expected results in each package's ordinary unit suite.
+- Give every selected case a disposition for every selected library. Keep known
+  failures and unharvested work visible; do not count skips as passing coverage.
+- Run `npm run standards:check` after changing cases, mappings, source pins, or
+  associated package tests. Use `npm run standards:project` to refresh local
+  fixtures; ordinary tests must not fetch sources or regenerate inputs.
+- Refresh official sources explicitly with `npm run standards:refresh`, then
+  review changes before updating expectations. Current implementation output
+  is not an independent oracle for the expected result.
+
 ## Performance is a product requirement
 
 Runtime performance is one of the primary aims of publishing these open-source

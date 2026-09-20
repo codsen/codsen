@@ -1,0 +1,487 @@
+{
+  "schemaVersion": 1,
+  "notice": "Abridged machine extracts. Examples preserve text content; definitions normalize whitespace. Unchanged archived documents and their notices remain authoritative.",
+  "extracts": [
+    {
+      "source": "html-syntax",
+      "sha256": "3520c542e9e9297f01adac1e397df753b81ffe4861418be78c3bcd935356fe47",
+      "sections": [
+        {
+          "anchor": "elements-2",
+          "text": "13.1.2 Elements There are six different kinds of elements: void elements, the template element, raw text elements, escapable raw text elements, foreign elements, and normal elements. Void elementsarea, base, br, col, embed, hr, img, input, link, meta, source, track, wbrThe template elementtemplateRaw text elementsscript, styleEscapable raw text elementstextarea, titleForeign elementsElements from the MathML namespace and the SVG namespace.Normal elementsAll other allowed HTML elements are normal elements. Tags are used to delimit the start and end of elements in the markup. Raw text, escapable raw text, and normal elements have a start tag to indicate where they begin, and an end tag to indicate where they end. The start and end tags of certain normal elements can be omitted, as described below in the section on optional tags. Those that cannot be omitted must not be omitted. Void elements only have a start tag; end tags must not be specified for void elements. Foreign elements must either have a start tag and an end tag, or a start tag that is marked as self-closing, in which case they must not have an end tag. The contents of the element must be placed between just after the start tag (which might be implied, in certain cases) and just before the end tag (which again, might be implied in certain cases). The exact allowed contents of each individual element depend on the content model of that element, as described earlier in this specification. Elements must not contain content that their content model disallows. In addition to the restrictions placed on the contents by those content models, however, the five types of elements have additional syntactic requirements. Void elements can't have any contents (since there's no end tag, no content can be put between the start tag and the end tag). The template element can have template contents, but such template contents are not children of the template element itself. Instead, they are stored in a DocumentFragment associated with a different Document — without a browsing context — so as to avoid the template contents interfering with the main Document. The markup for the template contents of a template element is placed just after the template element's start tag and just before template element's end tag (as with other elements), and may consist of any text, character references, elements, and comments, but the text must not contain the character U+003C LESS-THAN SIGN (<) or an ambiguous ampersand. Raw text elements can have text, though it has restrictions described below. Escapable raw text elements can have text and character references, but the text must not contain an ambiguous ampersand. There are also further restrictions described below. Foreign elements whose start tag is marked as self-closing can't have any contents (since, again, as there's no end tag, no content can be put between the start tag and the end tag). Foreign elements whose start tag is not marked as self-closing can have text, character references, CDATA sections, other elements, and comments, but the text must not contain the character U+003C LESS-THAN SIGN (<) or an ambiguous ampersand. The HTML syntax does not support namespace declarations, even in foreign elements. For instance, consider the following HTML fragment: <p> <svg> <metadata> <!-- this is invalid --> <cdr:license xmlns:cdr=\"https://www.example.com/cdr/metadata\" name=\"MIT\"/> </metadata> </svg> </p> The innermost element, cdr:license, is actually in the SVG namespace, as the \"xmlns:cdr\" attribute has no effect (unlike in XML). In fact, as the comment in the fragment above says, the fragment is actually non-conforming. This is because SVG 2 does not define any elements called \"cdr:license\" in the SVG namespace. Normal elements can have text, character references, other elements, and comments, but the text must not contain the character U+003C LESS-THAN SIGN (<) or an ambiguous ampersand. Some normal elements also have yet more restrictions on",
+          "truncated": true,
+          "examples": [
+            {
+              "text": "<p>\n <svg>\n  <metadata>\n   <!-- this is invalid -->\n   <cdr:license xmlns:cdr=\"https://www.example.com/cdr/metadata\" name=\"MIT\"/>\n  </metadata>\n </svg>\n</p>",
+              "truncated": false
+            },
+            {
+              "text": "<input disabled>",
+              "truncated": false
+            },
+            {
+              "text": "<input value=yes>",
+              "truncated": false
+            },
+            {
+              "text": "<input type='checkbox'>",
+              "truncated": false
+            }
+          ],
+          "omittedExamples": 19
+        },
+        {
+          "anchor": "start-tags",
+          "text": "13.1.2.1 Start tags Start tags must have the following format: The first character of a start tag must be a U+003C LESS-THAN SIGN character (<).The next few characters of a start tag must be the element's tag name.If there are to be any attributes in the next step, there must first be one or more ASCII whitespace.Then, the start tag may have a number of attributes, the syntax for which is described below. Attributes must be separated from each other by one or more ASCII whitespace.After the attributes, or after the tag name if there are no attributes, there may be one or more ASCII whitespace. (Some attributes are required to be followed by a space. See the attributes section below.)Then, if the element is one of the void elements, or if the element is a foreign element, then there may be a single U+002F SOLIDUS character (/), which on foreign elements marks the start tag as self-closing. On void elements, it does not mark the start tag as self-closing but instead is unnecessary and has no effect of any kind. For such void elements, it should be used only with caution — especially since, if directly preceded by an unquoted attribute value, it becomes part of the attribute value rather than being discarded by the parser.Finally, start tags must be closed by a U+003E GREATER-THAN SIGN character (>).",
+          "truncated": false,
+          "examples": [],
+          "omittedExamples": 0
+        },
+        {
+          "anchor": "attributes-2",
+          "text": "13.1.2.3 Attributes Attributes for an element are expressed inside the element's start tag. Attributes have a name and a value. Attribute names must consist of one or more characters other than controls, U+0020 SPACE, U+0022 (\"), U+0027 ('), U+003E (>), U+002F (/), U+003D (=), and noncharacters. In the HTML syntax, attribute names, even those for foreign elements, may be written with any mix of ASCII lower and ASCII upper alphas. Attribute values are a mixture of text and character references, except with the additional restriction that the text cannot contain an ambiguous ampersand. Attributes can be specified in four different ways: Empty attribute syntax Just the attribute name. The value is implicitly the empty string. In the following example, the disabled attribute is given with the empty attribute syntax: <input disabled> If an attribute using the empty attribute syntax is to be followed by another attribute, then there must be ASCII whitespace separating the two. Unquoted attribute value syntax The attribute name, followed by zero or more ASCII whitespace, followed by a single U+003D EQUALS SIGN character, followed by zero or more ASCII whitespace, followed by the attribute value, which, in addition to the requirements given above for attribute values, must not contain any literal ASCII whitespace, any U+0022 QUOTATION MARK characters (\"), U+0027 APOSTROPHE characters ('), U+003D EQUALS SIGN characters (=), U+003C LESS-THAN SIGN characters (<), U+003E GREATER-THAN SIGN characters (>), or U+0060 GRAVE ACCENT characters (`), and must not be the empty string. In the following example, the value attribute is given with the unquoted attribute value syntax: <input value=yes> If an attribute using the unquoted attribute syntax is to be followed by another attribute or by the optional U+002F SOLIDUS character (/) allowed in step 6 of the start tag syntax above, then there must be ASCII whitespace separating the two. Single-quoted attribute value syntax The attribute name, followed by zero or more ASCII whitespace, followed by a single U+003D EQUALS SIGN character, followed by zero or more ASCII whitespace, followed by a single U+0027 APOSTROPHE character ('), followed by the attribute value, which, in addition to the requirements given above for attribute values, must not contain any literal U+0027 APOSTROPHE characters ('), and finally followed by a second single U+0027 APOSTROPHE character ('). In the following example, the type attribute is given with the single-quoted attribute value syntax: <input type='checkbox'> If an attribute using the single-quoted attribute syntax is to be followed by another attribute, then there must be ASCII whitespace separating the two. Double-quoted attribute value syntax The attribute name, followed by zero or more ASCII whitespace, followed by a single U+003D EQUALS SIGN character, followed by zero or more ASCII whitespace, followed by a single U+0022 QUOTATION MARK character (\"), followed by the attribute value, which, in addition to the requirements given above for attribute values, must not contain any literal U+0022 QUOTATION MARK characters (\"), and finally followed by a second single U+0022 QUOTATION MARK character (\"). In the following example, the name attribute is given with the double-quoted attribute value syntax: <input name=\"be evil\"> If an attribute using the double-quoted attribute syntax is to be followed by another attribute, then there must be ASCII whitespace separating the two. There must never be two or more attributes on the same start tag whose names are an ASCII case-insensitive match for each other. When a foreign element has one of the namespaced attributes given by the local name and namespace of the first and second cells of a row from the following table, it must be written using the name given by the third cell from the same row. Local name Namespace Attribute name actuate XLink namespace xlink:actuate arcrole XLink namespace xlink:arcrole href XLink namespace x",
+          "truncated": true,
+          "examples": [
+            {
+              "text": "<input disabled>",
+              "truncated": false
+            },
+            {
+              "text": "<input value=yes>",
+              "truncated": false
+            },
+            {
+              "text": "<input type='checkbox'>",
+              "truncated": false
+            },
+            {
+              "text": "<input name=\"be evil\">",
+              "truncated": false
+            }
+          ],
+          "omittedExamples": 0
+        },
+        {
+          "anchor": "the-doctype",
+          "text": "13.1.1 The DOCTYPE A DOCTYPE is a required preamble. DOCTYPEs are required for legacy reasons. When omitted, browsers tend to use a different rendering mode that is incompatible with some specifications. Including the DOCTYPE in a document ensures that the browser makes a best-effort attempt at following the relevant specifications. A DOCTYPE must consist of the following components, in this order: A string that is an ASCII case-insensitive match for the string \"<!DOCTYPE\".One or more ASCII whitespace.A string that is an ASCII case-insensitive match for the string \"html\".Optionally, a DOCTYPE legacy string.Zero or more ASCII whitespace.A U+003E GREATER-THAN SIGN character (>). In other words, <!DOCTYPE html>, case-insensitively. For the purposes of HTML generators that cannot output HTML markup with the short DOCTYPE \"<!DOCTYPE html>\", a DOCTYPE legacy string may be inserted into the DOCTYPE (in the position defined above). This string must consist of: One or more ASCII whitespace.A string that is an ASCII case-insensitive match for the string \"SYSTEM\".One or more ASCII whitespace.A U+0022 QUOTATION MARK or U+0027 APOSTROPHE character (the quote mark).The literal string \"about:legacy-compat\".A matching U+0022 QUOTATION MARK or U+0027 APOSTROPHE character (i.e. the same character as in the earlier step labeled quote mark). In other words, <!DOCTYPE html SYSTEM \"about:legacy-compat\"> or <!DOCTYPE html SYSTEM 'about:legacy-compat'>, case-insensitively except for the part in single or double quotes. The DOCTYPE legacy string should not be used unless the document is generated from a system that cannot output the shorter string.",
+          "truncated": false,
+          "examples": [],
+          "omittedExamples": 0
+        },
+        {
+          "anchor": "optional-tags",
+          "text": "13.1.2.4 Optional tags Certain tags can be omitted. Omitting an element's start tag in the situations described below does not mean the element is not present; it is implied, but it is still there. For example, an HTML document always has a root html element, even if the string <html> doesn't appear anywhere in the markup. An html element's start tag may be omitted if the first thing inside the html element is not a comment. For example, in the following case it's ok to remove the \"<html>\" tag: <!DOCTYPE HTML> <html> <head> <title>Hello</title> </head> <body> <p>Welcome to this example.</p> </body> </html> Doing so would make the document look like this: <!DOCTYPE HTML> <head> <title>Hello</title> </head> <body> <p>Welcome to this example.</p> </body> </html> This has the exact same DOM. In particular, note that whitespace around the document element is ignored by the parser. The following example would also have the exact same DOM: <!DOCTYPE HTML><head> <title>Hello</title> </head> <body> <p>Welcome to this example.</p> </body> </html> However, in the following example, removing the start tag moves the comment to before the html element: <!DOCTYPE HTML> <html> <!-- where is this comment in the DOM? --> <head> <title>Hello</title> </head> <body> <p>Welcome to this example.</p> </body> </html> With the tag removed, the document actually turns into the same as this: <!DOCTYPE HTML> <!-- where is this comment in the DOM? --> <html> <head> <title>Hello</title> </head> <body> <p>Welcome to this example.</p> </body> </html> This is why the tag can only be removed if it is not followed by a comment: removing the tag when there is a comment there changes the document's resulting parse tree. Of course, if the position of the comment does not matter, then the tag can be omitted, as if the comment had been moved to before the start tag in the first place. An html element's end tag may be omitted if the html element is not immediately followed by a comment. A head element's start tag may be omitted if the element is empty, or if the first thing inside the head element is an element. A head element's end tag may be omitted if the head element is not immediately followed by ASCII whitespace or a comment. A body element's start tag may be omitted if the element is empty, or if the first thing inside the body element is not ASCII whitespace or a comment, except if the first thing inside the body element is a meta, noscript, link, script, style, or template element. A body element's end tag may be omitted if the body element is not immediately followed by a comment. Note that in the example above, the head element start and end tags, and the body element start tag, can't be omitted, because they are surrounded by whitespace: <!DOCTYPE HTML> <html> <head> <title>Hello</title> </head> <body> <p>Welcome to this example.</p> </body> </html> (The body and html element end tags could be omitted without trouble; any spaces after those get parsed into the body element anyway.) Usually, however, whitespace isn't an issue. If we first remove the whitespace we don't care about: <!DOCTYPE HTML><html><head><title>Hello</title></head><body><p>Welcome to this example.</p></body></html> Then we can omit a number of tags without affecting the DOM: <!DOCTYPE HTML><title>Hello</title><p>Welcome to this example.</p> At that point, we can also add some whitespace back: <!DOCTYPE HTML> <title>Hello</title> <p>Welcome to this example.</p> This would be equivalent to this document, with the omitted tags shown in their parser-implied positions; the only whitespace text node that results from this is the newline at the end of the head element: <!DOCTYPE HTML> <html><head><title>Hello</title> </head><body><p>Welcome to this example.</p></body></html> An li element's end tag may be omitted if the li element is immediately followed by another li element or if there is no more content in the parent element. A dt element's end tag may be omitted if the dt element is immedia",
+          "truncated": true,
+          "examples": [
+            {
+              "text": "<!DOCTYPE HTML>\n<html>\n  <head>\n    <title>Hello</title>\n  </head>\n  <body>\n    <p>Welcome to this example.</p>\n  </body>\n</html>",
+              "truncated": false
+            },
+            {
+              "text": "<!DOCTYPE HTML>\n\n  <head>\n    <title>Hello</title>\n  </head>\n  <body>\n    <p>Welcome to this example.</p>\n  </body>\n</html>",
+              "truncated": false
+            },
+            {
+              "text": "<!DOCTYPE HTML><head>\n    <title>Hello</title>\n  </head>\n  <body>\n    <p>Welcome to this example.</p>\n  </body>\n</html>",
+              "truncated": false
+            },
+            {
+              "text": "<!DOCTYPE HTML>\n<html>\n  <!-- where is this comment in the DOM? -->\n  <head>\n    <title>Hello</title>\n  </head>\n  <body>\n    <p>Welcome to this example.</p>\n  </body>\n</html>",
+              "truncated": false
+            }
+          ],
+          "omittedExamples": 12
+        },
+        {
+          "anchor": "comments",
+          "text": "13.1.6 Comments Comments must have the following format: The string \"<!--\".Optionally, text, with the additional restriction that the text must not start with the string \">\", nor start with the string \"->\", nor contain the strings \"<!--\", \"-->\", or \"--!>\", nor end with the string \"<!-\".The string \"-->\". The text is allowed to end with the string \"<!\", as in <!--My favorite operators are > and <!-->.",
+          "truncated": false,
+          "examples": [],
+          "omittedExamples": 0
+        }
+      ]
+    },
+    {
+      "source": "html-parsing",
+      "sha256": "4cb449c557673a653114254b3e51d5f8f0a52de6ed1b7cfee7f4b0dae24d2ca5",
+      "sections": [
+        {
+          "anchor": "named-character-reference-state",
+          "text": "13.2.5.78 Named character reference state Consume the maximum number of characters possible, where the consumed characters are one of the identifiers in the first column of the named character references table. Append each character to the temporary buffer when it's consumed. If there is a match If the character reference was consumed as part of an attribute, and the last character matched is not a U+003B SEMICOLON character (;), and the next input character is either a U+003D EQUALS SIGN character (=) or an ASCII alphanumeric, then, for historical reasons, flush code points consumed as a character reference and switch to the return state. Otherwise: If the last character matched is not a U+003B SEMICOLON character (;), then this is a missing-semicolon-after-character-reference parse error.Set the temporary buffer to the empty string. Append one or two characters corresponding to the character reference name (as given by the second column of the named character references table) to the temporary buffer.Flush code points consumed as a character reference. Switch to the return state. OtherwiseFlush code points consumed as a character reference. Switch to the ambiguous ampersand state. If the markup contains (not in an attribute) the string I'm &notit; I tell you, the character reference is parsed as \"not\", as in, I'm ¬it; I tell you (and this is a parse error). But if the markup was I'm &notin; I tell you, the character reference would be parsed as \"notin;\", resulting in I'm ∉ I tell you (and no parse error). However, if the markup contains the string I'm &notit; I tell you in an attribute, no character reference is parsed and string remains intact (and there is no parse error).",
+          "truncated": false,
+          "examples": [],
+          "omittedExamples": 0
+        },
+        {
+          "anchor": "numeric-character-reference-end-state",
+          "text": "13.2.5.84 Numeric character reference end state Check the character reference code: If the number is 0x00, then this is a null-character-reference parse error. Set the character reference code to 0xFFFD.If the number is greater than 0x10FFFF, then this is a character-reference-outside-unicode-range parse error. Set the character reference code to 0xFFFD.If the number is a surrogate, then this is a surrogate-character-reference parse error. Set the character reference code to 0xFFFD.If the number is a noncharacter, then this is a noncharacter-character-reference parse error.If the number is 0x0D, or a control that's not ASCII whitespace, then this is a control-character-reference parse error. If the number is one of the numbers in the first column of the following table, then find the row with that number in the first column, and set the character reference code to the number in the second column of that row. Number Code point 0x80 0x20AC EURO SIGN (€) 0x82 0x201A SINGLE LOW-9 QUOTATION MARK (‚) 0x83 0x0192 LATIN SMALL LETTER F WITH HOOK (ƒ) 0x84 0x201E DOUBLE LOW-9 QUOTATION MARK („) 0x85 0x2026 HORIZONTAL ELLIPSIS (…) 0x86 0x2020 DAGGER (†) 0x87 0x2021 DOUBLE DAGGER (‡) 0x88 0x02C6 MODIFIER LETTER CIRCUMFLEX ACCENT (ˆ) 0x89 0x2030 PER MILLE SIGN (‰) 0x8A 0x0160 LATIN CAPITAL LETTER S WITH CARON (Š) 0x8B 0x2039 SINGLE LEFT-POINTING ANGLE QUOTATION MARK (‹) 0x8C 0x0152 LATIN CAPITAL LIGATURE OE (Œ) 0x8E 0x017D LATIN CAPITAL LETTER Z WITH CARON (Ž) 0x91 0x2018 LEFT SINGLE QUOTATION MARK (‘) 0x92 0x2019 RIGHT SINGLE QUOTATION MARK (’) 0x93 0x201C LEFT DOUBLE QUOTATION MARK (“) 0x94 0x201D RIGHT DOUBLE QUOTATION MARK (”) 0x95 0x2022 BULLET (•) 0x96 0x2013 EN DASH (–) 0x97 0x2014 EM DASH (—) 0x98 0x02DC SMALL TILDE (˜) 0x99 0x2122 TRADE MARK SIGN (™) 0x9A 0x0161 LATIN SMALL LETTER S WITH CARON (š) 0x9B 0x203A SINGLE RIGHT-POINTING ANGLE QUOTATION MARK (›) 0x9C 0x0153 LATIN SMALL LIGATURE OE (œ) 0x9E 0x017E LATIN SMALL LETTER Z WITH CARON (ž) 0x9F 0x0178 LATIN CAPITAL LETTER Y WITH DIAERESIS (Ÿ) Set the temporary buffer to the empty string. Append a code point equal to the character reference code to the temporary buffer. Flush code points consumed as a character reference. Switch to the return state.",
+          "truncated": false,
+          "examples": [],
+          "omittedExamples": 0
+        },
+        {
+          "anchor": "script-data-end-tag-name-state",
+          "text": "13.2.5.17 Script data end tag name state Consume the next input character: U+0009 CHARACTER TABULATION (tab)U+000A LINE FEED (LF)U+000C FORM FEED (FF)U+0020 SPACEIf the current end tag token is an appropriate end tag token, then switch to the before attribute name state. Otherwise, treat it as per the \"anything else\" entry below.U+002F SOLIDUS (/)If the current end tag token is an appropriate end tag token, then switch to the self-closing start tag state. Otherwise, treat it as per the \"anything else\" entry below.U+003E GREATER-THAN SIGN (>)If the current end tag token is an appropriate end tag token, then switch to the data state and emit the current tag token. Otherwise, treat it as per the \"anything else\" entry below.ASCII upper alphaAppend the lowercase version of the current input character (add 0x0020 to the character's code point) to the current tag token's tag name. Append the current input character to the temporary buffer.ASCII lower alphaAppend the current input character to the current tag token's tag name. Append the current input character to the temporary buffer.Anything elseEmit a U+003C LESS-THAN SIGN character token, a U+002F SOLIDUS character token, and a character token for each of the characters in the temporary buffer (in the order they were added to the buffer). Reconsume in the script data state.",
+          "truncated": false,
+          "examples": [],
+          "omittedExamples": 0
+        }
+      ]
+    },
+    {
+      "source": "css-syntax",
+      "sha256": "413b27acb4e16721d28b487456359ecbcecba472c4310bd2f6a4939ad393738b",
+      "sections": [
+        {
+          "anchor": "consume-comment",
+          "text": "4.3.2. Consume comments This section describes how to consume comments from a stream of code points. It returns nothing. If the next two input code point are U+002F SOLIDUS (/) followed by a U+002A ASTERISK (*), consume them and all following code points up to and including the first U+002A ASTERISK (*) followed by a U+002F SOLIDUS (/), or up to an EOF code point. Return to the start of this step. If the preceding paragraph ended by consuming an EOF code point, this is a parse error. Return nothing.",
+          "truncated": false,
+          "examples": [],
+          "omittedExamples": 0
+        },
+        {
+          "anchor": "consume-escaped-code-point",
+          "text": "4.3.7. Consume an escaped code point This section describes how to consume an escaped code point. It assumes that the U+005C REVERSE SOLIDUS (\\) has already been consumed and that the next input code point has already been verified to be part of a valid escape. It will return a code point. Consume the next input code point. hex digit Consume as many hex digits as possible, but no more than 5. Note that this means 1-6 hex digits have been consumed in total. If the next input code point is whitespace, consume it as well. Interpret the hex digits as a hexadecimal number. If this number is zero, or is for a surrogate, or is greater than the maximum allowed code point, return U+FFFD REPLACEMENT CHARACTER (�). Otherwise, return the code point with that value. EOF This is a parse error. Return U+FFFD REPLACEMENT CHARACTER (�). anything else Return the current input code point.",
+          "truncated": false,
+          "examples": [],
+          "omittedExamples": 0
+        },
+        {
+          "anchor": "consume-string-token",
+          "text": "4.3.5. Consume a string token This section describes how to consume a string token from a stream of code points. It returns either a <string-token> or <bad-string-token>. This algorithm may be called with an ending code point, which denotes the code point that ends the string. If an ending code point is not specified, the current input code point is used. Initially create a <string-token> with its value set to the empty string. Repeatedly consume the next input code point from the stream: ending code point Return the <string-token>. EOF This is a parse error. Return the <string-token>. newline This is a parse error. Reconsume the current input code point, create a <bad-string-token>, and return it. U+005C REVERSE SOLIDUS (\\) If the next input code point is EOF, do nothing. Otherwise, if the next input code point is a newline, consume it. Otherwise, (the stream starts with a valid escape) consume an escaped code point and append the returned code point to the <string-token>’s value. anything else Append the current input code point to the <string-token>’s value.",
+          "truncated": false,
+          "examples": [],
+          "omittedExamples": 0
+        },
+        {
+          "anchor": "consume-url-token",
+          "text": "4.3.6. Consume a url token This section describes how to consume a url token from a stream of code points. It returns either a <url-token> or a <bad-url-token>. Note: This algorithm assumes that the initial \"url(\" has already been consumed. This algorithm also assumes that it’s being called to consume an \"unquoted\" value, like url(foo). A quoted value, like url(\"foo\"), is parsed as a <function-token>. Consume an ident-like token automatically handles this distinction; this algorithm shouldn’t be called directly otherwise. Initially create a <url-token> with its value set to the empty string. Consume as much whitespace as possible. Repeatedly consume the next input code point from the stream: U+0029 RIGHT PARENTHESIS ()) Return the <url-token>. EOF This is a parse error. Return the <url-token>. whitespace Consume as much whitespace as possible. If the next input code point is U+0029 RIGHT PARENTHESIS ()) or EOF, consume it and return the <url-token> (if EOF was encountered, this is a parse error); otherwise, consume the remnants of a bad url, create a <bad-url-token>, and return it. U+0022 QUOTATION MARK (\") U+0027 APOSTROPHE (') U+0028 LEFT PARENTHESIS (() non-printable code point This is a parse error. Consume the remnants of a bad url, create a <bad-url-token>, and return it. U+005C REVERSE SOLIDUS (\\) If the stream starts with a valid escape, consume an escaped code point and append the returned code point to the <url-token>’s value. Otherwise, this is a parse error. Consume the remnants of a bad url, create a <bad-url-token>, and return it. anything else Append the current input code point to the <url-token>’s value.",
+          "truncated": false,
+          "examples": [],
+          "omittedExamples": 0
+        },
+        {
+          "anchor": "consume-at-rule",
+          "text": "5.4.2. Consume an at-rule To consume an at-rule: Consume the next input token. Create a new at-rule with its name set to the value of the current input token, its prelude initially set to an empty list, and its value initially set to nothing. Repeatedly consume the next input token: <semicolon-token> Return the at-rule. <EOF-token> This is a parse error. Return the at-rule. <{-token> Consume a simple block and assign it to the at-rule’s block. Return the at-rule. simple block with an associated token of <{-token> Assign the block to the at-rule’s block. Return the at-rule. anything else Reconsume the current input token. Consume a component value. Append the returned value to the at-rule’s prelude.",
+          "truncated": false,
+          "examples": [],
+          "omittedExamples": 0
+        }
+      ]
+    },
+    {
+      "source": "css-selectors",
+      "sha256": "5d3b3f7e1fcc562dcec1a01ad2c5651e9f0bac294b255a75352e9df202604e6d",
+      "sections": [
+        {
+          "anchor": "attribute-selectors",
+          "text": "6. Attribute selectors Tests style-attribute-selector.html (live test) (source) attribute.html (live test) (source) class-id-attr.html (live test) (source) missing-right-token.html (live test) (source) parse-attribute.html (live test) (source) selectors-attr-many.html (live test) (source) Selectors allow the representation of an element’s attributes. When a selector is used as an expression to match against an element, an attribute selector must be considered to match an element if that element has an attribute that matches the attribute represented by the attribute selector. Add comma-separated syntax for multiple-value matching? e.g. [rel ~= next, prev, up, first, last] 6.1. Attribute presence and value selectors CSS2 introduced four attribute selectors: [att] Represents an element with the att attribute, whatever the value of the attribute. [att=val] Represents an element with the att attribute whose value is exactly \"val\". [att~=val] Represents an element with the att attribute whose value is a whitespace-separated list of words, one of which is exactly \"val\". If \"val\" contains whitespace, it will never represent anything (since the words are separated by spaces). Also if \"val\" is the empty string, it will never represent anything. [att|=val] Represents an element with the att attribute, its value either being exactly \"val\" or beginning with \"val\" immediately followed by \"-\" (U+002D). This is primarily intended to allow language subcode matches (e.g., the hreflang attribute on the a element in HTML) as described in BCP 47 ([BCP47]) or its successor. For lang (or xml:lang) language subcode matching, please see the :lang() pseudo-class. Attribute values must be <ident-token>s or <string-token>s. [CSS3SYN] Examples: The following attribute selector represents an h1 element that carries the title attribute, whatever its value: h1[title] In the following example, the selector represents a span element whose class attribute has exactly the value \"example\": span[class=\"example\"] Multiple attribute selectors can be used to represent several attributes of an element, or several conditions on the same attribute. Here, the selector represents a span element whose hello attribute has exactly the value \"Cleveland\" and whose goodbye attribute has exactly the value \"Columbus\": span[hello=\"Cleveland\"][goodbye=\"Columbus\"] The following CSS rules illustrate the differences between \"=\" and \"~=\". The first selector would match, for example, an a element with the value \"copyright copyleft copyeditor\" on a rel attribute. The second selector would only match an a element with an href attribute having the exact value \"http://www.w3.org/\". a[rel~=\"copyright\"] { ... } a[href=\"http://www.w3.org/\"] { ... } The following selector represents an a element whose hreflang attribute is exactly \"fr\". a[hreflang=fr] The following selector represents an a element for which the value of the hreflang attribute begins with \"en\", including \"en\", \"en-US\", and \"en-scouse\": a[hreflang|=\"en\"] The following selectors represent a DIALOGUE element whenever it has one of two different values for an attribute character: DIALOGUE[character=romeo] DIALOGUE[character=juliet] 6.2. Substring matching attribute selectors Three additional attribute selectors are provided for matching substrings in the value of an attribute: [att^=val] Represents an element with the att attribute whose value begins with the prefix \"val\". If \"val\" is the empty string then the selector does not represent anything. [att$=val] Represents an element with the att attribute whose value ends with the suffix \"val\". If \"val\" is the empty string then the selector does not represent anything. [att*=val] Represents an element with the att attribute whose value contains at least one instance of the substring \"val\". If \"val\" is the empty string then the selector does not represent anything. Attribute values must be <ident-token>s or <string-token>s. Examples: The following selector represents an HTML object ele",
+          "truncated": true,
+          "examples": [
+            {
+              "text": "h1[title]",
+              "truncated": false
+            },
+            {
+              "text": "span[class=\"example\"]",
+              "truncated": false
+            },
+            {
+              "text": "span[hello=\"Cleveland\"][goodbye=\"Columbus\"]",
+              "truncated": false
+            },
+            {
+              "text": "a[rel~=\"copyright\"] { ... }\na[href=\"http://www.w3.org/\"] { ... }\n",
+              "truncated": false
+            }
+          ],
+          "omittedExamples": 20
+        },
+        {
+          "anchor": "matches",
+          "text": "4.2. The Matches-Any Pseudo-class: :is() Tests is.html (live test) (source) is-default-ns-001.html (live test) (source) is-default-ns-002.html (live test) (source) is-default-ns-003.html (live test) (source) is-default-ns-002.html (live test) (source) is-default-ns-003.html (live test) (source) is-nested.html (live test) (source) is-specificity-shadow.html (live test) (source) is-specificity.html (live test) (source) is-where-basic.html (live test) (source) is-where-error-crash.html (live test) (source) is-where-error-recovery.html (live test) (source) is-where-not.html (live test) (source) is-where-pseudo-classes.html (live test) (source) is-where-pseudo-elements.html (live test) (source) is-where-shadow.html (live test) (source) is-where-visited.html (live test) (source) parse-is-where.html (live test) (source) parse-is.html (live test) (source) query-is.html (live test) (source) The matches-any pseudo-class, :is(), is a functional pseudo-class taking a <forgiving-selector-list> as its sole argument. If the argument, after parsing, is an empty list, the pseudo-class is valid but matches nothing. Otherwise, the pseudo-class matches any element that matches any of the selectors in the list. Note: The specificity of the :is() pseudo-class is replaced by the specificity of its most specific argument. Thus, a selector written with :is() does not necessarily have equivalent specificity to the equivalent selector written without :is() For example, if we have :is(ul, ol, .list) > [hidden] and ul > [hidden], ol > [hidden], .list > [hidden] a [hidden] child of an ol matches the first selector with a specificity of (0,2,0) whereas it matches the second selector with a specificity of (0,1,1). See § 15 Calculating a selector’s specificity. Pseudo-elements cannot be represented by the matches-any pseudo-class; they are not valid within :is(). Default namespace declarations do not affect the compound selector representing the subject of any selector within a :is() pseudo-class, unless that compound selector contains an explicit universal selector or type selector. For example, the following selector matches any element that is being hovered or focused, regardless of its namespace. In particular, it is not limited to only matching elements in the default namespace that are being hovered or focused. *|*:is(:hover, :focus) The following selector, however, represents only hovered or focused elements that are in the default namespace, because it uses an explicit universal selector within the :is() notation: *|*:is(*:hover, *:focus) As previous drafts of this specification used the name :matches() for this pseudo-class, UAs may additionally implement this obsolete name as a legacy selector alias for :is() if needed for backwards-compatibility.",
+          "truncated": false,
+          "examples": [
+            {
+              "text": "*|*:is(:hover, :focus) ",
+              "truncated": false
+            },
+            {
+              "text": "*|*:is(*:hover, *:focus) ",
+              "truncated": false
+            }
+          ],
+          "omittedExamples": 0
+        },
+        {
+          "anchor": "negation",
+          "text": "4.3. The Negation (Matches-None) Pseudo-class: :not() Tests not-001.html (live test) (source) not-002.html (live test) (source) not-complex.html (live test) (source) not-default-ns-001.html (live test) (source) not-default-ns-002.html (live test) (source) not-default-ns-003.html (live test) (source) not-links.html (live test) (source) not-specificity.html (live test) (source) parse-not.html (live test) (source) query-where.html (live test) (source) The negation pseudo-class, :not(), is a functional pseudo-class taking a <complex-real-selector-list> as an argument. It represents an element that is not represented by its argument. Note: In Selectors Level 3, only a single simple selector was allowed as the argument to :not(). Note: The specificity of the :not() pseudo-class is replaced by the specificity of the most specific selector in its argument; thus it has the exact behavior of :not(:is(argument)). See § 15 Calculating a selector’s specificity. Pseudo-elements cannot be represented by the negation pseudo-class; they are not valid within :not(). For example, the following selector matches all button elements in an HTML document that are not disabled. button:not([DISABLED]) The following selector represents all but FOO elements. *:not(FOO) The following compound selector represents all HTML elements except links. html|*:not(:link):not(:visited) As with :is(), default namespace declarations do not affect the compound selector representing the subject of any selector within a :not() pseudo-class, unless that compound selector contains an explicit universal selector or type selector. (See :is() for examples.) Note: The :not() pseudo-class allows useless selectors to be written. For instance :not(*|*), which represents no element at all, or div:not(span), which is equivalent to div but with a higher specificity.",
+          "truncated": false,
+          "examples": [
+            {
+              "text": "button:not([DISABLED]) ",
+              "truncated": false
+            },
+            {
+              "text": "*:not(FOO)",
+              "truncated": false
+            },
+            {
+              "text": "html|*:not(:link):not(:visited)",
+              "truncated": false
+            }
+          ],
+          "omittedExamples": 0
+        }
+      ]
+    },
+    {
+      "source": "css-variables",
+      "sha256": "5ce7b2c106af576328f222dd622598f847881f2ba9a64d53d6681d27d07ea0db",
+      "sections": [
+        {
+          "anchor": "defining-variables",
+          "text": "2. Defining Custom Properties: the --* family of properties This specification defines an open-ended set of properties called custom properties, which, among other things, are used to define the substitution value of var() functions. Name: --* Value: <declaration-value>? Initial: the guaranteed-invalid value Applies to: all elements and all pseudo-elements (including those with restricted property lists) Inherited: yes Percentages: n/a Computed value: specified value with variables substituted, or the guaranteed-invalid value Canonical order: per grammar Animation type: discrete User agents are expected to support this property on all media, including non-visual ones. A custom property is any property whose name starts with two dashes (U+002D HYPHEN-MINUS), like --foo. The <custom-property-name> production corresponds to this: it’s defined as any <dashed-ident> (a valid identifier that starts with two dashes), except -- itself, which is reserved for future use by CSS. Custom properties are solely for use by authors and users; CSS will never give them a meaning beyond what is presented here. Tests variable-declaration-29.html (live test) (source) variable-declaration-31.html (live test) (source) variable-declaration-32.html (live test) (source) variable-declaration-33.html (live test) (source) variable-declaration-34.html (live test) (source) variable-declaration-35.html (live test) (source) variable-declaration-36.html (live test) (source) variable-declaration-40.html (live test) (source) variable-declaration-41.html (live test) (source) variable-declaration-42.html (live test) (source) variable-empty-name-reserved.html (live test) (source) Custom properties define variables, referenced with the var() notation, which can be used for many purposes. For example, a page that consistently uses a small set of colors in its design can store the colors in custom properties and use them with variables: :root { --main-color: #06c; --accent-color: #006; } /* The rest of the CSS file */ #foo h1 { color: var(--main-color); } The naming provides a mnemonic for the colors, prevents difficult-to-spot typos in the color codes, and if the theme colors are ever changed, focuses the change on one simple spot (the custom property value) rather than requiring many edits across all stylesheets in the webpage. Unlike other CSS properties, custom property names are not ASCII case-insensitive. Instead, custom property names are only equal to each other if they are identical to each other. Tests css-vars-custom-property-case-sensitive-001.html (live test) (source) While both --foo and --FOO are valid, they are distinct properties —using var(--foo) will refer to the first one, while using var(--FOO) will refer to the second. Perhaps more surprisingly, --foó and --foó are distinct properties. The first is spelled with U+00F3 (LATIN SMALL LETTER O WITH ACUTE) while the second is spelled with an ASCII \"o\" followed by U+0301 (COMBINING ACUTE ACCENT), and the \"identical to\" relation uses direct codepoint-by-codepoint comparison to determine if two strings are equal, to avoid the complexities and pitfalls of unicode normalization and locale-specific collation. Operating systems, keyboards, or input methods sometimes encode visually-identical text using different codepoint sequences. Authors are advised to choose variable names that avoid potential confusion or to use escapes and other means to ensure that similar appearing sequences are identical. See Section 2.3 in [CHARMOD-NORM] for examples. Developers maintaining the following CSS might be confused why the test patch is red: --fijord: red; --fĳord: green; --ﬁjord: blue; .test { background-color: var(--fijord); } The reason is that the first custom property uses the character sequence LATIN SMALL LETTER F + LATIN SMALL LETTER I + LATIN SMALL LETTER J; the second, identical-looking one uses the character sequence LATIN SMALL LETTER F + LATIN SMALL LIGATURE IJ while the third uses the character sequence LAT",
+          "truncated": true,
+          "examples": [
+            {
+              "text": ":root {\n  --main-color: #06c;\n  --accent-color: #006;\n}\n/* The rest of the CSS file */\n#foo h1 {\n  color: var(--main-color);\n}\n",
+              "truncated": false
+            },
+            {
+              "text": "--fijord: red;\n--fĳord: green;\n--ﬁjord: blue;\n\n.test {\n  background-color: var(--fijord);\n}\n",
+              "truncated": false
+            },
+            {
+              "text": ":root {\n  --header-color: #06c;\n}\n",
+              "truncated": false
+            },
+            {
+              "text": "h1 { background-color: var(--header-color); }\n",
+              "truncated": false
+            }
+          ],
+          "omittedExamples": 6
+        },
+        {
+          "anchor": "using-variables",
+          "text": "3. Using Cascading Variables: the var() notation The value of a custom property can be substituted into the value of another property with the var() function. The syntax of var() is: var() = var( <custom-property-name> , <declaration-value>? ) Tests variable-reference-07.html (live test) (source) variable-reference-08.html (live test) (source) variable-reference-09.html (live test) (source) variable-reference-10.html (live test) (source) variable-reference-17.html (live test) (source) variable-reference-20.html (live test) (source) variable-reference-21.html (live test) (source) variable-reference-22.html (live test) (source) variable-reference-23.html (live test) (source) variable-reference-24.html (live test) (source) variable-reference-25.html (live test) (source) variable-reference-28.html (live test) (source) variable-reference-29.html (live test) (source) variable-reference-31.html (live test) (source) variable-reference-32.html (live test) (source) variable-reference-33.html (live test) (source) variable-reference-34.html (live test) (source) variable-reference-35.html (live test) (source) variable-reference.html (live test) (source) @supports variable-supports-01.html (live test) (source) variable-supports-02.html (live test) (source) variable-supports-03.html (live test) (source) variable-supports-04.html (live test) (source) variable-supports-05.html (live test) (source) variable-supports-06.html (live test) (source) variable-supports-07.html (live test) (source) variable-supports-08.html (live test) (source) variable-supports-09.html (live test) (source) variable-supports-10.html (live test) (source) variable-supports-11.html (live test) (source) variable-supports-12.html (live test) (source) variable-supports-13.html (live test) (source) variable-supports-14.html (live test) (source) variable-supports-15.html (live test) (source) variable-supports-16.html (live test) (source) variable-supports-17.html (live test) (source) variable-supports-18.html (live test) (source) variable-supports-19.html (live test) (source) variable-supports-20.html (live test) (source) variable-supports-21.html (live test) (source) variable-supports-22.html (live test) (source) variable-supports-23.html (live test) (source) variable-supports-24.html (live test) (source) variable-supports-25.html (live test) (source) variable-supports-26.html (live test) (source) variable-supports-27.html (live test) (source) variable-supports-28.html (live test) (source) variable-supports-29.html (live test) (source) variable-supports-30.html (live test) (source) variable-supports-31.html (live test) (source) variable-supports-32.html (live test) (source) variable-supports-33.html (live test) (source) variable-supports-34.html (live test) (source) variable-supports-35.html (live test) (source) variable-supports-36.html (live test) (source) variable-supports-37.html (live test) (source) variable-supports-38.html (live test) (source) variable-supports-39.html (live test) (source) variable-supports-40.html (live test) (source) variable-supports-41.html (live test) (source) variable-supports-42.html (live test) (source) variable-supports-43.html (live test) (source) variable-supports-44.html (live test) (source) variable-supports-45.html (live test) (source) variable-supports-46.html (live test) (source) variable-supports-47.html (live test) (source) variable-supports-48.html (live test) (source) variable-supports-49.html (live test) (source) variable-supports-50.html (live test) (source) variable-supports-51.html (live test) (source) variable-supports-52.html (live test) (source) variable-supports-53.html (live test) (source) variable-supports-54.html (live test) (source) variable-supports-55.html (live test) (source) variable-supports-56.html (live test) (source) variable-supports-57.html (live test) (source) variable-supports-58.html (live test) (source) variable-supports-59.html (live test) (source) variable-supports-60.html (live test) (source) variable-su",
+          "truncated": true,
+          "examples": [
+            {
+              "text": "var() = var( <custom-property-name> , <declaration-value>? )\n",
+              "truncated": false
+            },
+            {
+              "text": ".foo {\n  --side: margin-top;\n  var(--side): 20px;\n}\n",
+              "truncated": false
+            },
+            {
+              "text": "/* In the component’s style: */\n.component .header {\n  color: var(--header-color, blue);\n}\n.component .text {\n  color: var(--text-color, black);\n}\n\n/* In the larger application’s style: */\n.component {\n  --text-color: #080;\n  /* header-color isn’t set,\n     and so remains blue,\n     the fallback value */\n}\n",
+              "truncated": false
+            },
+            {
+              "text": ".foo {\n  --gap: 20;\n  margin-top: var(--gap)px;\n}\n",
+              "truncated": false
+            }
+          ],
+          "omittedExamples": 5
+        }
+      ]
+    },
+    {
+      "source": "css-nesting",
+      "sha256": "b29b0db74b96af295efcd7cd94f34366dd099ebb905dc5529c61409184f6fa9c",
+      "sections": [
+        {
+          "anchor": "syntax",
+          "text": "3.1. Syntax The contents of style rules now accepts nested style rules and at-rules, in addition to the existing declarations. Nested style rules differ from non-nested rules in the following ways: A nested style rule accepts a <relative-selector-list> as its prelude (rather than just a <selector-list>). Any relative selectors are relative to the elements represented by the nesting selector. If a selector in the <relative-selector-list> does not start with a combinator but does contain the nesting selector, it is interpreted as a non-relative selector. The precise details of how nested style rules are parsed are defined in [CSS-SYNTAX-3]. An invalid nested style rule is ignored, along with its contents, but does not invalidate its parent rule. Nested rules with relative selectors include the specificity of their implied nesting selector. For example, .foo { > .bar {...}} and .foo { & > .bar {...}} have the same specificity for their inner rule. Some CSS-generating tools that preprocess nesting will concatenate selectors as strings, allowing authors to build up a single simple selector across nesting levels. This is sometimes used with hierarchical name patterns like BEM to reduce repetition across a file, when the selectors themselves have significant repetition internally. For example, if one component uses the class .foo, and a nested component uses .fooBar, you could write this in Sass as: .foo { color: blue; &Bar { color: red; } } /* In Sass, this is equivalent to .foo { color: blue; } .fooBar { color: red; } */ This is not allowed in CSS, as nesting is not a syntax transformation, but rather matches on the actual elements the parent selector matches. It is also true that the selector &Bar is invalid in CSS in the first place, as the Bar part is a type selector, which must come first in the compound selector. (That is, it must be written as Bar&.) So, luckily, there is no overlap between CSS Nesting and the preprocessor syntax. A selector is said to contain the nesting selector if, when it was parsed as any type of selector, a <delim-token> with the value \"&\" (U+0026 AMPERSAND) was encountered. Note: This is phrased in this explicit manner so as to catch cases like :is(:unknown(&), .bar), where an unknown selector (which, being unknown, we have no way of knowing whether the argument is meant to be parsed as a selector or not) is the only part of the selector that contains an &. As that might be a perfectly valid selector that’s only supported by newer browsers, and we don’t want parsing to be dependent on unrelated versioning issues, we treat it as still containing the nesting selector. If a <forgiving-selector-list> has an item that contains the nesting selector but is invalid, that item is preserved exactly as-is rather than being discarded. (This does not change the matching behavior of the selector—​an invalid selector still fails to match anything—​just the serialization of the selector.) Tests nest-containing-forgiving.html (live test) (source) parsing.html (live test) (source) The preceding paragraph needs to move to Selectors when we move & itself to Selectors; I’m monkey-patching for convenience here.",
+          "truncated": false,
+          "examples": [
+            {
+              "text": ".foo {\n  color: blue;\n  &Bar { color: red; }\n}\n/* In Sass, this is equivalent to\n  .foo { color: blue; }\n  .fooBar { color: red; }\n*/\n",
+              "truncated": false
+            }
+          ],
+          "omittedExamples": 0
+        },
+        {
+          "anchor": "syntax-examples",
+          "text": "3.2. Examples /* & can be used on its own */ .foo { color: blue; & > .bar { color: red; } > .baz { color: green; } } /* equivalent to .foo { color: blue; } .foo > .bar { color: red; } .foo > .baz { color: green; } */ /* or in a compound selector, refining the parent’s selector */ .foo { color: blue; &.bar { color: red; } } /* equivalent to .foo { color: blue; } .foo.bar { color: red; } */ /* multiple selectors in the list are all relative to the parent */ .foo, .bar { color: blue; + .baz, &.qux { color: red; } } /* equivalent to .foo, .bar { color: blue; } :is(.foo, .bar) + .baz, :is(.foo, .bar).qux { color: red; } */ /* & can be used multiple times in a single selector */ .foo { color: blue; & .bar & .baz & .qux { color: red; } } /* equivalent to .foo { color: blue; } .foo .bar .foo .baz .foo .qux { color: red; } */ /* & doesn’t have to be at the beginning of the selector */ .foo { color: red; .parent & { color: blue; } } /* equivalent to .foo { color: red; } .parent .foo { color: blue; } */ .foo { color: red; :not(&) { color: blue; } } /* equivalent to .foo { color: red; } :not(.foo) { color: blue; } */ /* But if you use a relative selector, an initial & is implied automatically */ .foo { color: red; + .bar + & { color: blue; } } /* equivalent to .foo { color: red; } .foo + .bar + .foo { color: blue; } */ /* Somewhat silly, but & can be used all on its own, as well. */ .foo { color: blue; & { padding: 2ch; } } /* equivalent to .foo { color: blue; } .foo { padding: 2ch; } // or .foo { color: blue; padding: 2ch; } */ /* Again, silly, but can even be doubled up. */ .foo { color: blue; && { padding: 2ch; } } /* equivalent to .foo { color: blue; } .foo.foo { padding: 2ch; } */ /* The parent selector can be arbitrarily complicated */ .error, #404 { &:hover > .baz { color: red; } } /* equivalent to :is(.error, #404):hover > .baz { color: red; } */ .ancestor .el { .other-ancestor & { color: red; } } /* equivalent to .other-ancestor :is(.ancestor .el) { color: red; } /* As can the nested selector */ .foo { & :is(.bar, &.baz) { color: red; } } /* equivalent to .foo :is(.bar, .foo.baz) { color: red; } */ /* Multiple levels of nesting \"stack up\" the selectors */ figure { margin: 0; > figcaption { background: hsl(0 0% 0% / 50%); > p { font-size: .9rem; } } } /* equivalent to figure { margin: 0; } figure > figcaption { background: hsl(0 0% 0% / 50%); } figure > figcaption > p { font-size: .9rem; } */ /* Example usage with Cascade Layers */ @layer base { html { block-size: 100%; body { min-block-size: 100%; } } } /* equivalent to @layer base { html { block-size: 100%; } html body { min-block-size: 100%; } } */ /* Example nesting Cascade Layers */ @layer base { html { block-size: 100%; @layer support { body { min-block-size: 100%; } } } } /* equivalent to @layer base { html { block-size: 100%; } } @layer base.support { html body { min-block-size: 100%; } } */ /* Example usage with Scoping */ @scope (.card) to (> header) { :scope { inline-size: 40ch; aspect-ratio: 3/4; > header { border-block-end: 1px solid white; } } } /* equivalent to @scope (.card) to (> header) { :scope { inline-size: 40ch; aspect-ratio: 3/4; } :scope > header { border-block-end: 1px solid white; } } */ /* Example nesting Scoping */ .card { inline-size: 40ch; aspect-ratio: 3/4; @scope (&) to (> header > *) { :scope > header { border-block-end: 1px solid white; } } } /* equivalent to .card { inline-size: 40ch; aspect-ratio: 3/4; } @scope (.card) to (> header > *) { :scope > header { border-block-end: 1px solid white; } } */",
+          "truncated": false,
+          "examples": [
+            {
+              "text": "/* & can be used on its own */\n.foo {\n  color: blue;\n  & > .bar { color: red; }\n  > .baz { color: green; }\n}\n/* equivalent to\n  .foo { color: blue; }\n  .foo > .bar { color: red; }\n  .foo > .baz { color: green; }\n*/\n\n\n/* or in a compound selector,\n   refining the parent’s selector */\n.foo {\n  color: blue;\n  &.bar { color: red; }\n}\n/* equivalent to\n  .foo { color: blue; }\n  .foo.bar { color: red; }\n*/\n\n/* multiple selectors in the list are all\n   relative to the parent */\n.foo, .bar {\n  color: blue;\n  + .baz, &.qux { color: red; }\n}\n/* equivalent to\n  .foo, .bar { color: blue; }\n  :is(.foo, .bar) + .baz,\n  :is(.foo, .bar).qux { color: red; }\n*/\n\n/* & can be used multiple times in a single selector */\n.foo {\n  color: blue;\n  & .bar & .baz & .qux { color: red; }\n}\n/* equivalent to\n  .foo { color: blue; }\n  .foo .bar .foo .baz .foo .qux { color: red; }\n*/\n\n/* & doesn’t have to be at the beginning of the selector */\n\n.foo {\n  color: red;\n  .parent & {\n    color: blue;\n  }\n}\n/* equivalent to\n  .foo { color: red; }\n  .parent .foo { color: blue; }\n*/\n\n.foo {\n  color: red;\n  :not(&) {\n    color: blue;\n  }\n}\n/* equivalent to\n  .foo { color: red; }\n  :not(.foo) { color: blue; }\n*/\n\n/* But if you use a relative selector,\n  an initial & is implied automatically */\n\n.foo {\n  color: red;\n  + .bar + & { color: blue; }\n}\n\n/* equivalent to\n  .foo { color: red; }\n  .foo + .bar + .foo { color: blue; }\n*/\n\n/* Somewhat silly, but & can be used all on its own, as well. */\n.foo {\n  color: blue;\n  & { padding: 2ch; }\n}\n/* equivalent to\n  .foo { color: blue; }\n  .foo { padding: 2ch; }\n\n  // or\n\n  .foo {\n    color: blue;\n    padding: 2ch;\n  }\n*/\n\n/* Again, silly, but can even be doubled up. */\n.foo {\n  color: blue;\n  && { padding: 2ch; }\n}\n/* equivalent to\n  .foo { color: blue; }\n  .foo.foo { padding: 2ch; }\n*/\n\n/* The parent selector can be arbitrarily complicated */\n.error, #404 {\n  &:hover > .baz { color: red; }\n}\n/* equivalent to\n  :is(.error, #404):hover > .baz { color: red; }\n*/\n\n.ancest",
+              "truncated": true
+            }
+          ],
+          "omittedExamples": 0
+        },
+        {
+          "anchor": "nest-selector",
+          "text": "4. Nesting Selector: the & selector When using a nested style rule, one must be able to refer to the elements matched by the parent rule; that is, after all, the entire point of nesting. To accomplish that, this specification defines a new selector, the nesting selector, written as & (U+0026 AMPERSAND). When used in the selector of a nested style rule, the nesting selector represents the elements matched by the parent rule. When used in any other context, it represents the same elements as :scope in that context (unless otherwise defined). Tests top-level-is-scope.html (live test) (source) The nesting selector can be desugared by replacing it with the parent style rule’s selector, wrapped in an :is() selector. For example, a, b { & c { color: blue; } } is equivalent to :is(a, b) c { color: blue; } The nesting selector cannot represent pseudo-elements (identical to the behavior of the :is() pseudo-class). For example, in the following style rule: .foo, .foo::before, .foo::after { color: red; &:hover { color: blue; } } the & only represents the elements matched by .foo; in other words, it’s equivalent to: .foo, .foo::before, .foo::after { color: red; } .foo:hover { color: blue; } We’d like to relax this restriction, but need to do so simultaneously for both :is() and &, since they’re intentionally built on the same underlying mechanisms. (Issue 7433) The specificity of the nesting selector is equal to the largest specificity among the complex selectors in the parent style rule’s selector list (identical to the behavior of :is()), or zero if no such selector list exists. Tests top-level-parent-pseudo-specificity.html (live test) (source) For example, given the following style rules: #a, b { & c { color: blue; } } .foo c { color: red; } Then in a DOM structure like <b class=foo> <c>Blue text</c> </b> The text will be blue, rather than red. The specificity of the & is the larger of the specificities of #a ([1,0,0]) and b ([0,0,1]), so it’s [1,0,0], and the entire & c selector thus has specificity [1,0,1], which is larger than the specificity of .foo c ([0,1,1]). Notably, this is different than the result you’d get if the nesting were manually expanded out into non-nested rules, since the color: blue declaration would then be matching due to the b c selector ([0,0,2]) rather than #a c ([1,0,1]). Why is the specificity different than non-nested rules? The nesting selector intentionally uses the same specificity rules as the :is() pseudoclass, which just uses the largest specificity among its arguments, rather than tracking which selector actually matched. This is required for performance reasons; if a selector has multiple possible specificities, depending on how precisely it was matched, it makes selector matching much more complicated and slower. That skirts the question, tho: why do we define & in terms of :is()? Some non-browser implementations of Nesting-like functionality do not desugar to :is(), largely because they predate the introduction of :is() as well. Instead, they desugar directly; however, this comes with its own significant problems, as some (reasonably common) cases can accidentally produce massive selectors, due to the exponential explosion of possibilities. .a1, .a2, .a3 { .b1, .b2, .b3 { .c1, .c2, .c3 { ...; } } } /* naively desugars to */ .a1 .b1 .c1, .a1 .b1 .c2, .a1 .b1 .c3, .a1 .b2 .c1, .a1 .b2 .c2, .a1 .b2 .c3, .a1 .b3 .c1, .a1 .b3 .c2, .a1 .b3 .c3, .a2 .b1 .c1, .a2 .b1 .c2, .a2 .b1 .c3, .a2 .b2 .c1, .a2 .b2 .c2, .a2 .b2 .c3, .a2 .b3 .c1, .a2 .b3 .c2, .a2 .b3 .c3, .a3 .b1 .c1, .a3 .b1 .c2, .a3 .b1 .c3, .a3 .b2 .c1, .a3 .b2 .c2, .a3 .b2 .c3, .a3 .b3 .c1, .a3 .b3 .c2, .a3 .b3 .c3 {...} Here, three levels of nesting, each with three selectors in their lists, produced 27 desugared selectors. Adding more selectors to the lists, adding more levels of nesting, or making the nested rules more complex can make a relatively small rule expand into multiple megabytes of selectors (or much, much more!). Some CSS tools av",
+          "truncated": true,
+          "examples": [
+            {
+              "text": "a, b {\n  & c { color: blue; }\n}\n",
+              "truncated": false
+            },
+            {
+              "text": ":is(a, b) c { color: blue; }\n",
+              "truncated": false
+            },
+            {
+              "text": ".foo, .foo::before, .foo::after {\n  color: red;\n\n  &:hover { color: blue; }\n}\n",
+              "truncated": false
+            },
+            {
+              "text": ".foo, .foo::before, .foo::after {\n  color: red;\n}\n.foo:hover {\n  color: blue;\n}\n",
+              "truncated": false
+            }
+          ],
+          "omittedExamples": 3
+        }
+      ]
+    },
+    {
+      "source": "ecmascript-lexical",
+      "sha256": "85be30882e4462b28b7503b5f9a82f69510de64d8c9b70848dc82f5cf4e88532",
+      "sections": [
+        {
+          "anchor": "sec-comments",
+          "text": "12.4 Comments Comments can be either single or multi-line. Multi-line comments cannot nest. Because a single-line comment can contain any Unicode code point except a LineTerminator code point, and because of the general rule that a token is always as long as possible, a single-line comment always consists of all code points from the // marker to the end of the line. However, the LineTerminator at the end of the line is not considered to be part of the single-line comment; it is recognized separately by the lexical grammar and becomes part of the stream of input elements for the syntactic grammar. This point is very important, because it implies that the presence or absence of single-line comments does not affect the process of automatic semicolon insertion (see 12.10). Comments behave like white space and are discarded except that, if a MultiLineComment contains a line terminator code point, then the entire comment is considered to be a LineTerminator for purposes of parsing by the syntactic grammar. Syntax Comment :: MultiLineComment SingleLineComment MultiLineComment :: /* MultiLineCommentCharsopt */ MultiLineCommentChars :: MultiLineNotAsteriskChar MultiLineCommentCharsopt * PostAsteriskCommentCharsopt PostAsteriskCommentChars :: MultiLineNotForwardSlashOrAsteriskChar MultiLineCommentCharsopt * PostAsteriskCommentCharsopt MultiLineNotAsteriskChar :: SourceCharacter but not * MultiLineNotForwardSlashOrAsteriskChar :: SourceCharacter but not one of / or * SingleLineComment :: // SingleLineCommentCharsopt SingleLineCommentChars :: SingleLineCommentChar SingleLineCommentCharsopt SingleLineCommentChar :: SourceCharacter but not LineTerminator A number of productions in this section are given alternative definitions in section B.1.1",
+          "truncated": false,
+          "examples": [
+            {
+              "text": "\n    Comment :: \n        MultiLineComment\n    \n    \n        SingleLineComment\n    \n\n\n    MultiLineComment :: \n        /*\n        MultiLineCommentCharsopt\n        */\n    \n\n\n    MultiLineCommentChars :: \n        MultiLineNotAsteriskChar\n        MultiLineCommentCharsopt\n    \n    \n        *\n        PostAsteriskCommentCharsopt\n    \n\n\n    PostAsteriskCommentChars :: \n        MultiLineNotForwardSlashOrAsteriskChar\n        MultiLineCommentCharsopt\n    \n    \n        *\n        PostAsteriskCommentCharsopt\n    \n\n\n    MultiLineNotAsteriskChar :: \n        SourceCharacter but not *\n    \n\n\n    MultiLineNotForwardSlashOrAsteriskChar :: \n        SourceCharacter but not one of / or *\n    \n\n\n    SingleLineComment :: \n        //\n        SingleLineCommentCharsopt\n    \n\n\n    SingleLineCommentChars :: \n        SingleLineCommentChar\n        SingleLineCommentCharsopt\n    \n\n\n    SingleLineCommentChar :: \n        SourceCharacter but not LineTerminator\n    \n\n",
+              "truncated": false
+            }
+          ],
+          "omittedExamples": 0
+        },
+        {
+          "anchor": "sec-literals-string-literals",
+          "text": "12.9.4 String Literals Note 1 A string literal is 0 or more Unicode code points enclosed in single or double quotes. Unicode code points may also be represented by an escape sequence. All code points may appear literally in a string literal except for the closing quote code points, U+005C (REVERSE SOLIDUS), U+000D (CARRIAGE RETURN), and U+000A (LINE FEED). Any code points may appear in the form of an escape sequence. String literals evaluate to ECMAScript String values. When generating these String values Unicode code points are UTF-16 encoded as defined in 11.1.1. Code points belonging to the Basic Multilingual Plane are encoded as a single code unit element of the string. All other code points are encoded as two code unit elements of the string. Syntax StringLiteral :: \" DoubleStringCharactersopt \" ' SingleStringCharactersopt ' DoubleStringCharacters :: DoubleStringCharacter DoubleStringCharactersopt SingleStringCharacters :: SingleStringCharacter SingleStringCharactersopt DoubleStringCharacter :: SourceCharacter but not one of \" or \\ or LineTerminator <LS> <PS> \\ EscapeSequence LineContinuation SingleStringCharacter :: SourceCharacter but not one of ' or \\ or LineTerminator <LS> <PS> \\ EscapeSequence LineContinuation LineContinuation :: \\ LineTerminatorSequence EscapeSequence :: CharacterEscapeSequence 0 [lookahead ∉ DecimalDigit] LegacyOctalEscapeSequence NonOctalDecimalEscapeSequence HexEscapeSequence UnicodeEscapeSequence CharacterEscapeSequence :: SingleEscapeCharacter NonEscapeCharacter SingleEscapeCharacter :: one of ' \" \\ b f n r t v NonEscapeCharacter :: SourceCharacter but not one of EscapeCharacter or LineTerminator EscapeCharacter :: SingleEscapeCharacter DecimalDigit x u LegacyOctalEscapeSequence :: 0 [lookahead ∈ { 8, 9 }] NonZeroOctalDigit [lookahead ∉ OctalDigit] ZeroToThree OctalDigit [lookahead ∉ OctalDigit] FourToSeven OctalDigit ZeroToThree OctalDigit OctalDigit NonZeroOctalDigit :: OctalDigit but not 0 ZeroToThree :: one of 0 1 2 3 FourToSeven :: one of 4 5 6 7 NonOctalDecimalEscapeSequence :: one of 8 9 HexEscapeSequence :: x HexDigit HexDigit UnicodeEscapeSequence :: u Hex4Digits u{ CodePoint } Hex4Digits :: HexDigit HexDigit HexDigit HexDigit The definition of the nonterminal HexDigit is given in 12.9.3. SourceCharacter is defined in 11.1. Note 2 <LF> and <CR> cannot appear in a string literal, except as part of a LineContinuation to produce the empty code points sequence. The proper way to include either in the String value of a string literal is to use an escape sequence such as \\n or \\u000A. 12.9.4.1 Static Semantics: Early Errors EscapeSequence :: LegacyOctalEscapeSequence NonOctalDecimalEscapeSequence It is a Syntax Error if IsStrict(this production) is true. Note 1In non-strict code, this syntax is Legacy. Note 2 It is possible for string literals to precede a Use Strict Directive that places the enclosing code in strict mode, and implementations must take care to enforce the above rules for such literals. For example, the following source text contains a Syntax Error: function invalid() { \"\\7\"; \"use strict\"; } 12.9.4.2 Static Semantics: SV The syntax-directed operation SV takes no arguments and returns a String. A string literal stands for a value of the String type. SV produces String values for string literals through recursive application on the various parts of the string literal. As part of this process, some Unicode code points within the string literal are interpreted as having a mathematical value, as described below or in 12.9.3. The SV of StringLiteral :: \" \" is the empty String. The SV of StringLiteral :: ' ' is the empty String. The SV of DoubleStringCharacters :: DoubleStringCharacter DoubleStringCharacters is the string-concatenation of the SV of DoubleStringCharacter and the SV of DoubleStringCharacters. The SV of SingleStringCharacters :: SingleStringCharacter SingleStringCharacters is the string-concatenation of the SV of SingleStringCharacter and the SV of SingleStringCharacte",
+          "truncated": true,
+          "examples": [
+            {
+              "text": "\n    StringLiteral :: \n        \"\n        DoubleStringCharactersopt\n        \"\n    \n    \n        '\n        SingleStringCharactersopt\n        '\n    \n\n\n    DoubleStringCharacters :: \n        DoubleStringCharacter\n        DoubleStringCharactersopt\n    \n\n\n    SingleStringCharacters :: \n        SingleStringCharacter\n        SingleStringCharactersopt\n    \n\n\n    DoubleStringCharacter :: \n        SourceCharacter but not one of \" or \\ or LineTerminator\n    \n    \n        <LS>\n    \n    \n        <PS>\n    \n    \n        \\\n        EscapeSequence\n    \n    \n        LineContinuation\n    \n\n\n    SingleStringCharacter :: \n        SourceCharacter but not one of ' or \\ or LineTerminator\n    \n    \n        <LS>\n    \n    \n        <PS>\n    \n    \n        \\\n        EscapeSequence\n    \n    \n        LineContinuation\n    \n\n\n    LineContinuation :: \n        \\\n        LineTerminatorSequence\n    \n\n\n    EscapeSequence :: \n        CharacterEscapeSequence\n    \n    \n        0\n        [lookahead ∉ DecimalDigit]\n    \n    \n        LegacyOctalEscapeSequence\n    \n    \n        NonOctalDecimalEscapeSequence\n    \n    \n        HexEscapeSequence\n    \n    \n        UnicodeEscapeSequence\n    \n\n\n    CharacterEscapeSequence :: \n        SingleEscapeCharacter\n    \n    \n        NonEscapeCharacter\n    \n\n\n    SingleEscapeCharacter :: one of ' \" \\ b f n r t v\n\n\n    NonEscapeCharacter :: \n        SourceCharacter but not one of EscapeCharacter or LineTerminator\n    \n\n\n    EscapeCharacter :: \n        SingleEscapeCharacter\n    \n    \n        DecimalDigit\n    \n    \n        x\n    \n    \n        u\n    \n\n\n    LegacyOctalEscapeSequence :: \n        0\n        [lookahead ∈ { 8, 9 }]\n    \n    \n        NonZeroOctalDigit\n        [lookahead ∉ OctalDigit]\n    \n    \n        ZeroToThree\n        OctalDigit\n        [lookahead ∉ OctalDigit]\n    \n    \n        FourToSeven\n        OctalDigit\n    \n    \n        ZeroToThree\n        OctalDigit\n        OctalDigit\n    \n\n\n    NonZeroOctalDigit :: \n        OctalDigit but not 0\n    \n\n\n    ZeroToThree :: one of 0",
+              "truncated": true
+            },
+            {
+              "text": "\n    EscapeSequence :: \n        LegacyOctalEscapeSequence\n    \n    \n        NonOctalDecimalEscapeSequence\n    \n\n",
+              "truncated": false
+            },
+            {
+              "text": "function invalid() { \"\\7\"; \"use strict\"; }",
+              "truncated": false
+            },
+            {
+              "text": "\n    StringLiteral :: \n        \"\n        \"\n    \n\n",
+              "truncated": false
+            }
+          ],
+          "omittedExamples": 34
+        },
+        {
+          "anchor": "sec-literals-regular-expression-literals",
+          "text": "12.9.5 Regular Expression Literals Note 1 A regular expression literal is an input element that is converted to a RegExp object (see 22.2) each time the literal is evaluated. Two regular expression literals in a program evaluate to regular expression objects that never compare as === to each other even if the two literals' contents are identical. A RegExp object may also be created at runtime by new RegExp or calling the RegExp constructor as a function (see 22.2.4). The productions below describe the syntax for a regular expression literal and are used by the input element scanner to find the end of the regular expression literal. The source text comprising the RegularExpressionBody and the RegularExpressionFlags are subsequently parsed again using the more stringent ECMAScript Regular Expression grammar (22.2.1). An implementation may extend the ECMAScript Regular Expression grammar defined in 22.2.1, but it must not extend the RegularExpressionBody and RegularExpressionFlags productions defined below or the productions used by these productions. Syntax RegularExpressionLiteral :: / RegularExpressionBody / RegularExpressionFlags RegularExpressionBody :: RegularExpressionFirstChar RegularExpressionChars RegularExpressionChars :: [empty] RegularExpressionChars RegularExpressionChar RegularExpressionFirstChar :: RegularExpressionNonTerminator but not one of * or \\ or / or [ RegularExpressionBackslashSequence RegularExpressionClass RegularExpressionChar :: RegularExpressionNonTerminator but not one of \\ or / or [ RegularExpressionBackslashSequence RegularExpressionClass RegularExpressionBackslashSequence :: \\ RegularExpressionNonTerminator RegularExpressionNonTerminator :: SourceCharacter but not LineTerminator RegularExpressionClass :: [ RegularExpressionClassChars ] RegularExpressionClassChars :: [empty] RegularExpressionClassChars RegularExpressionClassChar RegularExpressionClassChar :: RegularExpressionNonTerminator but not one of ] or \\ RegularExpressionBackslashSequence RegularExpressionFlags :: [empty] RegularExpressionFlags IdentifierPartChar Note 2 Regular expression literals may not be empty; instead of representing an empty regular expression literal, the code unit sequence // starts a single-line comment. To specify an empty regular expression, use: /(?:)/. 12.9.5.1 Static Semantics: BodyText The syntax-directed operation BodyText takes no arguments and returns source text. It is defined piecewise over the following productions: RegularExpressionLiteral :: / RegularExpressionBody / RegularExpressionFlags Return the source text that was recognized as RegularExpressionBody. 12.9.5.2 Static Semantics: FlagText The syntax-directed operation FlagText takes no arguments and returns source text. It is defined piecewise over the following productions: RegularExpressionLiteral :: / RegularExpressionBody / RegularExpressionFlags Return the source text that was recognized as RegularExpressionFlags.",
+          "truncated": false,
+          "examples": [
+            {
+              "text": "\n    RegularExpressionLiteral :: \n        /\n        RegularExpressionBody\n        /\n        RegularExpressionFlags\n    \n\n\n    RegularExpressionBody :: \n        RegularExpressionFirstChar\n        RegularExpressionChars\n    \n\n\n    RegularExpressionChars :: \n        [empty]\n    \n    \n        RegularExpressionChars\n        RegularExpressionChar\n    \n\n\n    RegularExpressionFirstChar :: \n        RegularExpressionNonTerminator but not one of * or \\ or / or [\n    \n    \n        RegularExpressionBackslashSequence\n    \n    \n        RegularExpressionClass\n    \n\n\n    RegularExpressionChar :: \n        RegularExpressionNonTerminator but not one of \\ or / or [\n    \n    \n        RegularExpressionBackslashSequence\n    \n    \n        RegularExpressionClass\n    \n\n\n    RegularExpressionBackslashSequence :: \n        \\\n        RegularExpressionNonTerminator\n    \n\n\n    RegularExpressionNonTerminator :: \n        SourceCharacter but not LineTerminator\n    \n\n\n    RegularExpressionClass :: \n        [\n        RegularExpressionClassChars\n        ]\n    \n\n\n    RegularExpressionClassChars :: \n        [empty]\n    \n    \n        RegularExpressionClassChars\n        RegularExpressionClassChar\n    \n\n\n    RegularExpressionClassChar :: \n        RegularExpressionNonTerminator but not one of ] or \\\n    \n    \n        RegularExpressionBackslashSequence\n    \n\n\n    RegularExpressionFlags :: \n        [empty]\n    \n    \n        RegularExpressionFlags\n        IdentifierPartChar\n    \n\n",
+              "truncated": false
+            },
+            {
+              "text": "\n    RegularExpressionLiteral :: \n        /\n        RegularExpressionBody\n        /\n        RegularExpressionFlags\n    \n\n",
+              "truncated": false
+            },
+            {
+              "text": "\n    RegularExpressionLiteral :: \n        /\n        RegularExpressionBody\n        /\n        RegularExpressionFlags\n    \n\n",
+              "truncated": false
+            }
+          ],
+          "omittedExamples": 0
+        },
+        {
+          "anchor": "sec-template-literal-lexical-components",
+          "text": "12.9.6 Template Literal Lexical Components Syntax Template :: NoSubstitutionTemplate TemplateHead NoSubstitutionTemplate :: ` TemplateCharactersopt ` TemplateHead :: ` TemplateCharactersopt ${ TemplateSubstitutionTail :: TemplateMiddle TemplateTail TemplateMiddle :: } TemplateCharactersopt ${ TemplateTail :: } TemplateCharactersopt ` TemplateCharacters :: TemplateCharacter TemplateCharactersopt TemplateCharacter :: $ [lookahead ≠ {] \\ TemplateEscapeSequence \\ NotEscapeSequence LineContinuation LineTerminatorSequence SourceCharacter but not one of ` or \\ or $ or LineTerminator TemplateEscapeSequence :: CharacterEscapeSequence 0 [lookahead ∉ DecimalDigit] HexEscapeSequence UnicodeEscapeSequence NotEscapeSequence :: 0 DecimalDigit DecimalDigit but not 0 x [lookahead ∉ HexDigit] x HexDigit [lookahead ∉ HexDigit] u [lookahead ∉ HexDigit] [lookahead ≠ {] u HexDigit [lookahead ∉ HexDigit] u HexDigit HexDigit [lookahead ∉ HexDigit] u HexDigit HexDigit HexDigit [lookahead ∉ HexDigit] u { [lookahead ∉ HexDigit] u { NotCodePoint [lookahead ∉ HexDigit] u { CodePoint [lookahead ∉ HexDigit] [lookahead ≠ }] NotCodePoint :: HexDigits[~Sep] but only if the MV of HexDigits > 0x10FFFF CodePoint :: HexDigits[~Sep] but only if the MV of HexDigits ≤ 0x10FFFF Note TemplateSubstitutionTail is used by the InputElementTemplateTail alternative lexical goal. 12.9.6.1 Static Semantics: TV The syntax-directed operation TV takes no arguments and returns a String or undefined. A template literal component is interpreted by TV as a value of the String type. TV is used to construct the indexed components of a template object (colloquially, the template values). In TV, escape sequences are replaced by the UTF-16 code unit(s) of the Unicode code point represented by the escape sequence. The TV of NoSubstitutionTemplate :: ` ` is the empty String. The TV of TemplateHead :: ` ${ is the empty String. The TV of TemplateMiddle :: } ${ is the empty String. The TV of TemplateTail :: } ` is the empty String. The TV of TemplateCharacters :: TemplateCharacter TemplateCharacters is undefined if the TV of TemplateCharacter is undefined or the TV of TemplateCharacters is undefined. Otherwise, it is the string-concatenation of the TV of TemplateCharacter and the TV of TemplateCharacters. The TV of TemplateCharacter :: SourceCharacter but not one of ` or \\ or $ or LineTerminator is the result of performing UTF16EncodeCodePoint on the code point matched by SourceCharacter. The TV of TemplateCharacter :: $ is the String value consisting of the code unit 0x0024 (DOLLAR SIGN). The TV of TemplateCharacter :: \\ TemplateEscapeSequence is the SV of TemplateEscapeSequence. The TV of TemplateCharacter :: \\ NotEscapeSequence is undefined. The TV of TemplateCharacter :: LineTerminatorSequence is the TRV of LineTerminatorSequence. The TV of LineContinuation :: \\ LineTerminatorSequence is the empty String. 12.9.6.2 Static Semantics: TRV The syntax-directed operation TRV takes no arguments and returns a String. A template literal component is interpreted by TRV as a value of the String type. TRV is used to construct the raw components of a template object (colloquially, the template raw values). TRV is similar to TV with the difference being that in TRV, escape sequences are interpreted as they appear in the literal. The TRV of NoSubstitutionTemplate :: ` ` is the empty String. The TRV of TemplateHead :: ` ${ is the empty String. The TRV of TemplateMiddle :: } ${ is the empty String. The TRV of TemplateTail :: } ` is the empty String. The TRV of TemplateCharacters :: TemplateCharacter TemplateCharacters is the string-concatenation of the TRV of TemplateCharacter and the TRV of TemplateCharacters. The TRV of TemplateCharacter :: SourceCharacter but not one of ` or \\ or $ or LineTerminator is the result of performing UTF16EncodeCodePoint on the code point matched by SourceCharacter. The TRV of TemplateCharacter :: $ is the String value consisting of the code unit 0x0024 (DOLLAR SIGN). The TRV ",
+          "truncated": true,
+          "examples": [
+            {
+              "text": "\n    Template :: \n        NoSubstitutionTemplate\n    \n    \n        TemplateHead\n    \n\n\n    NoSubstitutionTemplate :: \n        `\n        TemplateCharactersopt\n        `\n    \n\n\n    TemplateHead :: \n        `\n        TemplateCharactersopt\n        ${\n    \n\n\n    TemplateSubstitutionTail :: \n        TemplateMiddle\n    \n    \n        TemplateTail\n    \n\n\n    TemplateMiddle :: \n        }\n        TemplateCharactersopt\n        ${\n    \n\n\n    TemplateTail :: \n        }\n        TemplateCharactersopt\n        `\n    \n\n\n    TemplateCharacters :: \n        TemplateCharacter\n        TemplateCharactersopt\n    \n\n\n    TemplateCharacter :: \n        $\n        [lookahead ≠ {]\n    \n    \n        \\\n        TemplateEscapeSequence\n    \n    \n        \\\n        NotEscapeSequence\n    \n    \n        LineContinuation\n    \n    \n        LineTerminatorSequence\n    \n    \n        SourceCharacter but not one of ` or \\ or $ or LineTerminator\n    \n\n\n    TemplateEscapeSequence :: \n        CharacterEscapeSequence\n    \n    \n        0\n        [lookahead ∉ DecimalDigit]\n    \n    \n        HexEscapeSequence\n    \n    \n        UnicodeEscapeSequence\n    \n\n\n    NotEscapeSequence :: \n        0\n        DecimalDigit\n    \n    \n        DecimalDigit but not 0\n    \n    \n        x\n        [lookahead ∉ HexDigit]\n    \n    \n        x\n        HexDigit\n        [lookahead ∉ HexDigit]\n    \n    \n        u\n        [lookahead ∉ HexDigit]\n        [lookahead ≠ {]\n    \n    \n        u\n        HexDigit\n        [lookahead ∉ HexDigit]\n    \n    \n        u\n        HexDigit\n        HexDigit\n        [lookahead ∉ HexDigit]\n    \n    \n        u\n        HexDigit\n        HexDigit\n        HexDigit\n        [lookahead ∉ HexDigit]\n    \n    \n        u\n        {\n        [lookahead ∉ HexDigit]\n    \n    \n        u\n        {\n        NotCodePoint\n        [lookahead ∉ HexDigit]\n    \n    \n        u\n        {\n        CodePoint\n        [lookahead ∉ HexDigit]\n        [lookahead ≠ }]\n    \n\n\n    NotCodePoint :: \n        HexDigits[~Sep]\n        but only if the MV of HexDigit",
+              "truncated": true
+            },
+            {
+              "text": "\n    NoSubstitutionTemplate :: \n        `\n        `\n    \n\n",
+              "truncated": false
+            },
+            {
+              "text": "\n    TemplateHead :: \n        `\n        ${\n    \n\n",
+              "truncated": false
+            },
+            {
+              "text": "\n    TemplateMiddle :: \n        }\n        ${\n    \n\n",
+              "truncated": false
+            }
+          ],
+          "omittedExamples": 43
+        }
+      ]
+    },
+    {
+      "source": "ecmascript-expressions",
+      "sha256": "25f27656a055bc8f65f55911a31af766e434a58d8bd0cb752c609fb6cf063bc3",
+      "sections": [
+        {
+          "anchor": "sec-optional-chains",
+          "text": "13.3.9 Optional Chains NoteAn optional chain is a chain of one or more property accesses and function calls, the first of which begins with the token ?.. 13.3.9.1 Runtime Semantics: Evaluation OptionalExpression : MemberExpression OptionalChain Let baseRef be ? Evaluation of MemberExpression.Let baseValue be ? GetValue(baseRef).If baseValue is either undefined or null, thenReturn undefined.Return ? ChainEvaluation of OptionalChain with arguments baseValue and baseRef. OptionalExpression : CallExpression OptionalChain Let baseRef be ? Evaluation of CallExpression.Let baseValue be ? GetValue(baseRef).If baseValue is either undefined or null, thenReturn undefined.Return ? ChainEvaluation of OptionalChain with arguments baseValue and baseRef. OptionalExpression : OptionalExpression OptionalChain Let baseRef be ? Evaluation of OptionalExpression.Let baseValue be ? GetValue(baseRef).If baseValue is either undefined or null, thenReturn undefined.Return ? ChainEvaluation of OptionalChain with arguments baseValue and baseRef. 13.3.9.2 Runtime Semantics: ChainEvaluation The syntax-directed operation ChainEvaluation takes arguments baseValue (an ECMAScript language value) and baseRef (an ECMAScript language value or a Reference Record) and returns either a normal completion containing either an ECMAScript language value or a Reference Record, or an abrupt completion. It is defined piecewise over the following productions: OptionalChain : ?. Arguments Let thisChain be this OptionalChain.Let tailCall be IsInTailPosition(thisChain).Return ? EvaluateCall(baseValue, baseRef, Arguments, tailCall). OptionalChain : ?. [ Expression ] Let strict be IsStrict(this OptionalChain).Return ? EvaluatePropertyAccessWithExpressionKey(baseValue, Expression, strict). OptionalChain : ?. IdentifierName Let strict be IsStrict(this OptionalChain).Return EvaluatePropertyAccessWithIdentifierKey(baseValue, IdentifierName, strict). OptionalChain : ?. PrivateIdentifier Let fieldNameString be the StringValue of PrivateIdentifier.Return MakePrivateReference(baseValue, fieldNameString). OptionalChain : OptionalChain Arguments Let optionalChain be OptionalChain.Let newRef be ? ChainEvaluation of optionalChain with arguments baseValue and baseRef.Let newValue be ? GetValue(newRef).Let thisChain be this OptionalChain.Let tailCall be IsInTailPosition(thisChain).Return ? EvaluateCall(newValue, newRef, Arguments, tailCall). OptionalChain : OptionalChain [ Expression ] Let optionalChain be OptionalChain.Let newRef be ? ChainEvaluation of optionalChain with arguments baseValue and baseRef.Let newValue be ? GetValue(newRef).Let strict be IsStrict(this OptionalChain).Return ? EvaluatePropertyAccessWithExpressionKey(newValue, Expression, strict). OptionalChain : OptionalChain . IdentifierName Let optionalChain be OptionalChain.Let newRef be ? ChainEvaluation of optionalChain with arguments baseValue and baseRef.Let newValue be ? GetValue(newRef).Let strict be IsStrict(this OptionalChain).Return EvaluatePropertyAccessWithIdentifierKey(newValue, IdentifierName, strict). OptionalChain : OptionalChain . PrivateIdentifier Let optionalChain be OptionalChain.Let newRef be ? ChainEvaluation of optionalChain with arguments baseValue and baseRef.Let newValue be ? GetValue(newRef).Let fieldNameString be the StringValue of PrivateIdentifier.Return MakePrivateReference(newValue, fieldNameString).",
+          "truncated": false,
+          "examples": [
+            {
+              "text": "\n    OptionalExpression : \n        MemberExpression\n        OptionalChain\n    \n\n",
+              "truncated": false
+            },
+            {
+              "text": "\n    OptionalExpression : \n        CallExpression\n        OptionalChain\n    \n\n",
+              "truncated": false
+            },
+            {
+              "text": "\n    OptionalExpression : \n        OptionalExpression\n        OptionalChain\n    \n\n",
+              "truncated": false
+            },
+            {
+              "text": "\n    OptionalChain : \n        ?.\n        Arguments\n    \n\n",
+              "truncated": false
+            }
+          ],
+          "omittedExamples": 7
+        },
+        {
+          "anchor": "sec-binary-logical-operators",
+          "text": "13.13 Binary Logical Operators Syntax LogicalANDExpression[In, Yield, Await] : BitwiseORExpression[?In, ?Yield, ?Await] LogicalANDExpression[?In, ?Yield, ?Await] && BitwiseORExpression[?In, ?Yield, ?Await] LogicalORExpression[In, Yield, Await] : LogicalANDExpression[?In, ?Yield, ?Await] LogicalORExpression[?In, ?Yield, ?Await] || LogicalANDExpression[?In, ?Yield, ?Await] CoalesceExpression[In, Yield, Await] : CoalesceExpressionHead[?In, ?Yield, ?Await] ?? BitwiseORExpression[?In, ?Yield, ?Await] CoalesceExpressionHead[In, Yield, Await] : CoalesceExpression[?In, ?Yield, ?Await] BitwiseORExpression[?In, ?Yield, ?Await] ShortCircuitExpression[In, Yield, Await] : LogicalORExpression[?In, ?Yield, ?Await] CoalesceExpression[?In, ?Yield, ?Await] Note The value produced by a && or || operator is not necessarily of type Boolean. The value produced will always be the value of one of the two operand expressions. 13.13.1 Runtime Semantics: Evaluation LogicalANDExpression : LogicalANDExpression && BitwiseORExpression Let leftRef be ? Evaluation of LogicalANDExpression.Let leftValue be ? GetValue(leftRef).If ToBoolean(leftValue) is false, return leftValue.Let rightRef be ? Evaluation of BitwiseORExpression.Return ? GetValue(rightRef). LogicalORExpression : LogicalORExpression || LogicalANDExpression Let leftRef be ? Evaluation of LogicalORExpression.Let leftValue be ? GetValue(leftRef).If ToBoolean(leftValue) is true, return leftValue.Let rightRef be ? Evaluation of LogicalANDExpression.Return ? GetValue(rightRef). CoalesceExpression : CoalesceExpressionHead ?? BitwiseORExpression Let leftRef be ? Evaluation of CoalesceExpressionHead.Let leftValue be ? GetValue(leftRef).If leftValue is neither undefined nor null, return leftValue.Let rightRef be ? Evaluation of BitwiseORExpression.Return ? GetValue(rightRef).",
+          "truncated": false,
+          "examples": [
+            {
+              "text": "\n    LogicalANDExpression[In, Yield, Await] : \n        BitwiseORExpression[?In, ?Yield, ?Await]\n    \n    \n        LogicalANDExpression[?In, ?Yield, ?Await]\n        &&\n        BitwiseORExpression[?In, ?Yield, ?Await]\n    \n\n\n    LogicalORExpression[In, Yield, Await] : \n        LogicalANDExpression[?In, ?Yield, ?Await]\n    \n    \n        LogicalORExpression[?In, ?Yield, ?Await]\n        ||\n        LogicalANDExpression[?In, ?Yield, ?Await]\n    \n\n\n    CoalesceExpression[In, Yield, Await] : \n        CoalesceExpressionHead[?In, ?Yield, ?Await]\n        ??\n        BitwiseORExpression[?In, ?Yield, ?Await]\n    \n\n\n    CoalesceExpressionHead[In, Yield, Await] : \n        CoalesceExpression[?In, ?Yield, ?Await]\n    \n    \n        BitwiseORExpression[?In, ?Yield, ?Await]\n    \n\n\n    ShortCircuitExpression[In, Yield, Await] : \n        LogicalORExpression[?In, ?Yield, ?Await]\n    \n    \n        CoalesceExpression[?In, ?Yield, ?Await]\n    \n\n",
+              "truncated": false
+            },
+            {
+              "text": "\n    LogicalANDExpression : \n        LogicalANDExpression\n        &&\n        BitwiseORExpression\n    \n\n",
+              "truncated": false
+            },
+            {
+              "text": "\n    LogicalORExpression : \n        LogicalORExpression\n        ||\n        LogicalANDExpression\n    \n\n",
+              "truncated": false
+            },
+            {
+              "text": "\n    CoalesceExpression : \n        CoalesceExpressionHead\n        ??\n        BitwiseORExpression\n    \n\n",
+              "truncated": false
+            }
+          ],
+          "omittedExamples": 0
+        }
+      ]
+    }
+  ]
+}

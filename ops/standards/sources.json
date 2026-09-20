@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "id": "html-syntax",
+      "url": "https://html.spec.whatwg.org/multipage/syntax.html",
+      "status": "Living Standard",
+      "retrieved": "2026-09-20",
+      "snapshot": "upstream/html-syntax.html.gz",
+      "sha256": "3520c542e9e9297f01adac1e397df753b81ffe4861418be78c3bcd935356fe47",
+      "archiveSha256": "fbafa5e264f107dcf7e3a3d82db0a834f0a342945022f889138df7afb577e866",
+      "license": {
+        "path": "upstream/whatwg-license.txt",
+        "url": "https://raw.githubusercontent.com/whatwg/html/main/LICENSE",
+        "sha256": "85dc6f5ccb57a6fe8c33d158f9fc8fc7ee5655a5d3db2cdd131c6a3d0f48a864"
+      },
+      "anchors": [
+        "elements-2",
+        "start-tags",
+        "attributes-2",
+        "the-doctype",
+        "optional-tags",
+        "comments"
+      ]
+    },
+    {
+      "id": "html-parsing",
+      "url": "https://html.spec.whatwg.org/multipage/parsing.html",
+      "status": "Living Standard",
+      "retrieved": "2026-09-20",
+      "snapshot": "upstream/html-parsing.html.gz",
+      "sha256": "4cb449c557673a653114254b3e51d5f8f0a52de6ed1b7cfee7f4b0dae24d2ca5",
+      "archiveSha256": "ee2de0ed816812147271548969fe41f638efc691111549c47d5fb36e010b7a5d",
+      "license": {
+        "path": "upstream/whatwg-license.txt",
+        "url": "https://raw.githubusercontent.com/whatwg/html/main/LICENSE",
+        "sha256": "85dc6f5ccb57a6fe8c33d158f9fc8fc7ee5655a5d3db2cdd131c6a3d0f48a864"
+      },
+      "anchors": [
+        "named-character-reference-state",
+        "numeric-character-reference-end-state",
+        "script-data-end-tag-name-state"
+      ]
+    },
+    {
+      "id": "css-syntax",
+      "url": "https://www.w3.org/TR/css-syntax-3/",
+      "status": "Candidate Recommendation Draft",
+      "retrieved": "2026-09-20",
+      "snapshot": "upstream/css-syntax.html.gz",
+      "sha256": "413b27acb4e16721d28b487456359ecbcecba472c4310bd2f6a4939ad393738b",
+      "archiveSha256": "d7635688bc1c15a0c4e31942bfdc0e1437ff96d62aa44957b1fb1e37244ab724",
+      "license": {
+        "path": "upstream/w3c-2015-license.txt",
+        "url": "https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document",
+        "sha256": "254f76f6eb153b1a874645015489f24844fe117585a422f9f53ea3f359806919"
+      },
+      "anchors": [
+        "consume-comment",
+        "consume-escaped-code-point",
+        "consume-string-token",
+        "consume-url-token",
+        "consume-at-rule"
+      ]
+    },
+    {
+      "id": "css-selectors",
+      "url": "https://www.w3.org/TR/selectors-4/",
+      "status": "Working Draft",
+      "retrieved": "2026-09-20",
+      "snapshot": "upstream/css-selectors.html.gz",
+      "sha256": "5d3b3f7e1fcc562dcec1a01ad2c5651e9f0bac294b255a75352e9df202604e6d",
+      "archiveSha256": "bc78ec6d5fbe2d891881b0df80484965a2e98556383fcfb67ea1209af169a6b5",
+      "license": {
+        "path": "upstream/w3c-license.txt",
+        "url": "https://www.w3.org/copyright/software-license-2023/",
+        "sha256": "ec32c12624d9dc038328872f288355f9e3ff59f2c1ab575c631868eb894415c1"
+      },
+      "anchors": ["attribute-selectors", "matches", "negation"]
+    },
+    {
+      "id": "css-variables",
+      "url": "https://www.w3.org/TR/css-variables-1/",
+      "status": "Candidate Recommendation Snapshot",
+      "retrieved": "2026-09-20",
+      "snapshot": "upstream/css-variables.html.gz",
+      "sha256": "5ce7b2c106af576328f222dd622598f847881f2ba9a64d53d6681d27d07ea0db",
+      "archiveSha256": "58033bccb46999be0bf8af0b706411853a4c1928cd2d17be7be808a9e6b8ff15",
+      "license": {
+        "path": "upstream/w3c-2015-license.txt",
+        "url": "https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document",
+        "sha256": "254f76f6eb153b1a874645015489f24844fe117585a422f9f53ea3f359806919"
+      },
+      "anchors": ["defining-variables", "using-variables"]
+    },
+    {
+      "id": "css-nesting",
+      "url": "https://www.w3.org/TR/css-nesting-1/",
+      "status": "Working Draft",
+      "retrieved": "2026-09-20",
+      "snapshot": "upstream/css-nesting.html.gz",
+      "sha256": "b29b0db74b96af295efcd7cd94f34366dd099ebb905dc5529c61409184f6fa9c",
+      "archiveSha256": "7d5c2ca948c66ba4f0ced94c97f0be73681c7d745811e92baed8d963dc237161",
+      "license": {
+        "path": "upstream/w3c-license.txt",
+        "url": "https://www.w3.org/copyright/software-license-2023/",
+        "sha256": "ec32c12624d9dc038328872f288355f9e3ff59f2c1ab575c631868eb894415c1"
+      },
+      "anchors": ["syntax", "syntax-examples", "nest-selector"]
+    },
+    {
+      "id": "ecmascript-lexical",
+      "url": "https://tc39.es/ecma262/multipage/ecmascript-language-lexical-grammar.html",
+      "status": "Current ECMA-262 draft; finished proposals only",
+      "retrieved": "2026-09-20",
+      "snapshot": "upstream/ecmascript-lexical.html.gz",
+      "sha256": "85be30882e4462b28b7503b5f9a82f69510de64d8c9b70848dc82f5cf4e88532",
+      "archiveSha256": "3f4cd806a37852fc6d31fefc003f5b6f318268ff483dfcb520d9a9a2ee9790fc",
+      "license": {
+        "path": "upstream/ecmascript-license.txt",
+        "url": "https://raw.githubusercontent.com/tc39/ecma262/main/LICENSE.md",
+        "sha256": "484d4a9e3e4bab42e5e2f8703c34ed46e861fb62662e1818b4534d1e34584967"
+      },
+      "anchors": [
+        "sec-comments",
+        "sec-literals-string-literals",
+        "sec-literals-regular-expression-literals",
+        "sec-template-literal-lexical-components"
+      ]
+    },
+    {
+      "id": "ecmascript-expressions",
+      "url": "https://tc39.es/ecma262/multipage/ecmascript-language-expressions.html",
+      "status": "Current ECMA-262 draft; finished proposals only",
+      "retrieved": "2026-09-20",
+      "snapshot": "upstream/ecmascript-expressions.html.gz",
+      "sha256": "25f27656a055bc8f65f55911a31af766e434a58d8bd0cb752c609fb6cf063bc3",
+      "archiveSha256": "1e13b52da27acb1301a326357e4ccf764fac748d27e70f463a14abee362609e3",
+      "license": {
+        "path": "upstream/ecmascript-license.txt",
+        "url": "https://raw.githubusercontent.com/tc39/ecma262/main/LICENSE.md",
+        "sha256": "484d4a9e3e4bab42e5e2f8703c34ed46e861fb62662e1818b4534d1e34584967"
+      },
+      "anchors": ["sec-optional-chains", "sec-binary-logical-operators"]
+    }
+  ]
+}

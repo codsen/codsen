@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "targets": [
+    {
+      "package": "html-crush",
+      "entrypoint": "crush",
+      "profiles": [
+        {
+          "id": "default",
+          "options": {}
+        }
+      ],
+      "fixture": "test/fixtures/standards/pilot.json",
+      "tests": "test/standards-pilot.js",
+      "knownFailures": "test/fixtures/standards/known-failures.json"
+    },
+    {
+      "package": "email-comb",
+      "entrypoint": "comb",
+      "profiles": [
+        {
+          "id": "default",
+          "options": {}
+        }
+      ],
+      "fixture": "test/fixtures/standards/pilot.json",
+      "tests": "test/standards-pilot.js",
+      "knownFailures": "test/fixtures/standards/known-failures.json"
+    },
+    {
+      "package": "string-strip-html",
+      "entrypoint": "stripHtml",
+      "profiles": [
+        {
+          "id": "default",
+          "options": {}
+        }
+      ],
+      "fixture": "test/fixtures/standards/pilot.json",
+      "tests": "test/standards-pilot.js",
+      "knownFailures": "test/fixtures/standards/known-failures.json"
+    }
+  ]
+}

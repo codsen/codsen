@@ -890,6 +890,22 @@ function emailCombSmoke(api, equal) {
     api.uglify(source).result,
     '<head><style>.l{x:z}</style></head><body class="l">z</body>',
   );
+  equal(
+    api.comb(
+      '<style>.used{color:red}.gone{color:blue}</style><p class="used">text</p>',
+    ).result,
+    '<style>.used{color:red}</style><p class="used">text</p>',
+  );
+  const functional =
+    '<style>.used:not(.gone){color:red}</style><p class="used">text</p>';
+  equal(api.comb(functional).result, functional);
+  const slash = "<style>.used\\/{color:red}</style><img class=used/>";
+  equal(api.comb(slash).result, slash);
+  equal(api.comb(slash).allInBody, [".used/"]);
+  equal(
+    api.comb('<img src=x class="gone" id="gone" />').result,
+    "<img src=x />",
+  );
 }
 
 function htmlCrushSmoke(api, equal) {
@@ -928,6 +944,22 @@ function htmlCrushSmoke(api, equal) {
     ),
     [true, true, true],
   );
+  equal(
+    api.crush("<img src=x />", { removeLineBreaks: true }).result,
+    "<img src=x />",
+  );
+  const title = "<title><b>  literal</b><!-- literal --></title>";
+  equal(
+    api.crush(title, { removeLineBreaks: true, removeHTMLComments: true })
+      .result,
+    title,
+  );
+  const script = '<script>const x = "</scriptx><!-- literal -->";</script>';
+  equal(
+    api.crush(script, { removeLineBreaks: true, removeHTMLComments: true })
+      .result,
+    script,
+  );
 }
 
 function generateAtomicCssSmoke(api, equal) {
@@ -947,6 +979,15 @@ function stringStripHtmlSmoke(api, equal) {
     }).result,
     "Read the docs https://example.com/docs",
   );
+  equal(
+    api.stripHtml("<textarea><b>&amp;</b><!-- literal --></textarea>").result,
+    "<b>&</b><!-- literal -->",
+  );
+  const encodedClose = api.stripHtml(
+    "<textarea>&lt;/textarea&gt;<b>literal</b></textarea>",
+  );
+  equal(encodedClose.result, "</textarea><b>literal</b>");
+  equal(encodedClose.allTagLocations.length, 2);
 }
 
 function stringExtractClassNamesSmoke(api, equal) {

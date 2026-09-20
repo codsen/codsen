@@ -1,0 +1,329 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "html-void-br",
+      "requirement": "html-elements",
+      "input": "<br>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "html-void-wbr",
+      "requirement": "html-elements",
+      "input": "one<wbr>two",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "html-unquoted-solidus",
+      "requirement": "html-attributes",
+      "input": "<img alt=\"\" src=x/>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "html-separated-solidus",
+      "requirement": "html-attributes",
+      "input": "<img alt=\"\" src=x />",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "html-double-quoted-greater-than",
+      "requirement": "html-attributes",
+      "input": "<p title=\"a > b\">text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "html-single-quoted-greater-than",
+      "requirement": "html-attributes",
+      "input": "<p title='a > b'>text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "html-boolean-attribute",
+      "requirement": "html-attributes",
+      "input": "<input disabled>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "html-ascii-case",
+      "requirement": "html-elements",
+      "input": "<DIV TITLE=\"X\">Text</DIV>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "html-named-references",
+      "requirement": "html-entities",
+      "input": "<p>&copy; &amp; &NotEqualTilde;</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "html-numeric-recovery",
+      "requirement": "html-entities",
+      "input": "<p>&#65; &#x1F680; &#0;</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "specified-recovery",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "html-reference-context",
+      "requirement": "html-entities",
+      "input": "<p title=\"&notit; &amp;\">&notit;</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "specified-recovery",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "html-textarea-rcdata",
+      "requirement": "html-rawtext",
+      "input": "<textarea><b>&amp;</b></textarea>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "html-title-rcdata",
+      "requirement": "html-rawtext",
+      "input": "<title>one &amp; two</title>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "html-comments",
+      "requirement": "html-comments",
+      "input": "<p>A<!-- note -->B</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "html-doctype",
+      "requirement": "html-doctype",
+      "input": "<!doctype html><p>text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "html-optional-end-tags",
+      "requirement": "html-optional-tags",
+      "input": "<ul><li>one<li>two</ul>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "html-foreign-self-close",
+      "requirement": "html-elements",
+      "input": "<svg><path d=\"M0 0\" /></svg>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "html-unquoted-class-solidus",
+      "requirement": "html-attributes",
+      "input": "<style>.used\\/{color:red}</style><img alt=\"\" class=used/>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "css-comments",
+      "requirement": "css-comments",
+      "input": "<style>.used{/* note */color:red}.gone{color:blue}</style><p class=\"used\">text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Stylesheet embedded in a style element with explicit HTML usage; assertions are package transformation policy, not browser rendering conformance."
+    },
+    {
+      "id": "css-hex-escape",
+      "requirement": "css-escapes",
+      "input": "<style>.\\31 23{color:red}</style><p class=\"123\">text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Stylesheet embedded in a style element with explicit HTML usage; assertions are package transformation policy, not browser rendering conformance."
+    },
+    {
+      "id": "css-escaped-punctuation",
+      "requirement": "css-escapes",
+      "input": "<style>.a\\+b{color:red}</style><p class=\"a+b\">text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Stylesheet embedded in a style element with explicit HTML usage; assertions are package transformation policy, not browser rendering conformance."
+    },
+    {
+      "id": "css-string-delimiters",
+      "requirement": "css-strings",
+      "input": "<style>.used::before{content:\"a; } /* b */\"}</style><p class=\"used\">text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Stylesheet embedded in a style element with explicit HTML usage; assertions are package transformation policy, not browser rendering conformance."
+    },
+    {
+      "id": "css-url-delimiters",
+      "requirement": "css-urls",
+      "input": "<style>.used{background:url(\"https://example.test/a;b#c\")}</style><p class=\"used\">text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Stylesheet embedded in a style element with explicit HTML usage; assertions are package transformation policy, not browser rendering conformance."
+    },
+    {
+      "id": "css-attribute-selector",
+      "requirement": "css-selectors",
+      "input": "<style>.used[data-x=\"a,b\"]{color:red}</style><p class=\"used\" data-x=\"a,b\">text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Stylesheet embedded in a style element with explicit HTML usage; assertions are package transformation policy, not browser rendering conformance."
+    },
+    {
+      "id": "css-is-selector",
+      "requirement": "css-selectors",
+      "input": "<style>:is(.used,.gone){color:red}</style><p class=\"used\">text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "draft-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Stylesheet embedded in a style element with explicit HTML usage; assertions are package transformation policy, not browser rendering conformance."
+    },
+    {
+      "id": "css-not-selector",
+      "requirement": "css-selectors",
+      "input": "<style>.used:not(.gone){color:red}</style><p class=\"used\">text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "draft-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Stylesheet embedded in a style element with explicit HTML usage; assertions are package transformation policy, not browser rendering conformance."
+    },
+    {
+      "id": "css-nested-conditional",
+      "requirement": "css-at-rules",
+      "input": "<style>@media screen{@supports (display:grid){.used{display:grid}.gone{color:red}}}</style><p class=\"used\">text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Stylesheet embedded in a style element with explicit HTML usage; assertions are package transformation policy, not browser rendering conformance."
+    },
+    {
+      "id": "css-custom-properties",
+      "requirement": "css-custom-properties",
+      "input": "<style>:root{--accent:red;--tokens:a  b}.used{color:var(--accent)}</style><p class=\"used\">text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Stylesheet embedded in a style element with explicit HTML usage; assertions are package transformation policy, not browser rendering conformance."
+    },
+    {
+      "id": "css-nesting",
+      "requirement": "css-nesting",
+      "input": "<style>.used{color:red;& .child{color:blue}}</style><div class=\"used\"><span class=\"child\">text</span></div>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "draft-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Stylesheet embedded in a style element with explicit HTML usage; assertions are package transformation policy, not browser rendering conformance."
+    },
+    {
+      "id": "css-font-face",
+      "requirement": "css-at-rules",
+      "input": "<style>@font-face{font-family:\"A; B\";src:url(\"font.woff2\")}.used{font-family:\"A; B\"}</style><p class=\"used\">text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Stylesheet embedded in a style element with explicit HTML usage; assertions are package transformation policy, not browser rendering conformance."
+    },
+    {
+      "id": "js-template-lines",
+      "requirement": "js-template",
+      "input": "<script>const x = `one\n\n  two`;</script><p>text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "js-regexp",
+      "requirement": "js-regexp",
+      "input": "<script>const pattern = /<[a-z]+>/gi;</script><p>text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "js-line-comment",
+      "requirement": "js-comments",
+      "input": "<script>// <b>literal</b>\nconst x = 1;</script><p>text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "js-html-like-string",
+      "requirement": "js-strings",
+      "input": "<script>const x = \"<!-- literal -->\";</script><p>text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "js-modern-operators",
+      "requirement": "js-modern",
+      "input": "<script type=\"module\">const x = data?.value ?? \"fallback\";</script><p>text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    },
+    {
+      "id": "js-end-tag-prefix",
+      "requirement": "html-script-boundaries",
+      "input": "<script>const x = \"</scriptx>\";</script><p>text</p>",
+      "context": "HTML syntax fragment; no script execution",
+      "classification": "standard-syntax",
+      "origin": "Original Codsen test input derived from the cited requirement; not copied from an upstream test.",
+      "notes": "Fragment isolates syntax; it is not asserted to be a complete author-conforming document."
+    }
+  ]
+}

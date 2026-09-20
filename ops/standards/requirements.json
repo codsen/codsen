@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "requirements": [
+    {
+      "id": "html-elements",
+      "summary": "HTML element categories, void elements, ASCII tag case, and foreign self-closing syntax",
+      "source": "html-syntax",
+      "anchors": ["elements-2"],
+      "state": "pilot"
+    },
+    {
+      "id": "html-attributes",
+      "summary": "Quoted/boolean attributes and the distinction between unquoted value slashes and self-closing syntax",
+      "source": "html-syntax",
+      "anchors": ["start-tags", "attributes-2"],
+      "state": "pilot"
+    },
+    {
+      "id": "html-entities",
+      "summary": "Character references, text/attribute lookahead, and invalid numeric replacement; product decoding policy remains explicit",
+      "source": "html-parsing",
+      "anchors": [
+        "named-character-reference-state",
+        "numeric-character-reference-end-state"
+      ],
+      "state": "pilot"
+    },
+    {
+      "id": "html-rawtext",
+      "summary": "Raw text and RCDATA preserve apparent inner markup according to their element category",
+      "source": "html-syntax",
+      "anchors": ["elements-2"],
+      "state": "pilot"
+    },
+    {
+      "id": "html-comments",
+      "summary": "Comment delimiters separate comment data from surrounding text",
+      "source": "html-syntax",
+      "anchors": ["comments"],
+      "state": "pilot"
+    },
+    {
+      "id": "html-doctype",
+      "summary": "Case-insensitive short HTML doctype syntax",
+      "source": "html-syntax",
+      "anchors": ["the-doctype"],
+      "state": "pilot"
+    },
+    {
+      "id": "html-optional-tags",
+      "summary": "Optional li end tags do not require fabricated closing tags in transformation input",
+      "source": "html-syntax",
+      "anchors": ["optional-tags"],
+      "state": "pilot"
+    },
+    {
+      "id": "html-script-boundaries",
+      "summary": "An apparent script end-tag name must be followed by an HTML delimiter",
+      "source": "html-parsing",
+      "anchors": ["script-data-end-tag-name-state"],
+      "state": "pilot"
+    },
+    {
+      "id": "css-comments",
+      "summary": "CSS comment boundaries and transformation-specific permitted removal",
+      "source": "css-syntax",
+      "anchors": ["consume-comment"],
+      "state": "pilot"
+    },
+    {
+      "id": "css-escapes",
+      "summary": "Escaped identifier code points and optional terminating whitespace",
+      "source": "css-syntax",
+      "anchors": ["consume-escaped-code-point"],
+      "state": "pilot"
+    },
+    {
+      "id": "css-strings",
+      "summary": "Quoted CSS strings protect punctuation and apparent comments",
+      "source": "css-syntax",
+      "anchors": ["consume-string-token"],
+      "state": "pilot"
+    },
+    {
+      "id": "css-urls",
+      "summary": "URL token boundaries and quoted URL punctuation",
+      "source": "css-syntax",
+      "anchors": ["consume-url-token"],
+      "state": "pilot"
+    },
+    {
+      "id": "css-selectors",
+      "summary": "Attribute selectors and logical selector alternatives/negation must not be treated as conjunctions of class presence",
+      "source": "css-selectors",
+      "anchors": ["attribute-selectors", "matches", "negation"],
+      "state": "pilot"
+    },
+    {
+      "id": "css-at-rules",
+      "summary": "At-rule blocks and preludes preserve strings and nested content",
+      "source": "css-syntax",
+      "anchors": ["consume-at-rule"],
+      "state": "pilot"
+    },
+    {
+      "id": "css-custom-properties",
+      "summary": "Custom property values and var() references preserve their meaning",
+      "source": "css-variables",
+      "anchors": ["defining-variables", "using-variables"],
+      "state": "pilot"
+    },
+    {
+      "id": "css-nesting",
+      "summary": "Nested style rules and the nesting selector require preserving nested selector usage",
+      "source": "css-nesting",
+      "anchors": ["syntax", "syntax-examples", "nest-selector"],
+      "state": "pilot"
+    },
+    {
+      "id": "js-template",
+      "summary": "Embedded template literal line terminators and spaces survive HTML processing",
+      "source": "ecmascript-lexical",
+      "anchors": ["sec-template-literal-lexical-components"],
+      "state": "pilot"
+    },
+    {
+      "id": "js-regexp",
+      "summary": "Regular-expression literal source is preserved without HTML-tag interpretation",
+      "source": "ecmascript-lexical",
+      "anchors": ["sec-literals-regular-expression-literals"],
+      "state": "pilot"
+    },
+    {
+      "id": "js-comments",
+      "summary": "JavaScript comment content is opaque to surrounding HTML transformations",
+      "source": "ecmascript-lexical",
+      "anchors": ["sec-comments"],
+      "state": "pilot"
+    },
+    {
+      "id": "js-strings",
+      "summary": "Quoted JavaScript content is preserved subject to HTML script delimiter rules",
+      "source": "ecmascript-lexical",
+      "anchors": ["sec-literals-string-literals"],
+      "state": "pilot"
+    },
+    {
+      "id": "js-modern",
+      "summary": "Optional chaining and nullish-coalescing source is preserved without host execution",
+      "source": "ecmascript-expressions",
+      "anchors": ["sec-optional-chains", "sec-binary-logical-operators"],
+      "state": "pilot"
+    },
+    {
+      "id": "html-tokenizer-recovery",
+      "summary": "Broader malformed tag, attribute, comment, and EOF recovery",
+      "state": "backlog",
+      "reason": "Select current WPT/html5lib tokenizer cases after the initial syntax pilot."
+    },
+    {
+      "id": "html-fragment-contexts",
+      "summary": "Table, select, template, SVG, MathML, and scripting-dependent parsing contexts",
+      "state": "backlog",
+      "reason": "Requires explicit fragment context and package contract review; current fragments do not prove tree-construction conformance."
+    },
+    {
+      "id": "css-new-at-rules",
+      "summary": "Cascade layers, containers, scope, and further nested conditional rules",
+      "state": "backlog",
+      "reason": "Inventory and adapt module-specific upstream tests before claiming support."
+    },
+    {
+      "id": "css-selector-states",
+      "summary": "Relational selectors, specificity, dynamic states, namespaces, and escaping interactions",
+      "state": "backlog",
+      "reason": "The initial logical-selector cases cannot establish complete matching or pruning safety."
+    },
+    {
+      "id": "html-entity-frontier",
+      "summary": "Dedicated html-entity-codec and string-extract-class-names target adapters",
+      "state": "backlog",
+      "reason": "Reuse existing entity snapshot owned by all-named-html-entities; expand targets after the three-library pilot."
+    },
+    {
+      "id": "js-lexical-frontier",
+      "summary": "Dedicated JavaScript source-transformation libraries and full lexical variations",
+      "state": "backlog",
+      "reason": "Review actual APIs such as js-row-num before adapting Test262 cases."
+    },
+    {
+      "id": "email-and-template-extensions",
+      "summary": "Email conditional comments and template-language extensions",
+      "state": "backlog",
+      "reason": "Keep product extensions separately classified from standard HTML."
+    },
+    {
+      "id": "css-rendering",
+      "summary": "CSS layout, painting, animation and full browser computed-style behavior",
+      "state": "backlog",
+      "reason": "Outside the current string-transform pilot; only select independent semantic checks where transformations need them."
+    }
+  ]
+}
