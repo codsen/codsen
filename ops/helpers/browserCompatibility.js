@@ -906,6 +906,31 @@ function emailCombSmoke(api, equal) {
     api.comb('<img src=x class="gone" id="gone" />').result,
     "<img src=x />",
   );
+  const nested =
+    '<style>.newsletter{color:red;& .newsletter-title{color:blue}}</style><div class="newsletter"><span class="newsletter-title">text</span></div>';
+  const nestedResult = api.comb(nested);
+  equal(nestedResult.result, nested);
+  equal(nestedResult.allInHead, [".newsletter", ".newsletter-title"]);
+  equal(nestedResult.allInBody, [".newsletter", ".newsletter-title"]);
+  equal(nestedResult.deletedFromHead, []);
+  equal(nestedResult.deletedFromBody, []);
+  const nestedUglified = api.uglify(nested);
+  const names = new Map(nestedUglified.log.uglified);
+  const parent = names.get(".newsletter");
+  const child = names.get(".newsletter-title");
+  equal(typeof parent, "string");
+  equal(typeof child, "string");
+  equal(parent === ".newsletter", false);
+  equal(child === ".newsletter-title", false);
+  equal(parent === child, false);
+  equal(
+    nestedUglified.result,
+    `<style>${parent}{color:red;& ${child}{color:blue}}</style><div class="${parent.slice(1)}"><span class="${child.slice(1)}">text</span></div>`,
+  );
+  equal(nestedUglified.allInHead, [".newsletter", ".newsletter-title"]);
+  equal(nestedUglified.allInBody, [".newsletter", ".newsletter-title"]);
+  equal(nestedUglified.deletedFromHead, []);
+  equal(nestedUglified.deletedFromBody, []);
 }
 
 function htmlCrushSmoke(api, equal) {

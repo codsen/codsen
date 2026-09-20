@@ -23,8 +23,8 @@ The standards checks are part of the normal test pipeline:
   inputs, so changing either invalidates the corresponding test results.
 - Repository tooling tests protect the local and hosted catalogue wiring.
 
-The known failure below remains a separate diagnostic until it is fixed and
-promoted into the normal package suite. Source refresh is explicit so routine
+All 108 pilot case/library combinations have assertions in the normal package
+suites, with no recorded known failures. Source refresh is explicit so routine
 tests use reviewed, pinned specification content without network access.
 
 ## Focused commands
@@ -54,9 +54,11 @@ npm run standards:known-failures
 This command prints expected and actual results and exits nonzero for unresolved
 failures. It also exits nonzero when a gap starts passing, because its expectation
 must then be promoted into the package's normal suite and its disposition updated.
-The initial known gap is `email-comb/css-nesting`: retained nested CSS loses the
-HTML class it needs. The expected result belongs to that package's local
-`test/fixtures/standards/known-failures.json`; it is not a passing regression test.
+Store each unresolved expectation in the affected package's local
+`test/fixtures/standards/known-failures.json`. These diagnostics do not count as
+passing regression tests. The initial `email-comb/css-nesting` gap is now covered
+by an ordinary package assertion that preserves both nested CSS and its HTML
+classes.
 
 ## Sources and harvested material
 
@@ -155,8 +157,9 @@ reviewed semantic reason makes the case obsolete.
   adaptation is part of the case, not an assertion of full document validity.
 - `stripHtml()` has deliberate text and entity-decoding policies. Its expected
   output is not simply browser `textContent` or HTML tokenizer output.
-- `comb()` has deliberate comment-separator behavior and conservative functional
-  selector retention. Those product policies are not browser DOM equivalence.
+- `comb()` has deliberate comment-separator behavior and conservatively retains
+  functional selectors and nested style-rule groups. Those product policies are
+  not browser DOM equivalence.
 - Input-language freshness and implementation-runtime floors are independent.
   Modern JS inside a string can be preserved by code running on Node 18 or
   Chromium 58 without executing that modern syntax.

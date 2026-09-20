@@ -389,8 +389,7 @@
       "target": "email-comb",
       "caseId": "css-nesting",
       "profile": "default",
-      "status": "known-failure",
-      "reason": "Nested selector usage is not inventoried by the current declaration scanner; child class removal can invalidate retained nested CSS. Requires a scoped nesting grammar update."
+      "status": "covered"
     },
     {
       "target": "email-comb",
