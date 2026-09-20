@@ -1,6 +1,6 @@
 # Codsen
 
-> A turbo-monorepo of 101 npm packages 📦📦📦
+> A turbo-monorepo from [royston](https://www.npmjs.com/~royston), whose npm portfolio spans 161 packages, past and present 📦📦📦
 
 ## 📚 Documentation
 

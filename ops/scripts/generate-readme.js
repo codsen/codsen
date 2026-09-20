@@ -2,13 +2,14 @@
 // GENERATES THE MONOREPO ROOT README
 // ==================================
 
-import fs from "node:fs";
 import path from "node:path";
 import {
   IIFE_BROWSER_POLICY,
   iifeGlobalName,
 } from "../helpers/browserCompatibility.js";
+import { createCodsenPackageLists } from "../helpers/codsenPackages.js";
 import { writeGeneratedFile } from "../helpers/generatedFiles.js";
+import { readWorkspaceRecords } from "../helpers/workspaceInventoryFile.js";
 
 const arguments_ = process.argv.slice(2);
 if (arguments_.some((argument) => argument !== "--check")) {
@@ -21,32 +22,34 @@ const mode = arguments_.includes("--check") ? "check" : "write";
 const today = new Date();
 const year = today.getFullYear();
 
-// READ ALL LIBS
-// =============
+// COUNT THE HISTORICAL NPM PORTFOLIO
+// =================================
 
-const allPackages = fs
-  .readdirSync(path.resolve("packages"))
-  .filter(
-    (packageName) =>
-      typeof packageName === "string" &&
-      packageName.length &&
-      fs.statSync(path.join("packages", packageName)).isDirectory() &&
-      fs.statSync(path.join("packages", packageName, "package.json")) &&
-      !JSON.parse(
-        fs.readFileSync(
-          path.join("packages", packageName, "package.json"),
-          "utf8",
-        ),
-      ).private,
-  )
-  .sort();
+const publicWorkspaceNames = readWorkspaceRecords(process.cwd())
+  .filter(({ manifest }) => !manifest.private)
+  .map(({ manifest }) => manifest.name);
+const { historical } = createCodsenPackageLists(publicWorkspaceNames);
+
+// Count package names across royston's npm history, including retired products.
+// These five additional names are intentionally outside the product catalogue:
+// metadata, an experiment, two formerly published aliases and a co-maintained
+// project. Registry membership and the alias tombstones were checked 2026-09-20.
+// Keep this list explicit: a catalogue exclusion need not be a published name.
+const npmPortfolioPackages = new Set([
+  ...historical,
+  "@codsen/data",
+  "codsen-test-1",
+  "eslint-plugin-row-num-tbc",
+  "eslint-plugin-test-num-tbc",
+  "postcss-nested-import",
+]);
 
 // ASSEMBLE THE TEMPLATE
 // =====================
 
 const template = `# Codsen
 
-> A turbo-monorepo of ${allPackages.length} npm packages 📦📦📦
+> A turbo-monorepo from [royston](https://www.npmjs.com/~royston), whose npm portfolio spans ${npmPortfolioPackages.size} packages, past and present 📦📦📦
 
 ## 📚 Documentation
 
