@@ -286,67 +286,76 @@ test("28 - css-custom-properties", () => {
   equal(actual.deletedFromBody, [], "28.05");
 });
 
-test("29 - css-font-face", () => {
-  const actual = comb(cases["css-font-face"]);
-  equal(actual.result, cases["css-font-face"], "29.01");
-  equal(actual.allInHead, [".used"], "29.02");
-  equal(actual.allInBody, [".used"], "29.03");
+test("29 - css-nesting", () => {
+  const actual = comb(cases["css-nesting"]);
+  equal(actual.result, cases["css-nesting"], "29.01");
+  equal(actual.allInHead, [".child", ".used"], "29.02");
+  equal(actual.allInBody, [".child", ".used"], "29.03");
   equal(actual.deletedFromHead, [], "29.04");
   equal(actual.deletedFromBody, [], "29.05");
 });
 
-test("30 - js-template-lines", () => {
-  const actual = comb(cases["js-template-lines"]);
-  equal(actual.result, cases["js-template-lines"], "30.01");
-  equal(actual.allInHead, [], "30.02");
-  equal(actual.allInBody, [], "30.03");
+test("30 - css-font-face", () => {
+  const actual = comb(cases["css-font-face"]);
+  equal(actual.result, cases["css-font-face"], "30.01");
+  equal(actual.allInHead, [".used"], "30.02");
+  equal(actual.allInBody, [".used"], "30.03");
   equal(actual.deletedFromHead, [], "30.04");
   equal(actual.deletedFromBody, [], "30.05");
 });
 
-test("31 - js-regexp", () => {
-  const actual = comb(cases["js-regexp"]);
-  equal(actual.result, cases["js-regexp"], "31.01");
+test("31 - js-template-lines", () => {
+  const actual = comb(cases["js-template-lines"]);
+  equal(actual.result, cases["js-template-lines"], "31.01");
   equal(actual.allInHead, [], "31.02");
   equal(actual.allInBody, [], "31.03");
   equal(actual.deletedFromHead, [], "31.04");
   equal(actual.deletedFromBody, [], "31.05");
 });
 
-test("32 - js-line-comment", () => {
-  const actual = comb(cases["js-line-comment"]);
-  equal(actual.result, cases["js-line-comment"], "32.01");
+test("32 - js-regexp", () => {
+  const actual = comb(cases["js-regexp"]);
+  equal(actual.result, cases["js-regexp"], "32.01");
   equal(actual.allInHead, [], "32.02");
   equal(actual.allInBody, [], "32.03");
   equal(actual.deletedFromHead, [], "32.04");
   equal(actual.deletedFromBody, [], "32.05");
 });
 
-test("33 - js-html-like-string", () => {
-  const actual = comb(cases["js-html-like-string"]);
-  equal(actual.result, cases["js-html-like-string"], "33.01");
+test("33 - js-line-comment", () => {
+  const actual = comb(cases["js-line-comment"]);
+  equal(actual.result, cases["js-line-comment"], "33.01");
   equal(actual.allInHead, [], "33.02");
   equal(actual.allInBody, [], "33.03");
   equal(actual.deletedFromHead, [], "33.04");
   equal(actual.deletedFromBody, [], "33.05");
 });
 
-test("34 - js-modern-operators", () => {
-  const actual = comb(cases["js-modern-operators"]);
-  equal(actual.result, cases["js-modern-operators"], "34.01");
+test("34 - js-html-like-string", () => {
+  const actual = comb(cases["js-html-like-string"]);
+  equal(actual.result, cases["js-html-like-string"], "34.01");
   equal(actual.allInHead, [], "34.02");
   equal(actual.allInBody, [], "34.03");
   equal(actual.deletedFromHead, [], "34.04");
   equal(actual.deletedFromBody, [], "34.05");
 });
 
-test("35 - js-end-tag-prefix", () => {
-  const actual = comb(cases["js-end-tag-prefix"]);
-  equal(actual.result, cases["js-end-tag-prefix"], "35.01");
+test("35 - js-modern-operators", () => {
+  const actual = comb(cases["js-modern-operators"]);
+  equal(actual.result, cases["js-modern-operators"], "35.01");
   equal(actual.allInHead, [], "35.02");
   equal(actual.allInBody, [], "35.03");
   equal(actual.deletedFromHead, [], "35.04");
   equal(actual.deletedFromBody, [], "35.05");
+});
+
+test("36 - js-end-tag-prefix", () => {
+  const actual = comb(cases["js-end-tag-prefix"]);
+  equal(actual.result, cases["js-end-tag-prefix"], "36.01");
+  equal(actual.allInHead, [], "36.02");
+  equal(actual.allInBody, [], "36.03");
+  equal(actual.deletedFromHead, [], "36.04");
+  equal(actual.deletedFromBody, [], "36.05");
 });
 
 test.run();

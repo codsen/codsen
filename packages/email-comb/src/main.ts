@@ -39,6 +39,7 @@ import {
   findStyleEnd,
   removeEmptyWrappers,
 } from "./css";
+import { collectNestedStyleRules, type NestedStyleRule } from "./css-nesting";
 
 import {
   type HtmlAttributeToken,
@@ -1190,6 +1191,8 @@ function comb(str: string, opts?: InputOpts | null): Res {
   );
   const nextClosingBracketAt = collectNextClosingBrackets(str);
   const cssRegions = new Map<number, CssRegion>();
+  const nestedStyleRules = new Map<number, NestedStyleRule>();
+  const nestedSelectors = new Set<string>();
   let activeCssRegion: CssRegion | undefined;
   const cssFlagsAt = (index: number): number => {
     for (let region of cssRegions.values()) {
@@ -1788,6 +1791,10 @@ function comb(str: string, opts?: InputOpts | null): Res {
               styleTag.end,
             );
             cssRegions.set(styleStartedAt, activeCssRegion);
+            for (const [start, rule] of collectNestedStyleRules(
+              activeCssRegion,
+            ))
+              nestedStyleRules.set(start, rule);
           }
           ruleChunkStartedAt = closingBracketAt + 1;
           DEV &&
@@ -1924,6 +1931,111 @@ function comb(str: string, opts?: InputOpts | null): Res {
         }
         whitespaceStartedAt = null;
         i = cssComment.to - 1;
+        continue;
+      }
+
+      // Preserve a complete nested style tree. Its selector identities still
+      // participate in body retention, inventories and coordinated uglification.
+      const nestedRule =
+        nestedStyleRules.size &&
+        !doNothing &&
+        stateWithinStyleTag &&
+        nestedStyleRules.get(i);
+      if (nestedRule && activeCssRegion) {
+        for (const [from, to] of nestedRule.preludes) {
+          if (round === 1) {
+            const prelude = str.slice(from, to);
+            headSelectorsArr.push(prelude);
+            for (const selector of extractCanonicalSelectors(prelude))
+              nestedSelectors.add(selector);
+          } else if (resolvedOpts.uglify) {
+            for (let cursor = from; cursor < to; ) {
+              const attribute = str[cursor] === "[";
+              const selector = attribute
+                ? undefined
+                : readSelectorInRegion(str, cursor, activeCssRegion);
+              const queue = attribute
+                ? attributeSelectorQueue(str, cursor, activeCssRegion)
+                : selector
+                  ? [
+                      {
+                        startsAt: selector.range[0],
+                        endsAt: selector.range[1],
+                        value: selector.value,
+                        marker: selector.value[0],
+                        quote: null,
+                      },
+                    ]
+                  : [];
+              for (const token of queue) {
+                const shortened = uglifiedBySelector.get(token.value);
+                if (
+                  shortened &&
+                  shortened !== token.value &&
+                  !bodyIdsReferencedByForAttributesSet.has(token.value) &&
+                  !match(token.value, resolvedOpts.whitelist)
+                ) {
+                  const name = shortened.slice(1);
+                  finalIndexesToDelete.push(
+                    token.startsAt,
+                    token.endsAt,
+                    attribute
+                      ? token.quote
+                        ? serializeCssString(name, token.quote)
+                        : serializeCssIdentifier(name)
+                      : `${token.marker}${serializeCssIdentifier(name)}`,
+                  );
+                }
+              }
+              if (attribute) {
+                const closing = cssAttributeEndsAt(str, cursor);
+                if (closing !== null) {
+                  cursor = closing + 1;
+                  continue;
+                }
+              }
+              cursor = selector
+                ? selector.range[1]
+                : (readCssToken(str, cursor) as CssToken).range[1];
+            }
+          }
+        }
+        if (round === 1 && resolvedOpts.removeCSSComments) {
+          for (const comment of nestedRule.comments) {
+            finalIndexesToDelete.push(
+              comment.from,
+              comment.to,
+              comment.replacement,
+            );
+            commentsLength +=
+              comment.to - comment.from - comment.replacement.length;
+          }
+        }
+        if (round === 2 && round1RangesClone) {
+          while (
+            round1RangeIndex < round1RangesClone.length &&
+            round1RangesClone[round1RangeIndex][0] < nestedRule.end
+          )
+            round1RangeIndex++;
+        }
+        ruleChunkStartedAt = nestedRule.end;
+        selectorChunkStartedAt = null;
+        selectorChunkCanBeDeleted = false;
+        singleSelectorStartedAt = null;
+        singleSelectorEndsAt = null;
+        singleSelectorQueue = [];
+        singleSelectorType = undefined;
+        singleSelectorValue = undefined;
+        headWholeLineCanBeDeleted = true;
+        lastKeptChunksCommaAt = null;
+        onlyDeletedChunksFollow = false;
+        insideCurlyBraces = false;
+        curliesDepth = 0;
+        currentlyWithinQuotes = null;
+        whitespaceStartedAt = null;
+        currentChunk = null;
+        currentChunksMinifiedSelectors.wipe();
+        i = nestedRule.end - 1;
         continue;
       }
 
@@ -4710,7 +4822,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
           )}`,
         );
 
-      const protectedSelectors = new Set<string>();
+      const protectedSelectors = nestedSelectors;
       const canonicalSelectorsByHeadChunk = headSelectorsArr.map((chunk) =>
         extractCanonicalSelectors(chunk, protectedSelectors),
       );
