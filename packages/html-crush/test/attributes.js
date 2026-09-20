@@ -55,4 +55,73 @@ test("06 - preserves an unmatched quoted attribute without throwing", () => {
   equal(m(equal, input, { removeLineBreaks: true }).result, input, "06.02");
 });
 
+test("07 - separates unquoted attribute values from a closing slash", () => {
+  const inputs = [
+    "<img src=x />",
+    "<img src = x />",
+    "<img src=x\n\t />",
+    '<img alt="a = b" src=x />',
+    "<input disabled value=x />",
+    "<input value=a=b />",
+    "<input value='quoted' data-x=unquoted />",
+    "<img src=https://example.com/image/ />",
+  ];
+  const expected = [
+    "<img src=x />",
+    "<img src = x />",
+    "<img src=x />",
+    '<img alt="a = b" src=x />',
+    "<input disabled value=x />",
+    "<input value=a=b />",
+    "<input value='quoted' data-x=unquoted />",
+    "<img src=https://example.com/image/ />",
+  ];
+
+  equal(
+    inputs.map((input) => m(equal, input, { removeLineBreaks: true }).result),
+    expected,
+    "07.01",
+  );
+  equal(
+    inputs.map(
+      (input) =>
+        m(equal, input, { removeLineBreaks: true, lineLengthLimit: 0 }).result,
+    ),
+    expected,
+    "07.02",
+  );
+});
+
+test("08 - still removes optional whitespace before closing slashes", () => {
+  const inputs = [
+    "<br />",
+    "<input disabled />",
+    '<img src="x" />',
+    "<img src='x' />",
+    "<input value=x disabled />",
+  ];
+
+  equal(
+    inputs.map((input) => m(equal, input, { removeLineBreaks: true }).result),
+    [
+      "<br/>",
+      "<input disabled/>",
+      '<img src="x"/>',
+      "<img src='x'/>",
+      "<input value=x disabled/>",
+    ],
+    "08.01",
+  );
+});
+
+test("09 - preserves slashes already inside unquoted attribute values", () => {
+  const inputs = ["<img src=x/>", "<img src=https://example.com/image/>"];
+
+  equal(
+    inputs.map((input) => m(equal, input, { removeLineBreaks: true }).result),
+    inputs,
+    "09.01",
+  );
+});
+
 test.run();

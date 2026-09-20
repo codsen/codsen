@@ -1,6 +1,5 @@
 import {
   formatDiagnosticValue,
-  isLetter,
   isPlainObject as isObj,
   isStr,
   isWhitespaceChar,
@@ -12,7 +11,6 @@ import { expander } from "string-range-expander";
 import type { Range, Ranges as RangesType } from "../../../ops/typedefs/common";
 
 import { version as v } from "../package.json";
-import { codePointAtIndex } from "./codePoint";
 import { collectCssRegions, getCssAnalysis } from "./css";
 
 const version: string = v;
@@ -38,6 +36,16 @@ function isHtmlNameChar(char: string | undefined): boolean {
   return (
     char !== undefined &&
     (isWordCharCode(char.charCodeAt(0)) || `:-.`.includes(char))
+  );
+}
+
+function isHtmlWhitespace(char: string | undefined): boolean {
+  return (
+    char === " " ||
+    char === "\t" ||
+    char === "\n" ||
+    char === "\f" ||
+    char === "\r"
   );
 }
 
@@ -563,10 +571,24 @@ function crush(str: string, opts?: InputOpts | null): Res {
       }
     }
 
+    const afterName = str[nameStartsAt + name.length];
     return (
-      !isHtmlNameChar(str[nameStartsAt + name.length]) &&
-      !isLetter(codePointAtIndex(str, nameStartsAt + name.length))
+      isHtmlWhitespace(afterName) || afterName === "/" || afterName === ">"
     );
+  }
+
+  function openingTagEndsAt(from: number): number {
+    let quote = null;
+    for (let cursor = from; cursor < len; cursor++) {
+      if (quote) {
+        if (str[cursor] === quote) quote = null;
+      } else if (str[cursor] === '"' || str[cursor] === "'") {
+        quote = str[cursor];
+      } else if (str[cursor] === ">") {
+        return cursor + 1;
+      }
+    }
+    return len;
   }
 
   function findClosingHtmlTag(from: number, name: string): number {
@@ -579,6 +601,42 @@ function crush(str: string, opts?: InputOpts | null): Res {
     }
     return -1;
   }
+
+  // Only needed when removing whitespace immediately before a closing slash.
+  // Without this separator, HTML includes the slash in an unquoted value.
+  function unquotedAttributeValueEndsAt(end: number): boolean {
+    if (tagNameStartsAt === null) return false;
+    let cursor = tagNameStartsAt;
+    while (cursor < end && !isHtmlWhitespace(str[cursor])) cursor++;
+    while (cursor < end) {
+      while (cursor < end && isHtmlWhitespace(str[cursor])) cursor++;
+      const nameFrom = cursor;
+      while (
+        cursor < end &&
+        !isHtmlWhitespace(str[cursor]) &&
+        !"=/>".includes(str[cursor])
+      ) {
+        cursor++;
+      }
+      if (cursor === nameFrom) {
+        cursor++;
+        continue;
+      }
+      while (cursor < end && isHtmlWhitespace(str[cursor])) cursor++;
+      if (str[cursor] !== "=") continue;
+      cursor++;
+      while (cursor < end && isHtmlWhitespace(str[cursor])) cursor++;
+      if (str[cursor] === '"' || str[cursor] === "'") {
+        const quoteEndsAt = str.indexOf(str[cursor], cursor + 1);
+        if (quoteEndsAt === -1 || quoteEndsAt >= end) return false;
+        cursor = quoteEndsAt + 1;
+      } else {
+        while (cursor < end && !isHtmlWhitespace(str[cursor])) cursor++;
+        if (cursor === end) return true;
+      }
+    }
+    return false;
+  }
   let lastLinebreak = null;
   let whitespaceStartedAt = null;
   let nonWhitespaceCharMet = false;
@@ -588,6 +646,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
   let cpl = 0;
 
   let withinStyleTag = false;
+  let styleOpeningEndsAt = 0;
   let withinHTMLConditional = false; // <!--[if lte mso 11]> etc
   let withinInlineStyle = null;
   let htmlAttributeQuoteStartedAt = null;
@@ -610,7 +669,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
   let stageAdd = null;
 
   let tagName = null;
-  let tagNameStartsAt = null;
+  let tagNameStartsAt: number | null = null;
   let leftTagName = null;
 
   let CHARS_BREAK_ON_THE_RIGHT_OF_THEM = `>};`;
@@ -892,7 +951,11 @@ function crush(str: string, opts?: InputOpts | null): Res {
       // catch ending of </script...
       // ███████████████████████████████████████
 
-      if (scriptStartedAt !== null && isHtmlTagAt(i, "script", true)) {
+      if (
+        scriptStartedAt !== null &&
+        i >= scriptStartedAt &&
+        isHtmlTagAt(i, "script", true)
+      ) {
         DEV && console.log(`ENDING OF A SCRIPT TAG CAUGHT`);
         // 1. if there is a line break, chunk of whitespace and </script>,
         // delete that chunk of whitespace, leave line break.
@@ -951,9 +1014,14 @@ function crush(str: string, opts?: InputOpts | null): Res {
       // catch start of <script...
       // ███████████████████████████████████████
 
-      if (!doNothing && !withinStyleTag && isHtmlTagAt(i, "script", false)) {
+      if (
+        !doNothing &&
+        !withinStyleTag &&
+        htmlAttributeQuoteStartedAt === null &&
+        isHtmlTagAt(i, "script", false)
+      ) {
         DEV && console.log(`STARTING OF A SCRIPT TAG CAUGHT`);
-        scriptStartedAt = i;
+        scriptStartedAt = openingTagEndsAt(i + 7);
         doNothing = true;
         let whatToInsert = "";
         if (
@@ -976,7 +1044,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
         lastLinebreak = null;
         DEV &&
           console.log(
-            `SET ${`\u001b[${33}m${`scriptStartedAt`}\u001b[${39}m`} = ${i}, ${`\u001b[${33}m${`scriptStartedAt`}\u001b[${39}m`} = true, RESET ${`\u001b[${33}m${`whitespaceStartedAt`}\u001b[${39}m`} = null; ${`\u001b[${33}m${`lastLinebreak`}\u001b[${39}m`} = null`,
+            `SET ${`\u001b[${33}m${`scriptStartedAt`}\u001b[${39}m`} = ${scriptStartedAt}, ${`\u001b[${33}m${`doNothing`}\u001b[${39}m`} = true, RESET ${`\u001b[${33}m${`whitespaceStartedAt`}\u001b[${39}m`} = null; ${`\u001b[${33}m${`lastLinebreak`}\u001b[${39}m`} = null`,
           );
       }
 
@@ -998,7 +1066,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
       }
       if (
         !doNothing &&
-        tagNameStartsAt !== null &&
+        (tagNameStartsAt !== null || i < styleOpeningEndsAt) &&
         !withinInlineStyle &&
         `"'`.includes(str[i])
       ) {
@@ -1331,6 +1399,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
       if (
         !doNothing &&
         withinStyleTag &&
+        i >= styleOpeningEndsAt &&
         styleCommentStartedAt === null &&
         isHtmlTagAt(i, "style", true)
       ) {
@@ -1346,6 +1415,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
         isHtmlTagAt(i, "style", false)
       ) {
         withinStyleTag = true;
+        styleOpeningEndsAt = openingTagEndsAt(i + 6);
         DEV &&
           console.log(
             `SET ${`\u001b[${33}m${`withinStyleTag`}\u001b[${39}m`} = true`,
@@ -1662,6 +1732,16 @@ function crush(str: string, opts?: InputOpts | null): Res {
                   console.log(
                     `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToAdd`}\u001b[${39}m`} = "${whatToAdd}"`,
                   );
+              }
+
+              if (
+                !whatToAdd &&
+                !withinStyleTag &&
+                !withinInlineStyle &&
+                str[i] === "/" &&
+                unquotedAttributeValueEndsAt(whitespaceStartedAt)
+              ) {
+                whatToAdd = " ";
               }
 
               DEV &&
@@ -2464,12 +2544,29 @@ function crush(str: string, opts?: InputOpts | null): Res {
           protectedTagName = "code";
         } else if (isHtmlTagAt(i, "textarea", false)) {
           protectedTagName = "textarea";
+        } else if (isHtmlTagAt(i, "title", false)) {
+          protectedTagName = "title";
+        } else if (isHtmlTagAt(i, "iframe", false)) {
+          protectedTagName = "iframe";
+        } else if (isHtmlTagAt(i, "xmp", false)) {
+          protectedTagName = "xmp";
+        } else if (isHtmlTagAt(i, "noembed", false)) {
+          protectedTagName = "noembed";
+        } else if (isHtmlTagAt(i, "noframes", false)) {
+          protectedTagName = "noframes";
+        } else if (isHtmlTagAt(i, "plaintext", false)) {
+          // The HTML plaintext state consumes everything through EOF, even an
+          // apparent closing tag. There is no transition back to markup.
+          doNothing = len;
         }
 
         if (protectedTagName !== null) {
           DEV &&
             console.log(`OPENING ${protectedTagName.toUpperCase()} TAG CAUGHT`);
-          let closingTagAt = findClosingHtmlTag(i + 2, protectedTagName);
+          let closingTagAt = findClosingHtmlTag(
+            openingTagEndsAt(i + protectedTagName.length + 1),
+            protectedTagName,
+          );
           doNothing = closingTagAt === -1 ? len : closingTagAt;
           DEV &&
             console.log(
