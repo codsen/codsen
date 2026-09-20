@@ -1,0 +1,786 @@
+{
+  "schemaVersion": 1,
+  "registry": "https://registry.npmjs.org",
+  "checkedAt": "2026-09-20T00:29:11.134Z",
+  "packages": {
+    "all-named-html-entities": {
+      "status": "available",
+      "version": "3.2.1",
+      "deprecated": null
+    },
+    "array-group-str-omit-num-char": {
+      "status": "available",
+      "version": "6.2.5",
+      "deprecated": null
+    },
+    "array-includes-with-glob": {
+      "status": "available",
+      "version": "5.2.4",
+      "deprecated": null
+    },
+    "array-of-arrays-into-ast": {
+      "status": "available",
+      "version": "4.1.3",
+      "deprecated": null
+    },
+    "array-of-arrays-sort-by-col": {
+      "status": "available",
+      "version": "5.0.10",
+      "deprecated": null
+    },
+    "array-pull-all-with-glob": {
+      "status": "available",
+      "version": "7.2.4",
+      "deprecated": null
+    },
+    "arrayiffy-if-string": {
+      "status": "available",
+      "version": "5.2.3",
+      "deprecated": null
+    },
+    "ast-compare": {
+      "status": "available",
+      "version": "4.2.6",
+      "deprecated": null
+    },
+    "ast-contains-only-empty-space": {
+      "status": "available",
+      "version": "4.2.2",
+      "deprecated": null
+    },
+    "ast-deep-contains": {
+      "status": "available",
+      "version": "5.2.5",
+      "deprecated": null
+    },
+    "ast-delete-object": {
+      "status": "available",
+      "version": "4.2.7",
+      "deprecated": "This package is retired and no longer maintained. Existing releases remain available."
+    },
+    "ast-get-object": {
+      "status": "available",
+      "version": "4.2.6",
+      "deprecated": "This package is retired and no longer maintained. Existing releases remain available."
+    },
+    "ast-get-values-by-key": {
+      "status": "available",
+      "version": "5.2.6",
+      "deprecated": null
+    },
+    "ast-is-empty": {
+      "status": "available",
+      "version": "4.2.4",
+      "deprecated": null
+    },
+    "ast-loose-compare": {
+      "status": "available",
+      "version": "4.2.4",
+      "deprecated": "This package is retired. Use ast-compare with { hungryForWhitespace: true }. Behavior differs; follow https://codsen.com/os/ast-loose-compare#migrate-to-ast-compare"
+    },
+    "ast-monkey": {
+      "status": "available",
+      "version": "10.0.0",
+      "deprecated": null
+    },
+    "ast-monkey-traverse": {
+      "status": "available",
+      "version": "4.3.1",
+      "deprecated": "Use ast-monkey@10 or later: import { traverse, DELETE } from \"ast-monkey/traverse\". Migrate callback types and DELETE together. Migration: https://codsen.com/os/ast-monkey#migrate-traversal-imports"
+    },
+    "ast-monkey-traverse-with-lookahead": {
+      "status": "available",
+      "version": "4.2.5",
+      "deprecated": "Use ast-monkey@10 or later: import { traverseWithLookahead } from \"ast-monkey/lookahead\". Callback returns remain ignored. Migration: https://codsen.com/os/ast-monkey#migrate-traversal-imports"
+    },
+    "ast-monkey-util": {
+      "status": "available",
+      "version": "3.3.1",
+      "deprecated": null
+    },
+    "bitbucket-slug": {
+      "status": "available",
+      "version": "4.0.10",
+      "deprecated": null
+    },
+    "bitsausage": {
+      "status": "available",
+      "version": "1.6.3",
+      "deprecated": "RIP bithound.io 2014-2018"
+    },
+    "charcode-is-valid-xml-name-character": {
+      "status": "available",
+      "version": "3.2.2",
+      "deprecated": null
+    },
+    "check-types-mini": {
+      "status": "available",
+      "version": "8.2.4",
+      "deprecated": null
+    },
+    "chlu": {
+      "status": "available",
+      "version": "3.8.1",
+      "deprecated": "use lerna + commitizen, generate changelogs automatically"
+    },
+    "chlu-cli": {
+      "status": "available",
+      "version": "1.17.1",
+      "deprecated": "use lerna + commitizen, generate changelogs automatically"
+    },
+    "codsen": {
+      "status": "available",
+      "version": "0.5.4",
+      "deprecated": null
+    },
+    "codsen-format-diagnostic-value": {
+      "status": "available",
+      "version": "1.1.1",
+      "deprecated": null
+    },
+    "codsen-glob": {
+      "status": "available",
+      "version": "1.1.2",
+      "deprecated": null
+    },
+    "codsen-parser": {
+      "status": "available",
+      "version": "0.14.25",
+      "deprecated": null
+    },
+    "codsen-tokenizer": {
+      "status": "available",
+      "version": "7.0.25",
+      "deprecated": null
+    },
+    "codsen-utils": {
+      "status": "available",
+      "version": "1.10.2",
+      "deprecated": null
+    },
+    "color-shorthand-hex-to-six-digit": {
+      "status": "available",
+      "version": "5.2.4",
+      "deprecated": null
+    },
+    "csv-sort": {
+      "status": "available",
+      "version": "7.2.5",
+      "deprecated": null
+    },
+    "csv-sort-cli": {
+      "status": "available",
+      "version": "4.2.6",
+      "deprecated": null
+    },
+    "csv-split-easy": {
+      "status": "available",
+      "version": "7.2.5",
+      "deprecated": null
+    },
+    "detect-is-it-html-or-xhtml": {
+      "status": "available",
+      "version": "6.2.4",
+      "deprecated": null
+    },
+    "detect-templating-language": {
+      "status": "available",
+      "version": "4.2.3",
+      "deprecated": null
+    },
+    "detergent": {
+      "status": "available",
+      "version": "9.4.9",
+      "deprecated": null
+    },
+    "easy-replace": {
+      "status": "available",
+      "version": "6.0.8",
+      "deprecated": null
+    },
+    "edit-package-json": {
+      "status": "available",
+      "version": "0.10.7",
+      "deprecated": null
+    },
+    "email-all-chars-within-ascii": {
+      "status": "available",
+      "version": "5.2.5",
+      "deprecated": null
+    },
+    "email-all-chars-within-ascii-cli": {
+      "status": "available",
+      "version": "4.2.6",
+      "deprecated": null
+    },
+    "email-comb": {
+      "status": "available",
+      "version": "7.4.3",
+      "deprecated": null
+    },
+    "email-homey": {
+      "status": "available",
+      "version": "5.0.3",
+      "deprecated": null
+    },
+    "email-remove-unused-css": {
+      "status": "available",
+      "version": "4.7.0",
+      "deprecated": "Now renamed to email-comb, please use it instead"
+    },
+    "emlint": {
+      "status": "available",
+      "version": "6.0.12",
+      "deprecated": null
+    },
+    "eslint-on-airbnb-base-badge": {
+      "status": "unavailable",
+      "reason": "not-found"
+    },
+    "eslint-plugin-row-num": {
+      "status": "available",
+      "version": "4.0.30",
+      "deprecated": null
+    },
+    "eslint-plugin-test-num": {
+      "status": "available",
+      "version": "3.0.31",
+      "deprecated": null
+    },
+    "extract-search-index": {
+      "status": "available",
+      "version": "2.2.7",
+      "deprecated": null
+    },
+    "fol": {
+      "status": "available",
+      "version": "1.1.1",
+      "deprecated": "bigger, better tools that do more can tackle this issue better"
+    },
+    "generate-atomic-css": {
+      "status": "available",
+      "version": "3.2.4",
+      "deprecated": null
+    },
+    "generate-atomic-css-cli": {
+      "status": "available",
+      "version": "4.2.6",
+      "deprecated": null
+    },
+    "gulp-email-remove-unused-css": {
+      "status": "available",
+      "version": "6.1.3",
+      "deprecated": null
+    },
+    "helga": {
+      "status": "available",
+      "version": "3.0.9",
+      "deprecated": null
+    },
+    "html-all-known-attributes": {
+      "status": "available",
+      "version": "6.2.1",
+      "deprecated": null
+    },
+    "html-crush": {
+      "status": "available",
+      "version": "6.3.3",
+      "deprecated": null
+    },
+    "html-entities-not-email-friendly": {
+      "status": "available",
+      "version": "0.10.1",
+      "deprecated": null
+    },
+    "html-entity-codec": {
+      "status": "available",
+      "version": "1.1.0",
+      "deprecated": null
+    },
+    "html-img-alt": {
+      "status": "available",
+      "version": "4.2.5",
+      "deprecated": "This package is retired and no longer maintained. Existing releases remain available."
+    },
+    "html-table-patcher": {
+      "status": "available",
+      "version": "6.2.6",
+      "deprecated": null
+    },
+    "is-char-suitable-for-html-attr-name": {
+      "status": "available",
+      "version": "4.2.3",
+      "deprecated": null
+    },
+    "is-html-attribute-closing": {
+      "status": "available",
+      "version": "4.2.5",
+      "deprecated": null
+    },
+    "is-html-tag-opening": {
+      "status": "available",
+      "version": "4.2.5",
+      "deprecated": null
+    },
+    "is-language-code": {
+      "status": "available",
+      "version": "5.2.2",
+      "deprecated": null
+    },
+    "is-media-descriptor": {
+      "status": "available",
+      "version": "5.2.5",
+      "deprecated": null
+    },
+    "is-relative-uri": {
+      "status": "available",
+      "version": "5.2.1",
+      "deprecated": null
+    },
+    "js-row-num": {
+      "status": "available",
+      "version": "7.2.5",
+      "deprecated": null
+    },
+    "js-row-num-cli": {
+      "status": "available",
+      "version": "4.2.6",
+      "deprecated": null
+    },
+    "json-comb": {
+      "status": "available",
+      "version": "0.11.6",
+      "deprecated": null
+    },
+    "json-comb-core": {
+      "status": "available",
+      "version": "8.2.6",
+      "deprecated": null
+    },
+    "json-sort-cli": {
+      "status": "available",
+      "version": "4.3.1",
+      "deprecated": null
+    },
+    "json-variables": {
+      "status": "available",
+      "version": "12.2.6",
+      "deprecated": null
+    },
+    "lect": {
+      "status": "available",
+      "version": "0.18.7",
+      "deprecated": null
+    },
+    "lerna-clean-changelogs": {
+      "status": "available",
+      "version": "5.2.5",
+      "deprecated": null
+    },
+    "lerna-clean-changelogs-cli": {
+      "status": "available",
+      "version": "4.2.6",
+      "deprecated": null
+    },
+    "lerna-link-dep": {
+      "status": "available",
+      "version": "4.0.2",
+      "deprecated": null
+    },
+    "line-column-mini": {
+      "status": "available",
+      "version": "3.1.1",
+      "deprecated": null
+    },
+    "object-all-values-equal-to": {
+      "status": "available",
+      "version": "4.2.4",
+      "deprecated": null
+    },
+    "object-boolean-combinations": {
+      "status": "available",
+      "version": "6.3.4",
+      "deprecated": null
+    },
+    "object-delete-key": {
+      "status": "available",
+      "version": "4.2.6",
+      "deprecated": null
+    },
+    "object-fill-missing-keys": {
+      "status": "available",
+      "version": "11.2.5",
+      "deprecated": null
+    },
+    "object-flatten-all-arrays": {
+      "status": "available",
+      "version": "7.2.4",
+      "deprecated": null
+    },
+    "object-flatten-referencing": {
+      "status": "available",
+      "version": "7.2.5",
+      "deprecated": null
+    },
+    "object-merge-advanced": {
+      "status": "available",
+      "version": "14.2.4",
+      "deprecated": null
+    },
+    "object-no-new-keys": {
+      "status": "available",
+      "version": "5.3.4",
+      "deprecated": null
+    },
+    "object-set-all-values-to": {
+      "status": "available",
+      "version": "6.2.5",
+      "deprecated": null
+    },
+    "perf-ref": {
+      "status": "available",
+      "version": "1.0.5",
+      "deprecated": null
+    },
+    "posthtml-ast-compare": {
+      "status": "available",
+      "version": "5.2.2",
+      "deprecated": null
+    },
+    "posthtml-ast-contains-only-empty-space": {
+      "status": "available",
+      "version": "2.1.5",
+      "deprecated": null
+    },
+    "posthtml-ast-delete-key": {
+      "status": "available",
+      "version": "3.6.4",
+      "deprecated": null
+    },
+    "posthtml-ast-delete-object": {
+      "status": "available",
+      "version": "4.1.7",
+      "deprecated": null
+    },
+    "posthtml-ast-get-object": {
+      "status": "available",
+      "version": "2.0.8",
+      "deprecated": null
+    },
+    "posthtml-ast-get-values-by-key": {
+      "status": "available",
+      "version": "3.2.5",
+      "deprecated": null
+    },
+    "posthtml-ast-is-empty": {
+      "status": "available",
+      "version": "4.0.0",
+      "deprecated": "Deprecated - Use ast-is-empty instead"
+    },
+    "posthtml-ast-loose-compare": {
+      "status": "available",
+      "version": "2.0.7",
+      "deprecated": null
+    },
+    "posthtml-color-shorthand-hex-to-six-digit": {
+      "status": "available",
+      "version": "1.2.1",
+      "deprecated": null
+    },
+    "posthtml-email-remove-unused-css": {
+      "status": "available",
+      "version": "1.5.1",
+      "deprecated": "use email-remove-unused-css directly instead"
+    },
+    "ranges-apply": {
+      "status": "available",
+      "version": "7.2.5",
+      "deprecated": null
+    },
+    "ranges-crop": {
+      "status": "available",
+      "version": "6.2.5",
+      "deprecated": null
+    },
+    "ranges-ent-decode": {
+      "status": "available",
+      "version": "6.2.5",
+      "deprecated": "This package is retired and no longer maintained. Existing releases remain available."
+    },
+    "ranges-invert": {
+      "status": "available",
+      "version": "6.2.5",
+      "deprecated": null
+    },
+    "ranges-is-index-within": {
+      "status": "available",
+      "version": "4.2.1",
+      "deprecated": null
+    },
+    "ranges-iterate": {
+      "status": "available",
+      "version": "4.2.4",
+      "deprecated": "This package is retired and no longer maintained. Use ranges-apply, then iterate over the resulting string. See https://codsen.com/os/ranges-iterate"
+    },
+    "ranges-merge": {
+      "status": "available",
+      "version": "9.2.5",
+      "deprecated": null
+    },
+    "ranges-offset": {
+      "status": "available",
+      "version": "4.0.8",
+      "deprecated": null
+    },
+    "ranges-process-outside": {
+      "status": "available",
+      "version": "6.2.5",
+      "deprecated": null
+    },
+    "ranges-push": {
+      "status": "available",
+      "version": "7.3.2",
+      "deprecated": null
+    },
+    "ranges-regex": {
+      "status": "available",
+      "version": "6.2.5",
+      "deprecated": "This package is retired and no longer maintained. Use String.prototype.matchAll() with a global regular expression to collect matches and indexes. See https://codsen.com/os/ranges-regex"
+    },
+    "ranges-sort": {
+      "status": "available",
+      "version": "6.2.4",
+      "deprecated": null
+    },
+    "regex-empty-conditional-comments": {
+      "status": "available",
+      "version": "3.2.3",
+      "deprecated": null
+    },
+    "regex-is-jinja-nunjucks": {
+      "status": "available",
+      "version": "4.2.1",
+      "deprecated": null
+    },
+    "regex-is-jsp": {
+      "status": "available",
+      "version": "4.2.1",
+      "deprecated": null
+    },
+    "regex-jinja-specific": {
+      "status": "available",
+      "version": "4.2.1",
+      "deprecated": null
+    },
+    "rehype-responsive-tables": {
+      "status": "available",
+      "version": "2.2.3",
+      "deprecated": null
+    },
+    "remark-conventional-commit-changelog-timeline": {
+      "status": "available",
+      "version": "4.0.0",
+      "deprecated": null
+    },
+    "remark-typography": {
+      "status": "available",
+      "version": "0.8.7",
+      "deprecated": null
+    },
+    "seo-editor": {
+      "status": "available",
+      "version": "2.0.8",
+      "deprecated": null
+    },
+    "str-indexes-of-plus": {
+      "status": "available",
+      "version": "5.2.2",
+      "deprecated": null
+    },
+    "string-apostrophes": {
+      "status": "available",
+      "version": "4.2.6",
+      "deprecated": null
+    },
+    "string-bionic-split": {
+      "status": "available",
+      "version": "2.0.10",
+      "deprecated": null
+    },
+    "string-character-is-astral-surrogate": {
+      "status": "available",
+      "version": "3.2.2",
+      "deprecated": null
+    },
+    "string-collapse-leading-whitespace": {
+      "status": "available",
+      "version": "7.3.1",
+      "deprecated": null
+    },
+    "string-collapse-white-space": {
+      "status": "available",
+      "version": "11.2.6",
+      "deprecated": null
+    },
+    "string-convert-indexes": {
+      "status": "available",
+      "version": "6.2.6",
+      "deprecated": null
+    },
+    "string-dashes": {
+      "status": "available",
+      "version": "1.4.6",
+      "deprecated": null
+    },
+    "string-extract-class-names": {
+      "status": "available",
+      "version": "8.4.0",
+      "deprecated": null
+    },
+    "string-extract-sass-vars": {
+      "status": "available",
+      "version": "4.2.4",
+      "deprecated": null
+    },
+    "string-find-heads-tails": {
+      "status": "available",
+      "version": "6.2.5",
+      "deprecated": null
+    },
+    "string-find-malformed": {
+      "status": "available",
+      "version": "4.2.5",
+      "deprecated": null
+    },
+    "string-fix-broken-named-entities": {
+      "status": "available",
+      "version": "7.2.5",
+      "deprecated": null
+    },
+    "string-left-right": {
+      "status": "available",
+      "version": "6.2.4",
+      "deprecated": null
+    },
+    "string-match-left-right": {
+      "status": "available",
+      "version": "9.2.5",
+      "deprecated": null
+    },
+    "string-overlap-one-on-another": {
+      "status": "available",
+      "version": "4.0.10",
+      "deprecated": null
+    },
+    "string-process-comma-separated": {
+      "status": "available",
+      "version": "4.3.4",
+      "deprecated": null
+    },
+    "string-range-expander": {
+      "status": "available",
+      "version": "4.2.5",
+      "deprecated": null
+    },
+    "string-remove-duplicate-heads-tails": {
+      "status": "available",
+      "version": "7.2.5",
+      "deprecated": null
+    },
+    "string-remove-thousand-separators": {
+      "status": "available",
+      "version": "7.2.5",
+      "deprecated": null
+    },
+    "string-remove-widows": {
+      "status": "available",
+      "version": "4.2.7",
+      "deprecated": null
+    },
+    "string-replace-slices-array": {
+      "status": "available",
+      "version": "2.2.3",
+      "deprecated": "use ranges-apply instead"
+    },
+    "string-slices-array-push": {
+      "status": "available",
+      "version": "2.8.2",
+      "deprecated": "use ranges-push instead"
+    },
+    "string-split-by-whitespace": {
+      "status": "available",
+      "version": "4.2.6",
+      "deprecated": null
+    },
+    "string-strip-html": {
+      "status": "available",
+      "version": "13.7.4",
+      "deprecated": null
+    },
+    "string-trim-spaces-only": {
+      "status": "available",
+      "version": "5.3.1",
+      "deprecated": null
+    },
+    "string-truncator": {
+      "status": "available",
+      "version": "2.0.18",
+      "deprecated": null
+    },
+    "string-typo-match": {
+      "status": "available",
+      "version": "1.1.0",
+      "deprecated": null
+    },
+    "string-uglify": {
+      "status": "available",
+      "version": "3.2.2",
+      "deprecated": null
+    },
+    "string-unfancy": {
+      "status": "available",
+      "version": "6.3.0",
+      "deprecated": null
+    },
+    "stristri": {
+      "status": "available",
+      "version": "5.0.25",
+      "deprecated": null
+    },
+    "tap-parse-string-to-object": {
+      "status": "available",
+      "version": "4.0.15",
+      "deprecated": null
+    },
+    "test-mixer": {
+      "status": "available",
+      "version": "4.4.2",
+      "deprecated": null
+    },
+    "tsd-extract": {
+      "status": "available",
+      "version": "0.10.6",
+      "deprecated": null
+    },
+    "tsd-extract-noesm": {
+      "status": "available",
+      "version": "0.6.0",
+      "deprecated": null
+    },
+    "update-versions": {
+      "status": "available",
+      "version": "7.2.7",
+      "deprecated": null
+    },
+    "util-array-object-or-both": {
+      "status": "available",
+      "version": "5.2.2",
+      "deprecated": null
+    },
+    "util-nonempty": {
+      "status": "available",
+      "version": "5.2.3",
+      "deprecated": null
+    }
+  }
+}

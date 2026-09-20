@@ -13,10 +13,11 @@ function parseInterdepsSource(source) {
 
 function completeInterdeps(interdeps, workspaceRecords) {
   const records = workspaceRecords.filter(({ manifest }) => !manifest.private);
-  const { current } = createCodsenPackageLists(
+  const { all, retired } = createCodsenPackageLists(
     records.map(({ manifest }) => manifest.name),
   );
-  const currentNames = new Set(current);
+  const chartPackages = all.filter((name) => !retired.includes(name));
+  const chartNames = new Set(chartPackages);
   const manifests = new Map(
     records.map(({ manifest }) => [manifest.name, manifest]),
   );
@@ -24,7 +25,7 @@ function completeInterdeps(interdeps, workspaceRecords) {
   for (const entry of interdeps) {
     if (
       !entry ||
-      !currentNames.has(entry.name) ||
+      !chartNames.has(entry.name) ||
       !manifests.has(entry.name) ||
       entries.has(entry.name) ||
       !Array.isArray(entry.imports) ||
@@ -37,18 +38,18 @@ function completeInterdeps(interdeps, workspaceRecords) {
     }
     entries.set(entry.name, entry);
   }
-  return current.map((name) => {
+  return chartPackages.map((name) => {
     const manifest = manifests.get(name);
     if (!manifest) return { name, imports: [], unknownImports: true };
     const imports = Object.keys({
       ...manifest.dependencies,
       ...manifest.optionalDependencies,
     })
-      .filter((dependency) => currentNames.has(dependency))
+      .filter((dependency) => chartNames.has(dependency))
       .sort();
     const entry = entries.get(name);
     const generatedImports = Object.keys(manifest.dependencies ?? {})
-      .filter((dependency) => currentNames.has(dependency))
+      .filter((dependency) => chartNames.has(dependency))
       .sort();
     // The generated source intentionally omits isolates, but a missing connected
     // workspace or changed edge means it needs regenerating before chart baking.
@@ -56,7 +57,7 @@ function completeInterdeps(interdeps, workspaceRecords) {
       generatedImports.length ||
       [...manifests.values()].some(
         (other) =>
-          currentNames.has(other.name) &&
+          chartNames.has(other.name) &&
           Object.hasOwn(other.dependencies ?? {}, name),
       );
     if (
@@ -64,7 +65,7 @@ function completeInterdeps(interdeps, workspaceRecords) {
       (entry &&
         JSON.stringify(
           entry.imports
-            .filter((dependency) => currentNames.has(dependency))
+            .filter((dependency) => chartNames.has(dependency))
             .sort(),
         ) !== JSON.stringify(generatedImports))
     ) {

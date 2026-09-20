@@ -25,9 +25,11 @@ const PROPOSAL_SCHEMA_VERSION = 1;
 const MAX_PROPOSAL_BYTES = 256 * 1024 * 1024;
 const MAX_CONTENT_BYTES = 128 * 1024 * 1024;
 const MAX_CHANGES = 100_000;
+const NPM_STATUS_PATH = "ops/package-npm-status.json";
 const ROOT_OUTPUTS = new Set([
   COMMITTED_PLAN_PATH,
   "LICENSE",
+  NPM_STATUS_PATH,
   "README.md",
   "package-lock.json",
 ]);
@@ -149,6 +151,11 @@ function assertSafeProposalPath(filename) {
 function validateProposalPath(filename, { baseFiles, workspaces }, deletion) {
   assertSafeProposalPath(filename);
   const parts = filename.split("/");
+  // Refreshing this generated observation must not grant access to ops tooling
+  // or remove the snapshot imported by ordinary offline generation.
+  if (filename === NPM_STATUS_PATH && deletion) {
+    fail(`npm package status snapshot cannot be deleted: ${filename}`);
+  }
   if (ROOT_OUTPUTS.has(filename) || CHART_OUTPUTS.has(filename)) {
     return;
   }

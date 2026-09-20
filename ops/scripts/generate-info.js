@@ -16,6 +16,10 @@ import {
 } from "../helpers/firstPublishedAt.js";
 import { writeGeneratedFile } from "../helpers/generatedFiles.js";
 import { npmPackageSizes } from "../helpers/npmPackageSizes.js";
+import {
+  refreshNpmPackageStatus,
+  validateNpmPackageStatus,
+} from "../helpers/npmPackageStatus.js";
 import { missingPackageBuildArtifacts } from "../helpers/packageBuildArtifacts.js";
 import { rootExport } from "../helpers/packageEntries.js";
 import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
@@ -28,12 +32,17 @@ import {
   perfStatsFrom,
 } from "../helpers/qualityStats.js";
 import { topDependencies } from "../helpers/topDependencies.js";
+import recordedNpmStatus from "../package-npm-status.json" with {
+  type: "json",
+};
 
 const arguments_ = process.argv.slice(2);
 if (
   arguments_.some(
     (argument) =>
-      !new Set(["--check", "--git-stats", "--npm-dates"]).has(argument),
+      !new Set(["--check", "--git-stats", "--npm-dates", "--npm-status"]).has(
+        argument,
+      ),
   )
 ) {
   throw new Error(
@@ -43,16 +52,17 @@ if (
 if (
   arguments_.includes("--check") &&
   arguments_.some((argument) =>
-    ["--git-stats", "--npm-dates"].includes(argument),
+    ["--git-stats", "--npm-dates", "--npm-status"].includes(argument),
   )
 ) {
   throw new Error(
-    "generate-info.js: --check cannot be combined with --git-stats or --npm-dates",
+    "generate-info.js: --check cannot be combined with --git-stats, --npm-dates or --npm-status",
   );
 }
 const mode = arguments_.includes("--check") ? "check" : "write";
 const shouldGenerateGitStats = arguments_.includes("--git-stats");
 const shouldRefreshNpmDates = arguments_.includes("--npm-dates");
+const shouldRefreshNpmStatus = arguments_.includes("--npm-status");
 const packageKinds = readPackageKindResolver(path.resolve("."));
 
 // READ ALL LIBS
@@ -233,20 +243,26 @@ for (let packageName of packageNames) {
   }
 }
 
-const {
-  all: allPackages,
-  current: currentPackages,
-  historical: historicalPackages,
-  deprecated,
-  packagesOutsideMonorepo,
-} = createCodsenPackageLists(publicWorkspaceNames);
+let packageLists = createCodsenPackageLists(publicWorkspaceNames);
+const npmStatus = shouldRefreshNpmStatus
+  ? await refreshNpmPackageStatus(packageLists.all)
+  : recordedNpmStatus;
+validateNpmPackageStatus(npmStatus, packageLists.all);
+if (shouldRefreshNpmStatus) {
+  packageLists = createCodsenPackageLists(publicWorkspaceNames, npmStatus);
+}
+const { all: allPackages, inMonorepo } = packageLists;
 
 // splits follow
 // -----------------------------------------------------------------------------
 
 for (let packageName of packageNames) {
   let p = packageName;
-  if (!splitListBlackList.includes(p)) {
+  if (
+    inMonorepo.includes(p) &&
+    !packageLists.retired.includes(p) &&
+    !splitListBlackList.includes(p)
+  ) {
     if (programClassification.flagshipLibsList.includes(p)) {
       splitListFlagshipLibs.push(p);
     } else if (
@@ -341,15 +357,10 @@ const dependencyStats = {
   ...dependencyStatuses(packageNames.map((name) => packageJSONData[name])),
 };
 
-for (let i = 0, len = allPackages.length; i < len; i++) {
-  let packageName = allPackages[i];
-  if (
-    packagesOutsideMonorepo.includes(packageName) ||
-    deprecated.includes(packageName)
-  ) {
-    continue;
-  }
-
+// Dependency statistics retain their non-retired repository population.
+for (const packageName of inMonorepo.filter(
+  (name) => !packageLists.retired.includes(name),
+)) {
   // console.log(
   //   `077 ======== processing ${`\u001b[${35}m${name}\u001b[${39}m`} ========`
   // );
@@ -361,9 +372,7 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
     name: packageName,
     ...packageSizes.get(packageName),
     imports: pack.dependencies
-      ? Object.keys(pack.dependencies).filter((n) =>
-          historicalPackages.includes(n),
-        )
+      ? Object.keys(pack.dependencies).filter((n) => allPackages.includes(n))
       : [],
   });
 
@@ -401,7 +410,7 @@ const allOwnDeps = new Set();
 const allExternalDeps = new Set();
 
 for (let depName in dependencyStats.dependencies) {
-  if (historicalPackages.includes(depName)) {
+  if (allPackages.includes(depName)) {
     // it's one of ours
     allOwnDeps.add(depName);
   } else {
@@ -412,11 +421,11 @@ for (let depName in dependencyStats.dependencies) {
 
 dependencyStats.top10OwnDeps = topDependencies(
   dependencyStats.dependencies,
-  (depName) => historicalPackages.includes(depName),
+  (depName) => allPackages.includes(depName),
 );
 dependencyStats.top10ExternalDeps = topDependencies(
   dependencyStats.dependencies,
-  (depName) => !historicalPackages.includes(depName),
+  (depName) => !allPackages.includes(depName),
 );
 dependencyStats.allOwnDeps = [...allOwnDeps].sort();
 dependencyStats.allExternalDeps = [...allExternalDeps].sort();
@@ -424,11 +433,19 @@ dependencyStats.allExternalDeps = [...allExternalDeps].sort();
 // 4. write files
 // -----------------------------------------------------------------------------
 
-// Preserve publication evidence for the complete historical catalogue, including
-// deprecated names excluded from packages.all. Finish registry reads before writes.
+// Preserve publication evidence for every known product, including retired names.
+// Finish all registry reads before writing either snapshot or generated output.
 const publicationDates = shouldRefreshNpmDates
-  ? await refreshFirstPublishedAt(historicalPackages, firstPublishedAt)
-  : projectFirstPublishedAt(historicalPackages, firstPublishedAt);
+  ? await refreshFirstPublishedAt(allPackages, firstPublishedAt)
+  : projectFirstPublishedAt(allPackages, firstPublishedAt);
+if (shouldRefreshNpmStatus) {
+  await writeGeneratedFile({
+    contents: `${JSON.stringify(npmStatus, null, 2)}\n`,
+    filename: path.resolve("ops/package-npm-status.json"),
+    fixCommand: "npm run ci:generate:info -- --npm-status",
+    mode,
+  });
+}
 const publicationDatesFilename = path.resolve(
   "data/sources/firstPublishedAt.ts",
 );
@@ -437,7 +454,7 @@ await writeGeneratedFile({
 import type { Package } from "./packages.js";
 
 /** Earliest observed npm version publication, in milliseconds since the Unix
- * epoch, for every packages.historical entry. Null means no date is known.
+ * epoch, for every packages.all entry. Null means no date is known.
  * Consumers choose their own recency cut-off or number of newest packages. */
 export const firstPublishedAt: Record<Package, number | null> = ${JSON.stringify(publicationDates, null, 2)};
 `,
@@ -450,7 +467,7 @@ if (shouldRefreshNpmDates) {
     (name) => publicationDates[name] === null,
   );
   console.log(
-    `Refreshed npm first-publication dates for ${historicalPackages.length} packages; ${unknown.length} unknown${unknown.length ? `: ${unknown.join(", ")}` : "."}`,
+    `Refreshed npm first-publication dates for ${allPackages.length} packages; ${unknown.length} unknown${unknown.length ? `: ${unknown.join(", ")}` : "."}`,
   );
 }
 
@@ -470,87 +487,119 @@ await writeGeneratedFile({
   mode,
 });
 
+const categories = {
+  flagshipLibs: splitListFlagshipLibs,
+  rangeLibs: splitListRangeLibs,
+  htmlLibs: splitListHtmlLibs,
+  stringLibs: splitListStringLibs,
+  objectOrArrayLibs: splitListObjectOrArrLibs,
+  lernaLibs: splitListLernaLibs,
+  cliApps: splitListCliApps,
+  astLibs: splitListASTApps,
+  miscLibs: splitListMiscLibs,
+};
+const listDescriptions = {
+  all: "Every known Codsen product name, including retired and unavailable products.",
+  inMonorepo:
+    "Public product manifests under packages/; independent of retirement or npm status.",
+  outsideMonorepo:
+    "Known products absent from packages/, including retired products. No maintenance claim.",
+  retired:
+    "Products deliberately retired by Codsen; independent of npm deprecation flags.",
+  deprecated:
+    "Products with a nonempty deprecated message on npm's latest version at npmStatusCheckedAt.",
+};
+const canonicalLists = {
+  all: packageLists.all,
+  inMonorepo: packageLists.inMonorepo,
+  outsideMonorepo: packageLists.outsideMonorepo,
+  retired: packageLists.retired,
+  deprecated: packageLists.deprecated,
+};
 await writeGeneratedFile({
-  contents: `const all = ${JSON.stringify(allPackages.sort(), null, 2)} as const;
-const current = ${JSON.stringify(currentPackages.sort(), null, 2)} as const;
-const historical = ${JSON.stringify(historicalPackages.sort(), null, 2)} as const;
+  contents: `// Generated by ops/scripts/generate-info.js. Edit the shared policy and manifests.
+${Object.entries(canonicalLists)
+  .map(
+    ([name, values]) =>
+      `/** ${listDescriptions[name]} */\nconst ${name} = ${JSON.stringify(values, null, 2)} as const;`,
+  )
+  .join("\n")}
+/** TypeScript libraries in packages/. */
+const libraries = ${JSON.stringify(programPackages.sort(), null, 2)} as const;
+/** Packages in packages/ with a bin capability. */
 const cli = ${JSON.stringify(cliPackages.sort(), null, 2)} as const;
-const deprecated = ${JSON.stringify(deprecated.sort(), null, 2)} as const;
-const programs = ${JSON.stringify(programPackages.sort(), null, 2)} as const;
+/** Packages in packages/ with a direct-browser script export. */
+const browserScripts = ${JSON.stringify(scriptAvailable.sort(), null, 2)} as const;
 const special = ${JSON.stringify(specialPackages.sort(), null, 2)} as const;
-const script = ${JSON.stringify(scriptAvailable.sort(), null, 2)} as const;
-const packagesOutsideMonorepo = ${JSON.stringify(
-    packagesOutsideMonorepo.sort(),
-    null,
-    2,
-  )} as const;
-const splitListFlagshipLibs = ${JSON.stringify(
-    splitListFlagshipLibs,
-    null,
-    2,
-  )} as const;
-const splitListRangeLibs = ${JSON.stringify(
-    splitListRangeLibs,
-    null,
-    2,
-  )} as const;
-const splitListHtmlLibs = ${JSON.stringify(
-    splitListHtmlLibs,
-    null,
-    2,
-  )} as const;
-const splitListStringLibs = ${JSON.stringify(
-    splitListStringLibs,
-    null,
-    2,
-  )} as const;
-const splitListObjectOrArrLibs = ${JSON.stringify(
-    splitListObjectOrArrLibs,
-    null,
-    2,
-  )} as const;
-const splitListLernaLibs = ${JSON.stringify(
-    splitListLernaLibs,
-    null,
-    2,
-  )} as const;
-const splitListCliApps = ${JSON.stringify(splitListCliApps, null, 2)} as const;
-const splitListASTApps = ${JSON.stringify(splitListASTApps, null, 2)} as const;
-const splitListMiscLibs = ${JSON.stringify(
-    splitListMiscLibs,
-    null,
-    2,
-  )} as const;
+/** Curated website groups; these do not describe maintenance status. */
+const categories = ${JSON.stringify(categories, null, 2)} as const;
 
-export type Package = typeof historical[number];
+export type Package = typeof all[number];
+
+// Preserve literal member types for consumers of the compatibility aliases.
+const current = ${JSON.stringify(packageLists.current, null, 2)} as const;
+const packagesOutsideMonorepo = ${JSON.stringify(packageLists.packagesOutsideMonorepo, null, 2)} as const;
 
 export const packages = {
-    all,
-    current,
-    historical,
-    cli,
-    deprecated,
-    programs,
-    special,
-    script,
-    packagesOutsideMonorepo,
-    totalPackageCount: ${allPackages.length},
-    currentPackagesCount: ${currentPackages.length},
-    historicalPackageCount: ${historicalPackages.length},
-    cliCount: ${cliPackages.length},
-    programsCount: ${programPackages.length},
-    specialCount: ${specialPackages.length},
-    scriptCount: ${scriptAvailable.length},
-    packagesOutsideMonorepoCount: ${packagesOutsideMonorepo.length},
-    splitListFlagshipLibs,
-    splitListRangeLibs,
-    splitListHtmlLibs,
-    splitListStringLibs,
-    splitListObjectOrArrLibs,
-    splitListLernaLibs,
-    splitListCliApps,
-    splitListASTApps,
-    splitListMiscLibs,
+  all,
+  inMonorepo,
+  outsideMonorepo,
+  retired,
+  deprecated,
+  npmStatusCheckedAt: ${JSON.stringify(npmStatus.checkedAt)},
+  libraries,
+  cli,
+  browserScripts,
+  categories,
+  totalPackageCount: all.length,
+  inMonorepoCount: inMonorepo.length,
+  outsideMonorepoCount: outsideMonorepo.length,
+  retiredCount: retired.length,
+  deprecatedCount: deprecated.length,
+  librariesCount: libraries.length,
+  cliCount: cli.length,
+  browserScriptsCount: browserScripts.length,
+
+  /** @deprecated Use all for the complete inventory. */
+  historical: all,
+  /** @deprecated Select all minus retired, or inMonorepo, for the intended population. */
+  current,
+  /** @deprecated Use outsideMonorepo; this legacy list excludes retired products. */
+  packagesOutsideMonorepo,
+  /** @deprecated Use libraries. */
+  programs: libraries,
+  /** @deprecated Use browserScripts. */
+  script: browserScripts,
+  /** @deprecated Select explicit capabilities instead. */
+  special,
+  /** @deprecated Use all.length. */
+  historicalPackageCount: all.length,
+  /** @deprecated Use the length of the intended population. */
+  currentPackagesCount: current.length,
+  /** @deprecated Use the length of the intended population. */
+  packagesOutsideMonorepoCount: packagesOutsideMonorepo.length,
+  /** @deprecated Use libraries.length. */
+  programsCount: libraries.length,
+  /** @deprecated Use browserScripts.length. */
+  scriptCount: browserScripts.length,
+  /** @deprecated Select explicit capabilities instead. */
+  specialCount: special.length,
+${Object.entries({
+  splitListFlagshipLibs: "flagshipLibs",
+  splitListRangeLibs: "rangeLibs",
+  splitListHtmlLibs: "htmlLibs",
+  splitListStringLibs: "stringLibs",
+  splitListObjectOrArrLibs: "objectOrArrayLibs",
+  splitListLernaLibs: "lernaLibs",
+  splitListCliApps: "cliApps",
+  splitListASTApps: "astLibs",
+  splitListMiscLibs: "miscLibs",
+})
+  .map(
+    ([alias, category]) =>
+      `  /** @deprecated Use categories.${category}. */\n  ${alias}: categories.${category},`,
+  )
+  .join("\n")}
 };\n`,
   filename: path.resolve("./data/sources/packages.ts"),
   fixCommand: "npm run ci:generate:info",

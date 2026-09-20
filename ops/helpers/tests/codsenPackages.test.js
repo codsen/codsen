@@ -8,9 +8,9 @@ import {
   catalogueExclusions,
   codsenPackagesOutsideWorkspace,
   createCodsenPackageLists,
-  deprecated,
   packagesOutsideMonorepo,
   packagesOutsideMonorepoObj,
+  retired,
 } from "../codsenPackages.js";
 import { readWorkspaceRecords } from "../workspaceInventoryFile.js";
 
@@ -19,7 +19,7 @@ const repositoryRoot = path.resolve(
   "../../..",
 );
 
-test("01 - returns sorted current products and a separate historical union", () => {
+test("01 - separates the complete inventory from location and retirement", () => {
   const result = createCodsenPackageLists([
     "zeta",
     "@example/library",
@@ -31,22 +31,32 @@ test("01 - returns sorted current products and a separate historical union", () 
     "alpha",
     ...packagesOutsideMonorepo,
   ].sort();
-  equal(result.all, expected, "01.01");
+  equal(result.all, [...expected, ...retired].sort(), "01.01");
   equal(result.current, expected, "01.02");
-  equal(result.historical, [...expected, ...deprecated].sort(), "01.03");
-  equal(result.deprecated, [...deprecated].sort(), "01.04");
+  equal(result.historical, [...expected, ...retired].sort(), "01.03");
+  equal(result.retired, [...retired].sort(), "01.04");
   equal(
     result.packagesOutsideMonorepo,
     [...packagesOutsideMonorepo].sort(),
     "01.05",
   );
-  equal(new Set(result.historical).size, result.historical.length, "01.06");
+  equal(new Set(result.all).size, result.all.length, "01.06");
+  equal(result.inMonorepo, ["@example/library", "alpha", "zeta"], "01.07");
+  equal(
+    result.outsideMonorepo,
+    [...packagesOutsideMonorepo, ...retired].sort(),
+    "01.08",
+  );
 });
 
 test("02 - excludes auxiliary, test, third-party and unpublished alias names", () => {
   const excluded = Object.keys(catalogueExclusions);
   const result = createCodsenPackageLists(["example", ...excluded]);
-  equal(result.all, ["example", ...packagesOutsideMonorepo].sort(), "02.01");
+  equal(
+    result.all,
+    ["example", ...packagesOutsideMonorepo, ...retired].sort(),
+    "02.01",
+  );
   equal(
     result.historical.some((name) => excluded.includes(name)),
     false,
@@ -63,23 +73,33 @@ test("02 - excludes auxiliary, test, third-party and unpublished alias names", (
   );
 });
 
-test("03 - retains retired packages in historical ownership without listing them as products", () => {
-  const result = createCodsenPackageLists(["example", ...deprecated]);
+test("03 - retirement does not erase inventory or repository membership", () => {
+  const result = createCodsenPackageLists(["example", ...retired]);
   equal(
-    result.all.some((name) => deprecated.includes(name)),
+    result.current.some((name) => retired.includes(name)),
     false,
     "03.01",
   );
   equal(
-    deprecated.every((name) => result.historical.includes(name)),
+    retired.every((name) => result.historical.includes(name)),
     true,
     "03.02",
   );
-  equal(result.deprecated.length, 27, "03.03");
+  equal(result.retired.length, 27, "03.03");
   equal(
-    deprecated.every((name) => codsenPackagesOutsideWorkspace.has(name)),
+    retired.every((name) => codsenPackagesOutsideWorkspace.has(name)),
     true,
     "03.04",
+  );
+  equal(
+    retired.every((name) => result.inMonorepo.includes(name)),
+    true,
+    "03.05",
+  );
+  equal(
+    result.outsideMonorepo.some((name) => retired.includes(name)),
+    false,
+    "03.06",
   );
 });
 
@@ -105,7 +125,7 @@ test("04 - includes the audited canonical ESLint plugins in products and depende
   );
   equal(
     [...codsenPackagesOutsideWorkspace].sort(),
-    [...packagesOutsideMonorepo, ...deprecated].sort(),
+    [...packagesOutsideMonorepo, ...retired].sort(),
     "04.04",
   );
 });
@@ -157,7 +177,7 @@ test("07 - rejects collisions between workspace and external inventories", () =>
 
 test("08 - never mutates input names, exported policy arrays or another result", () => {
   const names = ["zeta", "alpha"];
-  const originalDeprecated = [...deprecated];
+  const originalRetired = [...retired];
   const originalOutside = [...packagesOutsideMonorepo];
   const first = createCodsenPackageLists(names);
   const second = createCodsenPackageLists(names);
@@ -165,9 +185,12 @@ test("08 - never mutates input names, exported policy arrays or another result",
   first.current.length = 0;
   first.historical.length = 0;
   first.deprecated.length = 0;
+  first.retired.length = 0;
+  first.inMonorepo.length = 0;
+  first.outsideMonorepo.length = 0;
   first.packagesOutsideMonorepo.length = 0;
   equal(names, ["zeta", "alpha"], "08.01");
-  equal(deprecated, originalDeprecated, "08.02");
+  equal(retired, originalRetired, "08.02");
   equal(packagesOutsideMonorepo, originalOutside, "08.03");
   equal(createCodsenPackageLists(names), second, "08.04");
 });
@@ -177,11 +200,38 @@ test("09 - projects the real public catalogue without the auxiliary data workspa
     .filter(({ manifest }) => !manifest.private)
     .map(({ manifest }) => manifest.name);
   const result = createCodsenPackageLists(names);
-  equal(result.all.length, 129, "09.01");
+  equal(result.all.length, 156, "09.01");
   equal(result.historical.length, 156, "09.02");
   equal(result.all.includes("@codsen/data"), false, "09.03");
   equal(result.all, [...result.all].sort(), "09.04");
   equal(result.packagesOutsideMonorepo.length, 28, "09.05");
+  equal(result.inMonorepo.length, 101, "09.06");
+  equal(result.outsideMonorepo.length, 55, "09.07");
+  equal(result.retired.length, 27, "09.08");
+  equal(result.deprecated.length, 18, "09.09");
+  equal(result.deprecated.includes("posthtml-ast-compare"), false, "09.10");
+  equal(result.retired.includes("posthtml-ast-compare"), true, "09.11");
+  equal(result.current.length, 129, "09.12");
+});
+
+test("10 - npm deprecation is independent of location and Codsen retirement", () => {
+  const snapshot = {
+    schemaVersion: 1,
+    registry: "https://registry.npmjs.org",
+    checkedAt: "2026-09-20T00:00:00.000Z",
+    packages: {
+      example: {
+        status: "available",
+        version: "1.0.0",
+        deprecated: "Use another version",
+      },
+    },
+  };
+  const result = createCodsenPackageLists(["example"], snapshot);
+  equal(result.deprecated, ["example"], "10.01");
+  equal(result.inMonorepo, ["example"], "10.02");
+  equal(result.retired.includes("example"), false, "10.03");
+  equal(result.current.includes("example"), true, "10.04");
 });
 
 test.run();

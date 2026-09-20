@@ -74,6 +74,14 @@ function withFixture(callback) {
     write(repositoryRoot, ".gitignore", "ignored\n");
     write(repositoryRoot, "README.md", "base repository readme\n");
     write(repositoryRoot, "ops/trusted.js", "export const trusted = true;\n");
+    writeJson(repositoryRoot, "ops/package-npm-status.json", {
+      schemaVersion: 1,
+      registry: "https://registry.npmjs.org",
+      checkedAt: "2026-09-19T12:00:00.000Z",
+      packages: {
+        example: { status: "available", version: "1.0.0", deprecated: null },
+      },
+    });
     writeJson(repositoryRoot, "packages/example/package.json", {
       name: "example",
       version: "1.0.0",
@@ -587,6 +595,106 @@ test("11 - chart permission does not admit arbitrary statistics or executable ch
       "11.09",
     );
     equal(git(fixture.repositoryRoot, "status", "--porcelain"), "", "11.10");
+  });
+});
+
+test("12 - refreshed npm status survives proposal creation and the staged handoff", () => {
+  withFixture((fixture) => {
+    const filename = "ops/package-npm-status.json";
+    const snapshot = {
+      schemaVersion: 1,
+      registry: "https://registry.npmjs.org",
+      checkedAt: "2026-09-20T12:00:00.000Z",
+      packages: {
+        example: {
+          status: "available",
+          version: "1.0.0",
+          deprecated: "Retired",
+        },
+      },
+    };
+    prepare(fixture);
+    writeJson(fixture.repositoryRoot, filename, snapshot);
+    const proposal = createReleaseProposal(fixture);
+    equal(
+      proposal.changes
+        .filter((change) => change.path.startsWith("ops/"))
+        .map((change) => change.path),
+      [filename],
+      "12.01",
+    );
+    git(fixture.repositoryRoot, "reset", "--hard", "--quiet", fixture.baseSha);
+    git(fixture.repositoryRoot, "clean", "-fd", "--quiet");
+    applyReleaseProposal({ ...fixture, proposal });
+    equal(
+      JSON.parse(
+        readFileSync(path.join(fixture.repositoryRoot, filename), "utf8"),
+      ),
+      snapshot,
+      "12.02",
+    );
+    equal(git(fixture.repositoryRoot, "diff", "--name-only"), "", "12.03");
+    equal(
+      git(fixture.repositoryRoot, "diff", "--cached", "--name-only").split(
+        "\n",
+      ),
+      proposal.changes.map((change) => change.path),
+      "12.04",
+    );
+  });
+});
+
+test("13 - npm status permission excludes neighbouring files, executables and deletion", () => {
+  withFixture((fixture) => {
+    const filename = "ops/package-npm-status.json";
+    for (const candidate of [
+      "ops/package-npm-status.js",
+      "ops/package-npm-status.json/child",
+      "ops/package-kinds.json",
+      "ops/helpers/npmPackageStatus.js",
+    ]) {
+      throws(
+        () =>
+          applyReleaseProposal({
+            ...fixture,
+            proposal: adding(fixture.proposal, addedRecord(candidate)),
+          }),
+        /unexpected generated path/,
+      );
+    }
+    throws(
+      () =>
+        applyReleaseProposal({
+          ...fixture,
+          proposal: adding(
+            fixture.proposal,
+            addedRecord(filename, "{}", "100755"),
+          ),
+        }),
+      /mode changes and new executable files/,
+      "13.01",
+    );
+    throws(
+      () =>
+        applyReleaseProposal({
+          ...fixture,
+          proposal: adding(fixture.proposal, {
+            path: filename,
+            content: null,
+            mode: null,
+          }),
+        }),
+      /npm package status snapshot cannot be deleted/,
+      "13.02",
+    );
+    equal(git(fixture.repositoryRoot, "status", "--porcelain"), "", "13.03");
+    prepare(fixture);
+    rmSync(path.join(fixture.repositoryRoot, filename));
+    throws(
+      () => createReleaseProposal(fixture),
+      /npm package status snapshot cannot be deleted/,
+      "13.04",
+    );
   });
 });
 

@@ -91,35 +91,37 @@ function validatePreviousPackages(previousPackages) {
 function readNpmDownloadsRoster(repositoryRoot, previousPackages = {}) {
   validatePreviousPackages(previousPackages);
   const firstPublishedDays = readFirstPublishedDays(repositoryRoot);
-  const { all } = createCodsenPackageLists(
+  const { all, retired } = createCodsenPackageLists(
     readWorkspaceRecords(repositoryRoot)
       .filter(({ manifest }) => !manifest.private)
       .map(({ manifest }) => manifest.name),
   );
 
   return Object.fromEntries(
-    all.map((name) => {
-      packageFile(name);
-      const previous = Object.hasOwn(previousPackages, name)
-        ? previousPackages[name]
-        : null;
-      const sourceDay = firstPublishedDays.get(name) ?? null;
-      const previousDay = previous?.firstPublishedDay ?? null;
-      const firstPublishedDay =
-        sourceDay === null
-          ? previousDay
-          : previousDay === null || sourceDay < previousDay
-            ? sourceDay
-            : previousDay;
-      return [
-        name,
-        {
-          status: "current",
-          includedInPortfolio: true,
-          firstPublishedDay,
-        },
-      ];
-    }),
+    all
+      .filter((name) => !retired.includes(name))
+      .map((name) => {
+        packageFile(name);
+        const previous = Object.hasOwn(previousPackages, name)
+          ? previousPackages[name]
+          : null;
+        const sourceDay = firstPublishedDays.get(name) ?? null;
+        const previousDay = previous?.firstPublishedDay ?? null;
+        const firstPublishedDay =
+          sourceDay === null
+            ? previousDay
+            : previousDay === null || sourceDay < previousDay
+              ? sourceDay
+              : previousDay;
+        return [
+          name,
+          {
+            status: "current",
+            includedInPortfolio: true,
+            firstPublishedDay,
+          },
+        ];
+      }),
   );
 }
 

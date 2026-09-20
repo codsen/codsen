@@ -9,8 +9,8 @@ import { equal, throws } from "uvu/assert";
 import {
   catalogueExclusions,
   createCodsenPackageLists,
-  deprecated,
   packagesOutsideMonorepo,
+  retired,
 } from "../codsenPackages.js";
 import { readNpmDownloadsRoster } from "../npmDownloadsRoster.js";
 import { readWorkspaceRecords } from "../workspaceInventoryFile.js";
@@ -83,7 +83,7 @@ test("01 - combines published workspaces and curated catalogue in stable order",
     equal(Object.hasOwn(result, "@codsen/data"), false, "01.04");
     equal(result.lect, metadata(), "01.05");
     equal(
-      deprecated.every((name) => !Object.hasOwn(result, name)),
+      retired.every((name) => !Object.hasOwn(result, name)),
       true,
       "01.06",
     );
@@ -278,7 +278,7 @@ test("10 - follows the audited product catalogue including both canonical ESLint
       readWorkspaceRecords(repositoryRoot)
         .filter(({ manifest }) => !manifest.private)
         .map(({ manifest }) => manifest.name),
-    ).all,
+    ).all.filter((name) => !retired.includes(name)),
     "10.02",
   );
   equal(
@@ -322,11 +322,9 @@ test("11 - projects roster fields from full archive entries deterministically", 
 test("12 - stale manifests cannot reintroduce retired or excluded catalogue names", () => {
   withFixture((root) => {
     const previous = Object.fromEntries(
-      [
-        ...deprecated,
-        ...Object.keys(catalogueExclusions),
-        "former-product",
-      ].map((name) => [name, metadata({ firstPublishedDay: "2015-01-10" })]),
+      [...retired, ...Object.keys(catalogueExclusions), "former-product"].map(
+        (name) => [name, metadata({ firstPublishedDay: "2015-01-10" })],
+      ),
     );
     const result = readNpmDownloadsRoster(root, previous);
     equal(result, readNpmDownloadsRoster(root), "12.01");

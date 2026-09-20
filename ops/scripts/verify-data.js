@@ -7,9 +7,13 @@ import { isDeepStrictEqual } from "node:util";
 import { createCodsenPackageLists } from "../helpers/codsenPackages.js";
 import { dependencyStatuses } from "../helpers/dependencyStatuses.js";
 import { projectFirstPublishedAt } from "../helpers/firstPublishedAt.js";
+import { validateNpmPackageStatus } from "../helpers/npmPackageStatus.js";
 import { rootExport } from "../helpers/packageEntries.js";
 import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
 import { readPackageKindResolver } from "../helpers/packageKindsFile.js";
+import recordedNpmStatus from "../package-npm-status.json" with {
+  type: "json",
+};
 
 const ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -115,6 +119,12 @@ async function verifyData() {
       .filter((manifest) => !manifest.private)
       .map((manifest) => manifest.name),
   );
+  validateNpmPackageStatus(recordedNpmStatus, expectedLists.all);
+  if (data.packages.npmStatusCheckedAt !== recordedNpmStatus.checkedAt) {
+    fail(
+      "packages.npmStatusCheckedAt is stale relative to the npm status snapshot",
+    );
+  }
   for (const [listName, expected] of Object.entries(expectedLists)) {
     assertSameList(
       [...data.packages[listName]],
@@ -124,6 +134,10 @@ async function verifyData() {
   }
   for (const [countName, expected] of [
     ["totalPackageCount", expectedLists.all.length],
+    ["inMonorepoCount", expectedLists.inMonorepo.length],
+    ["outsideMonorepoCount", expectedLists.outsideMonorepo.length],
+    ["retiredCount", expectedLists.retired.length],
+    ["deprecatedCount", expectedLists.deprecated.length],
     ["currentPackagesCount", expectedLists.current.length],
     ["historicalPackageCount", expectedLists.historical.length],
     [
@@ -139,10 +153,10 @@ async function verifyData() {
   }
   assertSameList(
     sortedKeys(data.firstPublishedAt),
-    expectedLists.historical,
+    expectedLists.all,
     "firstPublishedAt keys",
   );
-  projectFirstPublishedAt(expectedLists.historical, data.firstPublishedAt);
+  projectFirstPublishedAt(expectedLists.all, data.firstPublishedAt);
   for (const entry of data.interdeps) {
     if (Object.hasOwn(entry, "size")) {
       fail(
@@ -243,23 +257,66 @@ async function verifyData() {
   assertSameList(sortedKeys(data.allDTS), programNames, "allDTS keys");
   assertSameList(sortedKeys(data.examples), programNames, "examples keys");
   assertSameList(
+    [...data.packages.libraries],
+    programNames,
+    "packages.libraries",
+  );
+  assertSameList(
     [...data.packages.programs],
     programNames,
     "packages.programs",
   );
   assertSameList([...data.packages.cli], cliNames, "packages.cli");
   assertSameList([...data.packages.script], scriptNames, "packages.script");
+  assertSameList(
+    [...data.packages.browserScripts],
+    scriptNames,
+    "packages.browserScripts",
+  );
   assertSameList([...data.packages.special], specialNames, "packages.special");
   for (const [countName, expected] of [
     ["programsCount", programNames.length],
+    ["librariesCount", programNames.length],
     ["cliCount", cliNames.length],
     ["scriptCount", scriptNames.length],
+    ["browserScriptsCount", scriptNames.length],
     ["specialCount", specialNames.length],
   ]) {
     if (data.packages[countName] !== expected) {
       fail(
         `packages.${countName} is ${data.packages[countName]}; expected ${expected}`,
       );
+    }
+  }
+
+  const categoryAliases = {
+    flagshipLibs: "splitListFlagshipLibs",
+    rangeLibs: "splitListRangeLibs",
+    htmlLibs: "splitListHtmlLibs",
+    stringLibs: "splitListStringLibs",
+    objectOrArrayLibs: "splitListObjectOrArrLibs",
+    lernaLibs: "splitListLernaLibs",
+    cliApps: "splitListCliApps",
+    astLibs: "splitListASTApps",
+    miscLibs: "splitListMiscLibs",
+  };
+  assertSameList(
+    sortedKeys(data.packages.categories),
+    Object.keys(categoryAliases).sort(),
+    "packages.categories keys",
+  );
+  const listedNames = new Set();
+  for (const [category, alias] of Object.entries(categoryAliases)) {
+    assertSameList(
+      [...data.packages.categories[category]],
+      [...data.packages[alias]],
+      `packages.categories.${category}`,
+    );
+    for (const name of data.packages.categories[category]) {
+      if (!expectedLists.all.includes(name) || listedNames.has(name)) {
+        fail(`Unknown or duplicate category package: ${name}`);
+      }
+      listedNames.add(name);
     }
   }
 

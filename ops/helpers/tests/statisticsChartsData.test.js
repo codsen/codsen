@@ -1,6 +1,7 @@
 import { test } from "uvu";
 import { equal, throws } from "uvu/assert";
 
+import { retired } from "../codsenPackages.js";
 import {
   assertLockedWorkspaceDependencies,
   completeInterdeps,
@@ -62,6 +63,11 @@ test("02 - restores isolates and explicitly unknown outside-checkout nodes", () 
     graph.find((node) => node.name === "chart-app").imports,
     ["chart-leaf", "codsen-parser"],
     "02.04",
+  );
+  equal(
+    graph.filter((node) => retired.includes(node.name)),
+    [],
+    "02.05",
   );
 });
 

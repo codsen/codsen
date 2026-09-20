@@ -15,9 +15,9 @@ npm run stats:refresh
 npm run stats:check
 ```
 
-The refresh uses the canonical current package catalogue and fetches history
-through npm's latest available day. It fills missing intervals, rechecks at
-least the latest 60 days, and rechecks dates flagged as possible reporting
+The refresh uses all catalogue packages except retired products and fetches
+history through npm's latest available day. It fills missing intervals, rechecks
+at least the latest 60 days, and rechecks dates flagged as possible reporting
 problems. It can request additional days to share bounded queries across
 packages. Corrected observations replace the previous count for that date;
 overlapping requests never add the same day twice. Retired histories remain
@@ -114,18 +114,23 @@ manually.
 
 ## Package membership
 
-The canonical snapshot contains 135 current products. Its package set
-matches both `all` and `current` from the shared
-[`createCodsenPackageLists` selector](../../ops/helpers/codsenPackages.js),
-which combines published workspaces and the explicitly maintained list of
-products published elsewhere. Generated website metadata and download
-collection use this same policy.
+The canonical snapshot contains 129 products. Its package set is `all` minus
+`retired` from the shared
+[`createCodsenPackageLists` selector](../../ops/helpers/codsenPackages.js).
+This includes packages inside and outside the monorepo without classifying
+their maintenance status.
 
-The 21 deprecated packages and the auxiliary `@codsen/data` package have 22
+The 27 retired products and the auxiliary `@codsen/data` package have 28
 previously collected histories in `retired/`. They are excluded from the
 primary manifest, portfolio totals, chart exports, and refresh requests.
-The selector's `historical` list remains available for consumers that need
-current and deprecated product names.
+The selector's `all` list includes every product in the catalogue, including
+retired products. Its `deprecated` list records npm's latest-version flags
+separately and does not control collection membership.
+
+The archive retains its existing status values: `current` means included in
+collection, and `deprecated` means retired by catalogue policy. These stored
+labels are independent of npm's latest-version deprecation flags. Changing
+the catalogue field names does not rewrite saved observations or revisions.
 
 Publication dates come from the checked-in
 [`firstPublishedAt` snapshot](../../data/sources/firstPublishedAt.ts), without

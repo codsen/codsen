@@ -28,7 +28,7 @@ const year = today.getFullYear();
 const publicWorkspaceNames = readWorkspaceRecords(process.cwd())
   .filter(({ manifest }) => !manifest.private)
   .map(({ manifest }) => manifest.name);
-const { historical } = createCodsenPackageLists(publicWorkspaceNames);
+const { all } = createCodsenPackageLists(publicWorkspaceNames);
 
 // Count package names across royston's npm history, including retired products.
 // These five additional names are intentionally outside the product catalogue:
@@ -36,7 +36,7 @@ const { historical } = createCodsenPackageLists(publicWorkspaceNames);
 // project. Registry membership and the alias tombstones were checked 2026-09-20.
 // Keep this list explicit: a catalogue exclusion need not be a published name.
 const npmPortfolioPackages = new Set([
-  ...historical,
+  ...all,
   "@codsen/data",
   "codsen-test-1",
   "eslint-plugin-row-num-tbc",

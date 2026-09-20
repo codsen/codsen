@@ -1,5 +1,10 @@
-// Codsen packages that are not workspaces in this checkout: published from
-// elsewhere, or deprecated. Their manifests are unavailable here, so their own
+import recordedNpmStatus from "../package-npm-status.json" with {
+  type: "json",
+};
+import { deprecatedPackageNames } from "./npmPackageStatus.js";
+
+// Codsen packages outside this checkout. Location makes no maintenance promise.
+// Their manifests are unavailable here, so their own
 // graphs cannot be audited -- they are not third-party, but they are not
 // verifiable either. `dependencyStatuses` and `generate-info` both classify
 // dependency names against this one list so the READMEs and the website's
@@ -108,7 +113,7 @@ const packagesOutsideMonorepoObj = {
 // The eight posthtml names below whose latest versions lack that flag still
 // announce deprecation and replacements in their published npm READMEs.
 // eslint-on-airbnb-base-badge is locally retired and unavailable from npm.
-const deprecated = [
+const retired = [
   "ast-delete-object",
   "ast-get-object",
   "ast-loose-compare",
@@ -153,7 +158,10 @@ const catalogueExclusions = {
     "Co-maintained third-party project outside the Codsen-authored catalogue",
 };
 
-function createCodsenPackageLists(workspaceNames) {
+function createCodsenPackageLists(
+  workspaceNames,
+  npmStatus = recordedNpmStatus,
+) {
   if (!Array.isArray(workspaceNames)) {
     throw new TypeError("Codsen workspace names must be an array");
   }
@@ -178,33 +186,44 @@ function createCodsenPackageLists(workspaceNames) {
     }
     seen.add(name);
   }
-  const current = [
-    ...workspaceNames.filter(
-      (name) =>
-        !Object.hasOwn(catalogueExclusions, name) && !deprecated.includes(name),
-    ),
-    ...packagesOutsideMonorepo,
+  // Repository membership and retirement are independent: a retired package
+  // can remain checked out while consumers migrate to its replacement.
+  const inMonorepo = workspaceNames
+    .filter((name) => !Object.hasOwn(catalogueExclusions, name))
+    .sort();
+  const all = [
+    ...new Set([...inMonorepo, ...packagesOutsideMonorepo, ...retired]),
   ].sort();
+  const outsideMonorepo = all.filter((name) => !inMonorepo.includes(name));
+  const current = all.filter((name) => !retired.includes(name));
   return {
-    all: [...current],
+    all,
+    inMonorepo,
+    outsideMonorepo,
+    retired: [...retired],
+    deprecated: deprecatedPackageNames(npmStatus).filter((name) =>
+      all.includes(name),
+    ),
+    // Compatibility aliases. New consumers should choose an explicit set.
     current,
-    historical: [...new Set([...current, ...deprecated])].sort(),
-    deprecated: [...deprecated].sort(),
-    packagesOutsideMonorepo: [...packagesOutsideMonorepo],
+    historical: [...all],
+    packagesOutsideMonorepo: outsideMonorepo.filter(
+      (name) => !retired.includes(name),
+    ),
   };
 }
 
-// Every Codsen name resolvable outside this checkout.
+// Known Codsen identities outside this checkout, including unavailable names.
 const codsenPackagesOutsideWorkspace = new Set([
   ...packagesOutsideMonorepo,
-  ...deprecated,
+  ...retired,
 ]);
 
 export {
   catalogueExclusions,
   codsenPackagesOutsideWorkspace,
   createCodsenPackageLists,
-  deprecated,
   packagesOutsideMonorepo,
   packagesOutsideMonorepoObj,
+  retired,
 };

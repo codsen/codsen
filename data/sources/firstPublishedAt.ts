@@ -2,7 +2,7 @@
 import type { Package } from "./packages.js";
 
 /** Earliest observed npm version publication, in milliseconds since the Unix
- * epoch, for every packages.historical entry. Null means no date is known.
+ * epoch, for every packages.all entry. Null means no date is known.
  * Consumers choose their own recency cut-off or number of newest packages. */
 export const firstPublishedAt: Record<Package, number | null> = {
   "all-named-html-entities": 1554572449731,

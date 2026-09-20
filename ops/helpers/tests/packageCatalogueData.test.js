@@ -28,15 +28,26 @@ test("01 - generated catalogue follows the shared policy while preserving histor
   );
   equal(packages.totalPackageCount, lists.all.length, "01.06");
   equal(packages.historicalPackageCount, lists.historical.length, "01.07");
-  ok(!packages.all.includes("bitsausage"), "01.08");
+  ok(packages.all.includes("bitsausage"), "01.08");
   ok(packages.historical.includes("bitsausage"), "01.09");
-  ok(!packages.historical.includes("@codsen/data"), "01.10");
+  ok(!packages.all.includes("@codsen/data"), "01.10");
+  equal(packages.inMonorepo, lists.inMonorepo, "01.11");
+  equal(packages.outsideMonorepo, lists.outsideMonorepo, "01.12");
+  equal(packages.retired, lists.retired, "01.13");
+  equal(packages.libraries, packages.programs, "01.14");
+  equal(packages.browserScripts, packages.script, "01.15");
+  equal(
+    packages.categories.flagshipLibs,
+    packages.splitListFlagshipLibs,
+    "01.16",
+  );
+  equal(Object.values(packages.categories).flat().length, 100, "01.17");
 });
 
 test("02 - generated publication dates retain the complete historical key set", () => {
   equal(
     Object.keys(firstPublishedAt).sort(),
-    [...packages.historical].sort(),
+    [...packages.all].sort(),
     "02.01",
   );
   ok(Object.hasOwn(firstPublishedAt, "bitsausage"), "02.02");
@@ -56,6 +67,13 @@ const legacy: Package = "bitsausage";
 const active: Package = "object-boolean-combinations";
 const current: readonly Package[] = packages.all;
 const historical: readonly Package[] = packages.historical;
+const inMonorepo: readonly Package[] = packages.inMonorepo;
+const outsideMonorepo: readonly Package[] = packages.outsideMonorepo;
+const retired: readonly Package[] = packages.retired;
+const npmDeprecated: readonly Package[] = packages.deprecated;
+const libraries: readonly Package[] = packages.libraries;
+const browserScripts: readonly Package[] = packages.browserScripts;
+const flagshipLibs: readonly Package[] = packages.categories.flagshipLibs;
 const dates: Record<Package, number | null> = firstPublishedAt;
 const legacyPublication: number | null = dates[legacy];
 

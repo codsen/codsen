@@ -71,8 +71,11 @@ persisted checkout credentials. A separate job checks out trusted tooling at
 the same base SHA, downloads the generation job's changes by artifact ID, and
 validates the complete changeset before applying it. The handoff permits
 release files in existing workspaces, root release documentation and the
-lockfile, the single release-plan file, and the ten generated website chart
-files. The chart permission excludes statistics archives, chart documentation,
+lockfile, the single release-plan file, the npm status snapshot at
+`ops/package-npm-status.json`, and the ten generated website chart files.
+The npm status permission allows that generated JSON file only and forbids its
+deletion; it does not allow changes to other `ops/` files. The chart permission
+excludes statistics archives, chart documentation,
 and arbitrary files in that directory. It rejects changes to privileged
 tooling, workflows, Git configuration, symbolic links, and file modes. The
 privileged job installs no repository dependencies and executes no generated

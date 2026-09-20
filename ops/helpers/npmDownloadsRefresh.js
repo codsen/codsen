@@ -1,7 +1,7 @@
 import { mkdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { deprecated } from "./codsenPackages.js";
+import { retired as retiredPackageNames } from "./codsenPackages.js";
 import {
   addDays,
   mergeDownloads,
@@ -195,7 +195,9 @@ function retainedHistory(previous, roster, observedAt) {
         name,
         {
           ...packages[name],
-          status: deprecated.includes(name)
+          // Preserve the archive's legacy status value for policy retirements.
+          // It does not describe the latest version's npm deprecation flag.
+          status: retiredPackageNames.includes(name)
             ? "deprecated"
             : name === "@codsen/data"
               ? "auxiliary"

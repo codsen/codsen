@@ -660,12 +660,14 @@ test("15 - moves excluded histories to retired without querying or changing thei
       {
         alpha: entry("2026-09-01"),
         bitsausage: entry("2026-09-01", "deprecated"),
+        "posthtml-ast-compare": entry("2026-09-01"),
         "@codsen/data": entry("2026-09-01", "auxiliary"),
       },
       "2026-09-02",
       {
         alpha: daily("2026-09-01", "2026-09-02"),
         bitsausage: daily("2026-09-01", "2026-09-02", () => 23),
+        "posthtml-ast-compare": daily("2026-09-01", "2026-09-02", () => 29),
         "@codsen/data": daily("2026-09-01", "2026-09-02", () => 17),
       },
     );
@@ -685,12 +687,17 @@ test("15 - moves excluded histories to retired without querying or changing thei
       {
         "@codsen/data": initial.series["@codsen/data"],
         bitsausage: initial.series.bitsausage,
+        "posthtml-ast-compare": initial.series["posthtml-ast-compare"],
       },
       "15.02",
     );
     equal(migrated.retired.manifest.through, "2026-09-02", "15.03");
-    equal(report.movedToRetired, ["@codsen/data", "bitsausage"], "15.04");
-    equal(report.retiredPackages, 2, "15.05");
+    equal(
+      report.movedToRetired,
+      ["@codsen/data", "bitsausage", "posthtml-ast-compare"],
+      "15.04",
+    );
+    equal(report.retiredPackages, 3, "15.05");
     equal(
       calls.map(({ names }) => names),
       [["alpha"]],
@@ -700,7 +707,7 @@ test("15 - moves excluded histories to retired without querying or changing thei
       Object.values(migrated.retired.manifest.packages).map(
         ({ includedInPortfolio }) => includedInPortfolio,
       ),
-      [false, false],
+      [false, false, false],
       "15.07",
     );
     equal(
@@ -713,12 +720,17 @@ test("15 - moves excluded histories to retired without querying or changing thei
       "auxiliary",
       "15.09",
     );
+    equal(
+      migrated.retired.manifest.packages["posthtml-ast-compare"].status,
+      "deprecated",
+      "15.10",
+    );
     await refreshNpmDownloads({
       ...options,
       client: clientFor("2026-09-04", []),
     });
     const refreshed = await readNpmDownloadsSnapshot(fixture.archiveDirectory);
-    equal(refreshed.retired, migrated.retired, "15.10");
+    equal(refreshed.retired, migrated.retired, "15.11");
   });
 });
 
