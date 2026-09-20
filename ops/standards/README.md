@@ -9,7 +9,25 @@ or ECMAScript-engine conformance. The eight backlog areas in `requirements.json`
 make unharvested work visible. A covered entry means its package test exists;
 the package's unit command establishes whether that assertion passes.
 
-## Daily commands
+## Automatic enforcement
+
+The standards checks are part of the normal test pipeline:
+
+- Root `npm test` runs `npm run verify`, which checks the shared catalogue.
+- Each package's `test/standards-pilot.js` runs through its ordinary unit and
+  coverage suites. The cumulative Node compatibility matrix also runs those
+  tests against installed package artifacts on every supported Node lane.
+- The shared repository-verification action checks the catalogue during
+  preparation for pull requests, main pushes, and releases. This check runs
+  outside Turbo caches. Package tests and local fixtures are existing cache
+  inputs, so changing either invalidates the corresponding test results.
+- Repository tooling tests protect the local and hosted catalogue wiring.
+
+The known failure below remains a separate diagnostic until it is fixed and
+promoted into the normal package suite. Source refresh is explicit so routine
+tests use reviewed, pinned specification content without network access.
+
+## Focused commands
 
 Run these from the repository root:
 

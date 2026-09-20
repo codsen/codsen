@@ -218,6 +218,13 @@ runs:
         --name "Verify unit-test numbering" --
         npm run ci:verify:test-numbering
 
+    - name: Verify standards sources and package test coverage
+      if: inputs.phase != 'validate'
+      shell: bash
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Verify standards catalogue" -- npm run standards:check
+
     - name: Verify lect-managed package files
       if: inputs.phase != 'validate'
       shell: bash

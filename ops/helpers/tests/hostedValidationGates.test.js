@@ -27,6 +27,7 @@ const requiredGates = [
   "npm run ci:verify:package-kinds",
   "npm run ci:verify:debug-log-production-cost",
   "npm run ci:verify:test-numbering",
+  "npm run standards:check",
   "npm run ci:verify:coverage-policy",
   "npm run test:coverage",
   "npm run ci:verify:node-compatibility",
@@ -295,6 +296,22 @@ test("12 - website refresh only sends the secret hook and reports request status
   ok(workflow.includes('case "$http_status" in\n            2??)'), "12.14");
   ok(workflow.includes("Vercel accepted a website rebuild request."), "12.15");
   ok(!workflow.includes("--location"), "12.16");
+});
+
+test("13 - standards catalogue checks stay automatic locally and in hosted preparation", () => {
+  const manifest = JSON.parse(readRepositoryFile("package.json"));
+  const step = readRepositoryFile(sharedAction)
+    .split("\n    - name:")
+    .find((section) => section.includes("npm run standards:check"));
+
+  ok(manifest.scripts.test.startsWith("npm run verify &&"), "13.01");
+  ok(manifest.scripts.verify.includes("npm run standards:check"), "13.02");
+  equal(
+    step?.match(/\n {6}if: ([^\n]+)/u)?.[1],
+    "inputs.phase != 'validate'",
+    "13.03",
+  );
+  ok(!step.includes("continue-on-error"), "13.04");
 });
 
 test.run();
