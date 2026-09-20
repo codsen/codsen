@@ -76,4 +76,80 @@ test("05 - preserves URLs and configured backend markers", () => {
   );
 });
 
+test("06 - distinguishes unquoted attribute slashes from self-closing syntax", () => {
+  const source = String.raw`<style>.used\/{color:red}#target\/{display:block}.used{color:blue}#target{display:none}</style><body><img class=used/><input id=target/></body>`;
+  const actual = comb(source);
+  equal(
+    actual.result,
+    String.raw`<style>.used\/{color:red}#target\/{display:block}</style><body><img class=used/><input id=target/></body>`,
+    "06.01",
+  );
+  equal(actual.allInBody, [".used/", "#target/"], "06.02");
+  equal(actual.deletedFromHead, [".used", "#target"], "06.03");
+  equal(actual.deletedFromBody, [], "06.04");
+  equal(
+    comb(
+      String.raw`<style>.used\/{color:red}.used{color:blue}</style><body><img class=used /></body>`,
+    ).result,
+    "<style>.used{color:blue}</style><body><img class=used /></body>",
+    "06.05",
+  );
+  equal(
+    comb('<img src=x class="gone" id="gone" />').result,
+    "<img src=x />",
+    "06.06",
+  );
+  equal(
+    comb('<img src=x disabled class="gone" id="gone" />').result,
+    "<img src=x disabled />",
+    "06.07",
+  );
+});
+
+test("07 - ignores apparent attributes and comments inside raw text and RCDATA", () => {
+  for (const tag of [
+    "script",
+    "textarea",
+    "title",
+    "xmp",
+    "iframe",
+    "noembed",
+    "noframes",
+    "plaintext",
+  ]) {
+    const raw = `<${tag}><i class="fake">x</i><!-- literal --></${tag}>`;
+    const actual = comb(`<style>.fake{color:red}</style><body>${raw}</body>`);
+    equal(actual.result, `<body>${raw}</body>`, "07.01");
+    equal(actual.allInBody, [], "07.02");
+    equal(actual.deletedFromHead, [".fake"], "07.03");
+  }
+});
+
+test("08 - raw text ends only at the corresponding HTML end-tag boundary", () => {
+  const raw =
+    '<script>const x = `</scriptx><i class="fake"><!-- literal -->`;</script>';
+  const actual = comb(
+    `<style>.fake{color:red}.used{color:blue}</style>${raw}<p class="used">text</p>`,
+  );
+  equal(
+    actual.result,
+    `<style>.used{color:blue}</style>${raw}<p class="used">text</p>`,
+    "08.01",
+  );
+  equal(actual.allInBody, [".used"], "08.02");
+  equal(actual.deletedFromHead, [".fake"], "08.03");
+  equal(
+    comb('<script></script><p class="unused">text</p>').result,
+    "<script></script><p>text</p>",
+    "08.04",
+  );
+  const consecutive =
+    '<script></script><textarea><b class="fake"><!-- literal --></b></textarea><script>const x = "<!-- literal -->";</script>';
+  equal(
+    comb(`${consecutive}<p class="unused">text</p>`).result,
+    `${consecutive}<p>text</p>`,
+    "08.05",
+  );
+});
+
 test.run();

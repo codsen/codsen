@@ -87,8 +87,12 @@ function isHtmlAsciiWhitespace(char: string | undefined): boolean {
   );
 }
 
-function extractCanonicalSelectors(str: string): string[] {
+function extractCanonicalSelectors(
+  str: string,
+  protectedSelectors?: Set<string>,
+): string[] {
   let result: string[] = [];
+  let hasFunction = false;
   for (let i = 0; i < str.length; ) {
     if (str[i] === "[") {
       let closingAt = cssAttributeEndsAt(str, i);
@@ -107,7 +111,15 @@ function extractCanonicalSelectors(str: string): string[] {
         continue;
       }
     }
-    i = (readCssToken(str, i) as CssToken).range[1];
+    const token = readCssToken(str, i) as CssToken;
+    if (token.kind === "function") hasFunction = true;
+    i = token.range[1];
+  }
+  // A flat inventory cannot prove :not(), :is(), :has() or another functional
+  // selector unused. Keep every participating identity until tree-aware
+  // matching can prove which alternatives or exclusions apply.
+  if (hasFunction && protectedSelectors) {
+    for (const selector of result) protectedSelectors.add(selector);
   }
   return result;
 }
@@ -211,7 +223,10 @@ interface StyleTagRegion {
   closingEnd: number;
 }
 
-function collectStyleTags(str: string): Map<number, StyleTagRegion> {
+function collectStyleTags(
+  str: string,
+  rawTextRanges?: Map<number, number>,
+): Map<number, StyleTagRegion> {
   let tags = new Map<number, StyleTagRegion>();
   for (
     let cursor = str.indexOf("<");
@@ -234,7 +249,10 @@ function collectStyleTags(str: string): Map<number, StyleTagRegion> {
     let name = asciiLowerCase(tag[1]);
     if (name !== "style") {
       cursor = start - 1;
-      if (name === "plaintext") break;
+      if (name === "plaintext") {
+        rawTextRanges?.set(start, str.length);
+        break;
+      }
       if (
         [
           "script",
@@ -249,6 +267,7 @@ function collectStyleTags(str: string): Map<number, StyleTagRegion> {
         let closing = new RegExp(`</${name}(?=[\\t\\n\\f\\r />])`, "gi");
         closing.lastIndex = start;
         let close = closing.exec(str);
+        rawTextRanges?.set(start, close ? close.index : str.length);
         if (!close) break;
         cursor = htmlTagEndsAt(str, close.index);
         if (cursor === -1) break;
@@ -466,6 +485,7 @@ interface BodyAttribute {
   tokens?: HtmlAttributeToken[];
   empty: boolean;
   equalsAt: number;
+  hasPrecedingUnquotedAttribute: boolean;
   name: BodyAttributeName;
   nameEndsAt: number;
   nameStartsAt: number;
@@ -478,13 +498,20 @@ interface BodyAttribute {
 function collectBodyAttributes(
   str: string,
   backend: HeadsAndTailsObj[],
+  rawTextRanges?: Map<number, number>,
 ): Map<number, BodyAttribute> {
+  if (!rawTextRanges) {
+    rawTextRanges = new Map<number, number>();
+    collectStyleTags(str, rawTextRanges);
+  }
   const attributes = new Map<number, BodyAttribute>();
   const lowerStr = asciiLowerCase(str);
   const protectedPairs = backend.filter(
     ({ heads, tails }) => heads.length && tails.length,
   );
   let rawTag: "script" | "style" | null = null;
+  const rawTextStarts = rawTextRanges.keys();
+  let nextRawTextAt = rawTextStarts.next().value ?? str.length;
 
   const skipBackend = (index: number): number | null => {
     const pair = protectedPairs.find(({ heads }) =>
@@ -498,6 +525,21 @@ function collectBodyAttributes(
   };
 
   for (let i = 0; i < str.length; i++) {
+    if (i >= nextRawTextAt) {
+      // The HTML pre-pass records regions in source order. Avoid a map lookup
+      // for every character, including after the final raw-text region.
+      while (i > nextRawTextAt) {
+        nextRawTextAt = rawTextStarts.next().value ?? str.length;
+      }
+      if (i === nextRawTextAt) {
+        const rawTextEnd = rawTextRanges.get(i) as number;
+        nextRawTextAt = rawTextStarts.next().value ?? str.length;
+        if (rawTextEnd > i) {
+          i = rawTextEnd - 1;
+          continue;
+        }
+      }
+    }
     if (rawTag) {
       const closingAt = lowerStr.indexOf(`</${rawTag}`, i);
       if (closingAt === -1) {
@@ -543,6 +585,7 @@ function collectBodyAttributes(
       cursor += 1;
     }
     const tagName = lowerStr.slice(tagNameStartsAt, cursor);
+    let hasPrecedingUnquotedAttribute = false;
 
     while (cursor < str.length) {
       while (isHtmlAsciiWhitespace(str[cursor])) {
@@ -631,15 +674,9 @@ function collectBodyAttributes(
         cursor += 1;
       }
 
-      let valueEndsAt = cursor;
-      if (
-        name !== "style" &&
-        !quote &&
-        str[valueEndsAt - 1] === "/" &&
-        str[cursor] === ">"
-      ) {
-        valueEndsAt -= 1;
-      }
+      // A slash touching an unquoted value belongs to that value. Only a
+      // slash after whitespace can mark the end of a self-closing start tag.
+      const valueEndsAt = cursor;
       if (name === "class" || name === "id" || name === "style") {
         const rawValue =
           name === "style" ? "" : str.slice(valueStartsAt, valueEndsAt);
@@ -653,6 +690,7 @@ function collectBodyAttributes(
               : undefined,
           empty,
           equalsAt,
+          hasPrecedingUnquotedAttribute,
           name,
           nameEndsAt,
           nameStartsAt,
@@ -666,6 +704,7 @@ function collectBodyAttributes(
       if (quote && str[cursor] === quote) {
         cursor += 1;
       }
+      hasPrecedingUnquotedAttribute ||= !quote && !empty;
     }
 
     if (tagName === "script" || tagName === "style") {
@@ -1142,9 +1181,14 @@ function comb(str: string, opts?: InputOpts | null): Res {
   }
 
   let len = str.length;
-  const bodyAttributes = collectBodyAttributes(str, resolvedOpts.backend);
+  const rawTextRanges = new Map<number, number>();
+  const styleTags = collectStyleTags(str, rawTextRanges);
+  const bodyAttributes = collectBodyAttributes(
+    str,
+    resolvedOpts.backend,
+    rawTextRanges,
+  );
   const nextClosingBracketAt = collectNextClosingBrackets(str);
-  const styleTags = collectStyleTags(str);
   const cssRegions = new Map<number, CssRegion>();
   let activeCssRegion: CssRegion | undefined;
   const cssFlagsAt = (index: number): number => {
@@ -1337,8 +1381,26 @@ function comb(str: string, opts?: InputOpts | null): Res {
     //                              V
 
     totalCounter += len;
+    const rawTextStarts = rawTextRanges.keys();
+    let nextRawTextAt = rawTextStarts.next().value ?? len;
 
     stepOuter: for (let i = 0; i < len; i++) {
+      if (i >= nextRawTextAt) {
+        while (i > nextRawTextAt) {
+          nextRawTextAt = rawTextStarts.next().value ?? len;
+        }
+        if (i === nextRawTextAt) {
+          const rawTextEnd = rawTextRanges.get(i) as number;
+          nextRawTextAt = rawTextStarts.next().value ?? len;
+          if (rawTextEnd > i) {
+            // HTML raw-text and RCDATA contents cannot introduce tags,
+            // attributes or HTML comments. Preserve their original contents.
+            i = rawTextEnd - 1;
+            whitespaceStartedAt = null;
+            continue;
+          }
+        }
+      }
       const cssFlags =
         activeCssRegion && i >= activeCssRegion.start && i < activeCssRegion.end
           ? activeCssRegion.flags[i - activeCssRegion.start]
@@ -1484,7 +1546,6 @@ function comb(str: string, opts?: InputOpts | null): Res {
           )}`,
         );
       if (
-        stateWithinBody &&
         // it might be some piece of the comment, for example imagine
         // <a style="color: red;/*">z<id style="*/padding-top: 10px;">
         //                        ^            ^                    ^
@@ -1515,7 +1576,6 @@ function comb(str: string, opts?: InputOpts | null): Res {
       //          ^
       //        this
       if (
-        stateWithinBody &&
         commentStartedAt === null &&
         stateWithinBodyInlineStyle === null &&
         bodyAttribute?.name === "style"
@@ -2692,7 +2752,6 @@ function comb(str: string, opts?: InputOpts | null): Res {
       // ================
       if (
         !doNothing &&
-        stateWithinBody &&
         !stateWithinStyleTag &&
         bodyAttribute?.name === "style"
       ) {
@@ -2707,7 +2766,6 @@ function comb(str: string, opts?: InputOpts | null): Res {
       // Template-bearing values continue through the existing backend path.
       if (
         !doNothing &&
-        stateWithinBody &&
         !stateWithinStyleTag &&
         !currentlyWithinQuotes &&
         bodyAttribute?.tokens
@@ -2748,9 +2806,11 @@ function comb(str: string, opts?: InputOpts | null): Res {
             finalIndexesToDelete.push(
               range[0],
               range[1],
-              str[range[0] - 1]?.trim() &&
+              (str[range[0] - 1]?.trim() &&
                 str[range[1]]?.trim() &&
-                !"/>".includes(str[range[1]])
+                !"/>".includes(str[range[1]])) ||
+                (str[range[1]] === "/" &&
+                  attribute.hasPrecedingUnquotedAttribute)
                 ? " "
                 : "",
             );
@@ -2850,7 +2910,6 @@ function comb(str: string, opts?: InputOpts | null): Res {
       // ================
       if (
         !doNothing &&
-        stateWithinBody &&
         !stateWithinStyleTag &&
         !currentlyWithinQuotes &&
         bodyAttribute?.name === "class"
@@ -3031,7 +3090,6 @@ function comb(str: string, opts?: InputOpts | null): Res {
       // ================
       if (
         !doNothing &&
-        stateWithinBody &&
         !stateWithinStyleTag &&
         !currentlyWithinQuotes &&
         bodyAttribute?.name === "id"
@@ -4652,8 +4710,9 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
           )}`,
         );
 
-      const canonicalSelectorsByHeadChunk = headSelectorsArr.map(
-        extractCanonicalSelectors,
+      const protectedSelectors = new Set<string>();
+      const canonicalSelectorsByHeadChunk = headSelectorsArr.map((chunk) =>
+        extractCanonicalSelectors(chunk, protectedSelectors),
       );
       canonicalSelectorsByHeadChunk.forEach((selectors) => {
         selectors.forEach((selector) => {
@@ -4735,6 +4794,8 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
         // intentional loose comparison !=, that's existy():
         if (
           headSelectorsArr[y] != null &&
+          (!protectedSelectors.size ||
+            !temp.some((selector) => protectedSelectors.has(selector))) &&
           !temp.every((el) => allClassesAndIdsWithinBodySet.has(el))
         ) {
           DEV &&
@@ -4829,6 +4890,11 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
           intersection(deletedFromHeadArr, bodyCssToDelete),
         ),
       );
+      if (protectedSelectors.size) {
+        headCssToDelete = headCssToDelete.filter(
+          (selector) => !protectedSelectors.has(selector),
+        );
+      }
       headCssToDeleteSet = new Set(headCssToDelete);
       DEV &&
         console.log(

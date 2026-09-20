@@ -336,4 +336,41 @@ test("21 - empty nested wrappers collapse while ordinary block data remains", ()
   );
 });
 
+test("22 - functional selectors retain alternatives and exclusions conservatively", () => {
+  for (const selector of [
+    ":is(.keep,.absent)",
+    ":where(.keep,.absent)",
+    ".keep:not(.absent)",
+    ".keep:has(.absent)",
+    ".keep:nth-child(2n of .absent,.keep)",
+  ]) {
+    const source = `${selector}{color:red}`;
+    const actual = comb(html(`${source}.unused{color:blue}`, "keep"));
+    equal(actual.result, html(source, "keep"), "22.01");
+    equal(actual.allInHead, [".absent", ".keep", ".unused"], "22.02");
+    equal(actual.deletedFromHead, [".unused"], "22.03");
+    equal(actual.deletedFromBody, [], "22.04");
+  }
+});
+
+test("23 - uglification keeps names synchronized inside functional selectors", () => {
+  const actual = comb(
+    html(":is(.newsletter,.unavailable){color:red}", "newsletter"),
+    { uglify: true },
+  );
+  const newsletter = actual.log.uglified.find(
+    ([name]) => name === ".newsletter",
+  )[1];
+  const unavailable = actual.log.uglified.find(
+    ([name]) => name === ".unavailable",
+  )[1];
+  equal(
+    actual.result,
+    html(`:is(${newsletter},${unavailable}){color:red}`, newsletter.slice(1)),
+    "23.01",
+  );
+  equal(actual.deletedFromHead, [], "23.02");
+  equal(actual.deletedFromBody, [], "23.03");
+});
+
 test.run();

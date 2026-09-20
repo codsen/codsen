@@ -23,16 +23,16 @@ test("02 - pair of tags, spaced", () => {
   equal(comb(source).result, intended, "02.01");
 });
 
-test("03 - self-closing tag, tight", () => {
+test("03 - removes the slash belonging to an unquoted class value", () => {
   let source = "<body><br style=padding:0;margin:10px class=test/>News</body>";
-  let intended = "<body><br style=padding:0;margin:10px/>News</body>";
+  let intended = "<body><br style=padding:0;margin:10px>News</body>";
 
   equal(comb(source).result, intended, "03.01");
 });
 
 test("04 - self-closing tag, spaced", () => {
   let source = "<body><br style=padding:0;margin:10px class=test />News</body>";
-  let intended = "<body><br style=padding:0;margin:10px/>News</body>";
+  let intended = "<body><br style=padding:0;margin:10px />News</body>";
 
   equal(comb(source).result, intended, "04.01");
 });

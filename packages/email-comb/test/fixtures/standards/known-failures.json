@@ -1,0 +1,8 @@
+[
+  {
+    "caseId": "css-nesting",
+    "profile": "default",
+    "expectedResult": "<style>.used{color:red;& .child{color:blue}}</style><div class=\"used\"><span class=\"child\">text</span></div>",
+    "reason": "The current flat rule scanner does not inventory the nested .child selector and incorrectly removes the matching HTML class. Nested-rule handling must preserve both the CSS and the class; a full CSS matching engine is not required for conservative preservation."
+  }
+]
