@@ -205,8 +205,8 @@ export const interdeps = [
   },
   {
     "name": "email-comb",
-    "tarballSizeBytes": 77548,
-    "unpackedSizeBytes": 241992,
+    "tarballSizeBytes": 79683,
+    "unpackedSizeBytes": 247861,
     "imports": [
       "array-pull-all-with-glob",
       "codsen-utils",
