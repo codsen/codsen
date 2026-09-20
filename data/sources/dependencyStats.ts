@@ -42,7 +42,6 @@ export const dependencyStats: DependencyStats = {
     "semver-compare",
     "sort-keys",
     "sort-package-json",
-    "unicode-segmenter",
     "unified",
     "unist-util-visit",
     "vfile"
@@ -58,7 +57,6 @@ export const dependencyStats: DependencyStats = {
     "check-types-mini",
     "codsen-format-diagnostic-value",
     "codsen-glob",
-    "codsen-parser",
     "codsen-utils",
     "csv-sort",
     "csv-split-easy",
@@ -120,7 +118,6 @@ export const dependencyStats: DependencyStats = {
     "edit-package-json",
     "email-all-chars-within-ascii-cli",
     "generate-atomic-css-cli",
-    "html-table-patcher",
     "js-row-num-cli",
     "json-comb",
     "json-comb-core",
@@ -129,7 +126,6 @@ export const dependencyStats: DependencyStats = {
     "lerna-clean-changelogs-cli",
     "rehype-responsive-tables",
     "remark-typography",
-    "string-convert-indexes",
     "update-versions"
   ],
   "dependencies": {
@@ -144,12 +140,11 @@ export const dependencyStats: DependencyStats = {
     "arrayiffy-if-string": 7,
     "ast-compare": 2,
     "ast-get-values-by-key": 1,
-    "ast-monkey": 5,
+    "ast-monkey": 3,
     "check-types-mini": 1,
     "codsen-format-diagnostic-value": 2,
     "codsen-glob": 8,
-    "codsen-parser": 1,
-    "codsen-utils": 69,
+    "codsen-utils": 65,
     "csv-sort": 1,
     "csv-split-easy": 1,
     "currency.js": 1,
@@ -175,13 +170,13 @@ export const dependencyStats: DependencyStats = {
     "p-progress": 1,
     "package-json": 1,
     "picomatch": 1,
-    "ranges-apply": 14,
+    "ranges-apply": 12,
     "ranges-crop": 2,
     "ranges-invert": 2,
     "ranges-is-index-within": 1,
     "ranges-merge": 3,
     "ranges-process-outside": 1,
-    "ranges-push": 11,
+    "ranges-push": 10,
     "ranges-sort": 2,
     "regex-empty-conditional-comments": 1,
     "semver-compare": 1,
@@ -207,7 +202,6 @@ export const dependencyStats: DependencyStats = {
     "string-typo-match": 2,
     "string-uglify": 1,
     "string-unfancy": 1,
-    "unicode-segmenter": 1,
     "unified": 2,
     "unist-util-visit": 1,
     "util-array-object-or-both": 1,
@@ -218,18 +212,12 @@ export const dependencyStats: DependencyStats = {
     "@types/picomatch": 1,
     "@types/semver-compare": 1,
     "ast-monkey": 2,
-    "ast-monkey-util": 1,
     "codsen-glob": 1,
-    "color-shorthand-hex-to-six-digit": 1,
-    "is-html-attribute-closing": 1,
-    "is-html-tag-opening": 1,
     "p-map": 5,
     "ranges-apply": 2,
     "ranges-invert": 1,
     "rehype": 1,
     "rehype-parse": 1,
-    "string-find-heads-tails": 1,
-    "string-find-malformed": 1,
     "string-strip-html": 1,
     "test-mixer": 5
   },
@@ -258,7 +246,6 @@ export const dependencyStats: DependencyStats = {
   ],
   "noThirdPartyDependencies": [
     "all-named-html-entities",
-    "array-group-str-omit-num-char",
     "array-includes-with-glob",
     "array-pull-all-with-glob",
     "arrayiffy-if-string",
@@ -275,7 +262,6 @@ export const dependencyStats: DependencyStats = {
     "codsen-utils",
     "color-shorthand-hex-to-six-digit",
     "csv-split-easy",
-    "detect-is-it-html-or-xhtml",
     "email-all-chars-within-ascii",
     "email-comb",
     "extract-search-index",
@@ -318,7 +304,6 @@ export const dependencyStats: DependencyStats = {
     "string-collapse-white-space",
     "string-dashes",
     "string-extract-class-names",
-    "string-extract-sass-vars",
     "string-find-heads-tails",
     "string-find-malformed",
     "string-fix-broken-named-entities",
@@ -329,7 +314,6 @@ export const dependencyStats: DependencyStats = {
     "string-remove-duplicate-heads-tails",
     "string-remove-thousand-separators",
     "string-remove-widows",
-    "string-split-by-whitespace",
     "string-strip-html",
     "string-trim-spaces-only",
     "string-typo-match",
@@ -347,8 +331,7 @@ export const dependencyStats: DependencyStats = {
     "detergent": "ansi-regex",
     "generate-atomic-css-cli": "picomatch",
     "js-row-num-cli": "picomatch",
-    "json-variables": "object-path",
-    "string-convert-indexes": "unicode-segmenter"
+    "json-variables": "object-path"
   },
   "top10ExternalDeps": [
     {
@@ -384,16 +367,16 @@ export const dependencyStats: DependencyStats = {
   ],
   "top10OwnDeps": [
     {
-      "codsen-utils": 69
+      "codsen-utils": 65
     },
     {
       "string-left-right": 15
     },
     {
-      "ranges-apply": 14
+      "ranges-apply": 12
     },
     {
-      "ranges-push": 11
+      "ranges-push": 10
     },
     {
       "codsen-glob": 8
@@ -408,7 +391,7 @@ export const dependencyStats: DependencyStats = {
       "html-entity-codec": 6
     },
     {
-      "ast-monkey": 5
+      "ast-monkey": 3
     },
     {
       "ranges-merge": 3

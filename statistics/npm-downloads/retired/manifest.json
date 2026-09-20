@@ -27,6 +27,21 @@
       },
       "total": 22240
     },
+    "array-group-str-omit-num-char": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2018-10-11",
+      "availability": "available",
+      "file": "packages/array-group-str-omit-num-char.ndjson",
+      "sha256": "f798e09a89a98144d607586c47c6ee2bba70f98866c6c4c514943bd0143f1772",
+      "coverage": {
+        "start": "2018-10-11",
+        "end": "2026-09-18",
+        "days": 2900,
+        "missing": []
+      },
+      "total": 49296
+    },
     "ast-delete-object": {
       "status": "deprecated",
       "includedInPortfolio": false,
@@ -167,6 +182,21 @@
       },
       "total": 46410
     },
+    "detect-is-it-html-or-xhtml": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2016-11-24",
+      "availability": "available",
+      "file": "packages/detect-is-it-html-or-xhtml.ndjson",
+      "sha256": "508a50af729d8465a0459ca2de5d639173439734831f2c1ae57855fc1af38a39",
+      "coverage": {
+        "start": "2016-11-24",
+        "end": "2026-09-18",
+        "days": 3586,
+        "missing": []
+      },
+      "total": 50132
+    },
     "email-remove-unused-css": {
       "status": "deprecated",
       "includedInPortfolio": false,
@@ -241,6 +271,21 @@
         "missing": []
       },
       "total": 46428
+    },
+    "html-table-patcher": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2018-08-13",
+      "availability": "available",
+      "file": "packages/html-table-patcher.ndjson",
+      "sha256": "04fea5b9701b997aeec678714b837a824283f69bd6ab17978624b22fde266ae2",
+      "coverage": {
+        "start": "2018-08-13",
+        "end": "2026-09-18",
+        "days": 2959,
+        "missing": []
+      },
+      "total": 60204
     },
     "posthtml-ast-compare": {
       "status": "deprecated",
@@ -497,6 +542,36 @@
       },
       "total": 42368
     },
+    "string-convert-indexes": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2017-12-25",
+      "availability": "available",
+      "file": "packages/string-convert-indexes.ndjson",
+      "sha256": "9045c3b013d1553e269c22d38422b7141d6d98efbfeaa424ce8b96610bf191f4",
+      "coverage": {
+        "start": "2017-12-25",
+        "end": "2026-09-18",
+        "days": 3190,
+        "missing": []
+      },
+      "total": 48178
+    },
+    "string-extract-sass-vars": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2020-04-20",
+      "availability": "available",
+      "file": "packages/string-extract-sass-vars.ndjson",
+      "sha256": "884cad98d0b4024d8e05852c6219e5619355bb5e1cba287ac4d7ea54748c1925",
+      "coverage": {
+        "start": "2020-04-20",
+        "end": "2026-09-18",
+        "days": 2343,
+        "missing": []
+      },
+      "total": 44921
+    },
     "string-replace-slices-array": {
       "status": "deprecated",
       "includedInPortfolio": false,
@@ -536,9 +611,35 @@
         ]
       },
       "total": 87719
+    },
+    "string-split-by-whitespace": {
+      "status": "deprecated",
+      "includedInPortfolio": false,
+      "firstPublishedDay": "2018-01-11",
+      "availability": "available",
+      "file": "packages/string-split-by-whitespace.ndjson",
+      "sha256": "7b9f8e6d320f4f64ac3330a232a33933d81747550d514be09ec51a9701eb90a0",
+      "coverage": {
+        "start": "2018-01-11",
+        "end": "2026-09-18",
+        "days": 3173,
+        "missing": []
+      },
+      "total": 76353
     }
   },
-  "anomalies": [],
-  "revision": "c82ff87d217eb219c37a29d4b5ef951641e36de56e44b2bddaa2956bc26694a3",
-  "updatedAt": "2026-09-19T23:40:36.764Z"
+  "anomalies": [
+    {
+      "day": "2023-06-17",
+      "kind": "suspected-shared-zero",
+      "packages": [
+        "array-group-str-omit-num-char",
+        "html-img-alt",
+        "ranges-iterate",
+        "string-convert-indexes"
+      ]
+    }
+  ],
+  "revision": "88468912b2456fa5ea61dd1deca33e64346047a8ca23e63abdcc63f7c71a2087",
+  "updatedAt": "2026-09-20T09:32:13.080Z"
 }

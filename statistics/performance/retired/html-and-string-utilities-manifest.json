@@ -1,0 +1,1010 @@
+{
+  "schemaVersion": 1,
+  "frozenRevision": "f462c7d297b65900e8315933daa3593b393f5046",
+  "repository": "https://github.com/codsen/codsen",
+  "sourceTree": "https://github.com/codsen/codsen/tree/f462c7d297b65900e8315933daa3593b393f5046",
+  "reason": "html-table-patcher, detect-is-it-html-or-xhtml, array-group-str-omit-num-char, string-convert-indexes, string-split-by-whitespace, and string-extract-sass-vars retired from active maintenance; their original performance evidence is retained independently of other workloads.",
+  "scoreFormula": "target operations per second * perf-ref canonical score / reference operations per second",
+  "reference": {
+    "name": "perf-ref",
+    "version": "1.0.5",
+    "canonicalScore": 183
+  },
+  "harness": [
+    {
+      "sourcePath": "ops/scripts/perf.js",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/ops/scripts/perf.js",
+      "sha256": "cc35acc89306f7882209073fcb990cd491bfbb3ca1584387476a0eb60cdad974"
+    },
+    {
+      "sourcePath": "ops/scripts/historicalJson.js",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/ops/scripts/historicalJson.js",
+      "sha256": "ba852ebd6c9ad68efb2d2e6f654e719e453a230e4452227737765b8c6c3fbf35"
+    },
+    {
+      "sourcePath": "ops/helpers/perfMeasurement.js",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/ops/helpers/perfMeasurement.js",
+      "sha256": "4828a27c0f154652bc2c5163f82d32a7802353f0acc6b06b38bac5c7d6bac3b9"
+    },
+    {
+      "sourcePath": "ops/helpers/perfPolicy.js",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/ops/helpers/perfPolicy.js",
+      "sha256": "0718f71445b3dbe41c1c79720c6df1542be94ed41f429797c68cb890d22e156e"
+    },
+    {
+      "sourcePath": "ops/perf-policy.json",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/ops/perf-policy.json",
+      "sha256": "30d19fe18a83767eda950a65b2423e172f73bd62f36f06288825db49716d071e"
+    },
+    {
+      "sourcePath": "package-lock.json",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/package-lock.json",
+      "sha256": "c805a7a3a1b28b691876b24da8ba5b67a362910c937c8f0bfa5304fc250a6354"
+    },
+    {
+      "sourcePath": ".agents/PERFORMANCE.md",
+      "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/.agents/PERFORMANCE.md",
+      "sha256": "0da061b126d186c5cd65446af0d7715ca2e8969e91a4e5a767375a2e638a44d4"
+    }
+  ],
+  "packages": {
+    "array-group-str-omit-num-char": {
+      "version": "6.2.5",
+      "release": {
+        "tag": "array-group-str-omit-num-char@6.2.5",
+        "revision": "35b0d4e396ad9dcd091561b7c8c3153cb3647a8b",
+        "sourceTree": "https://github.com/codsen/codsen/tree/35b0d4e396ad9dcd091561b7c8c3153cb3647a8b/packages/array-group-str-omit-num-char"
+      },
+      "recordedVersions": [
+        {
+          "version": "5.0.5",
+          "score": 222468,
+          "tag": "array-group-str-omit-num-char@5.0.5",
+          "revision": "351150dca7847d274a33f18abe4e5652d1b3f626",
+          "sourceTree": "https://github.com/codsen/codsen/tree/351150dca7847d274a33f18abe4e5652d1b3f626/packages/array-group-str-omit-num-char"
+        },
+        {
+          "version": "5.0.7",
+          "score": 353904,
+          "tag": "array-group-str-omit-num-char@5.0.7",
+          "revision": "72a1cef2b0c2d3668b95c56958989ddac8dcc1ac",
+          "sourceTree": "https://github.com/codsen/codsen/tree/72a1cef2b0c2d3668b95c56958989ddac8dcc1ac/packages/array-group-str-omit-num-char"
+        },
+        {
+          "version": "5.0.8",
+          "score": 201885,
+          "tag": "array-group-str-omit-num-char@5.0.8",
+          "revision": null,
+          "sourceTree": null,
+          "provenance": "Release tag unavailable in the local Git history; no exact release revision asserted."
+        },
+        {
+          "version": "5.0.9",
+          "score": 204035,
+          "tag": "array-group-str-omit-num-char@5.0.9",
+          "revision": null,
+          "sourceTree": null,
+          "provenance": "Release tag unavailable in the local Git history; no exact release revision asserted."
+        },
+        {
+          "version": "5.0.10",
+          "score": 207261,
+          "tag": "array-group-str-omit-num-char@5.0.10",
+          "revision": "c94152083d5137792b9722c2db754f6a2da31129",
+          "sourceTree": "https://github.com/codsen/codsen/tree/c94152083d5137792b9722c2db754f6a2da31129/packages/array-group-str-omit-num-char"
+        },
+        {
+          "version": "5.0.11",
+          "score": 191112,
+          "tag": "array-group-str-omit-num-char@5.0.11",
+          "revision": "29c26a9ede83ba8fceb1b7bf69f55d94cbf491d0",
+          "sourceTree": "https://github.com/codsen/codsen/tree/29c26a9ede83ba8fceb1b7bf69f55d94cbf491d0/packages/array-group-str-omit-num-char"
+        },
+        {
+          "version": "5.0.12",
+          "score": 195814,
+          "tag": "array-group-str-omit-num-char@5.0.12",
+          "revision": "f804ea7b045b65d5ecee135e164c0b889e65437f",
+          "sourceTree": "https://github.com/codsen/codsen/tree/f804ea7b045b65d5ecee135e164c0b889e65437f/packages/array-group-str-omit-num-char"
+        },
+        {
+          "version": "5.1.0",
+          "score": 156027,
+          "tag": "array-group-str-omit-num-char@5.1.0",
+          "revision": "8248e895aa1d81db70a836deb979a172593ba394",
+          "sourceTree": "https://github.com/codsen/codsen/tree/8248e895aa1d81db70a836deb979a172593ba394/packages/array-group-str-omit-num-char"
+        },
+        {
+          "version": "5.1.1",
+          "score": 260647,
+          "tag": "array-group-str-omit-num-char@5.1.1",
+          "revision": "8decd15a4bc35ccd963f5673313c60f71ee3be20",
+          "sourceTree": "https://github.com/codsen/codsen/tree/8decd15a4bc35ccd963f5673313c60f71ee3be20/packages/array-group-str-omit-num-char"
+        },
+        {
+          "version": "5.1.2",
+          "score": 169471,
+          "tag": "array-group-str-omit-num-char@5.1.2",
+          "revision": "f977a655d9a2d97b5c9cdf8a2ab58c09b00479b0",
+          "sourceTree": "https://github.com/codsen/codsen/tree/f977a655d9a2d97b5c9cdf8a2ab58c09b00479b0/packages/array-group-str-omit-num-char"
+        },
+        {
+          "version": "5.1.3",
+          "score": 185276,
+          "tag": "array-group-str-omit-num-char@5.1.3",
+          "revision": "411b10a3851ddac57a7a1d8ac900efa363d79819",
+          "sourceTree": "https://github.com/codsen/codsen/tree/411b10a3851ddac57a7a1d8ac900efa363d79819/packages/array-group-str-omit-num-char"
+        },
+        {
+          "version": "5.1.4",
+          "score": 254129,
+          "tag": "array-group-str-omit-num-char@5.1.4",
+          "revision": "e31bdbb384a317055adb2a8db141d568727076bf",
+          "sourceTree": "https://github.com/codsen/codsen/tree/e31bdbb384a317055adb2a8db141d568727076bf/packages/array-group-str-omit-num-char"
+        },
+        {
+          "version": "5.1.5",
+          "score": 198789,
+          "tag": "array-group-str-omit-num-char@5.1.5",
+          "revision": "3b2e16d2bba5743b966d2942a9aab5d9a77e5ab3",
+          "sourceTree": "https://github.com/codsen/codsen/tree/3b2e16d2bba5743b966d2942a9aab5d9a77e5ab3/packages/array-group-str-omit-num-char"
+        },
+        {
+          "version": "5.1.6",
+          "score": 263351,
+          "tag": "array-group-str-omit-num-char@5.1.6",
+          "revision": "e3eb24d6a6dff33e55eac100da22b912b7416211",
+          "sourceTree": "https://github.com/codsen/codsen/tree/e3eb24d6a6dff33e55eac100da22b912b7416211/packages/array-group-str-omit-num-char"
+        },
+        {
+          "version": "6.0.30",
+          "score": 135257,
+          "tag": "array-group-str-omit-num-char@6.0.30",
+          "revision": "2d8c4e185c6aaef386c86dd3f0cc1967cfffea43",
+          "sourceTree": "https://github.com/codsen/codsen/tree/2d8c4e185c6aaef386c86dd3f0cc1967cfffea43/packages/array-group-str-omit-num-char"
+        },
+        {
+          "version": "6.1.3",
+          "score": 178435,
+          "tag": "array-group-str-omit-num-char@6.1.3",
+          "revision": "ae6dc7ea79a0aebd5c7f7b7d644f39e148478568",
+          "sourceTree": "https://github.com/codsen/codsen/tree/ae6dc7ea79a0aebd5c7f7b7d644f39e148478568/packages/array-group-str-omit-num-char"
+        },
+        {
+          "version": "6.2.1",
+          "score": 190725,
+          "tag": "array-group-str-omit-num-char@6.2.1",
+          "revision": "4aed874fbcfc638f6ecaa682374ea523a916b9c1",
+          "sourceTree": "https://github.com/codsen/codsen/tree/4aed874fbcfc638f6ecaa682374ea523a916b9c1/packages/array-group-str-omit-num-char"
+        },
+        {
+          "version": "6.2.4",
+          "score": 208270,
+          "tag": "array-group-str-omit-num-char@6.2.4",
+          "revision": "4874b31b9640840e369e86a1e54b79428ea5d937",
+          "sourceTree": "https://github.com/codsen/codsen/tree/4874b31b9640840e369e86a1e54b79428ea5d937/packages/array-group-str-omit-num-char"
+        }
+      ],
+      "evidence": [
+        {
+          "archivePath": "array-group-str-omit-num-char/original-workload/check.js.txt",
+          "sourcePath": "packages/array-group-str-omit-num-char/perf/check.js",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/array-group-str-omit-num-char/perf/check.js",
+          "sha256": "d4787fd70ae234e4c67f2d60c63af10cb51e168f1b59b235cb9f9eaf5b317956"
+        },
+        {
+          "archivePath": "array-group-str-omit-num-char/historical.json.txt",
+          "sourcePath": "packages/array-group-str-omit-num-char/perf/historical.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/array-group-str-omit-num-char/perf/historical.json",
+          "sha256": "03ff0dfc5399515e5ec6a7428b145c541fce8f33bda002c35d145a1cd1b7e64e"
+        },
+        {
+          "archivePath": "array-group-str-omit-num-char/CHANGELOG.md",
+          "sourcePath": "packages/array-group-str-omit-num-char/CHANGELOG.md",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/array-group-str-omit-num-char/CHANGELOG.md",
+          "sha256": "7dec9c809806c6e1f047987c4bb5b46c20fbe49f34778e6e82fcbf21463ed0b8"
+        },
+        {
+          "archivePath": "array-group-str-omit-num-char/package.json.txt",
+          "sourcePath": "packages/array-group-str-omit-num-char/package.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/array-group-str-omit-num-char/package.json",
+          "sha256": "653989737369ae15212ed3ea4816e84cc85e4fbb4c4f5fd8618ed9de2da83fa9"
+        },
+        {
+          "archivePath": "array-group-str-omit-num-char/original-workload/main.ts.txt",
+          "sourcePath": "packages/array-group-str-omit-num-char/src/main.ts",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/array-group-str-omit-num-char/src/main.ts",
+          "sha256": "42df48d0012d7f0a390a920033d66e38b2375fb81d7c507baa607373a7c7cf14"
+        },
+        {
+          "archivePath": "array-group-str-omit-num-char/LICENSE",
+          "sourcePath": "packages/array-group-str-omit-num-char/LICENSE",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/array-group-str-omit-num-char/LICENSE",
+          "sha256": "44c5e27070432ee1282b08ee45677ff56c86eb7cde22284dbcc8655b44fc7484"
+        }
+      ]
+    },
+    "detect-is-it-html-or-xhtml": {
+      "version": "6.2.4",
+      "release": {
+        "tag": "detect-is-it-html-or-xhtml@6.2.4",
+        "revision": "35b0d4e396ad9dcd091561b7c8c3153cb3647a8b",
+        "sourceTree": "https://github.com/codsen/codsen/tree/35b0d4e396ad9dcd091561b7c8c3153cb3647a8b/packages/detect-is-it-html-or-xhtml"
+      },
+      "recordedVersions": [
+        {
+          "version": "5.0.5",
+          "score": 3784190,
+          "tag": "detect-is-it-html-or-xhtml@5.0.5",
+          "revision": "351150dca7847d274a33f18abe4e5652d1b3f626",
+          "sourceTree": "https://github.com/codsen/codsen/tree/351150dca7847d274a33f18abe4e5652d1b3f626/packages/detect-is-it-html-or-xhtml"
+        },
+        {
+          "version": "5.0.7",
+          "score": 5973495,
+          "tag": "detect-is-it-html-or-xhtml@5.0.7",
+          "revision": "72a1cef2b0c2d3668b95c56958989ddac8dcc1ac",
+          "sourceTree": "https://github.com/codsen/codsen/tree/72a1cef2b0c2d3668b95c56958989ddac8dcc1ac/packages/detect-is-it-html-or-xhtml"
+        },
+        {
+          "version": "5.0.8",
+          "score": 3977108,
+          "tag": "detect-is-it-html-or-xhtml@5.0.8",
+          "revision": null,
+          "sourceTree": null,
+          "provenance": "Release tag unavailable in the local Git history; no exact release revision asserted."
+        },
+        {
+          "version": "5.0.9",
+          "score": 4430618,
+          "tag": "detect-is-it-html-or-xhtml@5.0.9",
+          "revision": null,
+          "sourceTree": null,
+          "provenance": "Release tag unavailable in the local Git history; no exact release revision asserted."
+        },
+        {
+          "version": "5.0.10",
+          "score": 3013329,
+          "tag": "detect-is-it-html-or-xhtml@5.0.10",
+          "revision": "c94152083d5137792b9722c2db754f6a2da31129",
+          "sourceTree": "https://github.com/codsen/codsen/tree/c94152083d5137792b9722c2db754f6a2da31129/packages/detect-is-it-html-or-xhtml"
+        },
+        {
+          "version": "5.0.11",
+          "score": 2289152,
+          "tag": "detect-is-it-html-or-xhtml@5.0.11",
+          "revision": "29c26a9ede83ba8fceb1b7bf69f55d94cbf491d0",
+          "sourceTree": "https://github.com/codsen/codsen/tree/29c26a9ede83ba8fceb1b7bf69f55d94cbf491d0/packages/detect-is-it-html-or-xhtml"
+        },
+        {
+          "version": "5.0.12",
+          "score": 2740302,
+          "tag": "detect-is-it-html-or-xhtml@5.0.12",
+          "revision": "f804ea7b045b65d5ecee135e164c0b889e65437f",
+          "sourceTree": "https://github.com/codsen/codsen/tree/f804ea7b045b65d5ecee135e164c0b889e65437f/packages/detect-is-it-html-or-xhtml"
+        },
+        {
+          "version": "5.0.13",
+          "score": 2496918,
+          "tag": "detect-is-it-html-or-xhtml@5.0.13",
+          "revision": "411b10a3851ddac57a7a1d8ac900efa363d79819",
+          "sourceTree": "https://github.com/codsen/codsen/tree/411b10a3851ddac57a7a1d8ac900efa363d79819/packages/detect-is-it-html-or-xhtml"
+        },
+        {
+          "version": "5.0.14",
+          "score": 2555865,
+          "tag": "detect-is-it-html-or-xhtml@5.0.14",
+          "revision": "18efd872c2473587b08da149c3a9c7898c378de7",
+          "sourceTree": "https://github.com/codsen/codsen/tree/18efd872c2473587b08da149c3a9c7898c378de7/packages/detect-is-it-html-or-xhtml"
+        },
+        {
+          "version": "5.0.15",
+          "score": 3612573,
+          "tag": "detect-is-it-html-or-xhtml@5.0.15",
+          "revision": "3b2e16d2bba5743b966d2942a9aab5d9a77e5ab3",
+          "sourceTree": "https://github.com/codsen/codsen/tree/3b2e16d2bba5743b966d2942a9aab5d9a77e5ab3/packages/detect-is-it-html-or-xhtml"
+        },
+        {
+          "version": "6.0.23",
+          "score": 2374844,
+          "tag": "detect-is-it-html-or-xhtml@6.0.23",
+          "revision": "2d8c4e185c6aaef386c86dd3f0cc1967cfffea43",
+          "sourceTree": "https://github.com/codsen/codsen/tree/2d8c4e185c6aaef386c86dd3f0cc1967cfffea43/packages/detect-is-it-html-or-xhtml"
+        },
+        {
+          "version": "6.1.3",
+          "score": 2737251,
+          "tag": "detect-is-it-html-or-xhtml@6.1.3",
+          "revision": "ae6dc7ea79a0aebd5c7f7b7d644f39e148478568",
+          "sourceTree": "https://github.com/codsen/codsen/tree/ae6dc7ea79a0aebd5c7f7b7d644f39e148478568/packages/detect-is-it-html-or-xhtml"
+        },
+        {
+          "version": "6.2.3",
+          "score": 2714747,
+          "tag": "detect-is-it-html-or-xhtml@6.2.3",
+          "revision": "4874b31b9640840e369e86a1e54b79428ea5d937",
+          "sourceTree": "https://github.com/codsen/codsen/tree/4874b31b9640840e369e86a1e54b79428ea5d937/packages/detect-is-it-html-or-xhtml"
+        }
+      ],
+      "evidence": [
+        {
+          "archivePath": "detect-is-it-html-or-xhtml/original-workload/check.js.txt",
+          "sourcePath": "packages/detect-is-it-html-or-xhtml/perf/check.js",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/detect-is-it-html-or-xhtml/perf/check.js",
+          "sha256": "7cb74484e97424a6e17d10f9fbcd430481b9705aa8b350ecf943312265447b56"
+        },
+        {
+          "archivePath": "detect-is-it-html-or-xhtml/historical.json.txt",
+          "sourcePath": "packages/detect-is-it-html-or-xhtml/perf/historical.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/detect-is-it-html-or-xhtml/perf/historical.json",
+          "sha256": "eb721f0d4c5356f48a809ca186573696c73d17b52d916e9d8596b32a550b20a6"
+        },
+        {
+          "archivePath": "detect-is-it-html-or-xhtml/CHANGELOG.md",
+          "sourcePath": "packages/detect-is-it-html-or-xhtml/CHANGELOG.md",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/detect-is-it-html-or-xhtml/CHANGELOG.md",
+          "sha256": "d537c0ad9cecbe88bcf5eb6fb7bdf2b8f6d0a67cf10a7859001da5e32d07fc1a"
+        },
+        {
+          "archivePath": "detect-is-it-html-or-xhtml/package.json.txt",
+          "sourcePath": "packages/detect-is-it-html-or-xhtml/package.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/detect-is-it-html-or-xhtml/package.json",
+          "sha256": "3e55d6e6ea4a207def59ff7b2b2525aa053052f7b8f55f3bd7b3f5771f8c64f9"
+        },
+        {
+          "archivePath": "detect-is-it-html-or-xhtml/original-workload/main.ts.txt",
+          "sourcePath": "packages/detect-is-it-html-or-xhtml/src/main.ts",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/detect-is-it-html-or-xhtml/src/main.ts",
+          "sha256": "29a5b699e08ac4ca85f5203ab00106618f5aada9ce35700f5dd889fe2664aa26"
+        },
+        {
+          "archivePath": "detect-is-it-html-or-xhtml/LICENSE",
+          "sourcePath": "packages/detect-is-it-html-or-xhtml/LICENSE",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/detect-is-it-html-or-xhtml/LICENSE",
+          "sha256": "44c5e27070432ee1282b08ee45677ff56c86eb7cde22284dbcc8655b44fc7484"
+        }
+      ]
+    },
+    "html-table-patcher": {
+      "version": "6.2.6",
+      "release": {
+        "tag": "html-table-patcher@6.2.6",
+        "revision": "c1898722b0926cda2d53d1e8d430396e6f3192bc",
+        "sourceTree": "https://github.com/codsen/codsen/tree/c1898722b0926cda2d53d1e8d430396e6f3192bc/packages/html-table-patcher"
+      },
+      "recordedVersions": [
+        {
+          "version": "5.0.5",
+          "score": 536,
+          "tag": "html-table-patcher@5.0.5",
+          "revision": "351150dca7847d274a33f18abe4e5652d1b3f626",
+          "sourceTree": "https://github.com/codsen/codsen/tree/351150dca7847d274a33f18abe4e5652d1b3f626/packages/html-table-patcher"
+        },
+        {
+          "version": "5.0.7",
+          "score": 607,
+          "tag": "html-table-patcher@5.0.7",
+          "revision": "72a1cef2b0c2d3668b95c56958989ddac8dcc1ac",
+          "sourceTree": "https://github.com/codsen/codsen/tree/72a1cef2b0c2d3668b95c56958989ddac8dcc1ac/packages/html-table-patcher"
+        },
+        {
+          "version": "5.0.8",
+          "score": 403,
+          "tag": "html-table-patcher@5.0.8",
+          "revision": null,
+          "sourceTree": null,
+          "provenance": "Release tag unavailable in the local Git history; no exact release revision asserted."
+        },
+        {
+          "version": "5.0.9",
+          "score": 418,
+          "tag": "html-table-patcher@5.0.9",
+          "revision": null,
+          "sourceTree": null,
+          "provenance": "Release tag unavailable in the local Git history; no exact release revision asserted."
+        },
+        {
+          "version": "5.0.10",
+          "score": 378,
+          "tag": "html-table-patcher@5.0.10",
+          "revision": "c94152083d5137792b9722c2db754f6a2da31129",
+          "sourceTree": "https://github.com/codsen/codsen/tree/c94152083d5137792b9722c2db754f6a2da31129/packages/html-table-patcher"
+        },
+        {
+          "version": "5.0.11",
+          "score": 439,
+          "tag": "html-table-patcher@5.0.11",
+          "revision": "29c26a9ede83ba8fceb1b7bf69f55d94cbf491d0",
+          "sourceTree": "https://github.com/codsen/codsen/tree/29c26a9ede83ba8fceb1b7bf69f55d94cbf491d0/packages/html-table-patcher"
+        },
+        {
+          "version": "5.0.12",
+          "score": 429,
+          "tag": "html-table-patcher@5.0.12",
+          "revision": "f804ea7b045b65d5ecee135e164c0b889e65437f",
+          "sourceTree": "https://github.com/codsen/codsen/tree/f804ea7b045b65d5ecee135e164c0b889e65437f/packages/html-table-patcher"
+        },
+        {
+          "version": "5.0.13",
+          "score": 443,
+          "tag": "html-table-patcher@5.0.13",
+          "revision": "8483319f302902681acbe2d49f3023eb4c2cf363",
+          "sourceTree": "https://github.com/codsen/codsen/tree/8483319f302902681acbe2d49f3023eb4c2cf363/packages/html-table-patcher"
+        },
+        {
+          "version": "5.0.14",
+          "score": 377,
+          "tag": "html-table-patcher@5.0.14",
+          "revision": "8248e895aa1d81db70a836deb979a172593ba394",
+          "sourceTree": "https://github.com/codsen/codsen/tree/8248e895aa1d81db70a836deb979a172593ba394/packages/html-table-patcher"
+        },
+        {
+          "version": "5.0.15",
+          "score": 319,
+          "tag": "html-table-patcher@5.0.15",
+          "revision": "8decd15a4bc35ccd963f5673313c60f71ee3be20",
+          "sourceTree": "https://github.com/codsen/codsen/tree/8decd15a4bc35ccd963f5673313c60f71ee3be20/packages/html-table-patcher"
+        },
+        {
+          "version": "5.0.16",
+          "score": 382,
+          "tag": "html-table-patcher@5.0.16",
+          "revision": "f977a655d9a2d97b5c9cdf8a2ab58c09b00479b0",
+          "sourceTree": "https://github.com/codsen/codsen/tree/f977a655d9a2d97b5c9cdf8a2ab58c09b00479b0/packages/html-table-patcher"
+        },
+        {
+          "version": "5.0.17",
+          "score": 314,
+          "tag": "html-table-patcher@5.0.17",
+          "revision": "411b10a3851ddac57a7a1d8ac900efa363d79819",
+          "sourceTree": "https://github.com/codsen/codsen/tree/411b10a3851ddac57a7a1d8ac900efa363d79819/packages/html-table-patcher"
+        },
+        {
+          "version": "5.0.18",
+          "score": 316,
+          "tag": "html-table-patcher@5.0.18",
+          "revision": "90592ea960942c56b4db0b8cecd7a7ae8605f435",
+          "sourceTree": "https://github.com/codsen/codsen/tree/90592ea960942c56b4db0b8cecd7a7ae8605f435/packages/html-table-patcher"
+        },
+        {
+          "version": "5.0.21",
+          "score": 924,
+          "tag": "html-table-patcher@5.0.21",
+          "revision": "e31bdbb384a317055adb2a8db141d568727076bf",
+          "sourceTree": "https://github.com/codsen/codsen/tree/e31bdbb384a317055adb2a8db141d568727076bf/packages/html-table-patcher"
+        },
+        {
+          "version": "5.0.22",
+          "score": 735,
+          "tag": "html-table-patcher@5.0.22",
+          "revision": "3b2e16d2bba5743b966d2942a9aab5d9a77e5ab3",
+          "sourceTree": "https://github.com/codsen/codsen/tree/3b2e16d2bba5743b966d2942a9aab5d9a77e5ab3/packages/html-table-patcher"
+        },
+        {
+          "version": "5.0.23",
+          "score": 880,
+          "tag": "html-table-patcher@5.0.23",
+          "revision": "e3eb24d6a6dff33e55eac100da22b912b7416211",
+          "sourceTree": "https://github.com/codsen/codsen/tree/e3eb24d6a6dff33e55eac100da22b912b7416211/packages/html-table-patcher"
+        },
+        {
+          "version": "5.0.24",
+          "score": 901,
+          "tag": "html-table-patcher@5.0.24",
+          "revision": "696ed28530de9334eaca85fe3e9d4f80be9b50c7",
+          "sourceTree": "https://github.com/codsen/codsen/tree/696ed28530de9334eaca85fe3e9d4f80be9b50c7/packages/html-table-patcher"
+        },
+        {
+          "version": "6.0.40",
+          "score": 961,
+          "tag": "html-table-patcher@6.0.40",
+          "revision": "2d8c4e185c6aaef386c86dd3f0cc1967cfffea43",
+          "sourceTree": "https://github.com/codsen/codsen/tree/2d8c4e185c6aaef386c86dd3f0cc1967cfffea43/packages/html-table-patcher"
+        },
+        {
+          "version": "6.1.3",
+          "score": 716,
+          "tag": "html-table-patcher@6.1.3",
+          "revision": "ae6dc7ea79a0aebd5c7f7b7d644f39e148478568",
+          "sourceTree": "https://github.com/codsen/codsen/tree/ae6dc7ea79a0aebd5c7f7b7d644f39e148478568/packages/html-table-patcher"
+        },
+        {
+          "version": "6.2.1",
+          "score": 734,
+          "tag": "html-table-patcher@6.2.1",
+          "revision": "4aed874fbcfc638f6ecaa682374ea523a916b9c1",
+          "sourceTree": "https://github.com/codsen/codsen/tree/4aed874fbcfc638f6ecaa682374ea523a916b9c1/packages/html-table-patcher"
+        },
+        {
+          "version": "6.2.4",
+          "score": 869,
+          "tag": "html-table-patcher@6.2.4",
+          "revision": "4874b31b9640840e369e86a1e54b79428ea5d937",
+          "sourceTree": "https://github.com/codsen/codsen/tree/4874b31b9640840e369e86a1e54b79428ea5d937/packages/html-table-patcher"
+        }
+      ],
+      "evidence": [
+        {
+          "archivePath": "html-table-patcher/original-workload/check.js.txt",
+          "sourcePath": "packages/html-table-patcher/perf/check.js",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/html-table-patcher/perf/check.js",
+          "sha256": "f56079431d302311506bd9dbaf1902c72001e682d3a8ed2503e9c80defb42cda"
+        },
+        {
+          "archivePath": "html-table-patcher/historical.json.txt",
+          "sourcePath": "packages/html-table-patcher/perf/historical.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/html-table-patcher/perf/historical.json",
+          "sha256": "4305976d33b2006bcd2202c12b0ab0b91623fc9ebe2facad9043473e13998b21"
+        },
+        {
+          "archivePath": "html-table-patcher/CHANGELOG.md",
+          "sourcePath": "packages/html-table-patcher/CHANGELOG.md",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/html-table-patcher/CHANGELOG.md",
+          "sha256": "7bd3f61eaf6ac8b2e3fad3ab62cc6cf45d55593cb012b2bfecb684f5ee6f2d71"
+        },
+        {
+          "archivePath": "html-table-patcher/package.json.txt",
+          "sourcePath": "packages/html-table-patcher/package.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/html-table-patcher/package.json",
+          "sha256": "1e23c8daa4a61ecec0698835002d54355f26a7dc84eeaf579c34565de77db9e7"
+        },
+        {
+          "archivePath": "html-table-patcher/original-workload/main.ts.txt",
+          "sourcePath": "packages/html-table-patcher/src/main.ts",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/html-table-patcher/src/main.ts",
+          "sha256": "2bcd11d29c285dfa32e74f59d8bf47cdd2fff5d11782084e38b3b5f0086df359"
+        },
+        {
+          "archivePath": "html-table-patcher/LICENSE",
+          "sourcePath": "packages/html-table-patcher/LICENSE",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/html-table-patcher/LICENSE",
+          "sha256": "44c5e27070432ee1282b08ee45677ff56c86eb7cde22284dbcc8655b44fc7484"
+        }
+      ]
+    },
+    "string-convert-indexes": {
+      "version": "6.2.6",
+      "release": {
+        "tag": "string-convert-indexes@6.2.6",
+        "revision": "c1898722b0926cda2d53d1e8d430396e6f3192bc",
+        "sourceTree": "https://github.com/codsen/codsen/tree/c1898722b0926cda2d53d1e8d430396e6f3192bc/packages/string-convert-indexes"
+      },
+      "recordedVersions": [
+        {
+          "version": "5.0.5",
+          "score": 142871,
+          "tag": "string-convert-indexes@5.0.5",
+          "revision": "351150dca7847d274a33f18abe4e5652d1b3f626",
+          "sourceTree": "https://github.com/codsen/codsen/tree/351150dca7847d274a33f18abe4e5652d1b3f626/packages/string-convert-indexes"
+        },
+        {
+          "version": "5.0.7",
+          "score": 149742,
+          "tag": "string-convert-indexes@5.0.7",
+          "revision": "72a1cef2b0c2d3668b95c56958989ddac8dcc1ac",
+          "sourceTree": "https://github.com/codsen/codsen/tree/72a1cef2b0c2d3668b95c56958989ddac8dcc1ac/packages/string-convert-indexes"
+        },
+        {
+          "version": "5.0.8",
+          "score": 67793,
+          "tag": "string-convert-indexes@5.0.8",
+          "revision": null,
+          "sourceTree": null,
+          "provenance": "Release tag unavailable in the local Git history; no exact release revision asserted."
+        },
+        {
+          "version": "5.0.9",
+          "score": 83308,
+          "tag": "string-convert-indexes@5.0.9",
+          "revision": null,
+          "sourceTree": null,
+          "provenance": "Release tag unavailable in the local Git history; no exact release revision asserted."
+        },
+        {
+          "version": "5.0.10",
+          "score": 103471,
+          "tag": "string-convert-indexes@5.0.10",
+          "revision": "c94152083d5137792b9722c2db754f6a2da31129",
+          "sourceTree": "https://github.com/codsen/codsen/tree/c94152083d5137792b9722c2db754f6a2da31129/packages/string-convert-indexes"
+        },
+        {
+          "version": "5.0.11",
+          "score": 87118,
+          "tag": "string-convert-indexes@5.0.11",
+          "revision": "29c26a9ede83ba8fceb1b7bf69f55d94cbf491d0",
+          "sourceTree": "https://github.com/codsen/codsen/tree/29c26a9ede83ba8fceb1b7bf69f55d94cbf491d0/packages/string-convert-indexes"
+        },
+        {
+          "version": "5.0.12",
+          "score": 67339,
+          "tag": "string-convert-indexes@5.0.12",
+          "revision": "f804ea7b045b65d5ecee135e164c0b889e65437f",
+          "sourceTree": "https://github.com/codsen/codsen/tree/f804ea7b045b65d5ecee135e164c0b889e65437f/packages/string-convert-indexes"
+        },
+        {
+          "version": "5.0.13",
+          "score": 70090,
+          "tag": "string-convert-indexes@5.0.13",
+          "revision": "411b10a3851ddac57a7a1d8ac900efa363d79819",
+          "sourceTree": "https://github.com/codsen/codsen/tree/411b10a3851ddac57a7a1d8ac900efa363d79819/packages/string-convert-indexes"
+        },
+        {
+          "version": "5.0.14",
+          "score": 192331,
+          "tag": "string-convert-indexes@5.0.14",
+          "revision": "3b2e16d2bba5743b966d2942a9aab5d9a77e5ab3",
+          "sourceTree": "https://github.com/codsen/codsen/tree/3b2e16d2bba5743b966d2942a9aab5d9a77e5ab3/packages/string-convert-indexes"
+        },
+        {
+          "version": "6.0.32",
+          "score": 100340,
+          "tag": "string-convert-indexes@6.0.32",
+          "revision": "2d8c4e185c6aaef386c86dd3f0cc1967cfffea43",
+          "sourceTree": "https://github.com/codsen/codsen/tree/2d8c4e185c6aaef386c86dd3f0cc1967cfffea43/packages/string-convert-indexes"
+        },
+        {
+          "version": "6.1.3",
+          "score": 125571,
+          "tag": "string-convert-indexes@6.1.3",
+          "revision": "ae6dc7ea79a0aebd5c7f7b7d644f39e148478568",
+          "sourceTree": "https://github.com/codsen/codsen/tree/ae6dc7ea79a0aebd5c7f7b7d644f39e148478568/packages/string-convert-indexes"
+        },
+        {
+          "version": "6.2.1",
+          "score": 127029,
+          "tag": "string-convert-indexes@6.2.1",
+          "revision": "4aed874fbcfc638f6ecaa682374ea523a916b9c1",
+          "sourceTree": "https://github.com/codsen/codsen/tree/4aed874fbcfc638f6ecaa682374ea523a916b9c1/packages/string-convert-indexes"
+        }
+      ],
+      "evidence": [
+        {
+          "archivePath": "string-convert-indexes/original-workload/check.js.txt",
+          "sourcePath": "packages/string-convert-indexes/perf/check.js",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/string-convert-indexes/perf/check.js",
+          "sha256": "a4870bd6c07413d9cfd550daed3d0cd8ea142cbdb01a58536994e3d826313582"
+        },
+        {
+          "archivePath": "string-convert-indexes/historical.json.txt",
+          "sourcePath": "packages/string-convert-indexes/perf/historical.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/string-convert-indexes/perf/historical.json",
+          "sha256": "d403bd17b0969f570094f61800e2ee01a62eaef8ab69a9ec82dd34594f512da9"
+        },
+        {
+          "archivePath": "string-convert-indexes/CHANGELOG.md",
+          "sourcePath": "packages/string-convert-indexes/CHANGELOG.md",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/string-convert-indexes/CHANGELOG.md",
+          "sha256": "3fe6550745fbd9fad0b3e8da9ee6024d84eb59560861d0eb1b6e612ba3170178"
+        },
+        {
+          "archivePath": "string-convert-indexes/package.json.txt",
+          "sourcePath": "packages/string-convert-indexes/package.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/string-convert-indexes/package.json",
+          "sha256": "77c99445666ac3717230412552eb18fb20e9e9e777f1c9a18345369f7d6c5e65"
+        },
+        {
+          "archivePath": "string-convert-indexes/original-workload/main.ts.txt",
+          "sourcePath": "packages/string-convert-indexes/src/main.ts",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/string-convert-indexes/src/main.ts",
+          "sha256": "2af1ae5b5460da4e3d95f2c7b1835cc855a09718c393244a549790d143e9dbca"
+        },
+        {
+          "archivePath": "string-convert-indexes/LICENSE",
+          "sourcePath": "packages/string-convert-indexes/LICENSE",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/string-convert-indexes/LICENSE",
+          "sha256": "44c5e27070432ee1282b08ee45677ff56c86eb7cde22284dbcc8655b44fc7484"
+        }
+      ]
+    },
+    "string-extract-sass-vars": {
+      "version": "4.2.4",
+      "release": {
+        "tag": "string-extract-sass-vars@4.2.4",
+        "revision": "35b0d4e396ad9dcd091561b7c8c3153cb3647a8b",
+        "sourceTree": "https://github.com/codsen/codsen/tree/35b0d4e396ad9dcd091561b7c8c3153cb3647a8b/packages/string-extract-sass-vars"
+      },
+      "recordedVersions": [
+        {
+          "version": "3.0.5",
+          "score": 48267,
+          "tag": "string-extract-sass-vars@3.0.5",
+          "revision": "351150dca7847d274a33f18abe4e5652d1b3f626",
+          "sourceTree": "https://github.com/codsen/codsen/tree/351150dca7847d274a33f18abe4e5652d1b3f626/packages/string-extract-sass-vars"
+        },
+        {
+          "version": "3.0.7",
+          "score": 48560,
+          "tag": "string-extract-sass-vars@3.0.7",
+          "revision": "72a1cef2b0c2d3668b95c56958989ddac8dcc1ac",
+          "sourceTree": "https://github.com/codsen/codsen/tree/72a1cef2b0c2d3668b95c56958989ddac8dcc1ac/packages/string-extract-sass-vars"
+        },
+        {
+          "version": "3.0.8",
+          "score": 37699,
+          "tag": "string-extract-sass-vars@3.0.8",
+          "revision": null,
+          "sourceTree": null,
+          "provenance": "Release tag unavailable in the local Git history; no exact release revision asserted."
+        },
+        {
+          "version": "3.0.9",
+          "score": 33668,
+          "tag": "string-extract-sass-vars@3.0.9",
+          "revision": null,
+          "sourceTree": null,
+          "provenance": "Release tag unavailable in the local Git history; no exact release revision asserted."
+        },
+        {
+          "version": "3.0.10",
+          "score": 30706,
+          "tag": "string-extract-sass-vars@3.0.10",
+          "revision": "c94152083d5137792b9722c2db754f6a2da31129",
+          "sourceTree": "https://github.com/codsen/codsen/tree/c94152083d5137792b9722c2db754f6a2da31129/packages/string-extract-sass-vars"
+        },
+        {
+          "version": "3.0.11",
+          "score": 20826,
+          "tag": "string-extract-sass-vars@3.0.11",
+          "revision": "29c26a9ede83ba8fceb1b7bf69f55d94cbf491d0",
+          "sourceTree": "https://github.com/codsen/codsen/tree/29c26a9ede83ba8fceb1b7bf69f55d94cbf491d0/packages/string-extract-sass-vars"
+        },
+        {
+          "version": "3.0.12",
+          "score": 23976,
+          "tag": "string-extract-sass-vars@3.0.12",
+          "revision": "f804ea7b045b65d5ecee135e164c0b889e65437f",
+          "sourceTree": "https://github.com/codsen/codsen/tree/f804ea7b045b65d5ecee135e164c0b889e65437f/packages/string-extract-sass-vars"
+        },
+        {
+          "version": "3.0.13",
+          "score": 25081,
+          "tag": "string-extract-sass-vars@3.0.13",
+          "revision": "f977a655d9a2d97b5c9cdf8a2ab58c09b00479b0",
+          "sourceTree": "https://github.com/codsen/codsen/tree/f977a655d9a2d97b5c9cdf8a2ab58c09b00479b0/packages/string-extract-sass-vars"
+        },
+        {
+          "version": "3.0.14",
+          "score": 28370,
+          "tag": "string-extract-sass-vars@3.0.14",
+          "revision": "411b10a3851ddac57a7a1d8ac900efa363d79819",
+          "sourceTree": "https://github.com/codsen/codsen/tree/411b10a3851ddac57a7a1d8ac900efa363d79819/packages/string-extract-sass-vars"
+        },
+        {
+          "version": "3.0.15",
+          "score": 59322,
+          "tag": "string-extract-sass-vars@3.0.15",
+          "revision": "3b2e16d2bba5743b966d2942a9aab5d9a77e5ab3",
+          "sourceTree": "https://github.com/codsen/codsen/tree/3b2e16d2bba5743b966d2942a9aab5d9a77e5ab3/packages/string-extract-sass-vars"
+        },
+        {
+          "version": "4.0.32",
+          "score": 25001,
+          "tag": "string-extract-sass-vars@4.0.32",
+          "revision": "2d8c4e185c6aaef386c86dd3f0cc1967cfffea43",
+          "sourceTree": "https://github.com/codsen/codsen/tree/2d8c4e185c6aaef386c86dd3f0cc1967cfffea43/packages/string-extract-sass-vars"
+        },
+        {
+          "version": "4.1.3",
+          "score": 27948,
+          "tag": "string-extract-sass-vars@4.1.3",
+          "revision": "ae6dc7ea79a0aebd5c7f7b7d644f39e148478568",
+          "sourceTree": "https://github.com/codsen/codsen/tree/ae6dc7ea79a0aebd5c7f7b7d644f39e148478568/packages/string-extract-sass-vars"
+        },
+        {
+          "version": "4.2.3",
+          "score": 30356,
+          "tag": "string-extract-sass-vars@4.2.3",
+          "revision": "4874b31b9640840e369e86a1e54b79428ea5d937",
+          "sourceTree": "https://github.com/codsen/codsen/tree/4874b31b9640840e369e86a1e54b79428ea5d937/packages/string-extract-sass-vars"
+        }
+      ],
+      "evidence": [
+        {
+          "archivePath": "string-extract-sass-vars/original-workload/check.js.txt",
+          "sourcePath": "packages/string-extract-sass-vars/perf/check.js",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/string-extract-sass-vars/perf/check.js",
+          "sha256": "70533b629837c4022f57009c6b98611c500d7410c40501184f235beb3dffaf32"
+        },
+        {
+          "archivePath": "string-extract-sass-vars/historical.json.txt",
+          "sourcePath": "packages/string-extract-sass-vars/perf/historical.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/string-extract-sass-vars/perf/historical.json",
+          "sha256": "e060baa79d1900377d6b911fd59d6ddae6aaab54507392f88642b1056185ddea"
+        },
+        {
+          "archivePath": "string-extract-sass-vars/CHANGELOG.md",
+          "sourcePath": "packages/string-extract-sass-vars/CHANGELOG.md",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/string-extract-sass-vars/CHANGELOG.md",
+          "sha256": "f3358d44b39d44835a4cf79c5f17a88e636a58c2cab85ab05c988006c96a3b66"
+        },
+        {
+          "archivePath": "string-extract-sass-vars/package.json.txt",
+          "sourcePath": "packages/string-extract-sass-vars/package.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/string-extract-sass-vars/package.json",
+          "sha256": "f70d683720d9648ac9ae9a178431a4abb63d8b51b2b4eae65085c83d82ca19a1"
+        },
+        {
+          "archivePath": "string-extract-sass-vars/original-workload/main.ts.txt",
+          "sourcePath": "packages/string-extract-sass-vars/src/main.ts",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/string-extract-sass-vars/src/main.ts",
+          "sha256": "f0c3a59dc8cfec99ed01a4faa82b561803e363779cf25e4917d8a0562db56b47"
+        },
+        {
+          "archivePath": "string-extract-sass-vars/LICENSE",
+          "sourcePath": "packages/string-extract-sass-vars/LICENSE",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/string-extract-sass-vars/LICENSE",
+          "sha256": "44c5e27070432ee1282b08ee45677ff56c86eb7cde22284dbcc8655b44fc7484"
+        }
+      ]
+    },
+    "string-split-by-whitespace": {
+      "version": "4.2.6",
+      "release": {
+        "tag": "string-split-by-whitespace@4.2.6",
+        "revision": "35b0d4e396ad9dcd091561b7c8c3153cb3647a8b",
+        "sourceTree": "https://github.com/codsen/codsen/tree/35b0d4e396ad9dcd091561b7c8c3153cb3647a8b/packages/string-split-by-whitespace"
+      },
+      "recordedVersions": [
+        {
+          "version": "3.0.5",
+          "score": 171491,
+          "tag": "string-split-by-whitespace@3.0.5",
+          "revision": "351150dca7847d274a33f18abe4e5652d1b3f626",
+          "sourceTree": "https://github.com/codsen/codsen/tree/351150dca7847d274a33f18abe4e5652d1b3f626/packages/string-split-by-whitespace"
+        },
+        {
+          "version": "3.0.7",
+          "score": 157019,
+          "tag": "string-split-by-whitespace@3.0.7",
+          "revision": "72a1cef2b0c2d3668b95c56958989ddac8dcc1ac",
+          "sourceTree": "https://github.com/codsen/codsen/tree/72a1cef2b0c2d3668b95c56958989ddac8dcc1ac/packages/string-split-by-whitespace"
+        },
+        {
+          "version": "3.0.8",
+          "score": 174096,
+          "tag": "string-split-by-whitespace@3.0.8",
+          "revision": null,
+          "sourceTree": null,
+          "provenance": "Release tag unavailable in the local Git history; no exact release revision asserted."
+        },
+        {
+          "version": "3.0.9",
+          "score": 200158,
+          "tag": "string-split-by-whitespace@3.0.9",
+          "revision": null,
+          "sourceTree": null,
+          "provenance": "Release tag unavailable in the local Git history; no exact release revision asserted."
+        },
+        {
+          "version": "3.0.10",
+          "score": 174799,
+          "tag": "string-split-by-whitespace@3.0.10",
+          "revision": "c94152083d5137792b9722c2db754f6a2da31129",
+          "sourceTree": "https://github.com/codsen/codsen/tree/c94152083d5137792b9722c2db754f6a2da31129/packages/string-split-by-whitespace"
+        },
+        {
+          "version": "3.0.11",
+          "score": 142318,
+          "tag": "string-split-by-whitespace@3.0.11",
+          "revision": "29c26a9ede83ba8fceb1b7bf69f55d94cbf491d0",
+          "sourceTree": "https://github.com/codsen/codsen/tree/29c26a9ede83ba8fceb1b7bf69f55d94cbf491d0/packages/string-split-by-whitespace"
+        },
+        {
+          "version": "3.0.12",
+          "score": 119239,
+          "tag": "string-split-by-whitespace@3.0.12",
+          "revision": "f804ea7b045b65d5ecee135e164c0b889e65437f",
+          "sourceTree": "https://github.com/codsen/codsen/tree/f804ea7b045b65d5ecee135e164c0b889e65437f/packages/string-split-by-whitespace"
+        },
+        {
+          "version": "3.1.0",
+          "score": 136940,
+          "tag": "string-split-by-whitespace@3.1.0",
+          "revision": "8248e895aa1d81db70a836deb979a172593ba394",
+          "sourceTree": "https://github.com/codsen/codsen/tree/8248e895aa1d81db70a836deb979a172593ba394/packages/string-split-by-whitespace"
+        },
+        {
+          "version": "3.1.1",
+          "score": 146608,
+          "tag": "string-split-by-whitespace@3.1.1",
+          "revision": "8decd15a4bc35ccd963f5673313c60f71ee3be20",
+          "sourceTree": "https://github.com/codsen/codsen/tree/8decd15a4bc35ccd963f5673313c60f71ee3be20/packages/string-split-by-whitespace"
+        },
+        {
+          "version": "3.1.2",
+          "score": 120123,
+          "tag": "string-split-by-whitespace@3.1.2",
+          "revision": "f977a655d9a2d97b5c9cdf8a2ab58c09b00479b0",
+          "sourceTree": "https://github.com/codsen/codsen/tree/f977a655d9a2d97b5c9cdf8a2ab58c09b00479b0/packages/string-split-by-whitespace"
+        },
+        {
+          "version": "3.1.3",
+          "score": 150890,
+          "tag": "string-split-by-whitespace@3.1.3",
+          "revision": "411b10a3851ddac57a7a1d8ac900efa363d79819",
+          "sourceTree": "https://github.com/codsen/codsen/tree/411b10a3851ddac57a7a1d8ac900efa363d79819/packages/string-split-by-whitespace"
+        },
+        {
+          "version": "3.1.4",
+          "score": 327009,
+          "tag": "string-split-by-whitespace@3.1.4",
+          "revision": "e31bdbb384a317055adb2a8db141d568727076bf",
+          "sourceTree": "https://github.com/codsen/codsen/tree/e31bdbb384a317055adb2a8db141d568727076bf/packages/string-split-by-whitespace"
+        },
+        {
+          "version": "3.1.5",
+          "score": 227971,
+          "tag": "string-split-by-whitespace@3.1.5",
+          "revision": "3b2e16d2bba5743b966d2942a9aab5d9a77e5ab3",
+          "sourceTree": "https://github.com/codsen/codsen/tree/3b2e16d2bba5743b966d2942a9aab5d9a77e5ab3/packages/string-split-by-whitespace"
+        },
+        {
+          "version": "4.0.33",
+          "score": 87758,
+          "tag": "string-split-by-whitespace@4.0.33",
+          "revision": "2d8c4e185c6aaef386c86dd3f0cc1967cfffea43",
+          "sourceTree": "https://github.com/codsen/codsen/tree/2d8c4e185c6aaef386c86dd3f0cc1967cfffea43/packages/string-split-by-whitespace"
+        },
+        {
+          "version": "4.1.3",
+          "score": 233049,
+          "tag": "string-split-by-whitespace@4.1.3",
+          "revision": "ae6dc7ea79a0aebd5c7f7b7d644f39e148478568",
+          "sourceTree": "https://github.com/codsen/codsen/tree/ae6dc7ea79a0aebd5c7f7b7d644f39e148478568/packages/string-split-by-whitespace"
+        },
+        {
+          "version": "4.2.1",
+          "score": 240575,
+          "tag": "string-split-by-whitespace@4.2.1",
+          "revision": "4aed874fbcfc638f6ecaa682374ea523a916b9c1",
+          "sourceTree": "https://github.com/codsen/codsen/tree/4aed874fbcfc638f6ecaa682374ea523a916b9c1/packages/string-split-by-whitespace"
+        },
+        {
+          "version": "4.2.4",
+          "score": 961774,
+          "tag": "string-split-by-whitespace@4.2.4",
+          "revision": "4874b31b9640840e369e86a1e54b79428ea5d937",
+          "sourceTree": "https://github.com/codsen/codsen/tree/4874b31b9640840e369e86a1e54b79428ea5d937/packages/string-split-by-whitespace"
+        }
+      ],
+      "evidence": [
+        {
+          "archivePath": "string-split-by-whitespace/original-workload/check.js.txt",
+          "sourcePath": "packages/string-split-by-whitespace/perf/check.js",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/string-split-by-whitespace/perf/check.js",
+          "sha256": "212f6e575142863379d3fc0234493ec65930175c48835395a862dc611a9db57e"
+        },
+        {
+          "archivePath": "string-split-by-whitespace/historical.json.txt",
+          "sourcePath": "packages/string-split-by-whitespace/perf/historical.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/string-split-by-whitespace/perf/historical.json",
+          "sha256": "64819c988b4f9c8dfa9217213a665dc9e4da48e822dabb767b52ec17ba46e62d"
+        },
+        {
+          "archivePath": "string-split-by-whitespace/CHANGELOG.md",
+          "sourcePath": "packages/string-split-by-whitespace/CHANGELOG.md",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/string-split-by-whitespace/CHANGELOG.md",
+          "sha256": "b9ff283ab3bc9e657c30d5e97fbf4d6e80b1ca77aa0772ab7a2ea8ecb2ddc805"
+        },
+        {
+          "archivePath": "string-split-by-whitespace/package.json.txt",
+          "sourcePath": "packages/string-split-by-whitespace/package.json",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/string-split-by-whitespace/package.json",
+          "sha256": "e515173cee327ad26f7d99676a6aa5a2d2bb0d682783dacc7af211a98c325cf1"
+        },
+        {
+          "archivePath": "string-split-by-whitespace/original-workload/main.ts.txt",
+          "sourcePath": "packages/string-split-by-whitespace/src/main.ts",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/string-split-by-whitespace/src/main.ts",
+          "sha256": "c1e521179e265eda3e47a37b0e15537bcad4e963b6939c1d23a8e4da3fd77264"
+        },
+        {
+          "archivePath": "string-split-by-whitespace/LICENSE",
+          "sourcePath": "packages/string-split-by-whitespace/LICENSE",
+          "sourceUrl": "https://github.com/codsen/codsen/blob/f462c7d297b65900e8315933daa3593b393f5046/packages/string-split-by-whitespace/LICENSE",
+          "sha256": "44c5e27070432ee1282b08ee45677ff56c86eb7cde22284dbcc8655b44fc7484"
+        }
+      ]
+    }
+  }
+}

@@ -91,7 +91,6 @@ test("05 - keeps browser smoke functions self-contained and serializable", () =>
   equal(
     Object.keys(IIFE_API_SMOKES),
     [
-      "array-group-str-omit-num-char",
       "array-includes-with-glob",
       "ast-compare",
       "ast-contains-only-empty-space",
@@ -110,7 +109,6 @@ test("05 - keeps browser smoke functions self-contained and serializable", () =>
       "object-boolean-combinations",
       "object-delete-key",
       "object-merge-advanced",
-      "string-convert-indexes",
       "string-extract-class-names",
       "string-remove-widows",
       "string-strip-html",

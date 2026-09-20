@@ -188,12 +188,6 @@ function languageCodeSmoke(api, equal) {
   });
 }
 
-function stringConvertIndexesSmoke(api, equal) {
-  const input = "a🧑‍🤝‍🧑b";
-  equal(api.nativeToUnicode(input, [1, 2, 8, 9]), [1, 1, 1, 2]);
-  equal(api.unicodeToNative(input, 2), 9);
-}
-
 function astDeepContainsSmoke(api, equal) {
   const gathered = [];
   const errors = [];
@@ -884,14 +878,6 @@ function objectMergeAdvancedSmoke(api, equal) {
   );
 }
 
-function arrayGroupSmoke(api, equal) {
-  equal(api.groupStr(["a1-1", "a2-2", "b3-3", "c4-4"]), {
-    "a*-*": 2,
-    "b3-3": 1,
-    "c4-4": 1,
-  });
-}
-
 function emailCombSmoke(api, equal) {
   const source =
     '<head><style>.unused{x:y}.used{x:z}</style></head><body class="  used  ">z</body>';
@@ -1186,7 +1172,6 @@ function htmlEntityCodecSmoke(api, equal) {
 }
 
 const IIFE_API_SMOKES = Object.freeze({
-  "array-group-str-omit-num-char": arrayGroupSmoke,
   "array-includes-with-glob": arrayIncludesWithGlobSmoke,
   "ast-compare": astCompareSmoke,
   "ast-contains-only-empty-space": astContainsOnlyEmptySpaceSmoke,
@@ -1205,7 +1190,6 @@ const IIFE_API_SMOKES = Object.freeze({
   "object-boolean-combinations": objectBooleanCombinationsSmoke,
   "object-delete-key": objectDeleteKeySmoke,
   "object-merge-advanced": objectMergeAdvancedSmoke,
-  "string-convert-indexes": stringConvertIndexesSmoke,
   "string-extract-class-names": stringExtractClassNamesSmoke,
   "string-remove-widows": stringRemoveWidowsSmoke,
   "string-strip-html": stringStripHtmlSmoke,

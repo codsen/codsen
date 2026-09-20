@@ -114,13 +114,13 @@ manually.
 
 ## Package membership
 
-The canonical snapshot contains 129 products. Its package set is `all` minus
+The canonical snapshot contains 123 products. Its package set is `all` minus
 `retired` from the shared
 [`createCodsenPackageLists` selector](../../ops/helpers/codsenPackages.js).
 This includes packages inside and outside the monorepo without classifying
 their maintenance status.
 
-The 27 retired products and the auxiliary `@codsen/data` package have 28
+The 33 retired products and the auxiliary `@codsen/data` package have 34
 previously collected histories in `retired/`. They are excluded from the
 primary manifest, portfolio totals, chart exports, and refresh requests.
 The selector's `all` list includes every product in the catalogue, including

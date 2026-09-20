@@ -114,6 +114,7 @@ const packagesOutsideMonorepoObj = {
 // announce deprecation and replacements in their published npm READMEs.
 // eslint-on-airbnb-base-badge is locally retired and unavailable from npm.
 const retired = [
+  "array-group-str-omit-num-char",
   "ast-delete-object",
   "ast-get-object",
   "ast-loose-compare",
@@ -122,10 +123,12 @@ const retired = [
   "bitsausage",
   "chlu",
   "chlu-cli",
+  "detect-is-it-html-or-xhtml",
   "email-remove-unused-css",
   "eslint-on-airbnb-base-badge",
   "fol",
   "html-img-alt",
+  "html-table-patcher",
   "posthtml-ast-compare",
   "posthtml-ast-contains-only-empty-space",
   "posthtml-ast-delete-key",
@@ -139,8 +142,11 @@ const retired = [
   "ranges-ent-decode",
   "ranges-iterate",
   "ranges-regex",
+  "string-convert-indexes",
+  "string-extract-sass-vars",
   "string-replace-slices-array",
   "string-slices-array-push",
+  "string-split-by-whitespace",
 ];
 
 const packagesOutsideMonorepo = Object.keys(packagesOutsideMonorepoObj).sort();

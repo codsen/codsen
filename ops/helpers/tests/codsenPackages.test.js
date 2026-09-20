@@ -85,7 +85,7 @@ test("03 - retirement does not erase inventory or repository membership", () => 
     true,
     "03.02",
   );
-  equal(result.retired.length, 27, "03.03");
+  equal(result.retired.length, 33, "03.03");
   equal(
     retired.every((name) => codsenPackagesOutsideWorkspace.has(name)),
     true,
@@ -205,13 +205,13 @@ test("09 - projects the real public catalogue without the auxiliary data workspa
   equal(result.all.includes("@codsen/data"), false, "09.03");
   equal(result.all, [...result.all].sort(), "09.04");
   equal(result.packagesOutsideMonorepo.length, 28, "09.05");
-  equal(result.inMonorepo.length, 101, "09.06");
-  equal(result.outsideMonorepo.length, 55, "09.07");
-  equal(result.retired.length, 27, "09.08");
-  equal(result.deprecated.length, 18, "09.09");
+  equal(result.inMonorepo.length, 95, "09.06");
+  equal(result.outsideMonorepo.length, 61, "09.07");
+  equal(result.retired.length, 33, "09.08");
+  equal(result.deprecated.length, 24, "09.09");
   equal(result.deprecated.includes("posthtml-ast-compare"), false, "09.10");
   equal(result.retired.includes("posthtml-ast-compare"), true, "09.11");
-  equal(result.current.length, 129, "09.12");
+  equal(result.current.length, 123, "09.12");
 });
 
 test("10 - npm deprecation is independent of location and Codsen retirement", () => {

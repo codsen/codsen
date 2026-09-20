@@ -138,18 +138,9 @@ function verifyStaticApis(bundles) {
       errors.push(`${bundle.directory}: ${unsupportedRegexpSyntax.join(", ")}`);
     }
 
-    const segmenterReferences =
-      bundle.source.match(/\bIntl\.Segmenter\b/gu)?.length ?? 0;
-    if (
-      segmenterReferences &&
-      (bundle.directory !== "string-convert-indexes" ||
-        segmenterReferences !== 2 ||
-        !/typeof\s+Intl\.Segmenter\s*={2,3}\s*["']function["']\s*\?\s*new\s+Intl\.Segmenter\s*\(/u.test(
-          bundle.source,
-        ))
-    ) {
+    if (/\bIntl\.Segmenter\b/u.test(bundle.source)) {
       errors.push(
-        `${bundle.directory}: Intl.Segmenter must use the audited feature-detected fallback`,
+        `${bundle.directory}: Intl.Segmenter has no audited feature-detected fallback`,
       );
     }
 

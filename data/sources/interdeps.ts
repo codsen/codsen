@@ -6,15 +6,6 @@ export const interdeps = [
     "imports": []
   },
   {
-    "name": "array-group-str-omit-num-char",
-    "tarballSizeBytes": 11432,
-    "unpackedSizeBytes": 30755,
-    "imports": [
-      "codsen-utils",
-      "ranges-apply"
-    ]
-  },
-  {
     "name": "array-includes-with-glob",
     "tarballSizeBytes": 13260,
     "unpackedSizeBytes": 35513,
@@ -161,14 +152,6 @@ export const interdeps = [
     ]
   },
   {
-    "name": "detect-is-it-html-or-xhtml",
-    "tarballSizeBytes": 9022,
-    "unpackedSizeBytes": 21379,
-    "imports": [
-      "codsen-utils"
-    ]
-  },
-  {
     "name": "detergent",
     "tarballSizeBytes": 136312,
     "unpackedSizeBytes": 458236,
@@ -300,17 +283,6 @@ export const interdeps = [
     "tarballSizeBytes": 40567,
     "unpackedSizeBytes": 120614,
     "imports": []
-  },
-  {
-    "name": "html-table-patcher",
-    "tarballSizeBytes": 41705,
-    "unpackedSizeBytes": 143449,
-    "imports": [
-      "ast-monkey",
-      "codsen-parser",
-      "ranges-apply",
-      "ranges-push"
-    ]
   },
   {
     "name": "is-char-suitable-for-html-attr-name",
@@ -634,15 +606,6 @@ export const interdeps = [
     ]
   },
   {
-    "name": "string-convert-indexes",
-    "tarballSizeBytes": 14936,
-    "unpackedSizeBytes": 37912,
-    "imports": [
-      "ast-monkey",
-      "codsen-utils"
-    ]
-  },
-  {
     "name": "string-dashes",
     "tarballSizeBytes": 12574,
     "unpackedSizeBytes": 35529,
@@ -659,14 +622,6 @@ export const interdeps = [
     "imports": [
       "codsen-utils",
       "string-left-right"
-    ]
-  },
-  {
-    "name": "string-extract-sass-vars",
-    "tarballSizeBytes": 9292,
-    "unpackedSizeBytes": 22814,
-    "imports": [
-      "codsen-utils"
     ]
   },
   {

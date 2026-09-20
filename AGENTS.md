@@ -313,7 +313,7 @@ contract.
   `var P = "(?<=x)y"; new RegExp(P)` are both reported, because both throw on the
   floor where the call runs. If a package genuinely needs one behind a feature
   guard, audit it explicitly in `ops/scripts/verify-browser-iifes.js` the way
-  `Intl.Segmenter` and `SharedArrayBuffer` are.
+  `SharedArrayBuffer` is.
 - What the check cannot see is a pattern assembled at run time, and a name it
   cannot follow — one bound twice, destructured, or assigned to — is treated as
   assembled. Do not reach for either to quiet a finding: the bundle still breaks

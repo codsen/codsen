@@ -22,21 +22,6 @@
       },
       "total": 90701
     },
-    "array-group-str-omit-num-char": {
-      "status": "current",
-      "includedInPortfolio": true,
-      "firstPublishedDay": "2018-10-11",
-      "availability": "available",
-      "file": "packages/array-group-str-omit-num-char.ndjson",
-      "sha256": "f798e09a89a98144d607586c47c6ee2bba70f98866c6c4c514943bd0143f1772",
-      "coverage": {
-        "start": "2018-10-11",
-        "end": "2026-09-18",
-        "days": 2900,
-        "missing": []
-      },
-      "total": 49296
-    },
     "array-includes-with-glob": {
       "status": "current",
       "includedInPortfolio": true,
@@ -412,21 +397,6 @@
       },
       "total": 153862
     },
-    "detect-is-it-html-or-xhtml": {
-      "status": "current",
-      "includedInPortfolio": true,
-      "firstPublishedDay": "2016-11-24",
-      "availability": "available",
-      "file": "packages/detect-is-it-html-or-xhtml.ndjson",
-      "sha256": "508a50af729d8465a0459ca2de5d639173439734831f2c1ae57855fc1af38a39",
-      "coverage": {
-        "start": "2016-11-24",
-        "end": "2026-09-18",
-        "days": 3586,
-        "missing": []
-      },
-      "total": 50132
-    },
     "detect-templating-language": {
       "status": "current",
       "includedInPortfolio": true,
@@ -726,21 +696,6 @@
         "missing": []
       },
       "total": 23529
-    },
-    "html-table-patcher": {
-      "status": "current",
-      "includedInPortfolio": true,
-      "firstPublishedDay": "2018-08-13",
-      "availability": "available",
-      "file": "packages/html-table-patcher.ndjson",
-      "sha256": "04fea5b9701b997aeec678714b837a824283f69bd6ab17978624b22fde266ae2",
-      "coverage": {
-        "start": "2018-08-13",
-        "end": "2026-09-18",
-        "days": 2959,
-        "missing": []
-      },
-      "total": 60204
     },
     "is-char-suitable-for-html-attr-name": {
       "status": "current",
@@ -1492,21 +1447,6 @@
       },
       "total": 313568
     },
-    "string-convert-indexes": {
-      "status": "current",
-      "includedInPortfolio": true,
-      "firstPublishedDay": "2017-12-25",
-      "availability": "available",
-      "file": "packages/string-convert-indexes.ndjson",
-      "sha256": "9045c3b013d1553e269c22d38422b7141d6d98efbfeaa424ce8b96610bf191f4",
-      "coverage": {
-        "start": "2017-12-25",
-        "end": "2026-09-18",
-        "days": 3190,
-        "missing": []
-      },
-      "total": 48178
-    },
     "string-dashes": {
       "status": "current",
       "includedInPortfolio": true,
@@ -1536,21 +1476,6 @@
         "missing": []
       },
       "total": 3697980
-    },
-    "string-extract-sass-vars": {
-      "status": "current",
-      "includedInPortfolio": true,
-      "firstPublishedDay": "2020-04-20",
-      "availability": "available",
-      "file": "packages/string-extract-sass-vars.ndjson",
-      "sha256": "884cad98d0b4024d8e05852c6219e5619355bb5e1cba287ac4d7ea54748c1925",
-      "coverage": {
-        "start": "2020-04-20",
-        "end": "2026-09-18",
-        "days": 2343,
-        "missing": []
-      },
-      "total": 44921
     },
     "string-find-heads-tails": {
       "status": "current",
@@ -1716,21 +1641,6 @@
         "missing": []
       },
       "total": 2016465
-    },
-    "string-split-by-whitespace": {
-      "status": "current",
-      "includedInPortfolio": true,
-      "firstPublishedDay": "2018-01-11",
-      "availability": "available",
-      "file": "packages/string-split-by-whitespace.ndjson",
-      "sha256": "7b9f8e6d320f4f64ac3330a232a33933d81747550d514be09ec51a9701eb90a0",
-      "coverage": {
-        "start": "2018-01-11",
-        "end": "2026-09-18",
-        "days": 3173,
-        "missing": []
-      },
-      "total": 76353
     },
     "string-strip-html": {
       "status": "current",
@@ -2012,25 +1922,6 @@
         "string-uglify",
         "test-mixer",
         "util-nonempty"
-      ]
-    },
-    {
-      "day": "2023-06-17",
-      "kind": "suspected-shared-zero",
-      "packages": [
-        "array-group-str-omit-num-char",
-        "generate-atomic-css-cli",
-        "object-flatten-referencing",
-        "string-convert-indexes"
-      ]
-    },
-    {
-      "day": "2023-10-18",
-      "kind": "suspected-shared-zero",
-      "packages": [
-        "array-group-str-omit-num-char",
-        "array-of-arrays-into-ast",
-        "array-of-arrays-sort-by-col"
       ]
     },
     {
@@ -2564,7 +2455,7 @@
       ]
     }
   ],
-  "retiredRevision": "c82ff87d217eb219c37a29d4b5ef951641e36de56e44b2bddaa2956bc26694a3",
-  "revision": "52934f599aaf697f88c5a6b765a4dcf20c32eaf6f27f91fa82bd704841304a02",
-  "updatedAt": "2026-09-19T23:40:36.764Z"
+  "retiredRevision": "88468912b2456fa5ea61dd1deca33e64346047a8ca23e63abdcc63f7c71a2087",
+  "revision": "04bc3dbe658f61a414ca3cd404d4626aa5bc2fdcbfd65e1c76b94059dc3401de",
+  "updatedAt": "2026-09-20T09:32:13.080Z"
 }

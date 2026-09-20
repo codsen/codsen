@@ -41,7 +41,7 @@ test("01 - generated catalogue follows the shared policy while preserving histor
     packages.splitListFlagshipLibs,
     "01.16",
   );
-  equal(Object.values(packages.categories).flat().length, 100, "01.17");
+  equal(Object.values(packages.categories).flat().length, 94, "01.17");
 });
 
 test("02 - generated publication dates retain the complete historical key set", () => {

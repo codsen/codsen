@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registry": "https://registry.npmjs.org",
-  "checkedAt": "2026-09-20T01:07:16.256Z",
+  "checkedAt": "2026-09-20T09:42:09.130Z",
   "packages": {
     "all-named-html-entities": {
       "status": "available",
@@ -11,7 +11,7 @@
     "array-group-str-omit-num-char": {
       "status": "available",
       "version": "6.2.5",
-      "deprecated": null
+      "deprecated": "This package is retired and no longer maintained. Existing releases remain available."
     },
     "array-includes-with-glob": {
       "status": "available",
@@ -181,7 +181,7 @@
     "detect-is-it-html-or-xhtml": {
       "status": "available",
       "version": "6.2.4",
-      "deprecated": null
+      "deprecated": "This package is retired and no longer maintained. Existing releases remain available."
     },
     "detect-templating-language": {
       "status": "available",
@@ -305,7 +305,7 @@
     "html-table-patcher": {
       "status": "available",
       "version": "6.2.6",
-      "deprecated": null
+      "deprecated": "This package is retired and no longer maintained. Existing releases remain available."
     },
     "is-char-suitable-for-html-attr-name": {
       "status": "available",
@@ -625,7 +625,7 @@
     "string-convert-indexes": {
       "status": "available",
       "version": "6.2.6",
-      "deprecated": null
+      "deprecated": "This package is retired and no longer maintained. Existing releases remain available."
     },
     "string-dashes": {
       "status": "available",
@@ -640,7 +640,7 @@
     "string-extract-sass-vars": {
       "status": "available",
       "version": "4.2.4",
-      "deprecated": null
+      "deprecated": "This package is retired and no longer maintained. Existing releases remain available."
     },
     "string-find-heads-tails": {
       "status": "available",
@@ -710,7 +710,7 @@
     "string-split-by-whitespace": {
       "status": "available",
       "version": "4.2.6",
-      "deprecated": null
+      "deprecated": "This package is retired and no longer maintained. Existing releases remain available."
     },
     "string-strip-html": {
       "status": "available",

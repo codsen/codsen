@@ -444,7 +444,7 @@ test("18 - counts a shorthand property as a read of the local", () => {
   // `return { result }` names the local, but asking the binder about that
   // identifier gives the object's property instead; taking that answer would
   // report the call as dead while its value is returned to the caller. This is
-  // the shape shipped in packages/html-table-patcher/src/main.ts.
+  // the shape formerly shipped in html-table-patcher's source.
   const returned = [
     "function patcher(str: string): { result: string } {",
     "  const result = rApply(str, 0);",

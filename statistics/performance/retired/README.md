@@ -27,6 +27,13 @@ for `ast-get-object` and `html-img-alt` versions `3.0.8` and `3.0.9`, and
 `ranges-ent-decode` versions `5.0.8` and `5.0.9`, are unavailable locally; the
 manifest preserves those scores without asserting their release revisions.
 
+The HTML and string utility archives were captured from
+[revision f462c7d297b65900e8315933daa3593b393f5046](https://github.com/codsen/codsen/tree/f462c7d297b65900e8315933daa3593b393f5046).
+Their [manifest](html-and-string-utilities-manifest.json) records the same
+provenance and checksums for six retired packages. Historical release tags
+ending in `0.8` and `0.9` are unavailable locally for all six packages; their
+scores remain preserved without asserted release revisions.
+
 | Package | Frozen package version | Recorded versions and normalized scores |
 | --- | --- | --- |
 | `ast-monkey-traverse` | 4.3.1 | 4.2.2: 26,312; 4.3.1: 30,404 |
@@ -38,6 +45,12 @@ manifest preserves those scores without asserting their release revisions.
 | `ast-get-object` | 4.2.6 | 17 accepted scores, from 3.0.5: 147,176 through 4.1.3: 417,718; see the complete history |
 | `html-img-alt` | 4.2.5 | 18 accepted scores, from 3.0.5: 74,986 through 4.2.3: 129,240; see the complete history |
 | `ranges-ent-decode` | 6.2.5 | 16 accepted scores, from 5.0.5: 550,186 through 6.2.4: 1,301,222; see the complete history |
+| `array-group-str-omit-num-char` | 6.2.5 | 18 accepted scores, from 5.0.5: 222,468 through 6.2.4: 208,270; see the complete history |
+| `detect-is-it-html-or-xhtml` | 6.2.4 | 13 accepted scores, from 5.0.5: 3,784,190 through 6.2.3: 2,714,747; see the complete history |
+| `html-table-patcher` | 6.2.6 | 21 accepted scores, from 5.0.5: 536 through 6.2.4: 869; see the complete history |
+| `string-convert-indexes` | 6.2.6 | 12 accepted scores, from 5.0.5: 142,871 through 6.2.1: 127,029; see the complete history |
+| `string-extract-sass-vars` | 4.2.4 | 13 accepted scores, from 3.0.5: 48,267 through 4.2.3: 30,356; see the complete history |
+| `string-split-by-whitespace` | 4.2.6 | 17 accepted scores, from 3.0.5: 171,491 through 4.2.4: 961,774; see the complete history |
 
 Each package directory contains byte-for-byte copies of its complete history,
 changelog, manifest, license, source, and measured workload. The `.txt` suffixes
@@ -64,6 +77,14 @@ an empty alternative-text attribute to an image tag. The `ranges-ent-decode`
 workload identifies a numeric entity replacement range. All four retain their
 original arguments, source, and `lastSlowerRun` records. Their frozen package
 versions have no separate accepted scores.
+
+The HTML and string utility workloads patch a table with stray text, detect an
+HTML doctype, group strings containing digits, convert Unicode indexes, split
+text while ignoring specified ranges, and extract Sass variables. Their exact
+arguments remain in each workload file. None of their frozen package versions
+has a separate accepted score. The `string-convert-indexes` and
+`string-split-by-whitespace` histories retain their `lastSlowerRun` records;
+these rejected measurements remain separate from the accepted scores.
 
 Scores use `target rate * 183 / reference rate`, with `perf-ref@1.0.5` providing
 the canonical reference score. They are historical measurements, not new
@@ -119,6 +140,19 @@ npm run perf --workspace ast-delete-object
 npm run perf --workspace ast-get-object
 npm run perf --workspace html-img-alt
 npm run perf --workspace ranges-ent-decode
+```
+
+For the HTML and string utility workloads, create a disposable checkout at
+`f462c7d297b65900e8315933daa3593b393f5046` using the same procedure. After
+installing dependencies and building, run these benchmarks serially:
+
+```sh
+npm run perf --workspace html-table-patcher
+npm run perf --workspace detect-is-it-html-or-xhtml
+npm run perf --workspace array-group-str-omit-num-char
+npm run perf --workspace string-convert-indexes
+npm run perf --workspace string-split-by-whitespace
+npm run perf --workspace string-extract-sass-vars
 ```
 
 For the implementation corresponding to an older recorded score, use its exact
