@@ -156,4 +156,19 @@ test("007 - script ignore policies retain false prefixes", () => {
   );
 });
 
+test("008 - non-ASCII whitespace does not terminate a script end-tag name", () => {
+  for (const boundary of ["\u00a0", "\v", "\u2028", "\ufeff"]) {
+    const content = `a</script${boundary}><b>x</b>`;
+    const input = `<script>${content}</script>`;
+    const actual = stripHtml(input, { stripTogetherWithTheirContents: [] });
+    equal(actual.result, content, "008.01");
+    equal(
+      tagSlices(input, actual.allTagLocations),
+      ["<script>", "</script>"],
+      "008.02",
+    );
+    equal(stripHtml(input).result, "", "008.03");
+  }
+});
+
 test.run();

@@ -919,7 +919,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     );
   }
 
-  function isScriptClosingTagAt(i: number): boolean {
+  function isRawTextClosingTagAt(i: number): boolean {
     if (str.charCodeAt(i) !== CODE_LEFT_BRACKET) {
       return false;
     }
@@ -930,22 +930,36 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     }
 
     const nameStarts = right(str, slashAt);
+    if (nameStarts === null) {
+      return false;
+    }
+    for (let offset = 0; offset < rawTextTagName.length; offset++) {
+      if (
+        (str.charCodeAt(nameStarts + offset) | 32) !==
+        rawTextTagName.charCodeAt(offset)
+      ) {
+        return false;
+      }
+    }
+
+    const boundaryAt = nameStarts + rawTextTagName.length;
+    // A reference decoded inside RCDATA is text, even if it spells an end tag.
+    // The package's decode-and-strip extension still applies to encoded openers.
     if (
-      nameStarts === null ||
-      (str.charCodeAt(nameStarts) | 32) !== 115 ||
-      (str.charCodeAt(nameStarts + 1) | 32) !== 99 ||
-      (str.charCodeAt(nameStarts + 2) | 32) !== 114 ||
-      (str.charCodeAt(nameStarts + 3) | 32) !== 105 ||
-      (str.charCodeAt(nameStarts + 4) | 32) !== 112 ||
-      (str.charCodeAt(nameStarts + 5) | 32) !== 116
+      rawTextUsesLiteralDelimiters &&
+      originalStr.slice(originalStart(i), originalStart(boundaryAt + 1)) !==
+        str.slice(i, boundaryAt + 1)
     ) {
       return false;
     }
-
-    const boundaryCode = str.charCodeAt(nameStarts + 6);
+    const boundaryCode = str.charCodeAt(boundaryAt);
     return (
       Number.isNaN(boundaryCode) ||
-      isWhitespaceCode(boundaryCode) ||
+      boundaryCode === CODE_SPACE ||
+      boundaryCode === 9 ||
+      boundaryCode === 10 ||
+      boundaryCode === 12 ||
+      boundaryCode === 13 ||
       boundaryCode === 47 ||
       boundaryCode === CODE_RIGHT_BRACKET ||
       boundaryCode === CODE_LEFT_BRACKET
@@ -1281,7 +1295,8 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     );
   }
 
-  let isInsideScript = false;
+  let rawTextTagName = "";
+  let rawTextUsesLiteralDelimiters = false;
   let isDoctype = false;
   let pendingMalformedStart: number | null = null;
   let lastPercentage = 0;
@@ -1336,10 +1351,38 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     isDoctype = false;
   }
 
-  function releaseFinalizedTagState(): void {
-    if (tag.name?.length === 6 && lowerTagName(tag) === "script") {
-      isInsideScript = !tag.slashPresent;
+  function isRawTextElement(token: Obj): boolean {
+    const length = token.name?.length;
+    if (length !== 5 && length !== 6 && length !== 8) {
+      return false;
     }
+    const name = lowerTagName(token);
+    return name === "script" || name === "title" || name === "textarea";
+  }
+
+  function updateRawTextState(): boolean {
+    if (!isRawTextElement(tag)) {
+      return false;
+    }
+    if (tag.slashPresent) {
+      rawTextTagName = "";
+      rawTextUsesLiteralDelimiters = false;
+    } else {
+      const name = lowerTagName(tag);
+      if (rawTextTagName !== name) {
+        rawTextUsesLiteralDelimiters =
+          entityDecodeRanges !== null &&
+          name !== "script" &&
+          originalStr.charCodeAt(originalStart(tag.lastOpeningBracketAt)) ===
+            CODE_LEFT_BRACKET;
+        rawTextTagName = name;
+      }
+    }
+    return true;
+  }
+
+  function releaseFinalizedTagState(): void {
+    updateRawTextState();
     pendingMalformedStart = null;
     clearCurrentTagState();
   }
@@ -1459,7 +1502,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // skip known ESP token pairs
     // -------------------------------------------------------------------------
     if (
-      !isInsideScript &&
+      !rawTextTagName &&
       charCode === CODE_PERCENT &&
       str[i - 1] === "{" &&
       str.includes("%}", i + 1)
@@ -1492,7 +1535,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
     // catch the closing bracket of dirty tags with missing opening brackets
     // -------------------------------------------------------------------------
-    if (!isInsideScript && closesHere) {
+    if (!rawTextTagName && closesHere) {
       DEV && console.log(`closing bracket caught`);
       // tend cases where opening bracket of a tag is missing:
       if ((!tag || !hasMoreKeysThan(tag, 1)) && i > 1) {
@@ -2374,16 +2417,15 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               );
 
             if (
-              isInsideScript &&
-              tag.name?.length === 6 &&
-              lowerTagName(tag) === "script" &&
+              rawTextTagName &&
+              lowerTagName(tag) === rawTextTagName &&
               tag.slashPresent
             ) {
-              isInsideScript = false;
+              rawTextTagName = "";
               DEV &&
                 console.log(
-                  `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`isInsideScript`}\u001b[${39}m`} = ${JSON.stringify(
-                    isInsideScript,
+                  `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`rawTextTagName`}\u001b[${39}m`} = ${JSON.stringify(
+                    rawTextTagName,
                     null,
                     4,
                   )}`,
@@ -2800,16 +2842,16 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // catch an opening bracket
     // -------------------------------------------------------------------------
     if (
-      // Don't catch tags inside <script>:
+      // Don't catch tags inside script or RCDATA elements:
       //
-      // EITHER it's not inside <script>
-      (!isInsideScript ||
-        // OR it's the same script tag's closing counterpart
+      // EITHER it's not inside script/RCDATA
+      (!rawTextTagName ||
+        // OR it's the active element's closing counterpart
         //
         // < body > text < script > zzz <    /    script < / body >
         //                              ^
         //                          we're here
-        (charCode === CODE_LEFT_BRACKET && isScriptClosingTagAt(i))) &&
+        (charCode === CODE_LEFT_BRACKET && isRawTextClosingTagAt(i))) &&
       opensHere &&
       // A quote followed immediately by value characters may belong to a
       // later tag's attribute when the current attribute was never closed.
@@ -3210,7 +3252,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         // wipe the indentation
         if (
           strip &&
-          !isInsideScript &&
+          !rawTextTagName &&
           typeof lastLFCRAt === "number" &&
           i &&
           lastLFCRAt < i - 1
@@ -3280,12 +3322,19 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
     // activate
     // -----------------------------------------------------------------------------
-    if (tag.name?.length === 6 && lowerTagName(tag) === "script") {
-      isInsideScript = !tag.slashPresent;
+    // Most characters have no active tag, or belong to another tag name.
+    // Reject those directly before entering the raw-text state helpers.
+    const activeTagNameLength = tag.name?.length;
+    if (
+      (activeTagNameLength === 5 ||
+        activeTagNameLength === 6 ||
+        activeTagNameLength === 8) &&
+      updateRawTextState()
+    ) {
       DEV &&
         console.log(
-          `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`isInsideScript`}\u001b[${39}m`} = ${JSON.stringify(
-            isInsideScript,
+          `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`rawTextTagName`}\u001b[${39}m`} = ${JSON.stringify(
+            rawTextTagName,
             null,
             4,
           )}`,
@@ -3378,9 +3427,9 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       );
     DEV &&
       console.log(
-        `${`\u001b[${33}m${`isInsideScript`}\u001b[${39}m`} = ${`\u001b[${
-          isInsideScript ? 32 : 31
-        }m${JSON.stringify(isInsideScript, null, 0)}\u001b[${39}m`}`,
+        `${`\u001b[${33}m${`rawTextTagName`}\u001b[${39}m`} = ${`\u001b[${
+          rawTextTagName ? 32 : 31
+        }m${JSON.stringify(rawTextTagName, null, 0)}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
