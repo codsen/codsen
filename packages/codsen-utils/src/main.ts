@@ -750,6 +750,41 @@ export function isDate(something: unknown): something is Date {
 
 // ----------------------------------------------------------------
 
+function trimUnicodeChars(input: string, chars: string): string {
+  // Numeric membership avoids allocating a string for each edge character.
+  const charactersToTrim = new Set<number>();
+  for (let i = 0; i < chars.length; ) {
+    const code = chars.codePointAt(i) as number;
+    charactersToTrim.add(code);
+    i += code > 0xffff ? 2 : 1;
+  }
+  let start = 0;
+  let end = input.length;
+
+  // Decode only the edges: the retained middle does not need to be split
+  // into code points and joined again. Match surrogate pairs as one character,
+  // while retaining lone surrogates just as string iteration does.
+  while (start < end) {
+    const code = input.codePointAt(start) as number;
+    if (!charactersToTrim.has(code)) {
+      break;
+    }
+    start += code > 0xffff ? 2 : 1;
+  }
+  while (end > start) {
+    // An astral value here means the final two code units form one pair.
+    const previous = input.codePointAt(end - 2) || 0;
+    const width = previous > 0xffff ? 2 : 1;
+    const code = width === 2 ? previous : input.charCodeAt(end - 1);
+    if (!charactersToTrim.has(code)) {
+      break;
+    }
+    end -= width;
+  }
+
+  return start === 0 && end === input.length ? input : input.slice(start, end);
+}
+
 /**
  * Trims the supplied Unicode characters from both ends of a string.
  */
@@ -758,55 +793,36 @@ export function trimChars(input: string, chars: string): string {
     return input;
   }
 
-  let asciiOnly = true;
+  // Without surrogates in the trim set, code-unit comparisons cannot remove
+  // half of a pair. Keep this common path small enough for callers to inline.
   for (let i = chars.length; i--; ) {
-    if (chars.charCodeAt(i) > 127) {
-      asciiOnly = false;
-      break;
+    const code = chars.charCodeAt(i);
+    if (code >= 0xd800 && code <= 0xdfff) {
+      return trimUnicodeChars(input, chars);
     }
   }
 
-  if (asciiOnly) {
-    let start = 0;
-    let end = input.length;
-
-    if (chars.length === 1) {
-      const charCode = chars.charCodeAt(0);
-      while (start < end && input.charCodeAt(start) === charCode) {
-        start++;
-      }
-      while (end > start && input.charCodeAt(end - 1) === charCode) {
-        end--;
-      }
-    } else {
-      while (start < end && chars.includes(input[start])) {
-        start++;
-      }
-      while (end > start && chars.includes(input[end - 1])) {
-        end--;
-      }
-    }
-
-    return start === 0 && end === input.length
-      ? input
-      : input.slice(start, end);
-  }
-
-  const values = Array.from(input);
-  const charactersToTrim = new Set(chars);
   let start = 0;
-  let end = values.length;
+  let end = input.length;
 
-  while (start < end && charactersToTrim.has(values[start])) {
-    start++;
-  }
-  while (end > start && charactersToTrim.has(values[end - 1])) {
-    end--;
+  if (chars.length === 1) {
+    const charCode = chars.charCodeAt(0);
+    while (start < end && input.charCodeAt(start) === charCode) {
+      start++;
+    }
+    while (end > start && input.charCodeAt(end - 1) === charCode) {
+      end--;
+    }
+  } else {
+    while (start < end && chars.includes(input[start])) {
+      start++;
+    }
+    while (end > start && chars.includes(input[end - 1])) {
+      end--;
+    }
   }
 
-  return start === 0 && end === values.length
-    ? input
-    : values.slice(start, end).join("");
+  return start === 0 && end === input.length ? input : input.slice(start, end);
 }
 
 // ----------------------------------------------------------------
