@@ -1,0 +1,653 @@
+{
+  "2019-03-01-newton-desktop--fence-1": {
+    "options": {
+      "whitelist": [
+        "#cm_mail_smart_body"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  #cm_mail_smart_body .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-airmail--fence-1": {
+    "options": {
+      "whitelist": [
+        ".bloop_container"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .bloop_container .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-android-2.3--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  @media screen and (min-width:0\\0){.target{color:#123456;}}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-android-2--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  @media screen and (pointer){.target{color:#123456;}}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-android-4.2--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  _:-webkit-full-screen, :root .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-android-4.4--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  _:-webkit-full-screen, :root .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-android--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  _:-webkit-full-screen, :root .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-aol--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  .body{color:#123456;}\n</style></head>\n<body class=\"body\">Message</body></html>"
+  },
+  "2019-03-26-apple-mail-10--fence-1": {
+    "options": {
+      "whitelist": [
+        ".Singleton"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .Singleton .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-apple-mail-12.4--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  [class^=\"apple-mail\"] .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-apple-mail-8--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  _:-webkit-full-screen, _::-webkit-full-page-media, _:future, :root .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-edison-android--fence-1": {
+    "options": {
+      "whitelist": [
+        ".edo-email-view"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .edo-email-view .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-edison-ios--fence-1": {
+    "options": {
+      "whitelist": [
+        ".edo"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .edo .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-edison--fence-1": {
+    "options": {
+      "whitelist": [
+        "#edo-container"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  #edo-container .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-freenet-2--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><meta name=\"viewport\" content=\"width=device-width\"><style>\n  meta ~ * .target{color:#123456;}\n</style></head>\n<body><div><p class=\"target\">Message</p></div></body></html>"
+  },
+  "2019-03-26-freenet-2--fence-2": {
+    "options": {},
+    "result": "<!doctype html><html><head><title>Subject</title><style>\n  title ~ * .target{color:#123456;}\n</style></head>\n<body><div><p class=\"target\">Message</p></div></body></html>"
+  },
+  "2019-03-26-freenet--fence-1": {
+    "options": {
+      "whitelist": [
+        "#msgBody"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  #msgBody .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-gmail-android--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  div > u + .body .target{color:#123456;}\n</style></head>\n<body class=\"body\"><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-gmail--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  u + .body .target{color:#123456;}\n</style></head>\n<body class=\"body\"><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-gmx-web.de-2--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  body[style*=\"overflow-wrap:break-word\"]{color:#123456;}\n</style></head>\n<body><p>Message</p></body></html>"
+  },
+  "2019-03-26-gmx-web.de--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  u + .body .target{color:#123456;}\n</style></head>\n<body class=\"body\"><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-ios-mail-10--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  @supports (-webkit-overflow-scrolling:touch) and (color:#ffff){.target{color:#123456;}}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-nine--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  .body > div > div > .wrapper .target{color:#123456;}\n</style></head>\n<body class=\"body\"><div class=\"wrapper\"><p class=\"target\">Message</p></div></body></html>"
+  },
+  "2019-03-26-notes-8--fence-1": {
+    "options": {
+      "whitelist": [
+        ".unused"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .unused.target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-open-xchange--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  .target[class^=\"ox-\"]{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-orange--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><meta name=\"viewport\" content=\"width=device-width\"><style>\n  meta ~ * .target{color:#123456;}\n</style></head>\n<body><div><p class=\"target\">Message</p></div></body></html>"
+  },
+  "2019-03-26-orange--fence-2": {
+    "options": {},
+    "result": "<!doctype html><html><head><title>Subject</title><style>\n  title ~ * .target{color:#123456;}\n</style></head>\n<body><div><p class=\"target\">Message</p></div></body></html>"
+  },
+  "2019-03-26-outlook-ios-android-2--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  body[data-outlook-cycle] .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-outlook-ios-android-2--bodyless": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  [data-outlook-cycle] .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-outlook-ios-android--fence-1": {
+    "options": {
+      "whitelist": [
+        ".target�",
+        ".target"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .target\\0{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-outlook-ios-android--declaration-escape": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  .target{background:red\\0/;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-outlook-macos--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  _:-webkit-full-screen, _::-webkit-full-page-media, _:future, :root body:not(.Singleton) .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-outlook-webmail--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  [owa].target x:default .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-postbox--fence-1": {
+    "options": {
+      "whitelist": [
+        ".moz-text-html"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .moz-text-html .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-samsung-email-s4--fence-1": {
+    "options": {
+      "whitelist": [
+        "#secdiv"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  #secdiv .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-samsung-email-s5-s9-2--fence-1": {
+    "options": {
+      "whitelist": [
+        "#MessageViewBody"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  #MessageViewBody .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-samsung-email-s5-s9-3--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  .body > div > div > .wrapper .target{color:#123456;}\n</style></head>\n<body class=\"body\"><div class=\"wrapper\"><p class=\"target\">Message</p></div></body></html>"
+  },
+  "2019-03-26-samsung-email-s5-s9--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><meta name=\"viewport\" content=\"width=device-width\"><style>\n  meta ~ * .target{color:#123456;}\n</style></head>\n<body><div><p class=\"target\">Message</p></div></body></html>"
+  },
+  "2019-03-26-samsung-email-s5-s9--fence-2": {
+    "options": {},
+    "result": "<!doctype html><html><head><title>Subject</title><style>\n  title ~ * .target{color:#123456;}\n</style></head>\n<body><div><p class=\"target\">Message</p></div></body></html>"
+  },
+  "2019-03-26-spark--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  _:-webkit-full-screen, _::-webkit-full-page-media, _:future, :root .body:not(.Singleton){color:#123456;}\n</style></head>\n<body class=\"body\">Message</body></html>"
+  },
+  "2019-03-26-t-online.de--tonline": {
+    "options": {},
+    "result": "<body><p>Before</p><!--[if tonline]><p>Target</p><![endif]--><p>After</p></body>"
+  },
+  "2019-03-26-t-online.de--false": {
+    "options": {},
+    "result": "<body><p>Before</p><!--[if false]><p>Target</p><![endif]--><p>After</p></body>"
+  },
+  "2019-03-26-t-online.de--not-true": {
+    "options": {},
+    "result": "<body><p>Before</p><!--[if !true]><p>Target</p><![endif]--><p>After</p></body>"
+  },
+  "2019-03-26-thunderbird-2--fence-1": {
+    "options": {
+      "whitelist": [
+        ".moz-text-html"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .moz-text-html .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-thunderbird-2--body-wrapper": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  body > div > .wrapper .target{color:#123456;}\n</style></head>\n<body><div class=\"wrapper\"><p class=\"target\">Message</p></div></body></html>"
+  },
+  "2019-03-26-thunderbird--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><meta name=\"viewport\" content=\"width=device-width\"><style>\n  meta ~ * .target{color:#123456;}\n</style></head>\n<body><div><p class=\"target\">Message</p></div></body></html>"
+  },
+  "2019-03-26-thunderbird--fence-2": {
+    "options": {},
+    "result": "<!doctype html><html><head><title>Subject</title><style>\n  title ~ * .target{color:#123456;}\n</style></head>\n<body><div><p class=\"target\">Message</p></div></body></html>"
+  },
+  "2019-03-26-windows-mail-2--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  _:-ms-fullscreen, :root .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-windows-mail--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  _:-ms-input-placeholder, :root .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-yahoo-2--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  @media screen yahoo{.target{color:#123456;}}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-yahoo-2--required-space": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  @media screen yahoo {.target{color:#123456;}}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-yahoo-3--star-id": {
+    "options": {
+      "whitelist": [
+        "#★target"
+      ]
+    },
+    "result": "<body><p id=\"★target\">Message</p></body>"
+  },
+  "2019-03-26-yahoo--fence-1": {
+    "options": {
+      "whitelist": [
+        ".&*"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .& .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-03-26-yahoo--element": {
+    "options": {
+      "whitelist": [
+        ".&*"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .&h1{color:#123456;}\n</style></head>\n<body><h1>Message</h1></body></html>"
+  },
+  "2019-03-26-yahoo--wrapper": {
+    "options": {
+      "whitelist": [
+        ".&*"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .&{color:#123456;}\n</style></head>\n<body>Message</body></html>"
+  },
+  "2019-03-26-yahoo--escaped-marker": {
+    "options": {
+      "whitelist": [
+        ".\\&*"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .\\& .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-04-01-gmail-ios--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  @supports (-webkit-overflow-scrolling:touch) and (color:#ffff){.target{color:#123456;}}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-04-01-gmail--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  @media screen and (max-width: 480px){u + .body .target{display: block!important;}}\n</style></head>\n<body class=\"body\"><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-04-01-outlook-android--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  @media (min-resolution: 1dpi){body[data-outlook-cycle] .target{display: block!important;}}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-04-01-outlook--mso-or-ie": {
+    "options": {},
+    "result": "<body><p>Before</p><!--[if mso | ie]><p>Target</p><![endif]--><p>After</p></body>"
+  },
+  "2019-04-01-outlook--true": {
+    "options": {},
+    "result": "<body><p>Before</p><!--[if true]><p>Target</p><![endif]--><p>After</p></body>"
+  },
+  "2019-04-01-outlook--false": {
+    "options": {},
+    "result": "<body><p>Before</p><!--[if false]><p>Target</p><![endif]--><p>After</p></body>"
+  },
+  "2019-04-01-outlook--revealed": {
+    "options": {},
+    "result": "<body><p>Before</p><!--[if !mso]><!--><p>Target</p><!--<![endif]--><p>After</p></body>"
+  },
+  "2019-04-01-outlook--revealed-spaced": {
+    "options": {},
+    "result": "<body><p>Before</p><!--[if !mso]><! --><p>Target</p><!-- <![endif]--><p>After</p></body>"
+  },
+  "2019-04-01-outlook--versions": {
+    "options": {},
+    "result": "<body><p>Before</p><!--[if mso 12 | mso 14 | mso 15 ]><p>Target</p><![endif]--><p>After</p></body>"
+  },
+  "2019-04-01-outlook--mso-12": {
+    "options": {},
+    "result": "<body><p>Before</p><!--[if mso 12]><p>Target</p><![endif]--><p>After</p></body>"
+  },
+  "2019-04-01-outlook--mso-14": {
+    "options": {},
+    "result": "<body><p>Before</p><!--[if mso 14]><p>Target</p><![endif]--><p>After</p></body>"
+  },
+  "2019-04-01-outlook--mso-15": {
+    "options": {},
+    "result": "<body><p>Before</p><!--[if mso 15]><p>Target</p><![endif]--><p>After</p></body>"
+  },
+  "2019-04-01-outlook--mso-16": {
+    "options": {},
+    "result": "<body><p>Before</p><!--[if mso 16]><p>Target</p><![endif]--><p>After</p></body>"
+  },
+  "2019-04-01-outlook--field-spans": {
+    "options": {},
+    "result": "<body><p>Before</p><span style=\"mso-element:field-begin;\"></span>Target<span style=\"mso-element:field-end;\"></span><p>After</p></body>"
+  },
+  "2019-04-08-outlook-webmail--fence-1": {
+    "options": {
+      "whitelist": [
+        ".x_target",
+        ".target"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  [class~=\"x_target\"]{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-04-08-outlook-webmail--exact-attribute": {
+    "options": {
+      "whitelist": [
+        ".x_target",
+        ".target"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  [class=\"x_target\"]{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-06-13-thunderbird--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  @media screen and (-moz-device-pixel-ratio){.target{color:#123456;}}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-09-10-freenet--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  body[marginwidth][marginheight] .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2019-10-15-outlook-dark-mode--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  [data-ogsc] .target{color:#123456;}\n</style></head>\n<body><div style=\"color:#123456;background:#ffffff;\"><p class=\"target\">Message</p></div></body></html>"
+  },
+  "2019-10-15-outlook-dark-mode--background": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  [data-ogsb] .target{color:#123456;}\n</style></head>\n<body><div style=\"color:#123456;background:#ffffff;\"><p class=\"target\">Message</p></div></body></html>"
+  },
+  "2020-02-19-ios-mail-13--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  [class^=\"apple-mail\"] .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2020-03-23-yahoo--fence-1": {
+    "options": {
+      "removeCSSComments": false
+    },
+    "result": "<!doctype html><html><head><style>\n  .target{background:/* red */; font-size: /* 50px */; color: /* white */;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2020-04-27-sapo--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  body[style=\"overflow-y:hidden;width:auto !important; font-family: sans-serif\"] .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2021-06-14-ios-mail-15--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  @supports (-webkit-overflow-scrolling:touch) and (aspect-ratio: 1 / 1){.target{color:#123456;}}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2021-06-21-yahoo-aol--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  .target{background: red !yahoo}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2021-10-08-163.com--fence-1": {
+    "options": {
+      "whitelist": [
+        ".netease_mail_readhtml"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .netease_mail_readhtml .target, .netease_mail_readhtml .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2021-10-08-outlook-ios--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  [data-outlook-cycle*=\"INSERT_STYLES\"] .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2021-10-08-outlook-pwa--fence-1": {
+    "options": {
+      "whitelist": [
+        ".x_target",
+        ".target"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  @media (display-mode: standalone){[class~=\"\"x_target\"\"]{color:#123456;}}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2021-10-08-outlook-pwa--repaired-quotes": {
+    "options": {
+      "whitelist": [
+        ".x_target",
+        ".target"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  @media (display-mode: standalone){[class~=\"x_target\"]{color:#123456;}}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2021-10-08-yahoo-japan--noscript": {
+    "options": {
+      "whitelist": [
+        ".&"
+      ]
+    },
+    "result": "<!doctype html><html><head><noscript><style>\n  .& .target{color:#123456;}\n</style></noscript></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2021-10-29-comcast-webmail--fence-1": {
+    "options": {
+      "whitelist": [
+        ".mail-detail-content"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .mail-detail-content .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2021-10-29-libero--fence-1": {
+    "options": {
+      "whitelist": [
+        ".mail-detail-content"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .mail-detail-content .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2022-02-22-apple-mail-ipad--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) and (hover: none){_:-webkit-full-screen, _::-webkit-full-page-media, _:future, :root body:not(.Singleton) .target{color:#123456;}}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2022-07-12-outlook-ios-android-3--fence-1": {
+    "options": {
+      "whitelist": [
+        ".olm-fragment-custom"
+      ]
+    },
+    "result": "<!doctype html><html><head></head><body><style>\n  .olm-fragment-custom .target{color:#123456;}\n</style>\n<p class=\"target\">Message</p></body></html>"
+  },
+  "2022-08-15-seznam.cz--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  blockquote[data-color] + .target{color:#123456;}\n</style></head>\n<body><blockquote>Quote</blockquote><p class=\"target\">Message</p></body></html>"
+  },
+  "2022-11-09-spark-ios-android--fence-1": {
+    "options": {
+      "whitelist": [
+        ".c17637"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .c17637 .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2023-05-11-superhuman-mac--fence-1": {
+    "options": {
+      "whitelist": [
+        ".ShadowHTML"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .ShadowHTML .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2023-05-11-superhuman-mac--shadow-body": {
+    "options": {
+      "whitelist": [
+        ".ShadowBody"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .ShadowBody .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2023-05-11-superhuman-mac--shadow-wrapper": {
+    "options": {
+      "whitelist": [
+        ".ShadowWrapper"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .ShadowWrapper .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2023-05-11-superhuman-mac--platform-mac": {
+    "options": {
+      "whitelist": [
+        ".Platform-mac"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .Platform-mac .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2023-10-22-seznam--fence-1": {
+    "options": {
+      "whitelist": [
+        ".-wm-target",
+        ".target"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .-wm-target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2023-11-13-gmail-ipad--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  @media only screen and (min-device-width: 768px) and (max-device-width: 1366px){u + .body .target{color:#123456;}}\n</style></head>\n<body class=\"body\"><p class=\"target\">Message</p></body></html>"
+  },
+  "2023-12-12-outlook-mac-android--fence-1": {
+    "options": {
+      "whitelist": [
+        "#converted-body"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  #converted-body .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2023-12-19-apple-mail-ios-17--fence-1": {
+    "options": {},
+    "result": "<!doctype html><html><head><style>\n  @supports(text-transform: full-width) and (not (-moz-appearance: none)){.target{color:#123456;}}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2024-02-07-qq-mail-android--fence-1": {
+    "options": {
+      "whitelist": [
+        "#mailcontent"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  #mailcontent .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2024-02-07-qq-mail-android--class": {
+    "options": {
+      "whitelist": [
+        ".mailcontent"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .mailcontent .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2024-02-07-qq-mail-android--id-and-class": {
+    "options": {
+      "whitelist": [
+        "#mailcontent",
+        ".mailcontent"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  #mailcontent.mailcontent .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2024-07-17-samsung-email-microsoft--fence-1": {
+    "options": {
+      "whitelist": [
+        "#MessageViewBody"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  # #MessageViewBody .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2024-07-17-samsung-email-non-microsoft--fence-1": {
+    "options": {
+      "whitelist": [
+        "#MessageViewBody"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  & #MessageViewBody .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2024-07-24-mailspring-desktop--fence-1": {
+    "options": {
+      "whitelist": [
+        "#inbox-html-wrapper"
+      ]
+    },
+    "result": "<!doctype html><html><head></head><body><style>\n  #inbox-html-wrapper .target{color:#123456;}\n</style>\n<p class=\"target\">Message</p></body></html>"
+  },
+  "2024-08-30-freefr-webmail--fence-1": {
+    "options": {
+      "whitelist": [
+        ".v1target",
+        ".target"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .v1target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2024-08-30-freefr-webmail--fence-2": {
+    "options": {
+      "whitelist": [
+        ".v1target",
+        ".target"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  [class=\"v1target\"]{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2025-03-16-notionmail--fence-1": {
+    "options": {
+      "whitelist": [
+        "#mail-content-wrapper"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  #mail-content-wrapper .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2025-03-16-notionmail--fence-2": {
+    "options": {
+      "whitelist": [
+        "#mail-content-container"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  #mail-content-container .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2025-03-26-onet-chrome--fence-1": {
+    "options": {
+      "whitelist": [
+        "#ReadMailMainWrapper"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  #ReadMailMainWrapper .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  },
+  "2025-03-28-outlook-webmail--paired-classes": {
+    "options": {
+      "whitelist": [
+        ".x_chained"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  .target.x_chained{color:#123456;}.target.chained{color:#123456;}\n</style></head>\n<body><p class=\"target chained\">Message</p></body></html>"
+  },
+  "2025-04-27-proton--fence-1": {
+    "options": {
+      "whitelist": [
+        "#proton-root"
+      ]
+    },
+    "result": "<!doctype html><html><head><style>\n  #proton-root .target{color:#123456;}\n</style></head>\n<body><p class=\"target\">Message</p></body></html>"
+  }
+}

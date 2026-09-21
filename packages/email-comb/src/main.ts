@@ -4908,7 +4908,18 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
           headSelectorsArr[y] != null &&
           (!protectedSelectors.size ||
             !temp.some((selector) => protectedSelectors.has(selector))) &&
-          !temp.every((el) => allClassesAndIdsWithinBodySet.has(el))
+          !temp.every(
+            (el) =>
+              allClassesAndIdsWithinBodySet.has(el) ||
+              // An external, whitelisted wrapper must not make its live
+              // descendants collateral deletions. Match each nonempty
+              // pattern case-sensitively, just as pull() does below.
+              resolvedOpts.whitelist.some(
+                (pattern) =>
+                  pattern.length > 0 &&
+                  match(el, pattern, { caseSensitiveMatch: true }),
+              ),
+          )
         ) {
           DEV &&
             console.log(
