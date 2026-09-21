@@ -205,8 +205,8 @@ export const interdeps = [
   },
   {
     "name": "email-comb",
-    "tarballSizeBytes": 79683,
-    "unpackedSizeBytes": 247861,
+    "tarballSizeBytes": 79911,
+    "unpackedSizeBytes": 248537,
     "imports": [
       "array-pull-all-with-glob",
       "codsen-utils",
@@ -260,8 +260,8 @@ export const interdeps = [
   },
   {
     "name": "html-crush",
-    "tarballSizeBytes": 53806,
-    "unpackedSizeBytes": 161843,
+    "tarballSizeBytes": 54054,
+    "unpackedSizeBytes": 162682,
     "imports": [
       "codsen-utils",
       "html-entity-codec",
@@ -723,8 +723,8 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "tarballSizeBytes": 57264,
-    "unpackedSizeBytes": 174383,
+    "tarballSizeBytes": 57335,
+    "unpackedSizeBytes": 174631,
     "imports": [
       "codsen-utils",
       "html-entity-codec",

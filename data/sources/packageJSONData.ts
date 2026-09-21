@@ -2380,7 +2380,7 @@ export const packageJSONData = {
     "lect": {
       "licence": {
         "extras": [
-          ""
+          "Some unit tests are based on email-client targeting techniques from [howtotarget.email](https://howtotarget.email)."
         ]
       }
     },
@@ -2821,7 +2821,7 @@ export const packageJSONData = {
     "lect": {
       "licence": {
         "extras": [
-          ""
+          "Some unit tests are based on email-client targeting techniques from [howtotarget.email](https://howtotarget.email)."
         ]
       }
     },
@@ -7577,7 +7577,7 @@ export const packageJSONData = {
     "lect": {
       "licence": {
         "extras": [
-          ""
+          "Some unit tests are based on email-client targeting techniques from [howtotarget.email](https://howtotarget.email)."
         ]
       }
     },
