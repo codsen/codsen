@@ -1,6 +1,6 @@
 {
   "name": "test-mixer",
-  "version": "4.4.2",
+  "version": "4.4.3",
   "description": "Test helper to generate function opts object variations",
   "keywords": [
     "combinations",
@@ -67,7 +67,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.10.2"
+    "codsen-utils": "^1.10.3"
   },
   "engines": {
     "node": ">=18.20.8"

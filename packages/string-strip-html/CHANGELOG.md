@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 13.7.5 (2026-09-21)
+
+### Bug Fixes
+
+- **string-strip-html:** preserve literal RCDATA content ([1b757c3](https://github.com/codsen/codsen/commit/1b757c313404781a70c1482555bf73a8b2a8d42a))
+
 ## 13.7.3 (2026-09-09)
 
 ### Bug Fixes

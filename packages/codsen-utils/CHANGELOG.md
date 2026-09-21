@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.10.3 (2026-09-21)
+
+### Performance Improvements
+
+- **codsen-utils:** accelerate Unicode character trimming ([234580e](https://github.com/codsen/codsen/commit/234580e624c89bb7d134c062527c69573a8ebe62))
+
 ## 1.10.1 (2026-09-06)
 
 ### Performance Improvements

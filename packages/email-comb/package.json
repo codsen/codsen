@@ -1,6 +1,6 @@
 {
   "name": "email-comb",
-  "version": "7.4.3",
+  "version": "7.4.4",
   "description": "Remove unused CSS from email templates",
   "keywords": [
     "body",
@@ -68,17 +68,17 @@
     }
   },
   "dependencies": {
-    "array-pull-all-with-glob": "^7.2.4",
-    "codsen-utils": "^1.10.2",
-    "html-crush": "^6.3.3",
+    "array-pull-all-with-glob": "^7.2.5",
+    "codsen-utils": "^1.10.3",
+    "html-crush": "^6.3.4",
     "html-entity-codec": "^1.1.0",
-    "ranges-apply": "^7.2.5",
-    "ranges-push": "^7.3.2",
+    "ranges-apply": "^7.2.6",
+    "ranges-push": "^7.3.3",
     "regex-empty-conditional-comments": "^3.2.3",
-    "string-extract-class-names": "^8.4.0",
-    "string-left-right": "^6.2.4",
-    "string-match-left-right": "^9.2.5",
-    "string-range-expander": "^4.2.5",
+    "string-extract-class-names": "^8.4.1",
+    "string-left-right": "^6.2.5",
+    "string-match-left-right": "^9.2.6",
+    "string-range-expander": "^4.2.6",
     "string-uglify": "^3.2.2"
   },
   "engines": {

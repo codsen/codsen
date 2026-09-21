@@ -1,6 +1,6 @@
 {
   "name": "object-merge-advanced",
-  "version": "14.2.4",
+  "version": "14.2.5",
   "description": "Deeply merge JSON-like data structures",
   "keywords": [
     "advanced",
@@ -69,8 +69,8 @@
     }
   },
   "dependencies": {
-    "array-includes-with-glob": "^5.2.4",
-    "codsen-utils": "^1.10.2",
+    "array-includes-with-glob": "^5.2.5",
+    "codsen-utils": "^1.10.3",
     "util-nonempty": "^5.2.3"
   },
   "engines": {

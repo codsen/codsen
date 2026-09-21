@@ -1,6 +1,6 @@
 {
   "name": "generate-atomic-css-cli",
-  "version": "4.2.6",
+  "version": "4.2.7",
   "description": "Generates and updates all HTML templates' atomic CSS",
   "keywords": [
     "atomic",
@@ -71,8 +71,8 @@
   },
   "dependencies": {
     "codsen-glob": "^1.1.2",
-    "codsen-utils": "^1.10.2",
-    "generate-atomic-css": "^3.2.4"
+    "codsen-utils": "^1.10.3",
+    "generate-atomic-css": "^3.2.5"
   },
   "engines": {
     "node": ">=18.20.8"
