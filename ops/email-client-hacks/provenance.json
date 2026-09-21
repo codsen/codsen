@@ -1,0 +1,954 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/customerio/howtotarget",
+  "commit": "32b959d15863bec691e6b3bb32126559152dbf1b",
+  "expectedPostCount": 80,
+  "posts": [
+    {
+      "id": "2019-03-01-newton-desktop",
+      "path": "hacks/_posts/2019-03-01-newton-desktop.md",
+      "sha256": "01a6342a9124b01fa3846b3a14da952722c8a47e8578824b070e0871b1561ce0",
+      "client": "Newton",
+      "platform": "desktop",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-01-newton-desktop.md",
+      "variants": ["2019-03-01-newton-desktop--fence-1"]
+    },
+    {
+      "id": "2019-03-26-airmail",
+      "path": "hacks/_posts/2019-03-26-airmail.md",
+      "sha256": "37f4ba2e581914f206f9ce73935b5b96ad3ba04524457e9a6774b83cea1d7e96",
+      "client": "Airmail",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-airmail.md",
+      "variants": ["2019-03-26-airmail--fence-1"]
+    },
+    {
+      "id": "2019-03-26-android-2.3",
+      "path": "hacks/_posts/2019-03-26-android-2.3.md",
+      "sha256": "c2e81cea40e1edc864349037744e6fdc8d56bb48e624d96fa2a8f6fc558a41ab",
+      "client": "Android",
+      "platform": "",
+      "version": "2.3",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-android-2.3.md",
+      "variants": ["2019-03-26-android-2.3--fence-1"]
+    },
+    {
+      "id": "2019-03-26-android-2",
+      "path": "hacks/_posts/2019-03-26-android-2.md",
+      "sha256": "b6354f8f37554c5f15dea99b3cec858caed5c42f72340780365d374a6ffb3fd9",
+      "client": "Android",
+      "platform": "",
+      "version": "",
+      "status": "Deprecated",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-android-2.md",
+      "variants": ["2019-03-26-android-2--fence-1"]
+    },
+    {
+      "id": "2019-03-26-android-4.2",
+      "path": "hacks/_posts/2019-03-26-android-4.2.md",
+      "sha256": "befad1357fb4235cf6f9e984a7f70ae68d2014ead27ea25f325c2240ba5053ed",
+      "client": "Android",
+      "platform": "",
+      "version": "4.2",
+      "status": "Deprecated",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-android-4.2.md",
+      "variants": ["2019-03-26-android-4.2--fence-1"]
+    },
+    {
+      "id": "2019-03-26-android-4.4",
+      "path": "hacks/_posts/2019-03-26-android-4.4.md",
+      "sha256": "9b4dd466a161296b9ece1668d5a6e2638739bd9689f875980054b641b9ea38ab",
+      "client": "Android",
+      "platform": "",
+      "version": "4.4",
+      "status": "Deprecated",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-android-4.4.md",
+      "variants": ["2019-03-26-android-4.4--fence-1"]
+    },
+    {
+      "id": "2019-03-26-android",
+      "path": "hacks/_posts/2019-03-26-android.md",
+      "sha256": "1468f9f20faff50cee04ff771cd75cac48684e9267b30a4cd75afbeb8ec4f121",
+      "client": "Android",
+      "platform": "",
+      "version": "",
+      "status": "Deprecated",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-android.md",
+      "variants": ["2019-03-26-android--fence-1"]
+    },
+    {
+      "id": "2019-03-26-aol",
+      "path": "hacks/_posts/2019-03-26-aol.md",
+      "sha256": "9c4cca95a1c61746b81e50eb83f267b3a70af6e2109aa1d61427d1904bd2323a",
+      "client": "AOL",
+      "platform": "",
+      "version": "",
+      "status": "Deprecated",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-aol.md",
+      "variants": ["2019-03-26-aol--fence-1"]
+    },
+    {
+      "id": "2019-03-26-apple-mail-10",
+      "path": "hacks/_posts/2019-03-26-apple-mail-10.md",
+      "sha256": "3385dc258dc6001971817d1db4d60eac6c8fc774fd42b4b000532a2ada3a9e4e",
+      "client": "Apple Mail",
+      "platform": "",
+      "version": "10",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-apple-mail-10.md",
+      "variants": ["2019-03-26-apple-mail-10--fence-1"]
+    },
+    {
+      "id": "2019-03-26-apple-mail-12.4",
+      "path": "hacks/_posts/2019-03-26-apple-mail-12.4.md",
+      "sha256": "2dbb8369ca64189665a5b5353f4998cff4e1c12caad8746a57356ea6251942fb",
+      "client": "Apple Mail",
+      "platform": "",
+      "version": "12.4",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-apple-mail-12.4.md",
+      "variants": ["2019-03-26-apple-mail-12.4--fence-1"]
+    },
+    {
+      "id": "2019-03-26-apple-mail-8",
+      "path": "hacks/_posts/2019-03-26-apple-mail-8.md",
+      "sha256": "6148677b82eff55732c01a7084d8a06ab5336554ffdb7b5c5330fa29d1c8e39e",
+      "client": "Apple Mail",
+      "platform": "",
+      "version": "8",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-apple-mail-8.md",
+      "variants": ["2019-03-26-apple-mail-8--fence-1"]
+    },
+    {
+      "id": "2019-03-26-edison-android",
+      "path": "hacks/_posts/2019-03-26-edison-android.md",
+      "sha256": "9e0be68c4eec6112559e7950a900ce253383fbfe670379182d7de78c298218f9",
+      "client": "Edison",
+      "platform": "Android",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-edison-android.md",
+      "variants": ["2019-03-26-edison-android--fence-1"]
+    },
+    {
+      "id": "2019-03-26-edison-ios",
+      "path": "hacks/_posts/2019-03-26-edison-ios.md",
+      "sha256": "be950de558f68f4be5f8832e1f02fd005e5b0cdbe9843d4a6b039f33905b278b",
+      "client": "Edison",
+      "platform": "iOS",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-edison-ios.md",
+      "variants": ["2019-03-26-edison-ios--fence-1"]
+    },
+    {
+      "id": "2019-03-26-edison",
+      "path": "hacks/_posts/2019-03-26-edison.md",
+      "sha256": "4c87763148438839ea8db0b3f89d6eaec571b355a9eabbbffc7b3ea352e00de6",
+      "client": "Edison",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-edison.md",
+      "variants": ["2019-03-26-edison--fence-1"]
+    },
+    {
+      "id": "2019-03-26-freenet-2",
+      "path": "hacks/_posts/2019-03-26-freenet-2.md",
+      "sha256": "3c9cd9b36845bc7e4dfd036ad6a1e0ef43ad8d54345176adc56db3bf0ec4a8b5",
+      "client": "Freenet",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-freenet-2.md",
+      "variants": [
+        "2019-03-26-freenet-2--fence-1",
+        "2019-03-26-freenet-2--fence-2"
+      ]
+    },
+    {
+      "id": "2019-03-26-freenet",
+      "path": "hacks/_posts/2019-03-26-freenet.md",
+      "sha256": "75f4e8d2edaf05ad2b2a112a977988a971409a2fdf523fade03bfa276496a096",
+      "client": "Freenet",
+      "platform": "",
+      "version": "",
+      "status": "Unknown",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-freenet.md",
+      "variants": ["2019-03-26-freenet--fence-1"]
+    },
+    {
+      "id": "2019-03-26-gmail-android",
+      "path": "hacks/_posts/2019-03-26-gmail-android.md",
+      "sha256": "94d26965eaa5285d47fa4764171d5d2d305429858d9860bbbac74abd03cabb02",
+      "client": "Gmail",
+      "platform": "Android",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-gmail-android.md",
+      "variants": ["2019-03-26-gmail-android--fence-1"]
+    },
+    {
+      "id": "2019-03-26-gmail",
+      "path": "hacks/_posts/2019-03-26-gmail.md",
+      "sha256": "a6ea05e4050dfe7053c25efabe6c36eba64a0e57a71b2f4a235bccfdc2f3e7d1",
+      "client": "Gmail",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-gmail.md",
+      "variants": ["2019-03-26-gmail--fence-1"]
+    },
+    {
+      "id": "2019-03-26-gmx-web.de-2",
+      "path": "hacks/_posts/2019-03-26-gmx-web.de-2.md",
+      "sha256": "3a849af9a3b8c1c04aeee3c5897d64f22d7ee14ac050706ce9c0ea298cd41163",
+      "client": "GMX/web.de",
+      "platform": "Samsung 7",
+      "version": "",
+      "status": "Deprecated",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-gmx-web.de-2.md",
+      "variants": ["2019-03-26-gmx-web.de-2--fence-1"]
+    },
+    {
+      "id": "2019-03-26-gmx-web.de",
+      "path": "hacks/_posts/2019-03-26-gmx-web.de.md",
+      "sha256": "99e89bd2a33792a401e6293500a01cb70ab302e056937e10366f82b4a8e02326",
+      "client": "GMX/web.de",
+      "platform": "",
+      "version": "",
+      "status": "Deprecated",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-gmx-web.de.md",
+      "variants": ["2019-03-26-gmx-web.de--fence-1"]
+    },
+    {
+      "id": "2019-03-26-ios-mail-10",
+      "path": "hacks/_posts/2019-03-26-ios-mail-10.md",
+      "sha256": "f4232fd0d72046b93c384a42a37f2ff88ffe0e17f2708d8e2922c60238291f6d",
+      "client": "iOS Mail",
+      "platform": "",
+      "version": "10+",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-ios-mail-10.md",
+      "variants": ["2019-03-26-ios-mail-10--fence-1"]
+    },
+    {
+      "id": "2019-03-26-nine",
+      "path": "hacks/_posts/2019-03-26-nine.md",
+      "sha256": "be62765831ed40456fc4c79ba00b26887990783debae0d1c77ab384b7f68e6b5",
+      "client": "Nine",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-nine.md",
+      "variants": ["2019-03-26-nine--fence-1"]
+    },
+    {
+      "id": "2019-03-26-notes-8",
+      "path": "hacks/_posts/2019-03-26-notes-8.md",
+      "sha256": "17de2ba9ca2b47d9037761f36cdc245962fc82c19c68d9a52a63b378b7eee571",
+      "client": "Notes",
+      "platform": "",
+      "version": "8",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-notes-8.md",
+      "variants": ["2019-03-26-notes-8--fence-1"]
+    },
+    {
+      "id": "2019-03-26-open-xchange",
+      "path": "hacks/_posts/2019-03-26-open-xchange.md",
+      "sha256": "6742778dcca0e96038b502933df56baf4f3f7883eead690b41f04781a5cb10be",
+      "client": "Open-Xchange",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-open-xchange.md",
+      "variants": ["2019-03-26-open-xchange--fence-1"]
+    },
+    {
+      "id": "2019-03-26-orange",
+      "path": "hacks/_posts/2019-03-26-orange.md",
+      "sha256": "d1884d3ad5a800beff243cd43872d4a36a365146682eba9131feecd3ec435e95",
+      "client": "Orange",
+      "platform": "",
+      "version": "",
+      "status": "Deprecated",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-orange.md",
+      "variants": ["2019-03-26-orange--fence-1", "2019-03-26-orange--fence-2"]
+    },
+    {
+      "id": "2019-03-26-outlook-ios-android-2",
+      "path": "hacks/_posts/2019-03-26-outlook-ios-android-2.md",
+      "sha256": "87f91b5ee7cc865a011b281764ae4287d190b0992e5a115b74d11fdb0dfd3205",
+      "client": "Outlook",
+      "platform": "iOS & Android",
+      "version": "",
+      "status": "Deprecated",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-outlook-ios-android-2.md",
+      "variants": [
+        "2019-03-26-outlook-ios-android-2--fence-1",
+        "2019-03-26-outlook-ios-android-2--bodyless"
+      ]
+    },
+    {
+      "id": "2019-03-26-outlook-ios-android",
+      "path": "hacks/_posts/2019-03-26-outlook-ios-android.md",
+      "sha256": "6d5b29156a5ba63c4a296ad93337226afb8e270b763a11d52746eceba552ad11",
+      "client": "Outlook",
+      "platform": "webmail, iOS & Android",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-outlook-ios-android.md",
+      "variants": [
+        "2019-03-26-outlook-ios-android--fence-1",
+        "2019-03-26-outlook-ios-android--declaration-escape"
+      ]
+    },
+    {
+      "id": "2019-03-26-outlook-macos",
+      "path": "hacks/_posts/2019-03-26-outlook-macos.md",
+      "sha256": "e8612649ddb9d38db31bbf51dacd39e2e31634646d89e1bae99e59d9a651d7b9",
+      "client": "Outlook",
+      "platform": "macOS",
+      "version": "",
+      "status": "Deprecated",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-outlook-macos.md",
+      "variants": ["2019-03-26-outlook-macos--fence-1"]
+    },
+    {
+      "id": "2019-03-26-outlook-webmail",
+      "path": "hacks/_posts/2019-03-26-outlook-webmail.md",
+      "sha256": "540f65152ce8d3fed80a1fb629903ee0e10a3c4bc166a18b1ffee80a3d8918a6",
+      "client": "Outlook",
+      "platform": "webmail",
+      "version": "",
+      "status": "Deprecated",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-outlook-webmail.md",
+      "variants": ["2019-03-26-outlook-webmail--fence-1"]
+    },
+    {
+      "id": "2019-03-26-postbox",
+      "path": "hacks/_posts/2019-03-26-postbox.md",
+      "sha256": "277e8bb022fefd720222426ac3c513c6a694e5aee2fdb55a44b4f5e83f3413f4",
+      "client": "Postbox",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-postbox.md",
+      "variants": ["2019-03-26-postbox--fence-1"]
+    },
+    {
+      "id": "2019-03-26-samsung-email-s4",
+      "path": "hacks/_posts/2019-03-26-samsung-email-s4.md",
+      "sha256": "51e54c2d3044d6c023240bb374b53e35d0c9faf858a676c7c62fa255af2ae570",
+      "client": "Samsung Email",
+      "platform": "S4 and under",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-samsung-email-s4.md",
+      "variants": ["2019-03-26-samsung-email-s4--fence-1"]
+    },
+    {
+      "id": "2019-03-26-samsung-email-s5-s9-2",
+      "path": "hacks/_posts/2019-03-26-samsung-email-s5-s9-2.md",
+      "sha256": "da2201df7b72c37d9ea2f0c289d891c9a3a709b339fd8b8946771d4f128c17d0",
+      "client": "Samsung Email",
+      "platform": "S5-present",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-samsung-email-s5-s9-2.md",
+      "variants": ["2019-03-26-samsung-email-s5-s9-2--fence-1"]
+    },
+    {
+      "id": "2019-03-26-samsung-email-s5-s9-3",
+      "path": "hacks/_posts/2019-03-26-samsung-email-s5-s9-3.md",
+      "sha256": "e4f595934b313983e0d0762398a51646b564f98c0c8931db765ab0beaf320552",
+      "client": "Samsung Email",
+      "platform": "S5–S9",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-samsung-email-s5-s9-3.md",
+      "variants": ["2019-03-26-samsung-email-s5-s9-3--fence-1"]
+    },
+    {
+      "id": "2019-03-26-samsung-email-s5-s9",
+      "path": "hacks/_posts/2019-03-26-samsung-email-s5-s9.md",
+      "sha256": "bf50704a169f37e3859be5fce2fdb9e159e7a7c3db91677ef67eac6ab1ec3cd0",
+      "client": "Samsung Email",
+      "platform": "S5–S9",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-samsung-email-s5-s9.md",
+      "variants": [
+        "2019-03-26-samsung-email-s5-s9--fence-1",
+        "2019-03-26-samsung-email-s5-s9--fence-2"
+      ]
+    },
+    {
+      "id": "2019-03-26-spark",
+      "path": "hacks/_posts/2019-03-26-spark.md",
+      "sha256": "5dd25701e3e92acd89d8a8607a76e4f173f1d6bf18a3629081e8c6415f94f09a",
+      "client": "Spark",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-spark.md",
+      "variants": ["2019-03-26-spark--fence-1"]
+    },
+    {
+      "id": "2019-03-26-t-online.de",
+      "path": "hacks/_posts/2019-03-26-t-online.de.md",
+      "sha256": "6bd4d0e011ea67180cf0a4bb61971d4e8251d468fab3298730e6cf48d5fbd615",
+      "client": "T-online.de",
+      "platform": "",
+      "version": "",
+      "status": "Deprecated",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-t-online.de.md",
+      "variants": [
+        "2019-03-26-t-online.de--tonline",
+        "2019-03-26-t-online.de--false",
+        "2019-03-26-t-online.de--not-true"
+      ]
+    },
+    {
+      "id": "2019-03-26-thunderbird-2",
+      "path": "hacks/_posts/2019-03-26-thunderbird-2.md",
+      "sha256": "8092085939de0fef8b4b372adf9a26e422a0009024d6d8c6051c60d7dc99e866",
+      "client": "Thunderbird",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-thunderbird-2.md",
+      "variants": [
+        "2019-03-26-thunderbird-2--fence-1",
+        "2019-03-26-thunderbird-2--body-wrapper"
+      ]
+    },
+    {
+      "id": "2019-03-26-thunderbird",
+      "path": "hacks/_posts/2019-03-26-thunderbird.md",
+      "sha256": "7541826f63036fbbc0a6a3366f763f616bef43c07fc25c5ceb09484fe2f46b37",
+      "client": "Thunderbird",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-thunderbird.md",
+      "variants": [
+        "2019-03-26-thunderbird--fence-1",
+        "2019-03-26-thunderbird--fence-2"
+      ]
+    },
+    {
+      "id": "2019-03-26-windows-mail-2",
+      "path": "hacks/_posts/2019-03-26-windows-mail-2.md",
+      "sha256": "ac628d96e444a79e818bd529d7d8a279fd76995d42fa09a097ead6931ab5f9b8",
+      "client": "Windows Mail",
+      "platform": "Phone & Surface",
+      "version": "",
+      "status": "Unknown",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-windows-mail-2.md",
+      "variants": ["2019-03-26-windows-mail-2--fence-1"]
+    },
+    {
+      "id": "2019-03-26-windows-mail",
+      "path": "hacks/_posts/2019-03-26-windows-mail.md",
+      "sha256": "f9e4b46460631def2c0d63ee6547bbb9ad75003146adb3ce64c1bf23627bc75a",
+      "client": "Windows Mail",
+      "platform": "Phone & Surface",
+      "version": "",
+      "status": "Unknown",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-windows-mail.md",
+      "variants": ["2019-03-26-windows-mail--fence-1"]
+    },
+    {
+      "id": "2019-03-26-yahoo-2",
+      "path": "hacks/_posts/2019-03-26-yahoo-2.md",
+      "sha256": "b0b39c0ab8282158d3b516d8bdea9804792c07af78940b8cd2007c7983080688",
+      "client": "Yahoo",
+      "platform": "",
+      "version": "",
+      "status": "Deprecated",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-yahoo-2.md",
+      "variants": [
+        "2019-03-26-yahoo-2--fence-1",
+        "2019-03-26-yahoo-2--required-space"
+      ]
+    },
+    {
+      "id": "2019-03-26-yahoo-3",
+      "path": "hacks/_posts/2019-03-26-yahoo-3.md",
+      "sha256": "21847b36230dd19765b0cfc72328b34d40b6233739f27f9449ec04932a4211e0",
+      "client": "Yahoo",
+      "platform": "",
+      "version": "",
+      "status": "Deprecated",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-yahoo-3.md",
+      "variants": ["2019-03-26-yahoo-3--star-id"]
+    },
+    {
+      "id": "2019-03-26-yahoo",
+      "path": "hacks/_posts/2019-03-26-yahoo.md",
+      "sha256": "c806b9ae1c769403c438849091347f280ab4e25c14f37649c76072eac04c3211",
+      "client": "Yahoo",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-03-26-yahoo.md",
+      "variants": [
+        "2019-03-26-yahoo--fence-1",
+        "2019-03-26-yahoo--element",
+        "2019-03-26-yahoo--wrapper",
+        "2019-03-26-yahoo--escaped-marker"
+      ]
+    },
+    {
+      "id": "2019-04-01-gmail-ios",
+      "path": "hacks/_posts/2019-04-01-gmail-ios.md",
+      "sha256": "32279e1851d1e5ffd4f5b7d26dfbfc4bfd9038a22c28989ae7c9c54816a76d01",
+      "client": "Gmail",
+      "platform": "iOS",
+      "version": "",
+      "status": "Deprecated",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-04-01-gmail-ios.md",
+      "variants": ["2019-04-01-gmail-ios--fence-1"]
+    },
+    {
+      "id": "2019-04-01-gmail",
+      "path": "hacks/_posts/2019-04-01-gmail.md",
+      "sha256": "a1b324fbf16c31676343f2cca03e22c1f336e2f1020e484f4479534a64443ffd",
+      "client": "Gmail",
+      "platform": "mobile and web",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-04-01-gmail.md",
+      "variants": ["2019-04-01-gmail--fence-1"]
+    },
+    {
+      "id": "2019-04-01-outlook-android",
+      "path": "hacks/_posts/2019-04-01-outlook-android.md",
+      "sha256": "bdbd898082c72bc0d8f4bf20bd28dc844c4d82518c6f9bfece9c8b5795450c7c",
+      "client": "Outlook",
+      "platform": "Android",
+      "version": "",
+      "status": "Deprecated",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-04-01-outlook-android.md",
+      "variants": ["2019-04-01-outlook-android--fence-1"]
+    },
+    {
+      "id": "2019-04-01-outlook",
+      "path": "hacks/_posts/2019-04-01-outlook.md",
+      "sha256": "30ebb5943638b8181e2a32ecb386c804fb5ff7c7219b1bc664e12e98d0c43bdb",
+      "client": "Outlook",
+      "platform": "various",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-04-01-outlook.md",
+      "variants": [
+        "2019-04-01-outlook--mso-or-ie",
+        "2019-04-01-outlook--true",
+        "2019-04-01-outlook--false",
+        "2019-04-01-outlook--revealed",
+        "2019-04-01-outlook--revealed-spaced",
+        "2019-04-01-outlook--versions",
+        "2019-04-01-outlook--mso-12",
+        "2019-04-01-outlook--mso-14",
+        "2019-04-01-outlook--mso-15",
+        "2019-04-01-outlook--mso-16",
+        "2019-04-01-outlook--field-spans"
+      ]
+    },
+    {
+      "id": "2019-04-08-outlook-webmail",
+      "path": "hacks/_posts/2019-04-08-outlook-webmail.md",
+      "sha256": "e386780ba0d679e9cb17272cdaea14b87a5c49cd23c78e37a52c27a38dde56b0",
+      "client": "Outlook",
+      "platform": "webmail",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-04-08-outlook-webmail.md",
+      "variants": [
+        "2019-04-08-outlook-webmail--fence-1",
+        "2019-04-08-outlook-webmail--exact-attribute"
+      ]
+    },
+    {
+      "id": "2019-06-13-thunderbird",
+      "path": "hacks/_posts/2019-06-13-thunderbird.md",
+      "sha256": "2e284f6f96ece6a993c2ebcb18af4fca98d420d8a64ab285296a5f52d8a413ff",
+      "client": "Thunderbird",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-06-13-thunderbird.md",
+      "variants": ["2019-06-13-thunderbird--fence-1"]
+    },
+    {
+      "id": "2019-09-10-freenet",
+      "path": "hacks/_posts/2019-09-10-freenet.md",
+      "sha256": "7a150429d6543c27abe42dfed107c03151ea4916955fffad43cc6e9a769f4df0",
+      "client": "Freenet",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-09-10-freenet.md",
+      "variants": ["2019-09-10-freenet--fence-1"]
+    },
+    {
+      "id": "2019-10-15-outlook-dark-mode",
+      "path": "hacks/_posts/2019-10-15-outlook-dark-mode.md",
+      "sha256": "f54b974ee9b344fbf989cdbeeac64f4e18eef9d403059e17eef051c729c60b43",
+      "client": "Outlook",
+      "platform": "webmail & iOS dark modes",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2019-10-15-outlook-dark-mode.md",
+      "variants": [
+        "2019-10-15-outlook-dark-mode--fence-1",
+        "2019-10-15-outlook-dark-mode--background"
+      ]
+    },
+    {
+      "id": "2020-02-19-ios-mail-13",
+      "path": "hacks/_posts/2020-02-19-ios-mail-13.md",
+      "sha256": "750072c93fd800645d50e68f14aa94235cc362ac3904c58a8a6a2b26d4d8e713",
+      "client": "iOS Mail",
+      "platform": "",
+      "version": "13",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2020-02-19-ios-mail-13.md",
+      "variants": ["2020-02-19-ios-mail-13--fence-1"]
+    },
+    {
+      "id": "2020-03-23-yahoo",
+      "path": "hacks/_posts/2020-03-23-yahoo.md",
+      "sha256": "03b11aa73030062ffe4b3703667f8d662dbbee3c68a70fefde0f8c84ac44fa85",
+      "client": "Yahoo",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2020-03-23-yahoo.md",
+      "variants": ["2020-03-23-yahoo--fence-1"]
+    },
+    {
+      "id": "2020-04-27-sapo",
+      "path": "hacks/_posts/2020-04-27-sapo.md",
+      "sha256": "a46f44c835aa2d594d04b2d972a754390d64cc993545fadd97457acde70d40d2",
+      "client": "Sapo",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2020-04-27-sapo.md",
+      "variants": ["2020-04-27-sapo--fence-1"]
+    },
+    {
+      "id": "2021-06-14-ios-mail-15",
+      "path": "hacks/_posts/2021-06-14-ios-mail-15.md",
+      "sha256": "89d895527fc6f41a9fdc5e5f0e612e4f472c2dbf76d7941a88d818551766599c",
+      "client": "iOS Mail",
+      "platform": "",
+      "version": "15+",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2021-06-14-ios-mail-15.md",
+      "variants": ["2021-06-14-ios-mail-15--fence-1"]
+    },
+    {
+      "id": "2021-06-21-yahoo-aol",
+      "path": "hacks/_posts/2021-06-21-yahoo-aol.md",
+      "sha256": "db899512100d52ed2cc3ad9471739b6821dcc9ff8e892af2ca0d7d8ce6490ae7",
+      "client": "Yahoo & AOL",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2021-06-21-yahoo-aol.md",
+      "variants": ["2021-06-21-yahoo-aol--fence-1"]
+    },
+    {
+      "id": "2021-10-08-163.com",
+      "path": "hacks/_posts/2021-10-08-163.com.md",
+      "sha256": "70537bd07d9135e7f8b15cfc33bebf0807ec28865222391ec9116c2a76690412",
+      "client": "163.com",
+      "platform": "webmail",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2021-10-08-163.com.md",
+      "variants": ["2021-10-08-163.com--fence-1"]
+    },
+    {
+      "id": "2021-10-08-outlook-ios",
+      "path": "hacks/_posts/2021-10-08-outlook-ios.md",
+      "sha256": "77f591425dabec3600d14bccb0504127ac130ad786c1a64474951c9185429a32",
+      "client": "Outlook",
+      "platform": "iOS",
+      "version": "",
+      "status": "Deprecated",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2021-10-08-outlook-ios.md",
+      "variants": ["2021-10-08-outlook-ios--fence-1"]
+    },
+    {
+      "id": "2021-10-08-outlook-pwa",
+      "path": "hacks/_posts/2021-10-08-outlook-pwa.md",
+      "sha256": "a6e49fabdcf0ce972a354cb3bc77dc5362d8c5ef4c33043088d569f9e411a0ff",
+      "client": "Outlook",
+      "platform": "PWA",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2021-10-08-outlook-pwa.md",
+      "variants": [
+        "2021-10-08-outlook-pwa--fence-1",
+        "2021-10-08-outlook-pwa--repaired-quotes"
+      ]
+    },
+    {
+      "id": "2021-10-08-yahoo-japan",
+      "path": "hacks/_posts/2021-10-08-yahoo-japan.md",
+      "sha256": "527e34be4be6d090c2954bfc9395cf6161ea899565cd4af4e2482e64e12df945",
+      "client": "Yahoo Japan",
+      "platform": "webmail",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2021-10-08-yahoo-japan.md",
+      "variants": ["2021-10-08-yahoo-japan--noscript"]
+    },
+    {
+      "id": "2021-10-29-comcast-webmail",
+      "path": "hacks/_posts/2021-10-29-comcast-webmail.md",
+      "sha256": "cc3ccf3705868113ff05e3ea02c8d25340f9a2c3ec0075d37a704cd446186ffd",
+      "client": "Comcast",
+      "platform": "webmail",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2021-10-29-comcast-webmail.md",
+      "variants": ["2021-10-29-comcast-webmail--fence-1"]
+    },
+    {
+      "id": "2021-10-29-libero",
+      "path": "hacks/_posts/2021-10-29-libero.md",
+      "sha256": "1b2c98dcd69dfeeddc1aed9a8832d843f2cd9e467ba10aa0355b0de5c7d2d8c6",
+      "client": "Libero",
+      "platform": "webmail",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2021-10-29-libero.md",
+      "variants": ["2021-10-29-libero--fence-1"]
+    },
+    {
+      "id": "2022-02-22-apple-mail-ipad",
+      "path": "hacks/_posts/2022-02-22-apple-mail-ipad.md",
+      "sha256": "7712e925a4781125cf487785a082e3385f2c5999e213f1fcf5046317e2f86ea9",
+      "client": "Apple Mail",
+      "platform": "iPad",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2022-02-22-apple-mail-ipad.md",
+      "variants": ["2022-02-22-apple-mail-ipad--fence-1"]
+    },
+    {
+      "id": "2022-07-12-outlook-ios-android-3",
+      "path": "hacks/_posts/2022-07-12-outlook-ios-android-3.md",
+      "sha256": "a7b3dc4c298077cb184e33e96c6aa3ff07c609443ed6811992a3a7c9640be337",
+      "client": "Outlook",
+      "platform": "iOS, Android, Mac",
+      "version": "",
+      "status": "Deprecated",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2022-07-12-outlook-ios-android-3.md",
+      "variants": ["2022-07-12-outlook-ios-android-3--fence-1"]
+    },
+    {
+      "id": "2022-08-15-seznam.cz",
+      "path": "hacks/_posts/2022-08-15-seznam.cz.md",
+      "sha256": "2c882588536c8bf219c8f3d00a09fc57d8e24be9e06b0724df74d47fabd64563",
+      "client": "Seznam.cz",
+      "platform": "webmail",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2022-08-15-seznam.cz.md",
+      "variants": ["2022-08-15-seznam.cz--fence-1"]
+    },
+    {
+      "id": "2022-11-09-spark-ios-android",
+      "path": "hacks/_posts/2022-11-09-spark-ios-android.md",
+      "sha256": "7804beaa4a151f017674c39fbf89f7162c139c2b0f865ee36bc390850da6a84f",
+      "client": "Spark",
+      "platform": "iOS & Android",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2022-11-09-spark-ios-android.md",
+      "variants": ["2022-11-09-spark-ios-android--fence-1"]
+    },
+    {
+      "id": "2023-05-11-superhuman-mac",
+      "path": "hacks/_posts/2023-05-11-superhuman-mac.md",
+      "sha256": "d11f4ccffbc5e9e08d5e9b88cc060c934afd13bba0c081baa81d38e0393cb724",
+      "client": "Superhuman",
+      "platform": "mac",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2023-05-11-superhuman-mac.md",
+      "variants": [
+        "2023-05-11-superhuman-mac--fence-1",
+        "2023-05-11-superhuman-mac--shadow-body",
+        "2023-05-11-superhuman-mac--shadow-wrapper",
+        "2023-05-11-superhuman-mac--platform-mac"
+      ]
+    },
+    {
+      "id": "2023-10-22-seznam",
+      "path": "hacks/_posts/2023-10-22-Seznam.md",
+      "sha256": "c6155e082e6401a806668e6a0503821da30237b2465e572a9c4f0885590a0b87",
+      "client": "Seznam.cz",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2023-10-22-Seznam.md",
+      "variants": ["2023-10-22-seznam--fence-1"]
+    },
+    {
+      "id": "2023-11-13-gmail-ipad",
+      "path": "hacks/_posts/2023-11-13-gmail-ipad.md",
+      "sha256": "e30f2a04c46b49b8b45b4f6e105143f666856b3b0d73b21ecae83bf406515abb",
+      "client": "Gmail",
+      "platform": "iPadOS",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2023-11-13-gmail-ipad.md",
+      "variants": ["2023-11-13-gmail-ipad--fence-1"]
+    },
+    {
+      "id": "2023-12-12-outlook-mac-android",
+      "path": "hacks/_posts/2023-12-12-outlook-mac-android.md",
+      "sha256": "1dc7de0a608bd0512862e33db3c3e68a5e1bc42272ed7c8887517964cd62e082",
+      "client": "Outlook",
+      "platform": "Android, Mac",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2023-12-12-outlook-mac-android.md",
+      "variants": ["2023-12-12-outlook-mac-android--fence-1"]
+    },
+    {
+      "id": "2023-12-19-apple-mail-ios-17",
+      "path": "hacks/_posts/2023-12-19-apple-mail-ios-17",
+      "sha256": "64077d8f29524842f11d8a55a1bc97cadf084531beed10441d3c259b2da77f3b",
+      "client": "Apple Mail",
+      "platform": "iOs17, Mac OS 17",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2023-12-19-apple-mail-ios-17",
+      "variants": ["2023-12-19-apple-mail-ios-17--fence-1"]
+    },
+    {
+      "id": "2024-02-07-qq-mail-android",
+      "path": "hacks/_posts/2024-02-07-qq-mail-android.md",
+      "sha256": "d5e4289035e3309027edb6e204ffba5f9256b04ad6eb7809a972d4793645f0a9",
+      "client": "QQ mail",
+      "platform": "Android",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2024-02-07-qq-mail-android.md",
+      "variants": [
+        "2024-02-07-qq-mail-android--fence-1",
+        "2024-02-07-qq-mail-android--class",
+        "2024-02-07-qq-mail-android--id-and-class"
+      ]
+    },
+    {
+      "id": "2024-07-17-samsung-email-microsoft",
+      "path": "hacks/_posts/2024-07-17-samsung-email-microsoft.md",
+      "sha256": "1353e10a0e2a2d3a66806ee534a1bedeb3d61688ef8d9ba128e2df2034b518af",
+      "client": "Samsung Email",
+      "platform": "with a microsoft account",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2024-07-17-samsung-email-microsoft.md",
+      "variants": ["2024-07-17-samsung-email-microsoft--fence-1"]
+    },
+    {
+      "id": "2024-07-17-samsung-email-non-microsoft",
+      "path": "hacks/_posts/2024-07-17-samsung-email-non-microsoft.md",
+      "sha256": "ca339f2e82c0bde7fd83c1a3b51fb8e529bb7fa1e26ae4c75afa40a1f150bd8a",
+      "client": "Samsung Email",
+      "platform": "with a non-microsoft account",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2024-07-17-samsung-email-non-microsoft.md",
+      "variants": ["2024-07-17-samsung-email-non-microsoft--fence-1"]
+    },
+    {
+      "id": "2024-07-24-mailspring-desktop",
+      "path": "hacks/_posts/2024-07-24-mailspring-desktop.md",
+      "sha256": "a822c12a143aa74758d92e23a3011a5d57cdd595c8188d4cfbda19b539e4a69c",
+      "client": "Mailspring",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2024-07-24-mailspring-desktop.md",
+      "variants": ["2024-07-24-mailspring-desktop--fence-1"]
+    },
+    {
+      "id": "2024-08-30-freefr-webmail",
+      "path": "hacks/_posts/2024-08-30-freefr-webmail.md",
+      "sha256": "192b9c5794163c8fb8e9f106c5f47b2f32724e249e8c5fee84f73e4f2cdb6525",
+      "client": "Free.fr",
+      "platform": "",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2024-08-30-freefr-webmail.md",
+      "variants": [
+        "2024-08-30-freefr-webmail--fence-1",
+        "2024-08-30-freefr-webmail--fence-2"
+      ]
+    },
+    {
+      "id": "2025-03-16-notionmail",
+      "path": "hacks/_posts/2025-03-16-notionmail.md",
+      "sha256": "e2f88b465257e42b37064f1357de51e6d5047f7bf3a31d5c269627e7492df5b6",
+      "client": "Notion mail",
+      "platform": "Mac, Webmail",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2025-03-16-notionmail.md",
+      "variants": [
+        "2025-03-16-notionmail--fence-1",
+        "2025-03-16-notionmail--fence-2"
+      ]
+    },
+    {
+      "id": "2025-03-26-onet-chrome",
+      "path": "hacks/_posts/2025-03-26-onet-chrome.md",
+      "sha256": "7bbe9ab57208866deb2c5eab1182993565ce395d978a807f8fc852357f4637a3",
+      "client": "Onet",
+      "platform": "Desktop",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2025-03-26-onet-chrome.md",
+      "variants": ["2025-03-26-onet-chrome--fence-1"]
+    },
+    {
+      "id": "2025-03-28-outlook-webmail",
+      "path": "hacks/_posts/2025-03-28-outlook-webmail.md",
+      "sha256": "23f625b9b5377bde8c6238cab15d8d3fb2ddc1108eaf85d3ecda0132ac979c9a",
+      "client": "Outlook",
+      "platform": "webmail",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2025-03-28-outlook-webmail.md",
+      "variants": ["2025-03-28-outlook-webmail--paired-classes"]
+    },
+    {
+      "id": "2025-04-27-proton",
+      "path": "hacks/_posts/2025-04-27-proton.md",
+      "sha256": "a537f4ac0ac8954be1a210ed5998e67a486ba42f80ad6f5a55c37106cfbc17bd",
+      "client": "Proton Mail",
+      "platform": "Desktop",
+      "version": "",
+      "status": "Working",
+      "url": "https://github.com/customerio/howtotarget/blob/32b959d15863bec691e6b3bb32126559152dbf1b/hacks/_posts/2025-04-27-proton.md",
+      "variants": ["2025-04-27-proton--fence-1"]
+    }
+  ]
+}

@@ -1,0 +1,727 @@
+{
+  "2019-03-01-newton-desktop": [
+    {
+      "id": "2019-03-01-newton-desktop--fence-1",
+      "input": "<!doctype html><html><head><style>\n  #cm_mail_smart_body .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-airmail": [
+    {
+      "id": "2019-03-26-airmail--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .bloop_container .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-android-2.3": [
+    {
+      "id": "2019-03-26-android-2.3--fence-1",
+      "input": "<!doctype html><html><head><style>\n  @media screen and (min-width:0\\0){.target{color:#123456;}}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-android-2": [
+    {
+      "id": "2019-03-26-android-2--fence-1",
+      "input": "<!doctype html><html><head><style>\n  @media screen and (pointer){.target{color:#123456;}}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-android-4.2": [
+    {
+      "id": "2019-03-26-android-4.2--fence-1",
+      "input": "<!doctype html><html><head><style>\n  _:-webkit-full-screen, :root .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-android-4.4": [
+    {
+      "id": "2019-03-26-android-4.4--fence-1",
+      "input": "<!doctype html><html><head><style>\n  _:-webkit-full-screen, :root .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-android": [
+    {
+      "id": "2019-03-26-android--fence-1",
+      "input": "<!doctype html><html><head><style>\n  _:-webkit-full-screen, :root .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-aol": [
+    {
+      "id": "2019-03-26-aol--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .body{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body class=\"body\">Message</body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-apple-mail-10": [
+    {
+      "id": "2019-03-26-apple-mail-10--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .Singleton .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-apple-mail-12.4": [
+    {
+      "id": "2019-03-26-apple-mail-12.4--fence-1",
+      "input": "<!doctype html><html><head><style>\n  [class^=\"apple-mail\"] .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-apple-mail-8": [
+    {
+      "id": "2019-03-26-apple-mail-8--fence-1",
+      "input": "<!doctype html><html><head><style>\n  _:-webkit-full-screen, _::-webkit-full-page-media, _:future, :root .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-edison-android": [
+    {
+      "id": "2019-03-26-edison-android--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .edo-email-view .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-edison-ios": [
+    {
+      "id": "2019-03-26-edison-ios--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .edo .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-edison": [
+    {
+      "id": "2019-03-26-edison--fence-1",
+      "input": "<!doctype html><html><head><style>\n  #edo-container .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-freenet-2": [
+    {
+      "id": "2019-03-26-freenet-2--fence-1",
+      "input": "<!doctype html><html><head><meta name=\"viewport\" content=\"width=device-width\"><style>\n  meta ~ * .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><div><p class=\"target orphan\">Message</p></div></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class. Include the head meta element that becomes a content sibling after client rewriting. An authored div supplies the sibling ancestor selected by * after the head/body wrappers are removed."
+    },
+    {
+      "id": "2019-03-26-freenet-2--fence-2",
+      "input": "<!doctype html><html><head><title>Subject</title><style>\n  title ~ * .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><div><p class=\"target orphan\">Message</p></div></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class. Include the head title element that becomes a content sibling after client rewriting. An authored div supplies the sibling ancestor selected by * after the head/body wrappers are removed."
+    }
+  ],
+  "2019-03-26-freenet": [
+    {
+      "id": "2019-03-26-freenet--fence-1",
+      "input": "<!doctype html><html><head><style>\n  #msgBody .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-gmail-android": [
+    {
+      "id": "2019-03-26-gmail-android--fence-1",
+      "input": "<!doctype html><html><head><style>\n  div > u + .body .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body class=\"body\"><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-gmail": [
+    {
+      "id": "2019-03-26-gmail--fence-1",
+      "input": "<!doctype html><html><head><style>\n  u + .body .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body class=\"body\"><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-gmx-web.de-2": [
+    {
+      "id": "2019-03-26-gmx-web.de-2--fence-1",
+      "input": "<!doctype html><html><head><style>\n  body[style*=\"overflow-wrap:break-word\"]{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-gmx-web.de": [
+    {
+      "id": "2019-03-26-gmx-web.de--fence-1",
+      "input": "<!doctype html><html><head><style>\n  u + .body .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body class=\"body\"><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-ios-mail-10": [
+    {
+      "id": "2019-03-26-ios-mail-10--fence-1",
+      "input": "<!doctype html><html><head><style>\n  @supports (-webkit-overflow-scrolling:touch) and (color:#ffff){.target{color:#123456;}}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-nine": [
+    {
+      "id": "2019-03-26-nine--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .body > div > div > .wrapper .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body class=\"body\"><div class=\"wrapper\"><p class=\"target orphan\">Message</p></div></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-notes-8": [
+    {
+      "id": "2019-03-26-notes-8--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .unused.target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-open-xchange": [
+    {
+      "id": "2019-03-26-open-xchange--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .target[class^=\"ox-\"]{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-orange": [
+    {
+      "id": "2019-03-26-orange--fence-1",
+      "input": "<!doctype html><html><head><meta name=\"viewport\" content=\"width=device-width\"><style>\n  meta ~ * .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><div><p class=\"target orphan\">Message</p></div></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class. Include the head meta element that becomes a content sibling after client rewriting. An authored div supplies the sibling ancestor selected by * after the head/body wrappers are removed."
+    },
+    {
+      "id": "2019-03-26-orange--fence-2",
+      "input": "<!doctype html><html><head><title>Subject</title><style>\n  title ~ * .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><div><p class=\"target orphan\">Message</p></div></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class. Include the head title element that becomes a content sibling after client rewriting. An authored div supplies the sibling ancestor selected by * after the head/body wrappers are removed."
+    }
+  ],
+  "2019-03-26-outlook-ios-android-2": [
+    {
+      "id": "2019-03-26-outlook-ios-android-2--fence-1",
+      "input": "<!doctype html><html><head><style>\n  body[data-outlook-cycle] .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    },
+    {
+      "id": "2019-03-26-outlook-ios-android-2--bodyless",
+      "input": "<!doctype html><html><head><style>\n  [data-outlook-cycle] .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Additional targeting form stated in the source prose; instantiated with original test content."
+    }
+  ],
+  "2019-03-26-outlook-ios-android": [
+    {
+      "id": "2019-03-26-outlook-ios-android--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .target\\0{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    },
+    {
+      "id": "2019-03-26-outlook-ios-android--declaration-escape",
+      "input": "<!doctype html><html><head><style>\n  .target{background:red\\0/;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Additional targeting form stated in the source prose; instantiated with original test content."
+    }
+  ],
+  "2019-03-26-outlook-macos": [
+    {
+      "id": "2019-03-26-outlook-macos--fence-1",
+      "input": "<!doctype html><html><head><style>\n  _:-webkit-full-screen, _::-webkit-full-page-media, _:future, :root body:not(.Singleton) .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-outlook-webmail": [
+    {
+      "id": "2019-03-26-outlook-webmail--fence-1",
+      "input": "<!doctype html><html><head><style>\n  [owa].target x:default .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-postbox": [
+    {
+      "id": "2019-03-26-postbox--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .moz-text-html .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-samsung-email-s4": [
+    {
+      "id": "2019-03-26-samsung-email-s4--fence-1",
+      "input": "<!doctype html><html><head><style>\n  #secdiv .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-samsung-email-s5-s9-2": [
+    {
+      "id": "2019-03-26-samsung-email-s5-s9-2--fence-1",
+      "input": "<!doctype html><html><head><style>\n  #MessageViewBody .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-samsung-email-s5-s9-3": [
+    {
+      "id": "2019-03-26-samsung-email-s5-s9-3--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .body > div > div > .wrapper .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body class=\"body\"><div class=\"wrapper\"><p class=\"target orphan\">Message</p></div></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-samsung-email-s5-s9": [
+    {
+      "id": "2019-03-26-samsung-email-s5-s9--fence-1",
+      "input": "<!doctype html><html><head><meta name=\"viewport\" content=\"width=device-width\"><style>\n  meta ~ * .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><div><p class=\"target orphan\">Message</p></div></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class. Include the head meta element that becomes a content sibling after client rewriting. An authored div supplies the sibling ancestor selected by * after the head/body wrappers are removed."
+    },
+    {
+      "id": "2019-03-26-samsung-email-s5-s9--fence-2",
+      "input": "<!doctype html><html><head><title>Subject</title><style>\n  title ~ * .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><div><p class=\"target orphan\">Message</p></div></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class. Include the head title element that becomes a content sibling after client rewriting. An authored div supplies the sibling ancestor selected by * after the head/body wrappers are removed."
+    }
+  ],
+  "2019-03-26-spark": [
+    {
+      "id": "2019-03-26-spark--fence-1",
+      "input": "<!doctype html><html><head><style>\n  _:-webkit-full-screen, _::-webkit-full-page-media, _:future, :root .body:not(.Singleton){color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body class=\"body\">Message</body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-t-online.de": [
+    {
+      "id": "2019-03-26-t-online.de--tonline",
+      "input": "<body><p>Before</p><!--[if tonline]><p>Target</p><![endif]--><p>After</p></body>",
+      "note": "Original markup isolates one of the three conditional-comment forms."
+    },
+    {
+      "id": "2019-03-26-t-online.de--false",
+      "input": "<body><p>Before</p><!--[if false]><p>Target</p><![endif]--><p>After</p></body>",
+      "note": "Original markup isolates one of the three conditional-comment forms."
+    },
+    {
+      "id": "2019-03-26-t-online.de--not-true",
+      "input": "<body><p>Before</p><!--[if !true]><p>Target</p><![endif]--><p>After</p></body>",
+      "note": "Original markup isolates one of the three conditional-comment forms."
+    }
+  ],
+  "2019-03-26-thunderbird-2": [
+    {
+      "id": "2019-03-26-thunderbird-2--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .moz-text-html .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    },
+    {
+      "id": "2019-03-26-thunderbird-2--body-wrapper",
+      "input": "<!doctype html><html><head><style>\n  body > div > .wrapper .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><div class=\"wrapper\"><p class=\"target orphan\">Message</p></div></body></html>",
+      "note": "Additional targeting form stated in the source prose; instantiated with original test content. The client supplies the extra outer div; pre-client HTML only contains the authored wrapper."
+    }
+  ],
+  "2019-03-26-thunderbird": [
+    {
+      "id": "2019-03-26-thunderbird--fence-1",
+      "input": "<!doctype html><html><head><meta name=\"viewport\" content=\"width=device-width\"><style>\n  meta ~ * .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><div><p class=\"target orphan\">Message</p></div></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class. Include the head meta element that becomes a content sibling after client rewriting. An authored div supplies the sibling ancestor selected by * after the head/body wrappers are removed."
+    },
+    {
+      "id": "2019-03-26-thunderbird--fence-2",
+      "input": "<!doctype html><html><head><title>Subject</title><style>\n  title ~ * .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><div><p class=\"target orphan\">Message</p></div></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class. Include the head title element that becomes a content sibling after client rewriting. An authored div supplies the sibling ancestor selected by * after the head/body wrappers are removed."
+    }
+  ],
+  "2019-03-26-windows-mail-2": [
+    {
+      "id": "2019-03-26-windows-mail-2--fence-1",
+      "input": "<!doctype html><html><head><style>\n  _:-ms-fullscreen, :root .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-windows-mail": [
+    {
+      "id": "2019-03-26-windows-mail--fence-1",
+      "input": "<!doctype html><html><head><style>\n  _:-ms-input-placeholder, :root .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-03-26-yahoo-2": [
+    {
+      "id": "2019-03-26-yahoo-2--fence-1",
+      "input": "<!doctype html><html><head><style>\n  @media screen yahoo{.target{color:#123456;}}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    },
+    {
+      "id": "2019-03-26-yahoo-2--required-space",
+      "input": "<!doctype html><html><head><style>\n  @media screen yahoo {.target{color:#123456;}}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "The prose requires a space before the brace although the fenced snippet omits it. Retain both historical spellings."
+    }
+  ],
+  "2019-03-26-yahoo-3": [
+    {
+      "id": "2019-03-26-yahoo-3--star-id",
+      "input": "<body><p id=\"★target\">Message</p></body>",
+      "note": "The upstream CSS-labelled block is an HTML attribute; apply its star prefix to an original element."
+    }
+  ],
+  "2019-03-26-yahoo": [
+    {
+      "id": "2019-03-26-yahoo--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .& .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    },
+    {
+      "id": "2019-03-26-yahoo--element",
+      "input": "<!doctype html><html><head><style>\n  .&h1{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><h1>Message</h1></body></html>",
+      "note": "Additional targeting form stated in the source prose; instantiated with original test content."
+    },
+    {
+      "id": "2019-03-26-yahoo--wrapper",
+      "input": "<!doctype html><html><head><style>\n  .&{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body>Message</body></html>",
+      "note": "Additional targeting form stated in the source prose; instantiated with original test content."
+    },
+    {
+      "id": "2019-03-26-yahoo--escaped-marker",
+      "input": "<!doctype html><html><head><style>\n  .\\& .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Escaped spelling emitted by Tailwind/Maizzle; protects the issue #141 whitelist interaction."
+    }
+  ],
+  "2019-04-01-gmail-ios": [
+    {
+      "id": "2019-04-01-gmail-ios--fence-1",
+      "input": "<!doctype html><html><head><style>\n  @supports (-webkit-overflow-scrolling:touch) and (color:#ffff){.target{color:#123456;}}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-04-01-gmail": [
+    {
+      "id": "2019-04-01-gmail--fence-1",
+      "input": "<!doctype html><html><head><style>\n  @media screen and (max-width: 480px){u + .body .target{display: block!important;}}\n  .discard{font-weight:bold;}\n</style></head>\n<body class=\"body\"><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-04-01-outlook-android": [
+    {
+      "id": "2019-04-01-outlook-android--fence-1",
+      "input": "<!doctype html><html><head><style>\n  @media (min-resolution: 1dpi){body[data-outlook-cycle] .target{display: block!important;}}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-04-01-outlook": [
+    {
+      "id": "2019-04-01-outlook--mso-or-ie",
+      "input": "<body><p>Before</p><!--[if mso | ie]><p>Target</p><![endif]--><p>After</p></body>",
+      "note": "Original text and markup isolate the conditional-comment delimiters; significant spaces are retained."
+    },
+    {
+      "id": "2019-04-01-outlook--true",
+      "input": "<body><p>Before</p><!--[if true]><p>Target</p><![endif]--><p>After</p></body>",
+      "note": "Original text and markup isolate the conditional-comment delimiters; significant spaces are retained."
+    },
+    {
+      "id": "2019-04-01-outlook--false",
+      "input": "<body><p>Before</p><!--[if false]><p>Target</p><![endif]--><p>After</p></body>",
+      "note": "Original text and markup isolate the conditional-comment delimiters; significant spaces are retained."
+    },
+    {
+      "id": "2019-04-01-outlook--revealed",
+      "input": "<body><p>Before</p><!--[if !mso]><!--><p>Target</p><!--<![endif]--><p>After</p></body>",
+      "note": "Original text and markup isolate the conditional-comment delimiters; significant spaces are retained."
+    },
+    {
+      "id": "2019-04-01-outlook--revealed-spaced",
+      "input": "<body><p>Before</p><!--[if !mso]><! --><p>Target</p><!-- <![endif]--><p>After</p></body>",
+      "note": "Original text and markup isolate the conditional-comment delimiters; significant spaces are retained."
+    },
+    {
+      "id": "2019-04-01-outlook--versions",
+      "input": "<body><p>Before</p><!--[if mso 12 | mso 14 | mso 15 ]><p>Target</p><![endif]--><p>After</p></body>",
+      "note": "Original text and markup isolate the conditional-comment delimiters; significant spaces are retained."
+    },
+    {
+      "id": "2019-04-01-outlook--mso-12",
+      "input": "<body><p>Before</p><!--[if mso 12]><p>Target</p><![endif]--><p>After</p></body>",
+      "note": "Original text and markup isolate the conditional-comment delimiters; significant spaces are retained."
+    },
+    {
+      "id": "2019-04-01-outlook--mso-14",
+      "input": "<body><p>Before</p><!--[if mso 14]><p>Target</p><![endif]--><p>After</p></body>",
+      "note": "Original text and markup isolate the conditional-comment delimiters; significant spaces are retained."
+    },
+    {
+      "id": "2019-04-01-outlook--mso-15",
+      "input": "<body><p>Before</p><!--[if mso 15]><p>Target</p><![endif]--><p>After</p></body>",
+      "note": "Original text and markup isolate the conditional-comment delimiters; significant spaces are retained."
+    },
+    {
+      "id": "2019-04-01-outlook--mso-16",
+      "input": "<body><p>Before</p><!--[if mso 16]><p>Target</p><![endif]--><p>After</p></body>",
+      "note": "Original text and markup isolate the conditional-comment delimiters; significant spaces are retained."
+    },
+    {
+      "id": "2019-04-01-outlook--field-spans",
+      "input": "<body><p>Before</p><span style=\"mso-element:field-begin;\"></span>Target<span style=\"mso-element:field-end;\"></span><p>After</p></body>",
+      "note": "Original text between the paired Outlook field spans."
+    }
+  ],
+  "2019-04-08-outlook-webmail": [
+    {
+      "id": "2019-04-08-outlook-webmail--fence-1",
+      "input": "<!doctype html><html><head><style>\n  [class~=\"x_target\"]{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    },
+    {
+      "id": "2019-04-08-outlook-webmail--exact-attribute",
+      "input": "<!doctype html><html><head><style>\n  [class=\"x_target\"]{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Additional targeting form stated in the source prose; instantiated with original test content."
+    }
+  ],
+  "2019-06-13-thunderbird": [
+    {
+      "id": "2019-06-13-thunderbird--fence-1",
+      "input": "<!doctype html><html><head><style>\n  @media screen and (-moz-device-pixel-ratio){.target{color:#123456;}}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-09-10-freenet": [
+    {
+      "id": "2019-09-10-freenet--fence-1",
+      "input": "<!doctype html><html><head><style>\n  body[marginwidth][marginheight] .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2019-10-15-outlook-dark-mode": [
+    {
+      "id": "2019-10-15-outlook-dark-mode--fence-1",
+      "input": "<!doctype html><html><head><style>\n  [data-ogsc] .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><div style=\"color:#123456;background:#ffffff;\"><p class=\"target orphan\">Message</p></div></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class. An authored colored wrapper supplies styles for Outlook to adjust in dark mode."
+    },
+    {
+      "id": "2019-10-15-outlook-dark-mode--background",
+      "input": "<!doctype html><html><head><style>\n  [data-ogsb] .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><div style=\"color:#123456;background:#ffffff;\"><p class=\"target orphan\">Message</p></div></body></html>",
+      "note": "Additional targeting form stated in the source prose; instantiated with original test content. An authored colored wrapper supplies styles for Outlook to adjust in dark mode."
+    }
+  ],
+  "2020-02-19-ios-mail-13": [
+    {
+      "id": "2020-02-19-ios-mail-13--fence-1",
+      "input": "<!doctype html><html><head><style>\n  [class^=\"apple-mail\"] .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2020-03-23-yahoo": [
+    {
+      "id": "2020-03-23-yahoo--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .target{background:/* red */; font-size: /* 50px */; color: /* white */;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2020-04-27-sapo": [
+    {
+      "id": "2020-04-27-sapo--fence-1",
+      "input": "<!doctype html><html><head><style>\n  body[style=\"overflow-y:hidden;width:auto !important; font-family: sans-serif\"] .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2021-06-14-ios-mail-15": [
+    {
+      "id": "2021-06-14-ios-mail-15--fence-1",
+      "input": "<!doctype html><html><head><style>\n  @supports (-webkit-overflow-scrolling:touch) and (aspect-ratio: 1 / 1){.target{color:#123456;}}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2021-06-21-yahoo-aol": [
+    {
+      "id": "2021-06-21-yahoo-aol--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .target{background: red !yahoo}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2021-10-08-163.com": [
+    {
+      "id": "2021-10-08-163.com--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .netease_mail_readhtml .target, .netease_mail_readhtml .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2021-10-08-outlook-ios": [
+    {
+      "id": "2021-10-08-outlook-ios--fence-1",
+      "input": "<!doctype html><html><head><style>\n  [data-outlook-cycle*=\"INSERT_STYLES\"] .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2021-10-08-outlook-pwa": [
+    {
+      "id": "2021-10-08-outlook-pwa--fence-1",
+      "input": "<!doctype html><html><head><style>\n  @media (display-mode: standalone){[class~=\"\"x_target\"\"]{color:#123456;}}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    },
+    {
+      "id": "2021-10-08-outlook-pwa--repaired-quotes",
+      "input": "<!doctype html><html><head><style>\n  @media (display-mode: standalone){[class~=\"x_target\"]{color:#123456;}}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Repair the duplicated quotation marks in a separate case; retain the malformed source spelling as a robustness fixture."
+    }
+  ],
+  "2021-10-08-yahoo-japan": [
+    {
+      "id": "2021-10-08-yahoo-japan--noscript",
+      "input": "<!doctype html><html><head><noscript><style>\n  .& .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></noscript></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Place the targeting rule inside noscript, with original message markup and an unused control rule."
+    }
+  ],
+  "2021-10-29-comcast-webmail": [
+    {
+      "id": "2021-10-29-comcast-webmail--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .mail-detail-content .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2021-10-29-libero": [
+    {
+      "id": "2021-10-29-libero--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .mail-detail-content .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2022-02-22-apple-mail-ipad": [
+    {
+      "id": "2022-02-22-apple-mail-ipad--fence-1",
+      "input": "<!doctype html><html><head><style>\n  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) and (hover: none){_:-webkit-full-screen, _::-webkit-full-page-media, _:future, :root body:not(.Singleton) .target{color:#123456;}}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2022-07-12-outlook-ios-android-3": [
+    {
+      "id": "2022-07-12-outlook-ios-android-3--fence-1",
+      "input": "<!doctype html><html><head></head><body><style>\n  .olm-fragment-custom .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style>\n<p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2022-08-15-seznam.cz": [
+    {
+      "id": "2022-08-15-seznam.cz--fence-1",
+      "input": "<!doctype html><html><head><style>\n  blockquote[data-color] + .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><blockquote>Quote</blockquote><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2022-11-09-spark-ios-android": [
+    {
+      "id": "2022-11-09-spark-ios-android--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .c17637 .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2023-05-11-superhuman-mac": [
+    {
+      "id": "2023-05-11-superhuman-mac--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .ShadowHTML .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    },
+    {
+      "id": "2023-05-11-superhuman-mac--shadow-body",
+      "input": "<!doctype html><html><head><style>\n  .ShadowBody .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Additional targeting form stated in the source prose; instantiated with original test content."
+    },
+    {
+      "id": "2023-05-11-superhuman-mac--shadow-wrapper",
+      "input": "<!doctype html><html><head><style>\n  .ShadowWrapper .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Additional targeting form stated in the source prose; instantiated with original test content."
+    },
+    {
+      "id": "2023-05-11-superhuman-mac--platform-mac",
+      "input": "<!doctype html><html><head><style>\n  .Platform-mac .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Additional targeting form stated in the source prose; instantiated with original test content."
+    }
+  ],
+  "2023-10-22-seznam": [
+    {
+      "id": "2023-10-22-seznam--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .-wm-target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2023-11-13-gmail-ipad": [
+    {
+      "id": "2023-11-13-gmail-ipad--fence-1",
+      "input": "<!doctype html><html><head><style>\n  @media only screen and (min-device-width: 768px) and (max-device-width: 1366px){u + .body .target{color:#123456;}}\n  .discard{font-weight:bold;}\n</style></head>\n<body class=\"body\"><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2023-12-12-outlook-mac-android": [
+    {
+      "id": "2023-12-12-outlook-mac-android--fence-1",
+      "input": "<!doctype html><html><head><style>\n  #converted-body .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2023-12-19-apple-mail-ios-17": [
+    {
+      "id": "2023-12-19-apple-mail-ios-17--fence-1",
+      "input": "<!doctype html><html><head><style>\n  @supports(text-transform: full-width) and (not (-moz-appearance: none)){.target{color:#123456;}}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2024-02-07-qq-mail-android": [
+    {
+      "id": "2024-02-07-qq-mail-android--fence-1",
+      "input": "<!doctype html><html><head><style>\n  #mailcontent .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    },
+    {
+      "id": "2024-02-07-qq-mail-android--class",
+      "input": "<!doctype html><html><head><style>\n  .mailcontent .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Additional targeting form stated in the source prose; instantiated with original test content."
+    },
+    {
+      "id": "2024-02-07-qq-mail-android--id-and-class",
+      "input": "<!doctype html><html><head><style>\n  #mailcontent.mailcontent .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Additional targeting form stated in the source prose; instantiated with original test content."
+    }
+  ],
+  "2024-07-17-samsung-email-microsoft": [
+    {
+      "id": "2024-07-17-samsung-email-microsoft--fence-1",
+      "input": "<!doctype html><html><head><style>\n  # #MessageViewBody .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2024-07-17-samsung-email-non-microsoft": [
+    {
+      "id": "2024-07-17-samsung-email-non-microsoft--fence-1",
+      "input": "<!doctype html><html><head><style>\n  & #MessageViewBody .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2024-07-24-mailspring-desktop": [
+    {
+      "id": "2024-07-24-mailspring-desktop--fence-1",
+      "input": "<!doctype html><html><head></head><body><style>\n  #inbox-html-wrapper .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style>\n<p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2024-08-30-freefr-webmail": [
+    {
+      "id": "2024-08-30-freefr-webmail--fence-1",
+      "input": "<!doctype html><html><head><style>\n  .v1target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    },
+    {
+      "id": "2024-08-30-freefr-webmail--fence-2",
+      "input": "<!doctype html><html><head><style>\n  [class=\"v1target\"]{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2025-03-16-notionmail": [
+    {
+      "id": "2025-03-16-notionmail--fence-1",
+      "input": "<!doctype html><html><head><style>\n  #mail-content-wrapper .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    },
+    {
+      "id": "2025-03-16-notionmail--fence-2",
+      "input": "<!doctype html><html><head><style>\n  #mail-content-container .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2025-03-26-onet-chrome": [
+    {
+      "id": "2025-03-26-onet-chrome--fence-1",
+      "input": "<!doctype html><html><head><style>\n  #ReadMailMainWrapper .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ],
+  "2025-03-28-outlook-webmail": [
+    {
+      "id": "2025-03-28-outlook-webmail--paired-classes",
+      "input": "<!doctype html><html><head><style>\n  .target.x_chained{color:#123456;}.target.chained{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target chained orphan\">Message</p></body></html>",
+      "note": "Combine the complementary CSS rules and pre-client HTML class list; the x_ prefix remains absent from HTML."
+    }
+  ],
+  "2025-04-27-proton": [
+    {
+      "id": "2025-04-27-proton--fence-1",
+      "input": "<!doctype html><html><head><style>\n  #proton-root .target{color:#123456;}\n  .discard{font-weight:bold;}\n</style></head>\n<body><p class=\"target orphan\">Message</p></body></html>",
+      "note": "Retain targeting syntax; use original class names, declarations and pre-client HTML. Add an unused control rule and HTML class."
+    }
+  ]
+}

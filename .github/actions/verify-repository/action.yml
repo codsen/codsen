@@ -225,6 +225,13 @@ runs:
         node ops/scripts/ci-telemetry.js run
         --name "Verify standards catalogue" -- npm run standards:check
 
+    - name: Verify email-client hack fixtures and package test coverage
+      if: inputs.phase != 'validate'
+      shell: bash
+      run: >-
+        node ops/scripts/ci-telemetry.js run
+        --name "Verify email-client hack catalogue" -- npm run email-client-hacks:check
+
     - name: Verify lect-managed package files
       if: inputs.phase != 'validate'
       shell: bash
