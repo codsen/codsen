@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.4.4 (2026-09-21)
+
+### Bug Fixes
+
+- **email-comb:** preserve fragment selectors and raw text ([fa11c47](https://github.com/codsen/codsen/commit/fa11c474709750a76bd7aac1cc10e6e0a626b485))
+- **email-comb:** preserve nested CSS selectors and matching HTML attributes ([d4a106c](https://github.com/codsen/codsen/commit/d4a106cb117a0c6300ad297572d2f9417c46c669))
+- **email-comb:** retain live descendants of whitelisted selectors ([16b8b6a](https://github.com/codsen/codsen/commit/16b8b6a8f4b11c4183cd4784e1e13d5a1c9bfb3d)), closes [#141](https://github.com/codsen/codsen/issues/141)
+
 ## 7.4.3 (2026-09-09)
 
 ### Bug Fixes

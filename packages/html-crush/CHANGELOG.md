@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.3.4 (2026-09-21)
+
+### Bug Fixes
+
+- **html-crush:** preserve HTML raw text and attribute boundaries ([b1075fe](https://github.com/codsen/codsen/commit/b1075fe2870e3e4099e2a5b44b5096de376ab228))
+- **html-crush:** preserve Yahoo media-query targeting whitespace ([4da66c2](https://github.com/codsen/codsen/commit/4da66c2d9d0be49e4c17dbc9c3696c051d6849d0))
+
 ## 6.3.3 (2026-09-09)
 
 ### Bug Fixes
