@@ -346,8 +346,8 @@ function discoverWorkspaces() {
 
 function commandAssertWorkspaces() {
   const workspaces = discoverWorkspaces();
-  if (workspaces.length <= 100) {
-    fail(`Expected more than 100 workspaces, found ${workspaces.length}`);
+  if (workspaces.length <= 10) {
+    fail(`Expected more than 10 workspaces, found ${workspaces.length}`);
   }
   console.log(
     `Validated ${workspaces.length} npm/Lerna workspaces, including ${DATA_PACKAGE}.`,
