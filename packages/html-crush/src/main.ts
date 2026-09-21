@@ -49,6 +49,25 @@ function isHtmlWhitespace(char: string | undefined): boolean {
   );
 }
 
+function isYahooMediaPrelude(str: string, end: number, start: number): boolean {
+  if (str.slice(end - 5, end).toLowerCase() !== "yahoo") return false;
+
+  let cursor = end - 5;
+  for (const keyword of ["screen", "@media"]) {
+    const beforeWhitespace = cursor;
+    while (cursor > start && isHtmlWhitespace(str[cursor - 1])) cursor--;
+    if (
+      cursor === beforeWhitespace ||
+      cursor - keyword.length < start ||
+      str.slice(cursor - keyword.length, cursor).toLowerCase() !== keyword
+    ) {
+      return false;
+    }
+    cursor -= keyword.length;
+  }
+  return true;
+}
+
 function utf8ByteLength(value: string): number {
   // biome-ignore lint/suspicious/noControlCharactersInRegex: intentional full ASCII range for the fast path
   if (/^[\x00-\x7f]*$/.test(value)) {
@@ -1740,6 +1759,18 @@ function crush(str: string, opts?: InputOpts | null): Res {
                 !withinInlineStyle &&
                 str[i] === "/" &&
                 unquotedAttributeValueEndsAt(whitespaceStartedAt)
+              ) {
+                whatToAdd = " ";
+              }
+
+              // Yahoo's media-query hack needs the separator before "{";
+              // removing it changes which email clients apply the rules.
+              if (
+                !whatToAdd &&
+                inCssRegion &&
+                !cssRegion.inline &&
+                str[i] === "{" &&
+                isYahooMediaPrelude(str, whitespaceStartedAt, cssRegion.start)
               ) {
                 whatToAdd = " ";
               }
