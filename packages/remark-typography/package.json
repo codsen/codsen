@@ -1,6 +1,6 @@
 {
   "name": "remark-typography",
-  "version": "0.8.8",
+  "version": "0.8.9",
   "description": "Remark plugin to fix typography: quotes, dashes and so on.",
   "keywords": [
     "unified",
@@ -74,7 +74,7 @@
     "codsen-utils": "^1.10.3",
     "string-apostrophes": "^4.2.7",
     "string-dashes": "^1.4.7",
-    "string-remove-widows": "^4.2.8",
+    "string-remove-widows": "^4.2.9",
     "unified": "^11.0.5",
     "vfile": "^6.0.3"
   },

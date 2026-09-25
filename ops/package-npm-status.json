@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registry": "https://registry.npmjs.org",
-  "checkedAt": "2026-09-21T18:51:53.300Z",
+  "checkedAt": "2026-09-25T07:07:57.856Z",
   "packages": {
     "all-named-html-entities": {
       "status": "available",
@@ -15,7 +15,7 @@
     },
     "array-includes-with-glob": {
       "status": "available",
-      "version": "5.2.4",
+      "version": "5.2.5",
       "deprecated": null
     },
     "array-of-arrays-into-ast": {
@@ -30,7 +30,7 @@
     },
     "array-pull-all-with-glob": {
       "status": "available",
-      "version": "7.2.4",
+      "version": "7.2.5",
       "deprecated": null
     },
     "arrayiffy-if-string": {
@@ -40,7 +40,7 @@
     },
     "ast-compare": {
       "status": "available",
-      "version": "4.2.6",
+      "version": "4.2.7",
       "deprecated": null
     },
     "ast-contains-only-empty-space": {
@@ -50,7 +50,7 @@
     },
     "ast-deep-contains": {
       "status": "available",
-      "version": "5.2.5",
+      "version": "5.2.6",
       "deprecated": null
     },
     "ast-delete-object": {
@@ -65,12 +65,12 @@
     },
     "ast-get-values-by-key": {
       "status": "available",
-      "version": "5.2.6",
+      "version": "5.2.7",
       "deprecated": null
     },
     "ast-is-empty": {
       "status": "available",
-      "version": "4.2.4",
+      "version": "4.2.5",
       "deprecated": null
     },
     "ast-loose-compare": {
@@ -80,7 +80,7 @@
     },
     "ast-monkey": {
       "status": "available",
-      "version": "10.0.0",
+      "version": "10.0.1",
       "deprecated": null
     },
     "ast-monkey-traverse": {
@@ -115,7 +115,7 @@
     },
     "check-types-mini": {
       "status": "available",
-      "version": "8.2.4",
+      "version": "8.2.5",
       "deprecated": null
     },
     "chlu": {
@@ -130,7 +130,7 @@
     },
     "codsen": {
       "status": "available",
-      "version": "0.5.4",
+      "version": "0.5.5",
       "deprecated": null
     },
     "codsen-format-diagnostic-value": {
@@ -155,27 +155,27 @@
     },
     "codsen-utils": {
       "status": "available",
-      "version": "1.10.2",
+      "version": "1.10.3",
       "deprecated": null
     },
     "color-shorthand-hex-to-six-digit": {
       "status": "available",
-      "version": "5.2.4",
+      "version": "5.2.5",
       "deprecated": null
     },
     "csv-sort": {
       "status": "available",
-      "version": "7.2.5",
+      "version": "7.2.6",
       "deprecated": null
     },
     "csv-sort-cli": {
       "status": "available",
-      "version": "4.2.6",
+      "version": "4.2.7",
       "deprecated": null
     },
     "csv-split-easy": {
       "status": "available",
-      "version": "7.2.5",
+      "version": "7.2.6",
       "deprecated": null
     },
     "detect-is-it-html-or-xhtml": {
@@ -190,7 +190,7 @@
     },
     "detergent": {
       "status": "available",
-      "version": "9.4.9",
+      "version": "9.4.10",
       "deprecated": null
     },
     "easy-replace": {
@@ -200,22 +200,22 @@
     },
     "edit-package-json": {
       "status": "available",
-      "version": "0.10.7",
+      "version": "0.10.8",
       "deprecated": null
     },
     "email-all-chars-within-ascii": {
       "status": "available",
-      "version": "5.2.5",
+      "version": "5.2.6",
       "deprecated": null
     },
     "email-all-chars-within-ascii-cli": {
       "status": "available",
-      "version": "4.2.6",
+      "version": "4.2.7",
       "deprecated": null
     },
     "email-comb": {
       "status": "available",
-      "version": "7.4.3",
+      "version": "7.4.4",
       "deprecated": null
     },
     "email-homey": {
@@ -249,7 +249,7 @@
     },
     "extract-search-index": {
       "status": "available",
-      "version": "2.2.7",
+      "version": "2.2.8",
       "deprecated": null
     },
     "fol": {
@@ -259,12 +259,12 @@
     },
     "generate-atomic-css": {
       "status": "available",
-      "version": "3.2.4",
+      "version": "3.2.5",
       "deprecated": null
     },
     "generate-atomic-css-cli": {
       "status": "available",
-      "version": "4.2.6",
+      "version": "4.2.7",
       "deprecated": null
     },
     "gulp-email-remove-unused-css": {
@@ -284,7 +284,7 @@
     },
     "html-crush": {
       "status": "available",
-      "version": "6.3.3",
+      "version": "6.3.4",
       "deprecated": null
     },
     "html-entities-not-email-friendly": {
@@ -314,12 +314,12 @@
     },
     "is-html-attribute-closing": {
       "status": "available",
-      "version": "4.2.5",
+      "version": "4.2.6",
       "deprecated": null
     },
     "is-html-tag-opening": {
       "status": "available",
-      "version": "4.2.5",
+      "version": "4.2.6",
       "deprecated": null
     },
     "is-language-code": {
@@ -329,7 +329,7 @@
     },
     "is-media-descriptor": {
       "status": "available",
-      "version": "5.2.5",
+      "version": "5.2.6",
       "deprecated": null
     },
     "is-relative-uri": {
@@ -339,22 +339,22 @@
     },
     "js-row-num": {
       "status": "available",
-      "version": "7.2.5",
+      "version": "7.2.6",
       "deprecated": null
     },
     "js-row-num-cli": {
       "status": "available",
-      "version": "4.2.6",
+      "version": "4.2.7",
       "deprecated": null
     },
     "json-comb": {
       "status": "available",
-      "version": "0.11.6",
+      "version": "0.11.7",
       "deprecated": null
     },
     "json-comb-core": {
       "status": "available",
-      "version": "8.2.6",
+      "version": "8.2.7",
       "deprecated": null
     },
     "json-sort-cli": {
@@ -364,7 +364,7 @@
     },
     "json-variables": {
       "status": "available",
-      "version": "12.2.6",
+      "version": "12.2.7",
       "deprecated": null
     },
     "lect": {
@@ -374,12 +374,12 @@
     },
     "lerna-clean-changelogs": {
       "status": "available",
-      "version": "5.2.5",
+      "version": "5.2.6",
       "deprecated": null
     },
     "lerna-clean-changelogs-cli": {
       "status": "available",
-      "version": "4.2.6",
+      "version": "4.2.7",
       "deprecated": null
     },
     "lerna-link-dep": {
@@ -394,47 +394,47 @@
     },
     "object-all-values-equal-to": {
       "status": "available",
-      "version": "4.2.4",
+      "version": "4.2.5",
       "deprecated": null
     },
     "object-boolean-combinations": {
       "status": "available",
-      "version": "6.3.4",
+      "version": "6.3.5",
       "deprecated": null
     },
     "object-delete-key": {
       "status": "available",
-      "version": "4.2.6",
+      "version": "4.2.7",
       "deprecated": null
     },
     "object-fill-missing-keys": {
       "status": "available",
-      "version": "11.2.5",
+      "version": "11.2.6",
       "deprecated": null
     },
     "object-flatten-all-arrays": {
       "status": "available",
-      "version": "7.2.4",
+      "version": "7.2.5",
       "deprecated": null
     },
     "object-flatten-referencing": {
       "status": "available",
-      "version": "7.2.5",
+      "version": "7.2.6",
       "deprecated": null
     },
     "object-merge-advanced": {
       "status": "available",
-      "version": "14.2.4",
+      "version": "14.2.5",
       "deprecated": null
     },
     "object-no-new-keys": {
       "status": "available",
-      "version": "5.3.4",
+      "version": "5.3.5",
       "deprecated": null
     },
     "object-set-all-values-to": {
       "status": "available",
-      "version": "6.2.5",
+      "version": "6.2.6",
       "deprecated": null
     },
     "perf-ref": {
@@ -494,12 +494,12 @@
     },
     "ranges-apply": {
       "status": "available",
-      "version": "7.2.5",
+      "version": "7.2.6",
       "deprecated": null
     },
     "ranges-crop": {
       "status": "available",
-      "version": "6.2.5",
+      "version": "6.2.6",
       "deprecated": null
     },
     "ranges-ent-decode": {
@@ -509,7 +509,7 @@
     },
     "ranges-invert": {
       "status": "available",
-      "version": "6.2.5",
+      "version": "6.2.6",
       "deprecated": null
     },
     "ranges-is-index-within": {
@@ -524,7 +524,7 @@
     },
     "ranges-merge": {
       "status": "available",
-      "version": "9.2.5",
+      "version": "9.2.6",
       "deprecated": null
     },
     "ranges-offset": {
@@ -534,12 +534,12 @@
     },
     "ranges-process-outside": {
       "status": "available",
-      "version": "6.2.5",
+      "version": "6.2.6",
       "deprecated": null
     },
     "ranges-push": {
       "status": "available",
-      "version": "7.3.2",
+      "version": "7.3.3",
       "deprecated": null
     },
     "ranges-regex": {
@@ -549,7 +549,7 @@
     },
     "ranges-sort": {
       "status": "available",
-      "version": "6.2.4",
+      "version": "6.2.5",
       "deprecated": null
     },
     "regex-empty-conditional-comments": {
@@ -584,7 +584,7 @@
     },
     "remark-typography": {
       "status": "available",
-      "version": "0.8.7",
+      "version": "0.8.8",
       "deprecated": null
     },
     "seo-editor": {
@@ -599,7 +599,7 @@
     },
     "string-apostrophes": {
       "status": "available",
-      "version": "4.2.6",
+      "version": "4.2.7",
       "deprecated": null
     },
     "string-bionic-split": {
@@ -619,7 +619,7 @@
     },
     "string-collapse-white-space": {
       "status": "available",
-      "version": "11.2.6",
+      "version": "11.2.7",
       "deprecated": null
     },
     "string-convert-indexes": {
@@ -629,12 +629,12 @@
     },
     "string-dashes": {
       "status": "available",
-      "version": "1.4.6",
+      "version": "1.4.7",
       "deprecated": null
     },
     "string-extract-class-names": {
       "status": "available",
-      "version": "8.4.0",
+      "version": "8.4.1",
       "deprecated": null
     },
     "string-extract-sass-vars": {
@@ -644,27 +644,27 @@
     },
     "string-find-heads-tails": {
       "status": "available",
-      "version": "6.2.5",
+      "version": "6.2.6",
       "deprecated": null
     },
     "string-find-malformed": {
       "status": "available",
-      "version": "4.2.5",
+      "version": "4.2.6",
       "deprecated": null
     },
     "string-fix-broken-named-entities": {
       "status": "available",
-      "version": "7.2.5",
+      "version": "7.2.6",
       "deprecated": null
     },
     "string-left-right": {
       "status": "available",
-      "version": "6.2.4",
+      "version": "6.2.5",
       "deprecated": null
     },
     "string-match-left-right": {
       "status": "available",
-      "version": "9.2.5",
+      "version": "9.2.6",
       "deprecated": null
     },
     "string-overlap-one-on-another": {
@@ -674,27 +674,27 @@
     },
     "string-process-comma-separated": {
       "status": "available",
-      "version": "4.3.4",
+      "version": "4.3.5",
       "deprecated": null
     },
     "string-range-expander": {
       "status": "available",
-      "version": "4.2.5",
+      "version": "4.2.6",
       "deprecated": null
     },
     "string-remove-duplicate-heads-tails": {
       "status": "available",
-      "version": "7.2.5",
+      "version": "7.2.6",
       "deprecated": null
     },
     "string-remove-thousand-separators": {
       "status": "available",
-      "version": "7.2.5",
+      "version": "7.2.6",
       "deprecated": null
     },
     "string-remove-widows": {
       "status": "available",
-      "version": "4.2.7",
+      "version": "4.2.8",
       "deprecated": null
     },
     "string-replace-slices-array": {
@@ -714,7 +714,7 @@
     },
     "string-strip-html": {
       "status": "available",
-      "version": "13.7.4",
+      "version": "13.7.5",
       "deprecated": null
     },
     "string-trim-spaces-only": {
@@ -739,7 +739,7 @@
     },
     "string-unfancy": {
       "status": "available",
-      "version": "6.3.0",
+      "version": "6.3.1",
       "deprecated": null
     },
     "stristri": {
@@ -754,12 +754,12 @@
     },
     "test-mixer": {
       "status": "available",
-      "version": "4.4.2",
+      "version": "4.4.3",
       "deprecated": null
     },
     "tsd-extract": {
       "status": "available",
-      "version": "0.10.6",
+      "version": "0.10.7",
       "deprecated": null
     },
     "tsd-extract-noesm": {
@@ -769,7 +769,7 @@
     },
     "update-versions": {
       "status": "available",
-      "version": "7.2.7",
+      "version": "7.2.8",
       "deprecated": null
     },
     "util-array-object-or-both": {

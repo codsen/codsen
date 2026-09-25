@@ -1952,7 +1952,7 @@ export const packageJSONData = {
   },
   "detergent": {
     "name": "detergent",
-    "version": "9.4.10",
+    "version": "9.4.11",
     "description": "Extract, clean, encode text and fix English style",
     "keywords": [
       "brief",
@@ -2041,8 +2041,8 @@ export const packageJSONData = {
       "string-fix-broken-named-entities": "^7.2.6",
       "string-left-right": "^6.2.5",
       "string-range-expander": "^4.2.6",
-      "string-remove-widows": "^4.2.8",
-      "string-strip-html": "^13.7.5"
+      "string-remove-widows": "^4.2.9",
+      "string-strip-html": "^13.7.6"
     },
     "devDependencies": {
       "test-mixer": "^4.4.3"
@@ -2407,7 +2407,7 @@ export const packageJSONData = {
   },
   "extract-search-index": {
     "name": "extract-search-index",
-    "version": "2.2.8",
+    "version": "2.2.9",
     "description": "Extract unique keyword input list string for search",
     "keywords": [
       "string",
@@ -2482,7 +2482,7 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.10.3",
       "html-entity-codec": "^1.1.0",
-      "string-strip-html": "^13.7.5",
+      "string-strip-html": "^13.7.6",
       "string-unfancy": "^6.3.1"
     },
     "engines": {
@@ -5944,7 +5944,7 @@ export const packageJSONData = {
   },
   "remark-typography": {
     "name": "remark-typography",
-    "version": "0.8.8",
+    "version": "0.8.9",
     "description": "Remark plugin to fix typography: quotes, dashes and so on.",
     "keywords": [
       "unified",
@@ -6024,7 +6024,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.10.3",
       "string-apostrophes": "^4.2.7",
       "string-dashes": "^1.4.7",
-      "string-remove-widows": "^4.2.8",
+      "string-remove-widows": "^4.2.9",
       "unified": "^11.0.5",
       "vfile": "^6.0.3"
     },
@@ -7411,7 +7411,7 @@ export const packageJSONData = {
   },
   "string-remove-widows": {
     "name": "string-remove-widows",
-    "version": "4.2.8",
+    "version": "4.2.9",
     "description": "Helps to prevent widow words in a text",
     "keywords": [
       "against",
@@ -7494,7 +7494,7 @@ export const packageJSONData = {
       "string-left-right": "^6.2.5"
     },
     "devDependencies": {
-      "string-strip-html": "^13.7.5"
+      "string-strip-html": "^13.7.6"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -7505,7 +7505,7 @@ export const packageJSONData = {
   },
   "string-strip-html": {
     "name": "string-strip-html",
-    "version": "13.7.5",
+    "version": "13.7.6",
     "description": "Strip HTML tags from strings. No parser, accepts mixed sources.",
     "keywords": [
       "code",

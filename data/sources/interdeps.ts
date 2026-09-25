@@ -224,7 +224,7 @@ export const interdeps = [
   },
   {
     "name": "extract-search-index",
-    "tarballSizeBytes": 42231,
+    "tarballSizeBytes": 42232,
     "unpackedSizeBytes": 126803,
     "imports": [
       "codsen-utils",
@@ -712,7 +712,7 @@ export const interdeps = [
   },
   {
     "name": "string-remove-widows",
-    "tarballSizeBytes": 29832,
+    "tarballSizeBytes": 29833,
     "unpackedSizeBytes": 85889,
     "imports": [
       "codsen-utils",
@@ -723,8 +723,8 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "tarballSizeBytes": 57388,
-    "unpackedSizeBytes": 174938,
+    "tarballSizeBytes": 57456,
+    "unpackedSizeBytes": 175132,
     "imports": [
       "codsen-utils",
       "html-entity-codec",
