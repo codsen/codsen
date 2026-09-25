@@ -487,4 +487,92 @@ test("006 - quoted tag text respects attribute boundaries and malformed recovery
   }
 });
 
+test("007 - quotes in bracketed prose do not consume matching quotes in later text", () => {
+  for (const [source, expected] of [
+    ["<Bach's Suite> played it's fine", "played it's fine"],
+    ["<a's> body", "body"],
+    ["<no apostrophe> body it's here", "body it's here"],
+    ['<a"s> body it"s here', 'body it"s here'],
+  ]) {
+    equal(stripHtml(source).result, expected, "007.01");
+  }
+});
+
+test("008 - stray quotes without attribute assignments leave tag boundaries intact", () => {
+  for (const quote of ['"', "'"]) {
+    for (const opening of [
+      `<Bach${quote}s Suite>`,
+      `<a${quote}s>`,
+      `<div data-${quote}s>`,
+      `<div ${quote}stray>`,
+    ]) {
+      for (const suffix of [
+        `body it${quote}s here`,
+        `body ${quote} here`,
+        `body ${quote}`,
+        `body <b title=${quote}value${quote}>here</b>`,
+      ]) {
+        const source = `${opening} ${suffix}`;
+        const expected = suffix.includes("<b") ? "body here" : suffix;
+        for (const skipHtmlDecoding of [false, true]) {
+          const plain = stripHtml(source, { skipHtmlDecoding });
+          const tokens = [];
+          const forwarded = stripHtml(source, {
+            skipHtmlDecoding,
+            cb: ({ tag, rangesArr, proposedReturn }) => {
+              tokens.push(tag);
+              if (proposedReturn) {
+                rangesArr.push(proposedReturn);
+              }
+            },
+          });
+
+          equal(plain.result, expected, "008.01");
+          equal(forwarded.result, expected, "008.02");
+          equal(
+            [tokens[0].start, tokens[0].end, tokens[0].status],
+            [0, opening.length, "complete"],
+            "008.03",
+          );
+          equal(plain.allTagLocations[0], [0, opening.length], "008.04");
+          equal(plain.filteredTagLocations[0], [0, opening.length], "008.05");
+          equal(forwarded.ranges, plain.ranges, "008.06");
+          equal(rApply(source, plain.ranges), expected, "008.07");
+        }
+      }
+    }
+  }
+});
+
+test("009 - stray name quotes allow recovery at the next opening tag", () => {
+  for (const quote of ['"', "'"]) {
+    const source = `<a${quote}s <b>body ${quote} here`;
+    const expected = `body ${quote} here`;
+    const plain = stripHtml(source);
+    const tokens = [];
+    const forwarded = stripHtml(source, {
+      cb: ({ tag, rangesArr, proposedReturn }) => {
+        tokens.push(tag);
+        if (proposedReturn) {
+          rangesArr.push(proposedReturn);
+        }
+      },
+    });
+
+    equal(plain.result, expected, "009.01");
+    equal(forwarded.result, expected, "009.02");
+    equal(
+      tokens.map(({ start, end, name, status }) => [start, end, name, status]),
+      [
+        [0, 5, "a", "incomplete"],
+        [5, 8, "b", "complete"],
+      ],
+      "009.03",
+    );
+    equal(plain.ranges, [[0, 8]], "009.04");
+    equal(forwarded.ranges, plain.ranges, "009.05");
+    equal(rApply(source, plain.ranges), expected, "009.06");
+  }
+});
+
 test.run();

@@ -2218,9 +2218,11 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     if (
       // it's closing bracket
       closesHere &&
-      // A matching attribute quote still ahead makes this bracket value data.
-      // Keep the existing recovery below when the quote is never closed.
-      (!tag.quotes || tag.quotes.next === -1) &&
+      // Only assigned attribute values can quote a bracket. Stray quotes in
+      // names must not pair with later prose and consume it as tag content.
+      (!tag.quotes ||
+        typeof attrObj.equalsAt !== "number" ||
+        tag.quotes.next === -1) &&
       //
       // precaution against JSP comparison
       // .. <c:when test="${!empty ab.cd && ab.cd > 0.00}"> ..
@@ -2856,6 +2858,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       // A quote followed immediately by value characters may belong to a
       // later tag's attribute when the current attribute was never closed.
       (!tag.quotes ||
+        typeof attrObj.equalsAt !== "number" ||
         tag.quotes.next === -1 ||
         (tag.quotes.next + 1 < len &&
           !isWhitespaceCode(str.charCodeAt(tag.quotes.next + 1)) &&
