@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 13.7.6 (2026-09-25)
+
+### Bug Fixes
+
+- pattern, apostrophe inside angle brackets plus apostrophe ([6cfaecf](https://github.com/codsen/codsen/commit/6cfaecf4be82bc8ab8c9ca7d030afcd25371cc1c))
+
 ## 13.7.5 (2026-09-21)
 
 ### Bug Fixes
