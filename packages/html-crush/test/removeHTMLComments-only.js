@@ -237,4 +237,32 @@ test("10 - stray conditional tail reports applicability in every mode", () => {
   }
 });
 
+test("11 - conditional comments are recognised in any ASCII case", () => {
+  for (const [source, removedAll] of [
+    ["<!--[IF mso]>x<![ENDIF]-->", "x"],
+    ["<!--[If !MSO]><!-->x<!--<![EndIf]-->", "x"],
+    ["<![ENDIF]-->", ""],
+  ]) {
+    for (const [mode, expectedResult] of [
+      [0, source],
+      [1, source],
+      [2, removedAll],
+    ]) {
+      const { result, applicableOpts } = m(equal, source, {
+        removeHTMLComments: mode,
+      });
+
+      equal(result, expectedResult, "11.01");
+      equal(
+        applicableOpts,
+        {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+        "11.02",
+      );
+    }
+  }
+});
+
 test.run();

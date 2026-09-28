@@ -563,4 +563,74 @@ test(`24 - opts.mindTheInlineTags - entries containing non-word characters`, () 
   );
 });
 
+// HTML tag names are ASCII case-insensitive
+// -----------------------------------------------------------------------------
+
+test(`25 - inline tags - upper-case tag names retain a visible separator`, () => {
+  equal(
+    m(equal, "<SPAN>a</SPAN> <SPAN>b</SPAN>", {
+      removeLineBreaks: true,
+    }).result,
+    "<SPAN>a</SPAN> <SPAN>b</SPAN>",
+    "25.01",
+  );
+  equal(
+    m(equal, "<Span>a</Span>\n<span>b</span>", {
+      removeLineBreaks: true,
+    }).result,
+    "<Span>a</Span> <span>b</span>",
+    "25.02",
+  );
+  equal(
+    m(equal, "<B>a</B> <I>b</I>", {
+      removeLineBreaks: true,
+    }).result,
+    "<B>a</B> <I>b</I>",
+    "25.03",
+  );
+  equal(
+    m(equal, "<SPAN>a</SPAN> <SPAN>b</SPAN>", {
+      removeLineBreaks: true,
+      lineLengthLimit: 12,
+    }).result,
+    "<SPAN>a</SPAN>\n<SPAN>b</SPAN>",
+    "25.04",
+  );
+  equal(
+    m(equal, "<SPANNER>1</SPANNER> <SPANNER>2</SPANNER>", {
+      removeLineBreaks: true,
+    }).result,
+    "<SPANNER>1</SPANNER><SPANNER>2</SPANNER>",
+    "25.05",
+  );
+});
+
+test(`26 - opts.mindTheInlineTags - configured names match in any ASCII case`, () => {
+  equal(
+    m(equal, "<custom>a</custom> <CUSTOM>b</CUSTOM>", {
+      removeLineBreaks: true,
+      mindTheInlineTags: ["CuStOm"],
+    }).result,
+    "<custom>a</custom> <CUSTOM>b</CUSTOM>",
+    "26.01",
+  );
+  equal(
+    m(equal, "<custom>a</custom> <CUSTOM>b</CUSTOM>", {
+      removeLineBreaks: true,
+    }).result,
+    "<custom>a</custom><CUSTOM>b</CUSTOM>",
+    "26.02",
+  );
+  // an entry with a non-word character sends every lookup down the slower
+  // matchRight() path, which must fold the case too
+  equal(
+    m(equal, "<SPAN>1</SPAN>\n<Span>2</Span>", {
+      removeLineBreaks: true,
+      mindTheInlineTags: ["a-b", "SPAN"],
+    }).result,
+    "<SPAN>1</SPAN> <Span>2</Span>",
+    "26.03",
+  );
+});
+
 test.run();

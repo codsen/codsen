@@ -209,4 +209,74 @@ test(`03 - opts.breakToTheLeftOf - degenerate lists`, () => {
   );
 });
 
+// tag names, the doctype and CSS at-rules are all ASCII case-insensitive
+// -----------------------------------------------------------------------------
+
+test(`04 - opts.breakToTheLeftOf - default breakpoints match in any ASCII case`, () => {
+  equal(
+    m(equal, "<TD>a</TD> <TD>b</TD>", {
+      removeLineBreaks: true,
+    }).result,
+    "<TD>a\n</TD><TD>b\n</TD>",
+    "04.01",
+  );
+  equal(
+    m(equal, "<!DOCTYPE html><HTML><HEAD></HEAD></HTML>", {
+      removeLineBreaks: true,
+    }).result,
+    "<!DOCTYPE html>\n<HTML>\n<HEAD>\n</HEAD>\n</HTML>",
+    "04.02",
+  );
+  equal(
+    m(equal, "<!doctype html><html><head></head></html>", {
+      removeLineBreaks: true,
+    }).result,
+    "<!doctype html>\n<html>\n<head>\n</head>\n</html>",
+    "04.03",
+  );
+  equal(
+    m(equal, "<STYLE>@MEDIA x{.a{b:c}}</STYLE>", {
+      removeLineBreaks: true,
+    }).result,
+    "<STYLE>\n@MEDIA x{.a{b:c} }\n</STYLE>",
+    "04.04",
+  );
+});
+
+test(`05 - opts.breakToTheLeftOf - configured breakpoints match in any ASCII case`, () => {
+  equal(
+    m(equal, "<td>a</td> <td>b</td>", {
+      removeLineBreaks: true,
+      breakToTheLeftOf: ["<TD"],
+    }).result,
+    "<td>a</td>\n<td>b</td>",
+    "05.01",
+  );
+  equal(
+    m(equal, "<TD>a</TD> <Td>b</Td>", {
+      removeLineBreaks: true,
+      breakToTheLeftOf: ["<td"],
+    }).result,
+    "<TD>a</TD>\n<Td>b</Td>",
+    "05.02",
+  );
+});
+
+test(`06 - opts.breakToTheLeftOf - no break inside a revealed conditional tail`, () => {
+  equal(
+    m(equal, "a <!--<![endif]--> b", {
+      removeLineBreaks: true,
+    }).result,
+    "a\n<!--<![endif]--> b",
+    "06.01",
+  );
+  equal(
+    m(equal, "a <!--<![ENDIF]--> b", {
+      removeLineBreaks: true,
+    }).result,
+    "a\n<!--<![ENDIF]--> b",
+    "06.02",
+  );
+});
+
 test.run();

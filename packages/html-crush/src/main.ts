@@ -32,6 +32,41 @@ function isWordChar(char: string | undefined): boolean {
   return char !== undefined && isWordCharCode(char.charCodeAt(0));
 }
 
+// HTML's ASCII case-insensitivity folds A-Z alone: toLowerCase() would also
+// fold a letter like the Kelvin sign into "k".
+function asciiLowerCase(str: string): string {
+  return str.replace(/[A-Z]+/g, (s) => s.toLowerCase());
+}
+
+function asciiUpperCaseLetter(char: string | undefined): string | undefined {
+  return char !== undefined && char >= "a" && char <= "z"
+    ? char.toUpperCase()
+    : char;
+}
+
+// String#startsWith() folding ASCII case, for markup which HTML matches that
+// way, like the "<![endif" of a conditional comment. "lowerNeedle" must be in
+// lower case already.
+function startsWithIgnoringAsciiCase(
+  str: string,
+  lowerNeedle: string,
+  idx: number,
+): boolean {
+  let needleLen = lowerNeedle.length;
+  if (idx + needleLen > str.length) {
+    return false;
+  }
+  for (let k = 0; k < needleLen; k++) {
+    let code = str.charCodeAt(idx + k);
+    if (
+      (code > 64 && code < 91 ? code + 32 : code) !== lowerNeedle.charCodeAt(k)
+    ) {
+      return false;
+    }
+  }
+  return true;
+}
+
 function isHtmlNameChar(char: string | undefined): boolean {
   return (
     char !== undefined &&
@@ -404,14 +439,23 @@ function crush(str: string, opts?: InputOpts | null): Res {
     resolvedOpts.removeHTMLComments = resolvedOpts.removeHTMLComments ? 1 : 0;
   }
 
+  // Tag names, the doctype and CSS at-rules - everything the defaults hold -
+  // are ASCII case-insensitive, so the names are matched that way. They are
+  // folded once here, and breakToTheLeftOfMatches() folds the input as it
+  // compares. The first letters are kept in both cases for the prefilter.
+  let breakToTheLeftOf = Array.isArray(resolvedOpts.breakToTheLeftOf)
+    ? resolvedOpts.breakToTheLeftOf.map((val) =>
+        isStr(val) ? asciiLowerCase(val) : val,
+      )
+    : [];
   let breakToTheLeftOfFirstLetters = "";
-  if (
-    Array.isArray(resolvedOpts.breakToTheLeftOf) &&
-    resolvedOpts.breakToTheLeftOf.length
-  ) {
-    breakToTheLeftOfFirstLetters = [
-      ...new Set(resolvedOpts.breakToTheLeftOf.map((val) => val[0])),
-    ].join("");
+  if (breakToTheLeftOf.length) {
+    let firstLetters = new Set<string | undefined>();
+    for (let val of breakToTheLeftOf) {
+      firstLetters.add(val[0]);
+      firstLetters.add(asciiUpperCaseLetter(val[0]));
+    }
+    breakToTheLeftOfFirstLetters = [...firstLetters].join("");
   }
   DEV &&
     console.log(
@@ -451,7 +495,12 @@ function crush(str: string, opts?: InputOpts | null): Res {
   let mindTheInlineTags = Array.isArray(resolvedOpts.mindTheInlineTags)
     ? resolvedOpts.mindTheInlineTags
     : [];
-  let mindTheInlineTagsSet = new Set(mindTheInlineTags);
+  // HTML tag names are ASCII case-insensitive, so "SPAN" and a configured
+  // "Span" both match "span". Every lookup lowercases its tag name, which is
+  // made of ASCII word characters alone.
+  let mindTheInlineTagsSet = new Set(
+    mindTheInlineTags.map((tag) => (isStr(tag) ? asciiLowerCase(tag) : tag)),
+  );
   // Reading the whole word-character run at once and looking it up is
   // equivalent to matchRight() + its "next char is not \w" callback only while
   // every name is itself a run of word characters - which the defaults, and
@@ -468,13 +517,19 @@ function crush(str: string, opts?: InputOpts | null): Res {
 
   // resolvedOpts.breakToTheLeftOf is matched at nearly every character, and
   // matchRightIncl() rebuilds its options object once per name on every call.
-  // Since these are plain, case-sensitive literals with no callback and no
-  // trimming, matching one is just String#startsWith - so group the names by
-  // their first character and only test the ones that could start here.
+  // Since these are plain literals with no callback and no trimming, matching
+  // one is a character comparison which folds ASCII case. The folded names are
+  // filed under their first character, in both of its cases, which leaves most
+  // characters a single missed lookup. Nearly all of the defaults share their
+  // "<", so under it the names are filed again by their folded second
+  // character code, and only the few which could start here are compared.
   //
   // Entries that are empty strings are dropped: march() never matches those,
   // whereas startsWith("") would match anywhere.
-  let breakToTheLeftOfByFirstChar = new Map<string, string[]>();
+  let breakToTheLeftOfByFirstChar = new Map<
+    string,
+    { alone: boolean; bySecondCode: Map<number, string[]> }
+  >();
   // A lone whitespace-only or empty entry sends matchRightIncl() down its
   // "match by callback alone" branch, which throws when there is no callback.
   // Leave any such list to it rather than reproducing that here.
@@ -487,15 +542,27 @@ function crush(str: string, opts?: InputOpts | null): Res {
       !resolvedOpts.breakToTheLeftOf[0].trim()
     );
   if (breakToTheLeftOfIsSimple) {
-    for (let oneOfNames of resolvedOpts.breakToTheLeftOf) {
+    for (let oneOfNames of new Set(breakToTheLeftOf)) {
       if (!oneOfNames.length) {
         continue;
       }
-      let bucket = breakToTheLeftOfByFirstChar.get(oneOfNames[0]);
+      let firstChar = oneOfNames[0];
+      let upperFirstChar = asciiUpperCaseLetter(firstChar) as string;
+      let entry = breakToTheLeftOfByFirstChar.get(firstChar);
+      if (!entry) {
+        entry = { alone: false, bySecondCode: new Map() };
+        breakToTheLeftOfByFirstChar.set(firstChar, entry);
+        breakToTheLeftOfByFirstChar.set(upperFirstChar, entry);
+      }
+      if (oneOfNames.length === 1) {
+        entry.alone = true;
+        continue;
+      }
+      let bucket = entry.bySecondCode.get(oneOfNames.charCodeAt(1));
       if (bucket) {
         bucket.push(oneOfNames);
       } else {
-        breakToTheLeftOfByFirstChar.set(oneOfNames[0], [oneOfNames]);
+        entry.bySecondCode.set(oneOfNames.charCodeAt(1), [oneOfNames]);
       }
     }
   }
@@ -503,14 +570,27 @@ function crush(str: string, opts?: InputOpts | null): Res {
   // Does any resolvedOpts.breakToTheLeftOf name start at "idx"?
   function breakToTheLeftOfMatches(idx: number): boolean {
     if (!breakToTheLeftOfIsSimple) {
-      return !!matchRightIncl(str, idx, resolvedOpts.breakToTheLeftOf);
+      return !!matchRightIncl(str, idx, resolvedOpts.breakToTheLeftOf, {
+        i: true,
+      });
     }
-    let bucket = breakToTheLeftOfByFirstChar.get(str[idx]);
+    let entry = breakToTheLeftOfByFirstChar.get(str[idx]);
+    if (entry === undefined) {
+      return false;
+    }
+    if (entry.alone) {
+      return true;
+    }
+    let code = str.charCodeAt(idx + 1);
+    // past the end, the code is NaN, which no name has
+    let bucket = entry.bySecondCode.get(
+      code > 64 && code < 91 ? code + 32 : code,
+    );
     if (bucket === undefined) {
       return false;
     }
     for (let n = 0, bucketLen = bucket.length; n < bucketLen; n++) {
-      if (str.startsWith(bucket[n], idx)) {
+      if (startsWithIgnoringAsciiCase(str, bucket[n], idx)) {
         return true;
       }
     }
@@ -524,6 +604,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
     if (!inlineTagsAreWordsOnly) {
       return !!matchRight(str, idx, resolvedOpts.mindTheInlineTags, {
         ...(allowSlash ? { trimCharsBeforeMatching: "/" } : {}),
+        i: true,
         cb: (nextChar) => !nextChar || !isWordChar(nextChar),
       });
     }
@@ -537,7 +618,10 @@ function crush(str: string, opts?: InputOpts | null): Res {
     while (end < len && isWordCharCode(str.charCodeAt(end))) {
       end++;
     }
-    return end > start && mindTheInlineTagsSet.has(str.slice(start, end));
+    return (
+      end > start &&
+      mindTheInlineTagsSet.has(str.slice(start, end).toLowerCase())
+    );
   }
 
   // Return the ASCII-lowercased attribute name whose quoted value starts at
@@ -1112,7 +1196,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
         tagName === null &&
         !isWordChar(str[i]) // not a letter
       ) {
-        tagName = str.slice(tagNameStartsAt, i);
+        tagName = str.slice(tagNameStartsAt, i).toLowerCase();
         DEV &&
           console.log(
             `SET ${`\u001b[${33}m${`tagName`}\u001b[${39}m`} = ${tagName}`,
@@ -1192,7 +1276,10 @@ function crush(str: string, opts?: InputOpts | null): Res {
 
       // catch an ending of mso conditional tags
       // ███████████████████████████████████████
-      if (withinHTMLConditional && str.startsWith("![endif", i + 1)) {
+      if (
+        withinHTMLConditional &&
+        startsWithIgnoringAsciiCase(str, "![endif", i + 1)
+      ) {
         DEV &&
           console.log(
             `${`\u001b[${36}m${`██ CONDITIONAL'S CLOSING CAUGHT`}\u001b[${39}m`}`,
@@ -1329,7 +1416,8 @@ function crush(str: string, opts?: InputOpts | null): Res {
         !withinStyleTag &&
         !withinInlineStyle &&
         str[i] === "<" &&
-        (str.startsWith("<!--", i) || str.startsWith("<![endif", i)) &&
+        (str.startsWith("<!--", i) ||
+          startsWithIgnoringAsciiCase(str, "<![endif", i)) &&
         htmlCommentStartedAt === null
       ) {
         DEV &&
@@ -1339,11 +1427,11 @@ function crush(str: string, opts?: InputOpts | null): Res {
 
         // A bare conditional tail is applicable in every mode but removable
         // only when conditional-comment removal is enabled.
-        if (str.startsWith("<![endif", i)) {
+        if (startsWithIgnoringAsciiCase(str, "<![endif", i)) {
           if (resolvedOpts.removeHTMLComments === 2) {
             htmlCommentStartedAt = i;
           }
-        } else if (str.startsWith("[if", i + 4)) {
+        } else if (startsWithIgnoringAsciiCase(str, "[if", i + 4)) {
           // detect outlook conditionals
           DEV && console.log();
           if (!withinHTMLConditional) {
@@ -1444,7 +1532,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
         // right of this tag as well
         if (
           (resolvedOpts.removeLineBreaks || resolvedOpts.removeIndentations) &&
-          resolvedOpts.breakToTheLeftOf.includes("<style") &&
+          breakToTheLeftOf.includes("<style") &&
           str.startsWith(` type="text/css">`, i + 6) &&
           str[i + 24]
         ) {
@@ -2001,7 +2089,7 @@ function crush(str: string, opts?: InputOpts | null): Res {
           // over the input - and the answer never changes once known.
           contentStartsAt < i &&
           (str[i] !== "<" ||
-            !str.startsWith("<![endif]", i) ||
+            !startsWithIgnoringAsciiCase(str, "<![endif]", i) ||
             !matchLeft(str, i, "<!--"))
         ) {
           DEV &&
