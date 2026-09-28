@@ -72,6 +72,20 @@ function isWhitespace(char: string | undefined): boolean {
   );
 }
 
+// Elements whose contents HTML reads as text, never as tags, attributes or
+// comments.
+const rawTextElementNames = new Set([
+  "script",
+  "style",
+  "textarea",
+  "title",
+  "xmp",
+  "iframe",
+  "noembed",
+  "noframes",
+  "plaintext",
+]);
+
 function isHtmlAsciiWhitespace(char: string | undefined): boolean {
   if (!char) {
     return false;
@@ -204,6 +218,205 @@ function attributeSelectorQueue(
   );
 }
 
+// An attribute selector on class or id which reads the attribute's raw value:
+// presence, an exact or substring comparison, a case flag, a namespace or a
+// comment. Pruning or renaming what it reads can change what it matches.
+interface AttributeDependency {
+  attribute: "class" | "id";
+  operator: "" | "=" | "~=" | "|=" | "^=" | "$=" | "*=";
+  value: string;
+  caseInsensitive: boolean;
+  // attributeSelectorQueue() reads it as class or ID selectors, so uglify
+  // renames the selector and the markup alike
+  tokenized: boolean;
+}
+
+function isCssDelimiter(token: CssToken | undefined, value: string): boolean {
+  return token?.kind === "delimiter" && token.value === value;
+}
+
+function readAttributeDependency(
+  css: string,
+  openingAt: number,
+): AttributeDependency | null {
+  const tokens: CssToken[] = [];
+  let closed = false;
+  for (let i = openingAt + 1; i < css.length; ) {
+    const token = readCssToken(css, i) as CssToken;
+    if (isCssDelimiter(token, "]")) {
+      closed = true;
+      break;
+    }
+    // An attribute selector holds at most seven significant tokens, none of
+    // them a bracket, so a stray "[" in a comment costs a short scan.
+    if (
+      isCssDelimiter(token, "[") ||
+      isCssDelimiter(token, "{") ||
+      isCssDelimiter(token, "}") ||
+      isCssDelimiter(token, ";")
+    ) {
+      break;
+    }
+    if (token.kind !== "whitespace" && token.kind !== "comment") {
+      if (tokens.length === 7) break;
+      tokens.push(token);
+    }
+    i = token.range[1];
+  }
+  if (!closed) return null;
+
+  // an optional namespace prefix: "|name", "*|name" or "ns|name"
+  let at = 0;
+  if (isCssDelimiter(tokens[0], "|")) {
+    at = 1;
+  } else if (
+    (isCssDelimiter(tokens[0], "*") || tokens[0]?.kind === "identifier") &&
+    isCssDelimiter(tokens[1], "|") &&
+    tokens[2]?.kind === "identifier"
+  ) {
+    at = 2;
+  }
+  if (tokens[at]?.kind !== "identifier") return null;
+  const attribute = asciiLowerCase(tokens[at].value);
+  if (attribute !== "class" && attribute !== "id") return null;
+  at++;
+
+  let operator: AttributeDependency["operator"] = "";
+  if (isCssDelimiter(tokens[at], "=")) {
+    operator = "=";
+    at++;
+  } else if (
+    tokens[at]?.kind === "delimiter" &&
+    "~|^$*".includes(tokens[at].value) &&
+    isCssDelimiter(tokens[at + 1], "=")
+  ) {
+    operator = `${tokens[at].value}=` as AttributeDependency["operator"];
+    at += 2;
+  } else if (at < tokens.length) {
+    return null;
+  }
+
+  let value = "";
+  let caseInsensitive = false;
+  if (operator) {
+    const valueToken = tokens[at];
+    if (valueToken?.kind !== "identifier" && valueToken?.kind !== "string") {
+      return null;
+    }
+    value = valueToken.value;
+    at++;
+    if (tokens[at]?.kind === "identifier" && /^[is]$/i.test(tokens[at].value)) {
+      caseInsensitive = asciiLowerCase(tokens[at].value) === "i";
+      at++;
+    }
+    if (at < tokens.length) return null;
+  }
+
+  const tokenized = attributeSelectorQueue(css, openingAt).length > 0;
+  // A plain [class~=x] is the class selector .x, which the existing
+  // bookkeeping already keeps and renames together with the markup.
+  if (tokenized && operator === "~=") return null;
+  return { attribute, operator, value, caseInsensitive, tokenized };
+}
+
+function collectAttributeDependencies(
+  str: string,
+  styleTags: Map<number, StyleTagRegion>,
+): AttributeDependency[] {
+  const dependencies = new Map<string, AttributeDependency>();
+  for (const { start, end } of styleTags.values()) {
+    const css = str.slice(start, end);
+    // A "[" inside a CSS string or comment can only add a dependency, which
+    // keeps more of the markup than necessary but never breaks it.
+    for (let at = css.indexOf("["); at !== -1; at = css.indexOf("[", at + 1)) {
+      const dependency = readAttributeDependency(css, at);
+      if (dependency) {
+        dependencies.set(JSON.stringify(dependency), dependency);
+      }
+    }
+  }
+  return [...dependencies.values()];
+}
+
+function splitOnAsciiWhitespace(str: string): string[] {
+  return str.split(/[\t\n\f\r ]+/).filter(Boolean);
+}
+
+// Would editing this attribute change what the selector matches? It matches
+// now, or one of the attribute's tokens could make an edited value match once
+// its neighbours are pruned: [class^=foo] against class="bar foobar". Presence
+// only depends on whether the attribute survives, which is decided later.
+function attributeAtRisk(
+  dependency: AttributeDependency,
+  rawValue: string,
+  rawTokens: string[],
+): boolean {
+  const fold = (s: string): string =>
+    dependency.caseInsensitive ? asciiLowerCase(s) : s;
+  const value = fold(rawValue);
+  const tokens = rawTokens.map(fold);
+  const expected = fold(dependency.value);
+  const pieces = splitOnAsciiWhitespace(expected);
+  switch (dependency.operator) {
+    case "=":
+      if (value === expected) {
+        // Consistent renaming preserves the match; normalising the class
+        // list's whitespace would not.
+        return !dependency.tokenized || value !== tokens.join(" ");
+      }
+      return (
+        !!pieces.length &&
+        pieces.length < tokens.length &&
+        pieces.every((piece) => tokens.includes(piece))
+      );
+    case "~=":
+      return !!expected && tokens.includes(expected);
+    case "^=":
+      return (
+        !!expected &&
+        (value.startsWith(expected) ||
+          (!!pieces.length &&
+            tokens.some((token) => token.startsWith(pieces[0]))))
+      );
+    case "$=":
+      return (
+        !!expected &&
+        (value.endsWith(expected) ||
+          (!!pieces.length &&
+            tokens.some((token) => token.endsWith(pieces[pieces.length - 1]))))
+      );
+    case "*=":
+      return (
+        !!expected &&
+        (value.includes(expected) ||
+          tokens.some((token) => pieces.some((piece) => token.includes(piece))))
+      );
+    case "|=": {
+      const head = pieces[0] ?? "-";
+      return (
+        value === expected ||
+        value.startsWith(`${expected}-`) ||
+        tokens.some((token) => token.startsWith(head))
+      );
+    }
+    default:
+      return false;
+  }
+}
+
+// Could a name uglify produces make an attribute match the selector? A
+// tokenized selector is renamed along with the markup, and presence does not
+// read the value at all.
+function nameAtRisk(dependency: AttributeDependency, name: string): boolean {
+  if (dependency.tokenized || !dependency.operator) return false;
+  const fold = (s: string): string =>
+    dependency.caseInsensitive ? asciiLowerCase(s) : s;
+  return (
+    splitOnAsciiWhitespace(fold(dependency.value)).includes(fold(name)) ||
+    attributeAtRisk(dependency, name, [name])
+  );
+}
+
 function htmlTagEndsAt(str: string, start: number): number {
   let quote: string | null = null;
   for (let i = start; i < str.length; i++) {
@@ -254,17 +467,7 @@ function collectStyleTags(
         rawTextRanges?.set(start, str.length);
         break;
       }
-      if (
-        [
-          "script",
-          "textarea",
-          "title",
-          "xmp",
-          "iframe",
-          "noembed",
-          "noframes",
-        ].includes(name)
-      ) {
+      if (rawTextElementNames.has(name)) {
         let closing = new RegExp(`</${name}(?=[\\t\\n\\f\\r />])`, "gi");
         closing.lastIndex = start;
         let close = closing.exec(str);
@@ -297,6 +500,43 @@ function removeEmptyCssWrappers(
     } else if (css !== str.slice(start, end)) {
       ranges.push([start, end, css]);
     }
+  }
+  return rApply(str, ranges);
+}
+
+// Empty Outlook conditional comments go, but only where HTML reads them as
+// comments: the same characters in an attribute value or in raw text are data.
+// Style contents are the exception, as Outlook reads conditionals there too.
+function removeEmptyConditionalComments(
+  str: string,
+  backend: HeadsAndTailsObj[],
+): string {
+  const regex = emptyCondCommentRegex();
+  let match = regex.exec(str);
+  if (!match) {
+    return str;
+  }
+  const rawTextRanges = new Map<number, number>();
+  collectStyleTags(str, rawTextRanges);
+  const opaque: number[] = [];
+  for (const [start, end] of rawTextRanges) {
+    opaque.push(start, end);
+  }
+  collectBodyAttributes(str, backend, rawTextRanges, opaque);
+  const within = (index: number): boolean => {
+    for (let n = 0; n < opaque.length; n += 2) {
+      if (opaque[n] <= index && index < opaque[n + 1]) {
+        return true;
+      }
+    }
+    return false;
+  };
+  const ranges: Range[] = [];
+  while (match) {
+    if (!within(match.index)) {
+      ranges.push([match.index, match.index + match[0].length]);
+    }
+    match = regex.exec(str);
   }
   return rApply(str, ranges);
 }
@@ -346,21 +586,33 @@ function cleanBlankLines(str: string, backend: HeadsAndTailsObj[]): string {
   let lastOutputAt = 0;
   const output: string[] = [];
   let quote: '"' | "'" | null = null;
-  let protectedAttributeQuote = false;
   let protectedStyle = false;
-  let rawTag: "script" | "style" | null = null;
+  let rawTag: string | null = null;
+  // <pre> and <listing> keep their whitespace yet may contain tags
+  let preformattedDepth = 0;
   let tagStartedAt: number | null = null;
 
   for (let i = 0; i < str.length; i++) {
     if (blankLineMatch?.index === i) {
+      const matchEndsAt = i + blankLineMatch[0].length;
+      // An attribute value is data, and so is raw text; a preformatted
+      // element renders its blank lines. Between attributes the blank line
+      // closes up, but never so far that the neighbours join into one name.
+      // A backend region keeps one line break, even inside a value.
       const replacement =
-        protectedAttributeQuote || (rawTag === "style" && protectedStyle)
+        (quote && backendTails === null) ||
+        (rawTag === "style" && protectedStyle)
           ? blankLineMatch[0]
           : tagStartedAt !== null && !comment && backendTails === null
-            ? ""
+            ? isHtmlAsciiWhitespace(str[i - 1]) ||
+              isHtmlAsciiWhitespace(str[matchEndsAt]) ||
+              str[matchEndsAt] === ">" ||
+              str[matchEndsAt] === "/"
+              ? ""
+              : " "
             : rawTag === "style"
               ? " "
-              : rawTag || comment
+              : rawTag || comment || preformattedDepth
                 ? blankLineMatch[0]
                 : blankLineMatch[0].includes("\r\n")
                   ? "\r\n"
@@ -400,6 +652,7 @@ function cleanBlankLines(str: string, backend: HeadsAndTailsObj[]): string {
     if (rawTag) {
       const closingTag = `</${rawTag}`;
       if (
+        rawTag !== "plaintext" &&
         str[i] === "<" &&
         str.slice(i, i + closingTag.length).toLowerCase() === closingTag &&
         (isHtmlAsciiWhitespace(str[i + closingTag.length]) ||
@@ -415,20 +668,20 @@ function cleanBlankLines(str: string, backend: HeadsAndTailsObj[]): string {
       if (quote) {
         if (str[i] === quote) {
           quote = null;
-          protectedAttributeQuote = false;
         }
       } else if (str[i] === '"' || str[i] === "'") {
-        protectedAttributeQuote = /(?:^|\s)(?:style|class|id)\s*=\s*$/i.test(
-          str.slice(tagStartedAt, i),
-        );
         quote = str[i] as '"' | "'";
       } else if (str[i] === ">") {
-        const openingTagName = str
+        const tagName = str
           .slice(tagStartedAt, i + 1)
-          .match(/^<\s*([a-z][a-z\d:-]*)/i)?.[1]
-          ?.toLowerCase();
-        if (openingTagName === "script" || openingTagName === "style") {
-          rawTag = openingTagName;
+          .match(/^<\s*(\/?)\s*([a-z][a-z\d:-]*)/i);
+        const name = tagName?.[2].toLowerCase();
+        if (name === "pre" || name === "listing") {
+          preformattedDepth = tagName?.[1]
+            ? Math.max(preformattedDepth - 1, 0)
+            : preformattedDepth + 1;
+        } else if (!tagName?.[1] && name && rawTextElementNames.has(name)) {
+          rawTag = name;
           if (rawTag === "style") {
             const css = str.slice(i + 1, findStyleEnd(str, i + 1));
             protectedStyle = css.includes("\\") || css.includes("/*");
@@ -496,10 +749,13 @@ interface BodyAttribute {
   valueStartsAt: number;
 }
 
+// "tagSpans", when given, receives where every opening tag starts and ends, as
+// flat [start, end) pairs in source order.
 function collectBodyAttributes(
   str: string,
   backend: HeadsAndTailsObj[],
   rawTextRanges?: Map<number, number>,
+  tagSpans?: number[],
 ): Map<number, BodyAttribute> {
   if (!rawTextRanges) {
     rawTextRanges = new Map<number, number>();
@@ -586,6 +842,7 @@ function collectBodyAttributes(
       cursor += 1;
     }
     const tagName = lowerStr.slice(tagNameStartsAt, cursor);
+    const tagStartsAt = i;
     let hasPrecedingUnquotedAttribute = false;
 
     while (cursor < str.length) {
@@ -707,6 +964,8 @@ function collectBodyAttributes(
       }
       hasPrecedingUnquotedAttribute ||= !quote && !empty;
     }
+
+    tagSpans?.push(tagStartsAt, cursor < str.length ? i + 1 : str.length);
 
     if (tagName === "script" || tagName === "style") {
       rawTag = tagName;
@@ -1184,11 +1443,66 @@ function comb(str: string, opts?: InputOpts | null): Res {
   let len = str.length;
   const rawTextRanges = new Map<number, number>();
   const styleTags = collectStyleTags(str, rawTextRanges);
+  const tagSpans: number[] = [];
   const bodyAttributes = collectBodyAttributes(
     str,
     resolvedOpts.backend,
     rawTextRanges,
+    tagSpans,
   );
+  // A comment-shaped run inside an attribute value, like the one in
+  // <div title="<!-- x -->">, is the value's data. Asked in source order.
+  let tagSpanAt = 0;
+  const withinTag = (index: number): boolean => {
+    while (tagSpanAt < tagSpans.length && tagSpans[tagSpanAt + 1] <= index) {
+      tagSpanAt += 2;
+    }
+    return tagSpanAt < tagSpans.length && tagSpans[tagSpanAt] < index;
+  };
+
+  // Class and id attributes which attribute selectors read, keyed by where
+  // their names start, are left exactly as authored. Their names keep out of
+  // uglify, which would otherwise rename them in the CSS but not there.
+  const attributeDependencies = collectAttributeDependencies(str, styleTags);
+  const pinnedAttributes = new Set<number>();
+  const uglifyExempt = new Set<string>();
+  const pinAttribute = (attribute: BodyAttribute): void => {
+    pinnedAttributes.add(attribute.nameStartsAt);
+    const marker = attribute.name === "class" ? "." : "#";
+    for (const token of attribute.tokens ?? []) {
+      uglifyExempt.add(`${marker}${token.value}`);
+    }
+  };
+  if (attributeDependencies.length) {
+    for (const attribute of bodyAttributes.values()) {
+      if (
+        attribute.name === "style" ||
+        (!attribute.empty && !attribute.tokens)
+      ) {
+        continue;
+      }
+      const value = attribute.empty
+        ? ""
+        : decodeHtmlEntities(
+            str.slice(attribute.valueStartsAt, attribute.valueEndsAt),
+            { context: "attribute" },
+          );
+      const tokens = (attribute.tokens ?? []).map(({ value }) => value);
+      if (
+        attributeDependencies.some(
+          (dependency) =>
+            dependency.attribute === attribute.name &&
+            // a valueless attribute is removed in the first round, before
+            // the pruning which decides the others' presence
+            (dependency.operator
+              ? attributeAtRisk(dependency, value, tokens)
+              : attribute.empty),
+        )
+      ) {
+        pinAttribute(attribute);
+      }
+    }
+  }
   const nextClosingBracketAt = collectNextClosingBrackets(str);
   const cssRegions = new Map<number, CssRegion>();
   const nestedStyleRules = new Map<number, NestedStyleRule>();
@@ -2904,7 +3218,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
           if (attribute.equalsAt + 1 < openingAt) {
             finalIndexesToDelete.push(attribute.equalsAt + 1, openingAt);
           }
-        } else {
+        } else if (!pinnedAttributes.has(attribute.nameStartsAt)) {
           const deleted = isClass ? bodyClassesToDeleteSet : bodyIdsToDeleteSet;
           const retained = tokens.filter(({ value }) => !deleted.has(value));
           if (!retained.length) {
@@ -3032,7 +3346,10 @@ function comb(str: string, opts?: InputOpts | null): Res {
         let quote = bodyAttribute.quote;
 
         if (bodyAttribute.empty) {
-          if (round === 1) {
+          if (
+            round === 1 &&
+            !pinnedAttributes.has(bodyAttribute.nameStartsAt)
+          ) {
             const calculatedRange = expander({
               str,
               from: bodyAttribute.nameStartsAt,
@@ -3212,7 +3529,10 @@ function comb(str: string, opts?: InputOpts | null): Res {
         let quote = bodyAttribute.quote;
 
         if (bodyAttribute.empty) {
-          if (round === 1) {
+          if (
+            round === 1 &&
+            !pinnedAttributes.has(bodyAttribute.nameStartsAt)
+          ) {
             const calculatedRange = expander({
               str,
               from: bodyAttribute.nameStartsAt,
@@ -4404,7 +4724,8 @@ function comb(str: string, opts?: InputOpts | null): Res {
           resolvedOpts.removeHTMLComments &&
           commentStartedAt === null &&
           str[i] === "<" &&
-          str[i + 1] === "!"
+          str[i + 1] === "!" &&
+          !withinTag(i)
         ) {
           if (
             (!allHeads ||
@@ -5087,6 +5408,25 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
       ); // remove dots from them
       bodyClassesToDeleteSet = new Set(bodyClassesToDelete);
       bodyIdsToDeleteSet = new Set(bodyIdsToDelete);
+
+      // A presence selector keeps matching while the attribute survives, so
+      // it only guards an attribute whose every token is about to go.
+      for (const dependency of attributeDependencies) {
+        if (dependency.operator) continue;
+        const deleted =
+          dependency.attribute === "class"
+            ? bodyClassesToDeleteSet
+            : bodyIdsToDeleteSet;
+        for (const attribute of bodyAttributes.values()) {
+          if (
+            attribute.name === dependency.attribute &&
+            attribute.tokens &&
+            attribute.tokens.every(({ value }) => deleted.has(value))
+          ) {
+            pinAttribute(attribute);
+          }
+        }
+      }
       DEV &&
         console.log(
           `${`\u001b[${33}m${`bodyClassesToDelete`}\u001b[${39}m`} = ${JSON.stringify(
@@ -5142,11 +5482,33 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
       }
 
       if (resolvedOpts.uglify) {
-        allClassesAndIdsWithinHeadFinalUglified = uglifyArr(
-          allClassesAndIdsWithinHeadFinal,
+        // A name an attribute selector reads keeps its spelling, and so does
+        // one whose short name that selector would start to match.
+        let namesToUglify = allClassesAndIdsWithinHeadFinal.filter(
+          (selector) => !uglifyExempt.has(selector),
         );
+        for (;;) {
+          allClassesAndIdsWithinHeadFinalUglified = uglifyArr(namesToUglify);
+          const risky = new Set(
+            namesToUglify.filter((selector, index) =>
+              attributeDependencies.some(
+                (dependency) =>
+                  selector[0] ===
+                    (dependency.attribute === "class" ? "." : "#") &&
+                  nameAtRisk(
+                    dependency,
+                    allClassesAndIdsWithinHeadFinalUglified[index].slice(1),
+                  ),
+              ),
+            ),
+          );
+          if (!risky.size) break;
+          namesToUglify = namesToUglify.filter(
+            (selector) => !risky.has(selector),
+          );
+        }
         uglifiedBySelector = new Map(
-          allClassesAndIdsWithinHeadFinal.map((selector, index) => [
+          namesToUglify.map((selector, index) => [
             selector,
             allClassesAndIdsWithinHeadFinalUglified[index],
           ]),
@@ -5157,10 +5519,8 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
 
       uglified = resolvedOpts.uglify
         ? (allClassesAndIdsWithinHeadFinal
-            .map((name, id) => [
-              name,
-              allClassesAndIdsWithinHeadFinalUglified[id],
-            ])
+            .filter((name) => uglifiedBySelector.has(name))
+            .map((name) => [name, uglifiedBySelector.get(name) as string])
             .filter(
               (arr) =>
                 !bodyIdsReferencedByForAttributesSet.has(arr[0]) &&
@@ -5428,7 +5788,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
   // remove empty Outlook conditional comments:
   let tempLen = str.length;
   if (resolvedOpts.removeHTMLComments) {
-    str = str.replace(emptyCondCommentRegex(), "");
+    str = removeEmptyConditionalComments(str, resolvedOpts.backend);
   }
   totalCounter += str.length;
   if (tempLen !== str.length) {

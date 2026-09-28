@@ -352,4 +352,13 @@ test("37 - partial html-crush options inherit email-comb defaults", () => {
   );
 });
 
+test("38 - html-crush minification keeps inline separators in any case", () => {
+  const source = "<SPAN>a</SPAN> <SPAN>b</SPAN>";
+  equal(
+    comb(source, { htmlCrushOpts: { removeLineBreaks: true } }).result,
+    source,
+    "38.01",
+  );
+});
+
 test.run();

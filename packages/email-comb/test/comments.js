@@ -744,4 +744,43 @@ test("24 - matches comment exclusions case-insensitively", () => {
 //   equal(actual, intended, "22.01");
 // });
 
+test("25 - comment-shaped text in an attribute value is data", () => {
+  for (const source of [
+    '<div title="<!-- KEEP -->">text</div>',
+    "<div title='<!-- KEEP -->'>text</div>",
+    '<div title="a>b<!-- KEEP -->">text</div>',
+    '<div title="<! bogus >">text</div>',
+    '<style title="<!-- KEEP -->">p{color:red}</style><p>x</p>',
+  ]) {
+    equal(comb(source).result, source, "25.01");
+  }
+  equal(
+    comb('<div title="x">a<!-- gone -->b</div>').result,
+    '<div title="x">a b</div>',
+    "25.02",
+  );
+});
+
+test("26 - empty conditional comments go only where HTML reads comments", () => {
+  for (const source of [
+    "<textarea><!--[if mso]> <![endif]--></textarea>",
+    "<title><!--[if mso]> <![endif]--></title>",
+    '<script>var a = "<!--[if mso]> <![endif]-->";</script>',
+    '<style title="<!--[if mso]> <![endif]-->">p{color:red}</style><p>x</p>',
+    '<div title="<!--[if mso]> <![endif]-->">x</div>',
+  ]) {
+    equal(comb(source).result, source, "26.01");
+  }
+  equal(
+    comb("<head><!--[if mso]>\n<![endif]--></head><body>x</body>").result,
+    "<head></head><body>x</body>",
+    "26.02",
+  );
+  equal(
+    comb("<!--[if !mso]><!--><!--<![endif]--><p>x</p>").result,
+    "<p>x</p>",
+    "26.03",
+  );
+});
+
 test.run();
