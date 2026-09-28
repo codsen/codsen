@@ -850,6 +850,9 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
   function calculateHrefToBeInserted(resolvedOpts: Opts, toIdx?: number): void {
     DEV && console.log(`calculateHrefToBeInserted() called`);
+    // Start from nothing: an earlier link's href must not carry over to this
+    // tag, as it would on "<a href=u>x</a>y<b".
+    stringToInsertAfter = "";
     if (
       resolvedOpts.dumpLinkHrefsNearby?.enabled &&
       hrefDump.tagName &&
@@ -881,6 +884,31 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           `calculateHrefToBeInserted(): stringToInsertAfter = ${stringToInsertAfter}`,
         );
     }
+  }
+
+  // The complete-tag branch pads a dumped href with a space on each side where
+  // the tag sat flush against text. An unterminated tag needs the same, or the
+  // "</a" in "<a href=u>x</a" glues its href to the link text: "xu". There is
+  // nothing to separate on the left when everything before the tag has been
+  // stripped. The ranges accumulator collapses any doubled whitespace, and
+  // putOnNewLine's line breaks already separate the href.
+  function incompleteTagInsert(
+    resolvedOpts: Opts,
+    whiteSpaceCompensation: string | null,
+  ): string {
+    if (
+      stringToInsertAfter &&
+      !whiteSpaceCompensation &&
+      !resolvedOpts.dumpLinkHrefsNearby?.putOnNewLine
+    ) {
+      return `${
+        tag.leftOuterWhitespace &&
+        !coveredFromStartUpTo(tag.leftOuterWhitespace)
+          ? " "
+          : ""
+      }${stringToInsertAfter} `;
+    }
+    return `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`;
   }
 
   // These two run several times per character of the input. `str[i]` has to
@@ -1705,26 +1733,23 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           // 2. clear the quotes marker while preserving the tag object's shape
           tag.quotes = undefined;
           // 3. if resolvedOpts.dumpLinkHrefsNearby?.enabled is on, catch href
-          let hrefVal: string | undefined;
-          if (
+          // The first href wins, as it does in a browser. A valueless one,
+          // like <a href title="x">, has no value to dump.
+          const hrefAttr: Obj | undefined =
             resolvedOpts.dumpLinkHrefsNearby?.enabled &&
-            !rangedOpeningTagsForDeletion.length &&
-            tag.attributes.some((obj: Obj) => {
-              if (
-                typeof obj.name === "string" &&
-                obj.name.toLowerCase() === "href"
-              ) {
-                hrefVal = `${resolvedOpts.dumpLinkHrefsNearby?.wrapHeads || ""}${
-                  obj.value
-                }${resolvedOpts.dumpLinkHrefsNearby?.wrapTails || ""}`;
-                return true;
-              }
-              return false;
-            })
-          ) {
+            !rangedOpeningTagsForDeletion.length
+              ? tag.attributes.find(
+                  (obj: Obj) =>
+                    typeof obj.name === "string" &&
+                    obj.name.toLowerCase() === "href",
+                )
+              : undefined;
+          if (typeof hrefAttr?.value === "string") {
             hrefDump = {
               tagName: tag.name,
-              hrefValue: hrefVal as any,
+              hrefValue: `${resolvedOpts.dumpLinkHrefsNearby?.wrapHeads || ""}${
+                hrefAttr.value
+              }${resolvedOpts.dumpLinkHrefsNearby?.wrapTails || ""}`,
               openingTagEnds: undefined,
             };
             DEV &&
@@ -1889,7 +1914,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           [
             tag.leftOuterWhitespace,
             i,
-            `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
+            incompleteTagInsert(resolvedOpts, whiteSpaceCompensation),
           ],
           "tag",
           "incomplete",
@@ -2441,7 +2466,10 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             ) {
               insert = null;
             } else {
-              insert = `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`;
+              insert = incompleteTagInsert(
+                resolvedOpts,
+                whiteSpaceCompensation,
+              );
             }
             DEV &&
               console.log(
@@ -2582,7 +2610,6 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             );
 
           // calculate optional resolvedOpts.dumpLinkHrefsNearby?.enabled HREF to insert
-          stringToInsertAfter = "";
           hrefInsertionActive = false;
 
           // extracts href attribute's value, without any whitespace compensation,

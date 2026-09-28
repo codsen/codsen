@@ -57,7 +57,7 @@ test("004 - {}", () => {
       );
     },
     /THROW_ID_04/,
-    "04.01",
+    "004.01",
   );
 });
 
@@ -897,6 +897,245 @@ test("045 - Empty href", () => {
     }).result,
     "Empty href\nClick here",
     "045.01",
+  );
+});
+
+test("046 - valueless href followed by a quoted attribute dumps nothing", () => {
+  equal(
+    stripHtml('<a href title="x">link</a> text', {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "link text",
+    "046.01",
+  );
+  equal(
+    stripHtml('<a href title="x">link</a> text', {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "link text",
+    "046.02",
+  );
+  equal(
+    stripHtml('<a href title="x">link</a> text', {
+      dumpLinkHrefsNearby: { enabled: true, wrapHeads: "[", wrapTails: "]" },
+    }).result,
+    "link text",
+    "046.03",
+  );
+  equal(
+    stripHtml('<a HREF title="x">link</a> text', {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "link text",
+    "046.04",
+  );
+  equal(
+    stripHtml('<a title="x" href>link</a> text', {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "link text",
+    "046.05",
+  );
+  equal(
+    stripHtml("<a href title=x>link</a> text", {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "link text",
+    "046.06",
+  );
+});
+
+test("047 - the first href wins, even when it is valueless", () => {
+  equal(
+    stripHtml('<a href title="x" href="u">link</a> text', {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "link text",
+    "047.01",
+  );
+  equal(
+    stripHtml('<a href title="x" href="u">link</a> text', {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "link text",
+    "047.02",
+  );
+  equal(
+    stripHtml('<a href="u" href="v">link</a> text', {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "link u text",
+    "047.03",
+  );
+  equal(
+    stripHtml('<a href="u" href="v">link</a> text', {
+      dumpLinkHrefsNearby: { enabled: true, wrapHeads: "[", wrapTails: "]" },
+    }).result,
+    "link [u] text",
+    "047.04",
+  );
+});
+
+test("048 - an unterminated tag at the end does not repeat an earlier href", () => {
+  equal(
+    stripHtml("<a href=u>x</a>y<b", {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "x u y",
+    "048.01",
+  );
+  equal(
+    stripHtml("<a href=u>x</a>y<ab", {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "x u y",
+    "048.02",
+  );
+  equal(
+    stripHtml("<a href=u>x</a>y<a", {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "x u y",
+    "048.03",
+  );
+  equal(
+    stripHtml("<a href=u>x</a>y</b", {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "x u y",
+    "048.04",
+  );
+  equal(
+    stripHtml("<a href=u>x</a>y<br", {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "x u y",
+    "048.05",
+  );
+  equal(
+    stripHtml("<a href=u>x</a>y <b ", {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "x u y",
+    "048.06",
+  );
+  equal(
+    stripHtml('<a href="u">x</a>y<b', {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "x u y",
+    "048.07",
+  );
+  equal(
+    stripHtml("<a href=u>x</a>y<b", {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "x\n\nu\n\ny",
+    "048.08",
+  );
+  equal(
+    stripHtml("<a href=u>x</a>y<ab", {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "x\n\nu\n\ny",
+    "048.09",
+  );
+  equal(
+    stripHtml("<a href=u>x</a>y<b", {
+      dumpLinkHrefsNearby: { enabled: true, wrapHeads: "[", wrapTails: "]" },
+    }).result,
+    "x [u] y",
+    "048.10",
+  );
+  equal(
+    stripHtml("<a href=u>x</a>y<ab", {
+      dumpLinkHrefsNearby: { enabled: true, wrapHeads: "[", wrapTails: "]" },
+    }).result,
+    "x [u] y",
+    "048.11",
+  );
+});
+
+test("049 - an unterminated tag at the end does not repeat the latest of several hrefs", () => {
+  equal(
+    stripHtml("<a href=u>x</a>y<b>z</b><a href=v>w</a>q<i", {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "x u yzw v q",
+    "049.01",
+  );
+  equal(
+    stripHtml("<a href=u>x</a>y<b>z</b><a href=v>w</a>q<i", {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "x\n\nu\n\nyzw\n\nv\n\nq",
+    "049.02",
+  );
+});
+
+test("050 - an unterminated closing tag keeps its href apart from the text", () => {
+  equal(
+    stripHtml("<a href=u>x</a", {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "x u",
+    "050.01",
+  );
+  equal(
+    stripHtml("<a href=u>x</a<b>y", {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "x u y",
+    "050.02",
+  );
+  equal(
+    stripHtml("<p><a href=u>x</a</p>", {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "x u",
+    "050.03",
+  );
+  equal(
+    stripHtml("<a href=u></a", {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "u",
+    "050.04",
+  );
+  equal(
+    stripHtml("<a href=u></a<b>x", {
+      dumpLinkHrefsNearby: { enabled: true },
+    }).result,
+    "u x",
+    "050.05",
+  );
+  equal(
+    stripHtml("<a href=u>x</a", {
+      dumpLinkHrefsNearby: { enabled: true, wrapHeads: "[", wrapTails: "]" },
+    }).result,
+    "x [u]",
+    "050.06",
+  );
+  equal(
+    stripHtml("<a href=u>x</a<b>y", {
+      dumpLinkHrefsNearby: { enabled: true, wrapHeads: "[", wrapTails: "]" },
+    }).result,
+    "x [u] y",
+    "050.07",
+  );
+  equal(
+    stripHtml("<a href=u>x</a", {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "x\n\nu",
+    "050.08",
+  );
+  equal(
+    stripHtml("<a href=u>x</a<b>y", {
+      dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
+    }).result,
+    "x\n\nu\n\ny",
+    "050.09",
   );
 });
 
