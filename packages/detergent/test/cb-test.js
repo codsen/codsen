@@ -160,4 +160,28 @@ test("009 - callback-created trailing whitespace is trimmed before a CRLF", () =
   );
 });
 
+test("010 - numeric references in the callback's output follow opts.convertEntities", () => {
+  let converted = det1("zz", {
+    removeWidows: false,
+    cb: () => "&#169; &#; &#x; a;b",
+  });
+  equal(converted.res, "&copy; &amp;#; &amp;#x; a; b", "010.01");
+  equal(converted.applicableOpts.convertEntities, true, "010.02");
+
+  let raw = det1("zz", {
+    convertEntities: false,
+    removeWidows: false,
+    cb: () => "&#169; &#; &#x; a;b",
+  });
+  equal(raw.res, "\u00A9 &#; &#x; a; b", "010.03");
+  equal(raw.applicableOpts.convertEntities, true, "010.04");
+
+  equal(det1("zz", { cb: () => "&#65;&#x42;" }).res, "AB", "010.05");
+  equal(
+    det1("zz", { cb: () => "&#65;&#x42;" }).applicableOpts.convertEntities,
+    false,
+    "010.06",
+  );
+});
+
 test.run();

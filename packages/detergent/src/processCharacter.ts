@@ -883,42 +883,41 @@ function processCharacter(
           } else if (str[right(str, i) as number] === "#") {
             // it can be a numeric, a decimal or a hex entity
             DEV && console.log("██ numeric, a decimal or a hex entity");
-            for (let z = right(str, i) as number; z < len; z++) {
-              if (str[z].trim() && !isNumberChar(str[z]) && str[z] !== "#") {
-                if (str[z] === ";") {
-                  // it's numeric entity
-                  DEV && console.log(`carved out "${str.slice(i, z + 1)}"`);
-                  let tempRes = htmlEntities.encode(
-                    htmlEntities.decode(str.slice(i, z + 1)),
-                    {
-                      useNamedReferences: true,
-                    },
+            // main.ts has already decoded every reference the codec accepts,
+            // so a well-formed one can only come from the callback's output.
+            // Anything else, like "&#;" or "&#x;", is a literal ampersand.
+            const reference = htmlEntities.scanReference(str, i);
+            if (reference) {
+              DEV &&
+                console.log(
+                  `carved out "${str.slice(i, reference.end)}" = ${JSON.stringify(
+                    reference.value,
+                  )}`,
+                );
+              const encoded = htmlEntities.encode(reference.value, {
+                useNamedReferences: true,
+              });
+              if (encoded !== reference.value) {
+                applicableOpts.convertEntities = true;
+              }
+              rangesArr.push(
+                i,
+                reference.end,
+                opts.convertEntities ? encoded : reference.value,
+              );
+              // The outer iterator also advances past the initial ampersand.
+              offsetBy(reference.end - i - 1);
+            } else {
+              applicableOpts.convertEntities = true;
+              if (opts.convertEntities) {
+                rangesArr.push(i, i + 1, "&amp;");
+
+                DEV &&
+                  console.log(
+                    `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${
+                      i + 1
+                    }, "&amp;"]`,
                   );
-
-                  DEV &&
-                    console.log(
-                      `${`\u001b[${33}m${`tempRes`}\u001b[${39}m`} = ${JSON.stringify(
-                        tempRes,
-                        null,
-                        4,
-                      )}`,
-                    );
-                  if (tempRes) {
-                    rangesArr.push(i, z + 1, tempRes);
-
-                    DEV &&
-                      console.log(
-                        `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${
-                          z + 1
-                        }, "${tempRes}"]`,
-                      );
-                  }
-                  offsetBy(z + 1 - i);
-                  DEV && console.log(`offset by ${z + 1 - i}`);
-                } else {
-                  // do checks, maybe semicol is missing?
-                  // TODO
-                }
               }
             }
           } else {

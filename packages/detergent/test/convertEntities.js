@@ -2111,4 +2111,158 @@ test("148 - letters within ASCII are decoded if come encoded", () => {
   });
 });
 
+test("149 - malformed numeric reference does not repeat the following prose - convertEntities=on", () => {
+  mixer({
+    fixBrokenEntities: false,
+    convertEntities: true,
+    addMissingSpaces: false,
+    convertDotsToEllipsis: true,
+  }).forEach((opt, n) => {
+    equal(
+      det(ok, not, n, "&#x; a;b...c", opt).res,
+      "&amp;#x; a;b&hellip;c",
+      `149.01 - ${JSON.stringify(opt, null, 4)}`,
+    );
+    equal(
+      det(ok, not, n, "&#; a;b...c", opt).res,
+      "&amp;#; a;b&hellip;c",
+      `149.02 - ${JSON.stringify(opt, null, 4)}`,
+    );
+  });
+  mixer({
+    fixBrokenEntities: false,
+    convertEntities: true,
+    addMissingSpaces: true,
+    convertDotsToEllipsis: true,
+  }).forEach((opt, n) => {
+    equal(
+      det(ok, not, n, "&#x; a;b...c", opt).res,
+      "&amp;#x; a; b&hellip;c",
+      `149.03 - ${JSON.stringify(opt, null, 4)}`,
+    );
+  });
+});
+
+test("150 - malformed numeric reference does not repeat the following prose - convertEntities=off", () => {
+  mixer({
+    fixBrokenEntities: false,
+    convertEntities: false,
+    addMissingSpaces: false,
+    convertDotsToEllipsis: true,
+  }).forEach((opt, n) => {
+    equal(
+      det(ok, not, n, "&#x; a;b...c", opt).res,
+      "&#x; a;b\u2026c",
+      `150.01 - ${JSON.stringify(opt, null, 4)}`,
+    );
+    equal(
+      det(ok, not, n, "&#; a;b...c", opt).res,
+      "&#; a;b\u2026c",
+      `150.02 - ${JSON.stringify(opt, null, 4)}`,
+    );
+  });
+  mixer({
+    fixBrokenEntities: false,
+    convertEntities: false,
+    addMissingSpaces: true,
+    convertDotsToEllipsis: false,
+  }).forEach((opt, n) => {
+    equal(
+      det(ok, not, n, "&#x; a;b...c", opt).res,
+      "&#x; a; b...c",
+      `150.03 - ${JSON.stringify(opt, null, 4)}`,
+    );
+  });
+});
+
+test("151 - malformed numeric reference is a literal ampersand", () => {
+  mixer({
+    fixBrokenEntities: false,
+    convertEntities: true,
+  }).forEach((opt, n) => {
+    equal(
+      det(ok, not, n, "&#;", opt).res,
+      "&amp;#;",
+      `151.01 - ${JSON.stringify(opt, null, 4)}`,
+    );
+    equal(
+      det(ok, not, n, "&#x;", opt).res,
+      "&amp;#x;",
+      `151.02 - ${JSON.stringify(opt, null, 4)}`,
+    );
+    equal(
+      det(ok, not, n, "&#xZ;", opt).res,
+      "&amp;#xZ;",
+      `151.03 - ${JSON.stringify(opt, null, 4)}`,
+    );
+    equal(
+      det(ok, not, n, "&#; &#65;", opt).res,
+      "&amp;#; A",
+      `151.04 - ${JSON.stringify(opt, null, 4)}`,
+    );
+  });
+  mixer({
+    fixBrokenEntities: false,
+    convertEntities: false,
+  }).forEach((opt, n) => {
+    equal(
+      det(ok, not, n, "&#;", opt).res,
+      "&#;",
+      `151.05 - ${JSON.stringify(opt, null, 4)}`,
+    );
+    equal(
+      det(ok, not, n, "&#x;", opt).res,
+      "&#x;",
+      `151.06 - ${JSON.stringify(opt, null, 4)}`,
+    );
+    equal(
+      det(ok, not, n, "&#xZ;", opt).res,
+      "&#xZ;",
+      `151.07 - ${JSON.stringify(opt, null, 4)}`,
+    );
+    equal(
+      det(ok, not, n, "&#; &#65;", opt).res,
+      "&#; A",
+      `151.08 - ${JSON.stringify(opt, null, 4)}`,
+    );
+  });
+  const output = det1("&#;", {
+    fixBrokenEntities: false,
+    convertEntities: false,
+    removeWidows: false,
+  });
+  equal(output.res, "&#;", "151.09");
+  equal(output.applicableOpts.convertEntities, true, "151.10");
+});
+
+test("152 - malformed numeric reference spaces its semicolon like a named one", () => {
+  mixer({
+    fixBrokenEntities: false,
+    convertEntities: true,
+    addMissingSpaces: true,
+  }).forEach((opt, n) => {
+    equal(
+      det(ok, not, n, "x&#;y", opt).res,
+      det1("x&zz;y", opt).res.replace("zz", "#"),
+      `152.01 - ${JSON.stringify(opt, null, 4)}`,
+    );
+    equal(
+      det(ok, not, n, "x&#;y", opt).res,
+      "x&amp;#; y",
+      `152.02 - ${JSON.stringify(opt, null, 4)}`,
+    );
+  });
+  mixer({
+    fixBrokenEntities: false,
+    convertEntities: false,
+    addMissingSpaces: false,
+  }).forEach((opt, n) => {
+    equal(
+      det(ok, not, n, "x&#;y", opt).res,
+      "x&#;y",
+      `152.03 - ${JSON.stringify(opt, null, 4)}`,
+    );
+  });
+});
+
 test.run();
