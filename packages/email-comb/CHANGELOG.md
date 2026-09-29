@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.4.5 (2026-09-29)
+
+### Bug Fixes
+
+- **email-comb:** respect attribute selectors, attribute values and raw text ([22a6824](https://github.com/codsen/codsen/commit/22a68249d8a9691b989f88bc95ad57cea73e8904))
+
 ## 7.4.4 (2026-09-21)
 
 ### Bug Fixes

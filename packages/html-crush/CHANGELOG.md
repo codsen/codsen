@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.3.5 (2026-09-29)
+
+### Bug Fixes
+
+- **html-crush:** match tag names and markup keywords in any ASCII case ([7045a16](https://github.com/codsen/codsen/commit/7045a1679fcf4989bca96e885f641bb4818b717c))
+
 ## 6.3.4 (2026-09-21)
 
 ### Bug Fixes

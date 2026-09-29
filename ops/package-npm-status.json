@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registry": "https://registry.npmjs.org",
-  "checkedAt": "2026-09-25T07:07:57.856Z",
+  "checkedAt": "2026-09-29T16:49:36.155Z",
   "packages": {
     "all-named-html-entities": {
       "status": "available",
@@ -190,7 +190,7 @@
     },
     "detergent": {
       "status": "available",
-      "version": "9.4.10",
+      "version": "9.4.11",
       "deprecated": null
     },
     "easy-replace": {
@@ -249,7 +249,7 @@
     },
     "extract-search-index": {
       "status": "available",
-      "version": "2.2.8",
+      "version": "2.2.9",
       "deprecated": null
     },
     "fol": {
@@ -584,7 +584,7 @@
     },
     "remark-typography": {
       "status": "available",
-      "version": "0.8.8",
+      "version": "0.8.9",
       "deprecated": null
     },
     "seo-editor": {
@@ -694,7 +694,7 @@
     },
     "string-remove-widows": {
       "status": "available",
-      "version": "4.2.8",
+      "version": "4.2.9",
       "deprecated": null
     },
     "string-replace-slices-array": {
@@ -714,7 +714,7 @@
     },
     "string-strip-html": {
       "status": "available",
-      "version": "13.7.5",
+      "version": "13.7.6",
       "deprecated": null
     },
     "string-trim-spaces-only": {

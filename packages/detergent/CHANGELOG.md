@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 9.4.12 (2026-09-29)
+
+### Bug Fixes
+
+- **detergent:** treat malformed numeric references as literal ampersands ([ce15528](https://github.com/codsen/codsen/commit/ce155282443560bcdb4740c54135032c535f0243)), closes [#x](https://github.com/codsen/codsen/issues/x)
+
 ## 9.4.7 (2026-09-09)
 
 ### Bug Fixes

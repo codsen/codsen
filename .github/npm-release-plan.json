@@ -1,7 +1,7 @@
 {
-  "baseRef": "1d5155a5955a834012c2b5c0d437d262928cf5a8",
-  "baseSha": "1d5155a5955a834012c2b5c0d437d262928cf5a8",
-  "createdAt": "2026-09-25T07:08:22.776Z",
+  "baseRef": "e722840bddb765c61319d0fb322d410a95c3ccbb",
+  "baseSha": "e722840bddb765c61319d0fb322d410a95c3ccbb",
+  "createdAt": "2026-09-29T16:50:02.339Z",
   "dependencyFields": [
     "dependencies",
     "optionalDependencies",
@@ -10,11 +10,13 @@
   "kind": "codsen-npm-release-plan",
   "layers": [
     [
+      "html-crush",
       "string-remove-widows",
       "string-strip-html"
     ],
     [
       "detergent",
+      "email-comb",
       "extract-search-index",
       "remark-typography"
     ],
@@ -24,15 +26,15 @@
   ],
   "packages": [
     {
-      "baseVersion": "0.6.6",
+      "baseVersion": "0.6.7",
       "dependencies": [],
       "directory": "data",
       "layer": 2,
       "name": "@codsen/data",
-      "version": "0.6.7"
+      "version": "0.6.8"
     },
     {
-      "baseVersion": "9.4.10",
+      "baseVersion": "9.4.11",
       "dependencies": [
         "string-remove-widows",
         "string-strip-html"
@@ -40,48 +42,66 @@
       "directory": "packages/detergent",
       "layer": 1,
       "name": "detergent",
-      "version": "9.4.11"
+      "version": "9.4.12"
     },
     {
-      "baseVersion": "2.2.8",
+      "baseVersion": "7.4.4",
+      "dependencies": [
+        "html-crush"
+      ],
+      "directory": "packages/email-comb",
+      "layer": 1,
+      "name": "email-comb",
+      "version": "7.4.5"
+    },
+    {
+      "baseVersion": "2.2.9",
       "dependencies": [
         "string-strip-html"
       ],
       "directory": "packages/extract-search-index",
       "layer": 1,
       "name": "extract-search-index",
-      "version": "2.2.9"
+      "version": "2.2.10"
     },
     {
-      "baseVersion": "0.8.8",
+      "baseVersion": "6.3.4",
+      "dependencies": [],
+      "directory": "packages/html-crush",
+      "layer": 0,
+      "name": "html-crush",
+      "version": "6.3.5"
+    },
+    {
+      "baseVersion": "0.8.9",
       "dependencies": [
         "string-remove-widows"
       ],
       "directory": "packages/remark-typography",
       "layer": 1,
       "name": "remark-typography",
-      "version": "0.8.9"
+      "version": "0.8.10"
     },
     {
-      "baseVersion": "4.2.8",
+      "baseVersion": "4.2.9",
       "dependencies": [],
       "directory": "packages/string-remove-widows",
       "layer": 0,
       "name": "string-remove-widows",
-      "version": "4.2.9"
+      "version": "4.2.10"
     },
     {
-      "baseVersion": "13.7.5",
+      "baseVersion": "13.7.6",
       "dependencies": [],
       "directory": "packages/string-strip-html",
       "layer": 0,
       "name": "string-strip-html",
-      "version": "13.7.6"
+      "version": "13.7.7"
     }
   ],
-  "plannedAtSha": "1d5155a5955a834012c2b5c0d437d262928cf5a8",
-  "preparedTreeSha256": "b69e867ea5b39d411f01f5a6235909926df7a83c636daf6f7efe83aca2b517cb",
+  "plannedAtSha": "e722840bddb765c61319d0fb322d410a95c3ccbb",
+  "preparedTreeSha256": "bfdf247ec71048bb4f7ef64778c6ca0f09ed82cc528857951f6f1d77f8164cbe",
   "schemaVersion": 1,
-  "selectedCount": 6,
+  "selectedCount": 8,
   "workspaceCount": 96
 }
