@@ -1,6 +1,6 @@
 {
   "name": "email-comb",
-  "version": "7.4.4",
+  "version": "7.4.5",
   "description": "Remove unused CSS from email templates",
   "keywords": [
     "body",
@@ -70,7 +70,7 @@
   "dependencies": {
     "array-pull-all-with-glob": "^7.2.5",
     "codsen-utils": "^1.10.3",
-    "html-crush": "^6.3.4",
+    "html-crush": "^6.3.5",
     "html-entity-codec": "^1.1.0",
     "ranges-apply": "^7.2.6",
     "ranges-push": "^7.3.3",

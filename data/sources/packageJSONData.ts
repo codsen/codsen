@@ -1952,7 +1952,7 @@ export const packageJSONData = {
   },
   "detergent": {
     "name": "detergent",
-    "version": "9.4.11",
+    "version": "9.4.12",
     "description": "Extract, clean, encode text and fix English style",
     "keywords": [
       "brief",
@@ -2041,8 +2041,8 @@ export const packageJSONData = {
       "string-fix-broken-named-entities": "^7.2.6",
       "string-left-right": "^6.2.5",
       "string-range-expander": "^4.2.6",
-      "string-remove-widows": "^4.2.9",
-      "string-strip-html": "^13.7.6"
+      "string-remove-widows": "^4.2.10",
+      "string-strip-html": "^13.7.7"
     },
     "devDependencies": {
       "test-mixer": "^4.4.3"
@@ -2313,7 +2313,7 @@ export const packageJSONData = {
   },
   "email-comb": {
     "name": "email-comb",
-    "version": "7.4.4",
+    "version": "7.4.5",
     "description": "Remove unused CSS from email templates",
     "keywords": [
       "body",
@@ -2387,7 +2387,7 @@ export const packageJSONData = {
     "dependencies": {
       "array-pull-all-with-glob": "^7.2.5",
       "codsen-utils": "^1.10.3",
-      "html-crush": "^6.3.4",
+      "html-crush": "^6.3.5",
       "html-entity-codec": "^1.1.0",
       "ranges-apply": "^7.2.6",
       "ranges-push": "^7.3.3",
@@ -2407,7 +2407,7 @@ export const packageJSONData = {
   },
   "extract-search-index": {
     "name": "extract-search-index",
-    "version": "2.2.9",
+    "version": "2.2.10",
     "description": "Extract unique keyword input list string for search",
     "keywords": [
       "string",
@@ -2482,7 +2482,7 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.10.3",
       "html-entity-codec": "^1.1.0",
-      "string-strip-html": "^13.7.6",
+      "string-strip-html": "^13.7.7",
       "string-unfancy": "^6.3.1"
     },
     "engines": {
@@ -2744,7 +2744,7 @@ export const packageJSONData = {
   },
   "html-crush": {
     "name": "html-crush",
-    "version": "6.3.4",
+    "version": "6.3.5",
     "description": "Minify email templates",
     "keywords": [
       "breaks",
@@ -5944,7 +5944,7 @@ export const packageJSONData = {
   },
   "remark-typography": {
     "name": "remark-typography",
-    "version": "0.8.9",
+    "version": "0.8.10",
     "description": "Remark plugin to fix typography: quotes, dashes and so on.",
     "keywords": [
       "unified",
@@ -6024,7 +6024,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.10.3",
       "string-apostrophes": "^4.2.7",
       "string-dashes": "^1.4.7",
-      "string-remove-widows": "^4.2.9",
+      "string-remove-widows": "^4.2.10",
       "unified": "^11.0.5",
       "vfile": "^6.0.3"
     },
@@ -7411,7 +7411,7 @@ export const packageJSONData = {
   },
   "string-remove-widows": {
     "name": "string-remove-widows",
-    "version": "4.2.9",
+    "version": "4.2.10",
     "description": "Helps to prevent widow words in a text",
     "keywords": [
       "against",
@@ -7494,7 +7494,7 @@ export const packageJSONData = {
       "string-left-right": "^6.2.5"
     },
     "devDependencies": {
-      "string-strip-html": "^13.7.6"
+      "string-strip-html": "^13.7.7"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -7505,7 +7505,7 @@ export const packageJSONData = {
   },
   "string-strip-html": {
     "name": "string-strip-html",
-    "version": "13.7.6",
+    "version": "13.7.7",
     "description": "Strip HTML tags from strings. No parser, accepts mixed sources.",
     "keywords": [
       "code",

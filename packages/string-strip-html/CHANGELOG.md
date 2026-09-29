@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 13.7.7 (2026-09-29)
+
+### Bug Fixes
+
+- **string-strip-html:** stop dumping stale or undefined link hrefs ([4c74d08](https://github.com/codsen/codsen/commit/4c74d08139006deae494bd16b2301c962c3f682c))
+
 ## 13.7.6 (2026-09-25)
 
 ### Bug Fixes
