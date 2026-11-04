@@ -1273,8 +1273,9 @@ test("027 - opts.cb - closing quotes are not attribute names", () => {
     ],
     "027.05",
   );
-  equal(attributesFor('<div class="">'), [], "027.06");
-  equal(attributesFor("<div class=''>"), [], "027.07");
+  const emptyClass = { ...whitespaceClass, valueEnds: 12, value: "" };
+  equal(attributesFor('<div class="">'), [emptyClass], "027.06");
+  equal(attributesFor("<div class=''>"), [emptyClass], "027.07");
 
   const adjacentAttributes = [
     whitespaceClass,

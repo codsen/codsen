@@ -51,12 +51,27 @@ test("001 - repeated quoted attributes preserve callback keys and source offsets
     );
     equal(
       tokens[0].attributes.map((attribute) => Reflect.ownKeys(attribute)),
-      [attributeKeys, attributeKeys, attributeKeys],
+      [
+        attributeKeys,
+        attributeKeys,
+        attributeKeys,
+        attributeKeys,
+        attributeKeys,
+      ],
       "001.02",
     );
     equal(
       tokens[0].attributes,
       [
+        {
+          nameStarts: 8,
+          nameEnds: 13,
+          equalsAt: 13,
+          name: "empty",
+          valueStarts: 15,
+          valueEnds: 15,
+          value: "",
+        },
         {
           nameStarts: 17,
           nameEnds: 20,
@@ -65,6 +80,15 @@ test("001 - repeated quoted attributes preserve callback keys and source offsets
           valueStarts: 22,
           valueEnds: 28,
           value: skipHtmlDecoding ? "&copy;" : "©",
+        },
+        {
+          nameStarts: 30,
+          nameEnds: 36,
+          equalsAt: 36,
+          name: "empty2",
+          valueStarts: 38,
+          valueEnds: 38,
+          value: "",
         },
         {
           nameStarts: 40,

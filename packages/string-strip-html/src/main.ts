@@ -1373,6 +1373,37 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     }
   }
 
+  function commentKindAt(idx: number): "comment" | "cdata" | undefined {
+    if (str[idx + 1] === "!") {
+      if (str.startsWith("![CDATA[", idx + 1)) {
+        return "cdata";
+      }
+      return str.slice(idx + 2, idx + 9).toLowerCase() === "doctype"
+        ? undefined
+        : "comment";
+    }
+    if (str[idx + 1] === "?") {
+      return "comment";
+    }
+    if (str[idx + 1] === "/" && idx + 2 < len) {
+      // Keep the existing tolerant </ div> tag syntax, but report nameless
+      // and nonalphabetic end-tag openers rather than silently dropping them.
+      const nameCode = str.charCodeAt(
+        isWhitespaceCode(str.charCodeAt(idx + 2))
+          ? (right(str, idx + 1) ?? len)
+          : idx + 2,
+      );
+      if (
+        nameCode !== CODE_RIGHT_BRACKET &&
+        !(nameCode >= 65 && nameCode <= 90) &&
+        !(nameCode >= 97 && nameCode <= 122)
+      ) {
+        return "comment";
+      }
+    }
+    return undefined;
+  }
+
   function clearCurrentTagState(): void {
     resetTag();
     resetAttrObj();
@@ -1707,8 +1738,14 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       DEV && console.log(`quote clauses`);
       if (!isDoctype && tag.nameStarts && tag?.quotes?.value === str[i]) {
         consumedAttributeClosingQuoteAt = i;
-        // If empty quotes, skip processing and reset
+        // Empty values still belong to the callback's attribute inventory.
         if (attrObj.valueStarts === undefined) {
+          if (typeof attrObj.equalsAt === "number") {
+            attrObj.valueStarts = i;
+            attrObj.valueEnds = i;
+            attrObj.value = "";
+            tag.attributes.push(attrObj);
+          }
           // reset:
           resetAttrObj();
           // clear the quotes marker while preserving the tag object's shape
@@ -2144,16 +2181,17 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // catch the beginning of an attribute's name
     // -------------------------------------------------------------------------
     if (
-      // most selective clause first: an attribute name can only start right
-      // after whitespace, which rules out the bulk of the input before any
-      // of the tag object's properties have to be read
-      isWhitespaceCode(str.charCodeAt(i - 1)) &&
+      // Browsers also reconsume a character after an unexpected slash or a
+      // quoted value as the start of another attribute, without whitespace.
+      (isWhitespaceCode(str.charCodeAt(i - 1)) ||
+        str.charCodeAt(i - 1) === CODE_SLASH ||
+        consumedAttributeClosingQuoteAt === i - 1) &&
       consumedAttributeClosingQuoteAt !== i &&
       !isWhitespaceCode(charCode) &&
       charCode !== CODE_LEFT_BRACKET &&
       charCode !== CODE_RIGHT_BRACKET &&
       charCode !== CODE_SLASH &&
-      charCode !== CODE_EXCLAMATION &&
+      (charCode !== CODE_EXCLAMATION || !tag.onlyPlausible) &&
       !attrObj.nameStarts &&
       tag.nameEnds < i &&
       !tag.lastClosingBracketAt &&
@@ -2336,7 +2374,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // the tag is "released" into "rApply":
 
     if (
-      (!isDoctype || charCode === CODE_RIGHT_BRACKET) &&
+      (!isDoctype || charCode === CODE_RIGHT_BRACKET || i === len - 1) &&
       tag.lastOpeningBracketAt !== undefined
     ) {
       DEV && console.log(`opening bracket has been met`);
@@ -2870,6 +2908,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
     // catch an opening bracket
     // -------------------------------------------------------------------------
+    const commentKind = opensHere ? commentKindAt(i) : undefined;
     if (
       // Don't catch tags inside script or RCDATA elements:
       //
@@ -2891,9 +2930,11 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
           !isWhitespaceCode(str.charCodeAt(tag.quotes.next + 1)) &&
           str[tag.quotes.next + 1] !== ">" &&
           str[tag.quotes.next + 1] !== "/")) &&
-      !isOpeningAt(i - 1) &&
+      (commentKind || !isOpeningAt(i - 1)) &&
       !`'"`.includes(str[i + 1]) &&
-      (!`'"`.includes(str[i + 2]) || /\w/.test(str[i + 1])) &&
+      (!`'"`.includes(str[i + 2]) ||
+        /\w/.test(str[i + 1]) ||
+        "!?/".includes(str[i + 1])) &&
       //
       // precaution JSP,
       // against <c:
@@ -3013,7 +3054,9 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         }
 
         if (
-          (tag.lastOpeningBracketAt === undefined || !tag.onlyPlausible) &&
+          (commentKind ||
+            tag.lastOpeningBracketAt === undefined ||
+            !tag.onlyPlausible) &&
           !tag.quotes
         ) {
           tag.lastOpeningBracketAt = i;
@@ -3039,7 +3082,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             tag.leftOuterWhitespace = chunkOfWhitespaceStartsAt;
           }
 
-          if (pendingMalformedStart !== null) {
+          if (pendingMalformedStart !== null && !commentKind) {
             tag.leftOuterWhitespace = pendingMalformedStart;
           }
 
@@ -3055,22 +3098,34 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
               }; \u001b[${33}m${`tag.slashPresent`}\u001b[${39}m = false`,
             );
 
-          // tend the HTML comments: <!-- --> or CDATA: <![CDATA[ ... ]]>
-          // if opening comment tag is detected, traverse forward aggressively
-          // until EOL or "-->" is reached and offset outer index "i".
-          if (
-            str.startsWith("!--", i + 1) ||
-            str.startsWith("![CDATA[", i + 1)
-          ) {
+          // Comments, CDATA, and bogus declarations are single tokens even
+          // without a closing delimiter. Do not resume tag parsing inside them
+          // or leave an EOF opener invisible to a filtering callback.
+          const cdata = commentKind === "cdata";
+          const comment = str.startsWith("!--", i + 1);
+          const bogusComment = commentKind === "comment" && !comment;
+          if (comment || cdata || bogusComment) {
+            if (bogusComment) {
+              // Retain the whitespace policy for tolerant dirty forms such as
+              // <!a> and <///a>, without reporting them as real HTML tags.
+              let nameAt = i + 1;
+              while (
+                str[nameAt] === "!" ||
+                str[nameAt] === "/" ||
+                isWhitespaceCode(str.charCodeAt(nameAt))
+              ) {
+                nameAt += 1;
+              }
+              let nameEnd = nameAt;
+              while (characterSuitableForNames(str.charCodeAt(nameEnd))) {
+                nameEnd += 1;
+              }
+              tag.name = str.slice(nameAt, nameEnd);
+            }
             DEV &&
               console.log(
                 `\u001b[${31}m${`███████████████████████████████████████`}\u001b[${39}m`,
               );
-            // make a note which one it is:
-            let cdata = true;
-            if (str[i + 2] === "-") {
-              cdata = false;
-            }
             DEV && console.log("traversing forward");
             let closingFoundAt: number | undefined;
             for (let y = i; y < len; y++) {
@@ -3082,11 +3137,16 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                   `${`\u001b[${33}m${`str[${y}]`}\u001b[${39}m`} = ${str[y]}`,
                 );
               if (
-                // startsWith() clamps a negative index to zero, which the
-                // three-character concatenation this replaces did not
-                y > 1 &&
-                ((!closingFoundAt && cdata && str.startsWith("]]>", y - 2)) ||
-                  (!cdata && str.startsWith("-->", y - 2)))
+                closingFoundAt === undefined &&
+                ((cdata && y > 1 && str.startsWith("]]>", y - 2)) ||
+                  (bogusComment && str[y] === ">") ||
+                  (comment &&
+                    str[y] === ">" &&
+                    (str.startsWith("-->", y - 2) ||
+                      str.startsWith("--!>", y - 3) ||
+                      y === i + 4 ||
+                      (y === i + 5 && str[y - 1] === "-"))) ||
+                  y === len - 1)
               ) {
                 closingFoundAt = y;
                 DEV && console.log(`closingFoundAt = ${closingFoundAt}`);
@@ -3101,7 +3161,8 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 let rangeEnd = y;
                 if (
                   (str[y + 1] === undefined &&
-                    isWhitespaceCode(str.charCodeAt(y))) ||
+                    (closingFoundAt === y ||
+                      isWhitespaceCode(str.charCodeAt(y)))) ||
                   str[y] === ">"
                 ) {
                   rangeEnd += 1;
@@ -3150,7 +3211,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
 
                 // offset:
                 i = y - 1;
-                if (str[y] === ">") {
+                if (str[y] === ">" || (closingFoundAt === y && y === len - 1)) {
                   i = y;
                 }
                 // the cursor moved, so the readings taken at the top of this
