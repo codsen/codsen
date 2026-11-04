@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 13.7.8 (2026-11-04)
+
+### Bug Fixes
+
+- **string-strip-html:** report malformed markup and all attributes to callbacks ([bf1305d](https://github.com/codsen/codsen/commit/bf1305da9704f477f79c7c17c450e088a3059fba))
+
 ## 13.7.7 (2026-09-29)
 
 ### Bug Fixes

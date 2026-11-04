@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "registry": "https://registry.npmjs.org",
-  "checkedAt": "2026-09-29T16:49:36.155Z",
+  "checkedAt": "2026-11-04T21:47:45.794Z",
   "packages": {
     "all-named-html-entities": {
       "status": "available",
@@ -190,7 +190,7 @@
     },
     "detergent": {
       "status": "available",
-      "version": "9.4.11",
+      "version": "9.4.12",
       "deprecated": null
     },
     "easy-replace": {
@@ -215,7 +215,7 @@
     },
     "email-comb": {
       "status": "available",
-      "version": "7.4.4",
+      "version": "7.4.5",
       "deprecated": null
     },
     "email-homey": {
@@ -249,7 +249,7 @@
     },
     "extract-search-index": {
       "status": "available",
-      "version": "2.2.9",
+      "version": "2.2.10",
       "deprecated": null
     },
     "fol": {
@@ -284,7 +284,7 @@
     },
     "html-crush": {
       "status": "available",
-      "version": "6.3.4",
+      "version": "6.3.5",
       "deprecated": null
     },
     "html-entities-not-email-friendly": {
@@ -584,7 +584,7 @@
     },
     "remark-typography": {
       "status": "available",
-      "version": "0.8.9",
+      "version": "0.8.10",
       "deprecated": null
     },
     "seo-editor": {
@@ -694,7 +694,7 @@
     },
     "string-remove-widows": {
       "status": "available",
-      "version": "4.2.9",
+      "version": "4.2.10",
       "deprecated": null
     },
     "string-replace-slices-array": {
@@ -714,7 +714,7 @@
     },
     "string-strip-html": {
       "status": "available",
-      "version": "13.7.6",
+      "version": "13.7.7",
       "deprecated": null
     },
     "string-trim-spaces-only": {
