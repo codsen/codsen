@@ -851,7 +851,7 @@ export const packages = {
   outsideMonorepo,
   retired,
   deprecated,
-  npmStatusCheckedAt: "2026-09-29T16:49:36.155Z",
+  npmStatusCheckedAt: "2026-11-04T08:20:04.253Z",
   libraries,
   cli,
   browserScripts,
