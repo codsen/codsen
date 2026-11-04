@@ -119,6 +119,37 @@ making architectural, build, packaging, declaration-generation, or test-pipeline
 decisions. Treat the principles as constraints, and verify the current
 implementation before describing it as compliant.
 
+## Validate changed program logic with coverage
+
+Choose package validation from the change, and run it before handing off the
+work:
+
+- If a program's logic changed, run that package's coverage suite. From the
+  root, use `npm run turbo -- run coverage --filter='<package>'`; Turbo builds
+  the package and its dependencies first. Include affected consumers when a
+  shared library's changed behavior reaches them.
+- If program logic did not change, the faster unit suite without coverage is
+  sufficient for package testing: `npm run turbo -- run unit --filter='<package>'`.
+  Still run the checks required for the edited files, such as Markdown linting.
+- Keep this validation in the agent's task workflow. Do not add repository-wide
+  `test:coverage` to `prepush` or run it for every documentation, metadata, or
+  tooling edit merely because it exists.
+- Report unit results, coverage results, and unrun checks separately. Root
+  `npm run verify` does not execute package coverage; its
+  `ci:verify:coverage-policy` gate checks configuration. A passing unit suite or
+  policy check does not establish that execution under coverage passes.
+- Before recommending **Prepare npm release**, confirm that `verify.yml`
+  passed for the intended remote `main` commit. Ordinary CI already enforces
+  repository-wide coverage. Follow the recovery rules in
+  [.github/NPM_RELEASES.md](.github/NPM_RELEASES.md) when a proposal fails.
+
+Subprocess tests that bound hangs must allow for coverage instrumentation and
+parallel CI load. Keep a finite, generous timeout, preserve inherited coverage
+when the child exercises package logic, and include `error`, `signal`, and
+`stderr` in failure diagnostics. An exit status of `null` can indicate a timeout
+or signal; inspect those fields before treating it as an incorrect result or a
+coverage-threshold failure.
+
 ## Repository improvement backlog
 
 When present, the monorepo-wide review documents in the local `logs/` directory

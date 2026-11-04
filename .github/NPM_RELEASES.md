@@ -193,6 +193,23 @@ verified chart output, set the website build's `CODSEN_CHARTS_REVISION` to that
 full 40-character commit SHA, and rebuild the website. The override remains
 pinned until it is removed; remove it to resume automatic release updates.
 
+## Recover a failed proposal check
+
+A failed `verify.yml` run on an unmerged release PR has published nothing.
+Inspect the failing assertion before choosing a retry: the coverage step runs
+unit tests as well as enforcing thresholds, so its failure can be a test error
+or a subprocess timeout. Reproduce a package failure with
+`npm run turbo -- run coverage --filter='<package>'` from the repository root.
+
+If a source, test, or tooling fix is needed, close the old release PR, make the
+fix on `main`, and let ordinary CI pass. Then run **Prepare npm release** again.
+Keep fixes out of the generated proposal and do not update or rebase it; its
+release plan binds the tree produced during preparation.
+
+For a transient failure requiring no tree change, rerun the failed checks on
+the existing preparation-dispatched `workflow_dispatch` run. Leave the separate
+`action_required` pull-request run parked as described above.
+
 ## Recover a failed publish
 
 Open the failed GitHub Actions release run and use **Re-run jobs** (or
