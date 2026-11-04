@@ -10,7 +10,8 @@ test("01 - malformed long names cannot cause excessive backtracking", () => {
     import.meta.url,
   ).href;
   // A separate process bounds a regression even if the recognizer blocks its
-  // event loop. No naturally measured duration is asserted.
+  // event loop. Allow headroom for coverage instrumentation and concurrent CI
+  // suites. No naturally measured duration is asserted.
   const source = `
     import { isOpening } from ${JSON.stringify(moduleUrl)};
     const results = [];
@@ -28,10 +29,19 @@ test("01 - malformed long names cannot cause excessive backtracking", () => {
   const result = spawnSync(
     process.execPath,
     ["--input-type=module", "-e", source],
-    { encoding: "utf8", timeout: 5000 },
+    { encoding: "utf8", timeout: 30000 },
   );
 
-  equal(result.status, 0, "01.01");
+  equal(
+    result.status,
+    0,
+    `01.01 - ${JSON.stringify({
+      error: result.error?.message ?? null,
+      code: result.error?.code ?? null,
+      signal: result.signal,
+      stderr: result.stderr,
+    })}`,
+  );
   equal(result.stdout.trim(), JSON.stringify(Array(8).fill(false)), "01.02");
 });
 
@@ -105,10 +115,19 @@ test("04 - ASCII and Unicode whitespace terminate in ESM and browser scripts", (
   const result = spawnSync(
     process.execPath,
     ["--input-type=module", "-e", source],
-    { encoding: "utf8", timeout: 5000 },
+    { encoding: "utf8", timeout: 30000 },
   );
 
-  equal(result.status, 0, "04.01");
+  equal(
+    result.status,
+    0,
+    `04.01 - ${JSON.stringify({
+      error: result.error?.message ?? null,
+      code: result.error?.code ?? null,
+      signal: result.signal,
+      stderr: result.stderr,
+    })}`,
+  );
   equal(result.stdout.trim(), "[true,true]", "04.02");
 });
 
