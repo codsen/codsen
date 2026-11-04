@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import git from "simple-git";
+import { simpleGit } from "simple-git";
 import { firstPublishedAt } from "../../data/sources/firstPublishedAt.ts";
 import { programClassification } from "../../data/sources/programClassification.ts";
 import {
@@ -698,7 +698,7 @@ if (shouldGenerateGitStats) {
   let commitTotal = null;
   try {
     // git rev-list --count HEAD
-    commitTotal = await git(".git").raw(["rev-list", "--count", "HEAD"]);
+    commitTotal = await simpleGit(".git").raw(["rev-list", "--count", "HEAD"]);
     await writeGeneratedFile({
       contents: `export const gitStats = ${JSON.stringify(
         { commitTotal: commitTotal.trim() },
