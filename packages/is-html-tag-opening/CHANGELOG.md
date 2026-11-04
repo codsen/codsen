@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.2.7 (2026-11-04)
+
+### Bug Fixes
+
+- **is-html-tag-opening:** bound malformed tag recognition time ([96c2ef0](https://github.com/codsen/codsen/commit/96c2ef0c40596937bd24bad6370e5ac5a4afdcaf))
+
 ## 4.2.4 (2026-09-06)
 
 ### Performance Improvements

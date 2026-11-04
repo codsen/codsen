@@ -153,7 +153,7 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "tarballSizeBytes": 137169,
+    "tarballSizeBytes": 137170,
     "unpackedSizeBytes": 460615,
     "imports": [
       "all-named-html-entities",
@@ -205,7 +205,7 @@ export const interdeps = [
   },
   {
     "name": "email-comb",
-    "tarballSizeBytes": 83066,
+    "tarballSizeBytes": 83067,
     "unpackedSizeBytes": 257163,
     "imports": [
       "array-pull-all-with-glob",
@@ -224,7 +224,7 @@ export const interdeps = [
   },
   {
     "name": "extract-search-index",
-    "tarballSizeBytes": 42580,
+    "tarballSizeBytes": 42579,
     "unpackedSizeBytes": 127790,
     "imports": [
       "codsen-utils",
@@ -260,7 +260,7 @@ export const interdeps = [
   },
   {
     "name": "html-crush",
-    "tarballSizeBytes": 54710,
+    "tarballSizeBytes": 54711,
     "unpackedSizeBytes": 164471,
     "imports": [
       "codsen-utils",
@@ -303,8 +303,8 @@ export const interdeps = [
   },
   {
     "name": "is-html-tag-opening",
-    "tarballSizeBytes": 14218,
-    "unpackedSizeBytes": 38301,
+    "tarballSizeBytes": 14286,
+    "unpackedSizeBytes": 38498,
     "imports": [
       "codsen-utils",
       "string-left-right",
@@ -712,7 +712,7 @@ export const interdeps = [
   },
   {
     "name": "string-remove-widows",
-    "tarballSizeBytes": 29833,
+    "tarballSizeBytes": 29832,
     "unpackedSizeBytes": 85894,
     "imports": [
       "codsen-utils",
@@ -723,8 +723,8 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "tarballSizeBytes": 58209,
-    "unpackedSizeBytes": 177250,
+    "tarballSizeBytes": 58274,
+    "unpackedSizeBytes": 177465,
     "imports": [
       "codsen-utils",
       "html-entity-codec",
